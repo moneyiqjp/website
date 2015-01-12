@@ -1,30 +1,12 @@
 use moneyiq;
 -- triggers on fees table
 
-DELIMITER $$
-
 -- turn off note warnings as triggers don't exist during initial load
 SET sql_notes = 0;
-drop trigger if exists fees_update;
+drop trigger if exists fees_before_update;
 SET sql_notes = 1;
 
 
-CREATE TRIGGER fees_update
-    BEFORE UPDATE ON fees
-    FOR EACH ROW BEGIN
- 
-    INSERT INTO fees_history
-    SET action = 'update',
-		fee_id= OLD.fee_id,
-		fee_type= OLD.fee_type,
-		fee_amount= OLD.fee_amount,
-		yearly_occurrence= OLD.yearly_occurrence,
-		start_year= OLD.start_year,
-		end_year= OLD.end_year,
-		credit_card_id= OLD.credit_card_id,
-		time_beg = OLD.update_time,
-	   time_end = NOW(),
-		update_user = OLD.update_user; 		
-		 
-END$$
-DELIMITER ;
+CREATE TRIGGER fees_before_update BEFORE UPDATE ON fees FOR EACH ROW 
+INSERT INTO fees_history (fee_id, fee_type, fee_amount, yearly_occurrence, start_year, end_year, credit_card_id, time_beg, time_end, update_user)
+VALUES ( OLD.fee_id, OLD.fee_type, OLD.fee_amount, OLD.yearly_occurrence, OLD.start_year, OLD.end_year, OLD.credit_card_id, OLD.update_time, NOW(), OLD.update_user);

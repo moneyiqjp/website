@@ -6,7 +6,7 @@ param (
 #    ,[string]$file = $(throw "-file is required.")
 )
 
-$folders = 'triggers', 'views' #= 'tables', 'constraints', 
+$folders = 'tables', 'constraints', 'triggers', 'views'
 $path_base = resolve-path "./../database/"
 $mysql_dll = resolve-path "MySql.Data.dll"
 
@@ -31,11 +31,14 @@ foreach($folder in $folders)
         $sql = [io.file]::ReadAllText("$path_base$folder\$file") 
         $cm.CommandText = $sql
         try{
-            $cm.ExecuteNonQuery()
+            if($cm.ExecuteNonQuery())
+            {
+                Write-Host "Encountered unknown error"
+                return -1;
+            }
         } catch{
             write-host "Failed to execute sql for $path_base$folder\$file"
-        
-            $Error[0]
+            return $Error[0]
             exit
         }
     }
@@ -43,15 +46,7 @@ foreach($folder in $folders)
 
 write-host "Closing connection"
 $cn.Close()
+return 0;
 
 
-#write-host "Running backup script against db1"
-# Run Update Script MySQL 
-#$cm = New-Object -TypeName MySql.Data.MySqlClient.MySqlCommand
-#$sql = Get-Content C:\db2.sql
-#$sql = [io.file]::ReadAllText('c:\db2.sql') 
-#$cm.Connection = $cn
-#$OFS = "`r`n"
-#$cm.CommandText = $sql
-#$cm.ExecuteReader()
-#write-host "Closing Connection"
+return $result

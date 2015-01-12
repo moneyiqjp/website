@@ -1,6 +1,7 @@
 use moneyiq;
 -- triggers on affiliate_company table
 
+-- turn off note warnings as triggers don't exist during initial load
 SET sql_notes = 0;
 drop trigger if exists affiliate_company_before_update;
 SET sql_notes = 1;
