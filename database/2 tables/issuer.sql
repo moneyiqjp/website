@@ -16,7 +16,7 @@ SET sql_notes = 1;
 
 CREATE TABLE issuer (
     issuer_id	int    NOT NULL  AUTO_INCREMENT,
-    issuer_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+    issuer_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) NULL,
     CONSTRAINT issuer_pk PRIMARY KEY (issuer_id)

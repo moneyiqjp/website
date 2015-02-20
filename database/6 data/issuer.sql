@@ -1,7 +1,5 @@
 SET NAMES utf8;
 
-go;
-
 
 insert into issuer (issuer_name,update_time, update_user) values
  ('株式会社リクルートライフスタイル',NOW(),'benfries')
