@@ -9,6 +9,7 @@ param (
 $folders = 'tables', 'constraints', 'triggers', 'views'
 $path_base = resolve-path "./../database/"
 $mysql_dll = resolve-path "MySql.Data.dll"
+write-host $mysql_dll
 
 [void][system.reflection.Assembly]::LoadFrom("$mysql_dll")
 write-host "Connecting to mysql on $mysql_server as $mysql_user"

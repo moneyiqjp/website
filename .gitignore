@@ -1,2 +1,3 @@
 bin/FTPSync/*.res
 *.log
+backend/vendor
