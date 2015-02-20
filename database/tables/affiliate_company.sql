@@ -6,7 +6,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `affiliate_company`;
 CREATE TABLE affiliate_company (
     affiliate_id int    NOT NULL ,
-    name int    NOT NULL ,
+    name varchar(255)    NOT NULL ,
     description text    NULL ,
     website varchar(255)    NULL ,
     signed_up_date date    NOT NULL ,
@@ -18,7 +18,7 @@ CREATE TABLE affiliate_company (
 DROP TABLE IF EXISTS `affiliate_company_history`;
 CREATE TABLE affiliate_company_history (
     affiliate_id int    NOT NULL ,
-    name int    NOT NULL ,
+    name varchar(255)    NOT NULL ,
     description text    NULL ,
     website varchar(255)    NULL ,
     signed_up_date date    NOT NULL ,

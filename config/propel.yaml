@@ -1,0 +1,10 @@
+propel:
+  database:
+      connections:
+          default:
+              adapter: mysql
+              classname: Propel\Runtime\Connection\ConnectionWrapper
+              dsn: "mysql:host=localhost;dbname=moneyiq"
+              user: root
+              password: 
+              attributes:
