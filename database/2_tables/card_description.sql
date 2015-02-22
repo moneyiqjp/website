@@ -1,3 +1,4 @@
+SET NAMES utf8;
 use moneyiq;
 -- Table card_description
 -- allows additional descriptions for a credit card
@@ -15,10 +16,10 @@ SET sql_notes = 1;
 CREATE TABLE card_description (
     item_id int    NOT NULL ,
     credit_card_id int    NOT NULL ,
-    item_name varchar(255)    NULL ,
-    item_description text    NULL ,
+    item_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    item_description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     CONSTRAINT card_description_pk PRIMARY KEY (credit_card_id)
 );
 
@@ -27,11 +28,11 @@ CREATE TABLE card_description (
 CREATE TABLE card_description_history (
     item_id int    NOT NULL ,
     credit_card_id int    NOT NULL ,
-    item_name varchar(255)    NULL ,
-    item_description text    NULL ,
+    item_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    item_description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100),
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT card_description_pk PRIMARY KEY (credit_card_id, time_beg)
 );
 

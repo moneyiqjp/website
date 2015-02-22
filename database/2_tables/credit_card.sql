@@ -1,3 +1,4 @@
+SET NAMES utf8;
 use moneyiq;
 -- Table credit_card
 
@@ -14,18 +15,18 @@ SET sql_notes = 1;
 
 CREATE TABLE credit_card (
     credit_card_id int    NOT NULL  AUTO_INCREMENT,
-    name varchar(255)    NOT NULL ,
+    name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     issuer_id int    NOT NULL ,
-    description text    NULL ,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     visa bool    NULL ,
     master bool    NULL ,
     jcb bool    NULL ,
     amex bool    NULL ,
     diners bool    NULL ,
-    afilliate_link varchar(255)    NULL ,
+    afilliate_link varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     affiliate_id int    NOT NULL ,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     CONSTRAINT credit_card_pk PRIMARY KEY (credit_card_id)
 );
 

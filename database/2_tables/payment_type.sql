@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- Table payment_type
 
 -- required as we want to be able to refresh our db table by table
@@ -13,21 +14,21 @@ SET sql_notes = 1;
 
 CREATE TABLE payment_type (
     payment_type_id int    NOT NULL ,
-    payment_type varchar(100)    NOT NULL ,
-    payment_description text    NOT NULL ,
+    payment_type varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    payment_description text  CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT payment_type_pk PRIMARY KEY (payment_type_id)
 );
 
 
 CREATE TABLE payment_type_history (
     payment_type_id int    NOT NULL ,
-    payment_type varchar(100)    NOT NULL ,
-    payment_description text    NOT NULL ,
+    payment_type varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    payment_description text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT payment_type_pk PRIMARY KEY (payment_type_id, time_beg)
 );
 

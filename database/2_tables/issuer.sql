@@ -24,10 +24,10 @@ CREATE TABLE issuer (
 
 CREATE TABLE issuer_history (
     issuer_id int    NOT NULL ,
-    issuer_name varchar(255)    NOT NULL ,
+    issuer_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT issuer_pk PRIMARY KEY (issuer_id, time_beg)
 );
 

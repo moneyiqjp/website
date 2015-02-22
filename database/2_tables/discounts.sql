@@ -1,3 +1,4 @@
+SET NAMES utf8;
 use moneyiq;
 -- Table discounts
 
@@ -17,11 +18,11 @@ CREATE TABLE discounts (
     percentage double(15,15)    NOT NULL ,
     start_date date    NULL ,
     end_date date    NULL ,
-    description text    NULL ,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     credit_card_id int    NOT NULL ,
     store_store_id int    NOT NULL ,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT discounts_pk PRIMARY KEY (discount_id)
 );
 
@@ -30,12 +31,12 @@ CREATE TABLE discounts_history (
     percentage double(15,15)    NOT NULL ,
     start_date date    NULL ,
     end_date date    NULL ,
-    description text    NULL ,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     credit_card_id int    NOT NULL ,
     store_store_id int    NOT NULL ,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT discounts_pk PRIMARY KEY (discount_id, time_beg)
 );
 

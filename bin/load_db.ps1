@@ -2,19 +2,20 @@
 param (
     [string]$server = "localhost",
     [string]$user = "root",
+    [string]$db = "moneyiq",
     [string]$password =  $(throw "-password is required.")
 #    ,[string]$file = $(throw "-file is required.")
 )
 
-$folders = 'tables', 'constraints', 'triggers', 'views'
+$folders = '2_tables', '3_constraints', '4_triggers', '5_views', '6_data'
 $path_base = resolve-path "./../database/"
 $mysql_dll = resolve-path "MySql.Data.dll"
 write-host $mysql_dll
 
 [void][system.reflection.Assembly]::LoadFrom("$mysql_dll")
-write-host "Connecting to mysql on $mysql_server as $mysql_user"
+write-host "Connecting to mysql on $server as $user"
 $cn = New-Object -TypeName MySql.Data.MySqlClient.MySqlConnection
-$cn.ConnectionString = "SERVER=$server;DATABASE=mysql;UID=$user;PWD=$password"
+$cn.ConnectionString = "SERVER=$server;DATABASE=$db;UID=$user;PWD=$password"
 $cn.Open()
 
 write-host "Loading database scrips from $path_base into $mysql_server as $mysql_user"

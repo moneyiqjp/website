@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- Table campaign
 
 -- required as we want to be able to refresh our db table by table
@@ -14,15 +15,15 @@ SET sql_notes = 1;
 CREATE TABLE campaign (
     campaign_id int    NOT NULL ,
     credit_card_id int    NOT NULL ,
-    campaign_name varchar(255)    NOT NULL ,
-    description text    NULL ,
+    campaign_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     max_points int    NULL ,
     value_in_yen int    NULL ,
     start_date date    NULL DEFAULT '1000-01-01' ,
     end_date date    NOT NULL ,
     issuer_id int    NOT NULL ,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT campaign_pk PRIMARY KEY (campaign_id)
 );
 
@@ -30,8 +31,8 @@ CREATE TABLE campaign (
 CREATE TABLE campaign_history (
     campaign_id int    NOT NULL ,
     credit_card_id int    NOT NULL ,
-    campaign_name varchar(255)    NOT NULL ,
-    description text    NULL ,
+    campaign_name varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     max_points int    NULL ,
     value_in_yen int    NULL ,
     start_date date    NULL DEFAULT '1000-01-01' ,
@@ -39,7 +40,7 @@ CREATE TABLE campaign_history (
     issuer_id int    NOT NULL ,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100),
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT campaign_pk PRIMARY KEY (campaign_id, time_beg)
 );
 

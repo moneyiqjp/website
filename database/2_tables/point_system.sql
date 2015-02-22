@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- Table point_system
 
 -- required as we want to be able to refresh our db table by table
@@ -18,7 +19,7 @@ CREATE TABLE point_system (
     credit_card_id int    NOT NULL ,
     store_store_id int    NOT NULL ,
     update_time datetime NOT NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT point_system_pk PRIMARY KEY (point_system_id)
 );
 
@@ -30,7 +31,7 @@ CREATE TABLE point_system_history (
     store_store_id int    NOT NULL ,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
-    update_user varchar(100) NULL,
+    update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT point_system_pk PRIMARY KEY (point_system_id,time_beg)
 );
 
