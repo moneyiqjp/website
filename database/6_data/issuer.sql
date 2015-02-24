@@ -1,5 +1,8 @@
+use moneyiq;
 SET NAMES utf8;
-
+SET FOREIGN_KEY_CHECKS = 0;
+delete from issuer where issuer_id>0;
+ALTER TABLE issuer AUTO_INCREMENT = 1;
 
 insert into issuer (issuer_name,update_time, update_user) values
  ('株式会社リクルートライフスタイル',NOW(),'benfries')
@@ -14,4 +17,6 @@ insert into issuer (issuer_name,update_time, update_user) values
 ,('Credit Saison',NOW(),'benfries')
 ,('三井住友トラスト',NOW(),'benfries')
 ,('ジャックス',NOW(),'benfries')
-,('株式会社ＪＡＬカード',NOW(),'benfries')
+,('株式会社ＪＡＬカード',NOW(),'benfries');
+
+SET FOREIGN_KEY_CHECKS = 1;

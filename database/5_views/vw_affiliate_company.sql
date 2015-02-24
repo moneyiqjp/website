@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- View: vw_affiliate_company
 
 -- turn off note warnings as views don't exist during initial load

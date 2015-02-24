@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- View: vw_card_features
 
 -- turn off note warnings as views don't exist during initial load

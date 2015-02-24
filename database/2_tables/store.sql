@@ -15,9 +15,9 @@ SET sql_notes = 1;
 
 
 CREATE TABLE store (
-    store_id int    NOT NULL ,
-    store_name varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    category varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    store_id int NOT NULL AUTO_INCREMENT,
+    store_name text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    category varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -27,8 +27,8 @@ CREATE TABLE store (
 
 CREATE TABLE store_history (
     store_id int    NOT NULL ,
-    store_name varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    category varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+    store_name text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+    category varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,

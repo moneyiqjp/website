@@ -1,4 +1,5 @@
 use moneyiq;
+SET NAMES utf8;
 -- View: vw_active_campaign
 
 -- turn off note warnings as tables don't exist during initial load
