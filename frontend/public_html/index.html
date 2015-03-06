@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html　lang="ja-JP" xml:lang="ja-JP" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />-->
+　<link rel="stylesheet" href="../css/jquery-ui-1.11.3.custom/jquery-ui.css" />
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../js/ui.dropdownchecklist.js"></script>
+　<link rel="stylesheet" type="text/css" href="../css/ui.main.css" />
+        <link rel="stylesheet" type="text/css" href="../css/ui.dropdownchecklist.themeroller.css" />
+        <script type="text/javascript" src="../js/proc_data.js"></script>
+
+    </head>
+    <body>
+        <div id="container">
+            <div id="header"><span>MoneyIQ　クレジットカード比較 </span><i class="fa fa-credit-card"></i></div>
+            <span id="slogan"><h3>ライフスタイルによってポイントが一番たまるクレジットカードを提案するサービス</h3></span>
+            <div id="accordion">
+                <h3 id="step1">Step 1:必要な機能を選ぶ</h3>  
+                <div id="btnset1" class="btnset" style="margin-right:0;"><span><b>必要な機能をクリックしてください：</b></span>
+                    <input type="checkbox" id="golden" ><label for="golden">ゴールドカード</label></input>
+                    <input type="checkbox" id="travel_insurance"><label for="travel_insurance">旅行保険</label></input>
+                    <input type="checkbox" id="shopping_insurance"><label for="shopping_insurance">買物保険</label></input>
+                    <input type="checkbox" id="etc"><label for="etc">ETC付</label></input>
+                </div>
+                <h3 id="step2">Step 2:カードのお支払い金額を設定する</h3>
+                <div id="slider_container" style="margin-right:0;text-align:center;">
+                    <div id="spend_slider">
+                        <table id="slider_table"><tr>
+                                <td><span id="slider-caption">１カ月のカードお支払い金額<i class="fa fa-info-circle" style="position:relative;top:-10px;"></span></td>
+                                <td><div id="slider-range-min"></div></td>
+                                <td><input type="text" id="amount" readonly></input></td>
+                            </tr></table>
+                    </div>
+                </div>
+            </div>
+            <div id="search_box">
+                <table id="points_use_select">
+                    <caption style="text-align:left;font-size:1.1em;">最後に、クレジットカードをよく使うサービスを選ぶ</span></caption>
+                    <tr>
+                        <th><i class="fa fa-shopping-cart"></i> スーパー・コンビニ</th>
+                        <th><i class="fa fa-money"></i> ショッピング</th>
+                        <th><i class="fa fa-suitcase"></i> エンタメ・旅行</th>
+                        <th><i class="fa fa-car"></i> カーライフ</th>
+                        <!--                        <th><i class="fa fa-gift"></i> 交換商品</th>-->
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="s1" class="multichecks" multiple="multiple">
+                                <option>イーオン</option>
+                                <option>マルエツ</option>
+                                <option>ローソン</option></select>
+                        </td>
+                        <td>
+                            <select id="s2" class="multichecks" multiple="multiple">
+                                <option>コナカ</option>
+                                <option>楽天市場</option>
+                                <option>マルイ</option>
+                                <option>アマゾン</option> </select>
+                        </td>
+                        <td>
+                            <select id="s3" class="multichecks" multiple="multiple">
+                                <option>シダックス</option>
+                                <option>H.I.S.</option></select>
+                        </td>
+                        <td>
+                            <select id="s4" class="multichecks" multiple="multiple">
+                                <option>ETC</option>
+                                <option>ENEOS</option></select>
+                        </td>
+                        <!--                        <td>
+                                                    <select id="s5" class="multichecks" multiple="multiple">
+                                                        <option>マイレージ</option>
+                                                        <option>キャッシュバック</option>
+                                                        <option>商品券</option>
+                                                        <option>購入時割引</option>
+                                                        <option>電子マネー</option>
+                                                        <option>プリーペードカード</option></select>
+                                                </td>-->
+                    </tr>
+                </table>
+            </div>	
+
+            <div id="section"></div>
+
+            <div id="footer">
+                Copyright © Money IQ
+            </div>
+        </div>
+    </body>
+</html>

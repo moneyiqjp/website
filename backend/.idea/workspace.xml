@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db/JSONClasses.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/CreditCard.php" afterPath="$PROJECT_DIR$/db/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/affiliate_company.sql" afterPath="$PROJECT_DIR$/../database/2_tables/affiliate_company.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/backend.iml" afterPath="$PROJECT_DIR$/.idea/backend.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/campaign.sql" afterPath="$PROJECT_DIR$/../database/2_tables/campaign.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_description.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_description.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_features.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_features.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" afterPath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/db.php" afterPath="$PROJECT_DIR$/db/db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/discounts.sql" afterPath="$PROJECT_DIR$/../database/2_tables/discounts.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/fees.sql" afterPath="$PROJECT_DIR$/../database/2_tables/fees.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/insurance.sql" afterPath="$PROJECT_DIR$/../database/2_tables/insurance.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/insurance_type.sql" afterPath="$PROJECT_DIR$/../database/6_data/insurance_type.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/interest.sql" afterPath="$PROJECT_DIR$/../database/2_tables/interest.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/point_system.sql" afterPath="$PROJECT_DIR$/../database/2_tables/point_system.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/point_usage.sql" afterPath="$PROJECT_DIR$/../database/2_tables/point_usage.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/propel.yaml" afterPath="$PROJECT_DIR$/config/propel.yaml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/generated-reversed-database/schema.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/store.sql" afterPath="$PROJECT_DIR$/../database/6_data/store.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="" />
     <ignored path="backend.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -66,10 +39,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="db.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="db.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/db/db.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46378174" vertical-offset="0" max-vertical-offset="1207">
+            <state vertical-scroll-proportion="-18.961538" vertical-offset="0" max-vertical-offset="1207">
               <caret line="29" column="26" selection-start-line="28" selection-start-column="5" selection-end-line="29" selection-end-column="26" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
@@ -89,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreditCard.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CreditCard.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/db/CreditCard.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.846153" vertical-offset="2856" max-vertical-offset="4165">
-              <caret line="211" column="20" selection-start-line="211" selection-start-column="20" selection-end-line="211" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.5572093" vertical-offset="2274" max-vertical-offset="4165">
+              <caret line="174" column="42" selection-start-line="174" selection-start-column="42" selection-end-line="174" selection-end-column="42" />
               <folding>
                 <element signature="e#112#138#0#PHP" expanded="true" />
               </folding>
@@ -365,18 +338,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="40" width="1280" height="1400" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12047244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12047244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11102362" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11102362" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24836065" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -532,16 +505,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/CreditCard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.846153" vertical-offset="2856" max-vertical-offset="4165">
-          <caret line="211" column="20" selection-start-line="211" selection-start-column="20" selection-end-line="211" selection-end-column="20" />
-          <folding>
-            <element signature="e#112#138#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/JSONClasses.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="833">
@@ -552,11 +515,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db/db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46378174" vertical-offset="0" max-vertical-offset="1207">
+        <state vertical-scroll-proportion="-18.961538" vertical-offset="0" max-vertical-offset="1207">
           <caret line="29" column="26" selection-start-line="28" selection-start-column="5" selection-end-line="29" selection-end-column="26" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
             <element signature="e#350#376#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/CreditCard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5572093" vertical-offset="2274" max-vertical-offset="4165">
+          <caret line="174" column="42" selection-start-line="174" selection-start-column="42" selection-end-line="174" selection-end-column="42" />
+          <folding>
+            <element signature="e#112#138#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
