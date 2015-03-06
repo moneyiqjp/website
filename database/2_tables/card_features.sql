@@ -14,10 +14,9 @@ SET sql_notes = 1;
 
 CREATE TABLE card_features (
     feature_id int    NOT NULL  AUTO_INCREMENT,
+    feature_type_id int NOT NULL,
     credit_card_id int    NOT NULL ,
-    feature_name varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    feature_type int    NOT NULL ,
-    feature_description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     feature_cost int    NULL ,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
@@ -25,12 +24,10 @@ CREATE TABLE card_features (
 );
 
 CREATE TABLE card_features_history (
-    feature_id int    NOT NULL  AUTO_INCREMENT,
+    feature_id int    NOT NULL,
+    feature_type_id int NOT NULL,
     credit_card_id int    NOT NULL ,
-    feature_name varchar(250)    NOT NULL ,
-    feature_type int    NOT NULL ,
-    feature_description text    NULL ,
-    feature_cost int    NULL ,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
     update_user varchar(100),

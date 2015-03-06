@@ -5,11 +5,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `interest`;
 CREATE TABLE interest (
-	 interest_id int AUTO_INCREMENT,
+	 interest_id int AUTO_INCREMENT NOT NULL,
     credit_card_id int    NOT NULL ,
     payment_type_id int    NOT NULL ,
-    min_interest double(15,15)    NOT NULL ,
-    max_interest double(15,15)    NOT NULL ,
+    min_interest double(15,15)    NULL ,
+    max_interest double(15,15)    NULL ,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     PRIMARY KEY (interest_id),
@@ -21,8 +21,8 @@ CREATE TABLE interest_history (
 	 interest_id int not null,
     credit_card_id int    NOT NULL ,
     payment_type_id int    NOT NULL ,
-    min_interest double(15,15)    NOT NULL ,
-    max_interest double(15,15)    NOT NULL ,
+    min_interest double(15,15)    NULL ,
+    max_interest double(15,15)    NULL ,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

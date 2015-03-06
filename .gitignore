@@ -1,3 +1,4 @@
 bin/FTPSync/*.res
 *.log
 backend/vendor
+backend/generated-classes

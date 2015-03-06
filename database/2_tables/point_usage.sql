@@ -15,8 +15,8 @@ SET sql_notes = 1;
 
 
 CREATE TABLE point_usage (
-    point_usage_id int    NOT NULL ,
-    store_store_id int    NOT NULL ,
+    point_usage_id int    NOT NULL AUTO_INCREMENT,
+    store_id int    NOT NULL ,
     yen_per_point double(16,16)    NOT NULL ,
     credit_card_id int    NOT NULL ,
     update_time datetime NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE point_usage (
 
 CREATE TABLE point_usage_history (
     point_usage_id int    NOT NULL ,
-    store_store_id int    NOT NULL ,
+    store_id int    NOT NULL ,
     yen_per_point double(16,16)    NOT NULL ,
     credit_card_id int    NOT NULL ,
     time_beg datetime NOT NULL,

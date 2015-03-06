@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="MoneyIQ (Local)" />
+  <component name="PublishConfigData" serverName="MoneyIQ (Local)">
+    <serverData>
+      <paths name="MoneyIQ (Local)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="\" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="\db" local="$PROJECT_DIR$/db" web="/db" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
 </project>

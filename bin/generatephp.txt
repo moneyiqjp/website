@@ -1,0 +1,5 @@
+In backend folder
+.\vendor\bin\propel database:reverse "mysql:host=localhost;dbname=moneyiq;user=root;password="
+.\vendor\bin\propel model:build --schema-dir="generated-reversed-database"
+
+

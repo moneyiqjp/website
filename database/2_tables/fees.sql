@@ -14,7 +14,7 @@ SET sql_notes = 1;
 
 
 CREATE TABLE fees (
-    fee_id int    NOT NULL ,
+    fee_id int NOT NULL  AUTO_INCREMENT,
     fee_type int    NOT NULL ,
     fee_amount int    NOT NULL ,
     yearly_occurrence int    NULL ,

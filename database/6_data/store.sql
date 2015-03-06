@@ -51,6 +51,27 @@ insert into store (store_name, category,update_time, update_user) values
 	('牛角', 'レストラン・カフェ', NOW(), 'ben'),
 	('Denny\'s', 'レストラン・カフェ', NOW(), 'ben'),
 	('ロッテリア', 'レストラン・カフェ', NOW(), 'ben'),
-	('HOT PEPPER', 'ビューティー・エステ', NOW(), 'ben');
+	('HOT PEPPER', 'ビューティー・エステ', NOW(), 'ben'),
+	('モバイルSUICA', 'Point System', NOW(), 'ben'),
+	('リボ利用', 'Point System', NOW(), 'ben'),
+	('公共料金', 'Point System', NOW(), 'ben'),
+	('楽天Edy', 'Point System', NOW(), 'ben'),
+	('楽天市場', 'Point System', NOW(), 'ben'),
+	('標準ポイント', 'Point System', NOW(), 'ben'),
+	('海外一般店利用', 'Point System', NOW(), 'ben'),
+	('牛角', 'Point System', NOW(), 'ben'),
+	('阪急第一ホテルグループ', 'Point System', NOW(), 'ben'),
+	('7-Net Shopping', 'Point System', NOW(), 'ben'),
+	('ENEOS', 'Point System', NOW(), 'ben'),
+	('iD2', 'Point System', NOW(), 'ben'),
+	('JOMO', 'Point System', NOW(), 'ben'),
+	('nanaco', 'Point System', NOW(), 'ben'),
+	('QuicPay', 'Point System', NOW(), 'ben'),
+	('SMART ICOCA', 'Point System', NOW(), 'ben'),
+	('Waon', 'Point System', NOW(), 'ben'),
+	('ヤマト', 'Point System', NOW(), 'ben'),
+	('Amazon', 'Point System', NOW(), 'ben');
+
+
 
 SET FOREIGN_KEY_CHECKS = 1;

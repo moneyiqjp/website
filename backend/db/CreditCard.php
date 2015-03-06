@@ -8,6 +8,9 @@
 
 namespace CreditCard;
 
+use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionManagerSingle;
+
 
 class Feature {
     public $id;
@@ -62,6 +65,7 @@ class CreditCard {
     public $features = array();
     public $pointsData = array();
     public $discountData = array();
+    public $supportedBrands = array();
     /*
         "supportedBrands": [
             "Visa",
@@ -71,6 +75,14 @@ class CreditCard {
 
 
      */
+
+    function AddPaymentNetwork($text_)
+    {
+        array_push($this->supportedBrands, $text_);
+        $this->supportedBrands = array_unique($this->supportedBrands, SORT_STRING);
+
+        return $this;
+    }
 
     function AddFeature($id_, $text_)
     {
@@ -117,6 +129,89 @@ class CreditCard {
         return $this;
     }
 
+
+    public static function fromCreditCardObject(\CreditCard $cc)
+    {
+        $mine = new CreditCard();
+        $mine->cardId = $cc->getCreditCardId();
+        $mine->cardName = $cc->getName();
+        $mine->cardIssuer = $cc->getIssuer()->getIssuerName();
+        $mine->cardImg = $cc->getImageLink();
+        $mine->affiliateUrl = $cc->getAfilliateLink();
+
+        if($cc->getAmex()) $mine->AddPaymentNetwork("American Express");
+        if($cc->getVisa()) $mine->AddPaymentNetwork("VISA");
+        if($cc->getDiners()) $mine->AddPaymentNetwork("Diners");
+        if($cc->getJcb()) $mine->AddPaymentNetwork("JCB");
+        if($cc->getMaster()) $mine->AddPaymentNetwork("Master");
+
+        $mine->annualFeeFirstYear = 0.0;
+        $mine->annualFeeSubseqYear = 0;
+        foreach($cc->getFeess() as $fee)
+        {
+         //TODO add fee data
+        }
+
+        foreach($cc->getDiscountss() as $disc)
+        {
+            $mine->AddDiscountData( $disc->getStore()->getStoreName(),$disc->getPercentage(),$disc->getMultiple());
+        }
+
+        foreach($cc->getCardFeaturess() as $feature) {
+           $feattype = $feature->getCardFeatureType();
+            $mine->AddFeature($feattype->getCategory(),$feattype->getName());
+        }
+
+        foreach($cc->getInsurances() as $insurance )
+        {
+           #$insurance->get
+            //TODO add insurance data
+        }
+
+        $now = new \DateTime('NOW');
+        foreach($cc->getCampaigns() as $camp)
+        {
+            //TODO campaign text not available in data
+            if( $camp->getEndDate()> $now)
+            {
+                $mine->campaignPoints = $camp->getMaxPoints();
+                $mine->campaignText = $camp->getDescription();
+            }
+        }
+
+
+        $mine->pointsToMoneyConversionRate = 1;
+        foreach($cc->getPointUsages() as $use)
+        {
+            $mine->AddPointsData($use->getStore()->getStoreName(), $use->getYenPerPoint(),1.0);
+
+            //TODO point usage/points to money conversion rate/store where should the date go
+            if($mine->pointsToMoneyConversionRate > $use->getYenPerPoint())
+            {
+                //todo should we return min yen per point conversion?
+                $mine->pointsToMoneyConversionRate = $use->getYenPerPoint();
+            }
+        }
+
+        //TODO how are we handling interest
+        foreach($cc->getInterests() as $int) {
+            if($int->getPaymentType()->getPaymentType()=="ikkai") {
+                $mine->interestShopping = $int->getMinInterest();
+            }
+        }
+
+        //todo points expiry period
+        $mine->pointsExpiryPeriod = 1;
+
+
+
+        #$this->AddPointsData("標準ポイント",0.005,1.0);
+        #$this->AddPointsData("ローソン",0.012,1.0);
+        #$this->AddPointsData("イーオン",0.02,1.0);
+
+        return $mine;
+    }
+
     /**
      * function to create dummy data
      */
@@ -141,6 +236,9 @@ class CreditCard {
         $this->AddPointsData("標準ポイント",0.005,1.0);
         $this->AddPointsData("ローソン",0.012,1.0);
         $this->AddPointsData("イーオン",0.02,1.0);
+        $this->AddPaymentNetwork("Visa");
+        $this->AddPaymentNetwork("Visa");
+        $this->AddPaymentNetwork("Maestro");
 
         return $this;
     }

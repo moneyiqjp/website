@@ -20,12 +20,7 @@ ALTER TABLE credit_card ADD CONSTRAINT affiliate_company_credit_card FOREIGN KEY
 
 ALTER TABLE campaign ADD CONSTRAINT campaign_credit_card FOREIGN KEY campaign_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
--- Reference:  campaign_issuer (table: campaign)
-
-
-ALTER TABLE campaign ADD CONSTRAINT campaign_issuer FOREIGN KEY campaign_issuer (issuer_id)
-    REFERENCES issuer (issuer_id);
--- Reference:  card_features_credit_card (table: card_features)
+-- Reference:  campaign_issuer (table: camdiscountspaign)
 
 
 ALTER TABLE card_features ADD CONSTRAINT card_features_credit_card FOREIGN KEY card_features_credit_card (credit_card_id)
@@ -43,12 +38,12 @@ ALTER TABLE card_description ADD CONSTRAINT creditcard_description FOREIGN KEY c
 -- Reference:  discounts_credit_card (table: discounts)
 
 
-ALTER TABLE discounts ADD CONSTRAINT discounts_credit_card FOREIGN KEY discounts_credit_card (credit_card_id)
+ALTER TABLE discounts ADD CONSTRAINT fk_discounts_credit_card FOREIGN KEY fk_discounts_credit_card_key (credit_card_id)
     REFERENCES credit_card (credit_card_id);
 -- Reference:  discounts_store (table: discounts)
 
 
-ALTER TABLE discounts ADD CONSTRAINT discounts_store FOREIGN KEY discounts_store (store_store_id)
+ALTER TABLE discounts ADD CONSTRAINT fk_discounts_store FOREIGN KEY fk_discounts_store_key (store_id)
     REFERENCES store (store_id);
 -- Reference:  fees_credit_card (table: fees)
 
@@ -68,15 +63,20 @@ ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_cre
 -- Reference:  point_system_store (table: point_system)
 
 
-ALTER TABLE point_system ADD CONSTRAINT point_system_store FOREIGN KEY point_system_store (store_store_id)
+ALTER TABLE point_system ADD CONSTRAINT point_system_store FOREIGN KEY point_system_store (store_id)
     REFERENCES store (store_id);
 -- Reference:  point_usage_credit_card (table: point_usage)
 
 
-ALTER TABLE point_usage ADD CONSTRAINT point_usage_credit_card FOREIGN KEY point_usage_credit_card (credit_card_id)
+	 ALTER TABLE point_usage ADD CONSTRAINT point_usage_credit_card FOREIGN KEY fk_point_usage_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
 -- Reference:  point_usage_store (table: point_usage)
-
-
-ALTER TABLE point_usage ADD CONSTRAINT point_usage_store FOREIGN KEY point_usage_store (store_store_id)
+ALTER TABLE point_usage ADD CONSTRAINT const_point_usage_store FOREIGN KEY fk_point_usage_store (store_id)
     REFERENCES store (store_id);
+
+    
+    ALTER TABLE card_features ADD CONSTRAINT fk_card_feature_type FOREIGN KEY fk_card_feature_type (feature_type_id)
+    REFERENCES card_feature_type (feature_type_id);
+   
+

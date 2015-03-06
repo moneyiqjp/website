@@ -14,7 +14,7 @@ SET sql_notes = 1;
 
 
 CREATE TABLE insurance (
-    insurance_id int    NOT NULL ,
+    insurance_id int NOT NULL  AUTO_INCREMENT,
     credit_card_id int    NOT NULL ,
     shopping int    NULL ,
     domestic_travel int    NULL ,
