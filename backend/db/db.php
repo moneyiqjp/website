@@ -222,7 +222,7 @@ class DB
     function DeleteAffiliatesForCrud($id)
     {
         $item = (new  \AffiliateCompanyQuery())->findPk($id);
-        if(is_null($ccs)) throw new Exception ("Affiliate Company with id ". $id ." not found");
+        if(is_null($item)) throw new Exception ("Affiliate Company with id ". $id ." not found");
         $item->delete();
         return array();
     }
@@ -260,8 +260,10 @@ class DB
     }
     function DeleteIssuerForCrud($id)
     {
-        $item = (new  \AffiliateCompanyQuery())->findPk($id);
-        if(is_null($ccs)) throw new Exception ("Affiliate Company with id ". $id ." not found");
+        $item = (new  \IssuerQuery())->findPk($id);
+        if(is_null($item)) {
+                throw new Exception ("Issuer with id ". $id ." not found");
+        }
         $item->delete();
         return array();
     }

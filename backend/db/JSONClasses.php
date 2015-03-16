@@ -127,7 +127,7 @@ class DBAffiliateCompany
         $mine->Name = $af->getName();
         $mine->Description = $af->getDescription();
         $mine->Website = $af->getWebsite();
-        $mine->SignedUpDate = $af->getSignedUpDate()->format(\DateTime::ISO8601);
+        $mine->SignedUpDate = $af->getSignedUpDate()->format('Y-m-d');
         $mine->UpdateTime = $af->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $af->getUpdateUser();
         return $mine;
@@ -139,7 +139,7 @@ class DBAffiliateCompany
         $mine->Name = $data['Name'];
         $mine->Description = $data['Description'];
         $mine->Website = $data['Website'];
-        $mine->SignedUpDate = $data['SignedUpDate'];
+        $mine->SignedUpDate = new \DateTime($data['SignedUpDate']);
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
         return $mine;

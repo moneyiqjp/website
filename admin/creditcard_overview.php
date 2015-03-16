@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css">
     <link rel="stylesheet" type="text/css" href="media/css/dataTables.editor.css">
+    <link rel="stylesheet" type="text/css" href="media/css/admin_editor.css">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
     <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
@@ -147,6 +148,7 @@
 
             $('#example').dataTable( {
                 dom: "Tfrtip",
+                "pageLength": 25,
                 "ajax": {
                     "url": "http://localhost/backend/display/creditcards",
                     "type": "GET",
@@ -158,7 +160,15 @@
                     { "data": "name" },
                     { "data": "issuer.name", editField: "issuer.id" },
                     { "data": "description" },
-                    { "data": "image_link" },
+                    {
+                        "data": "image_link",
+                        render: function ( data, type, full, meta ) {
+                            if ( type === 'display' ) {
+                                return data.substring(0, 20).concat("...");
+                            }
+                            return data;
+                        }
+                    },
                     {
                         "data": "visa",
                         render: function ( data, type, row ) {
@@ -212,9 +222,12 @@
                     {
                         "data": "affiliate_link",
                         "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' ) {
+                                return decodeURIComponent(data).substring(0, 20).concat("...");
+                            }
                             return decodeURIComponent(data);
                         },
-                        visible: false
+                        visible: true
                     },
                     { "data": "affiliate.name", editField: "affiliate.id" },
                     { "data": "update_time" },
@@ -273,24 +286,24 @@
 </head>
 
 <body class="dt-example">
-
-    <table id="example" class="display" cellspacing="0" width="100%">
+    <div class="table-headline">Credit Cards</div>
+    <table id="example" class="display" cellspacing="0" width="98%">
     <thead>
         <tr>
             <th>id</th>
             <th>name</th>
-            <th>issuer_id</th>
+            <th>issuer</th>
             <th>description</th>
-            <th>image_link</th>
+            <th>image</th>
             <th>visa</th>
             <th>master</th>
             <th>jcb</th>
             <th>amex</th>
             <th>diners</th>
             <th>affiliate_link</th>
-            <th>affiliate_id</th>
-            <th>update_time</th>
-            <th>update_user</th>
+            <th>affiliate</th>
+            <th>update</th>
+            <th>user</th>
         </tr>
     </thead>
 
@@ -298,18 +311,18 @@
         <tr>
             <th>id</th>
             <th>name</th>
-            <th>issuer_id</th>
+            <th>issuer</th>
             <th>description</th>
-            <th>image_link</th>
+            <th>image</th>
             <th>visa</th>
             <th>master</th>
             <th>jcb</th>
             <th>amex</th>
             <th>diners</th>
             <th>affiliate_link</th>
-            <th>affiliate_id</th>
-            <th>update_time</th>
-            <th>update_user</th>
+            <th>affiliate</th>
+            <th>update</th>
+            <th>user</th>
         </tr>
     </tfoot>
     </table>

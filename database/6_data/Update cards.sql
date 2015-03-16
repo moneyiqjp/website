@@ -1,0 +1,33 @@
+Update credit_card set image_link='http://s.eximg.jp/exnews/feed/Dime/Dime_151993_7.jpg' where credit_card_id=1;
+Update credit_card set image_link='http://img.manesto.com/upload/posts/images/FdykMq0rSsPzzA6r_MPVGL.jpg' where credit_card_id=2;
+Update credit_card set image_link='http://cdn-ak.f.st-hatena.com/images/fotolife/a/aiza_man/20140401/20140401080040.jpg' where credit_card_id=3;
+Update credit_card set image_link='http://www.i-creditcard.net/hikaku/img/famima-t.jpg' where credit_card_id=4;
+Update credit_card set image_link='http://ryutsuu.biz/images/2013/03/20130325sevenai.jpg' where credit_card_id=5;
+Update credit_card set image_link='http://クレジットカード審査まとめ.com/wp-content/uploads/2013/11/rakuten.jpg' where credit_card_id=6;
+Update credit_card set image_link='http://cdn-ak.f.st-hatena.com/images/fotolife/a/advantaged/20130812/20130812234625.jpg' where credit_card_id=7;
+Update credit_card set image_link='http://moake.creditcardinfo.info/wp-content/uploads/2013/06/rakuten-premium.jpg' where credit_card_id=8;
+Update credit_card set image_link='http://www.smbc-card.com/mem/company/news/imgs/p_0001029_2.jpg' where credit_card_id=9;
+Update credit_card set image_link='http://oil-stat.com/image/cc/eneos_p.gif' where credit_card_id=10;
+Update credit_card set image_link='http://www8.ts3card.com/affiliated/img/img_eneos_c.jpg' where credit_card_id=11;
+Update credit_card set image_link='http://uplife.info/support/images/eneos_card.jpg' where credit_card_id=12;
+Update credit_card set image_link='http://cardjiten.jp/cardimg/t-card-plus.jpg' where credit_card_id=13;
+Update credit_card set image_link='http://dime.jp/review/files/2014/10/015KAMPO-STYLE-CLUB-CARD2.jpg' where credit_card_id=14;
+Update credit_card set image_link='http://www.smbc-card.com/nyukai/card/responsive/img/cardlist/001_DB_CD_F_rs.jpg' where credit_card_id=15;
+Update credit_card set image_link='http://img1.kakaku.k-img.com/images/credit-card/card/l/008001.jpg' where credit_card_id=16;
+Update credit_card set image_link='http://www.smbc-card.com/nyukai/card/responsive/img/cardlist/004_0_v_ic_smcc_amitie_rs.jpg' where credit_card_id=17;
+Update credit_card set image_link='https://www.smbc-card.com/mem/nyukai/pop/imgs/card_smbc_card_prime01.jpg' where credit_card_id=18;
+Update credit_card set image_link='http://crefan.jp/data/00001696_1.gif' where credit_card_id=19;
+Update credit_card set image_link='http://www.i-creditcard.net/hikaku/img/yamada-ana-mile.jpg' where credit_card_id=20;
+Update credit_card set image_link='https://club.seibugroup.jp/shared/images/icon_card_05.png' where credit_card_id=21;
+Update credit_card set image_link='http://card1192ya.com//img/6563.jpg' where credit_card_id=22;
+Update credit_card set image_link='http://amu-kokura.img.jugem.jp/20111206_1022315.jpg' where credit_card_id=23;
+Update credit_card set image_link='https://www.trafficgate.net/affiliate/image/sample_banner.cgi?mer_code=2670&lnk_id=342' where credit_card_id=24;
+Update credit_card set image_link='http://card-db.com/images/smtcard-lady.jpg' where credit_card_id=25;
+Update credit_card set image_link='http://nullbio.com/dimg/VJA%2077CARD%20%E3%83%AD%E3%83%BC%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9VISA%E3%82%AB%E3%83%BC%E3%83%89.jpg' where credit_card_id=26;
+Update credit_card set image_link='http://www.bossanovapgh.com/wp-content/uploads/2015/02/4e31004ffbc59c619b3ad4b10155c17e-300x190.png' where credit_card_id=27;
+Update credit_card set image_link='http://crecaguide.com/images/2r-11.gif' where credit_card_id=28;
+Update credit_card set image_link='http://moneyiq.jp/images/jal-card-club-a-gold-proper.png' where credit_card_id=29;
+Update credit_card set image_link='http://moneyiq.jp/images/jal-card-suica-proper.png' where credit_card_id=30;
+Update credit_card set image_link='http://moneyiq.jp/images/jal-card-club-a-proper.png' where credit_card_id=31;
+
+
