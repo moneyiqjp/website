@@ -226,8 +226,8 @@ class DBCampaign
         $mine->CampaignId = $item->getCampaignId();
         $mine->Name = $item->getCampaignName();
         $mine->CreditCard =  array(
-            'id' => $item->getCreditCardId(),
-            'name' => $item->getCreditCard()->getName()
+            'Id' => $item->getCreditCardId(),
+            'Name' => $item->getCreditCard()->getName()
         );
         $mine->Description = $item->getDescription();
         $mine->MaxPoints = $item->getMaxPoints();
@@ -244,12 +244,13 @@ class DBCampaign
         $mine = new DBCampaign();
         $mine->CampaignId = $data['CampaignId'];
         $mine->Name = $data['Name'];
+        $tmp = $data['CreditCard'];
         $mine->CreditCard =  array(
-            'id' => $data['Id'],
-            'name' => $data['Name']
+            'Id' => $tmp['Id'],
+            'Name' => $tmp['Name']
         );
 
-        $mine->Description = $data['tDescription'];
+        $mine->Description = $data['Description'];
         $mine->MaxPoints = $data['MaxPoints'];
         $mine->ValueInYen = $data['ValueInYen'];
         $mine->StartDate =  new \DateTime($data['StartDate']);
@@ -269,8 +270,8 @@ class DBCampaign
     {
         $item->setCampaignId($this->CampaignId);
         $item->setCampaignName($this->Name);
-        $cc = $this->CreditCard;
-        $item->setCreditCard((new \CreditCardQuery())->findPk( $cc['id']));
+        $it = $this->CreditCard;
+        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
         $item->setDescription($this->Description);
         $item->setMaxPoints($this->MaxPoints);
         $item->setValueInYen($this->ValueInYen);
@@ -283,4 +284,201 @@ class DBCampaign
 
 }
 
+class DBCartFeature
+{
+    public $FeatureId;
+    public $FeatureType;
+    public $CreditCard;
+    public $Description;
+    public $FeatureCost;
+    public $UpdateTime;
+    public $UpdateUser;
 
+    public function DBCartFeature(){
+        return $this;
+    }
+
+    public static function CREATE_FROM_DB(\CardFeatures $item)
+    {
+        $mine = new DBCartFeature();
+        $mine->FeatureId = $item->getCampaignId();
+        $mine->FeatureType = array(
+            'Id' => $item->getFeatureTypeId(),
+            'Name' => $item->getCardFeatureType()->getCategory() . "-" . $item->getCardFeatureType()->getName()
+        );
+        $mine->CreditCard =  array(
+            'Id' => $item->getCreditCardId(),
+            'Name' => $item->getCreditCard()->getName()
+        );
+        $mine->Description = $item->getDescription();
+        $mine->FeatureCost = $item->getFeatureCost();
+        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $mine->UpdateUser = $item->getUpdateUser();
+        return $mine;
+    }
+
+    public static function CREATE_FROM_ARRAY($data)
+    {
+        $mine = new DBCartFeature();
+        $mine->FeatureId = $data['FeatureId'];
+        $tmp = $data['FeatureType'];
+        $mine->$FeatureType = array(
+            'Id' => $tmp['Id'],
+            'Name' => $tmp['Name']
+        );
+        $tmp = $data['CreditCard'];
+        $mine->CreditCard =  array(
+            'Id' => $tmp['Id'],
+            'Name' => $tmp['Name']
+        );
+
+        $mine->Description = $data['Description'];
+        $mine->FeatureType = $data['FeatureType'];
+        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateUser = $data['UpdateUser'];
+
+        return $mine;
+
+    }
+    public function toDB()
+    {
+        $is = new \CardFeatures();
+        return $this->updateDB($is);
+    }
+    public function updateDB(\CardFeatures &$item)
+    {
+        $item->setFeatureId($this->FeatureId);
+        $it = $this->CreditCard;
+        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
+        $it = $this->FeatureType;
+        $item->setCardFeatureType((new \CardFeatureTypeQuery())->findPk( $it['Id']));
+        $item->setDescription($this->Description);
+        $item->setFeatureCost($this->FeatureCost);
+        $item->setUpdateTime(new \DateTime());
+        $item->setUpdateUser($this->UpdateUser);
+        return $item;
+    }
+}
+
+
+class DBCardFeatureType
+{
+    public $FeatureTypeId;
+    public $Name;
+    public $Description;
+    public $Category;
+    public $UpdateTime;
+    public $UpdateUser;
+
+    public function DBCardFeatureType(){
+        return $this;
+    }
+
+    public static function CREATE_FROM_DB(\CardFeatureType $item)
+    {
+        $mine = new DBCardFeatureType();
+        $mine->FeatureTypeId = $item->getFeatureTypeId();
+        $mine->Name = $item->getName();
+        $mine->Description = $item->getDescription();
+        $mine->Category = $item->getCategory();
+        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $mine->UpdateUser = $item->getUpdateUser();
+        return $mine;
+    }
+
+    public static function CREATE_FROM_ARRAY($data)
+    {
+        $mine = new DBCardFeatureType();
+        $mine->FeatureTypeId = $data['FeatureTypeId'];
+        $mine->Name = $data['Name'];
+        $mine->Description = $data['Description'];
+        $mine->Category = $data['Category'];
+        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateUser = $data['UpdateUser'];
+
+        return $mine;
+
+    }
+
+    public function toDB()
+    {
+        $is = new \CardFeatureType();
+        return $this->updateDB($is);
+    }
+
+    public function updateDB(\CardFeatureType &$item)
+    {
+        $item->setFeatureTypeId($this->FeatureTypeId);
+        $item->setDescription($this->Description);
+        $item->setName($this->Name);
+        $item->setCategory($this->Category);
+        $item->setUpdateTime(new \DateTime());
+        $item->setUpdateUser($this->UpdateUser);
+        return $item;
+    }
+}
+
+class DBCartDescription
+{
+    public $ItemId;
+    public $CreditCard;
+    public $Name;
+    public $Description;
+    public $UpdateTime;
+    public $UpdateUser;
+
+    public function DBCartFeature(){
+        return $this;
+    }
+
+    public static function CREATE_FROM_DB(\CardDescription $item)
+    {
+        $mine = new DBCartDescription();
+        $mine->ItemId = $item->getItemId();
+        $mine->CreditCard =  array(
+            'Id' => $item->getCreditCardId(),
+            'Name' => $item->getCreditCard()->getName()
+        );
+        $mine->Name = $item->getItemName();
+        $mine->Description = $item->getItemDescription();
+        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $mine->UpdateUser = $item->getUpdateUser();
+
+        return $mine;
+    }
+
+    public static function CREATE_FROM_ARRAY($data)
+    {
+        $mine = new DBCartDescription();
+        $mine->ItemId = $data['ItemId'];
+        $tmp = $data['CreditCard'];
+        $mine->CreditCard =  array(
+            'Id' => $tmp['Id'],
+            'Name' => $tmp['Name']
+        );
+
+        $mine->Name = $data['Name'];
+        $mine->Description = $data['Description'];
+        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateUser = $data['UpdateUser'];
+
+        return $mine;
+
+    }
+    public function toDB()
+    {
+        $is = new \CardDescription();
+        return $this->updateDB($is);
+    }
+    public function updateDB(\CardDescription &$item)
+    {
+        $item->setItemId($this->ItemId);
+        $it = $this->CreditCard;
+        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
+        $item->setItemDescription($this->Description);
+        $item->setItemName($this->Name);
+        $item->setUpdateTime(new \DateTime());
+        $item->setUpdateUser($this->UpdateUser);
+        return $item;
+    }
+}
