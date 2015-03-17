@@ -203,4 +203,84 @@ class DBIssuer
     }
 }
 
+class DBCampaign
+{
+    public $CampaignId;
+    public $CreditCard;
+    public $Name;
+    public $Description;
+    public $MaxPoints;
+    public $ValueInYen;
+    public $StartDate;
+    public $EndDate;
+    public $UpdateTime;
+    public $UpdateUser;
+
+    public function DBCampaign(){
+        return $this;
+    }
+
+    public static function CREATE_FROM_DB(\Campaign $item)
+    {
+        $mine = new DBCampaign();
+        $mine->CampaignId = $item->getCampaignId();
+        $mine->Name = $item->getCampaignName();
+        $mine->CreditCard =  array(
+            'id' => $item->getCreditCardId(),
+            'name' => $item->getCreditCard()->getName()
+        );
+        $mine->Description = $item->getDescription();
+        $mine->MaxPoints = $item->getMaxPoints();
+        $mine->ValueInYen = $item->getValueInYen();
+        $mine->StartDate = $item->getStartDate();
+        $mine->EndDate = $item->getEndDate();
+        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $mine->UpdateUser = $item->getUpdateUser();
+        return $mine;
+    }
+
+    public static function CREATE_FROM_ARRAY($data)
+    {
+        $mine = new DBCampaign();
+        $mine->CampaignId = $data['CampaignId'];
+        $mine->Name = $data['Name'];
+        $mine->CreditCard =  array(
+            'id' => $data['Id'],
+            'name' => $data['Name']
+        );
+
+        $mine->Description = $data['tDescription'];
+        $mine->MaxPoints = $data['MaxPoints'];
+        $mine->ValueInYen = $data['ValueInYen'];
+        $mine->StartDate =  new \DateTime($data['StartDate']);
+        $mine->EndDate =  new \DateTime($data['EndDate']);
+        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateUser = $data['UpdateUser'];
+
+        return $mine;
+
+    }
+    public function toDB()
+    {
+        $is = new \Campaign();
+        return $this->updateDB($is);
+    }
+    public function updateDB(\Campaign &$item)
+    {
+        $item->setCampaignId($this->CampaignId);
+        $item->setCampaignName($this->Name);
+        $cc = $this->CreditCard;
+        $item->setCreditCard((new \CreditCardQuery())->findPk( $cc['id']));
+        $item->setDescription($this->Description);
+        $item->setMaxPoints($this->MaxPoints);
+        $item->setValueInYen($this->ValueInYen);
+        $item->setStartDate($this->StartDate);
+        $item->setEndDate($this->EndDate);
+        $item->setUpdateTime(new \DateTime());
+        $item->setUpdateUser($this->UpdateUser);
+        return $item;
+    }
+
+}
+
 
