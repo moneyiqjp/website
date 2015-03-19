@@ -6,7 +6,7 @@
  * Time: 10:03 PM
  */
 
-namespace CreditCard;
+namespace Db\Core;
 
 
 class Feature {
@@ -148,10 +148,12 @@ class CreditCard {
 
         $mine->annualFeeFirstYear = 0.0;
         $mine->annualFeeSubseqYear = 0;
+        /*
         foreach($cc->getFeess() as $fee)
         {
          //TODO add fee data
         }
+        */
 
         foreach($cc->getDiscountss() as $disc)
         {
@@ -165,11 +167,13 @@ class CreditCard {
             }
         }
 
+        /*
         foreach($cc->getInsurances() as $insurance )
         {
            #$insurance->get
             //TODO add insurance data
         }
+        */
 
         $now = new \DateTime('NOW');
         foreach($cc->getCampaigns() as $camp)

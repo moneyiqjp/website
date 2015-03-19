@@ -1,6 +1,6 @@
 <?php
-require 'vendor/autoload.php';
-require 'db/db.php';
+require_once 'vendor/autoload.php';
+require_once 'Db/Core/Db.php';
 /**
  * Created by PhpStorm.
  * User: Ben
@@ -21,7 +21,7 @@ $app->getLog()->setLevel(\Slim\Log::DEBUG);
 $app->get('/allcards', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetAllCards();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -33,7 +33,7 @@ $app->get('/allcards', function () use ($app) {
 $app->get('/allstores', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetAllStores();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -46,7 +46,7 @@ $app->get('/allstores', function () use ($app) {
 $app->get('/allfeatures', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetAllFeatures();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -58,7 +58,7 @@ $app->get('/allfeatures', function () use ($app) {
 $app->get('/display/issuers', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetIssuersForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -70,7 +70,7 @@ $app->get('/display/issuers', function () use ($app) {
 $app->get('/display/affiliates', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetAffiliatesForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -82,8 +82,8 @@ $app->get('/display/affiliates', function () use ($app) {
 $app->post('/display/creditcards', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
-    $cards = $db->GetCreditCardForDisplay();
+    $Db = new \Db\Core\Db();
+    $cards = $Db->GetCreditCardForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $jTableResult = array();
@@ -97,7 +97,7 @@ $app->post('/display/creditcards', function () use ($app) {
 $app->get('/display/creditcards', function () use ($app) {
     // query database for all cards
 
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $cards = $db->GetCreditCardForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -110,7 +110,7 @@ $app->get('/display/creditcards', function () use ($app) {
 });
 
 $app->post('/crud/creditcards/create', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -125,7 +125,7 @@ $app->post('/crud/creditcards/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/creditcards/update', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -142,7 +142,7 @@ $app->put('/crud/creditcards/update', function () use ($app) {
 });
 
 $app->delete('/crud/creditcards/delete', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $request->delete('id');
@@ -160,12 +160,12 @@ $app->delete('/crud/creditcards/delete', function () use ($app) {
 
 /*Issuers*/
 $app->get('/crud/issuer/all', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetIssuerForCrud()));
 });
 $app->delete('/crud/issuer/delete', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -177,7 +177,7 @@ $app->delete('/crud/issuer/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/issuer/create', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -192,7 +192,7 @@ $app->post('/crud/issuer/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/issuer/update', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -211,12 +211,12 @@ $app->put('/crud/issuer/update', function () use ($app) {
 
 /*Affiliates*/
 $app->get('/crud/affiliate/all', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetAffiliatesForCrud()));
 });
 $app->delete('/crud/affiliate/delete', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -230,7 +230,7 @@ $app->delete('/crud/affiliate/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/affiliate/create', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -245,7 +245,7 @@ $app->post('/crud/affiliate/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/affiliate/update', function () use ($app) {
-    $db = new \DB\DB();
+    $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 

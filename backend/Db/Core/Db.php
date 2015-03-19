@@ -5,20 +5,31 @@
  * Date: 2/19/2015
  * Time: 10:02 PM
  */
-namespace DB;
+namespace Db\Core;
 
 // setup the autoloading
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/vendor/autoload.php';
+use Db\Json;
+
+require_once $_SERVER['DOCUMENT_ROOT'] .'/backend/vendor/autoload.php';
 // setup Propel
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/generated-conf/config.php';
-require 'CreditCard.php';
-require 'JSONClasses.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/JSONInterface.php';
 
-use CreditCard\CreditCard;
-use Propel\Runtime\Propel;
-use Propel\Runtime\Connection\ConnectionManagerSingle;
+spl_autoload_register(function($className)
+{
+    if (0 !== strpos($className, __NAMESPACE__)) {//not my namespace
+        return false;
+    }
 
-class DB
+    //$namespace=str_replace("\\","/",__NAMESPACE__);
+    $className=str_replace("\\","/",$className);
+    $class=$_SERVER['DOCUMENT_ROOT'] . '/backend/'.(empty($namespace)?"":$namespace."/")."{$className}.php";
+    include_once($class);
+    return true;
+});
+
+
+class Db
 {
     function db()
     {
@@ -42,7 +53,7 @@ class DB
         $result = array();
         foreach( (new \StoreQuery())->orderByCategory()->find() as $store)
         {
-            array_push($result, JSONStore::fromStoreObject($store));
+            array_push($result, SimpleStore::fromStoreObject($store));
         }
 
         return $result;
@@ -54,7 +65,7 @@ class DB
         $result = array();
         foreach( (new \CardFeatureTypeQuery())->orderByCategory()->find() as $ft)
         {
-            array_push($result, JSONCreditCardFeatureType::fromCardFeatureTypeObject($ft));
+            array_push($result, SimpleCardFeatureType::fromCardFeatureTypeObject($ft));
         }
 
         return $result;
@@ -65,7 +76,7 @@ class DB
         $result = array();
         foreach( (new \IssuerQuery())->orderByIssuerName()->find() as $issuer)
         {
-            array_push($result, JSONObject::CREATE($issuer->getIssuerName(), $issuer->getIssuerId()));
+            array_push($result, Json\JObject::CREATE($issuer->getIssuerName(), $issuer->getIssuerId()));
         }
         return $result;
     }
@@ -75,9 +86,9 @@ class DB
         $result = array();
         foreach( (new \AffiliateCompanyQuery())->orderByName()->find() as $issuer)
         {
-            array_push($result, JSONObject::CREATE($issuer->getName(), $issuer->getAffiliateId()));
+            array_push($result, Json\JObject::CREATE($issuer->getName(), $issuer->getAffiliateId()));
         }
-        array_push($result,JSONObject::CREATE("None",-1));
+        array_push($result,Json\JObject::CREATE("None",-1));
         return $result;
     }
 
@@ -88,7 +99,7 @@ class DB
 
         foreach($q->orderByCreditCardId()->find() as $ccs)
         {
-            array_push($result, JSONCreditCard::CREATE_DB($ccs));
+            array_push($result, Json\JCreditCard::CREATE_DB($ccs));
         }
         return $result;
     }
@@ -158,7 +169,7 @@ class DB
         //TODO implement cache, then refresh
         $q = new  \CreditCardQuery();
         $ccs = $q->findPk($data['credit_card_id']);
-        return JSONCreditCard::CREATE_DB($ccs);
+        return Json\JCreditCard::CREATE_DB($ccs);
     }
 
     function CreateCreditCard($data)
@@ -172,14 +183,14 @@ class DB
         //TODO implement cache, add to cache
         #$q = new  \CreditCardQuery();
         #$ccs = $q->findPk($data['credit_card_id']);
-        return JSONCreditCard::CREATE_DB($ccs);
+        return Json\JCreditCard::CREATE_DB($ccs);
     }
 
     function DeleteCreditCard($id)
     {
         $ccs = (new  \CreditCardQuery())->findPk($id);
 
-        if(is_null($ccs)) throw new Exception ("Credit card with id ". $id ." not found");
+        if(is_null($ccs)) throw new \Exception ("Credit card with id ". $id ." not found");
         $ccs->delete();
         return array();
     }
@@ -188,13 +199,13 @@ class DB
     {
         $result = array();
         foreach ((new \AffiliateCompanyQuery())->orderByName()->find() as $af) {
-            array_push($result, DBAffiliateCompany::CREATE_FROM_DB($af));
+            array_push($result, Json\JAffiliateCompany::CREATE_FROM_DB($af));
         }
         return $result;
     }
     function UpdateAffiliatesForCrud($data)
     {
-        $parsed = DBAffiliateCompany::CREATE_FROM_ARRAY($data);
+        $parsed = Json\JAffiliateCompany::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse AffiliateCompany update request");
 
         $item = (new  \AffiliateCompanyQuery())->findPk($parsed->AffiliateId);
@@ -205,11 +216,11 @@ class DB
 
         //TODO implement cache, then refresh
         $item = (new  \AffiliateCompanyQuery())->findPk($parsed->AffiliateId);
-        return DBAffiliateCompany::CREATE_FROM_DB($item);
+        return Json\JAffiliateCompany::CREATE_FROM_DB($item);
     }
     function CreateAffiliatesForCrud($data)
     {
-        $parsed = DBAffiliateCompany::CREATE_FROM_ARRAY($data);
+        $parsed = Json\JAffiliateCompany::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse AffiliateCompany update request");
 
         $item = $parsed->toDB();
@@ -217,12 +228,12 @@ class DB
         $item->save();
 
         //TODO implement cache, add to cache
-        return DBAffiliateCompany::CREATE_FROM_DB($item);
+        return Json\JAffiliateCompany::CREATE_FROM_DB($item);
     }
     function DeleteAffiliatesForCrud($id)
     {
         $item = (new  \AffiliateCompanyQuery())->findPk($id);
-        if(is_null($item)) throw new Exception ("Affiliate Company with id ". $id ." not found");
+        if(is_null($item)) throw new \Exception ("Affiliate Company with id ". $id ." not found");
         $item->delete();
         return array();
     }
@@ -231,13 +242,13 @@ class DB
     {
         $result = array();
         foreach ((new \IssuerQuery())->orderByIssuerName()->find() as $af) {
-            array_push($result, DBIssuer::CREATE_FROM_DB($af));
+            array_push($result, Json\JIssuer::CREATE_FROM_DB($af));
         }
         return $result;
     }
     function UpdateIssuerForCrud($data)
     {
-        $parsed = DBIssuer::CREATE_FROM_ARRAY($data);
+        $parsed = Json\JIssuer::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse issuer update request");
 
         $item = (new  \IssuerQuery())->findPk($parsed->IssuerId);
@@ -248,21 +259,21 @@ class DB
 
         //TODO implement cache, then refresh
         $item = (new  \IssuerQuery())->findPk($parsed->IssuerId);
-        return DBIssuer::CREATE_FROM_DB($item);
+        return Json\JIssuer::CREATE_FROM_DB($item);
     }
     function CreateIssuerForCrud($data)
     {
-        $item = DBIssuer::CREATE_FROM_ARRAY($data)->toDB();
+        $item = Json\JIssuer::CREATE_FROM_ARRAY($data)->toDB();
         $item->save();
 
         //TODO implement cache, add to cache
-        return DBIssuer::CREATE_FROM_DB($item);
+        return Json\JIssuer::CREATE_FROM_DB($item);
     }
     function DeleteIssuerForCrud($id)
     {
         $item = (new  \IssuerQuery())->findPk($id);
         if(is_null($item)) {
-                throw new Exception ("Issuer with id ". $id ." not found");
+                throw new \Exception ("Issuer with id ". $id ." not found");
         }
         $item->delete();
         return array();
