@@ -50,14 +50,17 @@ ALTER TABLE discounts ADD CONSTRAINT fk_discounts_store FOREIGN KEY fk_discounts
 
 ALTER TABLE fees ADD CONSTRAINT fees_credit_card FOREIGN KEY fees_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
 -- Reference:  insurance_credit_card (table: insurance)
-
-
 ALTER TABLE insurance ADD CONSTRAINT insurance_credit_card FOREIGN KEY insurance_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
+-- Reference:  insurance_insurance_type (table: insurance)
+ALTER TABLE insurance ADD CONSTRAINT insurance_insurance_type FOREIGN KEY insurance_insurance_type_key (insurance_type_id)
+    REFERENCES insurance_type (insurance_type_id);
+
+    
 -- Reference:  issuer_credit_card (table: credit_card)
-
-
 ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_credit_card (issuer_id)
     REFERENCES issuer (issuer_id);
 -- Reference:  point_system_store (table: point_system)
