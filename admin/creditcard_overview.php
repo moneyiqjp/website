@@ -249,32 +249,32 @@
                     $('input.editor-master', row).prop( 'checked', data.master == 1 );
                     $('input.editor-visa', row).prop( 'checked', data.visa == 1 );
                 }
-            } );
-            $('#example').on( 'change', 'input.editor-visa', function () {
+            } )
+            .on( 'change', 'input.editor-visa', function () {
                 editor
                     .edit( $(this).closest('tr'), false )
                     .set( 'visa', $(this).prop( 'checked' ) ? 1 : 0 )
                     .submit();
-            } );
-            $('#example').on( 'change', 'input.editor-master', function () {
+            } )
+            .on( 'change', 'input.editor-master', function () {
                 editor
                     .edit( $(this).closest('tr'), false )
                     .set( 'master', $(this).prop( 'checked' ) ? 1 : 0 )
                     .submit();
-            } );
-            $('#example').on( 'change', 'input.editor-jcb', function () {
+            } )
+            .on( 'change', 'input.editor-jcb', function () {
                 editor
                     .edit( $(this).closest('tr'), false )
                     .set( 'jcb', $(this).prop( 'checked' ) ? 1 : 0 )
                     .submit();
-            } );
-            $('#example').on( 'change', 'input.editor-amex', function () {
+            } )
+            .on( 'change', 'input.editor-amex', function () {
                 editor
                     .edit( $(this).closest('tr'), false )
                     .set( 'amex', $(this).prop( 'checked' ) ? 1 : 0 )
                     .submit();
-            } );
-            $('#example').on( 'change', 'input.editor-diners', function () {
+            } )
+            .on( 'change', 'input.editor-diners', function () {
                 editor
                     .edit( $(this).closest('tr'), false )
                     .set( 'diners', $(this).prop( 'checked' ) ? 1 : 0 )
@@ -286,7 +286,9 @@
 </head>
 
 <body class="dt-example">
-    <div class="table-headline">Credit Cards</div>
+    <div class="table-headline"><a name="creditcards">
+            Credit Cards
+    </a></div>
     <table id="example" class="display" cellspacing="0" width="98%">
     <thead>
         <tr>

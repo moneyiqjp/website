@@ -63,7 +63,9 @@ class JDescription
     }
     public function updateDB(\CardDescription &$item)
     {
-        $item->setItemId($this->ItemId);
+        if(!is_null($this->ItemId) && $this->ItemId>0) {
+            $item->setItemId($this->ItemId);
+        }
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
         $item->setItemDescription($this->Description);

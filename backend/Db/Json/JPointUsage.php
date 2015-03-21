@@ -69,7 +69,9 @@ class JPointUsage {
     }
     public function updateDB(\PointUsage&$item)
     {
-        $item->setPointUsageId($this->PointUsageId);
+        if(!is_null($this->PointUsageId) && $this->PointUsageId>0) {
+            $item->setPointUsageId($this->PointUsageId);
+        }
         $item->setYenPerPoint($this->YenPerPoint);
 
         $it = $this->CreditCard;

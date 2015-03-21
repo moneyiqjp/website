@@ -72,7 +72,9 @@ class Jinterest {
     }
     public function updateDB(\Interest &$item)
     {
-        $item->setInterestId($this->InterestId);
+        if(!is_null($this->InterestId) && $this->InterestId>0) {
+            $item->setInterestId($this->InterestId);
+        }
         $item->setMinInterest($this->MinInterest);
         $item->setMaxInterest($this->MaxInterest);
 

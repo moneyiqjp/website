@@ -44,6 +44,9 @@ class JIssuer implements JSONInterface
 
     public function updateDB(\Issuer &$is)
     {
+        if(!is_null($this->IssuerId) && $this->IssuerId>0) {
+            $is->setIssuerId($this->IssuerId);
+        }
         $is->setIssuerName($this->IssuerName);
         $is->setUpdateTime(new \DateTime());
         $is->setUpdateUser($this->UpdateUser);

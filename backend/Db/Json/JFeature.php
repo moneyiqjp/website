@@ -71,7 +71,9 @@ class JFeature {
     }
     public function updateDB(\CardFeatures &$item)
     {
-        $item->setFeatureId($this->FeatureId);
+        if(!is_null($this->FeatureId) && $this->FeatureId>0) {
+            $item->setFeatureId($this->FeatureId);
+        }
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
         $it = $this->FeatureType;

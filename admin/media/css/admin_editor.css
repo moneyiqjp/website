@@ -6,7 +6,31 @@
     background-color: #000000;
     width: 100%;
     height: 25px;
-    margin-bottom: 25px;
     text-align: center;
     align-self: center;
+}
+
+a.subheader:link{
+    width:25%;
+    font-size: smaller;
+    text-align: center;
+    float: left;
+    color: #000000;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    vertical-align: top;
+    margin-bottom: 25px;
+    text-decoration: none;
+}
+
+
+a.subheader:hover{
+    text-decoration: underline;
+    width:25%;
+    font-size: smaller;
+    text-align: center;
+    float: left;
+    color: #000000;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    vertical-align: top;
+    margin-bottom: 25px;
 }

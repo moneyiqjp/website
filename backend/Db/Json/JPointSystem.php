@@ -25,7 +25,7 @@ class JPointSystem {
 
     public static function CREATE_FROM_DB(\PointSystem $item)
     {
-        $mine = new JPointUsage();
+        $mine = new JPointSystem();
         $mine->PointSystemId = $item->getPointSystemId();
         $mine->CreditCard =  array(
             'Id' => $item->getCreditCardId(),
@@ -71,7 +71,9 @@ class JPointSystem {
     }
     public function updateDB(\PointSystem&$item)
     {
-        $item->setPointSystemId($this->PointSystemId);
+        if(!is_null($this->PointSystemId) && $this->PointSystemId>0) {
+            $item->setPointSystemId($this->PointSystemId);
+        }
         $item->setPointsPerYen($this->PointsPerYen);
 
         $it = $this->CreditCard;

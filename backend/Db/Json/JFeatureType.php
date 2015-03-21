@@ -56,7 +56,9 @@ class JFeatureType
 
     public function updateDB(\CardFeatureType &$item)
     {
-        $item->setFeatureTypeId($this->FeatureTypeId);
+        if(!is_null($this->FeatureTypeId) && $this->FeatureTypeId>0) {
+            $item->setFeatureTypeId($this->FeatureTypeId);
+        }
         $item->setDescription($this->Description);
         $item->setName($this->Name);
         $item->setCategory($this->Category);

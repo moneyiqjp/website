@@ -54,19 +54,26 @@ class JDiscount {
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JDiscount();
-        $mine->ItemId = $data['ItemId'];
+        $mine->DiscountId = $data['DiscountId'];
+
+        $mine->Percentage = $data['Percentage'];
+        $mine->StartDate =  new \DateTime($data['StartDate']);
+        $mine->EndDate =  new \DateTime($data['EndDate']);
+        $mine->Multiple = $data['Multiple'];
+        $mine->Conditions = $data['Conditions'];
         $tmp = $data['CreditCard'];
         $mine->CreditCard =  array(
             'Id' => $tmp['Id'],
             'Name' => $tmp['Name']
         );
-
-        $mine->Name = $data['Name'];
         $mine->Description = $data['Description'];
-        $mine->StartDate =  new \DateTime($data['StartDate']);
-        $mine->EndDate =  new \DateTime($data['EndDate']);
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
+        $tmp = $data['Store'];
+        $mine->Store =  array(
+            'Id' => $tmp['Id'],
+            'Name' => $tmp['Name']
+        );
 
         return $mine;
 
@@ -78,7 +85,9 @@ class JDiscount {
     }
     public function updateDB(\Discounts &$item)
     {
-        $item->setDiscountId($this->DiscountId);
+        if(!is_null($this->DiscountId) && $this->DiscountId>0) {
+            $item->setDiscountId($this->DiscountId);
+        }
         $item->setPercentage($this->Percentage);
         $item->setStartDate($this->StartDate);
         $item->setEndDate($this->EndDate);

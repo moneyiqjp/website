@@ -52,7 +52,9 @@ class JPaymentType {
 
     public function updateDB(\PaymentType &$item)
     {
-        $item->setPaymentTypeId($this->PaymentTypeId);
+        if(!is_null($this->PaymentTypeId) && $this->PaymentTypeId>0) {
+            $item->setPaymentTypeId($this->PaymentTypeId);
+        }
         $item->setPaymentType($this->PaymentType);
         $item->setPaymentDescription($this->PaymentDescription);
         $item->setUpdateTime(new \DateTime());

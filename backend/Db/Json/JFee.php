@@ -74,7 +74,9 @@ class JFee {
 
     public function updateDB(\Fees &$item)
     {
-        $item->setFeeId($this->FeeId);
+        if(!is_null($this->FeeId) && $this->FeeId>0) {
+            $item->setFeeId($this->FeeId);
+        }
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
         $item->setFeeType($this->FeeType);

@@ -74,7 +74,9 @@ class JCampaign {
 
     public function updateDB(\Campaign &$item)
     {
-        $item->setCampaignId($this->CampaignId);
+        if(!is_null($this->CampaignId) && $this->CampaignId>0) {
+            $item->setCampaignId($this->CampaignId);
+        }
         $item->setCampaignName($this->Name);
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));

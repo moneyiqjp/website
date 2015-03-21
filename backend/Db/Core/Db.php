@@ -239,6 +239,7 @@ class Db
         return array();
     }
 
+    /* Issuer */
     function GetIssuerForCrud()
     {
         $result = array();
@@ -279,5 +280,94 @@ class Db
         $item->delete();
         return array();
     }
+
+    /* InsuranceType */
+    function GetInsuranceTypeForCrud()
+    {
+        $result = array();
+        foreach ((new \InsuranceTypeQuery())->orderByTypeName()->find() as $item) {
+            array_push($result, Json\JInsuranceType::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function UpdateInsuranceTypeForCrud($data)
+    {
+        $parsed = Json\JInsuranceType::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse insurance update request");
+
+        $item = (new  \InsuranceTypeQuery())->findPk($parsed->InsuranceTypeId);
+        if(is_null($item)) throw new \Exception ("insurance with id ". $parsed->InsuranceTypeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \InsuranceTypeQuery())->findPk($parsed->InsuranceTypeId);
+        return Json\JInsuranceType::CREATE_FROM_DB($item);
+    }
+    function CreateInsuranceTypeForCrud($data)
+    {
+        $item = Json\JInsuranceType::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JInsuranceType::CREATE_FROM_DB($item);
+    }
+    function DeleteInsuranceTypeForCrud($id)
+    {
+        $item = (new  \InsuranceTypeQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("insurance with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* FeatureType */
+    function GetFeatureTypeForCrud()
+    {
+        $result = array();
+        foreach ((new \CardFeatureTypeQuery())->orderByName()->find() as $item) {
+            array_push($result, Json\JFeatureType::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateFeatureTypeForCrud($data)
+    {
+        $parsed = Json\JFeatureType::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse feature type update request");
+
+        $item = (new  \CardFeatureTypeQuery())->findPk($parsed->FeatureTypeId);
+        if(is_null($item)) throw new \Exception ("feature type with id ". $parsed->FeatureTypeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \CardFeatureTypeQuery())->findPk($parsed->FeatureTypeId);
+        return Json\JFeatureType::CREATE_FROM_DB($item);
+    }
+
+    function CreateFeatureTypeForCrud($data)
+    {
+        $item = Json\JFeatureType::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JFeatureType::CREATE_FROM_DB($item);
+    }
+
+    function DeleteFeatureTypeForCrud($id)
+    {
+        $item = (new  \CardFeatureTypeQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("feature type with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
 
 }

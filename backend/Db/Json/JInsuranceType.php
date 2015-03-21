@@ -53,13 +53,15 @@ class JInsuranceType {
 
     public function toDB()
     {
-        $is = new \Fees();
+        $is = new \InsuranceType();
         return $this->updateDB($is);
     }
 
     public function updateDB(\InsuranceType &$item)
     {
-        $item->setInsuranceTypeId($this->InsuranceTypeId);
+        if(!is_null($this->InsuranceTypeId) && $this->InsuranceTypeId>0) {
+            $item->setInsuranceTypeId($this->InsuranceTypeId);
+        }
         $item->setTypeName($this->TypeName);
         $item->setSubtypeName($this->SubtypeName);
         $item->setDescription($this->Description);
