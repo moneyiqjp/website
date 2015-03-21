@@ -1,6 +1,5 @@
 bin/FTPSync/*.res
 *.log
-backend/generated-classes
 /frontend/nbproject/private/
 frontend/css/jquery-ui-1.11.2.custom/images/Thumbs.db
 
