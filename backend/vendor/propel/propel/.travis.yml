@@ -1,0 +1,38 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+
+env:
+  - DB=agnostic                                   #only database agnostic tests
+  - DB=mysql DB_USER=root                         #only database tests against mysql
+  - DB=pgsql DB_USER=postgres DB_NAME=postgres    #only database tests against postgresql
+  - DB=sqlite
+
+before_script:
+  # Composer
+  - wget http://getcomposer.org/composer.phar
+  - php composer.phar install --prefer-source
+
+  - if [ "$DB" != 'agnostic' ]; then ./tests/bin/setup.$DB.sh; fi   # setup only for integration tests
+
+script:
+  - ./tests/bin/phpunit.$DB.sh;
+
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+    - php: 5.6
+  exclude:
+    - php: hhvm
+      env: DB=pgsql DB_USER=postgres DB_NAME=postgres  # driver currently unsupported by HHVM
+    - php: hhvm
+      env: DB=sqlite # some issues at the moment
+
+#after_script:
+#  - php vendor/bin/coveralls -v
