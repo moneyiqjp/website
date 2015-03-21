@@ -3,8 +3,10 @@ SET NAMES utf8;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-delete from point_usage where store_id>0;
+delete from point_usage where point_usage_id>0;
 ALTER TABLE point_usage AUTO_INCREMENT = 1;
+delete from point_system where point_system_id>0;
+ALTER TABLE point_system AUTO_INCREMENT = 1;
 
 insert into point_usage (store_id, yen_per_point,credit_card_id,update_time,update_user) values
 (4, 0.015, 5, NOW(), 'ben'),
@@ -155,5 +157,14 @@ insert into point_usage (store_id, yen_per_point,credit_card_id,update_time,upda
 (60, 0.01, 4, NOW(), 'ben'),
 (60, 0.01, 13, NOW(), 'ben'),
 (62, 0.015, 13, NOW(), 'ben');
+
+
+insert into point_system (point_system_name, points_per_yen,credit_card_id,store_id, update_time, update_user)
+select 'store', yen_per_point, credit_card_id,store_id, update_time, update_user from point_usage;
+
+update point_usage set yen_per_point = 1.0 where yen_per_point <> 1.0;
+
+select * from point_system;
+select * from point_usage;
 
 SET FOREIGN_KEY_CHECKS = 1;

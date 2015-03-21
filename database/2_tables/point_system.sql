@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `point_system_history`;
 SET sql_notes = 1;
 
 CREATE TABLE point_system (
-    point_system_id int    NOT NULL ,
+    point_system_id int    NOT NULL AUTO_INCREMENT,
     point_system_name varchar(255)    NOT NULL ,
     points_per_yen double(15,15)    NOT NULL ,
     credit_card_id int    NOT NULL ,

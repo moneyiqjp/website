@@ -31,9 +31,10 @@ spl_autoload_register(function($className)
 
 class Db
 {
+    //TODO convert to static
     function db()
     {
-
+        return $this;
     }
 
     function GetAllCards()

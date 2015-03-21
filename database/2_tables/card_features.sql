@@ -28,6 +28,7 @@ CREATE TABLE card_features_history (
     feature_type_id int NOT NULL,
     credit_card_id int    NOT NULL ,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+    feature_cost int    NULL ,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
     update_user varchar(100),

@@ -38,7 +38,6 @@ class JInsuranceType {
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        //Todo finish implementing class
         $mine = new JInsuranceType();
         $mine->InsuranceTypeId = $data['InsuranceTypeId'];
         $mine->TypeName = $data['TypeName'];

@@ -1,13 +1,16 @@
-﻿#script to load files into mysql
+#script to load files into mysql
 param (
     [string]$server = "localhost",
     [string]$user = "root",
     [string]$db = "moneyiq",
-    [string]$password =  $(throw "-password is required.")
-#    ,[string]$file = $(throw "-file is required.")
+    [string]$password =  $(throw "-password is required."),
+    [string]$dirs = "ALL"
 )
 
 $folders = '2_tables', '3_constraints', '4_triggers', '5_views', '6_data'
+if ($dirs -ne "ALL"){
+    $folders = $dirs
+}
 $path_base = resolve-path "./../database/"
 $mysql_dll = resolve-path "MySql.Data.dll"
 write-host $mysql_dll
@@ -30,7 +33,7 @@ foreach($folder in $folders)
         write-host ($i+1)"/"$files.Count" "$file
         $cm = New-Object -TypeName MySql.Data.MySqlClient.MySqlCommand
         $cm.Connection = $cn
-        $sql = [io.file]::ReadAllText("$path_base$folder\$file") 
+        $sql = [io.file]::ReadAllText("$path_base$folder\$file")
         $cm.CommandText = $sql
         try{
             if($cm.ExecuteNonQuery())
