@@ -367,6 +367,59 @@ $app->put('/crud/feature/type/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 
+
+/*Feature*/
+$app->get('/crud/feature/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetFeatureForCrud()));
+});
+$app->delete('/crud/feature/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting feature type card " . $id);
+        $jTableResult['row'] = $db->DeleteFeatureForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+
+$app->post('/crud/feature/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateFeatureForCrud($request->put('data'));
+    } catch(Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+$app->put('/crud/feature/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateFeatureForCrud($request->put('data'));
+    } catch(Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
 //Run the Slim application:
 $app->run();
 /**/

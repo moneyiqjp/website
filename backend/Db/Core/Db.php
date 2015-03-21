@@ -368,6 +368,52 @@ class Db
         return array();
     }
 
+    /* Features */
+    function GetFeatureForCrud()
+    {
+        $result = array();
+        foreach ((new \CardFeaturesQuery())->orderByFeatureId()->find() as $item) {
+            array_push($result, Json\JFeature::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateFeatureForCrud($data)
+    {
+        $parsed = Json\JFeature::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse feature type update request");
+
+        $item = (new  \CardFeaturesQuery())->findPk($parsed->FeatureId);
+        if(is_null($item)) throw new \Exception ("feature type with id ". $parsed->FeatureId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \CardFeaturesQuery())->findPk($parsed->FeatureId);
+        return Json\JFeature::CREATE_FROM_DB($item);
+    }
+
+    function CreateFeatureForCrud($data)
+    {
+        $item = Json\JFeature::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JFeature::CREATE_FROM_DB($item);
+    }
+
+    function DeleteFeatureForCrud($id)
+    {
+        $item = (new  \CardFeaturesQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("feature type with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
 
 
 }
