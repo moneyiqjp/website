@@ -239,6 +239,19 @@ class Db
         return array();
     }
 
+    /*  */
+    function GetStoresForDisplay()
+    {
+        $result = array();
+        foreach ((new \StoreQuery())->orderByCategory()->orderByStoreName()->find() as $af) {
+            array_push($result, Json\JStore::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+
+
+
+
     /* Issuer */
     function GetIssuerForCrud()
     {
@@ -383,8 +396,10 @@ class Db
         $parsed = Json\JFeature::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse feature type update request");
 
+        if(!is_null($parsed->Active) && !$parsed->Active) return $parsed;
+
         $item = (new  \CardFeaturesQuery())->findPk($parsed->FeatureId);
-        if(is_null($item)) throw new \Exception ("feature type with id ". $parsed->FeatureId ." not found");
+        if(is_null($item)) throw new \Exception ("feature with id ". $parsed->FeatureId ." not found");
 
         $item = $parsed->updateDB($item);
         $item->save();
@@ -396,15 +411,18 @@ class Db
 
     function CreateFeatureForCrud($data)
     {
-        $item = Json\JFeature::CREATE_FROM_ARRAY($data)->toDB();
-        $item->save();
+        $item = Json\JFeature::CREATE_FROM_ARRAY($data);
+        if(!is_null($item->Active) && !$item->Active) return $item;
+        $db=$item->toDB();
+        $db->save();
 
         //TODO implement cache, add to cache
-        return Json\JFeature::CREATE_FROM_DB($item);
+        return Json\JFeature::CREATE_FROM_DB($db);
     }
 
     function DeleteFeatureForCrud($id)
     {
+        if(is_null($id)||$id<=0) return array();
         $item = (new  \CardFeaturesQuery())->findPk($id);
         if(is_null($item)) {
             throw new \Exception ("feature type with id ". $id ." not found");
@@ -413,7 +431,252 @@ class Db
         return array();
     }
 
+    /* added functionality for per credit card details */
+    function GetFeaturesForCard($id) {
+        $cardFeatures = array();
+        $creditCard = new \CreditCard();
+        foreach ((new \CardFeaturesQuery())->findByCreditCardId($id) as $item) {
+            $creditCard = $item->getCreditCard();
+            $stuff =Json\JFeature::CREATE_FROM_DB($item);
+            $stuff->Active = true;
+            array_push($cardFeatures, $stuff);
+        }
+
+        $allFeatures = array(); $ids = -1;
+        foreach ((new \CardFeatureTypeQuery())->orderByFeatureTypeId()->find() as $item) {
+            $stuff = Json\JFeature::CREATE_FROM_FEATURE_TYPE_AND_CC($item,$creditCard);
+            $stuff->Active = false;
+            $stuff->FeatureId = $ids--;
+            //$stuff->FeatureCost = 0;
+            array_push($allFeatures, $stuff);
+        }
+
+        $diff = array();
+        foreach($allFeatures as $type) {
+            $existing = false;
+            foreach($cardFeatures as $exists)
+            {
+                if($exists->matchesOnType($type)) {
+                    $existing =true;
+                }
+            }
+            if(!$existing) {
+                array_push($diff, $type);
+            }
+        }
+
+        return array_merge($cardFeatures,$diff);
+    }
+
+    function UpdateFeatureForCard($data) {
+        if(!array_key_exists('FeatureId',$data)) throw new \Exception('FeatureId not defined');
+        if($data['FeatureId'] < 0) {
+            return $this->CreateFeatureForCard($data);
+        }
+
+        if(array_key_exists('Active',$data) && !is_null($data['Active']) && !$data['Active']){
+            if(!array_key_exists('FeatureId',$data)) throw new \Exception("Required field FeatureId not found for deleting row");
+
+            return $this->DeleteFeatureForCard($data['FeatureId']);
+        }
+
+        return $this->UpdateFeatureForCrud($data);
+    }
+
+    function CreateFeatureForCard($data) {
+        return $this->CreateFeatureForCrud($data);
+    }
+
+    function DeleteFeatureForCard($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \CardFeaturesQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("feature type with id ". $id ." not found");
+        }
+
+        $stuff = Json\JFeature::CREATE_FROM_FEATURE_TYPE_AND_CC($item->getCardFeatureType(),$item->getCreditCard());
+        $stuff->Active = false;
+        $stuff->FeatureId = (-1) * mt_rand(10000,100000);
+        $stuff->FeatureCost = 0;
+
+        $item->delete();
+        return $stuff;
+    }
+
+    /* Descriptions */
+    function GetDescriptionsForCard($id)
+    {
+        $result = array();
+        foreach ((new \CardDescriptionQuery())->orderByItemId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JDescription::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function GetDescriptionsForCrud()
+    {
+        $result = array();
+        foreach ((new \CardDescriptionQuery())->orderByItemId()->find() as $item) {
+            array_push($result, Json\JDescription::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateDescriptionForCrud($data)
+    {
+        $parsed = Json\JDescription::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Description type update request");
+
+        $item = (new  \CardDescriptionQuery())->findPk($parsed->ItemId);
+        if(is_null($item)) throw new \Exception ("Description with id ". $parsed->ItemId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \CardDescriptionQuery())->findPk($parsed->ItemId);
+        return Json\JDescription::CREATE_FROM_DB($item);
+    }
+
+    function CreateDescriptionForCrud($data)
+    {
+        $item = Json\JDescription::CREATE_FROM_ARRAY($data);
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JDescription::CREATE_FROM_DB($db);
+    }
+
+    function DeleteDescriptionForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \CardDescriptionQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Description type with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    
+
+    /* Campaigns */
+    function GetCampaignForCrud()
+    {
+        $result = array();
+        foreach ((new \CampaignQuery())->orderByCampaignId()->find() as $item) {
+            array_push($result, Json\JCampaign::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function GetCampaignForCard($id)
+    {
+        $result = array();
+        foreach ((new \CampaignQuery())->orderByCampaignId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JCampaign::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateCampaignForCrud($data)
+    {
+        $parsed = Json\JCampaign::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Campaign type update request");
+
+        $item = (new  \CampaignQuery())->findPk($parsed->CampaignId);
+        if(is_null($item)) throw new \Exception ("Campaign id ". $parsed->CampaignId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \CampaignQuery())->findPk($parsed->CampaignId);
+        return Json\JCampaign::CREATE_FROM_DB($item);
+    }
+
+    function CreateCampaignForCrud($data)
+    {
+        $item = Json\JCampaign::CREATE_FROM_ARRAY($data);
+
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JCampaign::CREATE_FROM_DB($db);
+    }
+
+    function DeleteCampaignForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \CampaignQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Campaign with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
 
 
 
+    /* Discounts */
+    function GetDiscountForCrud()
+    {
+        $result = array();
+        foreach ((new \DiscountsQuery())->orderByDiscountId()->find() as $item) {
+            array_push($result, Json\JDiscount::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function GetDiscountForCard($id)
+    {
+        $result = array();
+        foreach ((new \DiscountsQuery())->orderByDiscountId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JDiscount::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateDiscountForCrud($data)
+    {
+        $parsed = Json\JDiscount::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Discount type update request");
+
+        $item = (new  \DiscountsQuery())->findPk($parsed->DiscountId);
+        if(is_null($item)) throw new \Exception ("Discount id ". $parsed->DiscountId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \DiscountsQuery())->findPk($parsed->DiscountId);
+        return Json\JDiscount::CREATE_FROM_DB($item);
+    }
+
+    function CreateDiscountForCrud($data)
+    {
+        $item = Json\JDiscount::CREATE_FROM_ARRAY($data);
+
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JDiscount::CREATE_FROM_DB($db);
+    }
+
+    function DeleteDiscountForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \DiscountsQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Discount with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+    
+    
 }

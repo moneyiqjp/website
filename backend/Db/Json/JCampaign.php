@@ -37,9 +37,13 @@ class JCampaign {
         $mine->Description = $item->getDescription();
         $mine->MaxPoints = $item->getMaxPoints();
         $mine->ValueInYen = $item->getValueInYen();
-        $mine->StartDate = $item->getStartDate();
-        $mine->EndDate = $item->getEndDate();
-        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        if(!is_null($item->getStartDate())) {
+            $mine->StartDate = $item->getStartDate()->format("Y-m-d");
+        }
+        if(!is_null($item->getEndDate())) {
+            $mine->EndDate = $item->getEndDate()->format("Y-m-d");
+        }
+        $mine->UpdateTime = $item->getUpdateTime()->format("Y-m-d");
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
     }
@@ -50,18 +54,16 @@ class JCampaign {
         $mine->CampaignId = $data['CampaignId'];
         $mine->Name = $data['Name'];
         $tmp = $data['CreditCard'];
-        $mine->CreditCard =  array(
-            'Id' => $tmp['Id'],
-            'Name' => $tmp['Name']
-        );
+        $mine->CreditCard =  array('Id' => $tmp['Id']);
+        if(array_key_exists('Name',$tmp)) $mine->CreditCard['Name'] = $tmp['Name'];
 
         $mine->Description = $data['Description'];
         $mine->MaxPoints = $data['MaxPoints'];
         $mine->ValueInYen = $data['ValueInYen'];
-        $mine->StartDate =  new \DateTime($data['StartDate']);
-        $mine->EndDate =  new \DateTime($data['EndDate']);
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
+        if(array_key_exists('StartDate',$data)) $mine->StartDate =  new \DateTime($data['StartDate']);
+        if(array_key_exists('EndDate',$data)) $mine->EndDate =  new \DateTime($data['EndDate']);
+        $mine->UpdateTime = new \DateTime();
+        if(array_key_exists('UpdateUser',$data)) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
 
@@ -83,8 +85,8 @@ class JCampaign {
         $item->setDescription($this->Description);
         $item->setMaxPoints($this->MaxPoints);
         $item->setValueInYen($this->ValueInYen);
-        $item->setStartDate($this->StartDate);
-        $item->setEndDate($this->EndDate);
+        if(!is_null($this->StartDate)) $item->setStartDate($this->StartDate);
+        if(!is_null($this->EndDate)) $item->setEndDate($this->EndDate);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

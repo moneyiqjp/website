@@ -34,3 +34,32 @@ a.subheader:hover{
     vertical-align: top;
     margin-bottom: 25px;
 }
+
+/*
+ * Control feature layout
+ */
+.dataTables_wrapper#featureTable_wrapper{
+    position: relative;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
+    max-width: 300px;
+}
+/*
+ * Control feature layout
+ */
+.dataTables_wrapper#descriptionTable_wrapper{
+    position: relative;
+    float: left;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
+    max-width: 500px;
+}
+
+div.errorMessage {
+    background-color: red;
+    color: white;
+    font-weight: bolder;
+    font-size: large;
+}

@@ -31,21 +31,28 @@ class JDiscount {
     {
         $mine = new JDiscount();
         $mine->DiscountId = $item->getDiscountId();
-        $mine->CreditCard =  array(
+        $mine->CreditCard = array(
             'Id' => $item->getCreditCardId(),
             'Name' => $item->getCreditCard()->getName()
         );
-        $mine->Store=  array(
+        $mine->Store = array(
             'Id' => $item->getStoreId(),
-            'Name' => $item->getStore()->getCategory() . " - " . $item->getStore()->getStoreName(),
+            'Category' => $item->getStore()->getCategory(),
+            'Name' => $item->getStore()->getStoreName()
         );
         $mine->Percentage = $item->getPercentage();
         $mine->Description = $item->getDescription();
         $mine->Multiple = $item->getMultiple();
         $mine->Conditions = $item->getConditions();
-        $mine->StartDate = $item->getStartDate()->format(\DateTime::ISO8601);
-        $mine->EndDate = $item->getEndDate()->format(\DateTime::ISO8601);
-        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        if (!is_null($item->getStartDate())) {
+            $mine->StartDate = $item->getStartDate()->format("Y-m-d");
+        }
+
+        if (!is_null($item->getEndDate())) {
+            $mine->EndDate = $item->getEndDate()->format("Y-m-d");
+        }
+
+        $mine->UpdateTime = $item->getUpdateTime()->format("Y-m-d");
         $mine->UpdateUser = $item->getUpdateUser();
 
         return $mine;
@@ -57,23 +64,29 @@ class JDiscount {
         $mine->DiscountId = $data['DiscountId'];
 
         $mine->Percentage = $data['Percentage'];
-        $mine->StartDate =  new \DateTime($data['StartDate']);
-        $mine->EndDate =  new \DateTime($data['EndDate']);
+        if(array_key_exists('StartDate',$data) && !is_null($data['StartDate']) && (StrLen(trim($data['StartDate'] )) > 0)) {
+                $mine->StartDate =  new \DateTime($data['StartDate']);
+        }
+        if(array_key_exists('EndDate',$data) && !is_null($data['EndDate']) && (StrLen(trim($data['EndDate'] )) > 0) ) {
+            $mine->EndDate =  new \DateTime($data['EndDate']);
+        }
         $mine->Multiple = $data['Multiple'];
         $mine->Conditions = $data['Conditions'];
+
+        //Credit card name is optional when saving to db
         $tmp = $data['CreditCard'];
-        $mine->CreditCard =  array(
-            'Id' => $tmp['Id'],
-            'Name' => $tmp['Name']
-        );
+        $mine->CreditCard =  array( 'Id' => $tmp['Id']);
+        if(array_key_exists('Name',$tmp)) $mine->CreditCard['Name'] = $tmp['Name'];
+
         $mine->Description = $data['Description'];
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
         $tmp = $data['Store'];
-        $mine->Store =  array(
-            'Id' => $tmp['Id'],
-            'Name' => $tmp['Name']
-        );
+
+        //Store name and category are optional when saving to db
+        $mine->Store =  array('Id' => $tmp['Id'] );
+        if(array_key_exists('Name',$tmp)) $mine->Store['Name'] = $tmp['Name'];
+        if(array_key_exists('Category',$tmp)) $mine->Store['Name'] = $tmp['Category'];
 
         return $mine;
 
@@ -88,9 +101,10 @@ class JDiscount {
         if(!is_null($this->DiscountId) && $this->DiscountId>0) {
             $item->setDiscountId($this->DiscountId);
         }
+
         $item->setPercentage($this->Percentage);
-        $item->setStartDate($this->StartDate);
-        $item->setEndDate($this->EndDate);
+        if(!is_null($this->StartDate)) $item->setStartDate($this->StartDate);
+        if(!is_null($this->EndDate)) $item->setEndDate($this->EndDate);
         $item->setMultiple($this->Multiple);
         $item->setConditions($this->Conditions);
         $item->setDescription($this->Description);
