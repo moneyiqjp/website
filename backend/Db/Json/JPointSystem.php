@@ -48,18 +48,17 @@ class JPointSystem implements JSONInterface{
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JPointSystem();
-        if(!ArrayUtils::KEY_EXISTS($data,'PointSystemId')) throw new \Exception("Mandatory field PointUsageId missing");
+        if(!ArrayUtils::KEY_EXISTS($data,'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
         $mine->PointSystemId = $data['PointSystemId'];
-
-        if(ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("Mandatory field CreditCard missing");
+        if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("JPointSystem: Mandatory field CreditCard missing");
         $tmp = $data['CreditCard'];
-        if(!ArrayUtils::KEY_EXISTS($tmp,'Id'))  throw new \Exception("Mandatory field CreditCard.Id missing");
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointSystem: Mandatory field CreditCard.Id missing");
         $mine->CreditCard =  array( 'Id' => $tmp['Id'] );
         if(ArrayUtils::KEY_EXISTS($tmp,'Name'))   $mine->CreditCard['Name'] = $tmp['Name'];
 
         if(ArrayUtils::KEY_EXISTS($data,'Store')) {
             $tmp = $data['Store'];
-            if (!ArrayUtils::KEY_EXISTS($tmp, 'Id')) throw new \Exception("Mandatory field Store.Id missing");
+            if (!ArrayUtils::KEY_EXISTS($tmp, 'Id')) throw new \Exception("JPointSystem: Mandatory field Store.Id missing");
             $mine->Store = array('Id' => $tmp['Id']);
             if (ArrayUtils::KEY_EXISTS($tmp, 'Name')) $mine->Store['Name'] = $tmp['Name'];
         }

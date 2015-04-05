@@ -694,11 +694,10 @@ class Db
 
         $parsed = Json\CStorePointMapping::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse PointMapping type update request");
-        /*
-        $parsed->saveToDb();
-        */
 
-        return $parsed;
+        if(!$parsed->saveToDb()) throw new \Exception("Failed to save point mapping ");
+
+        return $parsed->Reload();
     }
 
     function CreatePointMappingForCard($data)

@@ -10,9 +10,14 @@ namespace Db\Utility;
 
 class ArrayUtils {
     public static function KEY_EXISTS($array,$key){
-        return  (!is_null($array)) && (!array_key_exists($key,$array)) && (!is_null($array[$key])) && (strlen(trim($array[$key]))>0);
+        return  (!is_null($array)) && (array_key_exists($key,$array)) && (!is_null($array[$key]));
+    }
+
+    public static function KEY_STRING ($array,$key) {
+        return (!is_null($array)) && (array_key_exists($key, $array)) && (!is_null($array[$key])) && (strlen(trim($array[$key])) > 0);
     }
 }
+
 
 
 spl_autoload_register(function($className)

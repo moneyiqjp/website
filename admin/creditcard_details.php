@@ -268,15 +268,6 @@
             }]
         });
 
-        /*
-         {"data": "Store.StoreId", edit: false, width: 5},
-         {"data": "PointSystem.CreditCard.Name", editField: "CreditCard.Id", visible: false},
-         {"data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId", visible: false},
-         {"data": "Store.Category", editField: "Store.Category", edit:false},
-         {"data": "Store.StoreName", editField: "Store.Id"},
-         {"data": "PointSystem.PointsPerYen", width: 10},
-         {"data": "PointUsage.YenPerPoint", width: 10}
-        */
 
         pointMappingEditor = new $.fn.dataTable.Editor({
             ajax: {

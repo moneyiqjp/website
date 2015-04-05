@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_overview.php" afterPath="$PROJECT_DIR$/creditcard_overview.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Utility/ArrayUtils.php" afterPath="$PROJECT_DIR$/../backend/Db/Utility/ArrayUtils.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/CStorePointMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/CStorePointMapping.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_details.php" afterPath="$PROJECT_DIR$/creditcard_details.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../config/propel.php" afterPath="$PROJECT_DIR$/../config/propel.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
     </list>
     <ignored path="admin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +39,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5511222" vertical-offset="1938" max-vertical-offset="5746">
-              <caret line="153" column="30" selection-start-line="153" selection-start-column="30" selection-end-line="153" selection-end-column="30" />
+            <state vertical-scroll-proportion="48.384617" vertical-offset="3723" max-vertical-offset="5746">
+              <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -46,18 +52,18 @@
       <file leaf-file-name="other.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/other.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="7548">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.109091" vertical-offset="51" max-vertical-offset="7548">
+              <caret line="26" column="85" selection-start-line="26" selection-start-column="84" selection-end-line="26" selection-end-column="85" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.615385" vertical-offset="51" max-vertical-offset="12597">
-              <caret line="33" column="17" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.33304942" vertical-offset="4760" max-vertical-offset="12444">
+              <caret line="303" column="16" selection-start-line="303" selection-start-column="16" selection-end-line="303" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -66,7 +72,7 @@
       <file leaf-file-name="admin_editor.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1190">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
@@ -98,8 +104,8 @@
         <option value="$PROJECT_DIR$/media/css/jquery.dataTables.css" />
         <option value="$PROJECT_DIR$/other.php" />
         <option value="$PROJECT_DIR$/media/css/admin_editor.css" />
-        <option value="$PROJECT_DIR$/creditcard_details.php" />
         <option value="$PROJECT_DIR$/creditcard_overview.php" />
+        <option value="$PROJECT_DIR$/creditcard_details.php" />
       </list>
     </option>
   </component>
@@ -108,8 +114,7 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="18" />
-    <option name="y" value="132" />
+    <option name="y" value="40" />
     <option name="width" value="1280" />
     <option name="height" value="1400" />
   </component>
@@ -208,6 +213,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -215,9 +223,6 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="1">
@@ -243,7 +248,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="18" y="132" width="1280" height="1400" extended-state="0" />
+    <frame x="0" y="40" width="1280" height="1400" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -253,7 +258,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18278688" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18606557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -286,9 +291,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20925926" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -312,6 +317,46 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5746">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/other.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="7548">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_details.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="12597">
+          <caret line="33" column="17" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1190">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/media/css/jquery.dataTables.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6959" max-vertical-offset="8279">
+          <caret line="452" column="1" selection-start-line="452" selection-start-column="1" selection-end-line="452" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1173" max-vertical-offset="5746">
@@ -634,6 +679,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="48.384617" vertical-offset="3723" max-vertical-offset="5746">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/media/css/jquery.dataTables.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6959" max-vertical-offset="8279">
@@ -644,8 +697,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/other.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="7548">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="-7.109091" vertical-offset="51" max-vertical-offset="7548">
+          <caret line="26" column="85" selection-start-line="26" selection-start-column="84" selection-end-line="26" selection-end-column="85" />
           <folding />
         </state>
       </provider>
@@ -660,16 +713,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.615385" vertical-offset="51" max-vertical-offset="12597">
-          <caret line="33" column="17" selection-start-line="32" selection-start-column="0" selection-end-line="33" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5511222" vertical-offset="1938" max-vertical-offset="5746">
-          <caret line="153" column="30" selection-start-line="153" selection-start-column="30" selection-end-line="153" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.33304942" vertical-offset="4760" max-vertical-offset="12444">
+          <caret line="303" column="16" selection-start-line="303" selection-start-column="16" selection-end-line="303" selection-end-column="16" />
           <folding />
         </state>
       </provider>

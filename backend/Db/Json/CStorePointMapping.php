@@ -119,6 +119,14 @@ class CStorePointMapping implements JSONInterface {
     }
 
 
+    public function Reload() {
+        $this->Store = JStore::CREATE_FROM_DB($this->Store->toDB());
+        $this->PointSystem = JPointSystem::CREATE_FROM_DB($this->PointSystem->toDB());
+        $this->PointUsage = JPointUsage::CREATE_FROM_DB($this->PointUsage->toDB());
+        return $this;
+    }
+
+
     public static function CREATE_FROM_ARRAY($data){
 
         if(!array_key_exists('Store',$data)) throw new \Exception('No store defined in request, need a store to be mapped');

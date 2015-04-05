@@ -9,6 +9,7 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 class JStore implements JSONInterface {
     public $StoreId;
@@ -26,11 +27,11 @@ class JStore implements JSONInterface {
     {
         $mine = new JStore();
         $mine->StoreId = $item->getStoreId();
-        if(!is_null($item->getStoreName())) $mine->StoreName = $item->getStoreName();
-        if(!is_null($item->getCategory())) $mine->Category = $item->getCategory();
-        if(!is_null($item->getDescription())) $mine->Description = $item->getDescription();
+        if(FieldUtils::STRING_IS_DEFINED($item->getStoreName())) $mine->StoreName = $item->getStoreName();
+        if(FieldUtils::STRING_IS_DEFINED($item->getCategory())) $mine->Category = $item->getCategory();
+        if(FieldUtils::STRING_IS_DEFINED($item->getDescription())) $mine->Description = $item->getDescription();
         if(!is_null($item->getUpdateTime())) $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
-        if(!is_null($item->getUpdateUser())) $mine->UpdateUser = $item->getUpdateUser();
+        if(FieldUtils::STRING_IS_DEFINED($item->getUpdateUser())) $mine->UpdateUser = $item->getUpdateUser();
 
         return $mine;
     }
@@ -58,15 +59,20 @@ class JStore implements JSONInterface {
 
     public function toDB()
     {
-        return $this->updateDB(new \Store());
+        $store = new \Store();
+        if(FieldUtils::ID_IS_DEFINED($this->StoreId)) {
+            $store =(new \StoreQuery())->findPk($this->StoreId);
+            if(is_null($store )) $store = new \Store();
+        }
+        return $this->updateDB($store);
     }
 
     public function updateDB(\Store &$item)
     {
-        if(!is_null($this->StoreId) && $this->StoreId>0) $item->setStoreId($this->StoreId);
-        if(!is_null($this->StoreName)) $item->setStoreName($this->StoreName);
-        if(!is_null($this->Category)) $item->setCategory($this->Category);
-        if(!is_null($this->Description)) $item->setCategory($this->Description);
+        if(FieldUtils::ID_IS_DEFINED($this->StoreId) && $this->StoreId>0) $item->setStoreId($this->StoreId);
+        if(FieldUtils::STRING_IS_DEFINED($this->StoreName)) $item->setStoreName($this->StoreName);
+        if(FieldUtils::STRING_IS_DEFINED($this->Category)) $item->setCategory($this->Category);
+        if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
 
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
