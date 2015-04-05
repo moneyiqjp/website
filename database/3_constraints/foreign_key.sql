@@ -3,12 +3,12 @@ use moneyiq;
 
 
 -- Reference:  Interest_credit_card (table: Interest)
-ALTER TABLE Interest ADD CONSTRAINT Interest_credit_card FOREIGN KEY Interest_credit_card (credit_card_id)
+ALTER TABLE interest ADD CONSTRAINT Interest_credit_card FOREIGN KEY Interest_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
 -- Reference:  Interest_payment_type (table: Interest)
 
 
-ALTER TABLE Interest ADD CONSTRAINT Interest_payment_type FOREIGN KEY Interest_payment_type (payment_type_id)
+ALTER TABLE interest ADD CONSTRAINT Interest_payment_type FOREIGN KEY Interest_payment_type (payment_type_id)
     REFERENCES payment_type (payment_type_id);
 -- Reference:  affiliate_company_credit_card (table: credit_card)
 

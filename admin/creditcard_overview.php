@@ -131,7 +131,7 @@
                 editor.field("issuer_id").update(values["issuers"]);
 
                 tmp = $.ajax({
-                    url: 'http://localhost/backend/display/affiliates',
+                    url: '../backend/display/affiliates',
                     data: {
                         format: 'json',
                         "contentType": "application/json; charset=utf-8",
@@ -151,7 +151,7 @@
                 dom: "Tfrtip",
                 "pageLength": 25,
                 "ajax": {
-                    "url": "http://localhost/backend/display/creditcards",
+                    "url": "../backend/display/creditcards",
                     "type": "GET",
                     "contentType": "application/json; charset=utf-8",
                     "dataType": "json"
