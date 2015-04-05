@@ -14,6 +14,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/backend/vendor/autoload.php';
 // setup Propel
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/generated-conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/JSONInterface.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Utility/ArrayUtils.php';
 
 spl_autoload_register(function($className)
 {
@@ -677,6 +678,49 @@ class Db
         $item->delete();
         return array();
     }
-    
-    
+
+
+    /* Point Mappings */
+    function GetPointMappingForCard($id)
+    {
+        $cc = (new\CreditCardQuery())->findPk($id);
+        if(is_null($cc)) return array();
+
+        return Json\CStorePointMapping::GET_POINT_MAPPINGS_FROM_CREDIT_CARD($cc);
+    }
+
+    function UpdatePointMappingForCard($data)
+    {
+
+        $parsed = Json\CStorePointMapping::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointMapping type update request");
+        /*
+        $parsed->saveToDb();
+        */
+
+        return $parsed;
+    }
+
+    function CreatePointMappingForCard($data)
+    {
+        $parsed = Json\JPointMapping::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointMapping type update request");
+        $parsed->saveToDb();
+        return $parsed;
+    }
+
+    function DeletePointMappingForCard($data)
+    {
+        /*
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \PointMappingsQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("PointMapping with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+        */
+    }
+
+
 }

@@ -142,6 +142,7 @@
                 }).responseText;
                 values["affiliates"] = JSON.parse(tmp);
                 editor.field("affiliate_id").update(values["affiliates"]);
+                //editor.field("affiliate_id")
 
             });
 

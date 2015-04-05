@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class JCampaign {
+class JCampaign implements JSONInterface{
     public $CampaignId;
     public $CreditCard;
     public $Name;
@@ -68,6 +68,11 @@ class JCampaign {
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB()
     {
         $is = new \Campaign();

@@ -9,8 +9,7 @@
 namespace Db\Json;
 
 
-class JFeatureType
-{
+class JFeatureType implements JSONInterface {
     public $FeatureTypeId;
     public $Name;
     public $Description;
@@ -46,6 +45,10 @@ class JFeatureType
 
         return $mine;
 
+    }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
     }
 
     public function toDB()

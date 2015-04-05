@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: Ben
- * Date: 3/19/2015
- * Time: 9:22 PM
+ * Date: 3/31/2015
+ * Time: 9:12 PM
  */
 
-namespace Db\Json;
+namespace Db\Utility;
 
-interface JSONInterface {
-
-    public static function CREATE_FROM_ARRAY($data);
-    public function saveToDb();
-    public function toDB();
+class ArrayUtils {
+    public static function KEY_EXISTS($array,$key){
+        return  (!is_null($array)) && (!array_key_exists($key,$array)) && (!is_null($array[$key])) && (strlen(trim($array[$key]))>0);
+    }
 }
+
 
 spl_autoload_register(function($className)
 {
@@ -21,7 +21,6 @@ spl_autoload_register(function($className)
         return false;
     }
 
-    //$namespace=str_replace("\\","/",__NAMESPACE__);
     $className=str_replace("\\","/",$className);
     $class=$_SERVER['DOCUMENT_ROOT'] . '/backend/'.(empty($namespace)?"":$namespace."/")."{$className}.php";
     include_once($class);

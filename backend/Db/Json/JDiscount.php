@@ -8,9 +8,10 @@
 
 namespace Db\Json;
 
+use Db\Utility\ArrayUtils;
 
 
-class JDiscount {
+class JDiscount implements JSONInterface{
     public $DiscountId;
     public $Percentage;
     public $StartDate;
@@ -61,41 +62,48 @@ class JDiscount {
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JDiscount();
+        if(!ArrayUtils::KEY_EXISTS($data,'DiscountId')) throw new \Exception("Missing mandatory field DiscountId");
         $mine->DiscountId = $data['DiscountId'];
 
-        $mine->Percentage = $data['Percentage'];
-        if(array_key_exists('StartDate',$data) && !is_null($data['StartDate']) && (StrLen(trim($data['StartDate'] )) > 0)) {
-                $mine->StartDate =  new \DateTime($data['StartDate']);
-        }
-        if(array_key_exists('EndDate',$data) && !is_null($data['EndDate']) && (StrLen(trim($data['EndDate'] )) > 0) ) {
-            $mine->EndDate =  new \DateTime($data['EndDate']);
-        }
-        $mine->Multiple = $data['Multiple'];
-        $mine->Conditions = $data['Conditions'];
+        if(ArrayUtils::KEY_EXISTS($data,'Percentage')) $mine->Percentage = $data['Percentage'];
+        if(ArrayUtils::KEY_EXISTS($data,'StartDate')) $mine->StartDate =  new \DateTime($data['StartDate']);
+        if(ArrayUtils::KEY_EXISTS($data,'EndDate')) $mine->EndDate =  new \DateTime($data['EndDate']);
+        if(ArrayUtils::KEY_EXISTS($data,'Multiple')) $mine->Multiple = $data['Multiple'];
+        if(ArrayUtils::KEY_EXISTS($data,'Conditions')) $mine->Conditions = $data['Conditions'];
+        if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         //Credit card name is optional when saving to db
+        if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("Failed to find mandatory field CreditCard");
         $tmp = $data['CreditCard'];
-        $mine->CreditCard =  array( 'Id' => $tmp['Id']);
-        if(array_key_exists('Name',$tmp)) $mine->CreditCard['Name'] = $tmp['Name'];
-
-        $mine->Description = $data['Description'];
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
-        $tmp = $data['Store'];
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("Failed to find mandatory field CreditCard.Id");
+        $mine->CreditCard =  array('Id' => $tmp['Id']);
+        if(ArrayUtils::KEY_EXISTS($tmp,'Name')) $mine->CreditCard['Name'] = $tmp['Name'];
 
         //Store name and category are optional when saving to db
+        if(!ArrayUtils::KEY_EXISTS($data,'Store')) throw new \Exception("Failed to find mandatory field Store");
+        $tmp = $data['Store'];
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("Failed to find mandatory field Store.Id");
         $mine->Store =  array('Id' => $tmp['Id'] );
-        if(array_key_exists('Name',$tmp)) $mine->Store['Name'] = $tmp['Name'];
-        if(array_key_exists('Category',$tmp)) $mine->Store['Name'] = $tmp['Category'];
+        if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Store['Name'] = $tmp['Name'];
+        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Store['Category'] = $tmp['Category'];
 
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
+
     public function toDB()
     {
         $is = new \Discounts();
         return $this->updateDB($is);
     }
+
     public function updateDB(\Discounts &$item)
     {
         if(!is_null($this->DiscountId) && $this->DiscountId>0) {

@@ -5,149 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Json/CPointMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Utility/ArrayUtils.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Json/CStorePointMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Utility/FieldUtils.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Json/JStore.php" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\external\json2.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\external\json2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\jquery.jtable.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\jquery.jtable.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.bd.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ca.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.cz.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.de.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.es.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.fa.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.fr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.hr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.hu.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.id.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.it.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.lt.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.nl-NL.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.no.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pl.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pt-BR.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pt-PT.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ro.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ru.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.se.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.tr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.vi.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.zh-CN.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\bg-thead.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jtable_theme_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\bg-thead.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\jtable_lightcolor_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\loading.gif" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\backend\Db\Json\CPointMapping.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Core/Db.php" afterPath="$PROJECT_DIR$/Db/Core/Db.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" afterPath="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/Db/Json/JCampaign.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JDescription.php" afterPath="$PROJECT_DIR$/Db/Json/JDescription.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JDiscount.php" afterPath="$PROJECT_DIR$/Db/Json/JDiscount.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/Db/Json/JFeature.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/media/css/admin_editor.css" afterPath="$PROJECT_DIR$/../admin/media/css/admin_editor.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFeatureType.php" afterPath="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFee.php" afterPath="$PROJECT_DIR$/Db/Json/JFee.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JInsuranceType.php" afterPath="$PROJECT_DIR$/Db/Json/JInsuranceType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JIssuer.php" afterPath="$PROJECT_DIR$/Db/Json/JIssuer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPaymentType.php" afterPath="$PROJECT_DIR$/Db/Json/JPaymentType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JSONInterface.php" afterPath="$PROJECT_DIR$/Db/Json/JSONInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/Db/Json/Jinterest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_details.php" afterPath="$PROJECT_DIR$/../admin/creditcard_details.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_overview.php" afterPath="$PROJECT_DIR$/../admin/creditcard_overview.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/scripts/dataTables.editor.js" afterPath="$PROJECT_DIR$/../admin/scripts/dataTables.editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/scripts/dataTables.editor.min.js" afterPath="$PROJECT_DIR$/../admin/scripts/dataTables.editor.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../admin/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -181,9 +61,31 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.054545" vertical-offset="10553" max-vertical-offset="11900">
-              <caret line="663" column="55" selection-start-line="663" selection-start-column="55" selection-end-line="663" selection-end-column="55" />
+            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="12937">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CStorePointMapping.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Db/Json/CStorePointMapping.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.47444633" vertical-offset="1568" max-vertical-offset="2805">
+              <caret line="130" column="44" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JPointUsage.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Json/JPointUsage.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-15.038462" vertical-offset="340" max-vertical-offset="2074">
+              <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
+              <folding>
+                <element signature="e#114#140#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -191,8 +93,8 @@
       <file leaf-file-name="Db.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-32.53846" vertical-offset="10476" max-vertical-offset="11679">
-              <caret line="666" column="39" selection-start-line="666" selection-start-column="38" selection-end-line="666" selection-end-column="39" />
+            <state vertical-scroll-proportion="-4.654762" vertical-offset="0" max-vertical-offset="12427">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
               </folding>
@@ -200,51 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JFee.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.8461537" vertical-offset="153" max-vertical-offset="1564">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="66" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="JStore.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Db/Json/JStore.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.846153" vertical-offset="0" max-vertical-offset="867">
-              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CPointMapping.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/CPointMapping.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.0" vertical-offset="450" max-vertical-offset="1666">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JSONInterface.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="476">
-              <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JDiscount.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JDiscount.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17705736" vertical-offset="824" max-vertical-offset="2057">
-              <caret line="66" column="111" selection-start-line="66" selection-start-column="111" selection-end-line="66" selection-end-column="111" />
+            <state vertical-scroll-proportion="-19.961538" vertical-offset="76" max-vertical-offset="1292">
+              <caret line="40" column="92" selection-start-line="40" selection-start-column="92" selection-end-line="40" selection-end-column="92" />
               <folding />
             </state>
           </provider>
@@ -259,13 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/generated-reversed-database/schema.xml" />
-        <option value="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" />
-        <option value="$PROJECT_DIR$/db/Store.php" />
-        <option value="$PROJECT_DIR$/db/JSONStore.php" />
-        <option value="$PROJECT_DIR$/db/JSONCreditCardFeatureType.php" />
-        <option value="$PROJECT_DIR$/../admin/creditcard.php" />
         <option value="$PROJECT_DIR$/db/db.php" />
         <option value="$PROJECT_DIR$/db/CreditCard.php" />
         <option value="$PROJECT_DIR$/db/JSONClasses.php" />
@@ -290,26 +145,33 @@
         <option value="$PROJECT_DIR$/Db/Json/JAffilateCompany.php" />
         <option value="$PROJECT_DIR$/Db/Json/JCreditCard.php" />
         <option value="$PROJECT_DIR$/Db/Json/SimpleStore2.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JInsuranceType.php" />
-        <option value="$PROJECT_DIR$/Db/Json/Jinterest.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JDescription.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JFee.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPaymentType.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JIssuer.php" />
         <option value="$PROJECT_DIR$/Db/Core/CreditCard.php" />
         <option value="$PROJECT_DIR$/Db/combination/CombinationInterface.php" />
         <option value="$PROJECT_DIR$/Db/combination/CFeature.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JFeature.php" />
         <option value="$PROJECT_DIR$/Db/Json/CPointMappings.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JSONInterface.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JFee.php" />
+        <option value="$PROJECT_DIR$/Db/Json/CPointMapping.php" />
         <option value="$PROJECT_DIR$/Db/Json/JCampaign.php" />
-        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JDescription.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JFeature.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JInsuranceType.php" />
+        <option value="$PROJECT_DIR$/Db/Json/Jinterest.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JIssuer.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPaymentType.php" />
+        <option value="$PROJECT_DIR$/Utility/FieldUtils.php" />
+        <option value="$PROJECT_DIR$/Utility/ArrayUtils.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JSONInterface.php" />
         <option value="$PROJECT_DIR$/Db/Core/Db.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JStore.php" />
+        <option value="$PROJECT_DIR$/Db/Utility/FieldUtils.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
         <option value="$PROJECT_DIR$/Db/Json/JDiscount.php" />
+        <option value="$PROJECT_DIR$/Db/Utility/ArrayUtils.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JStore.php" />
+        <option value="$PROJECT_DIR$/Db/Json/CStorePointMapping.php" />
       </list>
     </option>
   </component>
@@ -409,7 +271,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Json" />
+              <option name="myItemId" value="Utility" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -427,7 +289,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Core" />
+              <option name="myItemId" value="Json" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -444,12 +306,14 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="Mandatory field&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\Development\website\backend" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Development\website\backend\Db\" />
       <recent name="F:\Development\website\backend\Db\Core" />
       <recent name="F:\Development\website\backend\Db\Core\" />
       <recent name="F:\Development\website\backend\Db\Json" />
@@ -538,22 +402,22 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.119779356" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08195429" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20409836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32939324" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -561,9 +425,9 @@
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12047244" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.119779356" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -571,13 +435,13 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11077236" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2877049" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20409836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32939324" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
@@ -603,32 +467,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="804" max-vertical-offset="1768">
-          <caret line="52" column="29" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1955">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="1088">
-          <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="1207">
@@ -805,76 +643,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JAffiliateCompany.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22386831" vertical-offset="0" max-vertical-offset="1215">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/Jinterest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72039473" vertical-offset="280" max-vertical-offset="1530">
-          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JInsuranceType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74835527" vertical-offset="25" max-vertical-offset="1275">
-          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="61" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/SimpleStore.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13980263" vertical-offset="0" max-vertical-offset="1216">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42394015" vertical-offset="0" max-vertical-offset="1203">
-          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7269737" vertical-offset="0" max-vertical-offset="1216">
-          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="58" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPointUsage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70641446" vertical-offset="229" max-vertical-offset="1479">
-          <caret line="69" column="47" selection-start-line="69" selection-start-column="47" selection-end-line="69" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPointSystem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6924342" vertical-offset="297" max-vertical-offset="1513">
-          <caret line="72" column="5" selection-start-line="72" selection-start-column="5" selection-end-line="73" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPaymentType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67105263" vertical-offset="0" max-vertical-offset="1216">
-          <caret line="53" column="5" selection-start-line="53" selection-start-column="5" selection-end-line="54" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JObject.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25164473" vertical-offset="0" max-vertical-offset="1216">
-          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -892,22 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JIssuer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6579658" vertical-offset="0" max-vertical-offset="1111">
-          <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.254545" vertical-offset="1383" max-vertical-offset="2516">
-          <caret line="126" column="28" selection-start-line="126" selection-start-column="28" selection-end-line="126" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="21.115385" vertical-offset="2555" max-vertical-offset="3757">
@@ -915,76 +671,194 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JDescription.php">
+    <entry file="file://$PROJECT_DIR$/generated-classes/Base/PointUsage.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74814814" vertical-offset="94" max-vertical-offset="1309">
-          <caret line="64" column="5" selection-start-line="64" selection-start-column="5" selection-end-line="65" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="476">
-          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
-          <folding />
+        <state vertical-scroll-proportion="0.33998337" vertical-offset="11423" max-vertical-offset="26486">
+          <caret line="716" column="20" selection-start-line="716" selection-start-column="20" selection-end-line="716" selection-end-column="20" />
+          <folding>
+            <marker date="1426977353733" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JCampaign.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.76923" vertical-offset="71" max-vertical-offset="1615">
-          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.9646382" vertical-offset="0" max-vertical-offset="1700">
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/CPointMapping.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.0" vertical-offset="450" max-vertical-offset="1666">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4194079" vertical-offset="0" max-vertical-offset="1216">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JDescription.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.8461537" vertical-offset="153" max-vertical-offset="1564">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="66" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.7138158" vertical-offset="67" max-vertical-offset="1394">
+          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JStore.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JIssuer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.846153" vertical-offset="0" max-vertical-offset="867">
-          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.51726973" vertical-offset="0" max-vertical-offset="1216">
+          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPaymentType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.054545" vertical-offset="10553" max-vertical-offset="11900">
-          <caret line="663" column="55" selection-start-line="663" selection-start-column="55" selection-end-line="663" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.6430921" vertical-offset="0" max-vertical-offset="1216">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JAffiliateCompany.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.384615" vertical-offset="0" max-vertical-offset="1241">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JInsuranceType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6990132" vertical-offset="0" max-vertical-offset="1343">
+          <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-32.53846" vertical-offset="10476" max-vertical-offset="11679">
-          <caret line="666" column="39" selection-start-line="666" selection-start-column="38" selection-end-line="666" selection-end-column="39" />
+        <state vertical-scroll-proportion="-4.654762" vertical-offset="0" max-vertical-offset="12427">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Utility/FieldUtils.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04194079" vertical-offset="0" max-vertical-offset="1216">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.045863308" vertical-offset="0" max-vertical-offset="1112">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JDiscount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17705736" vertical-offset="824" max-vertical-offset="2057">
-          <caret line="66" column="111" selection-start-line="66" selection-start-column="111" selection-end-line="66" selection-end-column="111" />
+        <state vertical-scroll-proportion="0.07643885" vertical-offset="0" max-vertical-offset="2193">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.87140286" vertical-offset="0" max-vertical-offset="2601">
+          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9478417" vertical-offset="0" max-vertical-offset="1632">
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6582734" vertical-offset="50" max-vertical-offset="1224">
+          <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JObject.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27517986" vertical-offset="0" max-vertical-offset="1112">
+          <caret line="23" column="25" selection-start-line="23" selection-start-column="25" selection-end-line="23" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/Jinterest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.091726616" vertical-offset="0" max-vertical-offset="1632">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPointSystem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.807693" vertical-offset="8" max-vertical-offset="2397">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#114#140#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Utility/ArrayUtils.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31088945" vertical-offset="0" max-vertical-offset="1203">
+          <caret line="27" column="3" selection-start-line="27" selection-start-column="3" selection-end-line="27" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="12937">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPointUsage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.038462" vertical-offset="340" max-vertical-offset="2074">
+          <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
+          <folding>
+            <element signature="e#114#140#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JStore.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.961538" vertical-offset="76" max-vertical-offset="1292">
+          <caret line="40" column="92" selection-start-line="40" selection-start-column="92" selection-end-line="40" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/CStorePointMapping.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47444633" vertical-offset="1568" max-vertical-offset="2805">
+          <caret line="130" column="44" selection-start-line="130" selection-start-column="44" selection-end-line="130" selection-end-column="44" />
           <folding />
         </state>
       </provider>

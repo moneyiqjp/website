@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class JInsuranceType {
+class JInsuranceType implements  JSONInterface{
     public $InsuranceTypeId;
     public $TypeName;
     public $SubtypeName;
@@ -49,6 +49,10 @@ class JInsuranceType {
 
         return $mine;
 
+    }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
     }
 
     public function toDB()

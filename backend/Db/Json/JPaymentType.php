@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class JPaymentType {
+class JPaymentType implements JSONInterface{
     public $PaymentTypeId;
     public $PaymentType;
     public $PaymentDescription;
@@ -48,6 +48,10 @@ class JPaymentType {
     {
         $is = new \PaymentType();
         return $this->updateDB($is);
+    }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
     }
 
     public function updateDB(\PaymentType &$item)

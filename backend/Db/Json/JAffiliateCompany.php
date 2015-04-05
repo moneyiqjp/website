@@ -47,11 +47,18 @@ class JAffiliateCompany implements JSONInterface
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB()
     {
         $af = new \AffiliateCompany();
         return $this->updateDB($af);
     }
+
+
     public function updateDB(\AffiliateCompany &$item)
     {
         $item->setName($this->Name);

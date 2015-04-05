@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class Jinterest {
+class Jinterest implements JSONInterface{
     public $InterestId;
     public $CreditCard;
     public $PaymentType;
@@ -65,11 +65,17 @@ class Jinterest {
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB()
     {
         $is = new \Interest();
         return $this->updateDB($is);
     }
+
     public function updateDB(\Interest &$item)
     {
         if(!is_null($this->InterestId) && $this->InterestId>0) {

@@ -2,149 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/CPointMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Utility/ArrayUtils.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/CStorePointMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Utility/FieldUtils.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\extensions\jquery.jtable.aspnetpagemethods.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\external\json2.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\external\json2.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\jquery.jtable.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\jquery.jtable.min.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.bd.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ca.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.cz.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.de.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.es.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.fa.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.fr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.hr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.hu.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.id.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.it.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.lt.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.nl-NL.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.no.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pl.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pt-BR.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.pt-PT.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ro.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.ru.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.se.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.tr.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.vi.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\localization\jquery.jtable.zh-CN.js" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\basic\jtable_basic.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\bg-thead.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\jtable_jqueryui.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jqueryui\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\jtable_theme_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\bg-thead.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\blue\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\gray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\green\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\jtable_lightcolor_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\orange\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\lightcolor\red\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\add.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\blue\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\brown\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\close.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\column-sortable.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\crimson\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkgray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\darkorange\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\delete.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\edit.png" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\green\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\jtable_metro_base.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\lightgray\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\pink\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\purple\loading.gif" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.less" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\jtable.min.css" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\admin\scripts\jtable\themes\metro\red\loading.gif" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\backend\Db\Json\CPointMapping.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JAffiliateCompany.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JAffiliateCompany.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JDescription.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JDescription.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JDiscount.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JDiscount.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/css/admin_editor.css" afterPath="$PROJECT_DIR$/media/css/admin_editor.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFeatureType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFeatureType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFee.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFee.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JInsuranceType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JInsuranceType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JIssuer.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JIssuer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPaymentType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPaymentType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JSONInterface.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JSONInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_details.php" afterPath="$PROJECT_DIR$/creditcard_details.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_overview.php" afterPath="$PROJECT_DIR$/creditcard_overview.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/dataTables.editor.js" afterPath="$PROJECT_DIR$/scripts/dataTables.editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scripts/dataTables.editor.min.js" afterPath="$PROJECT_DIR$/scripts/dataTables.editor.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
     </list>
@@ -197,8 +77,8 @@
       <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28239202" vertical-offset="1785" max-vertical-offset="10421">
-              <caret line="125" column="29" selection-start-line="125" selection-start-column="29" selection-end-line="125" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.3252912" vertical-offset="0" max-vertical-offset="12597">
+              <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -249,10 +129,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="200" />
-    <option name="y" value="67" />
-    <option name="width" value="1318" />
-    <option name="height" value="1402" />
+    <option name="x" value="1280" />
+    <option name="y" value="40" />
+    <option name="width" value="1280" />
+    <option name="height" value="1400" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -384,7 +264,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="200" y="67" width="1318" height="1402" extended-state="0" />
+    <frame x="1280" y="40" width="1280" height="1400" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -394,7 +274,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17488076" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18032786" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -769,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28239202" vertical-offset="1785" max-vertical-offset="10421">
-          <caret line="125" column="29" selection-start-line="125" selection-start-column="29" selection-end-line="125" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.3252912" vertical-offset="0" max-vertical-offset="12597">
+          <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
           <folding />
         </state>
       </provider>

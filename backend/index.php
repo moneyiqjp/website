@@ -117,7 +117,7 @@ $app->post('/crud/creditcards/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateCreditCard($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -133,7 +133,7 @@ $app->put('/crud/creditcards/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateCreditCard($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -184,7 +184,7 @@ $app->post('/crud/issuer/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateIssuerForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -200,7 +200,7 @@ $app->put('/crud/issuer/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateIssuerForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -237,7 +237,7 @@ $app->post('/crud/affiliate/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateAffiliatesForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -253,7 +253,7 @@ $app->put('/crud/affiliate/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateAffiliatesForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -289,7 +289,7 @@ $app->post('/crud/insurance/type/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateInsuranceTypeForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -306,7 +306,7 @@ $app->put('/crud/insurance/type/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateInsuranceTypeForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -342,7 +342,7 @@ $app->post('/crud/feature/type/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateFeatureTypeForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -359,7 +359,7 @@ $app->put('/crud/feature/type/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateFeatureTypeForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -396,7 +396,7 @@ $app->post('/crud/feature/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateFeatureForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -413,7 +413,7 @@ $app->put('/crud/feature/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateFeatureForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -430,7 +430,7 @@ $app->get('/crud/feature/by/creditcard', function () use ($app) {
     $result = array();
     try {
         $result['data'] = $db->GetFeaturesForCard($app->request()->get('Id'));
-    } catch (Exception $ex) {
+    } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
     }
@@ -461,7 +461,7 @@ $app->post('/crud/feature/by/creditcard/create', function () use ($app) {
     try {
         $data = $request->put('data');
         $jTableResult['row'] = $db->CreateFeatureForCard($data);
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -477,7 +477,7 @@ $app->put('/crud/feature/by/creditcard/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateFeatureForCard($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -494,7 +494,7 @@ $app->get('/crud/description/by/creditcard', function () use ($app) {
     $result = array();
     try {
         $result['data'] = $db->GetDescriptionsForCard($app->request()->get('Id'));
-    } catch (Exception $ex) {
+    } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
     }
@@ -525,7 +525,7 @@ $app->post('/crud/description/by/creditcard/create', function () use ($app) {
     try {
         $data = $request->put('data');
         $jTableResult['row'] = $db->CreateDescriptionForCrud($data);
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -541,7 +541,7 @@ $app->put('/crud/description/by/creditcard/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateDescriptionForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -565,7 +565,7 @@ $app->get('/crud/campaign/by/creditcard', function () use ($app) {
     $result = array();
     try {
         $result['data'] = $db->GetCampaignForCard($app->request()->get('Id'));
-    } catch (Exception $ex) {
+    } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
     }
@@ -594,7 +594,7 @@ $app->post('/crud/campaign/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateCampaignForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -610,7 +610,7 @@ $app->put('/crud/campaign/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateCampaignForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -634,7 +634,7 @@ $app->get('/crud/discount/by/creditcard', function () use ($app) {
     $result = array();
     try {
         $result['data'] = $db->GetDiscountForCard($app->request()->get('Id'));
-    } catch (Exception $ex) {
+    } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
     }
@@ -662,7 +662,7 @@ $app->post('/crud/discount/create', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->CreateDiscountForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -678,7 +678,7 @@ $app->put('/crud/discount/update', function () use ($app) {
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdateDiscountForCrud($request->put('data'));
-    } catch(Exception $e) {
+    } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
     }
@@ -687,6 +687,67 @@ $app->put('/crud/discount/update', function () use ($app) {
 });
 
 
+/*Point Mapping*/
+
+$app->get('/crud/pointmapping/by/creditcard', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointMappingForCard($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+$app->delete('/crud/pointmapping/by/creditcard/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting credit card " . $id);
+        throw new \Exception("don:t support delete");
+        #$jTableResult['row'] = $db->DeletePointMappingForCard($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/pointmapping/by/creditcard/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreatePointMappingForCard($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdatePointMappingForCard($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
 
 
 //Run the Slim application:

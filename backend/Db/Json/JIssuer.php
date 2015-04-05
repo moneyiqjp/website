@@ -36,6 +36,11 @@ class JIssuer implements JSONInterface
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB()
     {
         $is = new \Issuer();

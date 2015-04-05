@@ -176,7 +176,7 @@
                 type: "readonly",
                 def: creditCardId
             }, {
-                label: "Catogory/Store:",
+                label: "Category/Store:",
                 name: "Store.Id",
                 type:  "select",
                 options: stores
@@ -265,6 +265,69 @@
                 label: "Update user:",
                 name: "UpdateUser",
                 type: "readonly"
+            }]
+        });
+
+        /*
+         {"data": "Store.StoreId", edit: false, width: 5},
+         {"data": "PointSystem.CreditCard.Name", editField: "CreditCard.Id", visible: false},
+         {"data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId", visible: false},
+         {"data": "Store.Category", editField: "Store.Category", edit:false},
+         {"data": "Store.StoreName", editField: "Store.Id"},
+         {"data": "PointSystem.PointsPerYen", width: 10},
+         {"data": "PointUsage.YenPerPoint", width: 10}
+        */
+
+        pointMappingEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: '../backend/crud/pointmapping/by/creditcard/create', // default method is POST
+                edit: {
+                    type: 'PUT',
+                    url: '../backend/crud/pointmapping/by/creditcard/update'
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '../backend/crud/pointmapping/by/creditcard/delete'
+                }
+            },
+            table: "#pointMappingTable",
+            idSrc: "MappingId",
+            fields: [{
+                label: "Id:",
+                name: "MappingId",
+                type: "readonly"
+            },   {
+                label: "Card Id:",
+                name: "PointSystem.CreditCard.Id",
+                type: "readonly",
+                def: creditCardId
+            }, {
+                label: "Card Id:",
+                name: "PointUsage.CreditCard.Id",
+                type: "readonly",
+                def: creditCardId
+            },{
+                label: "PointSystemId:",
+                name: "PointSystem.PointSystemId",
+                type: "readonly"
+            }, {
+                label: "PointUsageId:",
+                name: "PointUsage.PointUsageId",
+                type: "readonly"
+            }, {
+                label: "Category/Store:",
+                name: "Store.StoreId",
+                type:  "select",
+                options: stores
+            }, {
+                label: "PointSystemName:",
+                name: "PointSystem.PointSystemName"
+            }, {
+                label: "PointsPerYen:",
+                name: "PointSystem.PointsPerYen"
+            }, {
+                label: "YenPerPoint:",
+                name: "PointUsage.YenPerPoint"
             }]
         });
 
@@ -418,6 +481,37 @@
                         {sExtends: "editor_create", editor: discountEditor},
                         {sExtends: "editor_edit", editor: discountEditor},
                         {sExtends: "editor_remove", editor: discountEditor}
+                    ]
+                }
+            });
+
+
+
+            $('#pointMappingTable').dataTable({
+                dom: "tTr",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/pointmapping/by/creditcard?Id=" + creditCardId,
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "Store.StoreId", edit: false, width: 5},
+                    {"data": "PointSystem.CreditCard.Name", editField: "CreditCard.Id", visible: false},
+                    {"data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId", visible: false},
+                    {"data": "Store.Category", editField: "Store.Category", edit:false},
+                    {"data": "Store.StoreName", editField: "Store.Id"},
+                    {"data": "PointSystem.PointsPerYen", width: 10},
+                    {"data": "PointUsage.YenPerPoint", width: 10}
+                ]
+
+                , tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        {sExtends: "editor_create", editor: pointMappingEditor},
+                        {sExtends: "editor_edit", editor: pointMappingEditor},
+                        {sExtends: "editor_remove", editor: pointMappingEditor}
                     ]
                 }
 
@@ -596,6 +690,40 @@
                     <th>EndDate</th>
                     <th>Update</th>
                     <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table id="pointMappingTable" class="display" cellspacing="0">
+                <thead>
+                <tr>
+                    <td colspan="8" class="table-headline">
+                        Point mappings
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>PointSystem</th>
+                    <th>Category</th>
+                    <th>Store</th>
+                    <th>PointsPerYen</th>
+                    <th>YenPerPoint</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>PointSystem</th>
+                    <th>Category</th>
+                    <th>Store</th>
+                    <th>PointsPerYen</th>
+                    <th>YenPerPoint</th>
                 </tr>
                 </tfoot>
             </table>

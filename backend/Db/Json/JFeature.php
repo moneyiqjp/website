@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class JFeature {
+class JFeature implements JSONInterface{
     public $FeatureId;
     public $FeatureType;
     public $CreditCard;
@@ -124,6 +124,11 @@ class JFeature {
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB() {
         $is = new \CardFeatures();
         return $this->updateDB($is);

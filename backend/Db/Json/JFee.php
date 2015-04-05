@@ -9,7 +9,7 @@
 namespace Db\Json;
 
 
-class JFee {
+class JFee implements JSONInterface{
     public $FeeId;
     public $FeeType;
     public $FeeAmount;
@@ -64,6 +64,10 @@ class JFee {
 
         return $mine;
 
+    }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
     }
 
     public function toDB()

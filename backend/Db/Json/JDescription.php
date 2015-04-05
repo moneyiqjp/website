@@ -9,8 +9,7 @@
 namespace Db\Json;
 
 
-class JDescription
-{
+class JDescription implements JSONInterface {
     public $ItemId;
     public $CreditCard;
     public $Name;
@@ -56,11 +55,17 @@ class JDescription
         return $mine;
 
     }
+
+    public function saveToDb() {
+        return $this->toDB()->save() > 0;
+    }
+
     public function toDB()
     {
         $is = new \CardDescription();
         return $this->updateDB($is);
     }
+
     public function updateDB(\CardDescription &$item)
     {
         if(!is_null($this->ItemId) && $this->ItemId>0) {
