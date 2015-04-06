@@ -48,14 +48,14 @@ class JPointSystem implements JSONInterface{
     public static function CREATE_FROM_ARRAY($data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
-        return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
+        return JPointSystem::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
     public static function CREATE_FROM_ARRAY_RELAXED($data) {
         $mine = new JPointSystem();
         if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
 
-        if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("JPointSystem: Mandatory field CreditCard missing");
+        if(!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JPointSystem: Mandatory field CreditCard missing");
         $tmp = $data['CreditCard'];
         if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointSystem: Mandatory field CreditCard.Id missing");
         $mine->CreditCard =  array( 'Id' => $tmp['Id'] );
@@ -80,6 +80,7 @@ class JPointSystem implements JSONInterface{
     public function updateStore(JStore $store) {
         if(FieldUtils::ID_IS_DEFINED($store->StoreId)) $this->Store['Id']=$store->StoreId;
         if(FieldUtils::STRING_IS_DEFINED($store->StoreName)) $this->Store['Name']=$store->StoreName;
+        return $this;
     }
 
 
@@ -109,12 +110,7 @@ class JPointSystem implements JSONInterface{
         return false;
     }
 
-    public function delete() {
-
-    }
-
-    public function toDB()
-    {
+    public function toDB() {
         $usage = new \PointSystem();
         if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) {
             $usage=(new \PointSystemQuery())->findPk($this->PointSystemId);
@@ -124,20 +120,10 @@ class JPointSystem implements JSONInterface{
         return $this->updateDB($usage);
     }
 
-    public function updateDB(\PointSystem &$item)
-    {
-        if (FieldUtils::ID_IS_DEFINED($this->PointSystemId)) {
-            $item->setPointSystemId($this->PointSystemId);
-        }
-
-        if (FieldUtils::STRING_IS_DEFINED($this->PointSystemName)) {
-            $item->setPointSystemName($this->PointSystemName);
-        }
-
-
-        if(FieldUtils::ID_IS_DEFINED($this->PointsPerYen)) {
-            $item->setPointsPerYen($this->PointsPerYen);
-        }
+    public function updateDB(\PointSystem &$item) {
+        if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) $item->setPointSystemId($this->PointSystemId);
+        if(FieldUtils::ID_IS_DEFINED($this->PointsPerYen)) $item->setPointsPerYen($this->PointsPerYen);
+        if(FieldUtils::STRING_IS_DEFINED($this->PointSystemName)) $item->setPointSystemName($this->PointSystemName);
 
         if(ArrayUtils::KEY_EXISTS($this->CreditCard,'Id')){
            $item->setCreditCard((new \CreditCardQuery())->findPk($this->CreditCard['Id']));

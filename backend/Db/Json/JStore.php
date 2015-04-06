@@ -44,9 +44,9 @@ class JStore implements JSONInterface {
 
         if(ArrayUtils::KEY_EXISTS($data,'StoreName')) $mine->StoreName = $data['StoreName'];
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = $data['Category'];
-        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Description = $data['Description'];
-        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->UpdateUser = $data['UpdateUser'];
+        if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
     }
@@ -69,7 +69,7 @@ class JStore implements JSONInterface {
 
     public function updateDB(\Store &$item)
     {
-        if(FieldUtils::ID_IS_DEFINED($this->StoreId) && $this->StoreId>0) $item->setStoreId($this->StoreId);
+        if(FieldUtils::ID_IS_DEFINED($this->StoreId)) $item->setStoreId($this->StoreId);
         if(FieldUtils::STRING_IS_DEFINED($this->StoreName)) $item->setStoreName($this->StoreName);
         if(FieldUtils::STRING_IS_DEFINED($this->Category)) $item->setCategory($this->Category);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);

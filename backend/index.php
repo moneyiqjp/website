@@ -709,11 +709,15 @@ $app->delete('/crud/pointmapping/by/creditcard/delete', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting credit card " . $id);
-        throw new \Exception("don:t support delete");
-        #$jTableResult['row'] = $db->DeletePointMappingForCard($id);
+    try {
+        foreach($ids as $id) {
+            $app->getLog()->debug("Deleting credit card " . $id);
+            //throw new \Exception("don:t support delete");
+            $jTableResult['row'] = $db->DeletePointMappingForCard($id);
+        }
+    } catch(\Exception $ex) {
+        $jTableResult['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
     }
     echo json_encode($jTableResult);
 });

@@ -107,7 +107,10 @@ class CStorePointMapping implements JSONInterface {
      * @throws \Exception
      */
     public function saveToDb() {
-        return $this->PointSystem->saveToDb() || $this->PointUsage->saveToDb();
+        $res = $this->PointSystem->saveToDb();
+        $res = $this->PointUsage->saveToDb() || $res;
+        $this->MappingId = CStorePointMapping::GET_ID($this);
+        return $res;
     }
 
     /**
@@ -123,16 +126,18 @@ class CStorePointMapping implements JSONInterface {
         $this->Store = JStore::CREATE_FROM_DB($this->Store->toDB());
         $this->PointSystem = JPointSystem::CREATE_FROM_DB($this->PointSystem->toDB());
         $this->PointUsage = JPointUsage::CREATE_FROM_DB($this->PointUsage->toDB());
+        $this->MappingId = CStorePointMapping::GET_ID($this);
         return $this;
     }
 
 
-    public static function CREATE_FROM_ARRAY($data)
-    {
+    public static function CREATE_FROM_ARRAY($data) {
         if (!array_key_exists('PointUsage', $data)) throw new \Exception('No PointUsage defined in request');
         if (!array_key_exists('PointSystem', $data)) throw new \Exception('No PointSystem defined in request');
 
-        return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
+        $mine = CStorePointMapping::CREATE_FROM_ARRAY_RELAXED($data);
+        $mine->MappingId = CStorePointMapping::GET_ID($mine);
+        return $mine;
     }
 
 
@@ -146,7 +151,6 @@ class CStorePointMapping implements JSONInterface {
         $mine->PointUsage->updateStore($mine->Store);
         $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         $mine->PointSystem->updateStore($mine->Store);
-        $mine->MappingId = CStorePointMapping::GET_ID($mine);
 
         return $mine;
     }
@@ -159,8 +163,10 @@ class CStorePointMapping implements JSONInterface {
         $ids = explode("-",$id);
         if(!is_array($ids) || count($ids) <> 3) throw new \Exception("invalid id returned, require #-#-# got " . $id);
         if( (strlen($ids[0])<=0) ) throw new \Exception("No store id specified (" . $id . ")");
-        if( (strlen($ids[1])<=0) ) throw new \Exception("No PointSystem id specified (" . $id . ")");
-        if( (strlen($ids[2])<=0) ) throw new \Exception("No PointUsage id specified (" . $id . ")");
+        if( (strlen($ids[1])<=0) && (strlen($ids[2])<=0) ) {
+            if ((strlen($ids[1]) <= 0)) throw new \Exception("No PointSystem id specified (" . $id . ")");
+            if ((strlen($ids[2]) <= 0)) throw new \Exception("No PointUsage id specified (" . $id . ")");
+        }
         return $ids;
     }
 

@@ -51,15 +51,15 @@ class JPointUsage implements JSONInterface {
         $mine = new JPointUsage();
         if (ArrayUtils::KEY_EXISTS($data, 'PointUsageId')) $mine->PointUsageId = $data['PointUsageId'];
 
-        if (!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JPointUsage: Mandatory field CreditCard missing");
+        if(!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JPointUsage: Mandatory field CreditCard missing");
         $tmp = $data['CreditCard'];
-        if(!ArrayUtils::KEY_EXISTS($tmp,'Id'))  throw new \Exception("JPointUsage:Mandatory field CreditCard.Id missing");
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointUsage: Mandatory field CreditCard.Id missing");
         $mine->CreditCard =  array( 'Id' => $tmp['Id'] );
         if(ArrayUtils::KEY_EXISTS($tmp,'Name'))   $mine->CreditCard['Name'] = $tmp['Name'];
 
         if(ArrayUtils::KEY_EXISTS($data,'Store')) {
             $tmp = $data['Store'];
-            if (!ArrayUtils::KEY_EXISTS($tmp, 'Id')) throw new \Exception("Mandatory field Store.Id missing");
+            if (!ArrayUtils::KEY_EXISTS($tmp, 'Id')) throw new \Exception("JPointUsage: Mandatory field Store.Id missing");
             $mine->Store = array('Id' => $tmp['Id']);
             if (ArrayUtils::KEY_EXISTS($tmp, 'Name')) $mine->Store['Name'] = $tmp['Name'];
         }
@@ -75,6 +75,7 @@ class JPointUsage implements JSONInterface {
     public function updateStore(JStore $store) {
         if(FieldUtils::ID_IS_DEFINED($store->StoreId)) $this->Store['Id']=$store->StoreId;
         if(FieldUtils::STRING_IS_DEFINED($store->StoreName)) $this->Store['Name']=$store->StoreName;
+        return $this;
     }
 
 
@@ -104,8 +105,7 @@ class JPointUsage implements JSONInterface {
         return false;
     }
 
-    public function toDB()
-    {
+    public function toDB() {
         $usage = new \PointUsage();
         if(FieldUtils::ID_IS_DEFINED($this->PointUsageId)) {
             $usage=(new \PointUsageQuery())->findPk($this->PointUsageId);
@@ -115,8 +115,7 @@ class JPointUsage implements JSONInterface {
         return $this->updateDB($usage);
     }
 
-    public function updateDB(\PointUsage &$item)
-    {
+    public function updateDB(\PointUsage &$item)  {
         if(FieldUtils::ID_IS_DEFINED($this->PointUsageId)) { $item->setPointUsageId($this->PointUsageId); }
         if(FieldUtils::ID_IS_DEFINED($this->YenPerPoint)) { $item->setYenPerPoint($this->YenPerPoint); }
 
