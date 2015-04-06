@@ -702,23 +702,19 @@ class Db
 
     function CreatePointMappingForCard($data)
     {
-        $parsed = Json\JPointMapping::CREATE_FROM_ARRAY($data);
-        if(is_null($parsed)) throw new \Exception ("Failed to parse PointMapping type update request");
-        $parsed->saveToDb();
-        return $parsed;
+        $parsed = Json\CStorePointMapping::CREATE_FROM_ARRAY_RELAXED($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointMapping create request");
+        if(!$parsed->saveToDb()) throw new \Exception ("Failed to save PointMapping from create request");
+        return $parsed->Reload();
     }
 
-    function DeletePointMappingForCard($data)
+    function DeletePointMappingForCard($id)
     {
-        /*
-        if(is_null($id)||$id<=0) return array();
-        $item = (new  \PointMappingsQuery())->findPk($id);
-        if(is_null($item)) {
-            throw new \Exception ("PointMapping with id ". $id ." not found");
-        }
-        $item->delete();
+        if(is_null($id)) throw new \Exception("No valid PointMapping id provided (was null)");
+
+        if(!Json\CStorePointMapping::DELETE_BY_ID($id)) throw new \Exception("Failed to delete point mapping " . $id);
+
         return array();
-        */
     }
 
 

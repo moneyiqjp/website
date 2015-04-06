@@ -43,7 +43,7 @@ class CStorePointMapping implements JSONInterface {
         $mine->Store = JStore::CREATE_FROM_DB($store);
         $mine->PointUsage = new JPointUsage();
         $mine->PointSystem = new JPointSystem();
-        $mine->MappingId = $mine->Store->StoreId . "-" . $mine->PointUsage->PointUsageId . "-" . $mine->PointSystem->PointSystemId;
+        $mine->MappingId = CStorePointMapping::GET_ID($mine);
         return $mine;
     }
 
@@ -85,7 +85,7 @@ class CStorePointMapping implements JSONInterface {
         if( $this->Store->StoreId != $item->getStoreId()) return $this;
 
         $this->PointSystem = JPointSystem::CREATE_FROM_DB($item);
-        $this->MappingId = $this->Store->StoreId . "-" . $this->PointUsage->PointUsageId . "-" . $this->PointSystem->PointSystemId;
+        $this->MappingId = CStorePointMapping::GET_ID($this);
         return $this;
     }
 
@@ -99,7 +99,7 @@ class CStorePointMapping implements JSONInterface {
         if( $this->Store->StoreId != $item->getStoreId()) return $this;
 
         $this->PointUsage =JPointUsage::CREATE_FROM_DB($item);
-        $this->MappingId = $this->Store->StoreId . "-" . $this->PointUsage->PointUsageId . "-" . $this->PointSystem->PointSystemId;
+        $this->MappingId = CStorePointMapping::GET_ID($this);
         return $this;
     }
 
@@ -127,11 +127,17 @@ class CStorePointMapping implements JSONInterface {
     }
 
 
-    public static function CREATE_FROM_ARRAY($data){
+    public static function CREATE_FROM_ARRAY($data)
+    {
+        if (!array_key_exists('PointUsage', $data)) throw new \Exception('No PointUsage defined in request');
+        if (!array_key_exists('PointSystem', $data)) throw new \Exception('No PointSystem defined in request');
 
+        return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
+    }
+
+
+    public static function CREATE_FROM_ARRAY_RELAXED($data) { //allows creating an object without being mapped to the db
         if(!array_key_exists('Store',$data)) throw new \Exception('No store defined in request, need a store to be mapped');
-        if(!array_key_exists('PointUsage',$data)) throw new \Exception('No PointUsage defined in request, need a store to be mapped');
-        if(!array_key_exists('PointSystem',$data)) throw new \Exception('No PointSystem defined in request, need a store to be mapped');
         $mine = new CStorePointMapping();
         if(array_key_exists('MappingId',$data)) $mine->MappingId = $data['MappingId'];
 
@@ -140,12 +146,39 @@ class CStorePointMapping implements JSONInterface {
         $mine->PointUsage->updateStore($mine->Store);
         $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         $mine->PointSystem->updateStore($mine->Store);
-        $mine->MappingId = $mine->Store->StoreId . "-" . $mine->PointUsage->PointUsageId . "-" . $mine->PointSystem->PointSystemId;
+        $mine->MappingId = CStorePointMapping::GET_ID($mine);
 
         return $mine;
     }
 
-    /**
+    private static function GET_ID(CStorePointMapping $mp) {
+        return $mp->Store->StoreId . "-" . $mp->PointSystem->PointSystemId . "-" . $mp->PointUsage->PointUsageId;
+    }
+
+    private static function SPLIT_ID($id) {
+        $ids = explode("-",$id);
+        if(!is_array($ids) || count($ids) <> 3) throw new \Exception("invalid id returned, require #-#-# got " . $id);
+        if( (strlen($ids[0])<=0) ) throw new \Exception("No store id specified (" . $id . ")");
+        if( (strlen($ids[1])<=0) ) throw new \Exception("No PointSystem id specified (" . $id . ")");
+        if( (strlen($ids[2])<=0) ) throw new \Exception("No PointUsage id specified (" . $id . ")");
+        return $ids;
+    }
+
+    public static function DELETE_BY_ID($id) {
+        $ids = CStorePointMapping::SPLIT_ID($id);
+
+        $ps = (new \PointSystemQuery)->findPk($ids[1]);
+        if(!is_null($ps)) $ps->delete();
+
+        $pu = (new \PointUsageQuery())->findPk($ids[2]);
+        if(!is_null($pu)) $pu->delete();
+
+        return true;
+    }
+
+
+
+     /**
      * @param \CreditCard $cc
      * @return array
      */

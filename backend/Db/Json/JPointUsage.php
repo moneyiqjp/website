@@ -42,12 +42,16 @@ class JPointUsage implements JSONInterface {
     }
 
     public static function CREATE_FROM_ARRAY($data)
-    {
-        $mine = new JPointUsage();
+    { //create an object that is mapped against the db
+        if (!ArrayUtils::KEY_EXISTS($data, 'PointUsageId')) throw new \Exception("JPointUsage Mandatory field PointUsageId missing");
+        return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
+    }
 
-        if(!ArrayUtils::KEY_EXISTS($data,'PointUsageId')) throw new \Exception("JPointUsage Mandatory field PointUsageId missing");
-        $mine->PointUsageId = $data['PointUsageId'];
-        if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("JPointUsage: Mandatory field CreditCard missing");
+    public static function CREATE_FROM_ARRAY_RELAXED($data) { //allows creating an object without being mapped to the db
+        $mine = new JPointUsage();
+        if (ArrayUtils::KEY_EXISTS($data, 'PointUsageId')) $mine->PointUsageId = $data['PointUsageId'];
+
+        if (!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JPointUsage: Mandatory field CreditCard missing");
         $tmp = $data['CreditCard'];
         if(!ArrayUtils::KEY_EXISTS($tmp,'Id'))  throw new \Exception("JPointUsage:Mandatory field CreditCard.Id missing");
         $mine->CreditCard =  array( 'Id' => $tmp['Id'] );
@@ -74,19 +78,29 @@ class JPointUsage implements JSONInterface {
     }
 
 
-    public function hasData() {
-        return FieldUtils::STRING_IS_DEFINED($this->YenPerPoint);
+    public function isEmpty() {
+        return !FieldUtils::STRING_IS_DEFINED($this->YenPerPoint);
     }
 
     public function isValid() {
         //Mandatory fields + some data fields
-        return $this->hasData() &&
+        return $this->isEmpty() &&
         ArrayUtils::KEY_EXISTS($this->CreditCard,'Id') &&
         ArrayUtils::KEY_EXISTS($this->Store,'Id');
     }
 
     public function saveToDb() {
-        if($this->isValid()) return $this->toDB()->save() > 0;
+        if($this->isValid()) { //only save if valid object
+            $dbo = $this->toDB();
+            if($dbo->save() <=0) return false;
+            if(!FieldUtils::ID_IS_DEFINED($this->PointUsageId))
+            { //reload $ids on save, in case it was actually a create
+                $tmp = JPointUsage::CREATE_FROM_DB($dbo);
+                $this->PointUsageId = $tmp->PointUsageId;
+            }
+            return true;
+        }
+
         return false;
     }
 

@@ -47,9 +47,14 @@ class JPointSystem implements JSONInterface{
 
     public static function CREATE_FROM_ARRAY($data)
     {
+        if (!ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
+        return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
+    }
+
+    public static function CREATE_FROM_ARRAY_RELAXED($data) {
         $mine = new JPointSystem();
-        if(!ArrayUtils::KEY_EXISTS($data,'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
-        $mine->PointSystemId = $data['PointSystemId'];
+        if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
+
         if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("JPointSystem: Mandatory field CreditCard missing");
         $tmp = $data['CreditCard'];
         if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointSystem: Mandatory field CreditCard.Id missing");
@@ -78,19 +83,29 @@ class JPointSystem implements JSONInterface{
     }
 
 
-    public function hasData() {
-        return FieldUtils::STRING_IS_DEFINED($this->PointSystemName) ||   (!is_null($this->PointsPerYen));
+    public function isEmpty() {
+        return !FieldUtils::STRING_IS_DEFINED($this->PointSystemName) ||   (is_null($this->PointsPerYen));
     }
 
     public function isValid() {
         //Mandatory fields + some data fields
-        return $this->hasData() &&
+        return (!$this->isEmpty()) &&
                     ArrayUtils::KEY_EXISTS($this->CreditCard,'Id') &&
                     ArrayUtils::KEY_EXISTS($this->Store,'Id');
     }
 
     public function saveToDb() {
-        if($this->isValid()) return $this->toDB()->save() >0;
+        if($this->isValid()) { //only save if valid object
+            $dbo = $this->toDB();
+            if($dbo->save() <=0) return false;
+            if(!FieldUtils::ID_IS_DEFINED($this->PointSystemId))
+            { //reload $ids on save, in case it was actually a create
+                $tmp = JPointSystem::CREATE_FROM_DB($dbo);
+                $this->PointSystemId = $tmp->PointSystemId;
+            }
+            return true;
+        }
+
         return false;
     }
 
