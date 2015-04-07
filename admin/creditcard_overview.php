@@ -231,8 +231,15 @@
                         visible: true
                     },
                     { "data": "affiliate.name", editField: "affiliate.id" },
-                    { "data": "update_time" },
-                    { "data": "update_user" }
+                    {
+                        "data": "credit_card_id",
+                        render: function ( data, type, row ) {
+                            if ( type === 'display' ) {
+                                return "<a href='creditcard_details.php?Id=" + data + "'>Details</a>";
+                            }
+                            return data;
+                        }
+                    },
                 ],
                 tableTools: {
                     sRowSelect: "os",
@@ -306,7 +313,6 @@
             <th>affiliate_link</th>
             <th>affiliate</th>
             <th>update</th>
-            <th>user</th>
         </tr>
     </thead>
 
@@ -325,7 +331,6 @@
             <th>affiliate_link</th>
             <th>affiliate</th>
             <th>update</th>
-            <th>user</th>
         </tr>
     </tfoot>
     </table>

@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/CStorePointMapping.php" afterPath="$PROJECT_DIR$/Db/Json/CStorePointMapping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/Db/Json/JStore.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_overview.php" afterPath="$PROJECT_DIR$/../admin/creditcard_overview.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../config/propel.php" afterPath="$PROJECT_DIR$/../config/propel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="backend.iws" />
     <ignored path=".idea/workspace.xml" />
