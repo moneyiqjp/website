@@ -249,7 +249,44 @@ class Db
         }
         return $result;
     }
+    function GetStoresForCrud()
+    {
+        return $this->GetStoresForDisplay();
+    }
+    function UpdateStoreForCrud($data)
+    {
+        $parsed = Json\JStore::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Store update request");
 
+        $item = (new  \StoreQuery())->findPk($parsed->StoreId);
+        if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \StoreQuery())->findPk($parsed->StoreId);
+        return Json\JStore::CREATE_FROM_DB($item);
+    }
+    function CreateStoreForCrud($data)
+    {
+        $parsed = Json\JStore::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Store update request");
+
+        $item = $parsed->toDB();
+        if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JStore::CREATE_FROM_DB($item);
+    }
+    function DeleteStoreForCrud($id)
+    {
+        $item = (new  \StoreQuery())->findPk($id);
+        if(is_null($item)) throw new \Exception ("Store with id ". $id ." not found");
+        $item->delete();
+        return array();
+    }
 
 
 
@@ -621,7 +658,6 @@ class Db
     }
 
 
-
     /* Discounts */
     function GetDiscountForCrud()
     {
@@ -714,6 +750,64 @@ class Db
 
         if(!Json\CStorePointMapping::DELETE_BY_ID($id)) throw new \Exception("Failed to delete point mapping " . $id);
 
+        return array();
+    }
+
+
+    /* Insurance */
+    function GetInsuranceForCrud()
+    {
+        $result = array();
+        foreach ((new \InsuranceQuery())->orderByInsuranceId()->find() as $item) {
+            array_push($result, Json\JInsurance::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function GetInsuranceForCard($id)
+    {
+        $result = array();
+        foreach ((new \InsuranceQuery())->orderByInsuranceId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JInsurance::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+
+    function UpdateInsuranceForCrud($data)
+    {
+        $parsed = Json\JInsurance::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Insurance type update request");
+
+        $item = (new  \InsuranceQuery())->findPk($parsed->InsuranceId);
+        if(is_null($item)) throw new \Exception ("Insurance id ". $parsed->InsuranceId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \InsuranceQuery())->findPk($parsed->InsuranceId);
+        return Json\JInsurance::CREATE_FROM_DB($item);
+    }
+
+    function CreateInsuranceForCrud($data)
+    {
+        $item = Json\JInsurance::CREATE_FROM_ARRAY($data);
+
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JInsurance::CREATE_FROM_DB($db);
+    }
+
+    function DeleteInsuranceForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \InsuranceQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Insurance with id ". $id ." not found");
+        }
+        $item->delete();
         return array();
     }
 

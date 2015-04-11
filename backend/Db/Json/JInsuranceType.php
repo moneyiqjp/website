@@ -48,7 +48,10 @@ class JInsuranceType implements  JSONInterface{
         $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
+    }
 
+    public function toString(){
+        return  $this->TypeName . "-" . $this->SubtypeName . " (" . $this->Region .")";
     }
 
     public function saveToDb() {

@@ -56,6 +56,10 @@ class JStore implements JSONInterface {
         return $this->toDB()->save() > 0;
     }
 
+    public function toString(){
+        return  $this->StoreName . "-" . $this->Category;
+    }
+
 
     public function toDB()
     {

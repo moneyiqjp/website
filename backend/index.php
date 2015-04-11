@@ -754,7 +754,62 @@ $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
 });
 
 
+
+
+
+/*Discount*/
+$app->get('/crud/store/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetStoresForCrud()));
+});
+
+$app->delete('/crud/store/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting credit card " . $id);
+        $jTableResult['row'] = $db->DeleteStoreForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/store/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateStoreForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/store/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateStoreForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
 //Run the Slim application:
 $app->run();
-/**/
+
 ?>
