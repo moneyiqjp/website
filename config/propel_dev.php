@@ -7,9 +7,9 @@ return [
                 'moneyiq' => [
                     'adapter'    => 'mysql',
                     'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
-                    'dsn'        => 'mysql:host=moneyiq.jp;dbname=moneyiq',
-                    'user'       => 'moneyiqadmin',
-                    'password'   => 'ShowM3Th3Mon3y',
+                    'dsn'        => 'mysql:host=localhost;dbname=moneyiq',
+                    'user'       => 'root',
+                    'password'   => '',
                     'attributes' => []
                 ]
             ]

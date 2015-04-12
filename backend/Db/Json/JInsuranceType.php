@@ -9,6 +9,9 @@
 namespace Db\Json;
 
 
+use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
+
 class JInsuranceType implements  JSONInterface{
     public $InsuranceTypeId;
     public $TypeName;
@@ -39,13 +42,14 @@ class JInsuranceType implements  JSONInterface{
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JInsuranceType();
+        if(!ArrayUtils::KEY_EXISTS($data, 'InsuranceTypeId')) throw new \Exception("Required InsuranceTypeId not specified");
         $mine->InsuranceTypeId = $data['InsuranceTypeId'];
-        $mine->TypeName = $data['TypeName'];
-        $mine->SubtypeName = $data['SubtypeName'];
-        $mine->Description = $data['Description'];
-        $mine->Region = $data['Region'];
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
+        if(ArrayUtils::KEY_EXISTS($data, 'TypeName')) $mine->TypeName = $data['TypeName'];
+        if(ArrayUtils::KEY_EXISTS($data, 'SubtypeName')) $mine->SubtypeName = $data['SubtypeName'];
+        if(ArrayUtils::KEY_EXISTS($data, 'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data, 'Region')) $mine->Region = $data['Region'];
+        if(ArrayUtils::KEY_EXISTS($data, 'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data, 'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
     }
@@ -66,15 +70,13 @@ class JInsuranceType implements  JSONInterface{
 
     public function updateDB(\InsuranceType &$item)
     {
-        if(!is_null($this->InsuranceTypeId) && $this->InsuranceTypeId>0) {
-            $item->setInsuranceTypeId($this->InsuranceTypeId);
-        }
-        $item->setTypeName($this->TypeName);
-        $item->setSubtypeName($this->SubtypeName);
-        $item->setDescription($this->Description);
-        $item->setRegion($this->Region);
+        if(FieldUtils::ID_IS_DEFINED($this->InsuranceTypeId)) $item->setInsuranceTypeId($this->InsuranceTypeId);
+        if(FieldUtils::STRING_IS_DEFINED($this->TypeName)) $item->setTypeName($this->TypeName);
+        if(FieldUtils::STRING_IS_DEFINED($this->SubtypeName)) $item->setSubtypeName($this->SubtypeName);
+        if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->Region)) $item->setRegion($this->Region);
         $item->setUpdateTime(new \DateTime());
-        $item->setUpdateUser($this->UpdateUser);
+        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 
         return $item;
     }

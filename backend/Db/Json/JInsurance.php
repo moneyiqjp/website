@@ -28,6 +28,8 @@ class JInsurance {
     public static function CREATE_FROM_DB(\Insurance $item)
     {
         $mine = new JInsurance();
+        $mine->InsuranceId = $item->getInsuranceId();
+
         if(FieldUtils::ID_IS_DEFINED($item->getCreditCardId())) {
             $mine->CreditCard = array(
                 'Id' => $item->getCreditCardId(),
@@ -98,8 +100,8 @@ class JInsurance {
         }
 
         if(!is_null($this->InsuranceType)) {
-            if(FieldUtils::ID_IS_DEFINED($this->InsuranceType->InsuranceId)) {
-                $item->setInsuranceTypeId($this->InsuranceType->InsuranceId);
+            if(FieldUtils::ID_IS_DEFINED($this->InsuranceType->InsuranceTypeId)) {
+                $item->setInsuranceTypeId($this->InsuranceType->InsuranceTypeId);
             }
         }
 

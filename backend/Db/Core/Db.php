@@ -9,6 +9,7 @@ namespace Db\Core;
 
 // setup the autoloading
 use Db\Json;
+use Db\Utility\FieldUtils;
 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/backend/vendor/autoload.php';
 // setup Propel
@@ -48,8 +49,6 @@ class Db
         }
         return $result;
     }
-
-
     function GetAllStores()
     {
         $result = array();
@@ -60,8 +59,6 @@ class Db
 
         return $result;
     }
-
-
     function GetAllFeatures()
     {
         $result = array();
@@ -72,7 +69,6 @@ class Db
 
         return $result;
     }
-
     function GetIssuersForDisplay()
     {
         $result = array();
@@ -82,7 +78,6 @@ class Db
         }
         return $result;
     }
-
     function GetAffiliatesForDisplay()
     {
         $result = array();
@@ -105,7 +100,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateCreditCardItem(\CreditCard &$ccs, $data, $key,$value)
     {
         if(!array_key_exists($key,$data)) throw new \Exception("Failed to find key: " . $key);
@@ -155,7 +149,6 @@ class Db
 
         return $ccs;
     }
-
     function UpdateCreditCard($data)
     {
         $q = new  \CreditCardQuery();
@@ -173,7 +166,6 @@ class Db
         $ccs = $q->findPk($data['credit_card_id']);
         return Json\JCreditCard::CREATE_DB($ccs);
     }
-
     function CreateCreditCard($data)
     {
         $ccs = new \CreditCard();
@@ -187,7 +179,6 @@ class Db
         #$ccs = $q->findPk($data['credit_card_id']);
         return Json\JCreditCard::CREATE_DB($ccs);
     }
-
     function DeleteCreditCard($id)
     {
         $ccs = (new  \CreditCardQuery())->findPk($id);
@@ -258,11 +249,13 @@ class Db
         $parsed = Json\JStore::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse Store update request");
 
+        if(!FieldUtils::ID_IS_DEFINED($parsed->StoreId)) throw new \Exception("Failed to parse ID");
+
         $item = (new  \StoreQuery())->findPk($parsed->StoreId);
         if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
 
-        $item = $parsed->updateDB($item);
-        $item->save();
+        //$new = $parsed->updateDB($item);
+        if(!$parsed->saveToDb())   throw new \Exception("Failed to save store with id " . $parsed->StoreId);
 
         //TODO implement cache, then refresh
         $item = (new  \StoreQuery())->findPk($parsed->StoreId);
@@ -276,6 +269,7 @@ class Db
         $item = $parsed->toDB();
         if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
         $item->save();
+        $item->reload();
 
         //TODO implement cache, add to cache
         return Json\JStore::CREATE_FROM_DB($item);
@@ -383,7 +377,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateFeatureTypeForCrud($data)
     {
         $parsed = Json\JFeatureType::CREATE_FROM_ARRAY($data);
@@ -399,7 +392,6 @@ class Db
         $item = (new  \CardFeatureTypeQuery())->findPk($parsed->FeatureTypeId);
         return Json\JFeatureType::CREATE_FROM_DB($item);
     }
-
     function CreateFeatureTypeForCrud($data)
     {
         $item = Json\JFeatureType::CREATE_FROM_ARRAY($data)->toDB();
@@ -408,7 +400,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JFeatureType::CREATE_FROM_DB($item);
     }
-
     function DeleteFeatureTypeForCrud($id)
     {
         $item = (new  \CardFeatureTypeQuery())->findPk($id);
@@ -428,7 +419,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateFeatureForCrud($data)
     {
         $parsed = Json\JFeature::CREATE_FROM_ARRAY($data);
@@ -446,7 +436,6 @@ class Db
         $item = (new  \CardFeaturesQuery())->findPk($parsed->FeatureId);
         return Json\JFeature::CREATE_FROM_DB($item);
     }
-
     function CreateFeatureForCrud($data)
     {
         $item = Json\JFeature::CREATE_FROM_ARRAY($data);
@@ -457,7 +446,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JFeature::CREATE_FROM_DB($db);
     }
-
     function DeleteFeatureForCrud($id)
     {
         if(is_null($id)||$id<=0) return array();
@@ -505,7 +493,6 @@ class Db
 
         return array_merge($cardFeatures,$diff);
     }
-
     function UpdateFeatureForCard($data) {
         if(!array_key_exists('FeatureId',$data)) throw new \Exception('FeatureId not defined');
         if($data['FeatureId'] < 0) {
@@ -520,11 +507,9 @@ class Db
 
         return $this->UpdateFeatureForCrud($data);
     }
-
     function CreateFeatureForCard($data) {
         return $this->CreateFeatureForCrud($data);
     }
-
     function DeleteFeatureForCard($id)
     {
         if(is_null($id)||$id<=0) return array();
@@ -551,7 +536,6 @@ class Db
         }
         return $result;
     }
-
     function GetDescriptionsForCrud()
     {
         $result = array();
@@ -560,7 +544,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateDescriptionForCrud($data)
     {
         $parsed = Json\JDescription::CREATE_FROM_ARRAY($data);
@@ -576,7 +559,6 @@ class Db
         $item = (new  \CardDescriptionQuery())->findPk($parsed->ItemId);
         return Json\JDescription::CREATE_FROM_DB($item);
     }
-
     function CreateDescriptionForCrud($data)
     {
         $item = Json\JDescription::CREATE_FROM_ARRAY($data);
@@ -586,7 +568,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JDescription::CREATE_FROM_DB($db);
     }
-
     function DeleteDescriptionForCrud($id)
     {
         if(is_null($id)||$id<=0) return array();
@@ -598,8 +579,6 @@ class Db
         return array();
     }
 
-    
-
     /* Campaigns */
     function GetCampaignForCrud()
     {
@@ -609,7 +588,6 @@ class Db
         }
         return $result;
     }
-
     function GetCampaignForCard($id)
     {
         $result = array();
@@ -618,7 +596,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateCampaignForCrud($data)
     {
         $parsed = Json\JCampaign::CREATE_FROM_ARRAY($data);
@@ -634,7 +611,6 @@ class Db
         $item = (new  \CampaignQuery())->findPk($parsed->CampaignId);
         return Json\JCampaign::CREATE_FROM_DB($item);
     }
-
     function CreateCampaignForCrud($data)
     {
         $item = Json\JCampaign::CREATE_FROM_ARRAY($data);
@@ -645,7 +621,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JCampaign::CREATE_FROM_DB($db);
     }
-
     function DeleteCampaignForCrud($id)
     {
         if(is_null($id)||$id<=0) return array();
@@ -657,7 +632,6 @@ class Db
         return array();
     }
 
-
     /* Discounts */
     function GetDiscountForCrud()
     {
@@ -667,7 +641,6 @@ class Db
         }
         return $result;
     }
-
     function GetDiscountForCard($id)
     {
         $result = array();
@@ -676,7 +649,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateDiscountForCrud($data)
     {
         $parsed = Json\JDiscount::CREATE_FROM_ARRAY($data);
@@ -692,7 +664,6 @@ class Db
         $item = (new  \DiscountsQuery())->findPk($parsed->DiscountId);
         return Json\JDiscount::CREATE_FROM_DB($item);
     }
-
     function CreateDiscountForCrud($data)
     {
         $item = Json\JDiscount::CREATE_FROM_ARRAY($data);
@@ -703,7 +674,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JDiscount::CREATE_FROM_DB($db);
     }
-
     function DeleteDiscountForCrud($id)
     {
         if(is_null($id)||$id<=0) return array();
@@ -715,7 +685,6 @@ class Db
         return array();
     }
 
-
     /* Point Mappings */
     function GetPointMappingForCard($id)
     {
@@ -724,7 +693,6 @@ class Db
 
         return Json\CStorePointMapping::GET_POINT_MAPPINGS_FROM_CREDIT_CARD($cc);
     }
-
     function UpdatePointMappingForCard($data)
     {
 
@@ -735,7 +703,6 @@ class Db
 
         return $parsed->Reload();
     }
-
     function CreatePointMappingForCard($data)
     {
         $parsed = Json\CStorePointMapping::CREATE_FROM_ARRAY_RELAXED($data);
@@ -743,7 +710,6 @@ class Db
         if(!$parsed->saveToDb()) throw new \Exception ("Failed to save PointMapping from create request");
         return $parsed->Reload();
     }
-
     function DeletePointMappingForCard($id)
     {
         if(is_null($id)) throw new \Exception("No valid PointMapping id provided (was null)");
@@ -752,7 +718,6 @@ class Db
 
         return array();
     }
-
 
     /* Insurance */
     function GetInsuranceForCrud()
@@ -763,7 +728,6 @@ class Db
         }
         return $result;
     }
-
     function GetInsuranceForCard($id)
     {
         $result = array();
@@ -772,7 +736,6 @@ class Db
         }
         return $result;
     }
-
     function UpdateInsuranceForCrud($data)
     {
         $parsed = Json\JInsurance::CREATE_FROM_ARRAY($data);
@@ -788,7 +751,6 @@ class Db
         $item = (new  \InsuranceQuery())->findPk($parsed->InsuranceId);
         return Json\JInsurance::CREATE_FROM_DB($item);
     }
-
     function CreateInsuranceForCrud($data)
     {
         $item = Json\JInsurance::CREATE_FROM_ARRAY($data);
@@ -799,7 +761,6 @@ class Db
         //TODO implement cache, add to cache
         return Json\JInsurance::CREATE_FROM_DB($db);
     }
-
     function DeleteInsuranceForCrud($id)
     {
         if(is_null($id)||$id<=0) return array();

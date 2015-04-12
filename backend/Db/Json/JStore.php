@@ -78,8 +78,8 @@ class JStore implements JSONInterface {
         if(FieldUtils::STRING_IS_DEFINED($this->Category)) $item->setCategory($this->Category);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
 
-        $item->setUpdateTime(new \DateTime());
-        $item->setUpdateUser($this->UpdateUser);
+        //$item->setUpdateTime(new \DateTime());
+        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
 

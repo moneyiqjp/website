@@ -32,14 +32,39 @@
         }).responseText;
 
         if(tmp) {
-            var JSON = JSON.parse(tmp);
-            if(JSON["data"]!=undefined) {
-                var tmpStore = JSON["data"];
+            var jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                var tmpStore = jason["data"];
                 var index;
                 for (index = 0; index < tmpStore.length; ++index) {
                     stores.push({
                         value: tmpStore[index]["StoreId"],
                         label: tmpStore[index]["Category"] + " - " + tmpStore[index]["StoreName"]
+                    })
+                }
+            }
+        }
+
+        var insuranceTypes = [];
+        tmp = $.ajax({
+            url: '../backend/crud/insurance/type/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    insuranceTypes.push({
+                        value: tmpStore[index]["InsuranceTypeId"],
+                        label: tmpStore[index]["TypeName"] + " - " + tmpStore[index]["SubtypeName"] + " - " + tmpStore[index]["Region"]
                     })
                 }
             }
@@ -322,6 +347,51 @@
             }]
         });
 
+        insuranceEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: '../backend/crud/insurance/create', // default method is POST
+                edit: {
+                    type: 'PUT',
+                    url: '../backend/crud/insurance/update'
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '../backend/crud/insurance/delete'
+                }
+            },
+            table: "#insuranceTable",
+            idSrc: "InsuranceId",
+            "data": "CreditCard",
+            fields: [{
+                label: "Id:",
+                name: "InsuranceId",
+                type: "readonly"
+            },  {
+                label: "Card Id:",
+                name: "CreditCard.Id",
+                type: "readonly",
+                def: creditCardId
+            },{
+                label: "Type:",
+                name: "InsuranceType.InsuranceTypeId",
+                type:  "select",
+                options: insuranceTypes
+            }, {
+                label: "MaxInsuredAmount:",
+                name: "MaxInsuredAmount"
+            }, {
+                label: "Value:",
+                name: "Value"
+            }, {
+                label: "UpdateTime:",
+                name: "UpdateTime",
+                type: "readonly"
+            }, {
+                label: "UpdateUser:",
+                name: "UpdateUser"
+            }]
+        });
+
 
         $(document).ready(function () {
             $('#featureTable').dataTable({
@@ -476,8 +546,6 @@
                 }
             });
 
-
-
             $('#pointMappingTable').dataTable({
                 dom: "tTr",
                 "pageLength": 25,
@@ -505,7 +573,37 @@
                         {sExtends: "editor_remove", editor: pointMappingEditor}
                     ]
                 }
+            });
 
+            $('#insuranceTable').dataTable({
+                dom: "tTr",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/insurance/by/creditcard?Id=" + creditCardId,
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "InsuranceId", edit: false},
+                    {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
+                    {"data": "InsuranceType.TypeName", editField: "InsuranceType.TypeName"},
+                    {"data": "InsuranceType.SubtypeName", editField: "InsuranceType.SubtypeName"},
+                    {"data": "InsuranceType.Region", editField: "InsuranceType.Region"},
+                    {"data": "MaxInsuredAmount", editField: "MaxInsuredAmount"},
+                    {"data": "Value", editField: "Value"},
+                    {"data": "UpdateTime", visible:false},
+                    {"data": "UpdateUser", visible:false}
+                ]
+
+                , tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        {sExtends: "editor_create", editor: insuranceEditor},
+                        {sExtends: "editor_edit", editor: insuranceEditor},
+                        {sExtends: "editor_remove", editor: insuranceEditor}
+                    ]
+                }
             });
 
         });
@@ -687,6 +785,43 @@
         </td>
     </tr>
     <tr>
+        <td colspan="2">
+            <table id="insuranceTable" class="display" cellspacing="0">
+                <thead>
+                <tr>
+                    <td colspan="8" class="table-headline">
+                        Insurance
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>Type</th>
+                    <th>Subtype</th>
+                    <th>Region</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>Type</th>
+                    <th>Subtype</th>
+                    <th>Region</th>
+                    <th>Amount</th>
+                    <th>Value</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
+    </tr><tr>
         <td colspan="2">
             <table id="pointMappingTable" class="display" cellspacing="0">
                 <thead>
