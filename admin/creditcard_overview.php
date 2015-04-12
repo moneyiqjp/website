@@ -18,7 +18,36 @@
     <script type="text/javascript" language="javascript" class="init">
         var editor;
         var values = [];
+        values["issuers"] = [];
+        values["affiliates"] = [];
+        var tmp = $.ajax({
+            url: '../backend/display/issuers',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
 
+        if(tmp) {
+            values["issuers"] = JSON.parse(tmp);
+        }
+
+        tmp = $.ajax({
+            url: '../backend/display/affiliates',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+        if(tmp) {
+            values["affiliates"] = JSON.parse(tmp);
+        }
 
         $(document).ready(function() {
 
@@ -48,9 +77,10 @@
                         name: "name"
                     }, {
                         label: "Issuer:",
-                        name: "issuer_id",
+                        name: "issuer.id",
                         type: "select",
-                        options: []
+                        options: values["issuers"]
+
                     }, {
                         label: "Description:",
                         name: "description"
@@ -104,7 +134,7 @@
                         label: "Affiliate:",
                         name: "affiliate_id",
                         type: "select",
-                        options: []
+                        options: values["affiliates"]
                     }, {
                         label: "Update date:",
                         name: "update_time",
@@ -115,7 +145,7 @@
                     }
                 ]
              });
-
+/*
             editor.one( 'preOpen', function ( e, type ) {
                 var tmp = $.ajax({
                     url: 'http://localhost/backend/display/issuers',
@@ -145,7 +175,7 @@
                 //editor.field("affiliate_id")
 
             });
-
+*/
 
             $('#example').dataTable( {
                 dom: "Tfrtip",

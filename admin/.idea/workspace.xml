@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JInsuranceType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JInsuranceType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_details.php" afterPath="$PROJECT_DIR$/creditcard_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../config/propel.php" afterPath="$PROJECT_DIR$/../config/propel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_overview.php" afterPath="$PROJECT_DIR$/creditcard_overview.php" />
     </list>
     <ignored path="admin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-139.26923" vertical-offset="0" max-vertical-offset="5831">
-              <caret line="213" column="41" selection-start-line="213" selection-start-column="41" selection-end-line="213" selection-end-column="41" />
+            <state vertical-scroll-proportion="1.031171" vertical-offset="1479" max-vertical-offset="6341">
+              <caret line="159" column="52" selection-start-line="159" selection-start-column="52" selection-end-line="159" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -57,11 +51,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2787829" vertical-offset="5866" max-vertical-offset="14739">
-              <caret line="365" column="29" selection-start-line="365" selection-start-column="29" selection-end-line="365" selection-end-column="29" />
+            <state vertical-scroll-proportion="-15.038462" vertical-offset="0" max-vertical-offset="14739">
+              <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -70,7 +64,7 @@
       <file leaf-file-name="admin_editor.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1190">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
               <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
@@ -101,9 +95,9 @@
         <option value="$PROJECT_DIR$/datatablestest.php" />
         <option value="$PROJECT_DIR$/media/css/jquery.dataTables.css" />
         <option value="$PROJECT_DIR$/media/css/admin_editor.css" />
-        <option value="$PROJECT_DIR$/creditcard_overview.php" />
         <option value="$PROJECT_DIR$/other.php" />
         <option value="$PROJECT_DIR$/creditcard_details.php" />
+        <option value="$PROJECT_DIR$/creditcard_overview.php" />
       </list>
     </option>
   </component>
@@ -692,22 +686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-139.26923" vertical-offset="0" max-vertical-offset="5831">
-          <caret line="213" column="41" selection-start-line="213" selection-start-column="41" selection-end-line="213" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/other.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="96.42308" vertical-offset="8117" max-vertical-offset="9333">
@@ -716,10 +694,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1190">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2787829" vertical-offset="5866" max-vertical-offset="14739">
-          <caret line="365" column="29" selection-start-line="365" selection-start-column="29" selection-end-line="365" selection-end-column="29" />
+        <state vertical-scroll-proportion="-15.038462" vertical-offset="0" max-vertical-offset="14739">
+          <caret line="23" column="45" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.031171" vertical-offset="1479" max-vertical-offset="6341">
+          <caret line="159" column="52" selection-start-line="159" selection-start-column="52" selection-end-line="159" selection-end-column="52" />
           <folding />
         </state>
       </provider>
