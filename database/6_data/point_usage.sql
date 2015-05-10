@@ -164,7 +164,4 @@ select 'store', yen_per_point, credit_card_id,store_id, update_time, update_user
 
 update point_usage set yen_per_point = 1.0 where yen_per_point <> 1.0;
 
-select * from point_system;
-select * from point_usage;
-
 SET FOREIGN_KEY_CHECKS = 1;

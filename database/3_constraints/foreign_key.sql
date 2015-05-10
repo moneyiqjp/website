@@ -25,10 +25,10 @@ ALTER TABLE campaign ADD CONSTRAINT campaign_credit_card FOREIGN KEY campaign_cr
 
 ALTER TABLE card_features ADD CONSTRAINT card_features_credit_card FOREIGN KEY card_features_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
--- Reference:  credit_card_point_system (table: point_system)
+-- Reference:  credit_card_point_acquisition (table: point_acquisition)
 
 
-ALTER TABLE point_system ADD CONSTRAINT credit_card_point_system FOREIGN KEY credit_card_point_system (credit_card_id)
+ALTER TABLE point_acquisition ADD CONSTRAINT credit_card_point_acquisition FOREIGN KEY credit_card_point_acquisition (credit_card_id)
     REFERENCES credit_card (credit_card_id);
 -- Reference:  creditcard_description (table: card_description)
 
@@ -63,10 +63,10 @@ ALTER TABLE insurance ADD CONSTRAINT insurance_insurance_type FOREIGN KEY insura
 -- Reference:  issuer_credit_card (table: credit_card)
 ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_credit_card (issuer_id)
     REFERENCES issuer (issuer_id);
--- Reference:  point_system_store (table: point_system)
+-- Reference:  point_acquisition_store (table: point_acquisition)
 
 
-ALTER TABLE point_system ADD CONSTRAINT point_system_store FOREIGN KEY point_system_store (store_id)
+ALTER TABLE point_acquisition ADD CONSTRAINT point_acquisition_store FOREIGN KEY point_acquisition_store (store_id)
     REFERENCES store (store_id);
 -- Reference:  point_usage_credit_card (table: point_usage)
 
