@@ -170,8 +170,8 @@ class CardFeaturesTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('CardFeatureType', '\\CardFeatureType', RelationMap::MANY_TO_ONE, array('feature_type_id' => 'feature_type_id', ), null, null);
         $this->addRelation('CreditCard', '\\CreditCard', RelationMap::MANY_TO_ONE, array('credit_card_id' => 'credit_card_id', ), null, null);
+        $this->addRelation('CardFeatureType', '\\CardFeatureType', RelationMap::MANY_TO_ONE, array('feature_type_id' => 'feature_type_id', ), null, null);
     } // buildRelations()
 
     /**

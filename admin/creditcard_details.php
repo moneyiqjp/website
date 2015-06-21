@@ -70,7 +70,34 @@
             }
         }
 
-    if(creditCardId>0) {
+        var pointSystems = [];
+        tmp = $.ajax({
+            url: '../backend/crud/pointsystem/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    pointSystems.push({
+                        value: tmpStore[index]["PointSystemId"],
+                        label: tmpStore[index]["PointSystemName"]
+                    })
+                }
+            }
+        }
+
+
+
+        if(creditCardId>0) {
         featureEditor = new $.fn.dataTable.Editor({
             ajax: {
                 create: '../backend/crud/feature/by/creditcard/create', // default method is POST
@@ -296,55 +323,34 @@
 
         pointMappingEditor = new $.fn.dataTable.Editor({
             ajax: {
-                create: '../backend/crud/pointmapping/by/creditcard/create', // default method is POST
+                create: '../backend/crud/creditcard/pointsystem/mapping/create', // default method is POST
                 edit: {
                     type: 'PUT',
-                    url: '../backend/crud/pointmapping/by/creditcard/update'
+                    url: '../backend/crud/creditcard/pointsystem/mapping//update'
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '../backend/crud/pointmapping/by/creditcard/delete'
+                    url: '../backend/crud/creditcard/pointsystem/mapping/delete'
                 }
             },
-            table: "#pointMappingTable",
-            idSrc: "MappingId",
+            table: "#pointSystemTable",
+            idSrc: "Id",
             fields: [{
                 label: "Id:",
-                name: "MappingId",
+                name: "Id",
                 type: "readonly"
             },   {
                 label: "Card Id:",
-                name: "PointSystem.CreditCard.Id",
+                name: "CreditCard.credit_card_id",
                 type: "readonly",
                 def: creditCardId
             }, {
-                label: "Card Id:",
-                name: "PointUsage.CreditCard.Id",
-                type: "readonly",
-                def: creditCardId
-            },{
-                label: "PointSystemId:",
+                label: "PointSystem:",
                 name: "PointSystem.PointSystemId",
-                type: "readonly"
-            }, {
-                label: "PointUsageId:",
-                name: "PointUsage.PointUsageId",
-                type: "readonly"
-            }, {
-                label: "Category/Store:",
-                name: "Store.StoreId",
                 type:  "select",
-                options: stores
-            }, {
-                label: "PointSystemName:",
-                name: "PointSystem.PointSystemName"
-            }, {
-                label: "PointsPerYen:",
-                name: "PointSystem.PointsPerYen"
-            }, {
-                label: "YenPerPoint:",
-                name: "PointUsage.YenPerPoint"
-            }]
+                options: pointSystems
+            }
+            ]
         });
 
         insuranceEditor = new $.fn.dataTable.Editor({
@@ -546,34 +552,6 @@
                 }
             });
 
-            $('#pointMappingTable').dataTable({
-                dom: "tTr",
-                "pageLength": 25,
-                "ajax": {
-                    "url": "../backend/crud/pointmapping/by/creditcard?Id=" + creditCardId,
-                    "type": "GET",
-                    "contentType": "application/json; charset=utf-8",
-                    "dataType": "json"
-                },
-                "columns": [
-                    {"data": "Store.StoreId", edit: false, width: 5},
-                    {"data": "PointSystem.CreditCard.Name", editField: "CreditCard.Id", visible: false},
-                    {"data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId", visible: false},
-                    {"data": "Store.Category", editField: "Store.Category", edit:false},
-                    {"data": "Store.StoreName", editField: "Store.Id"},
-                    {"data": "PointSystem.PointsPerYen", width: 10},
-                    {"data": "PointUsage.YenPerPoint", width: 10}
-                ]
-
-                , tableTools: {
-                    sRowSelect: "os",
-                    aButtons: [
-                        {sExtends: "editor_create", editor: pointMappingEditor},
-                        {sExtends: "editor_edit", editor: pointMappingEditor},
-                        {sExtends: "editor_remove", editor: pointMappingEditor}
-                    ]
-                }
-            });
 
             $('#insuranceTable').dataTable({
                 dom: "tTr",
@@ -605,6 +583,44 @@
                     ]
                 }
             });
+
+
+             $('#pointSystemTable').dataTable({
+                 dom: "tTr",
+                 "pageLength": 25,
+                 "ajax": {
+                     "url": "../backend/crud/creditcard/pointsystem/mapping/by/creditcard?Id=" + creditCardId,
+                     "type": "GET",
+                     "contentType": "application/json; charset=utf-8",
+                     "dataType": "json"
+                },
+                 "columns": [
+                     {"data": "Id"},
+                     {"data": "CreditCard.credit_card_id", visible:false},
+                     /*{"data": "PointSystem.PointSystemId", visible:false},*/
+                     {"data": "PointSystem.PointSystemName"},
+                     {"data": "UpdateTime", visible:false},
+                     {"data": "UpdateUser",  visible:false},
+                     {"data": "PointSystem.PointSystemId",
+                         render: function ( data, type, row ) {
+                             if ( type === 'display' ) {
+                                return "<a href='pointprogram_details.php?Id=" + data + "'>Details</a>";
+                             }
+                             return data;
+                             }
+                     }
+
+                ]
+                , tableTools: {
+                     sRowSelect: "os",
+                     aButtons: [
+                         {sExtends: "editor_create", editor: pointMappingEditor},
+                         {sExtends: "editor_remove", editor: pointMappingEditor}
+                     ]
+                 }
+
+             });
+
 
         });
     }
@@ -668,6 +684,35 @@
                 </tr>
                 </tfoot>
             </table>
+            <table id="pointSystemTable" class="display" cellspacing="0" width="300">
+                <thead>
+                <tr>
+                    <td colspan="9" class="table-headline">
+                        Point System
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Id</th>
+                    <th>Point System</th>
+                    <th>User</th>
+                    <th>Time</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Id</th>
+                    <th>Point System</th>
+                    <th>User</th>
+                    <th>Time</th>
+                    <th>Details</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
         </td>
         <td valign="top">
             <table id="descriptionTable" class="display" cellspacing="0" width="800">
@@ -821,13 +866,15 @@
                 </tfoot>
             </table>
         </td>
-    </tr><tr>
+    </tr>
+    <!--
+    <tr>
         <td colspan="2">
             <table id="pointMappingTable" class="display" cellspacing="0">
                 <thead>
                 <tr>
                     <td colspan="8" class="table-headline">
-                        Point mappings
+                        Point System
                     </td>
                 </tr>
                 <tr>
@@ -855,6 +902,7 @@
             </table>
         </td>
     </tr>
+    -->
 </table>
 
 

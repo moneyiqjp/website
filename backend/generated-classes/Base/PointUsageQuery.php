@@ -53,7 +53,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointUsage findOneByPointUsageId(int $point_usage_id) Return the first ChildPointUsage filtered by the point_usage_id column
  * @method     ChildPointUsage findOneByStoreId(int $store_id) Return the first ChildPointUsage filtered by the store_id column
- * @method     ChildPointUsage findOneByYenPerPoint(double $yen_per_point) Return the first ChildPointUsage filtered by the yen_per_point column
+ * @method     ChildPointUsage findOneByYenPerPoint(string $yen_per_point) Return the first ChildPointUsage filtered by the yen_per_point column
  * @method     ChildPointUsage findOneByCreditCardId(int $credit_card_id) Return the first ChildPointUsage filtered by the credit_card_id column
  * @method     ChildPointUsage findOneByUpdateTime(string $update_time) Return the first ChildPointUsage filtered by the update_time column
  * @method     ChildPointUsage findOneByUpdateUser(string $update_user) Return the first ChildPointUsage filtered by the update_user column
@@ -61,7 +61,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUsage[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointUsage objects based on current ModelCriteria
  * @method     ChildPointUsage[]|ObjectCollection findByPointUsageId(int $point_usage_id) Return ChildPointUsage objects filtered by the point_usage_id column
  * @method     ChildPointUsage[]|ObjectCollection findByStoreId(int $store_id) Return ChildPointUsage objects filtered by the store_id column
- * @method     ChildPointUsage[]|ObjectCollection findByYenPerPoint(double $yen_per_point) Return ChildPointUsage objects filtered by the yen_per_point column
+ * @method     ChildPointUsage[]|ObjectCollection findByYenPerPoint(string $yen_per_point) Return ChildPointUsage objects filtered by the yen_per_point column
  * @method     ChildPointUsage[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildPointUsage objects filtered by the credit_card_id column
  * @method     ChildPointUsage[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPointUsage objects filtered by the update_time column
  * @method     ChildPointUsage[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointUsage objects filtered by the update_user column

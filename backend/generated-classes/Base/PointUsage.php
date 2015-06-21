@@ -79,7 +79,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * The value for the yen_per_point field.
-     * @var        double
+     * @var        string
      */
     protected $yen_per_point;
 
@@ -359,7 +359,7 @@ abstract class PointUsage implements ActiveRecordInterface
     /**
      * Get the [yen_per_point] column value.
      *
-     * @return double
+     * @return string
      */
     public function getYenPerPoint()
     {
@@ -453,13 +453,13 @@ abstract class PointUsage implements ActiveRecordInterface
     /**
      * Set the value of [yen_per_point] column.
      *
-     * @param  double $v new value
+     * @param  string $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
     public function setYenPerPoint($v)
     {
         if ($v !== null) {
-            $v = (double) $v;
+            $v = (string) $v;
         }
 
         if ($this->yen_per_point !== $v) {
@@ -577,7 +577,7 @@ abstract class PointUsage implements ActiveRecordInterface
             $this->store_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PointUsageTableMap::translateFieldName('YenPerPoint', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->yen_per_point = (null !== $col) ? (double) $col : null;
+            $this->yen_per_point = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PointUsageTableMap::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->credit_card_id = (null !== $col) ? (int) $col : null;

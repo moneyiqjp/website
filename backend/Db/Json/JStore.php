@@ -38,9 +38,18 @@ class JStore implements JSONInterface {
 
     public static function CREATE_FROM_ARRAY($data)
     {
+        if (!ArrayUtils::KEY_EXISTS($data, 'StoreId')) throw new \Exception("Required key StoreId not found");
+
+        return JStore::CREATE_FROM_ARRAY_RELAXED($data);
+    }
+    public static function CREATE_FROM_ARRAY_RELAXED($data)
+    {
         $mine = new JStore();
-        if(!ArrayUtils::KEY_EXISTS($data,'StoreId')) throw new \Exception("Required key StoreId not found");
-        $mine->StoreId = $data['StoreId'];
+        if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {
+            $mine->StoreId = $data['StoreId'];
+            $store =(new \StoreQuery())->findPk($mine->StoreId);
+            if(!is_null($store)) $mine = JStore::CREATE_FROM_DB($store);
+        }
 
         if(ArrayUtils::KEY_EXISTS($data,'StoreName')) $mine->StoreName = $data['StoreName'];
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = $data['Category'];

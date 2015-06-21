@@ -123,11 +123,11 @@
     <column name="feature_cost" phpName="FeatureCost" type="INTEGER"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
-    <foreign-key foreignTable="card_feature_type" name="fk_card_feature_type">
-      <reference local="feature_type_id" foreign="feature_type_id"/>
-    </foreign-key>
     <foreign-key foreignTable="credit_card" name="card_features_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="card_feature_type" name="fk_card_feature_type">
+      <reference local="feature_type_id" foreign="feature_type_id"/>
     </foreign-key>
     <index name="card_features_credit_card">
       <index-column name="credit_card_id"/>
@@ -152,6 +152,29 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="card_point_system" idMethod="native" phpName="CardPointSystem">
+    <column name="card_point_system_id" phpName="CardPointSystemId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="credit_card" name="fk_credit_card_id">
+      <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="point_system" name="fk_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <index name="fk_credit_card_id">
+      <index-column name="credit_card_id"/>
+    </index>
+    <index name="fk_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="credit_card" idMethod="native" phpName="CreditCard">
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -167,11 +190,11 @@
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
-    <foreign-key foreignTable="issuer" name="issuer_credit_card">
-      <reference local="issuer_id" foreign="issuer_id"/>
-    </foreign-key>
     <foreign-key foreignTable="affiliate_company" name="affiliate_company_credit_card">
       <reference local="affiliate_id" foreign="affiliate_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="issuer" name="issuer_credit_card">
+      <reference local="issuer_id" foreign="issuer_id"/>
     </foreign-key>
     <index name="idx_1">
       <index-column name="credit_card_id"/>
@@ -206,6 +229,34 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="discount" idMethod="native" phpName="Discount">
+    <column name="discount_id" phpName="DiscountId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="percentage" phpName="Percentage" type="DOUBLE" size="15" scale="15" required="true"/>
+    <column name="start_date" phpName="StartDate" type="DATE"/>
+    <column name="end_date" phpName="EndDate" type="DATE"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="multiple" phpName="Multiple" type="DOUBLE" size="30" scale="30" required="true"/>
+    <column name="conditions" phpName="Conditions" type="LONGVARCHAR"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="point_system" name="fk_discount_point_system_key">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="store" name="fk_discount_store_key">
+      <reference local="store_id" foreign="store_id"/>
+    </foreign-key>
+    <index name="fk_discount_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <index name="fk_discount_store">
+      <index-column name="store_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="discounts" idMethod="native" phpName="Discounts">
     <column name="discount_id" phpName="DiscountId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="percentage" phpName="Percentage" type="DOUBLE" size="15" scale="15" required="true"/>
@@ -218,11 +269,11 @@
     <column name="conditions" phpName="Conditions" type="LONGVARCHAR"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="store" name="fk_discounts_store">
-      <reference local="store_id" foreign="store_id"/>
-    </foreign-key>
-    <foreign-key foreignTable="credit_card" name="fk_discounts_credit_card">
+    <foreign-key foreignTable="credit_card" name="fk_discounts_credit_card_key">
       <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="store" name="fk_discounts_store_key">
+      <reference local="store_id" foreign="store_id"/>
     </foreign-key>
     <index name="fk_discounts_credit_card">
       <index-column name="credit_card_id"/>
@@ -294,11 +345,11 @@
     <column name="value" phpName="Value" type="INTEGER"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="insurance_type" name="insurance_insurance_type">
-      <reference local="insurance_type_id" foreign="insurance_type_id"/>
-    </foreign-key>
     <foreign-key foreignTable="credit_card" name="insurance_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="insurance_type" name="insurance_insurance_type_key">
+      <reference local="insurance_type_id" foreign="insurance_type_id"/>
     </foreign-key>
     <index name="insurance_credit_card">
       <index-column name="credit_card_id"/>
@@ -357,11 +408,11 @@
     <column name="max_interest" phpName="MaxInterest" type="DOUBLE" size="15" scale="15"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="payment_type" name="Interest_payment_type">
-      <reference local="payment_type_id" foreign="payment_type_id"/>
-    </foreign-key>
     <foreign-key foreignTable="credit_card" name="Interest_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="payment_type" name="Interest_payment_type">
+      <reference local="payment_type_id" foreign="payment_type_id"/>
     </foreign-key>
     <index name="credit_card_id">
       <index-column name="credit_card_id"/>
@@ -429,26 +480,50 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="point_system" idMethod="native" phpName="PointSystem">
-    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="point_system_name" phpName="PointSystemName" type="VARCHAR" size="255" required="true"/>
+  <table name="point_acquisition" idMethod="native" phpName="PointAcquisition">
+    <column name="point_acquisition_id" phpName="PointAcquisitionId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_acquisition_name" phpName="PointAcquisitionName" type="VARCHAR" size="255" required="true"/>
     <column name="points_per_yen" phpName="PointsPerYen" type="DOUBLE" size="15" scale="15" required="true"/>
-    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
     <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="store" name="point_system_store">
+    <foreign-key foreignTable="store" name="FK_point_acquisition_store">
       <reference local="store_id" foreign="store_id"/>
     </foreign-key>
-    <foreign-key foreignTable="credit_card" name="credit_card_point_system">
-      <reference local="credit_card_id" foreign="credit_card_id"/>
+    <foreign-key foreignTable="point_system" name="ps_point_acquisition">
+      <reference local="point_system_id" foreign="point_system_id"/>
     </foreign-key>
-    <index name="credit_card_point_system">
-      <index-column name="credit_card_id"/>
-    </index>
-    <index name="point_system_store">
+    <index name="FK_point_acquisition_store">
       <index-column name="store_id"/>
     </index>
+    <index name="ps_point_acquisition">
+      <index-column name="point_system_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="point_acquisition_history" idMethod="native" phpName="PointAcquisitionHistory">
+    <column name="point_acquisition_id" phpName="PointAcquisitionId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="point_acquisition_name" phpName="PointAcquisitionName" type="VARCHAR" size="255" required="true"/>
+    <column name="points_per_yen" phpName="PointsPerYen" type="DOUBLE" size="15" scale="15" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
+    <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="point_system" idMethod="native" phpName="PointSystem">
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_name" phpName="PointSystemName" type="VARCHAR" size="255" required="true"/>
+    <column name="default_points_per_yen" phpName="DefaultPointsPerYen" type="DECIMAL" required="true"/>
+    <column name="default_yen_per_point" phpName="DefaultYenPerPoint" type="DECIMAL" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -456,9 +531,8 @@
   <table name="point_system_history" idMethod="native" phpName="PointSystemHistory">
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="point_system_name" phpName="PointSystemName" type="VARCHAR" size="255" required="true"/>
-    <column name="points_per_yen" phpName="PointsPerYen" type="DOUBLE" size="15" scale="15" required="true"/>
-    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
-    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="default_points_per_yen" phpName="DefaultPointsPerYen" type="DECIMAL" required="true"/>
+    <column name="default_yen_per_point" phpName="DefaultYenPerPoint" type="DECIMAL" required="true"/>
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
@@ -469,7 +543,7 @@
   <table name="point_usage" idMethod="native" phpName="PointUsage">
     <column name="point_usage_id" phpName="PointUsageId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
-    <column name="yen_per_point" phpName="YenPerPoint" type="DOUBLE" size="16" scale="16" required="true"/>
+    <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" size="8" scale="6" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
@@ -492,8 +566,78 @@
   <table name="point_usage_history" idMethod="native" phpName="PointUsageHistory">
     <column name="point_usage_id" phpName="PointUsageId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
-    <column name="yen_per_point" phpName="YenPerPoint" type="DOUBLE" size="16" scale="16" required="true"/>
+    <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" size="8" scale="6" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
+    <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
+    <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="point_use" idMethod="native" phpName="PointUse">
+    <column name="point_use_id" phpName="PointUseId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" size="8" scale="6" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="point_system" name="point_use_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="store" name="point_use_store">
+      <reference local="store_id" foreign="store_id"/>
+    </foreign-key>
+    <index name="point_use_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <index name="point_use_store">
+      <index-column name="store_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward" idMethod="native" phpName="Reward">
+    <column name="reward_id" phpName="RewardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
+    <column name="category" phpName="Category" type="VARCHAR" size="255" required="true"/>
+    <column name="title" phpName="Title" type="VARCHAR" size="255"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="icon" phpName="Icon" type="VARCHAR" size="255"/>
+    <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" scale="6" required="true"/>
+    <column name="price_per_unit" phpName="PricePerUnit" type="INTEGER"/>
+    <column name="min_points" phpName="MinPoints" type="INTEGER"/>
+    <column name="max_points" phpName="MaxPoints" type="INTEGER"/>
+    <column name="required_points" phpName="RequiredPoints" type="INTEGER"/>
+    <column name="max_period" phpName="MaxPeriod" type="VARCHAR" size="255"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="point_system" name="FK_reward_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <index name="FK_reward_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward_history" idMethod="native" phpName="RewardHistory">
+    <column name="reward_id" phpName="RewardId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
+    <column name="category" phpName="Category" type="VARCHAR" size="255" required="true"/>
+    <column name="title" phpName="Title" type="VARCHAR" size="255"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="icon" phpName="Icon" type="VARCHAR" size="255"/>
+    <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" scale="6" required="true"/>
+    <column name="price_per_unit" phpName="PricePerUnit" type="INTEGER"/>
+    <column name="min_points" phpName="MinPoints" type="INTEGER"/>
+    <column name="max_points" phpName="MaxPoints" type="INTEGER"/>
+    <column name="required_points" phpName="RequiredPoints" type="INTEGER"/>
+    <column name="max_period" phpName="MaxPeriod" type="VARCHAR" size="255"/>
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>

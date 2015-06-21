@@ -74,22 +74,16 @@ abstract class PointSystemHistory implements ActiveRecordInterface
     protected $point_system_name;
 
     /**
-     * The value for the points_per_yen field.
-     * @var        double
+     * The value for the default_points_per_yen field.
+     * @var        string
      */
-    protected $points_per_yen;
+    protected $default_points_per_yen;
 
     /**
-     * The value for the credit_card_id field.
-     * @var        int
+     * The value for the default_yen_per_point field.
+     * @var        string
      */
-    protected $credit_card_id;
-
-    /**
-     * The value for the store_id field.
-     * @var        int
-     */
-    protected $store_id;
+    protected $default_yen_per_point;
 
     /**
      * The value for the time_beg field.
@@ -355,33 +349,23 @@ abstract class PointSystemHistory implements ActiveRecordInterface
     }
 
     /**
-     * Get the [points_per_yen] column value.
+     * Get the [default_points_per_yen] column value.
      *
-     * @return double
+     * @return string
      */
-    public function getPointsPerYen()
+    public function getDefaultPointsPerYen()
     {
-        return $this->points_per_yen;
+        return $this->default_points_per_yen;
     }
 
     /**
-     * Get the [credit_card_id] column value.
+     * Get the [default_yen_per_point] column value.
      *
-     * @return int
+     * @return string
      */
-    public function getCreditCardId()
+    public function getDefaultYenPerPoint()
     {
-        return $this->credit_card_id;
-    }
-
-    /**
-     * Get the [store_id] column value.
-     *
-     * @return int
-     */
-    public function getStoreId()
-    {
-        return $this->store_id;
+        return $this->default_yen_per_point;
     }
 
     /**
@@ -475,64 +459,44 @@ abstract class PointSystemHistory implements ActiveRecordInterface
     } // setPointSystemName()
 
     /**
-     * Set the value of [points_per_yen] column.
+     * Set the value of [default_points_per_yen] column.
      *
-     * @param  double $v new value
+     * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
-    public function setPointsPerYen($v)
+    public function setDefaultPointsPerYen($v)
     {
         if ($v !== null) {
-            $v = (double) $v;
+            $v = (string) $v;
         }
 
-        if ($this->points_per_yen !== $v) {
-            $this->points_per_yen = $v;
-            $this->modifiedColumns[PointSystemHistoryTableMap::COL_POINTS_PER_YEN] = true;
+        if ($this->default_points_per_yen !== $v) {
+            $this->default_points_per_yen = $v;
+            $this->modifiedColumns[PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN] = true;
         }
 
         return $this;
-    } // setPointsPerYen()
+    } // setDefaultPointsPerYen()
 
     /**
-     * Set the value of [credit_card_id] column.
+     * Set the value of [default_yen_per_point] column.
      *
-     * @param  int $v new value
+     * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
-    public function setCreditCardId($v)
+    public function setDefaultYenPerPoint($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->credit_card_id !== $v) {
-            $this->credit_card_id = $v;
-            $this->modifiedColumns[PointSystemHistoryTableMap::COL_CREDIT_CARD_ID] = true;
+        if ($this->default_yen_per_point !== $v) {
+            $this->default_yen_per_point = $v;
+            $this->modifiedColumns[PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT] = true;
         }
 
         return $this;
-    } // setCreditCardId()
-
-    /**
-     * Set the value of [store_id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\PointSystemHistory The current object (for fluent API support)
-     */
-    public function setStoreId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->store_id !== $v) {
-            $this->store_id = $v;
-            $this->modifiedColumns[PointSystemHistoryTableMap::COL_STORE_ID] = true;
-        }
-
-        return $this;
-    } // setStoreId()
+    } // setDefaultYenPerPoint()
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
@@ -636,28 +600,25 @@ abstract class PointSystemHistory implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PointSystemHistoryTableMap::translateFieldName('PointSystemName', TableMap::TYPE_PHPNAME, $indexType)];
             $this->point_system_name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PointSystemHistoryTableMap::translateFieldName('PointsPerYen', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->points_per_yen = (null !== $col) ? (double) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PointSystemHistoryTableMap::translateFieldName('DefaultPointsPerYen', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->default_points_per_yen = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PointSystemHistoryTableMap::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->credit_card_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PointSystemHistoryTableMap::translateFieldName('DefaultYenPerPoint', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->default_yen_per_point = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PointSystemHistoryTableMap::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->store_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PointSystemHistoryTableMap::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PointSystemHistoryTableMap::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->time_beg = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PointSystemHistoryTableMap::translateFieldName('TimeEnd', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PointSystemHistoryTableMap::translateFieldName('TimeEnd', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->time_end = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PointSystemHistoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PointSystemHistoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -667,7 +628,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = PointSystemHistoryTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = PointSystemHistoryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\PointSystemHistory'), 0, $e);
@@ -866,14 +827,11 @@ abstract class PointSystemHistory implements ActiveRecordInterface
         if ($this->isColumnModified(PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'point_system_name';
         }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_POINTS_PER_YEN)) {
-            $modifiedColumns[':p' . $index++]  = 'points_per_yen';
+        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN)) {
+            $modifiedColumns[':p' . $index++]  = 'default_points_per_yen';
         }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'credit_card_id';
-        }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_STORE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'store_id';
+        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT)) {
+            $modifiedColumns[':p' . $index++]  = 'default_yen_per_point';
         }
         if ($this->isColumnModified(PointSystemHistoryTableMap::COL_TIME_BEG)) {
             $modifiedColumns[':p' . $index++]  = 'time_beg';
@@ -901,14 +859,11 @@ abstract class PointSystemHistory implements ActiveRecordInterface
                     case 'point_system_name':
                         $stmt->bindValue($identifier, $this->point_system_name, PDO::PARAM_STR);
                         break;
-                    case 'points_per_yen':
-                        $stmt->bindValue($identifier, $this->points_per_yen, PDO::PARAM_STR);
+                    case 'default_points_per_yen':
+                        $stmt->bindValue($identifier, $this->default_points_per_yen, PDO::PARAM_STR);
                         break;
-                    case 'credit_card_id':
-                        $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
-                        break;
-                    case 'store_id':
-                        $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
+                    case 'default_yen_per_point':
+                        $stmt->bindValue($identifier, $this->default_yen_per_point, PDO::PARAM_STR);
                         break;
                     case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -981,21 +936,18 @@ abstract class PointSystemHistory implements ActiveRecordInterface
                 return $this->getPointSystemName();
                 break;
             case 2:
-                return $this->getPointsPerYen();
+                return $this->getDefaultPointsPerYen();
                 break;
             case 3:
-                return $this->getCreditCardId();
+                return $this->getDefaultYenPerPoint();
                 break;
             case 4:
-                return $this->getStoreId();
-                break;
-            case 5:
                 return $this->getTimeBeg();
                 break;
-            case 6:
+            case 5:
                 return $this->getTimeEnd();
                 break;
-            case 7:
+            case 6:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1029,12 +981,11 @@ abstract class PointSystemHistory implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getPointSystemId(),
             $keys[1] => $this->getPointSystemName(),
-            $keys[2] => $this->getPointsPerYen(),
-            $keys[3] => $this->getCreditCardId(),
-            $keys[4] => $this->getStoreId(),
-            $keys[5] => $this->getTimeBeg(),
-            $keys[6] => $this->getTimeEnd(),
-            $keys[7] => $this->getUpdateUser(),
+            $keys[2] => $this->getDefaultPointsPerYen(),
+            $keys[3] => $this->getDefaultYenPerPoint(),
+            $keys[4] => $this->getTimeBeg(),
+            $keys[5] => $this->getTimeEnd(),
+            $keys[6] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1081,21 +1032,18 @@ abstract class PointSystemHistory implements ActiveRecordInterface
                 $this->setPointSystemName($value);
                 break;
             case 2:
-                $this->setPointsPerYen($value);
+                $this->setDefaultPointsPerYen($value);
                 break;
             case 3:
-                $this->setCreditCardId($value);
+                $this->setDefaultYenPerPoint($value);
                 break;
             case 4:
-                $this->setStoreId($value);
-                break;
-            case 5:
                 $this->setTimeBeg($value);
                 break;
-            case 6:
+            case 5:
                 $this->setTimeEnd($value);
                 break;
-            case 7:
+            case 6:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1131,22 +1079,19 @@ abstract class PointSystemHistory implements ActiveRecordInterface
             $this->setPointSystemName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPointsPerYen($arr[$keys[2]]);
+            $this->setDefaultPointsPerYen($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setCreditCardId($arr[$keys[3]]);
+            $this->setDefaultYenPerPoint($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setStoreId($arr[$keys[4]]);
+            $this->setTimeBeg($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setTimeBeg($arr[$keys[5]]);
+            $this->setTimeEnd($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setTimeEnd($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateUser($arr[$keys[7]]);
+            $this->setUpdateUser($arr[$keys[6]]);
         }
     }
 
@@ -1195,14 +1140,11 @@ abstract class PointSystemHistory implements ActiveRecordInterface
         if ($this->isColumnModified(PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME)) {
             $criteria->add(PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME, $this->point_system_name);
         }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_POINTS_PER_YEN)) {
-            $criteria->add(PointSystemHistoryTableMap::COL_POINTS_PER_YEN, $this->points_per_yen);
+        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN)) {
+            $criteria->add(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN, $this->default_points_per_yen);
         }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID)) {
-            $criteria->add(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID, $this->credit_card_id);
-        }
-        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_STORE_ID)) {
-            $criteria->add(PointSystemHistoryTableMap::COL_STORE_ID, $this->store_id);
+        if ($this->isColumnModified(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT)) {
+            $criteria->add(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT, $this->default_yen_per_point);
         }
         if ($this->isColumnModified(PointSystemHistoryTableMap::COL_TIME_BEG)) {
             $criteria->add(PointSystemHistoryTableMap::COL_TIME_BEG, $this->time_beg);
@@ -1309,9 +1251,8 @@ abstract class PointSystemHistory implements ActiveRecordInterface
     {
         $copyObj->setPointSystemId($this->getPointSystemId());
         $copyObj->setPointSystemName($this->getPointSystemName());
-        $copyObj->setPointsPerYen($this->getPointsPerYen());
-        $copyObj->setCreditCardId($this->getCreditCardId());
-        $copyObj->setStoreId($this->getStoreId());
+        $copyObj->setDefaultPointsPerYen($this->getDefaultPointsPerYen());
+        $copyObj->setDefaultYenPerPoint($this->getDefaultYenPerPoint());
         $copyObj->setTimeBeg($this->getTimeBeg());
         $copyObj->setTimeEnd($this->getTimeEnd());
         $copyObj->setUpdateUser($this->getUpdateUser());
@@ -1351,9 +1292,8 @@ abstract class PointSystemHistory implements ActiveRecordInterface
     {
         $this->point_system_id = null;
         $this->point_system_name = null;
-        $this->points_per_yen = null;
-        $this->credit_card_id = null;
-        $this->store_id = null;
+        $this->default_points_per_yen = null;
+        $this->default_yen_per_point = null;
         $this->time_beg = null;
         $this->time_end = null;
         $this->update_user = null;

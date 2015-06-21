@@ -164,9 +164,11 @@ class StoreTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Discount', '\\Discount', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discounts');
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
-        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointSystems');
+        $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
         $this->addRelation('PointUsage', '\\PointUsage', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUsages');
+        $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUses');
     } // buildRelations()
 
     /**

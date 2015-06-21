@@ -54,13 +54,13 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildCreditCardQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildCreditCardQuery leftJoinIssuer($relationAlias = null) Adds a LEFT JOIN clause to the query using the Issuer relation
- * @method     ChildCreditCardQuery rightJoinIssuer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Issuer relation
- * @method     ChildCreditCardQuery innerJoinIssuer($relationAlias = null) Adds a INNER JOIN clause to the query using the Issuer relation
- *
  * @method     ChildCreditCardQuery leftJoinAffiliateCompany($relationAlias = null) Adds a LEFT JOIN clause to the query using the AffiliateCompany relation
  * @method     ChildCreditCardQuery rightJoinAffiliateCompany($relationAlias = null) Adds a RIGHT JOIN clause to the query using the AffiliateCompany relation
  * @method     ChildCreditCardQuery innerJoinAffiliateCompany($relationAlias = null) Adds a INNER JOIN clause to the query using the AffiliateCompany relation
+ *
+ * @method     ChildCreditCardQuery leftJoinIssuer($relationAlias = null) Adds a LEFT JOIN clause to the query using the Issuer relation
+ * @method     ChildCreditCardQuery rightJoinIssuer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Issuer relation
+ * @method     ChildCreditCardQuery innerJoinIssuer($relationAlias = null) Adds a INNER JOIN clause to the query using the Issuer relation
  *
  * @method     ChildCreditCardQuery leftJoinCampaign($relationAlias = null) Adds a LEFT JOIN clause to the query using the Campaign relation
  * @method     ChildCreditCardQuery rightJoinCampaign($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Campaign relation
@@ -73,6 +73,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery leftJoinCardFeatures($relationAlias = null) Adds a LEFT JOIN clause to the query using the CardFeatures relation
  * @method     ChildCreditCardQuery rightJoinCardFeatures($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardFeatures relation
  * @method     ChildCreditCardQuery innerJoinCardFeatures($relationAlias = null) Adds a INNER JOIN clause to the query using the CardFeatures relation
+ *
+ * @method     ChildCreditCardQuery leftJoinCardPointSystem($relationAlias = null) Adds a LEFT JOIN clause to the query using the CardPointSystem relation
+ * @method     ChildCreditCardQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
+ * @method     ChildCreditCardQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
  * @method     ChildCreditCardQuery leftJoinDiscounts($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discounts relation
  * @method     ChildCreditCardQuery rightJoinDiscounts($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discounts relation
@@ -90,15 +94,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery rightJoinInterest($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Interest relation
  * @method     ChildCreditCardQuery innerJoinInterest($relationAlias = null) Adds a INNER JOIN clause to the query using the Interest relation
  *
- * @method     ChildCreditCardQuery leftJoinPointSystem($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointSystem relation
- * @method     ChildCreditCardQuery rightJoinPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointSystem relation
- * @method     ChildCreditCardQuery innerJoinPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the PointSystem relation
- *
  * @method     ChildCreditCardQuery leftJoinPointUsage($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUsage relation
  * @method     ChildCreditCardQuery rightJoinPointUsage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUsage relation
  * @method     ChildCreditCardQuery innerJoinPointUsage($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUsage relation
  *
- * @method     \IssuerQuery|\AffiliateCompanyQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery|\PointSystemQuery|\PointUsageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \AffiliateCompanyQuery|\IssuerQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\CardPointSystemQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery|\PointUsageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCreditCard findOne(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query
  * @method     ChildCreditCard findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query, or a new ChildCreditCard object populated from the query conditions when no match is found
@@ -765,83 +765,6 @@ abstract class CreditCardQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Issuer object
-     *
-     * @param \Issuer|ObjectCollection $issuer The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function filterByIssuer($issuer, $comparison = null)
-    {
-        if ($issuer instanceof \Issuer) {
-            return $this
-                ->addUsingAlias(CreditCardTableMap::COL_ISSUER_ID, $issuer->getIssuerId(), $comparison);
-        } elseif ($issuer instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(CreditCardTableMap::COL_ISSUER_ID, $issuer->toKeyValue('PrimaryKey', 'IssuerId'), $comparison);
-        } else {
-            throw new PropelException('filterByIssuer() only accepts arguments of type \Issuer or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Issuer relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function joinIssuer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Issuer');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Issuer');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Issuer relation Issuer object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \IssuerQuery A secondary query class using the current class as primary query
-     */
-    public function useIssuerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinIssuer($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Issuer', '\IssuerQuery');
-    }
-
-    /**
      * Filter the query by a related \AffiliateCompany object
      *
      * @param \AffiliateCompany|ObjectCollection $affiliateCompany The related object(s) to use as filter
@@ -916,6 +839,83 @@ abstract class CreditCardQuery extends ModelCriteria
         return $this
             ->joinAffiliateCompany($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'AffiliateCompany', '\AffiliateCompanyQuery');
+    }
+
+    /**
+     * Filter the query by a related \Issuer object
+     *
+     * @param \Issuer|ObjectCollection $issuer The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByIssuer($issuer, $comparison = null)
+    {
+        if ($issuer instanceof \Issuer) {
+            return $this
+                ->addUsingAlias(CreditCardTableMap::COL_ISSUER_ID, $issuer->getIssuerId(), $comparison);
+        } elseif ($issuer instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(CreditCardTableMap::COL_ISSUER_ID, $issuer->toKeyValue('PrimaryKey', 'IssuerId'), $comparison);
+        } else {
+            throw new PropelException('filterByIssuer() only accepts arguments of type \Issuer or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Issuer relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function joinIssuer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Issuer');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Issuer');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Issuer relation Issuer object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \IssuerQuery A secondary query class using the current class as primary query
+     */
+    public function useIssuerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinIssuer($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Issuer', '\IssuerQuery');
     }
 
     /**
@@ -1135,6 +1135,79 @@ abstract class CreditCardQuery extends ModelCriteria
         return $this
             ->joinCardFeatures($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CardFeatures', '\CardFeaturesQuery');
+    }
+
+    /**
+     * Filter the query by a related \CardPointSystem object
+     *
+     * @param \CardPointSystem|ObjectCollection $cardPointSystem  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByCardPointSystem($cardPointSystem, $comparison = null)
+    {
+        if ($cardPointSystem instanceof \CardPointSystem) {
+            return $this
+                ->addUsingAlias(CreditCardTableMap::COL_CREDIT_CARD_ID, $cardPointSystem->getCreditCardId(), $comparison);
+        } elseif ($cardPointSystem instanceof ObjectCollection) {
+            return $this
+                ->useCardPointSystemQuery()
+                ->filterByPrimaryKeys($cardPointSystem->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByCardPointSystem() only accepts arguments of type \CardPointSystem or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the CardPointSystem relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function joinCardPointSystem($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('CardPointSystem');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'CardPointSystem');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the CardPointSystem relation CardPointSystem object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \CardPointSystemQuery A secondary query class using the current class as primary query
+     */
+    public function useCardPointSystemQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinCardPointSystem($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'CardPointSystem', '\CardPointSystemQuery');
     }
 
     /**
@@ -1427,79 +1500,6 @@ abstract class CreditCardQuery extends ModelCriteria
         return $this
             ->joinInterest($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Interest', '\InterestQuery');
-    }
-
-    /**
-     * Filter the query by a related \PointSystem object
-     *
-     * @param \PointSystem|ObjectCollection $pointSystem  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function filterByPointSystem($pointSystem, $comparison = null)
-    {
-        if ($pointSystem instanceof \PointSystem) {
-            return $this
-                ->addUsingAlias(CreditCardTableMap::COL_CREDIT_CARD_ID, $pointSystem->getCreditCardId(), $comparison);
-        } elseif ($pointSystem instanceof ObjectCollection) {
-            return $this
-                ->usePointSystemQuery()
-                ->filterByPrimaryKeys($pointSystem->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByPointSystem() only accepts arguments of type \PointSystem or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the PointSystem relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function joinPointSystem($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PointSystem');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'PointSystem');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the PointSystem relation PointSystem object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \PointSystemQuery A secondary query class using the current class as primary query
-     */
-    public function usePointSystemQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPointSystem($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PointSystem', '\PointSystemQuery');
     }
 
     /**

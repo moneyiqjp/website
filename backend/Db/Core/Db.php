@@ -282,7 +282,328 @@ class Db
         return array();
     }
 
+    /* PointSystem */
+    function GetCardPointSystemMappingForCrud()
+    {
+        $result = array();
+        foreach ((new \CardPointSystemQuery())->find() as $af) {
+            array_push($result, Json\JCreditCardToPointSystemMapping::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetCardPointSystemMappingForPointSystem($id)
+    {
+        $result = array();
+        foreach ((new \CardPointSystemQuery())->findByPointSystemId($id) as $item) {
+            array_push($result, Json\JCreditCardToPointSystemMapping::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function GetCardPointSystemMappingForCard($id)
+    {
+        $result = array();
+        foreach ((new \CardPointSystemQuery())->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JCreditCardToPointSystemMapping::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function GetPointSystemById($id)
+    {
+        $result = array();
+        foreach ((new \PointSystemQuery())->findByPointSystemId($id) as $item) {
+            array_push($result, Json\JPointSystem::CREATE_FROM_DB($item));
+        }
+        return $result;
 
+    }
+    function UpdateCardPointSystemMappingForCrud($data)
+    {
+        $parsed = Json\JPointSystem::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointSystem update request");
+
+        $item = (new  \PointSystemQuery())->findPk($parsed->PointSystemId);
+        if(is_null($item)) throw new \Exception ("PointSystem with id ". $parsed->PointSystemId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PointSystemQuery())->findPk($parsed->PointSystemId);
+        return Json\JPointSystem::CREATE_FROM_DB($item);
+    }
+    function CreateCardPointSystemMappingForCrud($data)
+    {
+        $item = Json\JCreditCardToPointSystemMapping::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JCreditCardToPointSystemMapping::CREATE_FROM_DB($item);
+    }
+    function DeleteCardPointSystemMappingForCrud($id)
+    {
+        $item = (new  \CardPointSystemQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("CardPointSystemMap with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* PointAcquisition */
+    function GetPointAcquisitionForCrud()
+    {
+        $result = array();
+        foreach ((new \PointAcquisitionQuery())->orderByPointAcquisitionName()->find() as $af) {
+            array_push($result, Json\JPointAcquisition::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPointAcquisitionById($id)
+    {
+        $result = array();
+        foreach ((new \PointAcquisitionQuery())->orderByPointAcquisitionName()->findPk($id) as $af) {
+            array_push($result, Json\JPointAcquisition::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPointAcquisitionByPointSystemId($id)
+    {
+        $result = array();
+        foreach ((new \PointAcquisitionQuery())->orderByPointAcquisitionName()->findByPointSystemId($id) as $af) {
+            array_push($result, Json\JPointAcquisition::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdatePointAcquisitionForCrud($data)
+    {
+        $parsed = Json\JPointAcquisition::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointAcquisition update request");
+
+        $item = (new  \PointAcquisitionQuery())->findPk($parsed->PointAcquisitionId);
+        if(is_null($item)) throw new \Exception ("PointAcquisition with id ". $parsed->PointAcquisitionId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PointAcquisitionQuery())->findPk($parsed->PointAcquisitionId);
+        return Json\JPointAcquisition::CREATE_FROM_DB($item);
+    }
+    function CreatePointAcquisitionForCrud($data)
+    {
+        $item = Json\JPointAcquisition::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPointAcquisition::CREATE_FROM_DB($item);
+    }
+    function DeletePointAcquisitionForCrud($id)
+    {
+        $item = (new  \PointAcquisitionQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("PointAcquisition with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* Reward */
+    function GetRewardForCrud()
+    {
+        $result = array();
+        foreach ((new \RewardQuery())->orderByCategory()->find() as $af) {
+            array_push($result, Json\JReward::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetRewardById($id)
+    {
+        $result = array();
+        foreach ((new \RewardQuery())->orderByCategory()->findPk($id) as $af) {
+            array_push($result, Json\JReward::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetRewardByPointSystemId($id)
+    {
+        $result = array();
+        foreach ((new \RewardQuery())->orderByCategory()->findByPointSystemId($id) as $af) {
+            array_push($result, Json\JReward::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateRewardForCrud($data)
+    {
+        $parsed = Json\JReward::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Reward update request");
+
+        $item = (new  \RewardQuery())->findPk($parsed->RewardId);
+        if(is_null($item)) throw new \Exception ("Reward with id ". $parsed->RewardId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \RewardQuery())->findPk($parsed->RewardId);
+        return Json\JReward::CREATE_FROM_DB($item);
+    }
+    function CreateRewardForCrud($data)
+    {
+        $item = Json\JReward::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JReward::CREATE_FROM_DB($item);
+    }
+    function DeleteRewardForCrud($id)
+    {
+        $item = (new  \RewardQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Reward with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* RewardType */
+    function GetRewardTypeForCrud()
+    {
+        $result = array();
+        $last ="";
+        foreach ((new \RewardQuery())->orderByType()->find() as $af) {
+            if($last != $af->getType()) {
+                $last = $af->getType();
+                array_push($result,  Json\JRewardType::CREATE($last,$last));
+            }
+        }
+        return $result;
+    }
+
+    /* RewardCategory */
+    function GetRewardCategoryForCrud()
+    {
+        $result = array();
+        $last ="";
+        foreach ((new \RewardQuery())->orderByCategory()->find() as $af) {
+            if($last != $af->getCategory()) {
+                $last = $af->getCategory();
+                array_push($result, Json\JRewardCategory::CREATE($last,$last));
+            }
+        }
+        return $result;
+    }
+
+
+    /* PointUsage */
+    function GetPointUsageForCrud()
+    {
+        $result = array();
+        foreach ((new \PointUseQuery())->orderByPointUseId()->find() as $af) {
+            array_push($result, Json\JPointUsage::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPointUsageById($id)
+    {
+        $result = array();
+        foreach ((new \PointUseQuery())->orderByPointUseId()->findPk($id) as $af) {
+            array_push($result, Json\JPointUsage::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPointUsageByPointSystemId($id)
+    {
+        $result = array();
+        foreach ((new \PointUseQuery())->orderByPointUseId()->findByPointSystemId($id) as $af) {
+            array_push($result, Json\JPointUsage::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdatePointUsageForCrud($data)
+    {
+        $parsed = Json\JPointUsage::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointUsage update request");
+
+        $item = (new  \PointUseQuery())->findPk($parsed->PointUsageId);
+        if(is_null($item)) throw new \Exception ("PointUsage with id ". $parsed->PointUsageId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PointUseQuery())->findPk($parsed->PointUsageId);
+        return Json\JPointUsage::CREATE_FROM_DB($item);
+    }
+    function CreatePointUsageForCrud($data)
+    {
+        $item = Json\JPointUsage::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPointUsage::CREATE_FROM_DB($item);
+    }
+    function DeletePointUsageForCrud($id)
+    {
+        $item = (new  \PointUseQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("PointUsage with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* PointSystem */
+    function GetPointSystemForCrud()
+    {
+        $result = array();
+        foreach ((new \PointSystemQuery())->orderByPointSystemName()->find() as $af) {
+            array_push($result, Json\JPointSystem::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPointSystemForCard($id)
+    {
+        $result = array();
+        foreach ((new \CardPointSystemQuery())->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JPointSystem::CREATE_FROM_DB($item->getPointSystem()));
+        }
+        return $result;
+    }
+    function UpdatePointSystemForCrud($data)
+    {
+        $parsed = Json\JPointSystem::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PointSystem update request");
+
+        $item = (new  \PointSystemQuery())->findPk($parsed->PointSystemId);
+        if(is_null($item)) throw new \Exception ("PointSystem with id ". $parsed->PointSystemId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PointSystemQuery())->findPk($parsed->PointSystemId);
+        return Json\JPointSystem::CREATE_FROM_DB($item);
+    }
+    function CreatePointSystemForCrud($data)
+    {
+        $item = Json\JPointSystem::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPointSystem::CREATE_FROM_DB($item);
+    }
+    function DeletePointSystemForCrud($id)
+    {
+        $item = (new  \PointSystemQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("PointSystem with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
 
     /* Issuer */
     function GetIssuerForCrud()

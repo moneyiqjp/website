@@ -40,15 +40,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsuranceQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildInsuranceQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildInsuranceQuery leftJoinInsuranceType($relationAlias = null) Adds a LEFT JOIN clause to the query using the InsuranceType relation
- * @method     ChildInsuranceQuery rightJoinInsuranceType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the InsuranceType relation
- * @method     ChildInsuranceQuery innerJoinInsuranceType($relationAlias = null) Adds a INNER JOIN clause to the query using the InsuranceType relation
- *
  * @method     ChildInsuranceQuery leftJoinCreditCard($relationAlias = null) Adds a LEFT JOIN clause to the query using the CreditCard relation
  * @method     ChildInsuranceQuery rightJoinCreditCard($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CreditCard relation
  * @method     ChildInsuranceQuery innerJoinCreditCard($relationAlias = null) Adds a INNER JOIN clause to the query using the CreditCard relation
  *
- * @method     \InsuranceTypeQuery|\CreditCardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildInsuranceQuery leftJoinInsuranceType($relationAlias = null) Adds a LEFT JOIN clause to the query using the InsuranceType relation
+ * @method     ChildInsuranceQuery rightJoinInsuranceType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the InsuranceType relation
+ * @method     ChildInsuranceQuery innerJoinInsuranceType($relationAlias = null) Adds a INNER JOIN clause to the query using the InsuranceType relation
+ *
+ * @method     \CreditCardQuery|\InsuranceTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildInsurance findOne(ConnectionInterface $con = null) Return the first ChildInsurance matching the query
  * @method     ChildInsurance findOneOrCreate(ConnectionInterface $con = null) Return the first ChildInsurance matching the query, or a new ChildInsurance object populated from the query conditions when no match is found
@@ -532,83 +532,6 @@ abstract class InsuranceQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \InsuranceType object
-     *
-     * @param \InsuranceType|ObjectCollection $insuranceType The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildInsuranceQuery The current query, for fluid interface
-     */
-    public function filterByInsuranceType($insuranceType, $comparison = null)
-    {
-        if ($insuranceType instanceof \InsuranceType) {
-            return $this
-                ->addUsingAlias(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $insuranceType->getInsuranceTypeId(), $comparison);
-        } elseif ($insuranceType instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $insuranceType->toKeyValue('PrimaryKey', 'InsuranceTypeId'), $comparison);
-        } else {
-            throw new PropelException('filterByInsuranceType() only accepts arguments of type \InsuranceType or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the InsuranceType relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildInsuranceQuery The current query, for fluid interface
-     */
-    public function joinInsuranceType($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('InsuranceType');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'InsuranceType');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the InsuranceType relation InsuranceType object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \InsuranceTypeQuery A secondary query class using the current class as primary query
-     */
-    public function useInsuranceTypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinInsuranceType($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'InsuranceType', '\InsuranceTypeQuery');
-    }
-
-    /**
      * Filter the query by a related \CreditCard object
      *
      * @param \CreditCard|ObjectCollection $creditCard The related object(s) to use as filter
@@ -683,6 +606,83 @@ abstract class InsuranceQuery extends ModelCriteria
         return $this
             ->joinCreditCard($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CreditCard', '\CreditCardQuery');
+    }
+
+    /**
+     * Filter the query by a related \InsuranceType object
+     *
+     * @param \InsuranceType|ObjectCollection $insuranceType The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildInsuranceQuery The current query, for fluid interface
+     */
+    public function filterByInsuranceType($insuranceType, $comparison = null)
+    {
+        if ($insuranceType instanceof \InsuranceType) {
+            return $this
+                ->addUsingAlias(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $insuranceType->getInsuranceTypeId(), $comparison);
+        } elseif ($insuranceType instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $insuranceType->toKeyValue('PrimaryKey', 'InsuranceTypeId'), $comparison);
+        } else {
+            throw new PropelException('filterByInsuranceType() only accepts arguments of type \InsuranceType or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the InsuranceType relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildInsuranceQuery The current query, for fluid interface
+     */
+    public function joinInsuranceType($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('InsuranceType');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'InsuranceType');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the InsuranceType relation InsuranceType object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \InsuranceTypeQuery A secondary query class using the current class as primary query
+     */
+    public function useInsuranceTypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinInsuranceType($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'InsuranceType', '\InsuranceTypeQuery');
     }
 
     /**

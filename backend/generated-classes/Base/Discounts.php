@@ -132,14 +132,14 @@ abstract class Discounts implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildStore
-     */
-    protected $aStore;
-
-    /**
      * @var        ChildCreditCard
      */
     protected $aCreditCard;
+
+    /**
+     * @var        ChildStore
+     */
+    protected $aStore;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -886,8 +886,8 @@ abstract class Discounts implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aStore = null;
             $this->aCreditCard = null;
+            $this->aStore = null;
         } // if (deep)
     }
 
@@ -992,18 +992,18 @@ abstract class Discounts implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aStore !== null) {
-                if ($this->aStore->isModified() || $this->aStore->isNew()) {
-                    $affectedRows += $this->aStore->save($con);
-                }
-                $this->setStore($this->aStore);
-            }
-
             if ($this->aCreditCard !== null) {
                 if ($this->aCreditCard->isModified() || $this->aCreditCard->isNew()) {
                     $affectedRows += $this->aCreditCard->save($con);
                 }
                 $this->setCreditCard($this->aCreditCard);
+            }
+
+            if ($this->aStore !== null) {
+                if ($this->aStore->isModified() || $this->aStore->isNew()) {
+                    $affectedRows += $this->aStore->save($con);
+                }
+                $this->setStore($this->aStore);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1263,21 +1263,6 @@ abstract class Discounts implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aStore) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'store';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'store';
-                        break;
-                    default:
-                        $key = 'Store';
-                }
-
-                $result[$key] = $this->aStore->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aCreditCard) {
 
                 switch ($keyType) {
@@ -1292,6 +1277,21 @@ abstract class Discounts implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aStore) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'store';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'store';
+                        break;
+                    default:
+                        $key = 'Store';
+                }
+
+                $result[$key] = $this->aStore->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1618,57 +1618,6 @@ abstract class Discounts implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildStore object.
-     *
-     * @param  ChildStore $v
-     * @return $this|\Discounts The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setStore(ChildStore $v = null)
-    {
-        if ($v === null) {
-            $this->setStoreId(NULL);
-        } else {
-            $this->setStoreId($v->getStoreId());
-        }
-
-        $this->aStore = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildStore object, it will not be re-added.
-        if ($v !== null) {
-            $v->addDiscounts($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildStore object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildStore The associated ChildStore object.
-     * @throws PropelException
-     */
-    public function getStore(ConnectionInterface $con = null)
-    {
-        if ($this->aStore === null && ($this->store_id !== null)) {
-            $this->aStore = ChildStoreQuery::create()->findPk($this->store_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aStore->addDiscountss($this);
-             */
-        }
-
-        return $this->aStore;
-    }
-
-    /**
      * Declares an association between this object and a ChildCreditCard object.
      *
      * @param  ChildCreditCard $v
@@ -1720,17 +1669,68 @@ abstract class Discounts implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildStore object.
+     *
+     * @param  ChildStore $v
+     * @return $this|\Discounts The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setStore(ChildStore $v = null)
+    {
+        if ($v === null) {
+            $this->setStoreId(NULL);
+        } else {
+            $this->setStoreId($v->getStoreId());
+        }
+
+        $this->aStore = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildStore object, it will not be re-added.
+        if ($v !== null) {
+            $v->addDiscounts($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildStore object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildStore The associated ChildStore object.
+     * @throws PropelException
+     */
+    public function getStore(ConnectionInterface $con = null)
+    {
+        if ($this->aStore === null && ($this->store_id !== null)) {
+            $this->aStore = ChildStoreQuery::create()->findPk($this->store_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aStore->addDiscountss($this);
+             */
+        }
+
+        return $this->aStore;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aStore) {
-            $this->aStore->removeDiscounts($this);
-        }
         if (null !== $this->aCreditCard) {
             $this->aCreditCard->removeDiscounts($this);
+        }
+        if (null !== $this->aStore) {
+            $this->aStore->removeDiscounts($this);
         }
         $this->discount_id = null;
         $this->percentage = null;
@@ -1763,8 +1763,8 @@ abstract class Discounts implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aStore = null;
         $this->aCreditCard = null;
+        $this->aStore = null;
     }
 
     /**

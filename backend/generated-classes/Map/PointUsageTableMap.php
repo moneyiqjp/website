@@ -153,7 +153,7 @@ class PointUsageTableMap extends TableMap
         // columns
         $this->addPrimaryKey('point_usage_id', 'PointUsageId', 'INTEGER', true, null, null);
         $this->addForeignKey('store_id', 'StoreId', 'INTEGER', 'store', 'store_id', true, null, null);
-        $this->addColumn('yen_per_point', 'YenPerPoint', 'DOUBLE', true, 16, null);
+        $this->addColumn('yen_per_point', 'YenPerPoint', 'DECIMAL', true, 8, null);
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);

@@ -108,14 +108,14 @@ abstract class Interest implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildPaymentType
-     */
-    protected $aPaymentType;
-
-    /**
      * @var        ChildCreditCard
      */
     protected $aCreditCard;
+
+    /**
+     * @var        ChildPaymentType
+     */
+    protected $aPaymentType;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -704,8 +704,8 @@ abstract class Interest implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aPaymentType = null;
             $this->aCreditCard = null;
+            $this->aPaymentType = null;
         } // if (deep)
     }
 
@@ -810,18 +810,18 @@ abstract class Interest implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aPaymentType !== null) {
-                if ($this->aPaymentType->isModified() || $this->aPaymentType->isNew()) {
-                    $affectedRows += $this->aPaymentType->save($con);
-                }
-                $this->setPaymentType($this->aPaymentType);
-            }
-
             if ($this->aCreditCard !== null) {
                 if ($this->aCreditCard->isModified() || $this->aCreditCard->isNew()) {
                     $affectedRows += $this->aCreditCard->save($con);
                 }
                 $this->setCreditCard($this->aCreditCard);
+            }
+
+            if ($this->aPaymentType !== null) {
+                if ($this->aPaymentType->isModified() || $this->aPaymentType->isNew()) {
+                    $affectedRows += $this->aPaymentType->save($con);
+                }
+                $this->setPaymentType($this->aPaymentType);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1041,21 +1041,6 @@ abstract class Interest implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aPaymentType) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'paymentType';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'payment_type';
-                        break;
-                    default:
-                        $key = 'PaymentType';
-                }
-
-                $result[$key] = $this->aPaymentType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aCreditCard) {
 
                 switch ($keyType) {
@@ -1070,6 +1055,21 @@ abstract class Interest implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aPaymentType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'paymentType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'payment_type';
+                        break;
+                    default:
+                        $key = 'PaymentType';
+                }
+
+                $result[$key] = $this->aPaymentType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1356,57 +1356,6 @@ abstract class Interest implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildPaymentType object.
-     *
-     * @param  ChildPaymentType $v
-     * @return $this|\Interest The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setPaymentType(ChildPaymentType $v = null)
-    {
-        if ($v === null) {
-            $this->setPaymentTypeId(NULL);
-        } else {
-            $this->setPaymentTypeId($v->getPaymentTypeId());
-        }
-
-        $this->aPaymentType = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildPaymentType object, it will not be re-added.
-        if ($v !== null) {
-            $v->addInterest($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildPaymentType object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildPaymentType The associated ChildPaymentType object.
-     * @throws PropelException
-     */
-    public function getPaymentType(ConnectionInterface $con = null)
-    {
-        if ($this->aPaymentType === null && ($this->payment_type_id !== null)) {
-            $this->aPaymentType = ChildPaymentTypeQuery::create()->findPk($this->payment_type_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aPaymentType->addInterests($this);
-             */
-        }
-
-        return $this->aPaymentType;
-    }
-
-    /**
      * Declares an association between this object and a ChildCreditCard object.
      *
      * @param  ChildCreditCard $v
@@ -1458,17 +1407,68 @@ abstract class Interest implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildPaymentType object.
+     *
+     * @param  ChildPaymentType $v
+     * @return $this|\Interest The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setPaymentType(ChildPaymentType $v = null)
+    {
+        if ($v === null) {
+            $this->setPaymentTypeId(NULL);
+        } else {
+            $this->setPaymentTypeId($v->getPaymentTypeId());
+        }
+
+        $this->aPaymentType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildPaymentType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addInterest($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildPaymentType object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildPaymentType The associated ChildPaymentType object.
+     * @throws PropelException
+     */
+    public function getPaymentType(ConnectionInterface $con = null)
+    {
+        if ($this->aPaymentType === null && ($this->payment_type_id !== null)) {
+            $this->aPaymentType = ChildPaymentTypeQuery::create()->findPk($this->payment_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aPaymentType->addInterests($this);
+             */
+        }
+
+        return $this->aPaymentType;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aPaymentType) {
-            $this->aPaymentType->removeInterest($this);
-        }
         if (null !== $this->aCreditCard) {
             $this->aCreditCard->removeInterest($this);
+        }
+        if (null !== $this->aPaymentType) {
+            $this->aPaymentType->removeInterest($this);
         }
         $this->interest_id = null;
         $this->credit_card_id = null;
@@ -1497,8 +1497,8 @@ abstract class Interest implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aPaymentType = null;
         $this->aCreditCard = null;
+        $this->aPaymentType = null;
     }
 
     /**

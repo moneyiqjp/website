@@ -108,14 +108,14 @@ abstract class CardFeatures implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildCardFeatureType
-     */
-    protected $aCardFeatureType;
-
-    /**
      * @var        ChildCreditCard
      */
     protected $aCreditCard;
+
+    /**
+     * @var        ChildCardFeatureType
+     */
+    protected $aCardFeatureType;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -704,8 +704,8 @@ abstract class CardFeatures implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aCardFeatureType = null;
             $this->aCreditCard = null;
+            $this->aCardFeatureType = null;
         } // if (deep)
     }
 
@@ -810,18 +810,18 @@ abstract class CardFeatures implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aCardFeatureType !== null) {
-                if ($this->aCardFeatureType->isModified() || $this->aCardFeatureType->isNew()) {
-                    $affectedRows += $this->aCardFeatureType->save($con);
-                }
-                $this->setCardFeatureType($this->aCardFeatureType);
-            }
-
             if ($this->aCreditCard !== null) {
                 if ($this->aCreditCard->isModified() || $this->aCreditCard->isNew()) {
                     $affectedRows += $this->aCreditCard->save($con);
                 }
                 $this->setCreditCard($this->aCreditCard);
+            }
+
+            if ($this->aCardFeatureType !== null) {
+                if ($this->aCardFeatureType->isModified() || $this->aCardFeatureType->isNew()) {
+                    $affectedRows += $this->aCardFeatureType->save($con);
+                }
+                $this->setCardFeatureType($this->aCardFeatureType);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1041,21 +1041,6 @@ abstract class CardFeatures implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aCardFeatureType) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'cardFeatureType';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'card_feature_type';
-                        break;
-                    default:
-                        $key = 'CardFeatureType';
-                }
-
-                $result[$key] = $this->aCardFeatureType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aCreditCard) {
 
                 switch ($keyType) {
@@ -1070,6 +1055,21 @@ abstract class CardFeatures implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aCardFeatureType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'cardFeatureType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'card_feature_type';
+                        break;
+                    default:
+                        $key = 'CardFeatureType';
+                }
+
+                $result[$key] = $this->aCardFeatureType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1356,57 +1356,6 @@ abstract class CardFeatures implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildCardFeatureType object.
-     *
-     * @param  ChildCardFeatureType $v
-     * @return $this|\CardFeatures The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setCardFeatureType(ChildCardFeatureType $v = null)
-    {
-        if ($v === null) {
-            $this->setFeatureTypeId(NULL);
-        } else {
-            $this->setFeatureTypeId($v->getFeatureTypeId());
-        }
-
-        $this->aCardFeatureType = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildCardFeatureType object, it will not be re-added.
-        if ($v !== null) {
-            $v->addCardFeatures($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildCardFeatureType object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildCardFeatureType The associated ChildCardFeatureType object.
-     * @throws PropelException
-     */
-    public function getCardFeatureType(ConnectionInterface $con = null)
-    {
-        if ($this->aCardFeatureType === null && ($this->feature_type_id !== null)) {
-            $this->aCardFeatureType = ChildCardFeatureTypeQuery::create()->findPk($this->feature_type_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aCardFeatureType->addCardFeaturess($this);
-             */
-        }
-
-        return $this->aCardFeatureType;
-    }
-
-    /**
      * Declares an association between this object and a ChildCreditCard object.
      *
      * @param  ChildCreditCard $v
@@ -1458,17 +1407,68 @@ abstract class CardFeatures implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildCardFeatureType object.
+     *
+     * @param  ChildCardFeatureType $v
+     * @return $this|\CardFeatures The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setCardFeatureType(ChildCardFeatureType $v = null)
+    {
+        if ($v === null) {
+            $this->setFeatureTypeId(NULL);
+        } else {
+            $this->setFeatureTypeId($v->getFeatureTypeId());
+        }
+
+        $this->aCardFeatureType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCardFeatureType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addCardFeatures($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildCardFeatureType object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCardFeatureType The associated ChildCardFeatureType object.
+     * @throws PropelException
+     */
+    public function getCardFeatureType(ConnectionInterface $con = null)
+    {
+        if ($this->aCardFeatureType === null && ($this->feature_type_id !== null)) {
+            $this->aCardFeatureType = ChildCardFeatureTypeQuery::create()->findPk($this->feature_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCardFeatureType->addCardFeaturess($this);
+             */
+        }
+
+        return $this->aCardFeatureType;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aCardFeatureType) {
-            $this->aCardFeatureType->removeCardFeatures($this);
-        }
         if (null !== $this->aCreditCard) {
             $this->aCreditCard->removeCardFeatures($this);
+        }
+        if (null !== $this->aCardFeatureType) {
+            $this->aCardFeatureType->removeCardFeatures($this);
         }
         $this->feature_id = null;
         $this->feature_type_id = null;
@@ -1497,8 +1497,8 @@ abstract class CardFeatures implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aCardFeatureType = null;
         $this->aCreditCard = null;
+        $this->aCardFeatureType = null;
     }
 
     /**

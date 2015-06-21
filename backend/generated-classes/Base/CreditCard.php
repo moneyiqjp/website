@@ -10,6 +10,8 @@ use \CardDescription as ChildCardDescription;
 use \CardDescriptionQuery as ChildCardDescriptionQuery;
 use \CardFeatures as ChildCardFeatures;
 use \CardFeaturesQuery as ChildCardFeaturesQuery;
+use \CardPointSystem as ChildCardPointSystem;
+use \CardPointSystemQuery as ChildCardPointSystemQuery;
 use \CreditCard as ChildCreditCard;
 use \CreditCardQuery as ChildCreditCardQuery;
 use \Discounts as ChildDiscounts;
@@ -22,8 +24,6 @@ use \Interest as ChildInterest;
 use \InterestQuery as ChildInterestQuery;
 use \Issuer as ChildIssuer;
 use \IssuerQuery as ChildIssuerQuery;
-use \PointSystem as ChildPointSystem;
-use \PointSystemQuery as ChildPointSystemQuery;
 use \PointUsage as ChildPointUsage;
 use \PointUsageQuery as ChildPointUsageQuery;
 use \DateTime;
@@ -175,14 +175,14 @@ abstract class CreditCard implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildIssuer
-     */
-    protected $aIssuer;
-
-    /**
      * @var        ChildAffiliateCompany
      */
     protected $aAffiliateCompany;
+
+    /**
+     * @var        ChildIssuer
+     */
+    protected $aIssuer;
 
     /**
      * @var        ObjectCollection|ChildCampaign[] Collection to store aggregation of ChildCampaign objects.
@@ -201,6 +201,12 @@ abstract class CreditCard implements ActiveRecordInterface
      */
     protected $collCardFeaturess;
     protected $collCardFeaturessPartial;
+
+    /**
+     * @var        ObjectCollection|ChildCardPointSystem[] Collection to store aggregation of ChildCardPointSystem objects.
+     */
+    protected $collCardPointSystems;
+    protected $collCardPointSystemsPartial;
 
     /**
      * @var        ObjectCollection|ChildDiscounts[] Collection to store aggregation of ChildDiscounts objects.
@@ -225,12 +231,6 @@ abstract class CreditCard implements ActiveRecordInterface
      */
     protected $collInterests;
     protected $collInterestsPartial;
-
-    /**
-     * @var        ObjectCollection|ChildPointSystem[] Collection to store aggregation of ChildPointSystem objects.
-     */
-    protected $collPointSystems;
-    protected $collPointSystemsPartial;
 
     /**
      * @var        ObjectCollection|ChildPointUsage[] Collection to store aggregation of ChildPointUsage objects.
@@ -266,6 +266,12 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildCardPointSystem[]
+     */
+    protected $cardPointSystemsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildDiscounts[]
      */
     protected $discountssScheduledForDeletion = null;
@@ -287,12 +293,6 @@ abstract class CreditCard implements ActiveRecordInterface
      * @var ObjectCollection|ChildInterest[]
      */
     protected $interestsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPointSystem[]
-     */
-    protected $pointSystemsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -1237,13 +1237,15 @@ abstract class CreditCard implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aIssuer = null;
             $this->aAffiliateCompany = null;
+            $this->aIssuer = null;
             $this->collCampaigns = null;
 
             $this->collCardDescriptions = null;
 
             $this->collCardFeaturess = null;
+
+            $this->collCardPointSystems = null;
 
             $this->collDiscountss = null;
 
@@ -1252,8 +1254,6 @@ abstract class CreditCard implements ActiveRecordInterface
             $this->collInsurances = null;
 
             $this->collInterests = null;
-
-            $this->collPointSystems = null;
 
             $this->collPointUsages = null;
 
@@ -1361,18 +1361,18 @@ abstract class CreditCard implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aIssuer !== null) {
-                if ($this->aIssuer->isModified() || $this->aIssuer->isNew()) {
-                    $affectedRows += $this->aIssuer->save($con);
-                }
-                $this->setIssuer($this->aIssuer);
-            }
-
             if ($this->aAffiliateCompany !== null) {
                 if ($this->aAffiliateCompany->isModified() || $this->aAffiliateCompany->isNew()) {
                     $affectedRows += $this->aAffiliateCompany->save($con);
                 }
                 $this->setAffiliateCompany($this->aAffiliateCompany);
+            }
+
+            if ($this->aIssuer !== null) {
+                if ($this->aIssuer->isModified() || $this->aIssuer->isNew()) {
+                    $affectedRows += $this->aIssuer->save($con);
+                }
+                $this->setIssuer($this->aIssuer);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1431,6 +1431,23 @@ abstract class CreditCard implements ActiveRecordInterface
 
             if ($this->collCardFeaturess !== null) {
                 foreach ($this->collCardFeaturess as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->cardPointSystemsScheduledForDeletion !== null) {
+                if (!$this->cardPointSystemsScheduledForDeletion->isEmpty()) {
+                    \CardPointSystemQuery::create()
+                        ->filterByPrimaryKeys($this->cardPointSystemsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->cardPointSystemsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collCardPointSystems !== null) {
+                foreach ($this->collCardPointSystems as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1499,23 +1516,6 @@ abstract class CreditCard implements ActiveRecordInterface
 
             if ($this->collInterests !== null) {
                 foreach ($this->collInterests as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
-            if ($this->pointSystemsScheduledForDeletion !== null) {
-                if (!$this->pointSystemsScheduledForDeletion->isEmpty()) {
-                    \PointSystemQuery::create()
-                        ->filterByPrimaryKeys($this->pointSystemsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->pointSystemsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collPointSystems !== null) {
-                foreach ($this->collPointSystems as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1815,21 +1815,6 @@ abstract class CreditCard implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aIssuer) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'issuer';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'issuer';
-                        break;
-                    default:
-                        $key = 'Issuer';
-                }
-
-                $result[$key] = $this->aIssuer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aAffiliateCompany) {
 
                 switch ($keyType) {
@@ -1844,6 +1829,21 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aAffiliateCompany->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aIssuer) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'issuer';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'issuer';
+                        break;
+                    default:
+                        $key = 'Issuer';
+                }
+
+                $result[$key] = $this->aIssuer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collCampaigns) {
 
@@ -1889,6 +1889,21 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collCardFeaturess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collCardPointSystems) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'cardPointSystems';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'card_point_systems';
+                        break;
+                    default:
+                        $key = 'CardPointSystems';
+                }
+
+                $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collDiscountss) {
 
@@ -1949,21 +1964,6 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collInterests->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-            if (null !== $this->collPointSystems) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'pointSystems';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'point_systems';
-                        break;
-                    default:
-                        $key = 'PointSystems';
-                }
-
-                $result[$key] = $this->collPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUsages) {
 
@@ -2330,6 +2330,12 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getCardPointSystems() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addCardPointSystem($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getDiscountss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addDiscounts($relObj->copy($deepCopy));
@@ -2351,12 +2357,6 @@ abstract class CreditCard implements ActiveRecordInterface
             foreach ($this->getInterests() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addInterest($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getPointSystems() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addPointSystem($relObj->copy($deepCopy));
                 }
             }
 
@@ -2394,57 +2394,6 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
-    }
-
-    /**
-     * Declares an association between this object and a ChildIssuer object.
-     *
-     * @param  ChildIssuer $v
-     * @return $this|\CreditCard The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setIssuer(ChildIssuer $v = null)
-    {
-        if ($v === null) {
-            $this->setIssuerId(NULL);
-        } else {
-            $this->setIssuerId($v->getIssuerId());
-        }
-
-        $this->aIssuer = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildIssuer object, it will not be re-added.
-        if ($v !== null) {
-            $v->addCreditCard($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildIssuer object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildIssuer The associated ChildIssuer object.
-     * @throws PropelException
-     */
-    public function getIssuer(ConnectionInterface $con = null)
-    {
-        if ($this->aIssuer === null && ($this->issuer_id !== null)) {
-            $this->aIssuer = ChildIssuerQuery::create()->findPk($this->issuer_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aIssuer->addCreditCards($this);
-             */
-        }
-
-        return $this->aIssuer;
     }
 
     /**
@@ -2498,6 +2447,57 @@ abstract class CreditCard implements ActiveRecordInterface
         return $this->aAffiliateCompany;
     }
 
+    /**
+     * Declares an association between this object and a ChildIssuer object.
+     *
+     * @param  ChildIssuer $v
+     * @return $this|\CreditCard The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setIssuer(ChildIssuer $v = null)
+    {
+        if ($v === null) {
+            $this->setIssuerId(NULL);
+        } else {
+            $this->setIssuerId($v->getIssuerId());
+        }
+
+        $this->aIssuer = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildIssuer object, it will not be re-added.
+        if ($v !== null) {
+            $v->addCreditCard($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildIssuer object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildIssuer The associated ChildIssuer object.
+     * @throws PropelException
+     */
+    public function getIssuer(ConnectionInterface $con = null)
+    {
+        if ($this->aIssuer === null && ($this->issuer_id !== null)) {
+            $this->aIssuer = ChildIssuerQuery::create()->findPk($this->issuer_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aIssuer->addCreditCards($this);
+             */
+        }
+
+        return $this->aIssuer;
+    }
+
 
     /**
      * Initializes a collection based on the name of a relation.
@@ -2518,6 +2518,9 @@ abstract class CreditCard implements ActiveRecordInterface
         if ('CardFeatures' == $relationName) {
             return $this->initCardFeaturess();
         }
+        if ('CardPointSystem' == $relationName) {
+            return $this->initCardPointSystems();
+        }
         if ('Discounts' == $relationName) {
             return $this->initDiscountss();
         }
@@ -2529,9 +2532,6 @@ abstract class CreditCard implements ActiveRecordInterface
         }
         if ('Interest' == $relationName) {
             return $this->initInterests();
-        }
-        if ('PointSystem' == $relationName) {
-            return $this->initPointSystems();
         }
         if ('PointUsage' == $relationName) {
             return $this->initPointUsages();
@@ -3215,6 +3215,249 @@ abstract class CreditCard implements ActiveRecordInterface
         $query->joinWith('CardFeatureType', $joinBehavior);
 
         return $this->getCardFeaturess($query, $con);
+    }
+
+    /**
+     * Clears out the collCardPointSystems collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addCardPointSystems()
+     */
+    public function clearCardPointSystems()
+    {
+        $this->collCardPointSystems = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collCardPointSystems collection loaded partially.
+     */
+    public function resetPartialCardPointSystems($v = true)
+    {
+        $this->collCardPointSystemsPartial = $v;
+    }
+
+    /**
+     * Initializes the collCardPointSystems collection.
+     *
+     * By default this just sets the collCardPointSystems collection to an empty array (like clearcollCardPointSystems());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initCardPointSystems($overrideExisting = true)
+    {
+        if (null !== $this->collCardPointSystems && !$overrideExisting) {
+            return;
+        }
+        $this->collCardPointSystems = new ObjectCollection();
+        $this->collCardPointSystems->setModel('\CardPointSystem');
+    }
+
+    /**
+     * Gets an array of ChildCardPointSystem objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildCreditCard is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildCardPointSystem[] List of ChildCardPointSystem objects
+     * @throws PropelException
+     */
+    public function getCardPointSystems(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardPointSystemsPartial && !$this->isNew();
+        if (null === $this->collCardPointSystems || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collCardPointSystems) {
+                // return empty collection
+                $this->initCardPointSystems();
+            } else {
+                $collCardPointSystems = ChildCardPointSystemQuery::create(null, $criteria)
+                    ->filterByCreditCard($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collCardPointSystemsPartial && count($collCardPointSystems)) {
+                        $this->initCardPointSystems(false);
+
+                        foreach ($collCardPointSystems as $obj) {
+                            if (false == $this->collCardPointSystems->contains($obj)) {
+                                $this->collCardPointSystems->append($obj);
+                            }
+                        }
+
+                        $this->collCardPointSystemsPartial = true;
+                    }
+
+                    return $collCardPointSystems;
+                }
+
+                if ($partial && $this->collCardPointSystems) {
+                    foreach ($this->collCardPointSystems as $obj) {
+                        if ($obj->isNew()) {
+                            $collCardPointSystems[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collCardPointSystems = $collCardPointSystems;
+                $this->collCardPointSystemsPartial = false;
+            }
+        }
+
+        return $this->collCardPointSystems;
+    }
+
+    /**
+     * Sets a collection of ChildCardPointSystem objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $cardPointSystems A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function setCardPointSystems(Collection $cardPointSystems, ConnectionInterface $con = null)
+    {
+        /** @var ChildCardPointSystem[] $cardPointSystemsToDelete */
+        $cardPointSystemsToDelete = $this->getCardPointSystems(new Criteria(), $con)->diff($cardPointSystems);
+
+
+        $this->cardPointSystemsScheduledForDeletion = $cardPointSystemsToDelete;
+
+        foreach ($cardPointSystemsToDelete as $cardPointSystemRemoved) {
+            $cardPointSystemRemoved->setCreditCard(null);
+        }
+
+        $this->collCardPointSystems = null;
+        foreach ($cardPointSystems as $cardPointSystem) {
+            $this->addCardPointSystem($cardPointSystem);
+        }
+
+        $this->collCardPointSystems = $cardPointSystems;
+        $this->collCardPointSystemsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related CardPointSystem objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related CardPointSystem objects.
+     * @throws PropelException
+     */
+    public function countCardPointSystems(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardPointSystemsPartial && !$this->isNew();
+        if (null === $this->collCardPointSystems || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collCardPointSystems) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getCardPointSystems());
+            }
+
+            $query = ChildCardPointSystemQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCreditCard($this)
+                ->count($con);
+        }
+
+        return count($this->collCardPointSystems);
+    }
+
+    /**
+     * Method called to associate a ChildCardPointSystem object to this object
+     * through the ChildCardPointSystem foreign key attribute.
+     *
+     * @param  ChildCardPointSystem $l ChildCardPointSystem
+     * @return $this|\CreditCard The current object (for fluent API support)
+     */
+    public function addCardPointSystem(ChildCardPointSystem $l)
+    {
+        if ($this->collCardPointSystems === null) {
+            $this->initCardPointSystems();
+            $this->collCardPointSystemsPartial = true;
+        }
+
+        if (!$this->collCardPointSystems->contains($l)) {
+            $this->doAddCardPointSystem($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildCardPointSystem $cardPointSystem The ChildCardPointSystem object to add.
+     */
+    protected function doAddCardPointSystem(ChildCardPointSystem $cardPointSystem)
+    {
+        $this->collCardPointSystems[]= $cardPointSystem;
+        $cardPointSystem->setCreditCard($this);
+    }
+
+    /**
+     * @param  ChildCardPointSystem $cardPointSystem The ChildCardPointSystem object to remove.
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function removeCardPointSystem(ChildCardPointSystem $cardPointSystem)
+    {
+        if ($this->getCardPointSystems()->contains($cardPointSystem)) {
+            $pos = $this->collCardPointSystems->search($cardPointSystem);
+            $this->collCardPointSystems->remove($pos);
+            if (null === $this->cardPointSystemsScheduledForDeletion) {
+                $this->cardPointSystemsScheduledForDeletion = clone $this->collCardPointSystems;
+                $this->cardPointSystemsScheduledForDeletion->clear();
+            }
+            $this->cardPointSystemsScheduledForDeletion[]= clone $cardPointSystem;
+            $cardPointSystem->setCreditCard(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this CreditCard is new, it will return
+     * an empty collection; or if this CreditCard has previously
+     * been saved, it will retrieve related CardPointSystems from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in CreditCard.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildCardPointSystem[] List of ChildCardPointSystem objects
+     */
+    public function getCardPointSystemsJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildCardPointSystemQuery::create(null, $criteria);
+        $query->joinWith('PointSystem', $joinBehavior);
+
+        return $this->getCardPointSystems($query, $con);
     }
 
     /**
@@ -4165,249 +4408,6 @@ abstract class CreditCard implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collPointSystems collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPointSystems()
-     */
-    public function clearPointSystems()
-    {
-        $this->collPointSystems = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collPointSystems collection loaded partially.
-     */
-    public function resetPartialPointSystems($v = true)
-    {
-        $this->collPointSystemsPartial = $v;
-    }
-
-    /**
-     * Initializes the collPointSystems collection.
-     *
-     * By default this just sets the collPointSystems collection to an empty array (like clearcollPointSystems());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initPointSystems($overrideExisting = true)
-    {
-        if (null !== $this->collPointSystems && !$overrideExisting) {
-            return;
-        }
-        $this->collPointSystems = new ObjectCollection();
-        $this->collPointSystems->setModel('\PointSystem');
-    }
-
-    /**
-     * Gets an array of ChildPointSystem objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildCreditCard is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildPointSystem[] List of ChildPointSystem objects
-     * @throws PropelException
-     */
-    public function getPointSystems(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPointSystemsPartial && !$this->isNew();
-        if (null === $this->collPointSystems || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collPointSystems) {
-                // return empty collection
-                $this->initPointSystems();
-            } else {
-                $collPointSystems = ChildPointSystemQuery::create(null, $criteria)
-                    ->filterByCreditCard($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collPointSystemsPartial && count($collPointSystems)) {
-                        $this->initPointSystems(false);
-
-                        foreach ($collPointSystems as $obj) {
-                            if (false == $this->collPointSystems->contains($obj)) {
-                                $this->collPointSystems->append($obj);
-                            }
-                        }
-
-                        $this->collPointSystemsPartial = true;
-                    }
-
-                    return $collPointSystems;
-                }
-
-                if ($partial && $this->collPointSystems) {
-                    foreach ($this->collPointSystems as $obj) {
-                        if ($obj->isNew()) {
-                            $collPointSystems[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPointSystems = $collPointSystems;
-                $this->collPointSystemsPartial = false;
-            }
-        }
-
-        return $this->collPointSystems;
-    }
-
-    /**
-     * Sets a collection of ChildPointSystem objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $pointSystems A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildCreditCard The current object (for fluent API support)
-     */
-    public function setPointSystems(Collection $pointSystems, ConnectionInterface $con = null)
-    {
-        /** @var ChildPointSystem[] $pointSystemsToDelete */
-        $pointSystemsToDelete = $this->getPointSystems(new Criteria(), $con)->diff($pointSystems);
-
-
-        $this->pointSystemsScheduledForDeletion = $pointSystemsToDelete;
-
-        foreach ($pointSystemsToDelete as $pointSystemRemoved) {
-            $pointSystemRemoved->setCreditCard(null);
-        }
-
-        $this->collPointSystems = null;
-        foreach ($pointSystems as $pointSystem) {
-            $this->addPointSystem($pointSystem);
-        }
-
-        $this->collPointSystems = $pointSystems;
-        $this->collPointSystemsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related PointSystem objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related PointSystem objects.
-     * @throws PropelException
-     */
-    public function countPointSystems(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPointSystemsPartial && !$this->isNew();
-        if (null === $this->collPointSystems || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPointSystems) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getPointSystems());
-            }
-
-            $query = ChildPointSystemQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByCreditCard($this)
-                ->count($con);
-        }
-
-        return count($this->collPointSystems);
-    }
-
-    /**
-     * Method called to associate a ChildPointSystem object to this object
-     * through the ChildPointSystem foreign key attribute.
-     *
-     * @param  ChildPointSystem $l ChildPointSystem
-     * @return $this|\CreditCard The current object (for fluent API support)
-     */
-    public function addPointSystem(ChildPointSystem $l)
-    {
-        if ($this->collPointSystems === null) {
-            $this->initPointSystems();
-            $this->collPointSystemsPartial = true;
-        }
-
-        if (!$this->collPointSystems->contains($l)) {
-            $this->doAddPointSystem($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildPointSystem $pointSystem The ChildPointSystem object to add.
-     */
-    protected function doAddPointSystem(ChildPointSystem $pointSystem)
-    {
-        $this->collPointSystems[]= $pointSystem;
-        $pointSystem->setCreditCard($this);
-    }
-
-    /**
-     * @param  ChildPointSystem $pointSystem The ChildPointSystem object to remove.
-     * @return $this|ChildCreditCard The current object (for fluent API support)
-     */
-    public function removePointSystem(ChildPointSystem $pointSystem)
-    {
-        if ($this->getPointSystems()->contains($pointSystem)) {
-            $pos = $this->collPointSystems->search($pointSystem);
-            $this->collPointSystems->remove($pos);
-            if (null === $this->pointSystemsScheduledForDeletion) {
-                $this->pointSystemsScheduledForDeletion = clone $this->collPointSystems;
-                $this->pointSystemsScheduledForDeletion->clear();
-            }
-            $this->pointSystemsScheduledForDeletion[]= clone $pointSystem;
-            $pointSystem->setCreditCard(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this CreditCard is new, it will return
-     * an empty collection; or if this CreditCard has previously
-     * been saved, it will retrieve related PointSystems from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in CreditCard.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildPointSystem[] List of ChildPointSystem objects
-     */
-    public function getPointSystemsJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildPointSystemQuery::create(null, $criteria);
-        $query->joinWith('Store', $joinBehavior);
-
-        return $this->getPointSystems($query, $con);
-    }
-
-    /**
      * Clears out the collPointUsages collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -4657,11 +4657,11 @@ abstract class CreditCard implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aIssuer) {
-            $this->aIssuer->removeCreditCard($this);
-        }
         if (null !== $this->aAffiliateCompany) {
             $this->aAffiliateCompany->removeCreditCard($this);
+        }
+        if (null !== $this->aIssuer) {
+            $this->aIssuer->removeCreditCard($this);
         }
         $this->credit_card_id = null;
         $this->name = null;
@@ -4711,6 +4711,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collCardPointSystems) {
+                foreach ($this->collCardPointSystems as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collDiscountss) {
                 foreach ($this->collDiscountss as $o) {
                     $o->clearAllReferences($deep);
@@ -4731,11 +4736,6 @@ abstract class CreditCard implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collPointSystems) {
-                foreach ($this->collPointSystems as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collPointUsages) {
                 foreach ($this->collPointUsages as $o) {
                     $o->clearAllReferences($deep);
@@ -4746,14 +4746,14 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->collCampaigns = null;
         $this->collCardDescriptions = null;
         $this->collCardFeaturess = null;
+        $this->collCardPointSystems = null;
         $this->collDiscountss = null;
         $this->collFeess = null;
         $this->collInsurances = null;
         $this->collInterests = null;
-        $this->collPointSystems = null;
         $this->collPointUsages = null;
-        $this->aIssuer = null;
         $this->aAffiliateCompany = null;
+        $this->aIssuer = null;
     }
 
     /**

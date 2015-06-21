@@ -108,14 +108,14 @@ abstract class Insurance implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildInsuranceType
-     */
-    protected $aInsuranceType;
-
-    /**
      * @var        ChildCreditCard
      */
     protected $aCreditCard;
+
+    /**
+     * @var        ChildInsuranceType
+     */
+    protected $aInsuranceType;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -704,8 +704,8 @@ abstract class Insurance implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aInsuranceType = null;
             $this->aCreditCard = null;
+            $this->aInsuranceType = null;
         } // if (deep)
     }
 
@@ -810,18 +810,18 @@ abstract class Insurance implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aInsuranceType !== null) {
-                if ($this->aInsuranceType->isModified() || $this->aInsuranceType->isNew()) {
-                    $affectedRows += $this->aInsuranceType->save($con);
-                }
-                $this->setInsuranceType($this->aInsuranceType);
-            }
-
             if ($this->aCreditCard !== null) {
                 if ($this->aCreditCard->isModified() || $this->aCreditCard->isNew()) {
                     $affectedRows += $this->aCreditCard->save($con);
                 }
                 $this->setCreditCard($this->aCreditCard);
+            }
+
+            if ($this->aInsuranceType !== null) {
+                if ($this->aInsuranceType->isModified() || $this->aInsuranceType->isNew()) {
+                    $affectedRows += $this->aInsuranceType->save($con);
+                }
+                $this->setInsuranceType($this->aInsuranceType);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1041,21 +1041,6 @@ abstract class Insurance implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aInsuranceType) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'insuranceType';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'insurance_type';
-                        break;
-                    default:
-                        $key = 'InsuranceType';
-                }
-
-                $result[$key] = $this->aInsuranceType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aCreditCard) {
 
                 switch ($keyType) {
@@ -1070,6 +1055,21 @@ abstract class Insurance implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aInsuranceType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'insuranceType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'insurance_type';
+                        break;
+                    default:
+                        $key = 'InsuranceType';
+                }
+
+                $result[$key] = $this->aInsuranceType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1356,57 +1356,6 @@ abstract class Insurance implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildInsuranceType object.
-     *
-     * @param  ChildInsuranceType $v
-     * @return $this|\Insurance The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setInsuranceType(ChildInsuranceType $v = null)
-    {
-        if ($v === null) {
-            $this->setInsuranceTypeId(NULL);
-        } else {
-            $this->setInsuranceTypeId($v->getInsuranceTypeId());
-        }
-
-        $this->aInsuranceType = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildInsuranceType object, it will not be re-added.
-        if ($v !== null) {
-            $v->addInsurance($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildInsuranceType object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildInsuranceType The associated ChildInsuranceType object.
-     * @throws PropelException
-     */
-    public function getInsuranceType(ConnectionInterface $con = null)
-    {
-        if ($this->aInsuranceType === null && ($this->insurance_type_id !== null)) {
-            $this->aInsuranceType = ChildInsuranceTypeQuery::create()->findPk($this->insurance_type_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aInsuranceType->addInsurances($this);
-             */
-        }
-
-        return $this->aInsuranceType;
-    }
-
-    /**
      * Declares an association between this object and a ChildCreditCard object.
      *
      * @param  ChildCreditCard $v
@@ -1458,17 +1407,68 @@ abstract class Insurance implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildInsuranceType object.
+     *
+     * @param  ChildInsuranceType $v
+     * @return $this|\Insurance The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setInsuranceType(ChildInsuranceType $v = null)
+    {
+        if ($v === null) {
+            $this->setInsuranceTypeId(NULL);
+        } else {
+            $this->setInsuranceTypeId($v->getInsuranceTypeId());
+        }
+
+        $this->aInsuranceType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildInsuranceType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addInsurance($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildInsuranceType object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildInsuranceType The associated ChildInsuranceType object.
+     * @throws PropelException
+     */
+    public function getInsuranceType(ConnectionInterface $con = null)
+    {
+        if ($this->aInsuranceType === null && ($this->insurance_type_id !== null)) {
+            $this->aInsuranceType = ChildInsuranceTypeQuery::create()->findPk($this->insurance_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aInsuranceType->addInsurances($this);
+             */
+        }
+
+        return $this->aInsuranceType;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aInsuranceType) {
-            $this->aInsuranceType->removeInsurance($this);
-        }
         if (null !== $this->aCreditCard) {
             $this->aCreditCard->removeInsurance($this);
+        }
+        if (null !== $this->aInsuranceType) {
+            $this->aInsuranceType->removeInsurance($this);
         }
         $this->insurance_id = null;
         $this->credit_card_id = null;
@@ -1497,8 +1497,8 @@ abstract class Insurance implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aInsuranceType = null;
         $this->aCreditCard = null;
+        $this->aInsuranceType = null;
     }
 
     /**

@@ -40,15 +40,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInterestQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildInterestQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildInterestQuery leftJoinPaymentType($relationAlias = null) Adds a LEFT JOIN clause to the query using the PaymentType relation
- * @method     ChildInterestQuery rightJoinPaymentType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PaymentType relation
- * @method     ChildInterestQuery innerJoinPaymentType($relationAlias = null) Adds a INNER JOIN clause to the query using the PaymentType relation
- *
  * @method     ChildInterestQuery leftJoinCreditCard($relationAlias = null) Adds a LEFT JOIN clause to the query using the CreditCard relation
  * @method     ChildInterestQuery rightJoinCreditCard($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CreditCard relation
  * @method     ChildInterestQuery innerJoinCreditCard($relationAlias = null) Adds a INNER JOIN clause to the query using the CreditCard relation
  *
- * @method     \PaymentTypeQuery|\CreditCardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildInterestQuery leftJoinPaymentType($relationAlias = null) Adds a LEFT JOIN clause to the query using the PaymentType relation
+ * @method     ChildInterestQuery rightJoinPaymentType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PaymentType relation
+ * @method     ChildInterestQuery innerJoinPaymentType($relationAlias = null) Adds a INNER JOIN clause to the query using the PaymentType relation
+ *
+ * @method     \CreditCardQuery|\PaymentTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildInterest findOne(ConnectionInterface $con = null) Return the first ChildInterest matching the query
  * @method     ChildInterest findOneOrCreate(ConnectionInterface $con = null) Return the first ChildInterest matching the query, or a new ChildInterest object populated from the query conditions when no match is found
@@ -532,83 +532,6 @@ abstract class InterestQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \PaymentType object
-     *
-     * @param \PaymentType|ObjectCollection $paymentType The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildInterestQuery The current query, for fluid interface
-     */
-    public function filterByPaymentType($paymentType, $comparison = null)
-    {
-        if ($paymentType instanceof \PaymentType) {
-            return $this
-                ->addUsingAlias(InterestTableMap::COL_PAYMENT_TYPE_ID, $paymentType->getPaymentTypeId(), $comparison);
-        } elseif ($paymentType instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(InterestTableMap::COL_PAYMENT_TYPE_ID, $paymentType->toKeyValue('PrimaryKey', 'PaymentTypeId'), $comparison);
-        } else {
-            throw new PropelException('filterByPaymentType() only accepts arguments of type \PaymentType or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the PaymentType relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildInterestQuery The current query, for fluid interface
-     */
-    public function joinPaymentType($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PaymentType');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'PaymentType');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the PaymentType relation PaymentType object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \PaymentTypeQuery A secondary query class using the current class as primary query
-     */
-    public function usePaymentTypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPaymentType($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PaymentType', '\PaymentTypeQuery');
-    }
-
-    /**
      * Filter the query by a related \CreditCard object
      *
      * @param \CreditCard|ObjectCollection $creditCard The related object(s) to use as filter
@@ -683,6 +606,83 @@ abstract class InterestQuery extends ModelCriteria
         return $this
             ->joinCreditCard($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CreditCard', '\CreditCardQuery');
+    }
+
+    /**
+     * Filter the query by a related \PaymentType object
+     *
+     * @param \PaymentType|ObjectCollection $paymentType The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildInterestQuery The current query, for fluid interface
+     */
+    public function filterByPaymentType($paymentType, $comparison = null)
+    {
+        if ($paymentType instanceof \PaymentType) {
+            return $this
+                ->addUsingAlias(InterestTableMap::COL_PAYMENT_TYPE_ID, $paymentType->getPaymentTypeId(), $comparison);
+        } elseif ($paymentType instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(InterestTableMap::COL_PAYMENT_TYPE_ID, $paymentType->toKeyValue('PrimaryKey', 'PaymentTypeId'), $comparison);
+        } else {
+            throw new PropelException('filterByPaymentType() only accepts arguments of type \PaymentType or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PaymentType relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildInterestQuery The current query, for fluid interface
+     */
+    public function joinPaymentType($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PaymentType');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PaymentType');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PaymentType relation PaymentType object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PaymentTypeQuery A secondary query class using the current class as primary query
+     */
+    public function usePaymentTypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPaymentType($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PaymentType', '\PaymentTypeQuery');
     }
 
     /**

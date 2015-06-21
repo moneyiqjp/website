@@ -21,18 +21,16 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointSystemHistoryQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
  * @method     ChildPointSystemHistoryQuery orderByPointSystemName($order = Criteria::ASC) Order by the point_system_name column
- * @method     ChildPointSystemHistoryQuery orderByPointsPerYen($order = Criteria::ASC) Order by the points_per_yen column
- * @method     ChildPointSystemHistoryQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
- * @method     ChildPointSystemHistoryQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
+ * @method     ChildPointSystemHistoryQuery orderByDefaultPointsPerYen($order = Criteria::ASC) Order by the default_points_per_yen column
+ * @method     ChildPointSystemHistoryQuery orderByDefaultYenPerPoint($order = Criteria::ASC) Order by the default_yen_per_point column
  * @method     ChildPointSystemHistoryQuery orderByTimeBeg($order = Criteria::ASC) Order by the time_beg column
  * @method     ChildPointSystemHistoryQuery orderByTimeEnd($order = Criteria::ASC) Order by the time_end column
  * @method     ChildPointSystemHistoryQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildPointSystemHistoryQuery groupByPointSystemId() Group by the point_system_id column
  * @method     ChildPointSystemHistoryQuery groupByPointSystemName() Group by the point_system_name column
- * @method     ChildPointSystemHistoryQuery groupByPointsPerYen() Group by the points_per_yen column
- * @method     ChildPointSystemHistoryQuery groupByCreditCardId() Group by the credit_card_id column
- * @method     ChildPointSystemHistoryQuery groupByStoreId() Group by the store_id column
+ * @method     ChildPointSystemHistoryQuery groupByDefaultPointsPerYen() Group by the default_points_per_yen column
+ * @method     ChildPointSystemHistoryQuery groupByDefaultYenPerPoint() Group by the default_yen_per_point column
  * @method     ChildPointSystemHistoryQuery groupByTimeBeg() Group by the time_beg column
  * @method     ChildPointSystemHistoryQuery groupByTimeEnd() Group by the time_end column
  * @method     ChildPointSystemHistoryQuery groupByUpdateUser() Group by the update_user column
@@ -46,9 +44,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointSystemHistory findOneByPointSystemId(int $point_system_id) Return the first ChildPointSystemHistory filtered by the point_system_id column
  * @method     ChildPointSystemHistory findOneByPointSystemName(string $point_system_name) Return the first ChildPointSystemHistory filtered by the point_system_name column
- * @method     ChildPointSystemHistory findOneByPointsPerYen(double $points_per_yen) Return the first ChildPointSystemHistory filtered by the points_per_yen column
- * @method     ChildPointSystemHistory findOneByCreditCardId(int $credit_card_id) Return the first ChildPointSystemHistory filtered by the credit_card_id column
- * @method     ChildPointSystemHistory findOneByStoreId(int $store_id) Return the first ChildPointSystemHistory filtered by the store_id column
+ * @method     ChildPointSystemHistory findOneByDefaultPointsPerYen(string $default_points_per_yen) Return the first ChildPointSystemHistory filtered by the default_points_per_yen column
+ * @method     ChildPointSystemHistory findOneByDefaultYenPerPoint(string $default_yen_per_point) Return the first ChildPointSystemHistory filtered by the default_yen_per_point column
  * @method     ChildPointSystemHistory findOneByTimeBeg(string $time_beg) Return the first ChildPointSystemHistory filtered by the time_beg column
  * @method     ChildPointSystemHistory findOneByTimeEnd(string $time_end) Return the first ChildPointSystemHistory filtered by the time_end column
  * @method     ChildPointSystemHistory findOneByUpdateUser(string $update_user) Return the first ChildPointSystemHistory filtered by the update_user column
@@ -56,9 +53,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemHistory[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointSystemHistory objects based on current ModelCriteria
  * @method     ChildPointSystemHistory[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildPointSystemHistory objects filtered by the point_system_id column
  * @method     ChildPointSystemHistory[]|ObjectCollection findByPointSystemName(string $point_system_name) Return ChildPointSystemHistory objects filtered by the point_system_name column
- * @method     ChildPointSystemHistory[]|ObjectCollection findByPointsPerYen(double $points_per_yen) Return ChildPointSystemHistory objects filtered by the points_per_yen column
- * @method     ChildPointSystemHistory[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildPointSystemHistory objects filtered by the credit_card_id column
- * @method     ChildPointSystemHistory[]|ObjectCollection findByStoreId(int $store_id) Return ChildPointSystemHistory objects filtered by the store_id column
+ * @method     ChildPointSystemHistory[]|ObjectCollection findByDefaultPointsPerYen(string $default_points_per_yen) Return ChildPointSystemHistory objects filtered by the default_points_per_yen column
+ * @method     ChildPointSystemHistory[]|ObjectCollection findByDefaultYenPerPoint(string $default_yen_per_point) Return ChildPointSystemHistory objects filtered by the default_yen_per_point column
  * @method     ChildPointSystemHistory[]|ObjectCollection findByTimeBeg(string $time_beg) Return ChildPointSystemHistory objects filtered by the time_beg column
  * @method     ChildPointSystemHistory[]|ObjectCollection findByTimeEnd(string $time_end) Return ChildPointSystemHistory objects filtered by the time_end column
  * @method     ChildPointSystemHistory[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointSystemHistory objects filtered by the update_user column
@@ -153,7 +149,7 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT point_system_id, point_system_name, points_per_yen, credit_card_id, store_id, time_beg, time_end, update_user FROM point_system_history WHERE point_system_id = :p0 AND time_beg = :p1';
+        $sql = 'SELECT point_system_id, point_system_name, default_points_per_yen, default_yen_per_point, time_beg, time_end, update_user FROM point_system_history WHERE point_system_id = :p0 AND time_beg = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -326,16 +322,16 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the points_per_yen column
+     * Filter the query on the default_points_per_yen column
      *
      * Example usage:
      * <code>
-     * $query->filterByPointsPerYen(1234); // WHERE points_per_yen = 1234
-     * $query->filterByPointsPerYen(array(12, 34)); // WHERE points_per_yen IN (12, 34)
-     * $query->filterByPointsPerYen(array('min' => 12)); // WHERE points_per_yen > 12
+     * $query->filterByDefaultPointsPerYen(1234); // WHERE default_points_per_yen = 1234
+     * $query->filterByDefaultPointsPerYen(array(12, 34)); // WHERE default_points_per_yen IN (12, 34)
+     * $query->filterByDefaultPointsPerYen(array('min' => 12)); // WHERE default_points_per_yen > 12
      * </code>
      *
-     * @param     mixed $pointsPerYen The value to use as filter.
+     * @param     mixed $defaultPointsPerYen The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -343,16 +339,16 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
      *
      * @return $this|ChildPointSystemHistoryQuery The current query, for fluid interface
      */
-    public function filterByPointsPerYen($pointsPerYen = null, $comparison = null)
+    public function filterByDefaultPointsPerYen($defaultPointsPerYen = null, $comparison = null)
     {
-        if (is_array($pointsPerYen)) {
+        if (is_array($defaultPointsPerYen)) {
             $useMinMax = false;
-            if (isset($pointsPerYen['min'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_POINTS_PER_YEN, $pointsPerYen['min'], Criteria::GREATER_EQUAL);
+            if (isset($defaultPointsPerYen['min'])) {
+                $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($pointsPerYen['max'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_POINTS_PER_YEN, $pointsPerYen['max'], Criteria::LESS_EQUAL);
+            if (isset($defaultPointsPerYen['max'])) {
+                $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -363,20 +359,20 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PointSystemHistoryTableMap::COL_POINTS_PER_YEN, $pointsPerYen, $comparison);
+        return $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen, $comparison);
     }
 
     /**
-     * Filter the query on the credit_card_id column
+     * Filter the query on the default_yen_per_point column
      *
      * Example usage:
      * <code>
-     * $query->filterByCreditCardId(1234); // WHERE credit_card_id = 1234
-     * $query->filterByCreditCardId(array(12, 34)); // WHERE credit_card_id IN (12, 34)
-     * $query->filterByCreditCardId(array('min' => 12)); // WHERE credit_card_id > 12
+     * $query->filterByDefaultYenPerPoint(1234); // WHERE default_yen_per_point = 1234
+     * $query->filterByDefaultYenPerPoint(array(12, 34)); // WHERE default_yen_per_point IN (12, 34)
+     * $query->filterByDefaultYenPerPoint(array('min' => 12)); // WHERE default_yen_per_point > 12
      * </code>
      *
-     * @param     mixed $creditCardId The value to use as filter.
+     * @param     mixed $defaultYenPerPoint The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -384,16 +380,16 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
      *
      * @return $this|ChildPointSystemHistoryQuery The current query, for fluid interface
      */
-    public function filterByCreditCardId($creditCardId = null, $comparison = null)
+    public function filterByDefaultYenPerPoint($defaultYenPerPoint = null, $comparison = null)
     {
-        if (is_array($creditCardId)) {
+        if (is_array($defaultYenPerPoint)) {
             $useMinMax = false;
-            if (isset($creditCardId['min'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID, $creditCardId['min'], Criteria::GREATER_EQUAL);
+            if (isset($defaultYenPerPoint['min'])) {
+                $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($creditCardId['max'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID, $creditCardId['max'], Criteria::LESS_EQUAL);
+            if (isset($defaultYenPerPoint['max'])) {
+                $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -404,48 +400,7 @@ abstract class PointSystemHistoryQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID, $creditCardId, $comparison);
-    }
-
-    /**
-     * Filter the query on the store_id column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByStoreId(1234); // WHERE store_id = 1234
-     * $query->filterByStoreId(array(12, 34)); // WHERE store_id IN (12, 34)
-     * $query->filterByStoreId(array('min' => 12)); // WHERE store_id > 12
-     * </code>
-     *
-     * @param     mixed $storeId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildPointSystemHistoryQuery The current query, for fluid interface
-     */
-    public function filterByStoreId($storeId = null, $comparison = null)
-    {
-        if (is_array($storeId)) {
-            $useMinMax = false;
-            if (isset($storeId['min'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_STORE_ID, $storeId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($storeId['max'])) {
-                $this->addUsingAlias(PointSystemHistoryTableMap::COL_STORE_ID, $storeId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(PointSystemHistoryTableMap::COL_STORE_ID, $storeId, $comparison);
+        return $this->addUsingAlias(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint, $comparison);
     }
 
     /**

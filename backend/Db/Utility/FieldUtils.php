@@ -14,7 +14,11 @@ class FieldUtils {
         return (!is_null($value)) && (strlen(trim($value))>0);
     }
 
+    public static function NUMBER_IS_DEFINED($value){
+        return (!is_null($value)) && is_numeric($value);
+    }
+
     public static function ID_IS_DEFINED($value){
-        return (!is_null($value)) && $value>0;
+        return (!is_null($value)) && is_numeric($value) && $value>0;
     }
 }

@@ -48,15 +48,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildDiscountsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildDiscountsQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildDiscountsQuery leftJoinStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the Store relation
- * @method     ChildDiscountsQuery rightJoinStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Store relation
- * @method     ChildDiscountsQuery innerJoinStore($relationAlias = null) Adds a INNER JOIN clause to the query using the Store relation
- *
  * @method     ChildDiscountsQuery leftJoinCreditCard($relationAlias = null) Adds a LEFT JOIN clause to the query using the CreditCard relation
  * @method     ChildDiscountsQuery rightJoinCreditCard($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CreditCard relation
  * @method     ChildDiscountsQuery innerJoinCreditCard($relationAlias = null) Adds a INNER JOIN clause to the query using the CreditCard relation
  *
- * @method     \StoreQuery|\CreditCardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildDiscountsQuery leftJoinStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the Store relation
+ * @method     ChildDiscountsQuery rightJoinStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Store relation
+ * @method     ChildDiscountsQuery innerJoinStore($relationAlias = null) Adds a INNER JOIN clause to the query using the Store relation
+ *
+ * @method     \CreditCardQuery|\StoreQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildDiscounts findOne(ConnectionInterface $con = null) Return the first ChildDiscounts matching the query
  * @method     ChildDiscounts findOneOrCreate(ConnectionInterface $con = null) Return the first ChildDiscounts matching the query, or a new ChildDiscounts object populated from the query conditions when no match is found
@@ -692,83 +692,6 @@ abstract class DiscountsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Store object
-     *
-     * @param \Store|ObjectCollection $store The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildDiscountsQuery The current query, for fluid interface
-     */
-    public function filterByStore($store, $comparison = null)
-    {
-        if ($store instanceof \Store) {
-            return $this
-                ->addUsingAlias(DiscountsTableMap::COL_STORE_ID, $store->getStoreId(), $comparison);
-        } elseif ($store instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(DiscountsTableMap::COL_STORE_ID, $store->toKeyValue('PrimaryKey', 'StoreId'), $comparison);
-        } else {
-            throw new PropelException('filterByStore() only accepts arguments of type \Store or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Store relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildDiscountsQuery The current query, for fluid interface
-     */
-    public function joinStore($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Store');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Store');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Store relation Store object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \StoreQuery A secondary query class using the current class as primary query
-     */
-    public function useStoreQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinStore($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Store', '\StoreQuery');
-    }
-
-    /**
      * Filter the query by a related \CreditCard object
      *
      * @param \CreditCard|ObjectCollection $creditCard The related object(s) to use as filter
@@ -843,6 +766,83 @@ abstract class DiscountsQuery extends ModelCriteria
         return $this
             ->joinCreditCard($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CreditCard', '\CreditCardQuery');
+    }
+
+    /**
+     * Filter the query by a related \Store object
+     *
+     * @param \Store|ObjectCollection $store The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildDiscountsQuery The current query, for fluid interface
+     */
+    public function filterByStore($store, $comparison = null)
+    {
+        if ($store instanceof \Store) {
+            return $this
+                ->addUsingAlias(DiscountsTableMap::COL_STORE_ID, $store->getStoreId(), $comparison);
+        } elseif ($store instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(DiscountsTableMap::COL_STORE_ID, $store->toKeyValue('PrimaryKey', 'StoreId'), $comparison);
+        } else {
+            throw new PropelException('filterByStore() only accepts arguments of type \Store or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Store relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildDiscountsQuery The current query, for fluid interface
+     */
+    public function joinStore($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Store');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Store');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Store relation Store object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \StoreQuery A secondary query class using the current class as primary query
+     */
+    public function useStoreQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinStore($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Store', '\StoreQuery');
     }
 
     /**

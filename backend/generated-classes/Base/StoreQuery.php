@@ -38,19 +38,27 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildStoreQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildStoreQuery leftJoinDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discount relation
+ * @method     ChildStoreQuery rightJoinDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discount relation
+ * @method     ChildStoreQuery innerJoinDiscount($relationAlias = null) Adds a INNER JOIN clause to the query using the Discount relation
+ *
  * @method     ChildStoreQuery leftJoinDiscounts($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discounts relation
  * @method     ChildStoreQuery rightJoinDiscounts($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discounts relation
  * @method     ChildStoreQuery innerJoinDiscounts($relationAlias = null) Adds a INNER JOIN clause to the query using the Discounts relation
  *
- * @method     ChildStoreQuery leftJoinPointSystem($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointSystem relation
- * @method     ChildStoreQuery rightJoinPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointSystem relation
- * @method     ChildStoreQuery innerJoinPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the PointSystem relation
+ * @method     ChildStoreQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
+ * @method     ChildStoreQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
+ * @method     ChildStoreQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
  *
  * @method     ChildStoreQuery leftJoinPointUsage($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUsage relation
  * @method     ChildStoreQuery rightJoinPointUsage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUsage relation
  * @method     ChildStoreQuery innerJoinPointUsage($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUsage relation
  *
- * @method     \DiscountsQuery|\PointSystemQuery|\PointUsageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildStoreQuery leftJoinPointUse($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUse relation
+ * @method     ChildStoreQuery rightJoinPointUse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUse relation
+ * @method     ChildStoreQuery innerJoinPointUse($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUse relation
+ *
+ * @method     \DiscountQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
@@ -451,6 +459,79 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \Discount object
+     *
+     * @param \Discount|ObjectCollection $discount  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByDiscount($discount, $comparison = null)
+    {
+        if ($discount instanceof \Discount) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $discount->getStoreId(), $comparison);
+        } elseif ($discount instanceof ObjectCollection) {
+            return $this
+                ->useDiscountQuery()
+                ->filterByPrimaryKeys($discount->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByDiscount() only accepts arguments of type \Discount or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Discount relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinDiscount($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Discount');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Discount');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Discount relation Discount object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \DiscountQuery A secondary query class using the current class as primary query
+     */
+    public function useDiscountQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinDiscount($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Discount', '\DiscountQuery');
+    }
+
+    /**
      * Filter the query by a related \Discounts object
      *
      * @param \Discounts|ObjectCollection $discounts  the related object to use as filter
@@ -524,40 +605,40 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \PointSystem object
+     * Filter the query by a related \PointAcquisition object
      *
-     * @param \PointSystem|ObjectCollection $pointSystem  the related object to use as filter
+     * @param \PointAcquisition|ObjectCollection $pointAcquisition  the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildStoreQuery The current query, for fluid interface
      */
-    public function filterByPointSystem($pointSystem, $comparison = null)
+    public function filterByPointAcquisition($pointAcquisition, $comparison = null)
     {
-        if ($pointSystem instanceof \PointSystem) {
+        if ($pointAcquisition instanceof \PointAcquisition) {
             return $this
-                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $pointSystem->getStoreId(), $comparison);
-        } elseif ($pointSystem instanceof ObjectCollection) {
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $pointAcquisition->getStoreId(), $comparison);
+        } elseif ($pointAcquisition instanceof ObjectCollection) {
             return $this
-                ->usePointSystemQuery()
-                ->filterByPrimaryKeys($pointSystem->getPrimaryKeys())
+                ->usePointAcquisitionQuery()
+                ->filterByPrimaryKeys($pointAcquisition->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByPointSystem() only accepts arguments of type \PointSystem or Collection');
+            throw new PropelException('filterByPointAcquisition() only accepts arguments of type \PointAcquisition or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the PointSystem relation
+     * Adds a JOIN clause to the query using the PointAcquisition relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildStoreQuery The current query, for fluid interface
      */
-    public function joinPointSystem($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinPointAcquisition($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PointSystem');
+        $relationMap = $tableMap->getRelation('PointAcquisition');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -572,14 +653,14 @@ abstract class StoreQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'PointSystem');
+            $this->addJoinObject($join, 'PointAcquisition');
         }
 
         return $this;
     }
 
     /**
-     * Use the PointSystem relation PointSystem object
+     * Use the PointAcquisition relation PointAcquisition object
      *
      * @see useQuery()
      *
@@ -587,13 +668,13 @@ abstract class StoreQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \PointSystemQuery A secondary query class using the current class as primary query
+     * @return \PointAcquisitionQuery A secondary query class using the current class as primary query
      */
-    public function usePointSystemQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function usePointAcquisitionQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinPointSystem($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PointSystem', '\PointSystemQuery');
+            ->joinPointAcquisition($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PointAcquisition', '\PointAcquisitionQuery');
     }
 
     /**
@@ -667,6 +748,79 @@ abstract class StoreQuery extends ModelCriteria
         return $this
             ->joinPointUsage($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'PointUsage', '\PointUsageQuery');
+    }
+
+    /**
+     * Filter the query by a related \PointUse object
+     *
+     * @param \PointUse|ObjectCollection $pointUse  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByPointUse($pointUse, $comparison = null)
+    {
+        if ($pointUse instanceof \PointUse) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $pointUse->getStoreId(), $comparison);
+        } elseif ($pointUse instanceof ObjectCollection) {
+            return $this
+                ->usePointUseQuery()
+                ->filterByPrimaryKeys($pointUse->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPointUse() only accepts arguments of type \PointUse or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PointUse relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinPointUse($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PointUse');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PointUse');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PointUse relation PointUse object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PointUseQuery A secondary query class using the current class as primary query
+     */
+    public function usePointUseQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPointUse($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PointUse', '\PointUseQuery');
     }
 
     /**

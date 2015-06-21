@@ -22,17 +22,15 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointSystemQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
  * @method     ChildPointSystemQuery orderByPointSystemName($order = Criteria::ASC) Order by the point_system_name column
- * @method     ChildPointSystemQuery orderByPointsPerYen($order = Criteria::ASC) Order by the points_per_yen column
- * @method     ChildPointSystemQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
- * @method     ChildPointSystemQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
+ * @method     ChildPointSystemQuery orderByDefaultPointsPerYen($order = Criteria::ASC) Order by the default_points_per_yen column
+ * @method     ChildPointSystemQuery orderByDefaultYenPerPoint($order = Criteria::ASC) Order by the default_yen_per_point column
  * @method     ChildPointSystemQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPointSystemQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildPointSystemQuery groupByPointSystemId() Group by the point_system_id column
  * @method     ChildPointSystemQuery groupByPointSystemName() Group by the point_system_name column
- * @method     ChildPointSystemQuery groupByPointsPerYen() Group by the points_per_yen column
- * @method     ChildPointSystemQuery groupByCreditCardId() Group by the credit_card_id column
- * @method     ChildPointSystemQuery groupByStoreId() Group by the store_id column
+ * @method     ChildPointSystemQuery groupByDefaultPointsPerYen() Group by the default_points_per_yen column
+ * @method     ChildPointSystemQuery groupByDefaultYenPerPoint() Group by the default_yen_per_point column
  * @method     ChildPointSystemQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPointSystemQuery groupByUpdateUser() Group by the update_user column
  *
@@ -40,33 +38,43 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildPointSystemQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildPointSystemQuery leftJoinStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the Store relation
- * @method     ChildPointSystemQuery rightJoinStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Store relation
- * @method     ChildPointSystemQuery innerJoinStore($relationAlias = null) Adds a INNER JOIN clause to the query using the Store relation
+ * @method     ChildPointSystemQuery leftJoinCardPointSystem($relationAlias = null) Adds a LEFT JOIN clause to the query using the CardPointSystem relation
+ * @method     ChildPointSystemQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
+ * @method     ChildPointSystemQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
- * @method     ChildPointSystemQuery leftJoinCreditCard($relationAlias = null) Adds a LEFT JOIN clause to the query using the CreditCard relation
- * @method     ChildPointSystemQuery rightJoinCreditCard($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CreditCard relation
- * @method     ChildPointSystemQuery innerJoinCreditCard($relationAlias = null) Adds a INNER JOIN clause to the query using the CreditCard relation
+ * @method     ChildPointSystemQuery leftJoinDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discount relation
+ * @method     ChildPointSystemQuery rightJoinDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discount relation
+ * @method     ChildPointSystemQuery innerJoinDiscount($relationAlias = null) Adds a INNER JOIN clause to the query using the Discount relation
  *
- * @method     \StoreQuery|\CreditCardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildPointSystemQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
+ * @method     ChildPointSystemQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
+ * @method     ChildPointSystemQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
+ *
+ * @method     ChildPointSystemQuery leftJoinPointUse($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUse relation
+ * @method     ChildPointSystemQuery rightJoinPointUse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUse relation
+ * @method     ChildPointSystemQuery innerJoinPointUse($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUse relation
+ *
+ * @method     ChildPointSystemQuery leftJoinReward($relationAlias = null) Adds a LEFT JOIN clause to the query using the Reward relation
+ * @method     ChildPointSystemQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
+ * @method     ChildPointSystemQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
+ *
+ * @method     \CardPointSystemQuery|\DiscountQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPointSystem findOne(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query
  * @method     ChildPointSystem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query, or a new ChildPointSystem object populated from the query conditions when no match is found
  *
  * @method     ChildPointSystem findOneByPointSystemId(int $point_system_id) Return the first ChildPointSystem filtered by the point_system_id column
  * @method     ChildPointSystem findOneByPointSystemName(string $point_system_name) Return the first ChildPointSystem filtered by the point_system_name column
- * @method     ChildPointSystem findOneByPointsPerYen(double $points_per_yen) Return the first ChildPointSystem filtered by the points_per_yen column
- * @method     ChildPointSystem findOneByCreditCardId(int $credit_card_id) Return the first ChildPointSystem filtered by the credit_card_id column
- * @method     ChildPointSystem findOneByStoreId(int $store_id) Return the first ChildPointSystem filtered by the store_id column
+ * @method     ChildPointSystem findOneByDefaultPointsPerYen(string $default_points_per_yen) Return the first ChildPointSystem filtered by the default_points_per_yen column
+ * @method     ChildPointSystem findOneByDefaultYenPerPoint(string $default_yen_per_point) Return the first ChildPointSystem filtered by the default_yen_per_point column
  * @method     ChildPointSystem findOneByUpdateTime(string $update_time) Return the first ChildPointSystem filtered by the update_time column
  * @method     ChildPointSystem findOneByUpdateUser(string $update_user) Return the first ChildPointSystem filtered by the update_user column
  *
  * @method     ChildPointSystem[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointSystem objects based on current ModelCriteria
  * @method     ChildPointSystem[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildPointSystem objects filtered by the point_system_id column
  * @method     ChildPointSystem[]|ObjectCollection findByPointSystemName(string $point_system_name) Return ChildPointSystem objects filtered by the point_system_name column
- * @method     ChildPointSystem[]|ObjectCollection findByPointsPerYen(double $points_per_yen) Return ChildPointSystem objects filtered by the points_per_yen column
- * @method     ChildPointSystem[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildPointSystem objects filtered by the credit_card_id column
- * @method     ChildPointSystem[]|ObjectCollection findByStoreId(int $store_id) Return ChildPointSystem objects filtered by the store_id column
+ * @method     ChildPointSystem[]|ObjectCollection findByDefaultPointsPerYen(string $default_points_per_yen) Return ChildPointSystem objects filtered by the default_points_per_yen column
+ * @method     ChildPointSystem[]|ObjectCollection findByDefaultYenPerPoint(string $default_yen_per_point) Return ChildPointSystem objects filtered by the default_yen_per_point column
  * @method     ChildPointSystem[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPointSystem objects filtered by the update_time column
  * @method     ChildPointSystem[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointSystem objects filtered by the update_user column
  * @method     ChildPointSystem[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -160,7 +168,7 @@ abstract class PointSystemQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT point_system_id, point_system_name, points_per_yen, credit_card_id, store_id, update_time, update_user FROM point_system WHERE point_system_id = :p0';
+        $sql = 'SELECT point_system_id, point_system_name, default_points_per_yen, default_yen_per_point, update_time, update_user FROM point_system WHERE point_system_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -321,16 +329,16 @@ abstract class PointSystemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the points_per_yen column
+     * Filter the query on the default_points_per_yen column
      *
      * Example usage:
      * <code>
-     * $query->filterByPointsPerYen(1234); // WHERE points_per_yen = 1234
-     * $query->filterByPointsPerYen(array(12, 34)); // WHERE points_per_yen IN (12, 34)
-     * $query->filterByPointsPerYen(array('min' => 12)); // WHERE points_per_yen > 12
+     * $query->filterByDefaultPointsPerYen(1234); // WHERE default_points_per_yen = 1234
+     * $query->filterByDefaultPointsPerYen(array(12, 34)); // WHERE default_points_per_yen IN (12, 34)
+     * $query->filterByDefaultPointsPerYen(array('min' => 12)); // WHERE default_points_per_yen > 12
      * </code>
      *
-     * @param     mixed $pointsPerYen The value to use as filter.
+     * @param     mixed $defaultPointsPerYen The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -338,16 +346,16 @@ abstract class PointSystemQuery extends ModelCriteria
      *
      * @return $this|ChildPointSystemQuery The current query, for fluid interface
      */
-    public function filterByPointsPerYen($pointsPerYen = null, $comparison = null)
+    public function filterByDefaultPointsPerYen($defaultPointsPerYen = null, $comparison = null)
     {
-        if (is_array($pointsPerYen)) {
+        if (is_array($defaultPointsPerYen)) {
             $useMinMax = false;
-            if (isset($pointsPerYen['min'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_POINTS_PER_YEN, $pointsPerYen['min'], Criteria::GREATER_EQUAL);
+            if (isset($defaultPointsPerYen['min'])) {
+                $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($pointsPerYen['max'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_POINTS_PER_YEN, $pointsPerYen['max'], Criteria::LESS_EQUAL);
+            if (isset($defaultPointsPerYen['max'])) {
+                $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -358,22 +366,20 @@ abstract class PointSystemQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PointSystemTableMap::COL_POINTS_PER_YEN, $pointsPerYen, $comparison);
+        return $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, $defaultPointsPerYen, $comparison);
     }
 
     /**
-     * Filter the query on the credit_card_id column
+     * Filter the query on the default_yen_per_point column
      *
      * Example usage:
      * <code>
-     * $query->filterByCreditCardId(1234); // WHERE credit_card_id = 1234
-     * $query->filterByCreditCardId(array(12, 34)); // WHERE credit_card_id IN (12, 34)
-     * $query->filterByCreditCardId(array('min' => 12)); // WHERE credit_card_id > 12
+     * $query->filterByDefaultYenPerPoint(1234); // WHERE default_yen_per_point = 1234
+     * $query->filterByDefaultYenPerPoint(array(12, 34)); // WHERE default_yen_per_point IN (12, 34)
+     * $query->filterByDefaultYenPerPoint(array('min' => 12)); // WHERE default_yen_per_point > 12
      * </code>
      *
-     * @see       filterByCreditCard()
-     *
-     * @param     mixed $creditCardId The value to use as filter.
+     * @param     mixed $defaultYenPerPoint The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -381,16 +387,16 @@ abstract class PointSystemQuery extends ModelCriteria
      *
      * @return $this|ChildPointSystemQuery The current query, for fluid interface
      */
-    public function filterByCreditCardId($creditCardId = null, $comparison = null)
+    public function filterByDefaultYenPerPoint($defaultYenPerPoint = null, $comparison = null)
     {
-        if (is_array($creditCardId)) {
+        if (is_array($defaultYenPerPoint)) {
             $useMinMax = false;
-            if (isset($creditCardId['min'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_CREDIT_CARD_ID, $creditCardId['min'], Criteria::GREATER_EQUAL);
+            if (isset($defaultYenPerPoint['min'])) {
+                $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($creditCardId['max'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_CREDIT_CARD_ID, $creditCardId['max'], Criteria::LESS_EQUAL);
+            if (isset($defaultYenPerPoint['max'])) {
+                $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -401,50 +407,7 @@ abstract class PointSystemQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(PointSystemTableMap::COL_CREDIT_CARD_ID, $creditCardId, $comparison);
-    }
-
-    /**
-     * Filter the query on the store_id column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByStoreId(1234); // WHERE store_id = 1234
-     * $query->filterByStoreId(array(12, 34)); // WHERE store_id IN (12, 34)
-     * $query->filterByStoreId(array('min' => 12)); // WHERE store_id > 12
-     * </code>
-     *
-     * @see       filterByStore()
-     *
-     * @param     mixed $storeId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildPointSystemQuery The current query, for fluid interface
-     */
-    public function filterByStoreId($storeId = null, $comparison = null)
-    {
-        if (is_array($storeId)) {
-            $useMinMax = false;
-            if (isset($storeId['min'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_STORE_ID, $storeId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($storeId['max'])) {
-                $this->addUsingAlias(PointSystemTableMap::COL_STORE_ID, $storeId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(PointSystemTableMap::COL_STORE_ID, $storeId, $comparison);
+        return $this->addUsingAlias(PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, $defaultYenPerPoint, $comparison);
     }
 
     /**
@@ -520,44 +483,40 @@ abstract class PointSystemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Store object
+     * Filter the query by a related \CardPointSystem object
      *
-     * @param \Store|ObjectCollection $store The related object(s) to use as filter
+     * @param \CardPointSystem|ObjectCollection $cardPointSystem  the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildPointSystemQuery The current query, for fluid interface
      */
-    public function filterByStore($store, $comparison = null)
+    public function filterByCardPointSystem($cardPointSystem, $comparison = null)
     {
-        if ($store instanceof \Store) {
+        if ($cardPointSystem instanceof \CardPointSystem) {
             return $this
-                ->addUsingAlias(PointSystemTableMap::COL_STORE_ID, $store->getStoreId(), $comparison);
-        } elseif ($store instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $cardPointSystem->getPointSystemId(), $comparison);
+        } elseif ($cardPointSystem instanceof ObjectCollection) {
             return $this
-                ->addUsingAlias(PointSystemTableMap::COL_STORE_ID, $store->toKeyValue('PrimaryKey', 'StoreId'), $comparison);
+                ->useCardPointSystemQuery()
+                ->filterByPrimaryKeys($cardPointSystem->getPrimaryKeys())
+                ->endUse();
         } else {
-            throw new PropelException('filterByStore() only accepts arguments of type \Store or Collection');
+            throw new PropelException('filterByCardPointSystem() only accepts arguments of type \CardPointSystem or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Store relation
+     * Adds a JOIN clause to the query using the CardPointSystem relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildPointSystemQuery The current query, for fluid interface
      */
-    public function joinStore($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinCardPointSystem($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Store');
+        $relationMap = $tableMap->getRelation('CardPointSystem');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -572,14 +531,14 @@ abstract class PointSystemQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Store');
+            $this->addJoinObject($join, 'CardPointSystem');
         }
 
         return $this;
     }
 
     /**
-     * Use the Store relation Store object
+     * Use the CardPointSystem relation CardPointSystem object
      *
      * @see useQuery()
      *
@@ -587,54 +546,50 @@ abstract class PointSystemQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \StoreQuery A secondary query class using the current class as primary query
+     * @return \CardPointSystemQuery A secondary query class using the current class as primary query
      */
-    public function useStoreQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useCardPointSystemQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinStore($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Store', '\StoreQuery');
+            ->joinCardPointSystem($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'CardPointSystem', '\CardPointSystemQuery');
     }
 
     /**
-     * Filter the query by a related \CreditCard object
+     * Filter the query by a related \Discount object
      *
-     * @param \CreditCard|ObjectCollection $creditCard The related object(s) to use as filter
+     * @param \Discount|ObjectCollection $discount  the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildPointSystemQuery The current query, for fluid interface
      */
-    public function filterByCreditCard($creditCard, $comparison = null)
+    public function filterByDiscount($discount, $comparison = null)
     {
-        if ($creditCard instanceof \CreditCard) {
+        if ($discount instanceof \Discount) {
             return $this
-                ->addUsingAlias(PointSystemTableMap::COL_CREDIT_CARD_ID, $creditCard->getCreditCardId(), $comparison);
-        } elseif ($creditCard instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $discount->getPointSystemId(), $comparison);
+        } elseif ($discount instanceof ObjectCollection) {
             return $this
-                ->addUsingAlias(PointSystemTableMap::COL_CREDIT_CARD_ID, $creditCard->toKeyValue('PrimaryKey', 'CreditCardId'), $comparison);
+                ->useDiscountQuery()
+                ->filterByPrimaryKeys($discount->getPrimaryKeys())
+                ->endUse();
         } else {
-            throw new PropelException('filterByCreditCard() only accepts arguments of type \CreditCard or Collection');
+            throw new PropelException('filterByDiscount() only accepts arguments of type \Discount or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the CreditCard relation
+     * Adds a JOIN clause to the query using the Discount relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildPointSystemQuery The current query, for fluid interface
      */
-    public function joinCreditCard($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinDiscount($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('CreditCard');
+        $relationMap = $tableMap->getRelation('Discount');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -649,14 +604,14 @@ abstract class PointSystemQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'CreditCard');
+            $this->addJoinObject($join, 'Discount');
         }
 
         return $this;
     }
 
     /**
-     * Use the CreditCard relation CreditCard object
+     * Use the Discount relation Discount object
      *
      * @see useQuery()
      *
@@ -664,13 +619,232 @@ abstract class PointSystemQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \CreditCardQuery A secondary query class using the current class as primary query
+     * @return \DiscountQuery A secondary query class using the current class as primary query
      */
-    public function useCreditCardQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useDiscountQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinCreditCard($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'CreditCard', '\CreditCardQuery');
+            ->joinDiscount($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Discount', '\DiscountQuery');
+    }
+
+    /**
+     * Filter the query by a related \PointAcquisition object
+     *
+     * @param \PointAcquisition|ObjectCollection $pointAcquisition  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByPointAcquisition($pointAcquisition, $comparison = null)
+    {
+        if ($pointAcquisition instanceof \PointAcquisition) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $pointAcquisition->getPointSystemId(), $comparison);
+        } elseif ($pointAcquisition instanceof ObjectCollection) {
+            return $this
+                ->usePointAcquisitionQuery()
+                ->filterByPrimaryKeys($pointAcquisition->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPointAcquisition() only accepts arguments of type \PointAcquisition or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PointAcquisition relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinPointAcquisition($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PointAcquisition');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PointAcquisition');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PointAcquisition relation PointAcquisition object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PointAcquisitionQuery A secondary query class using the current class as primary query
+     */
+    public function usePointAcquisitionQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPointAcquisition($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PointAcquisition', '\PointAcquisitionQuery');
+    }
+
+    /**
+     * Filter the query by a related \PointUse object
+     *
+     * @param \PointUse|ObjectCollection $pointUse  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByPointUse($pointUse, $comparison = null)
+    {
+        if ($pointUse instanceof \PointUse) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $pointUse->getPointSystemId(), $comparison);
+        } elseif ($pointUse instanceof ObjectCollection) {
+            return $this
+                ->usePointUseQuery()
+                ->filterByPrimaryKeys($pointUse->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPointUse() only accepts arguments of type \PointUse or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PointUse relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinPointUse($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PointUse');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PointUse');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PointUse relation PointUse object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PointUseQuery A secondary query class using the current class as primary query
+     */
+    public function usePointUseQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPointUse($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PointUse', '\PointUseQuery');
+    }
+
+    /**
+     * Filter the query by a related \Reward object
+     *
+     * @param \Reward|ObjectCollection $reward  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByReward($reward, $comparison = null)
+    {
+        if ($reward instanceof \Reward) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $reward->getPointSystemId(), $comparison);
+        } elseif ($reward instanceof ObjectCollection) {
+            return $this
+                ->useRewardQuery()
+                ->filterByPrimaryKeys($reward->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByReward() only accepts arguments of type \Reward or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Reward relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinReward($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Reward');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Reward');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Reward relation Reward object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \RewardQuery A secondary query class using the current class as primary query
+     */
+    public function useRewardQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinReward($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Reward', '\RewardQuery');
     }
 
     /**

@@ -13,7 +13,7 @@ INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.032000000000000, 1, 29, NOW(), 'ben');
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.040000000000000, 1, 29, NOW(), 'ben');
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.012000000000000, 1, 59, NOW(), 'ben');
-INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.020000000000000, 1, 59, NOW(), 'ben');
+INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `tore_id`, `update_time`, `update_user`) VALUES (0.020000000000000, 1, 59, NOW(), 'ben');
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.012000000000000, 1, 60, NOW(), 'ben');
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.020000000000000, 1, 60, NOW(), 'ben');
 INSERT INTO `point_acquisition` (`points_per_yen`, `point_system_id`, `store_id`, `update_time`, `update_user`) VALUES (0.012000000000000, 1, 61, NOW(), 'ben');

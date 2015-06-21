@@ -1,59 +1,58 @@
 use moneyiq;
+SET NAMES utf8;
 -- foreign keys
 
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- Reference:  Interest_credit_card (table: Interest)
 ALTER TABLE interest ADD CONSTRAINT Interest_credit_card FOREIGN KEY Interest_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
+    
 -- Reference:  Interest_payment_type (table: Interest)
-
-
 ALTER TABLE interest ADD CONSTRAINT Interest_payment_type FOREIGN KEY Interest_payment_type (payment_type_id)
     REFERENCES payment_type (payment_type_id);
+
+    
 -- Reference:  affiliate_company_credit_card (table: credit_card)
-
-
 ALTER TABLE credit_card ADD CONSTRAINT affiliate_company_credit_card FOREIGN KEY affiliate_company_credit_card (affiliate_id)
     REFERENCES affiliate_company (affiliate_id);
+
+
 -- Reference:  campaign_credit_card (table: campaign)
-
-
 ALTER TABLE campaign ADD CONSTRAINT campaign_credit_card FOREIGN KEY campaign_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
+
 -- Reference:  campaign_issuer (table: camdiscountspaign)
-
-
 ALTER TABLE card_features ADD CONSTRAINT card_features_credit_card FOREIGN KEY card_features_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
--- Reference:  credit_card_point_acquisition (table: point_acquisition)
 
 
-ALTER TABLE point_acquisition ADD CONSTRAINT credit_card_point_acquisition FOREIGN KEY credit_card_point_acquisition (credit_card_id)
-    REFERENCES credit_card (credit_card_id);
 -- Reference:  creditcard_description (table: card_description)
-
-
 ALTER TABLE card_description ADD CONSTRAINT creditcard_description FOREIGN KEY creditcard_description (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
+
 -- Reference:  discounts_credit_card (table: discounts)
-
-
 ALTER TABLE discounts ADD CONSTRAINT fk_discounts_credit_card FOREIGN KEY fk_discounts_credit_card_key (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
+    
 -- Reference:  discounts_store (table: discounts)
-
-
 ALTER TABLE discounts ADD CONSTRAINT fk_discounts_store FOREIGN KEY fk_discounts_store_key (store_id)
     REFERENCES store (store_id);
+
+
 -- Reference:  fees_credit_card (table: fees)
-
-
 ALTER TABLE fees ADD CONSTRAINT fees_credit_card FOREIGN KEY fees_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
 
 -- Reference:  insurance_credit_card (table: insurance)
 ALTER TABLE insurance ADD CONSTRAINT insurance_credit_card FOREIGN KEY insurance_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
 
 -- Reference:  insurance_insurance_type (table: insurance)
 ALTER TABLE insurance ADD CONSTRAINT insurance_insurance_type FOREIGN KEY insurance_insurance_type_key (insurance_type_id)
@@ -63,23 +62,19 @@ ALTER TABLE insurance ADD CONSTRAINT insurance_insurance_type FOREIGN KEY insura
 -- Reference:  issuer_credit_card (table: credit_card)
 ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_credit_card (issuer_id)
     REFERENCES issuer (issuer_id);
--- Reference:  point_acquisition_store (table: point_acquisition)
 
 
-ALTER TABLE point_acquisition ADD CONSTRAINT point_acquisition_store FOREIGN KEY point_acquisition_store (store_id)
-    REFERENCES store (store_id);
 -- Reference:  point_usage_credit_card (table: point_usage)
-
-
-	 ALTER TABLE point_usage ADD CONSTRAINT point_usage_credit_card FOREIGN KEY fk_point_usage_credit_card (credit_card_id)
+ ALTER TABLE point_usage ADD CONSTRAINT point_usage_credit_card FOREIGN KEY fk_point_usage_credit_card (credit_card_id)
     REFERENCES credit_card (credit_card_id);
+
 
 -- Reference:  point_usage_store (table: point_usage)
 ALTER TABLE point_usage ADD CONSTRAINT const_point_usage_store FOREIGN KEY fk_point_usage_store (store_id)
     REFERENCES store (store_id);
 
-    
-    ALTER TABLE card_features ADD CONSTRAINT fk_card_feature_type FOREIGN KEY fk_card_feature_type (feature_type_id)
-    REFERENCES card_feature_type (feature_type_id);
    
+ALTER TABLE card_features ADD CONSTRAINT fk_card_feature_type FOREIGN KEY fk_card_feature_type (feature_type_id)
+    REFERENCES card_feature_type (feature_type_id);
 
+SET FOREIGN_KEY_CHECKS = 1;

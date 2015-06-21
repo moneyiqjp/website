@@ -1,5 +1,9 @@
 <?php
 require_once 'vendor/autoload.php';
+/*
+require_once  'generated-classes\CardPointSystem.php';
+require_once 'generated-classes\CardPointSystemQuery.php';
+*/
 require_once 'Db/Core/Db.php';
 /**
  * Created by PhpStorm.
@@ -66,7 +70,6 @@ $app->get('/display/issuers', function () use ($app) {
     // return JSON-encoded response body with query results
     echo json_encode($cards);
 });
-
 $app->get('/display/affiliates', function () use ($app) {
     // query database for all cards
 
@@ -78,7 +81,6 @@ $app->get('/display/affiliates', function () use ($app) {
     // return JSON-encoded response body with query results
     echo json_encode($cards);
 });
-
 $app->get('/display/stores', function () use ($app) {
     $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -108,7 +110,6 @@ $app->get('/display/creditcards', function () use ($app) {
     #echo json_encode($cards[0]);
     echo json_encode($jTableResult);
 });
-
 $app->post('/crud/creditcards/create', function () use ($app) {
     $db = new \Db\Core\Db();
     $request = $app->request();
@@ -140,7 +141,6 @@ $app->put('/crud/creditcards/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
-
 $app->delete('/crud/creditcards/delete', function () use ($app) {
     $db = new \Db\Core\Db();
     $request = $app->request();
@@ -156,6 +156,424 @@ $app->delete('/crud/creditcards/delete', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
+
+
+
+/*PointSystems*/
+$app->get('/crud/pointsystem/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetPointSystemForCrud()));
+});
+$app->delete('/crud/pointsystem/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/pointsystem/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeletePointSystemForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/pointsystem/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreatePointSystemForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/pointsystem/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdatePointSystemForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->get('/crud/pointsystem/by/creditcard', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointSystemForCard($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/pointsystem/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointSystemById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+
+
+/*PointAcquisitions*/
+$app->get('/crud/pointacquisition/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetPointAcquisitionForCrud()));
+});
+$app->delete('/crud/pointacquisition/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/PointAcquisition/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeletePointAcquisitionForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/pointacquisition/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreatePointAcquisitionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/pointacquisition/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdatePointAcquisitionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->get('/crud/pointacquisition/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointAcquisitionById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/pointacquisition/by/pointsystem', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointAcquisitionByPointSystemId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+
+
+/*PointUsages*/
+$app->get('/crud/pointusage/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetPointUsageForCrud()));
+});
+$app->delete('/crud/pointusage/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/PointUsage/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeletePointUsageForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/pointusage/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreatePointUsageForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/pointusage/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdatePointUsageForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->get('/crud/pointusage/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointUsageById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/pointusage/by/pointsystem', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPointUsageByPointSystemId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+
+/*Rewards*/
+$app->get('/crud/reward/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetRewardForCrud()));
+});
+$app->delete('/crud/reward/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/Reward/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeleteRewardForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/reward/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateRewardForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/reward/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateRewardForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->get('/crud/reward/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetRewardById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/reward/by/pointsystem', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetRewardByPointSystemId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+/*RewardTypes*/
+$app->get('/crud/reward/type/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetRewardTypeForCrud()));
+});
+
+/*RewardCategories*/
+$app->get('/crud/reward/category/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetRewardCategoryForCrud()));
+});
+
+
+/*PointSystemMapping*/
+$app->get('/crud/creditcard/pointsystem/mapping/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetCardPointSystemMappingForCrud()));
+});
+$app->delete('/crud/creditcard/pointsystem/mapping/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/pointsystem/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeleteCardPointSystemMappingForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/creditcard/pointsystem/mapping/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateCardPointSystemMappingForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/creditcard/pointsystem/mapping/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateCardPointSystemMappingForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->get('/crud/creditcard/pointsystem/mapping/by/creditcard', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetCardPointSystemMappingForCard($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/creditcard/pointsystem/mapping/by/pointsystem', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetCardPointSystemMappingForPointSystem($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
 
 
 /*Issuers*/
@@ -721,6 +1139,8 @@ $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
+
+
 
 /*Store*/
 $app->get('/crud/store/all', function () use ($app) {

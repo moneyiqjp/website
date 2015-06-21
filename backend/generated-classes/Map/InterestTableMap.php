@@ -170,8 +170,8 @@ class InterestTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('PaymentType', '\\PaymentType', RelationMap::MANY_TO_ONE, array('payment_type_id' => 'payment_type_id', ), null, null);
         $this->addRelation('CreditCard', '\\CreditCard', RelationMap::MANY_TO_ONE, array('credit_card_id' => 'credit_card_id', ), null, null);
+        $this->addRelation('PaymentType', '\\PaymentType', RelationMap::MANY_TO_ONE, array('payment_type_id' => 'payment_type_id', ), null, null);
     } // buildRelations()
 
     /**

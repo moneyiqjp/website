@@ -8,6 +8,46 @@
 
 namespace Db\Core;
 
+class Reward{
+    public $category;
+    public $type;
+    public $description;
+    public $icon;
+    public $yenPerPoint;
+    public $pricePerUnit;
+    public $minPoints;
+    public $maxPoints;
+    public $requiredPoints;
+    public $maxPeriod;
+    public $pointSystemName;
+
+    function PointsData()
+    {
+    }
+
+    function UpdateFromDB(\Reward $rew)
+    {
+        $this->category = $rew->getCategory();
+        $this->type    = $rew->getType();
+        $this->description = $rew->getDescription();
+        $this->icon = $rew->getIcon();
+        $this->yenPerPoint = $rew->getYenPerPoint();
+        $this->pricePerUnit = $rew->getPricePerUnit();
+        $this->minPoints = $rew->getMinPoints();
+        $this->maxPoints = $rew->getMaxPoints();
+        $this->requiredPoints = $rew->getRequiredPoints();
+        $this->maxPeriod = $rew->getMaxPeriod();
+        $this->pointSystemName = $rew->getPointSystem()->getPointSystemName();
+        return $this;
+    }
+
+    static function CREATE_FROM_DB(\Reward $rew)
+    {
+        $mine = new Reward();
+        $mine->UpdateFromDB($rew);
+        return $mine;
+    }
+}
 
 class Feature {
     public $category;
@@ -65,15 +105,12 @@ class CreditCard {
     public $pointsData = array();
     public $discountData = array();
     public $supportedBrands = array();
-    /*
-        "supportedBrands": [
-            "Visa",
-            "Maestro",
-            "JCB"
-        ],
+    public $rewards = array();
 
-
-     */
+    function CreditCard()
+    {
+        return $this;
+    }
 
     function AddPaymentNetwork($text_)
     {
@@ -125,9 +162,14 @@ class CreditCard {
         $this->discountData = $this->_addPoints($this->discountData,$store,$storeCategory,$points,$multiple_);
     }
 
-    function CreditCard()
+    function AddReward(\Reward $rew)
     {
-        return $this;
+        $key = $rew->getCategory();
+        if (!array_key_exists($key,$this->rewards))
+        {
+            $this->rewards[$key] = array();
+        }
+        array_push($this->rewards[$key],Reward::CREATE_FROM_DB($rew));
     }
 
 
@@ -136,7 +178,10 @@ class CreditCard {
         $mine = new CreditCard();
         $mine->cardId = $cc->getCreditCardId();
         $mine->cardName = $cc->getName();
-        $mine->cardIssuer = $cc->getIssuer()->getIssuerName();
+        $issuer=$cc->getIssuer();
+        if(!is_null($issuer)) {
+            $mine->cardIssuer = $issuer->getIssuerName();
+        }
         $mine->cardImg = $cc->getImageLink();
         $mine->affiliateUrl = $cc->getAfilliateLink();
 
@@ -210,6 +255,13 @@ class CreditCard {
         //todo points expiry period
         $mine->pointsExpiryPeriod = 1;
 
+        foreach($cc->getCardPointSystems() as $pcs)
+        {
+            foreach($pcs->getPointSystem()->getRewards() as $rew)
+            {
+                $mine->AddReward($rew);
+            }
+        }
 
 
         #$this->AddPointsData("標準ポイント",0.005,1.0);

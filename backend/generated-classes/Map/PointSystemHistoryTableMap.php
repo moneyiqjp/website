@@ -59,7 +59,7 @@ class PointSystemHistoryTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PointSystemHistoryTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the point_system_id field
@@ -82,19 +82,14 @@ class PointSystemHistoryTableMap extends TableMap
     const COL_POINT_SYSTEM_NAME = 'point_system_history.point_system_name';
 
     /**
-     * the column name for the points_per_yen field
+     * the column name for the default_points_per_yen field
      */
-    const COL_POINTS_PER_YEN = 'point_system_history.points_per_yen';
+    const COL_DEFAULT_POINTS_PER_YEN = 'point_system_history.default_points_per_yen';
 
     /**
-     * the column name for the credit_card_id field
+     * the column name for the default_yen_per_point field
      */
-    const COL_CREDIT_CARD_ID = 'point_system_history.credit_card_id';
-
-    /**
-     * the column name for the store_id field
-     */
-    const COL_STORE_ID = 'point_system_history.store_id';
+    const COL_DEFAULT_YEN_PER_POINT = 'point_system_history.default_yen_per_point';
 
     /**
      * the column name for the time_beg field
@@ -123,11 +118,11 @@ class PointSystemHistoryTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PointSystemId', 'PointSystemName', 'PointsPerYen', 'CreditCardId', 'StoreId', 'TimeBeg', 'TimeEnd', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('pointSystemId', 'pointSystemName', 'pointsPerYen', 'creditCardId', 'storeId', 'timeBeg', 'timeEnd', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PointSystemHistoryTableMap::COL_POINT_SYSTEM_ID, PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME, PointSystemHistoryTableMap::COL_POINTS_PER_YEN, PointSystemHistoryTableMap::COL_CREDIT_CARD_ID, PointSystemHistoryTableMap::COL_STORE_ID, PointSystemHistoryTableMap::COL_TIME_BEG, PointSystemHistoryTableMap::COL_TIME_END, PointSystemHistoryTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('point_system_id', 'point_system_name', 'points_per_yen', 'credit_card_id', 'store_id', 'time_beg', 'time_end', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('PointSystemId', 'PointSystemName', 'DefaultPointsPerYen', 'DefaultYenPerPoint', 'TimeBeg', 'TimeEnd', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('pointSystemId', 'pointSystemName', 'defaultPointsPerYen', 'defaultYenPerPoint', 'timeBeg', 'timeEnd', 'updateUser', ),
+        self::TYPE_COLNAME       => array(PointSystemHistoryTableMap::COL_POINT_SYSTEM_ID, PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME, PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN, PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT, PointSystemHistoryTableMap::COL_TIME_BEG, PointSystemHistoryTableMap::COL_TIME_END, PointSystemHistoryTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('point_system_id', 'point_system_name', 'default_points_per_yen', 'default_yen_per_point', 'time_beg', 'time_end', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -137,11 +132,11 @@ class PointSystemHistoryTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PointSystemId' => 0, 'PointSystemName' => 1, 'PointsPerYen' => 2, 'CreditCardId' => 3, 'StoreId' => 4, 'TimeBeg' => 5, 'TimeEnd' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('pointSystemId' => 0, 'pointSystemName' => 1, 'pointsPerYen' => 2, 'creditCardId' => 3, 'storeId' => 4, 'timeBeg' => 5, 'timeEnd' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(PointSystemHistoryTableMap::COL_POINT_SYSTEM_ID => 0, PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME => 1, PointSystemHistoryTableMap::COL_POINTS_PER_YEN => 2, PointSystemHistoryTableMap::COL_CREDIT_CARD_ID => 3, PointSystemHistoryTableMap::COL_STORE_ID => 4, PointSystemHistoryTableMap::COL_TIME_BEG => 5, PointSystemHistoryTableMap::COL_TIME_END => 6, PointSystemHistoryTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('point_system_id' => 0, 'point_system_name' => 1, 'points_per_yen' => 2, 'credit_card_id' => 3, 'store_id' => 4, 'time_beg' => 5, 'time_end' => 6, 'update_user' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('PointSystemId' => 0, 'PointSystemName' => 1, 'DefaultPointsPerYen' => 2, 'DefaultYenPerPoint' => 3, 'TimeBeg' => 4, 'TimeEnd' => 5, 'UpdateUser' => 6, ),
+        self::TYPE_CAMELNAME     => array('pointSystemId' => 0, 'pointSystemName' => 1, 'defaultPointsPerYen' => 2, 'defaultYenPerPoint' => 3, 'timeBeg' => 4, 'timeEnd' => 5, 'updateUser' => 6, ),
+        self::TYPE_COLNAME       => array(PointSystemHistoryTableMap::COL_POINT_SYSTEM_ID => 0, PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME => 1, PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN => 2, PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT => 3, PointSystemHistoryTableMap::COL_TIME_BEG => 4, PointSystemHistoryTableMap::COL_TIME_END => 5, PointSystemHistoryTableMap::COL_UPDATE_USER => 6, ),
+        self::TYPE_FIELDNAME     => array('point_system_id' => 0, 'point_system_name' => 1, 'default_points_per_yen' => 2, 'default_yen_per_point' => 3, 'time_beg' => 4, 'time_end' => 5, 'update_user' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -163,9 +158,8 @@ class PointSystemHistoryTableMap extends TableMap
         // columns
         $this->addPrimaryKey('point_system_id', 'PointSystemId', 'INTEGER', true, null, null);
         $this->addColumn('point_system_name', 'PointSystemName', 'VARCHAR', true, 255, null);
-        $this->addColumn('points_per_yen', 'PointsPerYen', 'DOUBLE', true, 15, null);
-        $this->addColumn('credit_card_id', 'CreditCardId', 'INTEGER', true, null, null);
-        $this->addColumn('store_id', 'StoreId', 'INTEGER', true, null, null);
+        $this->addColumn('default_points_per_yen', 'DefaultPointsPerYen', 'DECIMAL', true, null, null);
+        $this->addColumn('default_yen_per_point', 'DefaultYenPerPoint', 'DECIMAL', true, null, null);
         $this->addPrimaryKey('time_beg', 'TimeBeg', 'TIMESTAMP', true, null, null);
         $this->addColumn('time_end', 'TimeEnd', 'TIMESTAMP', false, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
@@ -247,11 +241,11 @@ class PointSystemHistoryTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 5 + $offset : static::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 4 + $offset : static::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 5 + $offset : static::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 4 + $offset : static::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -277,7 +271,7 @@ class PointSystemHistoryTableMap extends TableMap
         ];
         $pks[] = (string) $row[
             $indexType == TableMap::TYPE_NUM
-                ? 5 + $offset
+                ? 4 + $offset
                 : self::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
@@ -383,18 +377,16 @@ class PointSystemHistoryTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_POINT_SYSTEM_ID);
             $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_POINT_SYSTEM_NAME);
-            $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_POINTS_PER_YEN);
-            $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_CREDIT_CARD_ID);
-            $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_STORE_ID);
+            $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_DEFAULT_POINTS_PER_YEN);
+            $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_DEFAULT_YEN_PER_POINT);
             $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_TIME_BEG);
             $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_TIME_END);
             $criteria->addSelectColumn(PointSystemHistoryTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.point_system_id');
             $criteria->addSelectColumn($alias . '.point_system_name');
-            $criteria->addSelectColumn($alias . '.points_per_yen');
-            $criteria->addSelectColumn($alias . '.credit_card_id');
-            $criteria->addSelectColumn($alias . '.store_id');
+            $criteria->addSelectColumn($alias . '.default_points_per_yen');
+            $criteria->addSelectColumn($alias . '.default_yen_per_point');
             $criteria->addSelectColumn($alias . '.time_beg');
             $criteria->addSelectColumn($alias . '.time_end');
             $criteria->addSelectColumn($alias . '.update_user');

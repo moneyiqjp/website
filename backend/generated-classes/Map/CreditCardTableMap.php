@@ -212,16 +212,16 @@ class CreditCardTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Issuer', '\\Issuer', RelationMap::MANY_TO_ONE, array('issuer_id' => 'issuer_id', ), null, null);
         $this->addRelation('AffiliateCompany', '\\AffiliateCompany', RelationMap::MANY_TO_ONE, array('affiliate_id' => 'affiliate_id', ), null, null);
+        $this->addRelation('Issuer', '\\Issuer', RelationMap::MANY_TO_ONE, array('issuer_id' => 'issuer_id', ), null, null);
         $this->addRelation('Campaign', '\\Campaign', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Campaigns');
         $this->addRelation('CardDescription', '\\CardDescription', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardDescriptions');
         $this->addRelation('CardFeatures', '\\CardFeatures', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardFeaturess');
+        $this->addRelation('CardPointSystem', '\\CardPointSystem', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardPointSystems');
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Discountss');
         $this->addRelation('Fees', '\\Fees', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Feess');
         $this->addRelation('Insurance', '\\Insurance', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Insurances');
         $this->addRelation('Interest', '\\Interest', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Interests');
-        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'PointSystems');
         $this->addRelation('PointUsage', '\\PointUsage', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'PointUsages');
     } // buildRelations()
 

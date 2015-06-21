@@ -44,7 +44,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointUsageHistory findOneByPointUsageId(int $point_usage_id) Return the first ChildPointUsageHistory filtered by the point_usage_id column
  * @method     ChildPointUsageHistory findOneByStoreId(int $store_id) Return the first ChildPointUsageHistory filtered by the store_id column
- * @method     ChildPointUsageHistory findOneByYenPerPoint(double $yen_per_point) Return the first ChildPointUsageHistory filtered by the yen_per_point column
+ * @method     ChildPointUsageHistory findOneByYenPerPoint(string $yen_per_point) Return the first ChildPointUsageHistory filtered by the yen_per_point column
  * @method     ChildPointUsageHistory findOneByCreditCardId(int $credit_card_id) Return the first ChildPointUsageHistory filtered by the credit_card_id column
  * @method     ChildPointUsageHistory findOneByTimeBeg(string $time_beg) Return the first ChildPointUsageHistory filtered by the time_beg column
  * @method     ChildPointUsageHistory findOneByTimeEnd(string $time_end) Return the first ChildPointUsageHistory filtered by the time_end column
@@ -53,7 +53,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUsageHistory[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointUsageHistory objects based on current ModelCriteria
  * @method     ChildPointUsageHistory[]|ObjectCollection findByPointUsageId(int $point_usage_id) Return ChildPointUsageHistory objects filtered by the point_usage_id column
  * @method     ChildPointUsageHistory[]|ObjectCollection findByStoreId(int $store_id) Return ChildPointUsageHistory objects filtered by the store_id column
- * @method     ChildPointUsageHistory[]|ObjectCollection findByYenPerPoint(double $yen_per_point) Return ChildPointUsageHistory objects filtered by the yen_per_point column
+ * @method     ChildPointUsageHistory[]|ObjectCollection findByYenPerPoint(string $yen_per_point) Return ChildPointUsageHistory objects filtered by the yen_per_point column
  * @method     ChildPointUsageHistory[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildPointUsageHistory objects filtered by the credit_card_id column
  * @method     ChildPointUsageHistory[]|ObjectCollection findByTimeBeg(string $time_beg) Return ChildPointUsageHistory objects filtered by the time_beg column
  * @method     ChildPointUsageHistory[]|ObjectCollection findByTimeEnd(string $time_end) Return ChildPointUsageHistory objects filtered by the time_end column
