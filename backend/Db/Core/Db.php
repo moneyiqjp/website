@@ -103,13 +103,15 @@ class Db
     function UpdateCreditCardItem(\CreditCard &$ccs, $data, $key,$value)
     {
         if(!array_key_exists($key,$data)) throw new \Exception("Failed to find key: " . $key);
-        switch($key)
+        switch(strtolower($key))
         {
             case "name":
                 $ccs->setName($value);
                 break;
+            case "issuer":
+                $ccs->setIssuerId($value['id']);
+                break;
             case "issuer_id":
-
                 $ccs->setIssuerId($value);
                 break;
             case "description":
@@ -149,6 +151,19 @@ class Db
 
         return $ccs;
     }
+
+    function _UpdateCreditCard(\CreditCard &$ccs, $data)
+    {
+        while (list($key, $value) = each($data)) {
+            //echo $key . "-" .  var_export($value,true) . "\n";
+            $this->UpdateCreditCardItem($ccs,$data,$key,$value);
+        }
+
+        $ccs->save();
+
+        return $ccs;
+    }
+
     function UpdateCreditCard($data)
     {
         $q = new  \CreditCardQuery();
@@ -156,27 +171,32 @@ class Db
 
         if(is_null($ccs)) throw new \Exception ("Credit card with id ". $data['credit_card_id'] ." not found");
 
-        while (list($key, $value) = each($data)) {
-            $this->UpdateCreditCardItem($ccs,$data,$key,$value);
-        }
-        $ccs->save();
+        $this->_UpdateCreditCard($ccs, $data);
 
         //TODO implement cache, then refresh
         $q = new  \CreditCardQuery();
         $ccs = $q->findPk($data['credit_card_id']);
+        if(is_null($ccs)) throw new \Exception ("Credit card with id ". $data['credit_card_id'] ." not found");
+
         return Json\JCreditCard::CREATE_DB($ccs);
     }
     function CreateCreditCard($data)
     {
         $ccs = new \CreditCard();
+        /*
         while (list($key, $value) = each($data)) {
             $this->UpdateCreditCardItem($ccs,$data,$key,$value);
         }
-        $ccs->save();
 
+
+        $ccs->save();
         //TODO implement cache, add to cache
         #$q = new  \CreditCardQuery();
         #$ccs = $q->findPk($data['credit_card_id']);
+        return Json\JCreditCard::CREATE_DB($ccs);
+        */
+        $this->_UpdateCreditCard($ccs, $data);
+        if(is_null($ccs)) throw new \Exception ("Credit card with id ". $data['credit_card_id'] ." not found");
         return Json\JCreditCard::CREATE_DB($ccs);
     }
     function DeleteCreditCard($id)
@@ -333,7 +353,7 @@ class Db
     }
     function CreateCardPointSystemMappingForCrud($data)
     {
-        $item = Json\JCreditCardToPointSystemMapping::CREATE_FROM_ARRAY($data)->toDB();
+        $item = Json\JCreditCardToPointSystemMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
         $item->save();
 
         //TODO implement cache, add to cache
@@ -471,12 +491,8 @@ class Db
     function GetRewardTypeForCrud()
     {
         $result = array();
-        $last ="";
-        foreach ((new \RewardQuery())->orderByType()->find() as $af) {
-            if($last != $af->getType()) {
-                $last = $af->getType();
-                array_push($result,  Json\JRewardType::CREATE($last,$last));
-            }
+        foreach ((new \RewardTypeQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getRewardTypeId()));
         }
         return $result;
     }
@@ -484,13 +500,10 @@ class Db
     /* RewardCategory */
     function GetRewardCategoryForCrud()
     {
+
         $result = array();
-        $last ="";
-        foreach ((new \RewardQuery())->orderByCategory()->find() as $af) {
-            if($last != $af->getCategory()) {
-                $last = $af->getCategory();
-                array_push($result, Json\JRewardCategory::CREATE($last,$last));
-            }
+        foreach ((new \RewardCategoryQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getRewardCategoryId()));
         }
         return $result;
     }

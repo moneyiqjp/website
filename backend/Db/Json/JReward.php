@@ -12,7 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JReward {
+class JReward  implements JSONInterface {
 
     public $RewardId;
     public $PointSystemId;
@@ -40,8 +40,8 @@ class JReward {
 
         $mine->RewardId = $item->getRewardId();
         $mine->PointSystemId = $item->getPointSystemId();
-        $mine->Type = $item->getType();
-        $mine->Category = $item->getCategory();
+        $mine->Type = JRewardType::CREATE_FROM_DB($item->getRewardType());
+        $mine->Category = JRewardCategory::CREATE_FROM_DB($item->getRewardCategory());
         $mine->Title = $item->getTitle();
         $mine->Description = $item->getDescription();
         $mine->Icon = $item->getIcon();
@@ -68,8 +68,8 @@ class JReward {
 
         if(ArrayUtils::KEY_EXISTS($data,'RewardId')) $mine->RewardId = $data['RewardId'];
         if(ArrayUtils::KEY_EXISTS($data,'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
-        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = $data['Type'];
-        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = $data['Category'];
+        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JRewardType::CREATE_FROM_ARRAY($data['Type']);
+        if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = JRewardCategory::CREATE_FROM_ARRAY($data['Category']);
         if(ArrayUtils::KEY_EXISTS($data,'Title')) $mine->Title = $data['Title'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
         if(ArrayUtils::KEY_EXISTS($data,'Icon')) $mine->Icon = $data['Icon'];
@@ -123,8 +123,12 @@ class JReward {
     public function updateDB(\Reward &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->RewardId)) $item->setRewardId($this->RewardId);
         if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) $item->setPointSystemId($this->PointSystemId);
-        if(FieldUtils::STRING_IS_DEFINED($this->Type)) $item->setType($this->Type);
-        if(FieldUtils::STRING_IS_DEFINED($this->Category)) $item->setCategory($this->Category);
+        if(is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->RewardTypeId)) {
+            $item->setRewardTypeId($this->Type->RewardTypeId);
+        }
+        if(is_null($this->Category) && FieldUtils::ID_IS_DEFINED($this->Category->RewardCategoryId)) {
+            $item->setRewardCategoryId($this->Category->RewardCategoryId);
+        }
         if(FieldUtils::STRING_IS_DEFINED($this->Title)) $item->setTitle($this->Title);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
         if(FieldUtils::STRING_IS_DEFINED($this->Icon)) $item->setIcon($this->Icon);

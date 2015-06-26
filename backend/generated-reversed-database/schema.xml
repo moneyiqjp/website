@@ -601,8 +601,8 @@
   <table name="reward" idMethod="native" phpName="Reward">
     <column name="reward_id" phpName="RewardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
-    <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
-    <column name="category" phpName="Category" type="VARCHAR" size="255" required="true"/>
+    <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER"/>
+    <column name="reward_type_id" phpName="RewardTypeId" type="INTEGER"/>
     <column name="title" phpName="Title" type="VARCHAR" size="255"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="icon" phpName="Icon" type="VARCHAR" size="255"/>
@@ -614,12 +614,45 @@
     <column name="max_period" phpName="MaxPeriod" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="reward_category" name="FK_reward_category_id">
+      <reference local="reward_category_id" foreign="reward_category_id"/>
+    </foreign-key>
     <foreign-key foreignTable="point_system" name="FK_reward_point_system">
       <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="reward_type" name="FK_reward_type">
+      <reference local="reward_type_id" foreign="reward_type_id"/>
     </foreign-key>
     <index name="FK_reward_point_system">
       <index-column name="point_system_id"/>
     </index>
+    <index name="FK_reward_category_id">
+      <index-column name="reward_category_id"/>
+    </index>
+    <index name="FK_reward_type">
+      <index-column name="reward_type_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward_category" idMethod="native" phpName="RewardCategory">
+    <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward_category_history" idMethod="native" phpName="RewardCategoryHistory">
+    <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
+    <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -638,6 +671,27 @@
     <column name="max_points" phpName="MaxPoints" type="INTEGER"/>
     <column name="required_points" phpName="RequiredPoints" type="INTEGER"/>
     <column name="max_period" phpName="MaxPeriod" type="VARCHAR" size="255"/>
+    <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
+    <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward_type" idMethod="native" phpName="RewardType">
+    <column name="reward_type_id" phpName="RewardTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reward_type_history" idMethod="native" phpName="RewardTypeHistory">
+    <column name="reward_type_id" phpName="RewardTypeId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>

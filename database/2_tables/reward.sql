@@ -17,8 +17,8 @@ SET sql_notes = 1;
 CREATE TABLE `reward` (
 	`reward_id` INT(11) NOT NULL AUTO_INCREMENT,
 	`point_system_id` INT(11) NOT NULL,
-	`type` VARCHAR(255) NOT NULL,
-	`category` VARCHAR(255) NOT NULL,
+	`reward_category_id` INT(11) NULL DEFAULT NULL,
+	`reward_type_id` INT(11) NULL DEFAULT NULL,
 	`title` VARCHAR(255) NULL DEFAULT NULL,
 	`description` TEXT NULL,
 	`icon` VARCHAR(255) NULL DEFAULT NULL,
@@ -32,14 +32,22 @@ CREATE TABLE `reward` (
 	`update_user` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`reward_id`),
 	INDEX `FK_reward_point_system` (`point_system_id`),
-	CONSTRAINT `FK_reward_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
-);
+	INDEX `FK_reward_category_id` (`reward_category_id`),
+	INDEX `FK_reward_type` (`reward_type_id`),
+	CONSTRAINT `FK_reward_category_id` FOREIGN KEY (`reward_category_id`) REFERENCES `reward_category` (`reward_category_id`),
+	CONSTRAINT `FK_reward_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`),
+	CONSTRAINT `FK_reward_type` FOREIGN KEY (`reward_type_id`) REFERENCES `reward_type` (`reward_type_id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
 
 CREATE TABLE reward_history (
     reward_id int    NOT NULL,
     point_system_id int    NOT NULL ,
-    type varchar(255) NOT NULL,
-    category varchar(255) NOT NULL,
+	`reward_category_id` INT(11) NULL DEFAULT NULL,
+	`reward_type_id` INT(11) NULL DEFAULT NULL,
     title varchar(255)    NULL ,
     description text NULL,
     icon varchar(255) NULL,

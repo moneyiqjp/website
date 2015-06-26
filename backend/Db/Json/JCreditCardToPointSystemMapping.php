@@ -37,7 +37,7 @@ class JCreditCardToPointSystemMapping {
         {
             return JCreditCardToPointSystemMapping::LOAD_FROM_DB($data['PointSystemId'], $data['CreditCardId']);
         }
-        if (!ArrayUtils::KEY_EXISTS($data, 'PointSystem')) throw new \Exception("JCreditCardToPointSystemMapping: Mandatory field PointSystem missing");
+        if (!ArrayUtils::KEY_EXISTS($data, 'PointSystem')) throw new \Exception("JCreditCardToPointSystemMapping: Mandatory field PointSystem (!) missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JCreditCardToPointSystemMapping: Mandatory field CreditCard missing");
         return JCreditCardToPointSystemMapping::CREATE_FROM_ARRAY_RELAXED($data);
     }
@@ -58,11 +58,15 @@ class JCreditCardToPointSystemMapping {
 
     public static function CREATE_FROM_ARRAY_RELAXED($data) {
         $mine = new JCreditCardToPointSystemMapping();
+        if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId') && ArrayUtils::KEY_EXISTS($data, 'CreditCardId'))
+        {
+            $mine = JCreditCardToPointSystemMapping::LOAD_FROM_DB($data['PointSystemId'], $data['CreditCardId']);
+        }
         if (ArrayUtils::KEY_EXISTS($data, 'CreditCard')) {
             $mine->CreditCard = JCreditCard::CREATE_FROM_ARRAY($data['CreditCard']);
         }
         if (ArrayUtils::KEY_EXISTS($data, 'PointSystem')) {
-            $mine->CreditCard = JCreditCardToPointSystemMapping::CREATE_FROM_ARRAY($data['CreditCard']);
+            $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         }
         return $mine;
     }
@@ -84,7 +88,7 @@ class JCreditCardToPointSystemMapping {
     public function updateDB(\CardPointSystem &$item)
     {
         $item->setPointSystemId($this->PointSystem->PointSystemId);
-        $item->setCreditCardId($this->CreditCard->credit_card_i);
+        $item->setCreditCardId($this->CreditCard->credit_card_id);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

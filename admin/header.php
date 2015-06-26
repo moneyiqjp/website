@@ -22,14 +22,26 @@
         </a>
     </div>
     <div class="adminlogo">
+        <a href="creditcard_other.php" target="frame_main" class="menulink">
+            Static Data
+        </a>
+    </div>
+    <div class="adminlogo">
         <a href="pointprogram_overview.php" target="frame_main" class="menulink">
         Point Programs
         </a>
     </div>
+
     <div class="adminlogo">
-        <a href="other.php" target="frame_main" class="menulink">
-        Static Data
-    </a>
+        <a href="rewards.php" target="frame_main" class="menulink">
+            Rewards
+        </a>
+    </div>
+
+    <div class="adminlogo">
+        <a href="stores.php" target="frame_main" class="menulink">
+            Stores
+        </a>
     </div>
 </div>
 

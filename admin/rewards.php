@@ -376,7 +376,7 @@
 
 
 
-</script>
+    </script>
 </head>
 
 <body class="dt-other">
@@ -387,21 +387,21 @@
 <a href="#feature_type" class="subheader">Feature Type</a>
 <table id="issuer" class="display" cellspacing="0" width="98%">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Updated</th>
+        <th>User</th>
+    </tr>
     </thead>
 
     <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Updated</th>
+        <th>User</th>
+    </tr>
     </tfoot>
 </table>
 
@@ -416,27 +416,27 @@
 <a href="#feature_type" class="subheader">Feature Type</a>
 <table id="affiliate" class="display" cellspacing="0" width="98%">
     <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Website</th>
-            <th>SignedUpDate</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Website</th>
+        <th>SignedUpDate</th>
+        <th>Updated</th>
+        <th>User</th>
+    </tr>
     </thead>
 
     <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Website</th>
-            <th>SignedUpDate</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Website</th>
+        <th>SignedUpDate</th>
+        <th>Updated</th>
+        <th>User</th>
+    </tr>
     </tfoot>
 </table>
 

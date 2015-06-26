@@ -1,8 +1,16 @@
-SET NAMES utf8;
-SET FOREIGN_KEY_CHECKS = 0;
-delete from reward where reward_id>0;
-ALTER TABLE reward AUTO_INCREMENT = 1;
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.6.24 - MySQL Community Server (GPL)
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.2.0.4947
+-- --------------------------------------------------------
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+-- Dumping data for table moneyiq.reward: ~46 rows (approximately)
+/*!40000 ALTER TABLE `reward` DISABLE KEYS */;
 INSERT IGNORE INTO `reward` (`reward_id`, `point_system_id`, `reward_category_id`, `reward_type_id`, `title`, `description`, `icon`, `yen_per_point`, `price_per_unit`, `min_points`, `max_points`, `required_points`, `max_period`, `update_time`, `update_user`) VALUES
 	(1, 2, 1, 1, '3,000円ホットペッパービューティーサロン割引', '1回あたり100ポイントから3,000ポイントまで100ポイント単位でご利用可能です。※事前申請必要。ご利用店によって最大ポイント利用制限あり', NULL, 1.000000, 100, 100, 3000, 3000, '回', '2015-06-05 23:17:26', 'Ben'),
 	(2, 2, 2, 1, '10,000円ホットペッパー食事券', 'お店で使えるお食事券をポイントで購入できたり、割引価格で購入することができます※事前申請必要。ご利用店によって最大ポイント利用制限あり', NULL, 1.000000, 100, 100, NULL, 25000, '', '2015-06-05 23:17:26', 'Ben'),
@@ -50,6 +58,7 @@ INSERT IGNORE INTO `reward` (`reward_id`, `point_system_id`, `reward_category_id
 	(44, 16, 6, 3, '東京→大阪片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 7000, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben'),
 	(45, 16, 6, 3, '東京→福岡片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 8500, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben'),
 	(46, 16, 6, 3, '東京→ハワイ片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 17500, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben');
-;
-
-SET FOREIGN_KEY_CHECKS = 1;
+/*!40000 ALTER TABLE `reward` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

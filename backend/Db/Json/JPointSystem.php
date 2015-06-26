@@ -48,7 +48,7 @@ class JPointSystem implements JSONInterface{
         if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
         if(ArrayUtils::KEY_EXISTS($data,'PointSystemName')) $mine->PointSystemName = $data['PointSystemName'];
         if(ArrayUtils::KEY_EXISTS($data,'PointsPerYen')) $mine->PointsPerYen = $data['PointsPerYen'];
-        if(ArrayUtils::KEY_EXISTS($data,'YenPerPoint')) $mine->PointsPerYen = $data['YenPerPoint'];
+        if(ArrayUtils::KEY_EXISTS($data,'YenPerPoint')) $mine->YenPerPoint = $data['YenPerPoint'];
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 

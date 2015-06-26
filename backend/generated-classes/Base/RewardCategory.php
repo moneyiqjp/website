@@ -2,22 +2,20 @@
 
 namespace Base;
 
-use \PointSystem as ChildPointSystem;
-use \PointSystemQuery as ChildPointSystemQuery;
+use \Reward as ChildReward;
 use \RewardCategory as ChildRewardCategory;
 use \RewardCategoryQuery as ChildRewardCategoryQuery;
 use \RewardQuery as ChildRewardQuery;
-use \RewardType as ChildRewardType;
-use \RewardTypeQuery as ChildRewardTypeQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\RewardTableMap;
+use Map\RewardCategoryTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -27,18 +25,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'reward' table.
+ * Base class that represents a row from the 'reward_category' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Reward implements ActiveRecordInterface
+abstract class RewardCategory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\RewardTableMap';
+    const TABLE_MAP = '\\Map\\RewardCategoryTableMap';
 
 
     /**
@@ -68,82 +66,22 @@ abstract class Reward implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the reward_id field.
-     * @var        int
-     */
-    protected $reward_id;
-
-    /**
-     * The value for the point_system_id field.
-     * @var        int
-     */
-    protected $point_system_id;
-
-    /**
      * The value for the reward_category_id field.
      * @var        int
      */
     protected $reward_category_id;
 
     /**
-     * The value for the reward_type_id field.
-     * @var        int
-     */
-    protected $reward_type_id;
-
-    /**
-     * The value for the title field.
+     * The value for the name field.
      * @var        string
      */
-    protected $title;
+    protected $name;
 
     /**
      * The value for the description field.
      * @var        string
      */
     protected $description;
-
-    /**
-     * The value for the icon field.
-     * @var        string
-     */
-    protected $icon;
-
-    /**
-     * The value for the yen_per_point field.
-     * @var        string
-     */
-    protected $yen_per_point;
-
-    /**
-     * The value for the price_per_unit field.
-     * @var        int
-     */
-    protected $price_per_unit;
-
-    /**
-     * The value for the min_points field.
-     * @var        int
-     */
-    protected $min_points;
-
-    /**
-     * The value for the max_points field.
-     * @var        int
-     */
-    protected $max_points;
-
-    /**
-     * The value for the required_points field.
-     * @var        int
-     */
-    protected $required_points;
-
-    /**
-     * The value for the max_period field.
-     * @var        string
-     */
-    protected $max_period;
 
     /**
      * The value for the update_time field.
@@ -158,19 +96,10 @@ abstract class Reward implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildRewardCategory
+     * @var        ObjectCollection|ChildReward[] Collection to store aggregation of ChildReward objects.
      */
-    protected $aRewardCategory;
-
-    /**
-     * @var        ChildPointSystem
-     */
-    protected $aPointSystem;
-
-    /**
-     * @var        ChildRewardType
-     */
-    protected $aRewardType;
+    protected $collRewards;
+    protected $collRewardsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -181,7 +110,13 @@ abstract class Reward implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Reward object.
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildReward[]
+     */
+    protected $rewardsScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of Base\RewardCategory object.
      */
     public function __construct()
     {
@@ -276,9 +211,9 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Reward</code> instance.  If
-     * <code>obj</code> is an instance of <code>Reward</code>, delegates to
-     * <code>equals(Reward)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>RewardCategory</code> instance.  If
+     * <code>obj</code> is an instance of <code>RewardCategory</code>, delegates to
+     * <code>equals(RewardCategory)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -344,7 +279,7 @@ abstract class Reward implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Reward The current object, for fluid interface
+     * @return $this|RewardCategory The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -398,26 +333,6 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
-     * Get the [reward_id] column value.
-     *
-     * @return int
-     */
-    public function getRewardId()
-    {
-        return $this->reward_id;
-    }
-
-    /**
-     * Get the [point_system_id] column value.
-     *
-     * @return int
-     */
-    public function getPointSystemId()
-    {
-        return $this->point_system_id;
-    }
-
-    /**
      * Get the [reward_category_id] column value.
      *
      * @return int
@@ -428,23 +343,13 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
-     * Get the [reward_type_id] column value.
-     *
-     * @return int
-     */
-    public function getRewardTypeId()
-    {
-        return $this->reward_type_id;
-    }
-
-    /**
-     * Get the [title] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
@@ -455,76 +360,6 @@ abstract class Reward implements ActiveRecordInterface
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Get the [icon] column value.
-     *
-     * @return string
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * Get the [yen_per_point] column value.
-     *
-     * @return string
-     */
-    public function getYenPerPoint()
-    {
-        return $this->yen_per_point;
-    }
-
-    /**
-     * Get the [price_per_unit] column value.
-     *
-     * @return int
-     */
-    public function getPricePerUnit()
-    {
-        return $this->price_per_unit;
-    }
-
-    /**
-     * Get the [min_points] column value.
-     *
-     * @return int
-     */
-    public function getMinPoints()
-    {
-        return $this->min_points;
-    }
-
-    /**
-     * Get the [max_points] column value.
-     *
-     * @return int
-     */
-    public function getMaxPoints()
-    {
-        return $this->max_points;
-    }
-
-    /**
-     * Get the [required_points] column value.
-     *
-     * @return int
-     */
-    public function getRequiredPoints()
-    {
-        return $this->required_points;
-    }
-
-    /**
-     * Get the [max_period] column value.
-     *
-     * @return string
-     */
-    public function getMaxPeriod()
-    {
-        return $this->max_period;
     }
 
     /**
@@ -558,54 +393,10 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [reward_id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setRewardId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->reward_id !== $v) {
-            $this->reward_id = $v;
-            $this->modifiedColumns[RewardTableMap::COL_REWARD_ID] = true;
-        }
-
-        return $this;
-    } // setRewardId()
-
-    /**
-     * Set the value of [point_system_id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setPointSystemId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->point_system_id !== $v) {
-            $this->point_system_id = $v;
-            $this->modifiedColumns[RewardTableMap::COL_POINT_SYSTEM_ID] = true;
-        }
-
-        if ($this->aPointSystem !== null && $this->aPointSystem->getPointSystemId() !== $v) {
-            $this->aPointSystem = null;
-        }
-
-        return $this;
-    } // setPointSystemId()
-
-    /**
      * Set the value of [reward_category_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
+     * @return $this|\RewardCategory The current object (for fluent API support)
      */
     public function setRewardCategoryId($v)
     {
@@ -615,65 +406,37 @@ abstract class Reward implements ActiveRecordInterface
 
         if ($this->reward_category_id !== $v) {
             $this->reward_category_id = $v;
-            $this->modifiedColumns[RewardTableMap::COL_REWARD_CATEGORY_ID] = true;
-        }
-
-        if ($this->aRewardCategory !== null && $this->aRewardCategory->getRewardCategoryId() !== $v) {
-            $this->aRewardCategory = null;
+            $this->modifiedColumns[RewardCategoryTableMap::COL_REWARD_CATEGORY_ID] = true;
         }
 
         return $this;
     } // setRewardCategoryId()
 
     /**
-     * Set the value of [reward_type_id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setRewardTypeId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->reward_type_id !== $v) {
-            $this->reward_type_id = $v;
-            $this->modifiedColumns[RewardTableMap::COL_REWARD_TYPE_ID] = true;
-        }
-
-        if ($this->aRewardType !== null && $this->aRewardType->getRewardTypeId() !== $v) {
-            $this->aRewardType = null;
-        }
-
-        return $this;
-    } // setRewardTypeId()
-
-    /**
-     * Set the value of [title] column.
+     * Set the value of [name] column.
      *
      * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
+     * @return $this|\RewardCategory The current object (for fluent API support)
      */
-    public function setTitle($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->title !== $v) {
-            $this->title = $v;
-            $this->modifiedColumns[RewardTableMap::COL_TITLE] = true;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[RewardCategoryTableMap::COL_NAME] = true;
         }
 
         return $this;
-    } // setTitle()
+    } // setName()
 
     /**
      * Set the value of [description] column.
      *
      * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
+     * @return $this|\RewardCategory The current object (for fluent API support)
      */
     public function setDescription($v)
     {
@@ -683,158 +446,18 @@ abstract class Reward implements ActiveRecordInterface
 
         if ($this->description !== $v) {
             $this->description = $v;
-            $this->modifiedColumns[RewardTableMap::COL_DESCRIPTION] = true;
+            $this->modifiedColumns[RewardCategoryTableMap::COL_DESCRIPTION] = true;
         }
 
         return $this;
     } // setDescription()
 
     /**
-     * Set the value of [icon] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setIcon($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->icon !== $v) {
-            $this->icon = $v;
-            $this->modifiedColumns[RewardTableMap::COL_ICON] = true;
-        }
-
-        return $this;
-    } // setIcon()
-
-    /**
-     * Set the value of [yen_per_point] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setYenPerPoint($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->yen_per_point !== $v) {
-            $this->yen_per_point = $v;
-            $this->modifiedColumns[RewardTableMap::COL_YEN_PER_POINT] = true;
-        }
-
-        return $this;
-    } // setYenPerPoint()
-
-    /**
-     * Set the value of [price_per_unit] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setPricePerUnit($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->price_per_unit !== $v) {
-            $this->price_per_unit = $v;
-            $this->modifiedColumns[RewardTableMap::COL_PRICE_PER_UNIT] = true;
-        }
-
-        return $this;
-    } // setPricePerUnit()
-
-    /**
-     * Set the value of [min_points] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setMinPoints($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->min_points !== $v) {
-            $this->min_points = $v;
-            $this->modifiedColumns[RewardTableMap::COL_MIN_POINTS] = true;
-        }
-
-        return $this;
-    } // setMinPoints()
-
-    /**
-     * Set the value of [max_points] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setMaxPoints($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->max_points !== $v) {
-            $this->max_points = $v;
-            $this->modifiedColumns[RewardTableMap::COL_MAX_POINTS] = true;
-        }
-
-        return $this;
-    } // setMaxPoints()
-
-    /**
-     * Set the value of [required_points] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setRequiredPoints($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->required_points !== $v) {
-            $this->required_points = $v;
-            $this->modifiedColumns[RewardTableMap::COL_REQUIRED_POINTS] = true;
-        }
-
-        return $this;
-    } // setRequiredPoints()
-
-    /**
-     * Set the value of [max_period] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setMaxPeriod($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->max_period !== $v) {
-            $this->max_period = $v;
-            $this->modifiedColumns[RewardTableMap::COL_MAX_PERIOD] = true;
-        }
-
-        return $this;
-    } // setMaxPeriod()
-
-    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Reward The current object (for fluent API support)
+     * @return $this|\RewardCategory The current object (for fluent API support)
      */
     public function setUpdateTime($v)
     {
@@ -842,7 +465,7 @@ abstract class Reward implements ActiveRecordInterface
         if ($this->update_time !== null || $dt !== null) {
             if ($dt !== $this->update_time) {
                 $this->update_time = $dt;
-                $this->modifiedColumns[RewardTableMap::COL_UPDATE_TIME] = true;
+                $this->modifiedColumns[RewardCategoryTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
@@ -853,7 +476,7 @@ abstract class Reward implements ActiveRecordInterface
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
+     * @return $this|\RewardCategory The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -863,7 +486,7 @@ abstract class Reward implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[RewardTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[RewardCategoryTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -905,52 +528,22 @@ abstract class Reward implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : RewardTableMap::translateFieldName('RewardId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reward_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RewardTableMap::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->point_system_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardTableMap::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : RewardCategoryTableMap::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reward_category_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardTableMap::translateFieldName('RewardTypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reward_type_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RewardCategoryTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardTableMap::translateFieldName('Title', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->title = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RewardTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardCategoryTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : RewardTableMap::translateFieldName('Icon', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->icon = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : RewardTableMap::translateFieldName('YenPerPoint', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->yen_per_point = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : RewardTableMap::translateFieldName('PricePerUnit', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->price_per_unit = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : RewardTableMap::translateFieldName('MinPoints', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->min_points = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : RewardTableMap::translateFieldName('MaxPoints', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->max_points = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : RewardTableMap::translateFieldName('RequiredPoints', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->required_points = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : RewardTableMap::translateFieldName('MaxPeriod', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->max_period = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : RewardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : RewardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -960,10 +553,10 @@ abstract class Reward implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 15; // 15 = RewardTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = RewardCategoryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Reward'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\RewardCategory'), 0, $e);
         }
     }
 
@@ -982,15 +575,6 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aPointSystem !== null && $this->point_system_id !== $this->aPointSystem->getPointSystemId()) {
-            $this->aPointSystem = null;
-        }
-        if ($this->aRewardCategory !== null && $this->reward_category_id !== $this->aRewardCategory->getRewardCategoryId()) {
-            $this->aRewardCategory = null;
-        }
-        if ($this->aRewardType !== null && $this->reward_type_id !== $this->aRewardType->getRewardTypeId()) {
-            $this->aRewardType = null;
-        }
     } // ensureConsistency
 
     /**
@@ -1014,13 +598,13 @@ abstract class Reward implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(RewardTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(RewardCategoryTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildRewardQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildRewardCategoryQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -1030,9 +614,8 @@ abstract class Reward implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aRewardCategory = null;
-            $this->aPointSystem = null;
-            $this->aRewardType = null;
+            $this->collRewards = null;
+
         } // if (deep)
     }
 
@@ -1042,8 +625,8 @@ abstract class Reward implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Reward::setDeleted()
-     * @see Reward::isDeleted()
+     * @see RewardCategory::setDeleted()
+     * @see RewardCategory::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -1052,11 +635,11 @@ abstract class Reward implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RewardCategoryTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildRewardQuery::create()
+            $deleteQuery = ChildRewardCategoryQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -1087,7 +670,7 @@ abstract class Reward implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RewardCategoryTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -1106,7 +689,7 @@ abstract class Reward implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                RewardTableMap::addInstanceToPool($this);
+                RewardCategoryTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -1132,32 +715,6 @@ abstract class Reward implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aRewardCategory !== null) {
-                if ($this->aRewardCategory->isModified() || $this->aRewardCategory->isNew()) {
-                    $affectedRows += $this->aRewardCategory->save($con);
-                }
-                $this->setRewardCategory($this->aRewardCategory);
-            }
-
-            if ($this->aPointSystem !== null) {
-                if ($this->aPointSystem->isModified() || $this->aPointSystem->isNew()) {
-                    $affectedRows += $this->aPointSystem->save($con);
-                }
-                $this->setPointSystem($this->aPointSystem);
-            }
-
-            if ($this->aRewardType !== null) {
-                if ($this->aRewardType->isModified() || $this->aRewardType->isNew()) {
-                    $affectedRows += $this->aRewardType->save($con);
-                }
-                $this->setRewardType($this->aRewardType);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -1167,6 +724,24 @@ abstract class Reward implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->rewardsScheduledForDeletion !== null) {
+                if (!$this->rewardsScheduledForDeletion->isEmpty()) {
+                    foreach ($this->rewardsScheduledForDeletion as $reward) {
+                        // need to save related object because we set the relation to null
+                        $reward->save($con);
+                    }
+                    $this->rewardsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collRewards !== null) {
+                foreach ($this->collRewards as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -1189,60 +764,30 @@ abstract class Reward implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[RewardTableMap::COL_REWARD_ID] = true;
-        if (null !== $this->reward_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . RewardTableMap::COL_REWARD_ID . ')');
+        $this->modifiedColumns[RewardCategoryTableMap::COL_REWARD_CATEGORY_ID] = true;
+        if (null !== $this->reward_category_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . RewardCategoryTableMap::COL_REWARD_CATEGORY_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'reward_id';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_POINT_SYSTEM_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'point_system_id';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_CATEGORY_ID)) {
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID)) {
             $modifiedColumns[':p' . $index++]  = 'reward_category_id';
         }
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'reward_type_id';
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(RewardTableMap::COL_TITLE)) {
-            $modifiedColumns[':p' . $index++]  = 'title';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_DESCRIPTION)) {
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
-        if ($this->isColumnModified(RewardTableMap::COL_ICON)) {
-            $modifiedColumns[':p' . $index++]  = 'icon';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_YEN_PER_POINT)) {
-            $modifiedColumns[':p' . $index++]  = 'yen_per_point';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_PRICE_PER_UNIT)) {
-            $modifiedColumns[':p' . $index++]  = 'price_per_unit';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MIN_POINTS)) {
-            $modifiedColumns[':p' . $index++]  = 'min_points';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MAX_POINTS)) {
-            $modifiedColumns[':p' . $index++]  = 'max_points';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_REQUIRED_POINTS)) {
-            $modifiedColumns[':p' . $index++]  = 'required_points';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MAX_PERIOD)) {
-            $modifiedColumns[':p' . $index++]  = 'max_period';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_UPDATE_TIME)) {
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(RewardTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO reward (%s) VALUES (%s)',
+            'INSERT INTO reward_category (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -1251,44 +796,14 @@ abstract class Reward implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'reward_id':
-                        $stmt->bindValue($identifier, $this->reward_id, PDO::PARAM_INT);
-                        break;
-                    case 'point_system_id':
-                        $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
-                        break;
                     case 'reward_category_id':
                         $stmt->bindValue($identifier, $this->reward_category_id, PDO::PARAM_INT);
                         break;
-                    case 'reward_type_id':
-                        $stmt->bindValue($identifier, $this->reward_type_id, PDO::PARAM_INT);
-                        break;
-                    case 'title':
-                        $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
-                    case 'icon':
-                        $stmt->bindValue($identifier, $this->icon, PDO::PARAM_STR);
-                        break;
-                    case 'yen_per_point':
-                        $stmt->bindValue($identifier, $this->yen_per_point, PDO::PARAM_STR);
-                        break;
-                    case 'price_per_unit':
-                        $stmt->bindValue($identifier, $this->price_per_unit, PDO::PARAM_INT);
-                        break;
-                    case 'min_points':
-                        $stmt->bindValue($identifier, $this->min_points, PDO::PARAM_INT);
-                        break;
-                    case 'max_points':
-                        $stmt->bindValue($identifier, $this->max_points, PDO::PARAM_INT);
-                        break;
-                    case 'required_points':
-                        $stmt->bindValue($identifier, $this->required_points, PDO::PARAM_INT);
-                        break;
-                    case 'max_period':
-                        $stmt->bindValue($identifier, $this->max_period, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1309,7 +824,7 @@ abstract class Reward implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setRewardId($pk);
+        $this->setRewardCategoryId($pk);
 
         $this->setNew(false);
     }
@@ -1342,7 +857,7 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RewardTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = RewardCategoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1359,48 +874,18 @@ abstract class Reward implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getRewardId();
-                break;
-            case 1:
-                return $this->getPointSystemId();
-                break;
-            case 2:
                 return $this->getRewardCategoryId();
                 break;
-            case 3:
-                return $this->getRewardTypeId();
+            case 1:
+                return $this->getName();
                 break;
-            case 4:
-                return $this->getTitle();
-                break;
-            case 5:
+            case 2:
                 return $this->getDescription();
                 break;
-            case 6:
-                return $this->getIcon();
-                break;
-            case 7:
-                return $this->getYenPerPoint();
-                break;
-            case 8:
-                return $this->getPricePerUnit();
-                break;
-            case 9:
-                return $this->getMinPoints();
-                break;
-            case 10:
-                return $this->getMaxPoints();
-                break;
-            case 11:
-                return $this->getRequiredPoints();
-                break;
-            case 12:
-                return $this->getMaxPeriod();
-                break;
-            case 13:
+            case 3:
                 return $this->getUpdateTime();
                 break;
-            case 14:
+            case 4:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1427,27 +912,17 @@ abstract class Reward implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Reward'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['RewardCategory'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Reward'][$this->hashCode()] = true;
-        $keys = RewardTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['RewardCategory'][$this->hashCode()] = true;
+        $keys = RewardCategoryTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getRewardId(),
-            $keys[1] => $this->getPointSystemId(),
-            $keys[2] => $this->getRewardCategoryId(),
-            $keys[3] => $this->getRewardTypeId(),
-            $keys[4] => $this->getTitle(),
-            $keys[5] => $this->getDescription(),
-            $keys[6] => $this->getIcon(),
-            $keys[7] => $this->getYenPerPoint(),
-            $keys[8] => $this->getPricePerUnit(),
-            $keys[9] => $this->getMinPoints(),
-            $keys[10] => $this->getMaxPoints(),
-            $keys[11] => $this->getRequiredPoints(),
-            $keys[12] => $this->getMaxPeriod(),
-            $keys[13] => $this->getUpdateTime(),
-            $keys[14] => $this->getUpdateUser(),
+            $keys[0] => $this->getRewardCategoryId(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getDescription(),
+            $keys[3] => $this->getUpdateTime(),
+            $keys[4] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1455,50 +930,20 @@ abstract class Reward implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aRewardCategory) {
+            if (null !== $this->collRewards) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'rewardCategory';
+                        $key = 'rewards';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'reward_category';
+                        $key = 'rewards';
                         break;
                     default:
-                        $key = 'RewardCategory';
+                        $key = 'Rewards';
                 }
 
-                $result[$key] = $this->aRewardCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aPointSystem) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'pointSystem';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'point_system';
-                        break;
-                    default:
-                        $key = 'PointSystem';
-                }
-
-                $result[$key] = $this->aPointSystem->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aRewardType) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'rewardType';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'reward_type';
-                        break;
-                    default:
-                        $key = 'RewardType';
-                }
-
-                $result[$key] = $this->aRewardType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1514,11 +959,11 @@ abstract class Reward implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Reward
+     * @return $this|\RewardCategory
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RewardTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = RewardCategoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1529,54 +974,24 @@ abstract class Reward implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Reward
+     * @return $this|\RewardCategory
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setRewardId($value);
-                break;
-            case 1:
-                $this->setPointSystemId($value);
-                break;
-            case 2:
                 $this->setRewardCategoryId($value);
                 break;
-            case 3:
-                $this->setRewardTypeId($value);
+            case 1:
+                $this->setName($value);
                 break;
-            case 4:
-                $this->setTitle($value);
-                break;
-            case 5:
+            case 2:
                 $this->setDescription($value);
                 break;
-            case 6:
-                $this->setIcon($value);
-                break;
-            case 7:
-                $this->setYenPerPoint($value);
-                break;
-            case 8:
-                $this->setPricePerUnit($value);
-                break;
-            case 9:
-                $this->setMinPoints($value);
-                break;
-            case 10:
-                $this->setMaxPoints($value);
-                break;
-            case 11:
-                $this->setRequiredPoints($value);
-                break;
-            case 12:
-                $this->setMaxPeriod($value);
-                break;
-            case 13:
+            case 3:
                 $this->setUpdateTime($value);
                 break;
-            case 14:
+            case 4:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1603,52 +1018,22 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = RewardTableMap::getFieldNames($keyType);
+        $keys = RewardCategoryTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setRewardId($arr[$keys[0]]);
+            $this->setRewardCategoryId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setPointSystemId($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setRewardCategoryId($arr[$keys[2]]);
+            $this->setDescription($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setRewardTypeId($arr[$keys[3]]);
+            $this->setUpdateTime($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTitle($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setDescription($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setIcon($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setYenPerPoint($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setPricePerUnit($arr[$keys[8]]);
-        }
-        if (array_key_exists($keys[9], $arr)) {
-            $this->setMinPoints($arr[$keys[9]]);
-        }
-        if (array_key_exists($keys[10], $arr)) {
-            $this->setMaxPoints($arr[$keys[10]]);
-        }
-        if (array_key_exists($keys[11], $arr)) {
-            $this->setRequiredPoints($arr[$keys[11]]);
-        }
-        if (array_key_exists($keys[12], $arr)) {
-            $this->setMaxPeriod($arr[$keys[12]]);
-        }
-        if (array_key_exists($keys[13], $arr)) {
-            $this->setUpdateTime($arr[$keys[13]]);
-        }
-        if (array_key_exists($keys[14], $arr)) {
-            $this->setUpdateUser($arr[$keys[14]]);
+            $this->setUpdateUser($arr[$keys[4]]);
         }
     }
 
@@ -1669,7 +1054,7 @@ abstract class Reward implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Reward The current object, for fluid interface
+     * @return $this|\RewardCategory The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1689,52 +1074,22 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(RewardTableMap::DATABASE_NAME);
+        $criteria = new Criteria(RewardCategoryTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_ID)) {
-            $criteria->add(RewardTableMap::COL_REWARD_ID, $this->reward_id);
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID)) {
+            $criteria->add(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, $this->reward_category_id);
         }
-        if ($this->isColumnModified(RewardTableMap::COL_POINT_SYSTEM_ID)) {
-            $criteria->add(RewardTableMap::COL_POINT_SYSTEM_ID, $this->point_system_id);
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_NAME)) {
+            $criteria->add(RewardCategoryTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_CATEGORY_ID)) {
-            $criteria->add(RewardTableMap::COL_REWARD_CATEGORY_ID, $this->reward_category_id);
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_DESCRIPTION)) {
+            $criteria->add(RewardCategoryTableMap::COL_DESCRIPTION, $this->description);
         }
-        if ($this->isColumnModified(RewardTableMap::COL_REWARD_TYPE_ID)) {
-            $criteria->add(RewardTableMap::COL_REWARD_TYPE_ID, $this->reward_type_id);
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(RewardCategoryTableMap::COL_UPDATE_TIME, $this->update_time);
         }
-        if ($this->isColumnModified(RewardTableMap::COL_TITLE)) {
-            $criteria->add(RewardTableMap::COL_TITLE, $this->title);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_DESCRIPTION)) {
-            $criteria->add(RewardTableMap::COL_DESCRIPTION, $this->description);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_ICON)) {
-            $criteria->add(RewardTableMap::COL_ICON, $this->icon);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_YEN_PER_POINT)) {
-            $criteria->add(RewardTableMap::COL_YEN_PER_POINT, $this->yen_per_point);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_PRICE_PER_UNIT)) {
-            $criteria->add(RewardTableMap::COL_PRICE_PER_UNIT, $this->price_per_unit);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MIN_POINTS)) {
-            $criteria->add(RewardTableMap::COL_MIN_POINTS, $this->min_points);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MAX_POINTS)) {
-            $criteria->add(RewardTableMap::COL_MAX_POINTS, $this->max_points);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_REQUIRED_POINTS)) {
-            $criteria->add(RewardTableMap::COL_REQUIRED_POINTS, $this->required_points);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_MAX_PERIOD)) {
-            $criteria->add(RewardTableMap::COL_MAX_PERIOD, $this->max_period);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(RewardTableMap::COL_UPDATE_TIME, $this->update_time);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_UPDATE_USER)) {
-            $criteria->add(RewardTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_UPDATE_USER)) {
+            $criteria->add(RewardCategoryTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1752,8 +1107,8 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildRewardQuery::create();
-        $criteria->add(RewardTableMap::COL_REWARD_ID, $this->reward_id);
+        $criteria = ChildRewardCategoryQuery::create();
+        $criteria->add(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, $this->reward_category_id);
 
         return $criteria;
     }
@@ -1766,7 +1121,7 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getRewardId();
+        $validPk = null !== $this->getRewardCategoryId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1786,18 +1141,18 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getRewardId();
+        return $this->getRewardCategoryId();
     }
 
     /**
-     * Generic method to set the primary key (reward_id column).
+     * Generic method to set the primary key (reward_category_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setRewardId($key);
+        $this->setRewardCategoryId($key);
     }
 
     /**
@@ -1806,7 +1161,7 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getRewardId();
+        return null === $this->getRewardCategoryId();
     }
 
     /**
@@ -1815,30 +1170,34 @@ abstract class Reward implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Reward (or compatible) type.
+     * @param      object $copyObj An object of \RewardCategory (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setPointSystemId($this->getPointSystemId());
-        $copyObj->setRewardCategoryId($this->getRewardCategoryId());
-        $copyObj->setRewardTypeId($this->getRewardTypeId());
-        $copyObj->setTitle($this->getTitle());
+        $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
-        $copyObj->setIcon($this->getIcon());
-        $copyObj->setYenPerPoint($this->getYenPerPoint());
-        $copyObj->setPricePerUnit($this->getPricePerUnit());
-        $copyObj->setMinPoints($this->getMinPoints());
-        $copyObj->setMaxPoints($this->getMaxPoints());
-        $copyObj->setRequiredPoints($this->getRequiredPoints());
-        $copyObj->setMaxPeriod($this->getMaxPeriod());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getRewards() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addReward($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setRewardId(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setRewardCategoryId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1851,7 +1210,7 @@ abstract class Reward implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Reward Clone of current object.
+     * @return \RewardCategory Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1864,157 +1223,288 @@ abstract class Reward implements ActiveRecordInterface
         return $copyObj;
     }
 
+
     /**
-     * Declares an association between this object and a ChildRewardCategory object.
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
      *
-     * @param  ChildRewardCategory $v
-     * @return $this|\Reward The current object (for fluent API support)
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('Reward' == $relationName) {
+            return $this->initRewards();
+        }
+    }
+
+    /**
+     * Clears out the collRewards collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addRewards()
+     */
+    public function clearRewards()
+    {
+        $this->collRewards = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collRewards collection loaded partially.
+     */
+    public function resetPartialRewards($v = true)
+    {
+        $this->collRewardsPartial = $v;
+    }
+
+    /**
+     * Initializes the collRewards collection.
+     *
+     * By default this just sets the collRewards collection to an empty array (like clearcollRewards());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initRewards($overrideExisting = true)
+    {
+        if (null !== $this->collRewards && !$overrideExisting) {
+            return;
+        }
+        $this->collRewards = new ObjectCollection();
+        $this->collRewards->setModel('\Reward');
+    }
+
+    /**
+     * Gets an array of ChildReward objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildRewardCategory is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
      * @throws PropelException
      */
-    public function setRewardCategory(ChildRewardCategory $v = null)
+    public function getRewards(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        if ($v === null) {
-            $this->setRewardCategoryId(NULL);
-        } else {
-            $this->setRewardCategoryId($v->getRewardCategoryId());
+        $partial = $this->collRewardsPartial && !$this->isNew();
+        if (null === $this->collRewards || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collRewards) {
+                // return empty collection
+                $this->initRewards();
+            } else {
+                $collRewards = ChildRewardQuery::create(null, $criteria)
+                    ->filterByRewardCategory($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collRewardsPartial && count($collRewards)) {
+                        $this->initRewards(false);
+
+                        foreach ($collRewards as $obj) {
+                            if (false == $this->collRewards->contains($obj)) {
+                                $this->collRewards->append($obj);
+                            }
+                        }
+
+                        $this->collRewardsPartial = true;
+                    }
+
+                    return $collRewards;
+                }
+
+                if ($partial && $this->collRewards) {
+                    foreach ($this->collRewards as $obj) {
+                        if ($obj->isNew()) {
+                            $collRewards[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collRewards = $collRewards;
+                $this->collRewardsPartial = false;
+            }
         }
 
-        $this->aRewardCategory = $v;
+        return $this->collRewards;
+    }
 
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRewardCategory object, it will not be re-added.
-        if ($v !== null) {
-            $v->addReward($this);
+    /**
+     * Sets a collection of ChildReward objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $rewards A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildRewardCategory The current object (for fluent API support)
+     */
+    public function setRewards(Collection $rewards, ConnectionInterface $con = null)
+    {
+        /** @var ChildReward[] $rewardsToDelete */
+        $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
+
+
+        $this->rewardsScheduledForDeletion = $rewardsToDelete;
+
+        foreach ($rewardsToDelete as $rewardRemoved) {
+            $rewardRemoved->setRewardCategory(null);
         }
 
+        $this->collRewards = null;
+        foreach ($rewards as $reward) {
+            $this->addReward($reward);
+        }
+
+        $this->collRewards = $rewards;
+        $this->collRewardsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Reward objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Reward objects.
+     * @throws PropelException
+     */
+    public function countRewards(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collRewardsPartial && !$this->isNew();
+        if (null === $this->collRewards || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collRewards) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getRewards());
+            }
+
+            $query = ChildRewardQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByRewardCategory($this)
+                ->count($con);
+        }
+
+        return count($this->collRewards);
+    }
+
+    /**
+     * Method called to associate a ChildReward object to this object
+     * through the ChildReward foreign key attribute.
+     *
+     * @param  ChildReward $l ChildReward
+     * @return $this|\RewardCategory The current object (for fluent API support)
+     */
+    public function addReward(ChildReward $l)
+    {
+        if ($this->collRewards === null) {
+            $this->initRewards();
+            $this->collRewardsPartial = true;
+        }
+
+        if (!$this->collRewards->contains($l)) {
+            $this->doAddReward($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildReward $reward The ChildReward object to add.
+     */
+    protected function doAddReward(ChildReward $reward)
+    {
+        $this->collRewards[]= $reward;
+        $reward->setRewardCategory($this);
+    }
+
+    /**
+     * @param  ChildReward $reward The ChildReward object to remove.
+     * @return $this|ChildRewardCategory The current object (for fluent API support)
+     */
+    public function removeReward(ChildReward $reward)
+    {
+        if ($this->getRewards()->contains($reward)) {
+            $pos = $this->collRewards->search($reward);
+            $this->collRewards->remove($pos);
+            if (null === $this->rewardsScheduledForDeletion) {
+                $this->rewardsScheduledForDeletion = clone $this->collRewards;
+                $this->rewardsScheduledForDeletion->clear();
+            }
+            $this->rewardsScheduledForDeletion[]= $reward;
+            $reward->setRewardCategory(null);
+        }
 
         return $this;
     }
 
 
     /**
-     * Get the associated ChildRewardCategory object
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this RewardCategory is new, it will return
+     * an empty collection; or if this RewardCategory has previously
+     * been saved, it will retrieve related Rewards from storage.
      *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRewardCategory The associated ChildRewardCategory object.
-     * @throws PropelException
-     */
-    public function getRewardCategory(ConnectionInterface $con = null)
-    {
-        if ($this->aRewardCategory === null && ($this->reward_category_id !== null)) {
-            $this->aRewardCategory = ChildRewardCategoryQuery::create()->findPk($this->reward_category_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aRewardCategory->addRewards($this);
-             */
-        }
-
-        return $this->aRewardCategory;
-    }
-
-    /**
-     * Declares an association between this object and a ChildPointSystem object.
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in RewardCategory.
      *
-     * @param  ChildPointSystem $v
-     * @return $this|\Reward The current object (for fluent API support)
-     * @throws PropelException
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
      */
-    public function setPointSystem(ChildPointSystem $v = null)
+    public function getRewardsJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        if ($v === null) {
-            $this->setPointSystemId(NULL);
-        } else {
-            $this->setPointSystemId($v->getPointSystemId());
-        }
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('PointSystem', $joinBehavior);
 
-        $this->aPointSystem = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildPointSystem object, it will not be re-added.
-        if ($v !== null) {
-            $v->addReward($this);
-        }
-
-
-        return $this;
+        return $this->getRewards($query, $con);
     }
 
 
     /**
-     * Get the associated ChildPointSystem object
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this RewardCategory is new, it will return
+     * an empty collection; or if this RewardCategory has previously
+     * been saved, it will retrieve related Rewards from storage.
      *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildPointSystem The associated ChildPointSystem object.
-     * @throws PropelException
-     */
-    public function getPointSystem(ConnectionInterface $con = null)
-    {
-        if ($this->aPointSystem === null && ($this->point_system_id !== null)) {
-            $this->aPointSystem = ChildPointSystemQuery::create()->findPk($this->point_system_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aPointSystem->addRewards($this);
-             */
-        }
-
-        return $this->aPointSystem;
-    }
-
-    /**
-     * Declares an association between this object and a ChildRewardType object.
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in RewardCategory.
      *
-     * @param  ChildRewardType $v
-     * @return $this|\Reward The current object (for fluent API support)
-     * @throws PropelException
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
      */
-    public function setRewardType(ChildRewardType $v = null)
+    public function getRewardsJoinRewardType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        if ($v === null) {
-            $this->setRewardTypeId(NULL);
-        } else {
-            $this->setRewardTypeId($v->getRewardTypeId());
-        }
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('RewardType', $joinBehavior);
 
-        $this->aRewardType = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRewardType object, it will not be re-added.
-        if ($v !== null) {
-            $v->addReward($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildRewardType object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRewardType The associated ChildRewardType object.
-     * @throws PropelException
-     */
-    public function getRewardType(ConnectionInterface $con = null)
-    {
-        if ($this->aRewardType === null && ($this->reward_type_id !== null)) {
-            $this->aRewardType = ChildRewardTypeQuery::create()->findPk($this->reward_type_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aRewardType->addRewards($this);
-             */
-        }
-
-        return $this->aRewardType;
+        return $this->getRewards($query, $con);
     }
 
     /**
@@ -2024,28 +1514,9 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aRewardCategory) {
-            $this->aRewardCategory->removeReward($this);
-        }
-        if (null !== $this->aPointSystem) {
-            $this->aPointSystem->removeReward($this);
-        }
-        if (null !== $this->aRewardType) {
-            $this->aRewardType->removeReward($this);
-        }
-        $this->reward_id = null;
-        $this->point_system_id = null;
         $this->reward_category_id = null;
-        $this->reward_type_id = null;
-        $this->title = null;
+        $this->name = null;
         $this->description = null;
-        $this->icon = null;
-        $this->yen_per_point = null;
-        $this->price_per_unit = null;
-        $this->min_points = null;
-        $this->max_points = null;
-        $this->required_points = null;
-        $this->max_period = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
@@ -2066,11 +1537,14 @@ abstract class Reward implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collRewards) {
+                foreach ($this->collRewards as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
-        $this->aRewardCategory = null;
-        $this->aPointSystem = null;
-        $this->aRewardType = null;
+        $this->collRewards = null;
     }
 
     /**
@@ -2080,7 +1554,7 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(RewardTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(RewardCategoryTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

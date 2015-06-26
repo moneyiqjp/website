@@ -521,7 +521,7 @@ $app->post('/crud/creditcard/pointsystem/mapping/create', function () use ($app)
 
     $jTableResult = array();
     try {
-        $jTableResult['row'] = $db->CreateCardPointSystemMappingForCrud($request->put('data'));
+        $jTableResult['row'] = $db->CreateCardPointSystemMappingForCrud($request->post('data'));
     } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);

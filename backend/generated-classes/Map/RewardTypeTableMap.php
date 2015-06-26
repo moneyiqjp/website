@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Reward;
-use \RewardQuery;
+use \RewardType;
+use \RewardTypeQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'reward' table.
+ * This class defines the structure of the 'reward_type' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class RewardTableMap extends TableMap
+class RewardTypeTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class RewardTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.RewardTableMap';
+    const CLASS_NAME = '.Map.RewardTypeTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class RewardTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'reward';
+    const TABLE_NAME = 'reward_type';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Reward';
+    const OM_CLASS = '\\RewardType';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Reward';
+    const CLASS_DEFAULT = 'RewardType';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 15;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,82 +69,32 @@ class RewardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 15;
-
-    /**
-     * the column name for the reward_id field
-     */
-    const COL_REWARD_ID = 'reward.reward_id';
-
-    /**
-     * the column name for the point_system_id field
-     */
-    const COL_POINT_SYSTEM_ID = 'reward.point_system_id';
-
-    /**
-     * the column name for the reward_category_id field
-     */
-    const COL_REWARD_CATEGORY_ID = 'reward.reward_category_id';
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the reward_type_id field
      */
-    const COL_REWARD_TYPE_ID = 'reward.reward_type_id';
+    const COL_REWARD_TYPE_ID = 'reward_type.reward_type_id';
 
     /**
-     * the column name for the title field
+     * the column name for the name field
      */
-    const COL_TITLE = 'reward.title';
+    const COL_NAME = 'reward_type.name';
 
     /**
      * the column name for the description field
      */
-    const COL_DESCRIPTION = 'reward.description';
-
-    /**
-     * the column name for the icon field
-     */
-    const COL_ICON = 'reward.icon';
-
-    /**
-     * the column name for the yen_per_point field
-     */
-    const COL_YEN_PER_POINT = 'reward.yen_per_point';
-
-    /**
-     * the column name for the price_per_unit field
-     */
-    const COL_PRICE_PER_UNIT = 'reward.price_per_unit';
-
-    /**
-     * the column name for the min_points field
-     */
-    const COL_MIN_POINTS = 'reward.min_points';
-
-    /**
-     * the column name for the max_points field
-     */
-    const COL_MAX_POINTS = 'reward.max_points';
-
-    /**
-     * the column name for the required_points field
-     */
-    const COL_REQUIRED_POINTS = 'reward.required_points';
-
-    /**
-     * the column name for the max_period field
-     */
-    const COL_MAX_PERIOD = 'reward.max_period';
+    const COL_DESCRIPTION = 'reward_type.description';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'reward.update_time';
+    const COL_UPDATE_TIME = 'reward_type.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'reward.update_user';
+    const COL_UPDATE_USER = 'reward_type.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -158,11 +108,11 @@ class RewardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RewardId', 'PointSystemId', 'RewardCategoryId', 'RewardTypeId', 'Title', 'Description', 'Icon', 'YenPerPoint', 'PricePerUnit', 'MinPoints', 'MaxPoints', 'RequiredPoints', 'MaxPeriod', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('rewardId', 'pointSystemId', 'rewardCategoryId', 'rewardTypeId', 'title', 'description', 'icon', 'yenPerPoint', 'pricePerUnit', 'minPoints', 'maxPoints', 'requiredPoints', 'maxPeriod', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID, RewardTableMap::COL_POINT_SYSTEM_ID, RewardTableMap::COL_REWARD_CATEGORY_ID, RewardTableMap::COL_REWARD_TYPE_ID, RewardTableMap::COL_TITLE, RewardTableMap::COL_DESCRIPTION, RewardTableMap::COL_ICON, RewardTableMap::COL_YEN_PER_POINT, RewardTableMap::COL_PRICE_PER_UNIT, RewardTableMap::COL_MIN_POINTS, RewardTableMap::COL_MAX_POINTS, RewardTableMap::COL_REQUIRED_POINTS, RewardTableMap::COL_MAX_PERIOD, RewardTableMap::COL_UPDATE_TIME, RewardTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('reward_id', 'point_system_id', 'reward_category_id', 'reward_type_id', 'title', 'description', 'icon', 'yen_per_point', 'price_per_unit', 'min_points', 'max_points', 'required_points', 'max_period', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('RewardTypeId', 'Name', 'Description', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('rewardTypeId', 'name', 'description', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID, RewardTypeTableMap::COL_NAME, RewardTypeTableMap::COL_DESCRIPTION, RewardTypeTableMap::COL_UPDATE_TIME, RewardTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('reward_type_id', 'name', 'description', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -172,11 +122,11 @@ class RewardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RewardId' => 0, 'PointSystemId' => 1, 'RewardCategoryId' => 2, 'RewardTypeId' => 3, 'Title' => 4, 'Description' => 5, 'Icon' => 6, 'YenPerPoint' => 7, 'PricePerUnit' => 8, 'MinPoints' => 9, 'MaxPoints' => 10, 'RequiredPoints' => 11, 'MaxPeriod' => 12, 'UpdateTime' => 13, 'UpdateUser' => 14, ),
-        self::TYPE_CAMELNAME     => array('rewardId' => 0, 'pointSystemId' => 1, 'rewardCategoryId' => 2, 'rewardTypeId' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yenPerPoint' => 7, 'pricePerUnit' => 8, 'minPoints' => 9, 'maxPoints' => 10, 'requiredPoints' => 11, 'maxPeriod' => 12, 'updateTime' => 13, 'updateUser' => 14, ),
-        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID => 0, RewardTableMap::COL_POINT_SYSTEM_ID => 1, RewardTableMap::COL_REWARD_CATEGORY_ID => 2, RewardTableMap::COL_REWARD_TYPE_ID => 3, RewardTableMap::COL_TITLE => 4, RewardTableMap::COL_DESCRIPTION => 5, RewardTableMap::COL_ICON => 6, RewardTableMap::COL_YEN_PER_POINT => 7, RewardTableMap::COL_PRICE_PER_UNIT => 8, RewardTableMap::COL_MIN_POINTS => 9, RewardTableMap::COL_MAX_POINTS => 10, RewardTableMap::COL_REQUIRED_POINTS => 11, RewardTableMap::COL_MAX_PERIOD => 12, RewardTableMap::COL_UPDATE_TIME => 13, RewardTableMap::COL_UPDATE_USER => 14, ),
-        self::TYPE_FIELDNAME     => array('reward_id' => 0, 'point_system_id' => 1, 'reward_category_id' => 2, 'reward_type_id' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yen_per_point' => 7, 'price_per_unit' => 8, 'min_points' => 9, 'max_points' => 10, 'required_points' => 11, 'max_period' => 12, 'update_time' => 13, 'update_user' => 14, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('RewardTypeId' => 0, 'Name' => 1, 'Description' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
+        self::TYPE_CAMELNAME     => array('rewardTypeId' => 0, 'name' => 1, 'description' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
+        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID => 0, RewardTypeTableMap::COL_NAME => 1, RewardTypeTableMap::COL_DESCRIPTION => 2, RewardTypeTableMap::COL_UPDATE_TIME => 3, RewardTypeTableMap::COL_UPDATE_USER => 4, ),
+        self::TYPE_FIELDNAME     => array('reward_type_id' => 0, 'name' => 1, 'description' => 2, 'update_time' => 3, 'update_user' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -189,26 +139,16 @@ class RewardTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('reward');
-        $this->setPhpName('Reward');
+        $this->setName('reward_type');
+        $this->setPhpName('RewardType');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Reward');
+        $this->setClassName('\\RewardType');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('reward_id', 'RewardId', 'INTEGER', true, null, null);
-        $this->addForeignKey('point_system_id', 'PointSystemId', 'INTEGER', 'point_system', 'point_system_id', true, null, null);
-        $this->addForeignKey('reward_category_id', 'RewardCategoryId', 'INTEGER', 'reward_category', 'reward_category_id', false, null, null);
-        $this->addForeignKey('reward_type_id', 'RewardTypeId', 'INTEGER', 'reward_type', 'reward_type_id', false, null, null);
-        $this->addColumn('title', 'Title', 'VARCHAR', false, 255, null);
+        $this->addPrimaryKey('reward_type_id', 'RewardTypeId', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('icon', 'Icon', 'VARCHAR', false, 255, null);
-        $this->addColumn('yen_per_point', 'YenPerPoint', 'DECIMAL', true, null, null);
-        $this->addColumn('price_per_unit', 'PricePerUnit', 'INTEGER', false, null, null);
-        $this->addColumn('min_points', 'MinPoints', 'INTEGER', false, null, null);
-        $this->addColumn('max_points', 'MaxPoints', 'INTEGER', false, null, null);
-        $this->addColumn('required_points', 'RequiredPoints', 'INTEGER', false, null, null);
-        $this->addColumn('max_period', 'MaxPeriod', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -218,9 +158,7 @@ class RewardTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('RewardCategory', '\\RewardCategory', RelationMap::MANY_TO_ONE, array('reward_category_id' => 'reward_category_id', ), null, null);
-        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
-        $this->addRelation('RewardType', '\\RewardType', RelationMap::MANY_TO_ONE, array('reward_type_id' => 'reward_type_id', ), null, null);
+        $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('reward_type_id' => 'reward_type_id', ), null, null, 'Rewards');
     } // buildRelations()
 
     /**
@@ -239,11 +177,11 @@ class RewardTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RewardId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RewardTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RewardId', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('RewardTypeId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -263,7 +201,7 @@ class RewardTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('RewardId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('RewardTypeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -280,7 +218,7 @@ class RewardTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? RewardTableMap::CLASS_DEFAULT : RewardTableMap::OM_CLASS;
+        return $withPrefix ? RewardTypeTableMap::CLASS_DEFAULT : RewardTypeTableMap::OM_CLASS;
     }
 
     /**
@@ -294,22 +232,22 @@ class RewardTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Reward object, last column rank)
+     * @return array           (RewardType object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = RewardTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = RewardTableMap::getInstanceFromPool($key))) {
+        $key = RewardTypeTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = RewardTypeTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + RewardTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + RewardTypeTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = RewardTableMap::OM_CLASS;
-            /** @var Reward $obj */
+            $cls = RewardTypeTableMap::OM_CLASS;
+            /** @var RewardType $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            RewardTableMap::addInstanceToPool($obj, $key);
+            RewardTypeTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -332,18 +270,18 @@ class RewardTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = RewardTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = RewardTableMap::getInstanceFromPool($key))) {
+            $key = RewardTypeTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = RewardTypeTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Reward $obj */
+                /** @var RewardType $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                RewardTableMap::addInstanceToPool($obj, $key);
+                RewardTypeTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -364,35 +302,15 @@ class RewardTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(RewardTableMap::COL_REWARD_ID);
-            $criteria->addSelectColumn(RewardTableMap::COL_POINT_SYSTEM_ID);
-            $criteria->addSelectColumn(RewardTableMap::COL_REWARD_CATEGORY_ID);
-            $criteria->addSelectColumn(RewardTableMap::COL_REWARD_TYPE_ID);
-            $criteria->addSelectColumn(RewardTableMap::COL_TITLE);
-            $criteria->addSelectColumn(RewardTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(RewardTableMap::COL_ICON);
-            $criteria->addSelectColumn(RewardTableMap::COL_YEN_PER_POINT);
-            $criteria->addSelectColumn(RewardTableMap::COL_PRICE_PER_UNIT);
-            $criteria->addSelectColumn(RewardTableMap::COL_MIN_POINTS);
-            $criteria->addSelectColumn(RewardTableMap::COL_MAX_POINTS);
-            $criteria->addSelectColumn(RewardTableMap::COL_REQUIRED_POINTS);
-            $criteria->addSelectColumn(RewardTableMap::COL_MAX_PERIOD);
-            $criteria->addSelectColumn(RewardTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(RewardTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_REWARD_TYPE_ID);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_NAME);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_UPDATE_USER);
         } else {
-            $criteria->addSelectColumn($alias . '.reward_id');
-            $criteria->addSelectColumn($alias . '.point_system_id');
-            $criteria->addSelectColumn($alias . '.reward_category_id');
             $criteria->addSelectColumn($alias . '.reward_type_id');
-            $criteria->addSelectColumn($alias . '.title');
+            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.icon');
-            $criteria->addSelectColumn($alias . '.yen_per_point');
-            $criteria->addSelectColumn($alias . '.price_per_unit');
-            $criteria->addSelectColumn($alias . '.min_points');
-            $criteria->addSelectColumn($alias . '.max_points');
-            $criteria->addSelectColumn($alias . '.required_points');
-            $criteria->addSelectColumn($alias . '.max_period');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }
@@ -407,7 +325,7 @@ class RewardTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(RewardTableMap::DATABASE_NAME)->getTable(RewardTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(RewardTypeTableMap::DATABASE_NAME)->getTable(RewardTypeTableMap::TABLE_NAME);
     }
 
     /**
@@ -415,16 +333,16 @@ class RewardTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(RewardTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(RewardTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new RewardTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(RewardTypeTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(RewardTypeTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new RewardTypeTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Reward or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a RewardType or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Reward object or primary key or array of primary keys
+     * @param mixed               $values Criteria or RewardType object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -435,27 +353,27 @@ class RewardTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RewardTypeTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Reward) { // it's a model object
+        } elseif ($values instanceof \RewardType) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(RewardTableMap::DATABASE_NAME);
-            $criteria->add(RewardTableMap::COL_REWARD_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(RewardTypeTableMap::DATABASE_NAME);
+            $criteria->add(RewardTypeTableMap::COL_REWARD_TYPE_ID, (array) $values, Criteria::IN);
         }
 
-        $query = RewardQuery::create()->mergeWith($criteria);
+        $query = RewardTypeQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            RewardTableMap::clearInstancePool();
+            RewardTypeTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                RewardTableMap::removeInstanceFromPool($singleval);
+                RewardTypeTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -463,20 +381,20 @@ class RewardTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the reward table.
+     * Deletes all rows from the reward_type table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return RewardQuery::create()->doDeleteAll($con);
+        return RewardTypeQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Reward or Criteria object.
+     * Performs an INSERT on the database, given a RewardType or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Reward object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or RewardType object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -485,22 +403,22 @@ class RewardTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(RewardTypeTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Reward object
+            $criteria = $criteria->buildCriteria(); // build Criteria from RewardType object
         }
 
-        if ($criteria->containsKey(RewardTableMap::COL_REWARD_ID) && $criteria->keyContainsValue(RewardTableMap::COL_REWARD_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.RewardTableMap::COL_REWARD_ID.')');
+        if ($criteria->containsKey(RewardTypeTableMap::COL_REWARD_TYPE_ID) && $criteria->keyContainsValue(RewardTypeTableMap::COL_REWARD_TYPE_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.RewardTypeTableMap::COL_REWARD_TYPE_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = RewardQuery::create()->mergeWith($criteria);
+        $query = RewardTypeQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -509,7 +427,7 @@ class RewardTableMap extends TableMap
         });
     }
 
-} // RewardTableMap
+} // RewardTypeTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-RewardTableMap::buildTableMap();
+RewardTypeTableMap::buildTableMap();

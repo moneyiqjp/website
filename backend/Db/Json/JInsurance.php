@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JInsurance {
+class JInsurance  implements JSONInterface {
     public $InsuranceId;
     public $CreditCard;
     public $InsuranceType;
