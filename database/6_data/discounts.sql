@@ -4,7 +4,7 @@ SET NAMES utf8;
 SET FOREIGN_KEY_CHECKS = 0;
 
 delete from discounts where discount_id>0;
-ALTER TABLE discounts AUTO_INCREMENT = 1;
+ALTER TABLE discounts AUTO_INCREMENT = 0;
 
 insert into discounts (percentage, credit_card_id, store_id,multiple, conditions, update_time, update_user) values
 	(0.05, 5, 3, 0.1, '毎月8日、18日、28日のみ', NOW(), 'ben'),

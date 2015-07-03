@@ -26,7 +26,11 @@ class JRewardCategory  implements JSONInterface {
         $mine->RewardCategoryId = $item->getRewardCategoryId();
         $mine->Name = $item->getName();
         $mine->Description = $item->getDescription();
-        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $time = new \DateTime();
+        if(!is_null($item->getUpdateTime())) {
+            $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        }
+        $mine->UpdateTime = $time;
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
     }
@@ -52,7 +56,7 @@ class JRewardCategory  implements JSONInterface {
     }
 
     public function toDB() {
-        $usage = new \Reward();
+        $usage = new \RewardCategory();
         if(FieldUtils::ID_IS_DEFINED($this->RewardCategoryId)) {
             $usage=(new \RewardCategoryQuery())->findPk($this->RewardCategoryId);
             if(is_null($usage)) $usage = new \RewardCategory();

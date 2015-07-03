@@ -59,7 +59,7 @@ class PointAcquisitionTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PointAcquisitionTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the point_acquisition_id field
@@ -107,6 +107,11 @@ class PointAcquisitionTableMap extends TableMap
     const COL_UPDATE_USER = 'point_acquisition.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'point_acquisition.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -118,11 +123,11 @@ class PointAcquisitionTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PointAcquisitionId', 'PointAcquisitionName', 'PointsPerYen', 'PointSystemId', 'StoreId', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('pointAcquisitionId', 'pointAcquisitionName', 'pointsPerYen', 'pointSystemId', 'storeId', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PointAcquisitionTableMap::COL_POINT_ACQUISITION_ID, PointAcquisitionTableMap::COL_POINT_ACQUISITION_NAME, PointAcquisitionTableMap::COL_POINTS_PER_YEN, PointAcquisitionTableMap::COL_POINT_SYSTEM_ID, PointAcquisitionTableMap::COL_STORE_ID, PointAcquisitionTableMap::COL_UPDATE_TIME, PointAcquisitionTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('point_acquisition_id', 'point_acquisition_name', 'points_per_yen', 'point_system_id', 'store_id', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('PointAcquisitionId', 'PointAcquisitionName', 'PointsPerYen', 'PointSystemId', 'StoreId', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('pointAcquisitionId', 'pointAcquisitionName', 'pointsPerYen', 'pointSystemId', 'storeId', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(PointAcquisitionTableMap::COL_POINT_ACQUISITION_ID, PointAcquisitionTableMap::COL_POINT_ACQUISITION_NAME, PointAcquisitionTableMap::COL_POINTS_PER_YEN, PointAcquisitionTableMap::COL_POINT_SYSTEM_ID, PointAcquisitionTableMap::COL_STORE_ID, PointAcquisitionTableMap::COL_UPDATE_TIME, PointAcquisitionTableMap::COL_UPDATE_USER, PointAcquisitionTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('point_acquisition_id', 'point_acquisition_name', 'points_per_yen', 'point_system_id', 'store_id', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -132,11 +137,11 @@ class PointAcquisitionTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PointAcquisitionId' => 0, 'PointAcquisitionName' => 1, 'PointsPerYen' => 2, 'PointSystemId' => 3, 'StoreId' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
-        self::TYPE_CAMELNAME     => array('pointAcquisitionId' => 0, 'pointAcquisitionName' => 1, 'pointsPerYen' => 2, 'pointSystemId' => 3, 'storeId' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
-        self::TYPE_COLNAME       => array(PointAcquisitionTableMap::COL_POINT_ACQUISITION_ID => 0, PointAcquisitionTableMap::COL_POINT_ACQUISITION_NAME => 1, PointAcquisitionTableMap::COL_POINTS_PER_YEN => 2, PointAcquisitionTableMap::COL_POINT_SYSTEM_ID => 3, PointAcquisitionTableMap::COL_STORE_ID => 4, PointAcquisitionTableMap::COL_UPDATE_TIME => 5, PointAcquisitionTableMap::COL_UPDATE_USER => 6, ),
-        self::TYPE_FIELDNAME     => array('point_acquisition_id' => 0, 'point_acquisition_name' => 1, 'points_per_yen' => 2, 'point_system_id' => 3, 'store_id' => 4, 'update_time' => 5, 'update_user' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('PointAcquisitionId' => 0, 'PointAcquisitionName' => 1, 'PointsPerYen' => 2, 'PointSystemId' => 3, 'StoreId' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, 'Reference' => 7, ),
+        self::TYPE_CAMELNAME     => array('pointAcquisitionId' => 0, 'pointAcquisitionName' => 1, 'pointsPerYen' => 2, 'pointSystemId' => 3, 'storeId' => 4, 'updateTime' => 5, 'updateUser' => 6, 'reference' => 7, ),
+        self::TYPE_COLNAME       => array(PointAcquisitionTableMap::COL_POINT_ACQUISITION_ID => 0, PointAcquisitionTableMap::COL_POINT_ACQUISITION_NAME => 1, PointAcquisitionTableMap::COL_POINTS_PER_YEN => 2, PointAcquisitionTableMap::COL_POINT_SYSTEM_ID => 3, PointAcquisitionTableMap::COL_STORE_ID => 4, PointAcquisitionTableMap::COL_UPDATE_TIME => 5, PointAcquisitionTableMap::COL_UPDATE_USER => 6, PointAcquisitionTableMap::COL_REFERENCE => 7, ),
+        self::TYPE_FIELDNAME     => array('point_acquisition_id' => 0, 'point_acquisition_name' => 1, 'points_per_yen' => 2, 'point_system_id' => 3, 'store_id' => 4, 'update_time' => 5, 'update_user' => 6, 'reference' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -163,6 +168,7 @@ class PointAcquisitionTableMap extends TableMap
         $this->addForeignKey('store_id', 'StoreId', 'INTEGER', 'store', 'store_id', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -322,6 +328,7 @@ class PointAcquisitionTableMap extends TableMap
             $criteria->addSelectColumn(PointAcquisitionTableMap::COL_STORE_ID);
             $criteria->addSelectColumn(PointAcquisitionTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(PointAcquisitionTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(PointAcquisitionTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.point_acquisition_id');
             $criteria->addSelectColumn($alias . '.point_acquisition_name');
@@ -330,6 +337,7 @@ class PointAcquisitionTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.store_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

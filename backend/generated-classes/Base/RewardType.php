@@ -84,6 +84,13 @@ abstract class RewardType implements ActiveRecordInterface
     protected $description;
 
     /**
+     * The value for the is_finite field.
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $is_finite;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -116,10 +123,23 @@ abstract class RewardType implements ActiveRecordInterface
     protected $rewardsScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->is_finite = 0;
+    }
+
+    /**
      * Initializes internal state of Base\RewardType object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -363,6 +383,16 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
+     * Get the [is_finite] column value.
+     *
+     * @return int
+     */
+    public function getIsFinite()
+    {
+        return $this->is_finite;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -453,6 +483,26 @@ abstract class RewardType implements ActiveRecordInterface
     } // setDescription()
 
     /**
+     * Set the value of [is_finite] column.
+     *
+     * @param  int $v new value
+     * @return $this|\RewardType The current object (for fluent API support)
+     */
+    public function setIsFinite($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->is_finite !== $v) {
+            $this->is_finite = $v;
+            $this->modifiedColumns[RewardTypeTableMap::COL_IS_FINITE] = true;
+        }
+
+        return $this;
+    } // setIsFinite()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -502,6 +552,10 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->is_finite !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -537,13 +591,16 @@ abstract class RewardType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardTypeTableMap::translateFieldName('IsFinite', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->is_finite = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RewardTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -553,7 +610,7 @@ abstract class RewardType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = RewardTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = RewardTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\RewardType'), 0, $e);
@@ -779,6 +836,9 @@ abstract class RewardType implements ActiveRecordInterface
         if ($this->isColumnModified(RewardTypeTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
+        if ($this->isColumnModified(RewardTypeTableMap::COL_IS_FINITE)) {
+            $modifiedColumns[':p' . $index++]  = 'is_finite';
+        }
         if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -804,6 +864,9 @@ abstract class RewardType implements ActiveRecordInterface
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                        break;
+                    case 'is_finite':
+                        $stmt->bindValue($identifier, $this->is_finite, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -883,9 +946,12 @@ abstract class RewardType implements ActiveRecordInterface
                 return $this->getDescription();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getIsFinite();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -921,8 +987,9 @@ abstract class RewardType implements ActiveRecordInterface
             $keys[0] => $this->getRewardTypeId(),
             $keys[1] => $this->getName(),
             $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[3] => $this->getIsFinite(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -989,9 +1056,12 @@ abstract class RewardType implements ActiveRecordInterface
                 $this->setDescription($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setIsFinite($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1030,10 +1100,13 @@ abstract class RewardType implements ActiveRecordInterface
             $this->setDescription($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setIsFinite($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1084,6 +1157,9 @@ abstract class RewardType implements ActiveRecordInterface
         }
         if ($this->isColumnModified(RewardTypeTableMap::COL_DESCRIPTION)) {
             $criteria->add(RewardTypeTableMap::COL_DESCRIPTION, $this->description);
+        }
+        if ($this->isColumnModified(RewardTypeTableMap::COL_IS_FINITE)) {
+            $criteria->add(RewardTypeTableMap::COL_IS_FINITE, $this->is_finite);
         }
         if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_TIME)) {
             $criteria->add(RewardTypeTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1179,6 +1255,7 @@ abstract class RewardType implements ActiveRecordInterface
     {
         $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
+        $copyObj->setIsFinite($this->getIsFinite());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1517,10 +1594,12 @@ abstract class RewardType implements ActiveRecordInterface
         $this->reward_type_id = null;
         $this->name = null;
         $this->description = null;
+        $this->is_finite = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);

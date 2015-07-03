@@ -59,7 +59,7 @@ class DiscountsTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 11;
+    const NUM_COLUMNS = 12;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class DiscountsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 11;
+    const NUM_HYDRATE_COLUMNS = 12;
 
     /**
      * the column name for the discount_id field
@@ -127,6 +127,11 @@ class DiscountsTableMap extends TableMap
     const COL_UPDATE_USER = 'discounts.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'discounts.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -138,11 +143,11 @@ class DiscountsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('DiscountId', 'Percentage', 'StartDate', 'EndDate', 'Description', 'CreditCardId', 'StoreId', 'Multiple', 'Conditions', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('discountId', 'percentage', 'startDate', 'endDate', 'description', 'creditCardId', 'storeId', 'multiple', 'conditions', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(DiscountsTableMap::COL_DISCOUNT_ID, DiscountsTableMap::COL_PERCENTAGE, DiscountsTableMap::COL_START_DATE, DiscountsTableMap::COL_END_DATE, DiscountsTableMap::COL_DESCRIPTION, DiscountsTableMap::COL_CREDIT_CARD_ID, DiscountsTableMap::COL_STORE_ID, DiscountsTableMap::COL_MULTIPLE, DiscountsTableMap::COL_CONDITIONS, DiscountsTableMap::COL_UPDATE_TIME, DiscountsTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('discount_id', 'percentage', 'start_date', 'end_date', 'description', 'credit_card_id', 'store_id', 'multiple', 'conditions', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('DiscountId', 'Percentage', 'StartDate', 'EndDate', 'Description', 'CreditCardId', 'StoreId', 'Multiple', 'Conditions', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('discountId', 'percentage', 'startDate', 'endDate', 'description', 'creditCardId', 'storeId', 'multiple', 'conditions', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(DiscountsTableMap::COL_DISCOUNT_ID, DiscountsTableMap::COL_PERCENTAGE, DiscountsTableMap::COL_START_DATE, DiscountsTableMap::COL_END_DATE, DiscountsTableMap::COL_DESCRIPTION, DiscountsTableMap::COL_CREDIT_CARD_ID, DiscountsTableMap::COL_STORE_ID, DiscountsTableMap::COL_MULTIPLE, DiscountsTableMap::COL_CONDITIONS, DiscountsTableMap::COL_UPDATE_TIME, DiscountsTableMap::COL_UPDATE_USER, DiscountsTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('discount_id', 'percentage', 'start_date', 'end_date', 'description', 'credit_card_id', 'store_id', 'multiple', 'conditions', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -152,11 +157,11 @@ class DiscountsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('DiscountId' => 0, 'Percentage' => 1, 'StartDate' => 2, 'EndDate' => 3, 'Description' => 4, 'CreditCardId' => 5, 'StoreId' => 6, 'Multiple' => 7, 'Conditions' => 8, 'UpdateTime' => 9, 'UpdateUser' => 10, ),
-        self::TYPE_CAMELNAME     => array('discountId' => 0, 'percentage' => 1, 'startDate' => 2, 'endDate' => 3, 'description' => 4, 'creditCardId' => 5, 'storeId' => 6, 'multiple' => 7, 'conditions' => 8, 'updateTime' => 9, 'updateUser' => 10, ),
-        self::TYPE_COLNAME       => array(DiscountsTableMap::COL_DISCOUNT_ID => 0, DiscountsTableMap::COL_PERCENTAGE => 1, DiscountsTableMap::COL_START_DATE => 2, DiscountsTableMap::COL_END_DATE => 3, DiscountsTableMap::COL_DESCRIPTION => 4, DiscountsTableMap::COL_CREDIT_CARD_ID => 5, DiscountsTableMap::COL_STORE_ID => 6, DiscountsTableMap::COL_MULTIPLE => 7, DiscountsTableMap::COL_CONDITIONS => 8, DiscountsTableMap::COL_UPDATE_TIME => 9, DiscountsTableMap::COL_UPDATE_USER => 10, ),
-        self::TYPE_FIELDNAME     => array('discount_id' => 0, 'percentage' => 1, 'start_date' => 2, 'end_date' => 3, 'description' => 4, 'credit_card_id' => 5, 'store_id' => 6, 'multiple' => 7, 'conditions' => 8, 'update_time' => 9, 'update_user' => 10, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('DiscountId' => 0, 'Percentage' => 1, 'StartDate' => 2, 'EndDate' => 3, 'Description' => 4, 'CreditCardId' => 5, 'StoreId' => 6, 'Multiple' => 7, 'Conditions' => 8, 'UpdateTime' => 9, 'UpdateUser' => 10, 'Reference' => 11, ),
+        self::TYPE_CAMELNAME     => array('discountId' => 0, 'percentage' => 1, 'startDate' => 2, 'endDate' => 3, 'description' => 4, 'creditCardId' => 5, 'storeId' => 6, 'multiple' => 7, 'conditions' => 8, 'updateTime' => 9, 'updateUser' => 10, 'reference' => 11, ),
+        self::TYPE_COLNAME       => array(DiscountsTableMap::COL_DISCOUNT_ID => 0, DiscountsTableMap::COL_PERCENTAGE => 1, DiscountsTableMap::COL_START_DATE => 2, DiscountsTableMap::COL_END_DATE => 3, DiscountsTableMap::COL_DESCRIPTION => 4, DiscountsTableMap::COL_CREDIT_CARD_ID => 5, DiscountsTableMap::COL_STORE_ID => 6, DiscountsTableMap::COL_MULTIPLE => 7, DiscountsTableMap::COL_CONDITIONS => 8, DiscountsTableMap::COL_UPDATE_TIME => 9, DiscountsTableMap::COL_UPDATE_USER => 10, DiscountsTableMap::COL_REFERENCE => 11, ),
+        self::TYPE_FIELDNAME     => array('discount_id' => 0, 'percentage' => 1, 'start_date' => 2, 'end_date' => 3, 'description' => 4, 'credit_card_id' => 5, 'store_id' => 6, 'multiple' => 7, 'conditions' => 8, 'update_time' => 9, 'update_user' => 10, 'reference' => 11, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -187,6 +192,7 @@ class DiscountsTableMap extends TableMap
         $this->addColumn('conditions', 'Conditions', 'LONGVARCHAR', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -350,6 +356,7 @@ class DiscountsTableMap extends TableMap
             $criteria->addSelectColumn(DiscountsTableMap::COL_CONDITIONS);
             $criteria->addSelectColumn(DiscountsTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(DiscountsTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(DiscountsTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.discount_id');
             $criteria->addSelectColumn($alias . '.percentage');
@@ -362,6 +369,7 @@ class DiscountsTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.conditions');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

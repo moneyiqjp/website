@@ -59,7 +59,7 @@ class RewardTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class RewardTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the reward_type_id field
@@ -85,6 +85,11 @@ class RewardTypeTableMap extends TableMap
      * the column name for the description field
      */
     const COL_DESCRIPTION = 'reward_type.description';
+
+    /**
+     * the column name for the is_finite field
+     */
+    const COL_IS_FINITE = 'reward_type.is_finite';
 
     /**
      * the column name for the update_time field
@@ -108,11 +113,11 @@ class RewardTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RewardTypeId', 'Name', 'Description', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('rewardTypeId', 'name', 'description', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID, RewardTypeTableMap::COL_NAME, RewardTypeTableMap::COL_DESCRIPTION, RewardTypeTableMap::COL_UPDATE_TIME, RewardTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('reward_type_id', 'name', 'description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RewardTypeId', 'Name', 'Description', 'IsFinite', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('rewardTypeId', 'name', 'description', 'isFinite', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID, RewardTypeTableMap::COL_NAME, RewardTypeTableMap::COL_DESCRIPTION, RewardTypeTableMap::COL_IS_FINITE, RewardTypeTableMap::COL_UPDATE_TIME, RewardTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('reward_type_id', 'name', 'description', 'is_finite', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class RewardTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RewardTypeId' => 0, 'Name' => 1, 'Description' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('rewardTypeId' => 0, 'name' => 1, 'description' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID => 0, RewardTypeTableMap::COL_NAME => 1, RewardTypeTableMap::COL_DESCRIPTION => 2, RewardTypeTableMap::COL_UPDATE_TIME => 3, RewardTypeTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('reward_type_id' => 0, 'name' => 1, 'description' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RewardTypeId' => 0, 'Name' => 1, 'Description' => 2, 'IsFinite' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('rewardTypeId' => 0, 'name' => 1, 'description' => 2, 'isFinite' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(RewardTypeTableMap::COL_REWARD_TYPE_ID => 0, RewardTypeTableMap::COL_NAME => 1, RewardTypeTableMap::COL_DESCRIPTION => 2, RewardTypeTableMap::COL_IS_FINITE => 3, RewardTypeTableMap::COL_UPDATE_TIME => 4, RewardTypeTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('reward_type_id' => 0, 'name' => 1, 'description' => 2, 'is_finite' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -149,6 +154,7 @@ class RewardTypeTableMap extends TableMap
         $this->addPrimaryKey('reward_type_id', 'RewardTypeId', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('is_finite', 'IsFinite', 'TINYINT', false, null, 0);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -305,12 +311,14 @@ class RewardTypeTableMap extends TableMap
             $criteria->addSelectColumn(RewardTypeTableMap::COL_REWARD_TYPE_ID);
             $criteria->addSelectColumn(RewardTypeTableMap::COL_NAME);
             $criteria->addSelectColumn(RewardTypeTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(RewardTypeTableMap::COL_IS_FINITE);
             $criteria->addSelectColumn(RewardTypeTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(RewardTypeTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.reward_type_id');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.is_finite');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

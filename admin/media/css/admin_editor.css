@@ -1,3 +1,18 @@
+.two-total{
+    padding: 10px;
+}
+
+.two-left{
+    display:block
+    float: left;
+    width:300px;
+}
+
+.two-right{
+    display:block;
+    float: right;
+}
+
 .table-headline{
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
     font-weight: bold;

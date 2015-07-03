@@ -59,7 +59,7 @@ class CardFeaturesTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CardFeaturesTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the feature_id field
@@ -92,9 +92,14 @@ class CardFeaturesTableMap extends TableMap
     const COL_DESCRIPTION = 'card_features.description';
 
     /**
-     * the column name for the feature_cost field
+     * the column name for the issuing_fee field
      */
-    const COL_FEATURE_COST = 'card_features.feature_cost';
+    const COL_ISSUING_FEE = 'card_features.issuing_fee';
+
+    /**
+     * the column name for the ongoing_fee field
+     */
+    const COL_ONGOING_FEE = 'card_features.ongoing_fee';
 
     /**
      * the column name for the update_time field
@@ -105,6 +110,11 @@ class CardFeaturesTableMap extends TableMap
      * the column name for the update_user field
      */
     const COL_UPDATE_USER = 'card_features.update_user';
+
+    /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'card_features.reference';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +128,11 @@ class CardFeaturesTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeatureId', 'FeatureTypeId', 'CreditCardId', 'Description', 'FeatureCost', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('featureId', 'featureTypeId', 'creditCardId', 'description', 'featureCost', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID, CardFeaturesTableMap::COL_FEATURE_TYPE_ID, CardFeaturesTableMap::COL_CREDIT_CARD_ID, CardFeaturesTableMap::COL_DESCRIPTION, CardFeaturesTableMap::COL_FEATURE_COST, CardFeaturesTableMap::COL_UPDATE_TIME, CardFeaturesTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('feature_id', 'feature_type_id', 'credit_card_id', 'description', 'feature_cost', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('FeatureId', 'FeatureTypeId', 'CreditCardId', 'Description', 'IssuingFee', 'OngoingFee', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('featureId', 'featureTypeId', 'creditCardId', 'description', 'issuingFee', 'ongoingFee', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID, CardFeaturesTableMap::COL_FEATURE_TYPE_ID, CardFeaturesTableMap::COL_CREDIT_CARD_ID, CardFeaturesTableMap::COL_DESCRIPTION, CardFeaturesTableMap::COL_ISSUING_FEE, CardFeaturesTableMap::COL_ONGOING_FEE, CardFeaturesTableMap::COL_UPDATE_TIME, CardFeaturesTableMap::COL_UPDATE_USER, CardFeaturesTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('feature_id', 'feature_type_id', 'credit_card_id', 'description', 'issuing_fee', 'ongoing_fee', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -132,11 +142,11 @@ class CardFeaturesTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeatureId' => 0, 'FeatureTypeId' => 1, 'CreditCardId' => 2, 'Description' => 3, 'FeatureCost' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
-        self::TYPE_CAMELNAME     => array('featureId' => 0, 'featureTypeId' => 1, 'creditCardId' => 2, 'description' => 3, 'featureCost' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
-        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID => 0, CardFeaturesTableMap::COL_FEATURE_TYPE_ID => 1, CardFeaturesTableMap::COL_CREDIT_CARD_ID => 2, CardFeaturesTableMap::COL_DESCRIPTION => 3, CardFeaturesTableMap::COL_FEATURE_COST => 4, CardFeaturesTableMap::COL_UPDATE_TIME => 5, CardFeaturesTableMap::COL_UPDATE_USER => 6, ),
-        self::TYPE_FIELDNAME     => array('feature_id' => 0, 'feature_type_id' => 1, 'credit_card_id' => 2, 'description' => 3, 'feature_cost' => 4, 'update_time' => 5, 'update_user' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('FeatureId' => 0, 'FeatureTypeId' => 1, 'CreditCardId' => 2, 'Description' => 3, 'IssuingFee' => 4, 'OngoingFee' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, 'Reference' => 8, ),
+        self::TYPE_CAMELNAME     => array('featureId' => 0, 'featureTypeId' => 1, 'creditCardId' => 2, 'description' => 3, 'issuingFee' => 4, 'ongoingFee' => 5, 'updateTime' => 6, 'updateUser' => 7, 'reference' => 8, ),
+        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID => 0, CardFeaturesTableMap::COL_FEATURE_TYPE_ID => 1, CardFeaturesTableMap::COL_CREDIT_CARD_ID => 2, CardFeaturesTableMap::COL_DESCRIPTION => 3, CardFeaturesTableMap::COL_ISSUING_FEE => 4, CardFeaturesTableMap::COL_ONGOING_FEE => 5, CardFeaturesTableMap::COL_UPDATE_TIME => 6, CardFeaturesTableMap::COL_UPDATE_USER => 7, CardFeaturesTableMap::COL_REFERENCE => 8, ),
+        self::TYPE_FIELDNAME     => array('feature_id' => 0, 'feature_type_id' => 1, 'credit_card_id' => 2, 'description' => 3, 'issuing_fee' => 4, 'ongoing_fee' => 5, 'update_time' => 6, 'update_user' => 7, 'reference' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -160,9 +170,11 @@ class CardFeaturesTableMap extends TableMap
         $this->addForeignKey('feature_type_id', 'FeatureTypeId', 'INTEGER', 'card_feature_type', 'feature_type_id', true, null, null);
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('feature_cost', 'FeatureCost', 'INTEGER', false, null, null);
+        $this->addColumn('issuing_fee', 'IssuingFee', 'INTEGER', false, null, null);
+        $this->addColumn('ongoing_fee', 'OngoingFee', 'INTEGER', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -319,17 +331,21 @@ class CardFeaturesTableMap extends TableMap
             $criteria->addSelectColumn(CardFeaturesTableMap::COL_FEATURE_TYPE_ID);
             $criteria->addSelectColumn(CardFeaturesTableMap::COL_CREDIT_CARD_ID);
             $criteria->addSelectColumn(CardFeaturesTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_FEATURE_COST);
+            $criteria->addSelectColumn(CardFeaturesTableMap::COL_ISSUING_FEE);
+            $criteria->addSelectColumn(CardFeaturesTableMap::COL_ONGOING_FEE);
             $criteria->addSelectColumn(CardFeaturesTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CardFeaturesTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(CardFeaturesTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.feature_id');
             $criteria->addSelectColumn($alias . '.feature_type_id');
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.feature_cost');
+            $criteria->addSelectColumn($alias . '.issuing_fee');
+            $criteria->addSelectColumn($alias . '.ongoing_fee');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

@@ -34,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery orderByAffiliateId($order = Criteria::ASC) Order by the affiliate_id column
  * @method     ChildCreditCardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCreditCardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildCreditCardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildCreditCardQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildCreditCardQuery groupByName() Group by the name column
@@ -49,6 +50,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery groupByAffiliateId() Group by the affiliate_id column
  * @method     ChildCreditCardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCreditCardQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildCreditCardQuery groupByReference() Group by the reference column
  *
  * @method     ChildCreditCardQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildCreditCardQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -117,6 +119,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard findOneByAffiliateId(int $affiliate_id) Return the first ChildCreditCard filtered by the affiliate_id column
  * @method     ChildCreditCard findOneByUpdateTime(string $update_time) Return the first ChildCreditCard filtered by the update_time column
  * @method     ChildCreditCard findOneByUpdateUser(string $update_user) Return the first ChildCreditCard filtered by the update_user column
+ * @method     ChildCreditCard findOneByReference(string $reference) Return the first ChildCreditCard filtered by the reference column
  *
  * @method     ChildCreditCard[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCreditCard objects based on current ModelCriteria
  * @method     ChildCreditCard[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildCreditCard objects filtered by the credit_card_id column
@@ -133,6 +136,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard[]|ObjectCollection findByAffiliateId(int $affiliate_id) Return ChildCreditCard objects filtered by the affiliate_id column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCreditCard objects filtered by the update_time column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCreditCard objects filtered by the update_user column
+ * @method     ChildCreditCard[]|ObjectCollection findByReference(string $reference) Return ChildCreditCard objects filtered by the reference column
  * @method     ChildCreditCard[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -224,7 +228,7 @@ abstract class CreditCardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
+        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, update_time, update_user, reference FROM credit_card WHERE credit_card_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -762,6 +766,35 @@ abstract class CreditCardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CreditCardTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

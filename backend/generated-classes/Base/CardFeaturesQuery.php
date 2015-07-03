@@ -24,17 +24,21 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeaturesQuery orderByFeatureTypeId($order = Criteria::ASC) Order by the feature_type_id column
  * @method     ChildCardFeaturesQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildCardFeaturesQuery orderByDescription($order = Criteria::ASC) Order by the description column
- * @method     ChildCardFeaturesQuery orderByFeatureCost($order = Criteria::ASC) Order by the feature_cost column
+ * @method     ChildCardFeaturesQuery orderByIssuingFee($order = Criteria::ASC) Order by the issuing_fee column
+ * @method     ChildCardFeaturesQuery orderByOngoingFee($order = Criteria::ASC) Order by the ongoing_fee column
  * @method     ChildCardFeaturesQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCardFeaturesQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildCardFeaturesQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildCardFeaturesQuery groupByFeatureId() Group by the feature_id column
  * @method     ChildCardFeaturesQuery groupByFeatureTypeId() Group by the feature_type_id column
  * @method     ChildCardFeaturesQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildCardFeaturesQuery groupByDescription() Group by the description column
- * @method     ChildCardFeaturesQuery groupByFeatureCost() Group by the feature_cost column
+ * @method     ChildCardFeaturesQuery groupByIssuingFee() Group by the issuing_fee column
+ * @method     ChildCardFeaturesQuery groupByOngoingFee() Group by the ongoing_fee column
  * @method     ChildCardFeaturesQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCardFeaturesQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildCardFeaturesQuery groupByReference() Group by the reference column
  *
  * @method     ChildCardFeaturesQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildCardFeaturesQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -57,18 +61,22 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatures findOneByFeatureTypeId(int $feature_type_id) Return the first ChildCardFeatures filtered by the feature_type_id column
  * @method     ChildCardFeatures findOneByCreditCardId(int $credit_card_id) Return the first ChildCardFeatures filtered by the credit_card_id column
  * @method     ChildCardFeatures findOneByDescription(string $description) Return the first ChildCardFeatures filtered by the description column
- * @method     ChildCardFeatures findOneByFeatureCost(int $feature_cost) Return the first ChildCardFeatures filtered by the feature_cost column
+ * @method     ChildCardFeatures findOneByIssuingFee(int $issuing_fee) Return the first ChildCardFeatures filtered by the issuing_fee column
+ * @method     ChildCardFeatures findOneByOngoingFee(int $ongoing_fee) Return the first ChildCardFeatures filtered by the ongoing_fee column
  * @method     ChildCardFeatures findOneByUpdateTime(string $update_time) Return the first ChildCardFeatures filtered by the update_time column
  * @method     ChildCardFeatures findOneByUpdateUser(string $update_user) Return the first ChildCardFeatures filtered by the update_user column
+ * @method     ChildCardFeatures findOneByReference(string $reference) Return the first ChildCardFeatures filtered by the reference column
  *
  * @method     ChildCardFeatures[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCardFeatures objects based on current ModelCriteria
  * @method     ChildCardFeatures[]|ObjectCollection findByFeatureId(int $feature_id) Return ChildCardFeatures objects filtered by the feature_id column
  * @method     ChildCardFeatures[]|ObjectCollection findByFeatureTypeId(int $feature_type_id) Return ChildCardFeatures objects filtered by the feature_type_id column
  * @method     ChildCardFeatures[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildCardFeatures objects filtered by the credit_card_id column
  * @method     ChildCardFeatures[]|ObjectCollection findByDescription(string $description) Return ChildCardFeatures objects filtered by the description column
- * @method     ChildCardFeatures[]|ObjectCollection findByFeatureCost(int $feature_cost) Return ChildCardFeatures objects filtered by the feature_cost column
+ * @method     ChildCardFeatures[]|ObjectCollection findByIssuingFee(int $issuing_fee) Return ChildCardFeatures objects filtered by the issuing_fee column
+ * @method     ChildCardFeatures[]|ObjectCollection findByOngoingFee(int $ongoing_fee) Return ChildCardFeatures objects filtered by the ongoing_fee column
  * @method     ChildCardFeatures[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCardFeatures objects filtered by the update_time column
  * @method     ChildCardFeatures[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCardFeatures objects filtered by the update_user column
+ * @method     ChildCardFeatures[]|ObjectCollection findByReference(string $reference) Return ChildCardFeatures objects filtered by the reference column
  * @method     ChildCardFeatures[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -160,7 +168,7 @@ abstract class CardFeaturesQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT feature_id, feature_type_id, credit_card_id, description, feature_cost, update_time, update_user FROM card_features WHERE feature_id = :p0';
+        $sql = 'SELECT feature_id, feature_type_id, credit_card_id, description, issuing_fee, ongoing_fee, update_time, update_user, reference FROM card_features WHERE feature_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -407,16 +415,16 @@ abstract class CardFeaturesQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the feature_cost column
+     * Filter the query on the issuing_fee column
      *
      * Example usage:
      * <code>
-     * $query->filterByFeatureCost(1234); // WHERE feature_cost = 1234
-     * $query->filterByFeatureCost(array(12, 34)); // WHERE feature_cost IN (12, 34)
-     * $query->filterByFeatureCost(array('min' => 12)); // WHERE feature_cost > 12
+     * $query->filterByIssuingFee(1234); // WHERE issuing_fee = 1234
+     * $query->filterByIssuingFee(array(12, 34)); // WHERE issuing_fee IN (12, 34)
+     * $query->filterByIssuingFee(array('min' => 12)); // WHERE issuing_fee > 12
      * </code>
      *
-     * @param     mixed $featureCost The value to use as filter.
+     * @param     mixed $issuingFee The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -424,16 +432,16 @@ abstract class CardFeaturesQuery extends ModelCriteria
      *
      * @return $this|ChildCardFeaturesQuery The current query, for fluid interface
      */
-    public function filterByFeatureCost($featureCost = null, $comparison = null)
+    public function filterByIssuingFee($issuingFee = null, $comparison = null)
     {
-        if (is_array($featureCost)) {
+        if (is_array($issuingFee)) {
             $useMinMax = false;
-            if (isset($featureCost['min'])) {
-                $this->addUsingAlias(CardFeaturesTableMap::COL_FEATURE_COST, $featureCost['min'], Criteria::GREATER_EQUAL);
+            if (isset($issuingFee['min'])) {
+                $this->addUsingAlias(CardFeaturesTableMap::COL_ISSUING_FEE, $issuingFee['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($featureCost['max'])) {
-                $this->addUsingAlias(CardFeaturesTableMap::COL_FEATURE_COST, $featureCost['max'], Criteria::LESS_EQUAL);
+            if (isset($issuingFee['max'])) {
+                $this->addUsingAlias(CardFeaturesTableMap::COL_ISSUING_FEE, $issuingFee['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -444,7 +452,48 @@ abstract class CardFeaturesQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(CardFeaturesTableMap::COL_FEATURE_COST, $featureCost, $comparison);
+        return $this->addUsingAlias(CardFeaturesTableMap::COL_ISSUING_FEE, $issuingFee, $comparison);
+    }
+
+    /**
+     * Filter the query on the ongoing_fee column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByOngoingFee(1234); // WHERE ongoing_fee = 1234
+     * $query->filterByOngoingFee(array(12, 34)); // WHERE ongoing_fee IN (12, 34)
+     * $query->filterByOngoingFee(array('min' => 12)); // WHERE ongoing_fee > 12
+     * </code>
+     *
+     * @param     mixed $ongoingFee The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardFeaturesQuery The current query, for fluid interface
+     */
+    public function filterByOngoingFee($ongoingFee = null, $comparison = null)
+    {
+        if (is_array($ongoingFee)) {
+            $useMinMax = false;
+            if (isset($ongoingFee['min'])) {
+                $this->addUsingAlias(CardFeaturesTableMap::COL_ONGOING_FEE, $ongoingFee['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($ongoingFee['max'])) {
+                $this->addUsingAlias(CardFeaturesTableMap::COL_ONGOING_FEE, $ongoingFee['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CardFeaturesTableMap::COL_ONGOING_FEE, $ongoingFee, $comparison);
     }
 
     /**
@@ -517,6 +566,35 @@ abstract class CardFeaturesQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CardFeaturesTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardFeaturesQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CardFeaturesTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

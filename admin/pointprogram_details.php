@@ -48,7 +48,7 @@
 
         var rewardTypes = [];
         tmp = $.ajax({
-            url: '../backend/crud/reward/type/all',
+            url: '../backend/display/reward/type/all',
             data: {
                 format: 'json',
                 "contentType": "application/json; charset=utf-8",
@@ -64,8 +64,8 @@
                 tmpStore = jason["data"];
                 for (index = 0; index < tmpStore.length; ++index) {
                     rewardTypes.push({
-                        value: tmpStore[index]["label"],
-                        label: tmpStore[index]["value"]
+                        value: tmpStore[index]["value"],
+                        label: tmpStore[index]["label"]
                     })
                 }
             }
@@ -73,7 +73,7 @@
 
         var rewardCategories = [];
         tmp = $.ajax({
-            url: '../backend/crud/reward/category/all',
+            url: '../backend/display/reward/category/all',
             data: {
                 format: 'json',
                 "contentType": "application/json; charset=utf-8",
@@ -89,8 +89,8 @@
                 tmpStore = jason["data"];
                 for (index = 0; index < tmpStore.length; ++index) {
                     rewardCategories.push({
-                        value: tmpStore[index]["label"],
-                        label: tmpStore[index]["value"]
+                        value: tmpStore[index]["value"],
+                        label: tmpStore[index]["label"]
                     })
                 }
             }
@@ -209,7 +209,7 @@
                             url: '../backend/crud/pointacquisition/delete'
                         }
                     },
-                    table: "#function",
+                    table: "#pointAcquisitionTable",
                     idSrc: "PointAcquisitionId",
                     fields: [
                         {
@@ -244,18 +244,18 @@
             pointUsageEditor = new $.fn.dataTable.Editor(
                 {
                     ajax: {
-                        create: '../backend/crud/pointacquisition/create', // default method is POST
+                        create: '../backend/crud/pointusage/create', // default method is POST
                         edit: {
                             type: 'PUT',
-                            url:  '../backend/crud/pointacquisition/update'
+                            url:  '../backend/crud/pointusage/update'
                         },
                         remove: {
                             type: 'DELETE',
-                            url: '../backend/crud/pointacquisition/delete'
+                            url: '../backend/crud/pointusage/delete'
                         }
                     },
-                    table: "#pointAcquisitionTable",
-                    idSrc: "PointAcquisitionId",
+                    table: "#pointUsageTable",
+                    idSrc: "PointUsageId",
                     fields: [
                         {
                             label: "Id:",
@@ -263,7 +263,7 @@
                             type:  "readonly"
                         },{
                             label: "PointSystem:",
-                            name: "PointSystemId",
+                            name: "PointSystem.Id",
                             type:  "readonly",
                             def: pointSystemId
                         }, {
@@ -272,7 +272,7 @@
                             def: 1.0
                         }, {
                             label: "Category/Store:",
-                            name: "Store.StoreId",
+                            name: "Store.Id",
                             type:  "select",
                             options: stores
                         },    {
@@ -314,12 +314,12 @@
                             def: pointSystemId
                         },{
                             label: "Type:",
-                            name: "Type",
+                            name: "Type.RewardTypeId",
                             type:  "select",
                             options: rewardTypes
                         }, {
                             label: "Category:",
-                            name: "Category",
+                            name: "Category.RewardCategoryId",
                             type:  "select",
                             options: rewardCategories
                         },  {
@@ -334,7 +334,7 @@
                         },  {
                             label: "YenPerPoint:",
                             name: "YenPerPoint",
-                            def: 1.0
+                            def: 0.01
                         },  {
                             label: "PricePerUnit:",
                             name: "PricePerUnit",
@@ -378,8 +378,8 @@
                     "columns": [
                         {"data": "RewardId",width:20},
                         {"data": "PointSystemId", visible: false,width:20},
-                        {"data": "Type",width:50},
-                        {"data": "Category",width:100},
+                        {"data": "Type.Name", editField: "Type.RewardTypeId",width:50},
+                        {"data": "Category.Name", editField: "Category.RewardCategoryId",width:100},
                         {"data": "Title",width:150},
                         {"data": "Description",width:200},
                         {"data": "Icon",width:50},
@@ -416,6 +416,7 @@
                     "columns": [
                         {"data": "PointUsageId",width:1},
                         {"data": "PointSystem.Id", visible: false,width:1},
+
                         {"data": "Store.Id",width:1,visible: false},
                         {"data": "Store.Name",width:1},
                         {"data": "YenPerPoint",width:2},
@@ -656,7 +657,7 @@ if(!array_key_exists('Id',$_GET)) {
                 <tr>
                     <th>Id</th>
                     <th>PointSystemId</th>
-                    <th>StoreId</th>
+                    <th>Category</th>
                     <th>Store</th>
                     <th>YenPerPoint</th>
                     <th>Update</th>
@@ -668,53 +669,9 @@ if(!array_key_exists('Id',$_GET)) {
                 <tr>
                     <th>Id</th>
                     <th>PointSystemId</th>
-                    <th>StoreId</th>
+                    <th>Category</th>
                     <th>Store</th>
                     <th>YenPerPoint</th>
-                    <th>Update</th>
-                    <th>User</th>
-                </tr>
-                </tfoot>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td valign="top">
-            <table id="discountTable" class="display" cellspacing="0" width="800">
-                <thead>
-                <tr>
-                    <td colspan="12" class="table-headline">
-                        Discounts
-                    </td>
-                </tr>
-                <tr>
-                    <th>Id</th>
-                    <th>Card</th>
-                    <th>Category</th>
-                    <th>Store</th>
-                    <th>Description</th>
-                    <th>Percentage</th>
-                    <th>Multiple</th>
-                    <th>Conditions</th>
-                    <th>StartDate</th>
-                    <th>EndDate</th>
-                    <th>Update</th>
-                    <th>User</th>
-                </tr>
-                </thead>
-
-                <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>Card</th>
-                    <th>Category</th>
-                    <th>Store</th>
-                    <th>Description</th>
-                    <th>Percentage</th>
-                    <th>Multiple</th>
-                    <th>Conditions</th>
-                    <th>StartDate</th>
-                    <th>EndDate</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>

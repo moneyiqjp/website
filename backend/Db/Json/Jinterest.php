@@ -7,6 +7,8 @@
  */
 
 namespace Db\Json;
+use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 
 class Jinterest implements JSONInterface{
@@ -25,7 +27,7 @@ class Jinterest implements JSONInterface{
     public static function CREATE_FROM_DB(\Interest $item)
     {
         $mine = new Jinterest();
-        $mine->$InterestId = $item->getInterestId();
+        $mine->InterestId = $item->getInterestId();
         $mine->CreditCard =  array(
             'Id' => $item->getCreditCardId(),
             'Name' => $item->getCreditCard()->getName()
@@ -44,14 +46,20 @@ class Jinterest implements JSONInterface{
 
     public static function CREATE_FROM_ARRAY($data)
     {
+
         $mine = new Jinterest();
         $mine->InterestId = $data['InterestId'];
+
         $tmp = $data['CreditCard'];
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Name')) $tmp['Name']="";
         $mine->CreditCard =  array(
             'Id' => $tmp['Id'],
             'Name' => $tmp['Name']
         );
+
+        if(ArrayUtils::KEY_EXISTS($tmp,'Name'))
         $tmp = $data['PaymentType'];
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Name')) $tmp['Name']="";
         $mine->PaymentType =  array(
             'Id' => $tmp['Id'],
             'Name' => $tmp['Name']

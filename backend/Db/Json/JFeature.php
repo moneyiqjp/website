@@ -7,6 +7,8 @@
  */
 
 namespace Db\Json;
+use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 
 class JFeature implements JSONInterface{
@@ -14,7 +16,8 @@ class JFeature implements JSONInterface{
     public $FeatureType;
     public $CreditCard;
     public $Description;
-    public $FeatureCost;
+    public $IssuingFee;
+    public $OngoingFee;
     public $Active;
     public $UpdateTime;
     public $UpdateUser;
@@ -85,7 +88,8 @@ class JFeature implements JSONInterface{
             'Name' => $item->getCreditCard()->getName()
         );
         $mine->Description = $item->getDescription();
-        $mine->FeatureCost = $item->getFeatureCost();
+        $mine->IssuingFee = $item->getIssuingFee();
+        $mine->OngoingFee = $item->getOngoingFee();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
         $mine->Active = true;
@@ -111,10 +115,11 @@ class JFeature implements JSONInterface{
             'Name' => $tmp['Name']
         );
 
-        $mine->FeatureCost = $data['FeatureCost'];
-        $mine->Description = $data['Description'];
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
+        if(ArrayUtils::KEY_EXISTS($data,'IssuingFee')) $mine->IssuingFee = $data['IssuingFee'];
+        if(ArrayUtils::KEY_EXISTS($data,'OngoingFee')) $mine->OngoingFee = $data['OngoingFee'];
+        if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        $mine->UpdateTime = new \DateTime();
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         $mine->Active = true;
         if(array_key_exists('Active',$data)) {
@@ -144,7 +149,8 @@ class JFeature implements JSONInterface{
         $it = $this->FeatureType;
         $item->setCardFeatureType((new \CardFeatureTypeQuery())->findPk( $it['Id']));
         $item->setDescription($this->Description);
-        $item->setFeatureCost($this->FeatureCost);
+        $item->setIssuingFee($this->IssuingFee);
+        $item->setOngoingFee($this->OngoingFee);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

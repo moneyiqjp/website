@@ -7,6 +7,8 @@
  */
 
 namespace Db\Json;
+use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 
 class JCampaign implements JSONInterface{
@@ -90,8 +92,16 @@ class JCampaign implements JSONInterface{
         $item->setDescription($this->Description);
         $item->setMaxPoints($this->MaxPoints);
         $item->setValueInYen($this->ValueInYen);
-        if(!is_null($this->StartDate)) $item->setStartDate($this->StartDate);
-        if(!is_null($this->EndDate)) $item->setEndDate($this->EndDate);
+        if(FieldUtils::STRING_IS_DEFINED($this->StartDate)) {
+            $item->setStartDate($this->StartDate);
+        } else {
+            $item->setStartDate(new \DateTime());
+        }
+        if(FieldUtils::STRING_IS_DEFINED($this->EndDate)) {
+            $item->setEndDate($this->EndDate);
+        }  else {
+            $item->setEndDate(new \DateTime('9999-12-31'));
+        }
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

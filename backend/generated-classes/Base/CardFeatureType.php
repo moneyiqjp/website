@@ -90,6 +90,18 @@ abstract class CardFeatureType implements ActiveRecordInterface
     protected $category;
 
     /**
+     * The value for the foreground_color field.
+     * @var        string
+     */
+    protected $foreground_color;
+
+    /**
+     * The value for the background_color field.
+     * @var        string
+     */
+    protected $background_color;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -379,6 +391,26 @@ abstract class CardFeatureType implements ActiveRecordInterface
     }
 
     /**
+     * Get the [foreground_color] column value.
+     *
+     * @return string
+     */
+    public function getForegroundColor()
+    {
+        return $this->foreground_color;
+    }
+
+    /**
+     * Get the [background_color] column value.
+     *
+     * @return string
+     */
+    public function getBackgroundColor()
+    {
+        return $this->background_color;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -489,6 +521,46 @@ abstract class CardFeatureType implements ActiveRecordInterface
     } // setCategory()
 
     /**
+     * Set the value of [foreground_color] column.
+     *
+     * @param  string $v new value
+     * @return $this|\CardFeatureType The current object (for fluent API support)
+     */
+    public function setForegroundColor($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->foreground_color !== $v) {
+            $this->foreground_color = $v;
+            $this->modifiedColumns[CardFeatureTypeTableMap::COL_FOREGROUND_COLOR] = true;
+        }
+
+        return $this;
+    } // setForegroundColor()
+
+    /**
+     * Set the value of [background_color] column.
+     *
+     * @param  string $v new value
+     * @return $this|\CardFeatureType The current object (for fluent API support)
+     */
+    public function setBackgroundColor($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->background_color !== $v) {
+            $this->background_color = $v;
+            $this->modifiedColumns[CardFeatureTypeTableMap::COL_BACKGROUND_COLOR] = true;
+        }
+
+        return $this;
+    } // setBackgroundColor()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -576,13 +648,19 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CardFeatureTypeTableMap::translateFieldName('Category', TableMap::TYPE_PHPNAME, $indexType)];
             $this->category = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeatureTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeatureTypeTableMap::translateFieldName('ForegroundColor', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->foreground_color = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeatureTypeTableMap::translateFieldName('BackgroundColor', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->background_color = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CardFeatureTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeatureTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : CardFeatureTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -592,7 +670,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = CardFeatureTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = CardFeatureTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\CardFeatureType'), 0, $e);
@@ -820,6 +898,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_CATEGORY)) {
             $modifiedColumns[':p' . $index++]  = 'category';
         }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
+            $modifiedColumns[':p' . $index++]  = 'foreground_color';
+        }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR)) {
+            $modifiedColumns[':p' . $index++]  = 'background_color';
+        }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -848,6 +932,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
                         break;
                     case 'category':
                         $stmt->bindValue($identifier, $this->category, PDO::PARAM_STR);
+                        break;
+                    case 'foreground_color':
+                        $stmt->bindValue($identifier, $this->foreground_color, PDO::PARAM_STR);
+                        break;
+                    case 'background_color':
+                        $stmt->bindValue($identifier, $this->background_color, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -930,9 +1020,15 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 return $this->getCategory();
                 break;
             case 4:
-                return $this->getUpdateTime();
+                return $this->getForegroundColor();
                 break;
             case 5:
+                return $this->getBackgroundColor();
+                break;
+            case 6:
+                return $this->getUpdateTime();
+                break;
+            case 7:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -969,8 +1065,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $keys[1] => $this->getName(),
             $keys[2] => $this->getDescription(),
             $keys[3] => $this->getCategory(),
-            $keys[4] => $this->getUpdateTime(),
-            $keys[5] => $this->getUpdateUser(),
+            $keys[4] => $this->getForegroundColor(),
+            $keys[5] => $this->getBackgroundColor(),
+            $keys[6] => $this->getUpdateTime(),
+            $keys[7] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1040,9 +1138,15 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 $this->setCategory($value);
                 break;
             case 4:
-                $this->setUpdateTime($value);
+                $this->setForegroundColor($value);
                 break;
             case 5:
+                $this->setBackgroundColor($value);
+                break;
+            case 6:
+                $this->setUpdateTime($value);
+                break;
+            case 7:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1084,10 +1188,16 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $this->setCategory($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateTime($arr[$keys[4]]);
+            $this->setForegroundColor($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateUser($arr[$keys[5]]);
+            $this->setBackgroundColor($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setUpdateTime($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setUpdateUser($arr[$keys[7]]);
         }
     }
 
@@ -1141,6 +1251,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
         }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_CATEGORY)) {
             $criteria->add(CardFeatureTypeTableMap::COL_CATEGORY, $this->category);
+        }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
+            $criteria->add(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $this->foreground_color);
+        }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR)) {
+            $criteria->add(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, $this->background_color);
         }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_UPDATE_TIME)) {
             $criteria->add(CardFeatureTypeTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1237,6 +1353,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
         $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setCategory($this->getCategory());
+        $copyObj->setForegroundColor($this->getForegroundColor());
+        $copyObj->setBackgroundColor($this->getBackgroundColor());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1551,6 +1669,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
         $this->name = null;
         $this->description = null;
         $this->category = null;
+        $this->foreground_color = null;
+        $this->background_color = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;

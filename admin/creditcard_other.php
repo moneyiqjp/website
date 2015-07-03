@@ -56,9 +56,9 @@
             });
 
         $(document).ready(function() {
-            //TODO switch localhost to relative query
             $('#issuer').dataTable( {
-                dom: "lfrtTip",
+                autoWidth: false,
+                dom: "lrtTp",
                 "pageLength": 25,
                 "ajax": {
                     "url": "../backend/crud/issuer/all",
@@ -67,10 +67,10 @@
                     "dataType": "json"
                 },
                 "columns": [
-                    { "data": "IssuerId",edit: false },
-                    { "data": "IssuerName" },
-                    { "data": "UpdateTime",edit: false  },
-                    { "data": "UpdateUser" }
+                    { "data": "IssuerId",edit: false, width:"20px" },
+                    { "data": "IssuerName", width:"200px" },
+                    { "data": "UpdateTime",visible: false  },
+                    { "data": "UpdateUser",visible: false }
                 ]
                 ,tableTools: {
                     sRowSelect: "os",
@@ -143,8 +143,8 @@
                     { "data": "Description" },
                     { "data": "Website" },
                     { "data": "SignedUpDate" },
-                    { "data": "UpdateTime",edit: false  },
-                    { "data": "UpdateUser" }
+                    { "data": "UpdateTime",visible: false },
+                    { "data": "UpdateUser",visible: false }
                 ]
                 ,tableTools: {
                     sRowSelect: "os",
@@ -218,8 +218,8 @@
                     { "data": "SubtypeName" },
                     { "data": "Description" },
                     { "data": "Region" },
-                    { "data": "UpdateTime",edit: false  },
-                    { "data": "UpdateUser" }
+                    { "data": "UpdateTime",visible: false  },
+                    { "data": "UpdateUser",visible: false  }
                 ]
                 ,tableTools: {
                     sRowSelect: "os",
@@ -263,6 +263,12 @@
                         label: "Category:",
                         name: "Category"
                     }, {
+                        label: "Foreground Color:",
+                        name: "ForegroundColor"
+                    }, {
+                        label: "Background Color:",
+                        name: "BackgroundColor"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -290,6 +296,8 @@
                     { "data": "Name" },
                     { "data": "Description" },
                     { "data": "Category" },
+                    { "data": "ForegroundColor" },
+                    { "data": "BackgroundColor" },
                     { "data": "UpdateTime",edit: false, visible: false  },
                     { "data": "UpdateUser", visible: false }
                 ]
@@ -307,137 +315,153 @@
 </head>
 
 <body class="dt-other">
-<div class="table-headline"><a name="issuers">Issuers</a></div>
-<a href="#store" class="subheader">Stores</a>
-<a href="#affiliates" class="subheader">Affiliates</a>
-<a href="#insurance_type" class="subheader">Insurance Type</a>
-<a href="#feature_type" class="subheader">Feature Type</a>
-<table id="issuer" class="display" cellspacing="0" width="98%">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-    </thead>
 
-    <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-    </tfoot>
+
+<table width="98%">
+    <tr>
+        <td width="360" valign="top">
+            <div class="table-headline"><a name="issuers">Issuers</a></div>
+            <a href="#affiliates" class="subheader">Affiliates</a>
+            <a href="#insurance_type" class="subheader">Insurance Type</a>
+            <a href="#feature_type" class="subheader">Feature Type</a>
+            <table id="issuer" class="display" cellspacing="0" width="300">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <br />
+            <br />
+            <br />
+        </td>
+        <td>
+            <div class="table-headline"><a name="feature_type">Feature Type</a></div>
+            <a href="#issuers" class="subheader">Issuers</a>
+            <a href="#affiliates" class="subheader">Affiliates</a>
+            <a href="#insurance_type" class="subheader">Insurance Type</a>
+            <table id="featureType" class="display" cellspacing="0" width="98%">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Foreground</th>
+                    <th>Background</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Foreground</th>
+                    <th>Background</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="table-headline"><a name="affiliates">Affiliates</a></div>
+            <a href="#issuers" class="subheader">Issuers</a>
+            <a href="#insurance_type" class="subheader">Insurance Type</a>
+            <a href="#feature_type" class="subheader">Feature Type</a>
+            <table id="affiliate" class="display" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                    <th>SignedUpDate</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Website</th>
+                    <th>SignedUpDate</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <br />
+            <br />
+            <br />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div class="table-headline"><a name="insurance_type">Insurance Type</a></div>
+            <a href="#issuers" class="subheader">Issuers</a>
+            <a href="#affiliates" class="subheader">Affiliates</a>
+            <a href="#feature_type" class="subheader">Feature Type</a>
+            <table id="insuranceType" class="display" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Subtype</th>
+                    <th>Description</th>
+                    <th>Region</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Subtype</th>
+                    <th>Description</th>
+                    <th>Region</th>
+                    <th>Updated</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <br />
+            <br />
+            <br />
+        </td>
+    </tr>
 </table>
 
-<br />
-<br />
-<br />
 
-<div class="table-headline"><a name="affiliates">Affiliates</a></div>
-<a href="#issuers" class="subheader">Issuers</a>
-<a href="#store" class="subheader">Stores</a>
-<a href="#insurance_type" class="subheader">Insurance Type</a>
-<a href="#feature_type" class="subheader">Feature Type</a>
-<table id="affiliate" class="display" cellspacing="0" width="98%">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Website</th>
-            <th>SignedUpDate</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-    </thead>
 
-    <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Website</th>
-            <th>SignedUpDate</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-    </tfoot>
-</table>
 
-<br />
-<br />
-<br />
-
-<div class="table-headline"><a name="insurance_type">Insurance Type</a></div>
-<a href="#issuers" class="subheader">Issuers</a>
-<a href="#affiliates" class="subheader">Affiliates</a>
-<a href="#store" class="subheader">Store</a>
-<a href="#feature_type" class="subheader">Feature Type</a>
-<table id="insuranceType" class="display" cellspacing="0" width="98%">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Subtype</th>
-        <th>Description</th>
-        <th>Region</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </thead>
-
-    <tfoot>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Subtype</th>
-        <th>Description</th>
-        <th>Region</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </tfoot>
-</table>
-
-<br />
-<br />
-<br />
-
-<div class="table-headline"><a name="feature_type">Feature Type</a></div>
-<a href="#issuers" class="subheader">Issuers</a>
-<a href="#affiliates" class="subheader">Affiliates</a>
-<a href="#insurance_type" class="subheader">Insurance Type</a>
-<a href="#store" class="subheader">Store</a>
-<table id="featureType" class="display" cellspacing="0" width="98%">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </thead>
-
-    <tfoot>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </tfoot>
-</table>
-
-<br>
-<br>
-<br>
+</div>
 
 </body>
 </html>

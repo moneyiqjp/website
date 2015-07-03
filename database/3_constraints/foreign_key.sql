@@ -60,21 +60,17 @@ ALTER TABLE insurance ADD CONSTRAINT insurance_insurance_type FOREIGN KEY insura
 
     
 -- Reference:  issuer_credit_card (table: credit_card)
-ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_credit_card (issuer_id)
-    REFERENCES issuer (issuer_id);
+ALTER TABLE credit_card ADD CONSTRAINT issuer_credit_card FOREIGN KEY issuer_credit_card (issuer_id) REFERENCES issuer (issuer_id);
 
-
--- Reference:  point_usage_credit_card (table: point_usage)
- ALTER TABLE point_usage ADD CONSTRAINT point_usage_credit_card FOREIGN KEY fk_point_usage_credit_card (credit_card_id)
-    REFERENCES credit_card (credit_card_id);
-
-
--- Reference:  point_usage_store (table: point_usage)
-ALTER TABLE point_usage ADD CONSTRAINT const_point_usage_store FOREIGN KEY fk_point_usage_store (store_id)
-    REFERENCES store (store_id);
-
-   
+  
 ALTER TABLE card_features ADD CONSTRAINT fk_card_feature_type FOREIGN KEY fk_card_feature_type (feature_type_id)
     REFERENCES card_feature_type (feature_type_id);
+
+ALTER TABLE card_point_system ADD 	CONSTRAINT `fk_credit_card_id` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`);
+ALTER TABLE card_point_system ADD 	CONSTRAINT `fk_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`);
+
+ALTER TABLE point_acquisition ADD 	CONSTRAINT `FK_point_acquisition_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
+ALTER TABLE point_acquisition ADD 	CONSTRAINT `ps_point_acquisition` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`);
+
 
 SET FOREIGN_KEY_CHECKS = 1;

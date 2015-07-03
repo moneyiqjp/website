@@ -1,6 +1,8 @@
 SET NAMES utf8;
+
 SET FOREIGN_KEY_CHECKS = 0;
-delete from reward where reward_id>0;
+
+DELETE FROM reward where reward_id>0;
 ALTER TABLE reward AUTO_INCREMENT = 1;
 
 INSERT IGNORE INTO `reward` (`reward_id`, `point_system_id`, `reward_category_id`, `reward_type_id`, `title`, `description`, `icon`, `yen_per_point`, `price_per_unit`, `min_points`, `max_points`, `required_points`, `max_period`, `update_time`, `update_user`) VALUES
@@ -50,6 +52,6 @@ INSERT IGNORE INTO `reward` (`reward_id`, `point_system_id`, `reward_category_id
 	(44, 16, 6, 3, '東京→大阪片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 7000, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben'),
 	(45, 16, 6, 3, '東京→福岡片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 8500, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben'),
 	(46, 16, 6, 3, '東京→ハワイ片道飛行機チケット', 'ローシーズン限定', NULL, 1.000000, NULL, 17500, NULL, NULL, '', '2015-06-05 23:17:26', 'Ben');
-;
+
 
 SET FOREIGN_KEY_CHECKS = 1;

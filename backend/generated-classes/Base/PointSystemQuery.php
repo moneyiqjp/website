@@ -26,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery orderByDefaultYenPerPoint($order = Criteria::ASC) Order by the default_yen_per_point column
  * @method     ChildPointSystemQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPointSystemQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildPointSystemQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildPointSystemQuery groupByPointSystemId() Group by the point_system_id column
  * @method     ChildPointSystemQuery groupByPointSystemName() Group by the point_system_name column
@@ -33,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery groupByDefaultYenPerPoint() Group by the default_yen_per_point column
  * @method     ChildPointSystemQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPointSystemQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildPointSystemQuery groupByReference() Group by the reference column
  *
  * @method     ChildPointSystemQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPointSystemQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -69,6 +71,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystem findOneByDefaultYenPerPoint(string $default_yen_per_point) Return the first ChildPointSystem filtered by the default_yen_per_point column
  * @method     ChildPointSystem findOneByUpdateTime(string $update_time) Return the first ChildPointSystem filtered by the update_time column
  * @method     ChildPointSystem findOneByUpdateUser(string $update_user) Return the first ChildPointSystem filtered by the update_user column
+ * @method     ChildPointSystem findOneByReference(string $reference) Return the first ChildPointSystem filtered by the reference column
  *
  * @method     ChildPointSystem[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointSystem objects based on current ModelCriteria
  * @method     ChildPointSystem[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildPointSystem objects filtered by the point_system_id column
@@ -77,6 +80,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystem[]|ObjectCollection findByDefaultYenPerPoint(string $default_yen_per_point) Return ChildPointSystem objects filtered by the default_yen_per_point column
  * @method     ChildPointSystem[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPointSystem objects filtered by the update_time column
  * @method     ChildPointSystem[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointSystem objects filtered by the update_user column
+ * @method     ChildPointSystem[]|ObjectCollection findByReference(string $reference) Return ChildPointSystem objects filtered by the reference column
  * @method     ChildPointSystem[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -168,7 +172,7 @@ abstract class PointSystemQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT point_system_id, point_system_name, default_points_per_yen, default_yen_per_point, update_time, update_user FROM point_system WHERE point_system_id = :p0';
+        $sql = 'SELECT point_system_id, point_system_name, default_points_per_yen, default_yen_per_point, update_time, update_user, reference FROM point_system WHERE point_system_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -480,6 +484,35 @@ abstract class PointSystemQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PointSystemTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PointSystemTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

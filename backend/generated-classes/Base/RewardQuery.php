@@ -35,6 +35,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery orderByMaxPeriod($order = Criteria::ASC) Order by the max_period column
  * @method     ChildRewardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildRewardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildRewardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildRewardQuery groupByRewardId() Group by the reward_id column
  * @method     ChildRewardQuery groupByPointSystemId() Group by the point_system_id column
@@ -51,6 +52,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery groupByMaxPeriod() Group by the max_period column
  * @method     ChildRewardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildRewardQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildRewardQuery groupByReference() Group by the reference column
  *
  * @method     ChildRewardQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildRewardQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -88,6 +90,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReward findOneByMaxPeriod(string $max_period) Return the first ChildReward filtered by the max_period column
  * @method     ChildReward findOneByUpdateTime(string $update_time) Return the first ChildReward filtered by the update_time column
  * @method     ChildReward findOneByUpdateUser(string $update_user) Return the first ChildReward filtered by the update_user column
+ * @method     ChildReward findOneByReference(string $reference) Return the first ChildReward filtered by the reference column
  *
  * @method     ChildReward[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildReward objects based on current ModelCriteria
  * @method     ChildReward[]|ObjectCollection findByRewardId(int $reward_id) Return ChildReward objects filtered by the reward_id column
@@ -105,6 +108,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReward[]|ObjectCollection findByMaxPeriod(string $max_period) Return ChildReward objects filtered by the max_period column
  * @method     ChildReward[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildReward objects filtered by the update_time column
  * @method     ChildReward[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildReward objects filtered by the update_user column
+ * @method     ChildReward[]|ObjectCollection findByReference(string $reference) Return ChildReward objects filtered by the reference column
  * @method     ChildReward[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -196,7 +200,7 @@ abstract class RewardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, update_time, update_user FROM reward WHERE reward_id = :p0';
+        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, update_time, update_user, reference FROM reward WHERE reward_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -847,6 +851,35 @@ abstract class RewardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RewardTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

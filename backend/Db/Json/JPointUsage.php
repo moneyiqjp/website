@@ -51,9 +51,9 @@ class JPointUsage implements JSONInterface {
         $mine = new JPointUsage();
         if (ArrayUtils::KEY_EXISTS($data, 'PointUsageId')) $mine->PointUsageId = $data['PointUsageId'];
 
-        if(!ArrayUtils::KEY_EXISTS($data, 'CreditCard')) throw new \Exception("JPointUsage: Mandatory field CreditCard missing");
-        $tmp = $data['CreditCard'];
-        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointUsage: Mandatory field CreditCard.Id missing");
+        if(!ArrayUtils::KEY_EXISTS($data, 'PointSystem')) throw new \Exception("JPointUsage: Mandatory field PointSystem missing");
+        $tmp = $data['PointSystem'];
+        if(!ArrayUtils::KEY_EXISTS($tmp,'Id')) throw new \Exception("JPointUsage: Mandatory field PointSystem.Id missing");
         $mine->PointSystem =  array( 'Id' => $tmp['Id'] );
         if(ArrayUtils::KEY_EXISTS($tmp,'Name'))   $mine->PointSystem['Name'] = $tmp['Name'];
 

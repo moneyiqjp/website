@@ -19,6 +19,21 @@
     <script type="text/javascript" language="javascript" class="init">
         var creditCardId = -1;
         <?php if(array_key_exists('Id',$_GET)) { echo "creditCardId=" . htmlspecialchars($_GET["Id"]) . ";\n"; } ?>
+
+        function isoTodayString(){
+            var d = new Date();
+            var pad = function (n){
+                return n<10 ? '0'+n : n
+            };
+            return d.getUTCFullYear()+'-'
+                + pad(d.getUTCMonth()+1)+'-'
+                + pad(d.getUTCDate())
+        }
+
+        function isoMaxString(){
+            return '9999-12-31';
+        }
+
         var stores = [];
         var tmp = $.ajax({
             url: '../backend/display/stores',
@@ -40,6 +55,31 @@
                     stores.push({
                         value: tmpStore[index]["StoreId"],
                         label: tmpStore[index]["Category"] + " - " + tmpStore[index]["StoreName"]
+                    })
+                }
+            }
+        }
+
+        var paymentTypes = [];
+         tmp = $.ajax({
+            url: '../backend/crud/payment/type/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    paymentTypes.push({
+                        value: tmpStore[index]["PaymentTypeId"],
+                        label: tmpStore[index]["PaymentType"]
                     })
                 }
             }
@@ -142,8 +182,11 @@
                     name: "Description",
                     type: "readonly"
                 }, {
-                    label: "Cost:",
-                    name: "FeatureCost"
+                    label: "Issuing Fee:",
+                    name: "IssuingFee"
+                }, {
+                    label: "Ongoing Fee:",
+                    name: "OngoingFee"
                 }, {
                     label: "Update date:",
                     name: "UpdateTime",
@@ -193,6 +236,115 @@
             }, {
                 label: "Description:",
                 name: "Description"
+            }, {
+                label: "Update date:",
+                name: "UpdateTime",
+                type: "readonly"
+            }, {
+                label: "Update user:",
+                name: "UpdateUser",
+                type: "readonly"
+            }]
+        });
+/*
+ {"data": "InterestId", edit: false, width: 5},
+ {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
+ {"data": "PaymentType.Name", editField: "PaymentType.Id"},
+ {"data": "MinInterest", width: 20},
+ {"data": "MaxInterest", width: 10},
+ {"data": "UpdateTime", visible: false},
+ {"data": "UpdateUser", visible: false}
+ */
+
+        interestEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: '../backend/crud/interest/create', // default method is POST
+                edit: {
+                    type: 'PUT',
+                    url: '../backend/crud/interest/update'
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '../backend/crud/interest/delete'
+                }
+            },
+            table: "#interestTable",
+            idSrc: "InterestId",
+            fields: [{
+                label: "Id:",
+                name: "InterestId",
+                type: "readonly"
+            }, {
+                label: "CardId:",
+                name: "CreditCard.Id",
+                type: "readonly",
+                def: creditCardId
+            }, {
+                label: "PaymentType:",
+                name: "PaymentType.Id",
+                type:  "select",
+                options: paymentTypes
+            }, {
+                label: "MinInterest:",
+                name: "MinInterest"
+            }, {
+                label: "MaxInterest:",
+                name: "MaxInterest"
+            }, {
+                label: "Update date:",
+                name: "UpdateTime",
+                type: "readonly"
+            }, {
+                label: "Update user:",
+                name: "UpdateUser",
+                type: "readonly"
+            }]
+        });
+
+
+        feeEditor = new $.fn.dataTable.Editor({
+            ajax: {
+                create: '../backend/crud/fee/create', // default method is POST
+                edit: {
+                    type: 'PUT',
+                    url: '../backend/crud/fee/update'
+                },
+                remove: {
+                    type: 'DELETE',
+                    url: '../backend/crud/fee/delete'
+                }
+            },
+            table: "#feeTable",
+            idSrc: "FeeId",
+            fields: [{
+                label: "Id:",
+                name: "FeeId",
+                type: "readonly"
+            }, {
+                label: "CardId:",
+                name: "CreditCard.Id",
+                type: "readonly",
+                def: creditCardId
+            }, {
+                label: "Type:",
+                name: "FeeType",
+                type:  "select",
+                options: [
+                    { label: "Year 1", value: 1 },
+                    { label: "Year 2", value: 2 }
+                ]
+            }, {
+                label: "FeeAmount:",
+                name: "FeeAmount"
+            }, {
+                label: "YearlyOccurrence:",
+                name: "YearlyOccurrence"
+            }, {
+                label: "startYear:",
+                name: "startYear"
+            }, {
+                label: "endYear:",
+                name: "endYear"
             }, {
                 label: "Update date:",
                 name: "UpdateTime",
@@ -304,19 +456,20 @@
                 label: "StartDate:",
                 name: "StartDate",
                 type:       "date",
-                dateFormat: 'yy-mm-dd'
+                def: isoTodayString
             }, {
                 label: "EndDate:",
-                name: "EndDate",
-                type:       "date"
+                name:  "EndDate",
+                type:  "date",
+                def:   isoMaxString
             }, {
                 label: "Update date:",
-                name: "UpdateTime",
-                type:       "readonly"
+                name:  "UpdateTime",
+                type:  "readonly"
             }, {
                 label: "Update user:",
-                name: "UpdateUser",
-                type: "readonly"
+                name:  "UpdateUser",
+                type:  "readonly"
             }]
         });
 
@@ -418,7 +571,8 @@
                     {"data": "FeatureType.Category", edit: false, width: "50"},
                     {"data": "FeatureType.Name", editField: "FeatureType.Id", edit: false, width: "50"},
                     {"data": "Description", edit: false, visible: false, width: "80"},
-                    {"data": "FeatureCost", width: "20"},
+                    {"data": "IssuingFee", width: "20"},
+                    {"data": "OngoingFee", width: "20"},
                     {
                         "data": "Active",
                         render: function (data, type, row) {
@@ -552,6 +706,67 @@
                 }
             });
 
+            $('#feeTable').dataTable({
+                dom: "tTr",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/fee/by/creditcard?Id=" + creditCardId,
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "FeeId", edit: false, width: 5},
+                    {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
+                    {"data": "FeeType", width: 20},
+                    {"data": "FeeAmount", width: 20},
+                    {"data": "YearlyOccurrence", width: 10},
+                    {"data": "startYear", width: 10},
+                    {"data": "endYear", width: 10},
+                    {"data": "UpdateTime", visible: false},
+                    {"data": "UpdateUser", visible: false}
+                ]
+
+                 , tableTools: {
+                     sRowSelect: "os",
+                     aButtons: [
+                         {sExtends: "editor_create", editor: feeEditor},
+                         {sExtends: "editor_edit", editor: feeEditor},
+                         {sExtends: "editor_remove", editor: feeEditor}
+                     ]
+                 }
+
+            });
+
+            $('#interestTable').dataTable({
+                dom: "tTr",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/interest/by/creditcard?Id=" + creditCardId,
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "InterestId", edit: false, width: 5},
+                    {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
+                    {"data": "PaymentType.Name", editField: "PaymentType.Id"},
+                    {"data": "MinInterest", width: 20},
+                    {"data": "MaxInterest", width: 10},
+                    {"data": "UpdateTime", visible: false},
+                    {"data": "UpdateUser", visible: false}
+                ]
+
+                , tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        {sExtends: "editor_create", editor: interestEditor},
+                        {sExtends: "editor_edit", editor: interestEditor},
+                        {sExtends: "editor_remove", editor: interestEditor}
+                    ]
+                }
+            });
+
 
             $('#insuranceTable').dataTable({
                 dom: "tTr",
@@ -649,8 +864,8 @@
         </td>
     </tr>
     <tr>
-        <td rowspan="3">
-            <table id="featureTable" class="display" cellspacing="0" width="300">
+        <td rowspan="5" valign="top" width="400" align="left">
+            <table id="featureTable" class="display" cellspacing="0" width="400">
                 <thead>
                 <tr>
                     <td colspan="9" class="table-headline">
@@ -663,7 +878,8 @@
                     <th>Category</th>
                     <th>Type</th>
                     <th>Description</th>
-                    <th>Cost</th>
+                    <th>Issuing<br>Fee</th>
+                    <th>Ongoing<br>Fee</th>
                     <th></th>
                     <th>Update</th>
                     <th>User</th>
@@ -678,13 +894,14 @@
                     <th>Type</th>
                     <th>Description</th>
                     <th>Cost</th>
+                    <th>Cost</th>
                     <th></th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
                 </tfoot>
             </table>
-            <table id="pointSystemTable" class="display" cellspacing="0" width="300">
+            <table id="pointSystemTable" class="display" cellspacing="0" width="400">
                 <thead>
                 <tr>
                     <td colspan="9" class="table-headline">
@@ -778,6 +995,78 @@
                     <th>ValueInYen</th>
                     <th>StartDate</th>
                     <th>EndDate</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">
+            <table id="interestTable" class="display" cellspacing="0" width="800">
+                <thead>
+                <tr>
+                    <td colspan="12" class="table-headline">
+                        Interest
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>PaymentType</th>
+                    <th>MinInterest</th>
+                    <th>MaxInterest</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>PaymentType</th>
+                    <th>MinInterest</th>
+                    <th>MaxInterest</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </tfoot>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">
+            <table id="feeTable" class="display" cellspacing="0" width="800">
+                <thead>
+                <tr>
+                    <td colspan="12" class="table-headline">
+                        Fee
+                    </td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>YearlyOccurrence</th>
+                    <th>StartYear</th>
+                    <th>EndYear</th>
+                    <th>Update</th>
+                    <th>User</th>
+                </tr>
+                </thead>
+
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Card</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>YearlyOccurrence</th>
+                    <th>StartYear</th>
+                    <th>EndYear</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>

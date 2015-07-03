@@ -29,6 +29,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildFeesQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildFeesQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildFeesQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildFeesQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildFeesQuery groupByFeeId() Group by the fee_id column
  * @method     ChildFeesQuery groupByFeeType() Group by the fee_type column
@@ -39,6 +40,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildFeesQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildFeesQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildFeesQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildFeesQuery groupByReference() Group by the reference column
  *
  * @method     ChildFeesQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildFeesQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -62,6 +64,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildFees findOneByCreditCardId(int $credit_card_id) Return the first ChildFees filtered by the credit_card_id column
  * @method     ChildFees findOneByUpdateTime(string $update_time) Return the first ChildFees filtered by the update_time column
  * @method     ChildFees findOneByUpdateUser(string $update_user) Return the first ChildFees filtered by the update_user column
+ * @method     ChildFees findOneByReference(string $reference) Return the first ChildFees filtered by the reference column
  *
  * @method     ChildFees[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildFees objects based on current ModelCriteria
  * @method     ChildFees[]|ObjectCollection findByFeeId(int $fee_id) Return ChildFees objects filtered by the fee_id column
@@ -73,6 +76,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildFees[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildFees objects filtered by the credit_card_id column
  * @method     ChildFees[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildFees objects filtered by the update_time column
  * @method     ChildFees[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildFees objects filtered by the update_user column
+ * @method     ChildFees[]|ObjectCollection findByReference(string $reference) Return ChildFees objects filtered by the reference column
  * @method     ChildFees[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -164,7 +168,7 @@ abstract class FeesQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT fee_id, fee_type, fee_amount, yearly_occurrence, start_year, end_year, credit_card_id, update_time, update_user FROM fees WHERE fee_id = :p0';
+        $sql = 'SELECT fee_id, fee_type, fee_amount, yearly_occurrence, start_year, end_year, credit_card_id, update_time, update_user, reference FROM fees WHERE fee_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -613,6 +617,35 @@ abstract class FeesQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(FeesTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildFeesQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(FeesTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

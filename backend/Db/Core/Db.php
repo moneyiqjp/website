@@ -15,7 +15,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] .'/backend/vendor/autoload.php';
 // setup Propel
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/generated-conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/JSONInterface.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/Jinterest.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Utility/ArrayUtils.php';
+
 
 spl_autoload_register(function($className)
 {
@@ -100,6 +102,17 @@ class Db
         }
         return $result;
     }
+    function GetCreditCardById($id)
+    {
+        $result = array();
+        $q = new  \CreditCardQuery();
+
+        foreach($q->findPk($id) as $ccs)
+        {
+            array_push($result, Json\JCreditCard::CREATE_DB($ccs));
+        }
+        return $result;
+    }
     function UpdateCreditCardItem(\CreditCard &$ccs, $data, $key,$value)
     {
         if(!array_key_exists($key,$data)) throw new \Exception("Failed to find key: " . $key);
@@ -141,17 +154,15 @@ class Db
             case "affiliate_id":
                 $ccs->setAffiliateId($value);
                 break;
-            case "update_time":
-                $ccs->setUpdateTime((new \DateTime()));
-                break;
             case "update_user":
                 $ccs->setUpdateUser($value);
                 break;
         }
 
+        $ccs->setUpdateTime((new \DateTime()));
+
         return $ccs;
     }
-
     function _UpdateCreditCard(\CreditCard &$ccs, $data)
     {
         while (list($key, $value) = each($data)) {
@@ -163,7 +174,6 @@ class Db
 
         return $ccs;
     }
-
     function UpdateCreditCard($data)
     {
         $q = new  \CreditCardQuery();
@@ -433,7 +443,7 @@ class Db
     function GetRewardForCrud()
     {
         $result = array();
-        foreach ((new \RewardQuery())->orderByCategory()->find() as $af) {
+        foreach ((new \RewardQuery())->orderByDescription()->find() as $af) {
             array_push($result, Json\JReward::CREATE_FROM_DB($af));
         }
         return $result;
@@ -441,7 +451,7 @@ class Db
     function GetRewardById($id)
     {
         $result = array();
-        foreach ((new \RewardQuery())->orderByCategory()->findPk($id) as $af) {
+        foreach ((new \RewardQuery())->orderByDescription()->findPk($id) as $af) {
             array_push($result, Json\JReward::CREATE_FROM_DB($af));
         }
         return $result;
@@ -449,7 +459,7 @@ class Db
     function GetRewardByPointSystemId($id)
     {
         $result = array();
-        foreach ((new \RewardQuery())->orderByCategory()->findByPointSystemId($id) as $af) {
+        foreach ((new \RewardQuery())->orderByDescription()->findByPointSystemId($id) as $af) {
             array_push($result, Json\JReward::CREATE_FROM_DB($af));
         }
         return $result;
@@ -488,7 +498,7 @@ class Db
     }
 
     /* RewardType */
-    function GetRewardTypeForCrud()
+    function GetRewardTypeForDisplay()
     {
         $result = array();
         foreach ((new \RewardTypeQuery())->orderByName()->find() as $af) {
@@ -496,9 +506,58 @@ class Db
         }
         return $result;
     }
+    function GetRewardTypeForCrud()
+    {
+        $result = array();
+        foreach ((new \RewardTypeQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JRewardType::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetRewardTypeById($id)
+    {
+        $result = array();
+        foreach ((new \RewardTypeQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JRewardType::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateRewardTypeForCrud($data)
+    {
+        $parsed = Json\JRewardType::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse RewardType update request");
 
+        $item = (new  \RewardTypeQuery())->findPk($parsed->RewardTypeId);
+        if(is_null($item)) throw new \Exception ("RewardType with id ". $parsed->RewardTypeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \RewardTypeQuery())->findPk($parsed->RewardTypeId);
+        return Json\JRewardType::CREATE_FROM_DB($item);
+    }
+    function CreateRewardTypeForCrud($data)
+    {
+        $item = Json\JRewardType::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JRewardType::CREATE_FROM_DB($item);
+    }
+    function DeleteRewardTypeForCrud($id)
+    {
+        $item = (new  \RewardTypeQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("RewardType with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    
     /* RewardCategory */
-    function GetRewardCategoryForCrud()
+    function GetRewardCategoryForDisplay()
     {
 
         $result = array();
@@ -507,6 +566,55 @@ class Db
         }
         return $result;
     }
+    function GetRewardCategoryForCrud()
+    {
+        $result = array();
+        foreach ((new \RewardCategoryQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JRewardCategory::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetRewardCategoryById($id)
+    {
+        $result = array();
+        foreach ((new \RewardCategoryQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JRewardCategory::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateRewardCategoryForCrud($data)
+    {
+        $parsed = Json\JRewardCategory::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse RewardCategory update request");
+
+        $item = (new  \RewardCategoryQuery())->findPk($parsed->RewardCategoryId);
+        if(is_null($item)) throw new \Exception ("RewardCategory with id ". $parsed->RewardCategoryId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \RewardCategoryQuery())->findPk($parsed->RewardCategoryId);
+        return Json\JRewardCategory::CREATE_FROM_DB($item);
+    }
+    function CreateRewardCategoryForCrud($data)
+    {
+        $item = Json\JRewardCategory::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JRewardCategory::CREATE_FROM_DB($item);
+    }
+    function DeleteRewardCategoryForCrud($id)
+    {
+        $item = (new  \RewardCategoryQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("RewardCategory with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
 
 
     /* PointUsage */
@@ -1101,6 +1209,170 @@ class Db
         $item = (new  \InsuranceQuery())->findPk($id);
         if(is_null($item)) {
             throw new \Exception ("Insurance with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* Interest */
+    function GetInterestForCrud()
+    {
+        $result = array();
+        foreach ((new \InterestQuery())->orderByInterestId()->find() as $item) {
+            array_push($result, Json\JInterest::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function GetInterestForCard($id)
+    {
+        $result = array();
+        foreach ((new \InterestQuery())->orderByInterestId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JInterest::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function UpdateInterestForCrud($data)
+    {
+        $parsed = Json\JInterest::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Interest type update request");
+
+        $item = (new  \InterestQuery())->findPk($parsed->InterestId);
+        if(is_null($item)) throw new \Exception ("Interest id ". $parsed->InterestId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \InterestQuery())->findPk($parsed->InterestId);
+        return Json\JInterest::CREATE_FROM_DB($item);
+    }
+    function CreateInterestForCrud($data)
+    {
+        $item = Json\JInterest::CREATE_FROM_ARRAY($data);
+
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JInterest::CREATE_FROM_DB($db);
+    }
+    function DeleteInterestForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \InterestQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Interest with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* Fee */
+    function GetFeeForCrud()
+    {
+        $result = array();
+        foreach ((new \FeesQuery())->orderByFeeId()->find() as $item) {
+            array_push($result, Json\JFee::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function GetFeeForCard($id)
+    {
+        $result = array();
+        foreach ((new \FeesQuery())->orderByFeeId()->findByCreditCardId($id) as $item) {
+            array_push($result, Json\JFee::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function UpdateFeeForCrud($data)
+    {
+        $parsed = Json\JFee::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Fee type update request");
+
+        $item = (new  \FeesQuery())->findPk($parsed->FeeId);
+        if(is_null($item)) throw new \Exception ("Fee id ". $parsed->FeeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \FeesQuery())->findPk($parsed->FeeId);
+        return Json\JFee::CREATE_FROM_DB($item);
+    }
+    function CreateFeeForCrud($data)
+    {
+        $item = Json\JFee::CREATE_FROM_ARRAY($data);
+
+        $db=$item->toDB();
+        $db->save();
+
+        //TODO implement cache, add to cache
+        return Json\JFee::CREATE_FROM_DB($db);
+    }
+    function DeleteFeeForCrud($id)
+    {
+        if(is_null($id)||$id<=0) return array();
+        $item = (new  \FeesQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Fee with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* PaymentType */
+    function GetPaymentTypeForDisplay()
+    {
+        $result = array();
+        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getPaymentTypeId()));
+        }
+        return $result;
+    }
+    function GetPaymentTypeForCrud()
+    {
+        $result = array();
+        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->find() as $af) {
+            array_push($result, Json\JPaymentType::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPaymentTypeById($id)
+    {
+        $result = array();
+        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->findPk($id) as $af) {
+            array_push($result, Json\JPaymentType::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdatePaymentTypeForCrud($data)
+    {
+        $parsed = Json\JPaymentType::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse PaymentType update request");
+
+        $item = (new  \PaymentTypeQuery())->findPk($parsed->PaymentTypeId);
+        if(is_null($item)) throw new \Exception ("PaymentType with id ". $parsed->PaymentTypeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PaymentTypeQuery())->findPk($parsed->PaymentTypeId);
+        return Json\JPaymentType::CREATE_FROM_DB($item);
+    }
+    function CreatePaymentTypeForCrud($data)
+    {
+        $item = Json\JPaymentType::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPaymentType::CREATE_FROM_DB($item);
+    }
+    function DeletePaymentTypeForCrud($id)
+    {
+        $item = (new  \PaymentTypeQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("PaymentType with id ". $id ." not found");
         }
         $item->delete();
         return array();

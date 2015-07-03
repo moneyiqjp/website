@@ -17,7 +17,9 @@ CREATE TABLE card_features (
     feature_type_id int NOT NULL,
     credit_card_id int    NOT NULL ,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-    feature_cost int    NULL ,
+	`issuing_fee` INT(11) NULL DEFAULT NULL,
+	`ongoing_fee` INT(11) NULL DEFAULT NULL,
+	`reference` VARCHAR(255) NULL DEFAULT NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     CONSTRAINT card_features_pk PRIMARY KEY (feature_id)
@@ -28,9 +30,11 @@ CREATE TABLE card_features_history (
     feature_type_id int NOT NULL,
     credit_card_id int    NOT NULL ,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-    feature_cost int    NULL ,
+	`issuing_fee` INT(11) NULL DEFAULT NULL,
+	`ongoing_fee` INT(11) NULL DEFAULT NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
+	`reference` VARCHAR(255) NULL DEFAULT NULL,
     update_user varchar(100),
     CONSTRAINT card_features_pk PRIMARY KEY (feature_id,time_beg)
 );

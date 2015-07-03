@@ -36,6 +36,7 @@
     <column name="end_date" phpName="EndDate" type="DATE" defaultValue="9999-12-31"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="campaign_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -96,6 +97,8 @@
     <column name="name" phpName="Name" type="VARCHAR" size="250" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="category" phpName="Category" type="VARCHAR" size="250" required="true"/>
+    <column name="foreground_color" phpName="ForegroundColor" type="VARCHAR" size="250"/>
+    <column name="background_color" phpName="BackgroundColor" type="VARCHAR" size="250"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <vendor type="mysql">
@@ -120,9 +123,11 @@
     <column name="feature_type_id" phpName="FeatureTypeId" type="INTEGER" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
-    <column name="feature_cost" phpName="FeatureCost" type="INTEGER"/>
+    <column name="issuing_fee" phpName="IssuingFee" type="INTEGER"/>
+    <column name="ongoing_fee" phpName="OngoingFee" type="INTEGER"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="card_features_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -190,6 +195,7 @@
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="affiliate_company" name="affiliate_company_credit_card">
       <reference local="affiliate_id" foreign="affiliate_id"/>
     </foreign-key>
@@ -269,6 +275,7 @@
     <column name="conditions" phpName="Conditions" type="LONGVARCHAR"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="fk_discounts_credit_card_key">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -312,6 +319,7 @@
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="fees_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -345,6 +353,7 @@
     <column name="value" phpName="Value" type="INTEGER"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="insurance_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -408,6 +417,7 @@
     <column name="max_interest" phpName="MaxInterest" type="DOUBLE" size="15" scale="15"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="credit_card" name="Interest_credit_card">
       <reference local="credit_card_id" foreign="credit_card_id"/>
     </foreign-key>
@@ -488,6 +498,7 @@
     <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="store" name="FK_point_acquisition_store">
       <reference local="store_id" foreign="store_id"/>
     </foreign-key>
@@ -520,10 +531,11 @@
   <table name="point_system" idMethod="native" phpName="PointSystem">
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="point_system_name" phpName="PointSystemName" type="VARCHAR" size="255" required="true"/>
-    <column name="default_points_per_yen" phpName="DefaultPointsPerYen" type="DECIMAL" required="true"/>
-    <column name="default_yen_per_point" phpName="DefaultYenPerPoint" type="DECIMAL" required="true"/>
+    <column name="default_points_per_yen" phpName="DefaultPointsPerYen" type="DECIMAL" size="8" scale="6" required="true" defaultValue="0.010000"/>
+    <column name="default_yen_per_point" phpName="DefaultYenPerPoint" type="DECIMAL" size="8" scale="6" required="true" defaultValue="1.000000"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -547,6 +559,7 @@
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="store" name="const_point_usage_store">
       <reference local="store_id" foreign="store_id"/>
     </foreign-key>
@@ -582,6 +595,7 @@
     <column name="yen_per_point" phpName="YenPerPoint" type="DECIMAL" size="8" scale="6" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="point_system" name="point_use_point_system">
       <reference local="point_system_id" foreign="point_system_id"/>
     </foreign-key>
@@ -614,6 +628,7 @@
     <column name="max_period" phpName="MaxPeriod" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <foreign-key foreignTable="reward_category" name="FK_reward_category_id">
       <reference local="reward_category_id" foreign="reward_category_id"/>
     </foreign-key>
@@ -682,6 +697,7 @@
     <column name="reward_type_id" phpName="RewardTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="is_finite" phpName="IsFinite" type="TINYINT" defaultValue="0"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">

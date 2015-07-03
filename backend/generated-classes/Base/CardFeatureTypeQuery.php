@@ -24,6 +24,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureTypeQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildCardFeatureTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildCardFeatureTypeQuery orderByCategory($order = Criteria::ASC) Order by the category column
+ * @method     ChildCardFeatureTypeQuery orderByForegroundColor($order = Criteria::ASC) Order by the foreground_color column
+ * @method     ChildCardFeatureTypeQuery orderByBackgroundColor($order = Criteria::ASC) Order by the background_color column
  * @method     ChildCardFeatureTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCardFeatureTypeQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -31,6 +33,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureTypeQuery groupByName() Group by the name column
  * @method     ChildCardFeatureTypeQuery groupByDescription() Group by the description column
  * @method     ChildCardFeatureTypeQuery groupByCategory() Group by the category column
+ * @method     ChildCardFeatureTypeQuery groupByForegroundColor() Group by the foreground_color column
+ * @method     ChildCardFeatureTypeQuery groupByBackgroundColor() Group by the background_color column
  * @method     ChildCardFeatureTypeQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCardFeatureTypeQuery groupByUpdateUser() Group by the update_user column
  *
@@ -51,6 +55,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureType findOneByName(string $name) Return the first ChildCardFeatureType filtered by the name column
  * @method     ChildCardFeatureType findOneByDescription(string $description) Return the first ChildCardFeatureType filtered by the description column
  * @method     ChildCardFeatureType findOneByCategory(string $category) Return the first ChildCardFeatureType filtered by the category column
+ * @method     ChildCardFeatureType findOneByForegroundColor(string $foreground_color) Return the first ChildCardFeatureType filtered by the foreground_color column
+ * @method     ChildCardFeatureType findOneByBackgroundColor(string $background_color) Return the first ChildCardFeatureType filtered by the background_color column
  * @method     ChildCardFeatureType findOneByUpdateTime(string $update_time) Return the first ChildCardFeatureType filtered by the update_time column
  * @method     ChildCardFeatureType findOneByUpdateUser(string $update_user) Return the first ChildCardFeatureType filtered by the update_user column
  *
@@ -59,6 +65,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureType[]|ObjectCollection findByName(string $name) Return ChildCardFeatureType objects filtered by the name column
  * @method     ChildCardFeatureType[]|ObjectCollection findByDescription(string $description) Return ChildCardFeatureType objects filtered by the description column
  * @method     ChildCardFeatureType[]|ObjectCollection findByCategory(string $category) Return ChildCardFeatureType objects filtered by the category column
+ * @method     ChildCardFeatureType[]|ObjectCollection findByForegroundColor(string $foreground_color) Return ChildCardFeatureType objects filtered by the foreground_color column
+ * @method     ChildCardFeatureType[]|ObjectCollection findByBackgroundColor(string $background_color) Return ChildCardFeatureType objects filtered by the background_color column
  * @method     ChildCardFeatureType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCardFeatureType objects filtered by the update_time column
  * @method     ChildCardFeatureType[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCardFeatureType objects filtered by the update_user column
  * @method     ChildCardFeatureType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -152,7 +160,7 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT feature_type_id, name, description, category, update_time, update_user FROM card_feature_type WHERE feature_type_id = :p0';
+        $sql = 'SELECT feature_type_id, name, description, category, foreground_color, background_color, update_time, update_user FROM card_feature_type WHERE feature_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -368,6 +376,64 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CardFeatureTypeTableMap::COL_CATEGORY, $category, $comparison);
+    }
+
+    /**
+     * Filter the query on the foreground_color column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByForegroundColor('fooValue');   // WHERE foreground_color = 'fooValue'
+     * $query->filterByForegroundColor('%fooValue%'); // WHERE foreground_color LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $foregroundColor The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function filterByForegroundColor($foregroundColor = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($foregroundColor)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $foregroundColor)) {
+                $foregroundColor = str_replace('*', '%', $foregroundColor);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $foregroundColor, $comparison);
+    }
+
+    /**
+     * Filter the query on the background_color column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByBackgroundColor('fooValue');   // WHERE background_color = 'fooValue'
+     * $query->filterByBackgroundColor('%fooValue%'); // WHERE background_color LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $backgroundColor The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function filterByBackgroundColor($backgroundColor = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($backgroundColor)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $backgroundColor)) {
+                $backgroundColor = str_replace('*', '%', $backgroundColor);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, $backgroundColor, $comparison);
     }
 
     /**

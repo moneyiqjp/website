@@ -59,7 +59,7 @@ class PointSystemTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PointSystemTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the point_system_id field
@@ -102,6 +102,11 @@ class PointSystemTableMap extends TableMap
     const COL_UPDATE_USER = 'point_system.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'point_system.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -113,11 +118,11 @@ class PointSystemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PointSystemId', 'PointSystemName', 'DefaultPointsPerYen', 'DefaultYenPerPoint', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('pointSystemId', 'pointSystemName', 'defaultPointsPerYen', 'defaultYenPerPoint', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID, PointSystemTableMap::COL_POINT_SYSTEM_NAME, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, PointSystemTableMap::COL_UPDATE_TIME, PointSystemTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('point_system_id', 'point_system_name', 'default_points_per_yen', 'default_yen_per_point', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('PointSystemId', 'PointSystemName', 'DefaultPointsPerYen', 'DefaultYenPerPoint', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('pointSystemId', 'pointSystemName', 'defaultPointsPerYen', 'defaultYenPerPoint', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID, PointSystemTableMap::COL_POINT_SYSTEM_NAME, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, PointSystemTableMap::COL_UPDATE_TIME, PointSystemTableMap::COL_UPDATE_USER, PointSystemTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('point_system_id', 'point_system_name', 'default_points_per_yen', 'default_yen_per_point', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class PointSystemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PointSystemId' => 0, 'PointSystemName' => 1, 'DefaultPointsPerYen' => 2, 'DefaultYenPerPoint' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
-        self::TYPE_CAMELNAME     => array('pointSystemId' => 0, 'pointSystemName' => 1, 'defaultPointsPerYen' => 2, 'defaultYenPerPoint' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
-        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID => 0, PointSystemTableMap::COL_POINT_SYSTEM_NAME => 1, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN => 2, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT => 3, PointSystemTableMap::COL_UPDATE_TIME => 4, PointSystemTableMap::COL_UPDATE_USER => 5, ),
-        self::TYPE_FIELDNAME     => array('point_system_id' => 0, 'point_system_name' => 1, 'default_points_per_yen' => 2, 'default_yen_per_point' => 3, 'update_time' => 4, 'update_user' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('PointSystemId' => 0, 'PointSystemName' => 1, 'DefaultPointsPerYen' => 2, 'DefaultYenPerPoint' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, 'Reference' => 6, ),
+        self::TYPE_CAMELNAME     => array('pointSystemId' => 0, 'pointSystemName' => 1, 'defaultPointsPerYen' => 2, 'defaultYenPerPoint' => 3, 'updateTime' => 4, 'updateUser' => 5, 'reference' => 6, ),
+        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID => 0, PointSystemTableMap::COL_POINT_SYSTEM_NAME => 1, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN => 2, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT => 3, PointSystemTableMap::COL_UPDATE_TIME => 4, PointSystemTableMap::COL_UPDATE_USER => 5, PointSystemTableMap::COL_REFERENCE => 6, ),
+        self::TYPE_FIELDNAME     => array('point_system_id' => 0, 'point_system_name' => 1, 'default_points_per_yen' => 2, 'default_yen_per_point' => 3, 'update_time' => 4, 'update_user' => 5, 'reference' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -153,10 +158,11 @@ class PointSystemTableMap extends TableMap
         // columns
         $this->addPrimaryKey('point_system_id', 'PointSystemId', 'INTEGER', true, null, null);
         $this->addColumn('point_system_name', 'PointSystemName', 'VARCHAR', true, 255, null);
-        $this->addColumn('default_points_per_yen', 'DefaultPointsPerYen', 'DECIMAL', true, null, null);
-        $this->addColumn('default_yen_per_point', 'DefaultYenPerPoint', 'DECIMAL', true, null, null);
+        $this->addColumn('default_points_per_yen', 'DefaultPointsPerYen', 'DECIMAL', true, 8, 0.01);
+        $this->addColumn('default_yen_per_point', 'DefaultYenPerPoint', 'DECIMAL', true, 8, 1);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -318,6 +324,7 @@ class PointSystemTableMap extends TableMap
             $criteria->addSelectColumn(PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT);
             $criteria->addSelectColumn(PointSystemTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(PointSystemTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(PointSystemTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.point_system_id');
             $criteria->addSelectColumn($alias . '.point_system_name');
@@ -325,6 +332,7 @@ class PointSystemTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.default_yen_per_point');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

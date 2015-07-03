@@ -6,8 +6,8 @@ $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'classname' => 'Propel\\Runtime\\Connection\\ConnectionWrapper',
   'dsn' => 'mysql:host=localhost;dbname=moneyiq',
-  'user' => 'moneyiqadmin',
-  'password' => 'ShowM3Th3Mon3y',
+  'user' => 'root',
+  'password' => '',
   'settings' =>
   array (
     'charset' => 'utf8',

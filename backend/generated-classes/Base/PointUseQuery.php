@@ -26,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUseQuery orderByYenPerPoint($order = Criteria::ASC) Order by the yen_per_point column
  * @method     ChildPointUseQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPointUseQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildPointUseQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildPointUseQuery groupByPointUseId() Group by the point_use_id column
  * @method     ChildPointUseQuery groupByPointSystemId() Group by the point_system_id column
@@ -33,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUseQuery groupByYenPerPoint() Group by the yen_per_point column
  * @method     ChildPointUseQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPointUseQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildPointUseQuery groupByReference() Group by the reference column
  *
  * @method     ChildPointUseQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPointUseQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -57,6 +59,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUse findOneByYenPerPoint(string $yen_per_point) Return the first ChildPointUse filtered by the yen_per_point column
  * @method     ChildPointUse findOneByUpdateTime(string $update_time) Return the first ChildPointUse filtered by the update_time column
  * @method     ChildPointUse findOneByUpdateUser(string $update_user) Return the first ChildPointUse filtered by the update_user column
+ * @method     ChildPointUse findOneByReference(string $reference) Return the first ChildPointUse filtered by the reference column
  *
  * @method     ChildPointUse[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointUse objects based on current ModelCriteria
  * @method     ChildPointUse[]|ObjectCollection findByPointUseId(int $point_use_id) Return ChildPointUse objects filtered by the point_use_id column
@@ -65,6 +68,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUse[]|ObjectCollection findByYenPerPoint(string $yen_per_point) Return ChildPointUse objects filtered by the yen_per_point column
  * @method     ChildPointUse[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPointUse objects filtered by the update_time column
  * @method     ChildPointUse[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointUse objects filtered by the update_user column
+ * @method     ChildPointUse[]|ObjectCollection findByReference(string $reference) Return ChildPointUse objects filtered by the reference column
  * @method     ChildPointUse[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -156,7 +160,7 @@ abstract class PointUseQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT point_use_id, point_system_id, store_id, yen_per_point, update_time, update_user FROM point_use WHERE point_use_id = :p0';
+        $sql = 'SELECT point_use_id, point_system_id, store_id, yen_per_point, update_time, update_user, reference FROM point_use WHERE point_use_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -484,6 +488,35 @@ abstract class PointUseQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PointUseTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPointUseQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PointUseTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

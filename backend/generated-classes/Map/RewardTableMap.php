@@ -59,7 +59,7 @@ class RewardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 15;
+    const NUM_COLUMNS = 16;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class RewardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 15;
+    const NUM_HYDRATE_COLUMNS = 16;
 
     /**
      * the column name for the reward_id field
@@ -147,6 +147,11 @@ class RewardTableMap extends TableMap
     const COL_UPDATE_USER = 'reward.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'reward.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -158,11 +163,11 @@ class RewardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RewardId', 'PointSystemId', 'RewardCategoryId', 'RewardTypeId', 'Title', 'Description', 'Icon', 'YenPerPoint', 'PricePerUnit', 'MinPoints', 'MaxPoints', 'RequiredPoints', 'MaxPeriod', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('rewardId', 'pointSystemId', 'rewardCategoryId', 'rewardTypeId', 'title', 'description', 'icon', 'yenPerPoint', 'pricePerUnit', 'minPoints', 'maxPoints', 'requiredPoints', 'maxPeriod', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID, RewardTableMap::COL_POINT_SYSTEM_ID, RewardTableMap::COL_REWARD_CATEGORY_ID, RewardTableMap::COL_REWARD_TYPE_ID, RewardTableMap::COL_TITLE, RewardTableMap::COL_DESCRIPTION, RewardTableMap::COL_ICON, RewardTableMap::COL_YEN_PER_POINT, RewardTableMap::COL_PRICE_PER_UNIT, RewardTableMap::COL_MIN_POINTS, RewardTableMap::COL_MAX_POINTS, RewardTableMap::COL_REQUIRED_POINTS, RewardTableMap::COL_MAX_PERIOD, RewardTableMap::COL_UPDATE_TIME, RewardTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('reward_id', 'point_system_id', 'reward_category_id', 'reward_type_id', 'title', 'description', 'icon', 'yen_per_point', 'price_per_unit', 'min_points', 'max_points', 'required_points', 'max_period', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('RewardId', 'PointSystemId', 'RewardCategoryId', 'RewardTypeId', 'Title', 'Description', 'Icon', 'YenPerPoint', 'PricePerUnit', 'MinPoints', 'MaxPoints', 'RequiredPoints', 'MaxPeriod', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('rewardId', 'pointSystemId', 'rewardCategoryId', 'rewardTypeId', 'title', 'description', 'icon', 'yenPerPoint', 'pricePerUnit', 'minPoints', 'maxPoints', 'requiredPoints', 'maxPeriod', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID, RewardTableMap::COL_POINT_SYSTEM_ID, RewardTableMap::COL_REWARD_CATEGORY_ID, RewardTableMap::COL_REWARD_TYPE_ID, RewardTableMap::COL_TITLE, RewardTableMap::COL_DESCRIPTION, RewardTableMap::COL_ICON, RewardTableMap::COL_YEN_PER_POINT, RewardTableMap::COL_PRICE_PER_UNIT, RewardTableMap::COL_MIN_POINTS, RewardTableMap::COL_MAX_POINTS, RewardTableMap::COL_REQUIRED_POINTS, RewardTableMap::COL_MAX_PERIOD, RewardTableMap::COL_UPDATE_TIME, RewardTableMap::COL_UPDATE_USER, RewardTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('reward_id', 'point_system_id', 'reward_category_id', 'reward_type_id', 'title', 'description', 'icon', 'yen_per_point', 'price_per_unit', 'min_points', 'max_points', 'required_points', 'max_period', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
     );
 
     /**
@@ -172,11 +177,11 @@ class RewardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RewardId' => 0, 'PointSystemId' => 1, 'RewardCategoryId' => 2, 'RewardTypeId' => 3, 'Title' => 4, 'Description' => 5, 'Icon' => 6, 'YenPerPoint' => 7, 'PricePerUnit' => 8, 'MinPoints' => 9, 'MaxPoints' => 10, 'RequiredPoints' => 11, 'MaxPeriod' => 12, 'UpdateTime' => 13, 'UpdateUser' => 14, ),
-        self::TYPE_CAMELNAME     => array('rewardId' => 0, 'pointSystemId' => 1, 'rewardCategoryId' => 2, 'rewardTypeId' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yenPerPoint' => 7, 'pricePerUnit' => 8, 'minPoints' => 9, 'maxPoints' => 10, 'requiredPoints' => 11, 'maxPeriod' => 12, 'updateTime' => 13, 'updateUser' => 14, ),
-        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID => 0, RewardTableMap::COL_POINT_SYSTEM_ID => 1, RewardTableMap::COL_REWARD_CATEGORY_ID => 2, RewardTableMap::COL_REWARD_TYPE_ID => 3, RewardTableMap::COL_TITLE => 4, RewardTableMap::COL_DESCRIPTION => 5, RewardTableMap::COL_ICON => 6, RewardTableMap::COL_YEN_PER_POINT => 7, RewardTableMap::COL_PRICE_PER_UNIT => 8, RewardTableMap::COL_MIN_POINTS => 9, RewardTableMap::COL_MAX_POINTS => 10, RewardTableMap::COL_REQUIRED_POINTS => 11, RewardTableMap::COL_MAX_PERIOD => 12, RewardTableMap::COL_UPDATE_TIME => 13, RewardTableMap::COL_UPDATE_USER => 14, ),
-        self::TYPE_FIELDNAME     => array('reward_id' => 0, 'point_system_id' => 1, 'reward_category_id' => 2, 'reward_type_id' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yen_per_point' => 7, 'price_per_unit' => 8, 'min_points' => 9, 'max_points' => 10, 'required_points' => 11, 'max_period' => 12, 'update_time' => 13, 'update_user' => 14, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('RewardId' => 0, 'PointSystemId' => 1, 'RewardCategoryId' => 2, 'RewardTypeId' => 3, 'Title' => 4, 'Description' => 5, 'Icon' => 6, 'YenPerPoint' => 7, 'PricePerUnit' => 8, 'MinPoints' => 9, 'MaxPoints' => 10, 'RequiredPoints' => 11, 'MaxPeriod' => 12, 'UpdateTime' => 13, 'UpdateUser' => 14, 'Reference' => 15, ),
+        self::TYPE_CAMELNAME     => array('rewardId' => 0, 'pointSystemId' => 1, 'rewardCategoryId' => 2, 'rewardTypeId' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yenPerPoint' => 7, 'pricePerUnit' => 8, 'minPoints' => 9, 'maxPoints' => 10, 'requiredPoints' => 11, 'maxPeriod' => 12, 'updateTime' => 13, 'updateUser' => 14, 'reference' => 15, ),
+        self::TYPE_COLNAME       => array(RewardTableMap::COL_REWARD_ID => 0, RewardTableMap::COL_POINT_SYSTEM_ID => 1, RewardTableMap::COL_REWARD_CATEGORY_ID => 2, RewardTableMap::COL_REWARD_TYPE_ID => 3, RewardTableMap::COL_TITLE => 4, RewardTableMap::COL_DESCRIPTION => 5, RewardTableMap::COL_ICON => 6, RewardTableMap::COL_YEN_PER_POINT => 7, RewardTableMap::COL_PRICE_PER_UNIT => 8, RewardTableMap::COL_MIN_POINTS => 9, RewardTableMap::COL_MAX_POINTS => 10, RewardTableMap::COL_REQUIRED_POINTS => 11, RewardTableMap::COL_MAX_PERIOD => 12, RewardTableMap::COL_UPDATE_TIME => 13, RewardTableMap::COL_UPDATE_USER => 14, RewardTableMap::COL_REFERENCE => 15, ),
+        self::TYPE_FIELDNAME     => array('reward_id' => 0, 'point_system_id' => 1, 'reward_category_id' => 2, 'reward_type_id' => 3, 'title' => 4, 'description' => 5, 'icon' => 6, 'yen_per_point' => 7, 'price_per_unit' => 8, 'min_points' => 9, 'max_points' => 10, 'required_points' => 11, 'max_period' => 12, 'update_time' => 13, 'update_user' => 14, 'reference' => 15, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
     );
 
     /**
@@ -211,6 +216,7 @@ class RewardTableMap extends TableMap
         $this->addColumn('max_period', 'MaxPeriod', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -379,6 +385,7 @@ class RewardTableMap extends TableMap
             $criteria->addSelectColumn(RewardTableMap::COL_MAX_PERIOD);
             $criteria->addSelectColumn(RewardTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(RewardTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(RewardTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.reward_id');
             $criteria->addSelectColumn($alias . '.point_system_id');
@@ -395,6 +402,7 @@ class RewardTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.max_period');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

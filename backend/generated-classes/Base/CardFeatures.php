@@ -90,10 +90,16 @@ abstract class CardFeatures implements ActiveRecordInterface
     protected $description;
 
     /**
-     * The value for the feature_cost field.
+     * The value for the issuing_fee field.
      * @var        int
      */
-    protected $feature_cost;
+    protected $issuing_fee;
+
+    /**
+     * The value for the ongoing_fee field.
+     * @var        int
+     */
+    protected $ongoing_fee;
 
     /**
      * The value for the update_time field.
@@ -106,6 +112,12 @@ abstract class CardFeatures implements ActiveRecordInterface
      * @var        string
      */
     protected $update_user;
+
+    /**
+     * The value for the reference field.
+     * @var        string
+     */
+    protected $reference;
 
     /**
      * @var        ChildCreditCard
@@ -383,13 +395,23 @@ abstract class CardFeatures implements ActiveRecordInterface
     }
 
     /**
-     * Get the [feature_cost] column value.
+     * Get the [issuing_fee] column value.
      *
      * @return int
      */
-    public function getFeatureCost()
+    public function getIssuingFee()
     {
-        return $this->feature_cost;
+        return $this->issuing_fee;
+    }
+
+    /**
+     * Get the [ongoing_fee] column value.
+     *
+     * @return int
+     */
+    public function getOngoingFee()
+    {
+        return $this->ongoing_fee;
     }
 
     /**
@@ -420,6 +442,16 @@ abstract class CardFeatures implements ActiveRecordInterface
     public function getUpdateUser()
     {
         return $this->update_user;
+    }
+
+    /**
+     * Get the [reference] column value.
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
     }
 
     /**
@@ -511,24 +543,44 @@ abstract class CardFeatures implements ActiveRecordInterface
     } // setDescription()
 
     /**
-     * Set the value of [feature_cost] column.
+     * Set the value of [issuing_fee] column.
      *
      * @param  int $v new value
      * @return $this|\CardFeatures The current object (for fluent API support)
      */
-    public function setFeatureCost($v)
+    public function setIssuingFee($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->feature_cost !== $v) {
-            $this->feature_cost = $v;
-            $this->modifiedColumns[CardFeaturesTableMap::COL_FEATURE_COST] = true;
+        if ($this->issuing_fee !== $v) {
+            $this->issuing_fee = $v;
+            $this->modifiedColumns[CardFeaturesTableMap::COL_ISSUING_FEE] = true;
         }
 
         return $this;
-    } // setFeatureCost()
+    } // setIssuingFee()
+
+    /**
+     * Set the value of [ongoing_fee] column.
+     *
+     * @param  int $v new value
+     * @return $this|\CardFeatures The current object (for fluent API support)
+     */
+    public function setOngoingFee($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->ongoing_fee !== $v) {
+            $this->ongoing_fee = $v;
+            $this->modifiedColumns[CardFeaturesTableMap::COL_ONGOING_FEE] = true;
+        }
+
+        return $this;
+    } // setOngoingFee()
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
@@ -569,6 +621,26 @@ abstract class CardFeatures implements ActiveRecordInterface
 
         return $this;
     } // setUpdateUser()
+
+    /**
+     * Set the value of [reference] column.
+     *
+     * @param  string $v new value
+     * @return $this|\CardFeatures The current object (for fluent API support)
+     */
+    public function setReference($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->reference !== $v) {
+            $this->reference = $v;
+            $this->modifiedColumns[CardFeaturesTableMap::COL_REFERENCE] = true;
+        }
+
+        return $this;
+    } // setReference()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -618,17 +690,23 @@ abstract class CardFeatures implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CardFeaturesTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeaturesTableMap::translateFieldName('FeatureCost', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->feature_cost = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeaturesTableMap::translateFieldName('IssuingFee', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->issuing_fee = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeaturesTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeaturesTableMap::translateFieldName('OngoingFee', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->ongoing_fee = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CardFeaturesTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CardFeaturesTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : CardFeaturesTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : CardFeaturesTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->reference = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -637,7 +715,7 @@ abstract class CardFeatures implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = CardFeaturesTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = CardFeaturesTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\CardFeatures'), 0, $e);
@@ -873,14 +951,20 @@ abstract class CardFeatures implements ActiveRecordInterface
         if ($this->isColumnModified(CardFeaturesTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
-        if ($this->isColumnModified(CardFeaturesTableMap::COL_FEATURE_COST)) {
-            $modifiedColumns[':p' . $index++]  = 'feature_cost';
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_ISSUING_FEE)) {
+            $modifiedColumns[':p' . $index++]  = 'issuing_fee';
+        }
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_ONGOING_FEE)) {
+            $modifiedColumns[':p' . $index++]  = 'ongoing_fee';
         }
         if ($this->isColumnModified(CardFeaturesTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
         if ($this->isColumnModified(CardFeaturesTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
+        }
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_REFERENCE)) {
+            $modifiedColumns[':p' . $index++]  = 'reference';
         }
 
         $sql = sprintf(
@@ -905,14 +989,20 @@ abstract class CardFeatures implements ActiveRecordInterface
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'feature_cost':
-                        $stmt->bindValue($identifier, $this->feature_cost, PDO::PARAM_INT);
+                    case 'issuing_fee':
+                        $stmt->bindValue($identifier, $this->issuing_fee, PDO::PARAM_INT);
+                        break;
+                    case 'ongoing_fee':
+                        $stmt->bindValue($identifier, $this->ongoing_fee, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
+                        break;
+                    case 'reference':
+                        $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -989,13 +1079,19 @@ abstract class CardFeatures implements ActiveRecordInterface
                 return $this->getDescription();
                 break;
             case 4:
-                return $this->getFeatureCost();
+                return $this->getIssuingFee();
                 break;
             case 5:
-                return $this->getUpdateTime();
+                return $this->getOngoingFee();
                 break;
             case 6:
+                return $this->getUpdateTime();
+                break;
+            case 7:
                 return $this->getUpdateUser();
+                break;
+            case 8:
+                return $this->getReference();
                 break;
             default:
                 return null;
@@ -1031,9 +1127,11 @@ abstract class CardFeatures implements ActiveRecordInterface
             $keys[1] => $this->getFeatureTypeId(),
             $keys[2] => $this->getCreditCardId(),
             $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getFeatureCost(),
-            $keys[5] => $this->getUpdateTime(),
-            $keys[6] => $this->getUpdateUser(),
+            $keys[4] => $this->getIssuingFee(),
+            $keys[5] => $this->getOngoingFee(),
+            $keys[6] => $this->getUpdateTime(),
+            $keys[7] => $this->getUpdateUser(),
+            $keys[8] => $this->getReference(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1118,13 +1216,19 @@ abstract class CardFeatures implements ActiveRecordInterface
                 $this->setDescription($value);
                 break;
             case 4:
-                $this->setFeatureCost($value);
+                $this->setIssuingFee($value);
                 break;
             case 5:
-                $this->setUpdateTime($value);
+                $this->setOngoingFee($value);
                 break;
             case 6:
+                $this->setUpdateTime($value);
+                break;
+            case 7:
                 $this->setUpdateUser($value);
+                break;
+            case 8:
+                $this->setReference($value);
                 break;
         } // switch()
 
@@ -1165,13 +1269,19 @@ abstract class CardFeatures implements ActiveRecordInterface
             $this->setDescription($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setFeatureCost($arr[$keys[4]]);
+            $this->setIssuingFee($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateTime($arr[$keys[5]]);
+            $this->setOngoingFee($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateUser($arr[$keys[6]]);
+            $this->setUpdateTime($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setUpdateUser($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setReference($arr[$keys[8]]);
         }
     }
 
@@ -1226,14 +1336,20 @@ abstract class CardFeatures implements ActiveRecordInterface
         if ($this->isColumnModified(CardFeaturesTableMap::COL_DESCRIPTION)) {
             $criteria->add(CardFeaturesTableMap::COL_DESCRIPTION, $this->description);
         }
-        if ($this->isColumnModified(CardFeaturesTableMap::COL_FEATURE_COST)) {
-            $criteria->add(CardFeaturesTableMap::COL_FEATURE_COST, $this->feature_cost);
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_ISSUING_FEE)) {
+            $criteria->add(CardFeaturesTableMap::COL_ISSUING_FEE, $this->issuing_fee);
+        }
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_ONGOING_FEE)) {
+            $criteria->add(CardFeaturesTableMap::COL_ONGOING_FEE, $this->ongoing_fee);
         }
         if ($this->isColumnModified(CardFeaturesTableMap::COL_UPDATE_TIME)) {
             $criteria->add(CardFeaturesTableMap::COL_UPDATE_TIME, $this->update_time);
         }
         if ($this->isColumnModified(CardFeaturesTableMap::COL_UPDATE_USER)) {
             $criteria->add(CardFeaturesTableMap::COL_UPDATE_USER, $this->update_user);
+        }
+        if ($this->isColumnModified(CardFeaturesTableMap::COL_REFERENCE)) {
+            $criteria->add(CardFeaturesTableMap::COL_REFERENCE, $this->reference);
         }
 
         return $criteria;
@@ -1324,9 +1440,11 @@ abstract class CardFeatures implements ActiveRecordInterface
         $copyObj->setFeatureTypeId($this->getFeatureTypeId());
         $copyObj->setCreditCardId($this->getCreditCardId());
         $copyObj->setDescription($this->getDescription());
-        $copyObj->setFeatureCost($this->getFeatureCost());
+        $copyObj->setIssuingFee($this->getIssuingFee());
+        $copyObj->setOngoingFee($this->getOngoingFee());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
+        $copyObj->setReference($this->getReference());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setFeatureId(NULL); // this is a auto-increment column, so set to default value
@@ -1474,9 +1592,11 @@ abstract class CardFeatures implements ActiveRecordInterface
         $this->feature_type_id = null;
         $this->credit_card_id = null;
         $this->description = null;
-        $this->feature_cost = null;
+        $this->issuing_fee = null;
+        $this->ongoing_fee = null;
         $this->update_time = null;
         $this->update_user = null;
+        $this->reference = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

@@ -7,6 +7,8 @@
  */
 
 namespace Db\Json;
+use Db\Utility\FieldUtils;
+use Db\Utility\ArrayUtils;
 
 
 class JAffiliateCompany implements JSONInterface
@@ -37,13 +39,13 @@ class JAffiliateCompany implements JSONInterface
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JAffiliateCompany();
-        $mine->AffiliateId = $data['AffiliateId'];
-        $mine->Name = $data['Name'];
-        $mine->Description = $data['Description'];
-        $mine->Website = $data['Website'];
-        $mine->SignedUpDate = new \DateTime($data['SignedUpDate']);
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
+        if (ArrayUtils::KEY_EXISTS($data, 'AffiliateId')) $mine->AffiliateId = $data['AffiliateId'];
+        if (ArrayUtils::KEY_EXISTS($data, 'Name')) $mine->Name = $data['Name'];
+        if (ArrayUtils::KEY_EXISTS($data, 'Description')) $mine->Description = $data['Description'];
+        if (ArrayUtils::KEY_EXISTS($data, 'Website')) $mine->Website = $data['Website'];
+        if (ArrayUtils::KEY_EXISTS($data, 'SignedUpDate')) $mine->SignedUpDate = new \DateTime($data['SignedUpDate']);
+        if (ArrayUtils::KEY_EXISTS($data, 'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if (ArrayUtils::KEY_EXISTS($data, 'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
         return $mine;
 
     }
@@ -61,13 +63,13 @@ class JAffiliateCompany implements JSONInterface
 
     public function updateDB(\AffiliateCompany &$item)
     {
-        $item->setName($this->Name);
-        $item->setDescription($this->Description);
-        $item->setName($this->Description);
-        $item->setWebsite($this->Website);
-        $item->setSignedUpDate($this->SignedUpDate);
+        if(FieldUtils::ID_IS_DEFINED($this->AffiliateId)) $item->setAffiliateId($this->AffiliateId);
+        if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
+        if(FieldUtils::STRING_IS_DEFINED($this->Description))$item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->Website)) $item->setWebsite($this->Website);
+        if(!is_null($this->SignedUpDate)) $item->setSignedUpDate($this->SignedUpDate);
         $item->setUpdateTime(new \DateTime());
-        $item->setUpdateUser($this->UpdateUser);
+       if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser))  $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
 }

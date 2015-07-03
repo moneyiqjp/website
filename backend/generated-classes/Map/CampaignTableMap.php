@@ -59,7 +59,7 @@ class CampaignTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CampaignTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the campaign_id field
@@ -122,6 +122,11 @@ class CampaignTableMap extends TableMap
     const COL_UPDATE_USER = 'campaign.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'campaign.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -133,11 +138,11 @@ class CampaignTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('CampaignId', 'CreditCardId', 'CampaignName', 'Description', 'MaxPoints', 'ValueInYen', 'StartDate', 'EndDate', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('campaignId', 'creditCardId', 'campaignName', 'description', 'maxPoints', 'valueInYen', 'startDate', 'endDate', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CampaignTableMap::COL_CAMPAIGN_ID, CampaignTableMap::COL_CREDIT_CARD_ID, CampaignTableMap::COL_CAMPAIGN_NAME, CampaignTableMap::COL_DESCRIPTION, CampaignTableMap::COL_MAX_POINTS, CampaignTableMap::COL_VALUE_IN_YEN, CampaignTableMap::COL_START_DATE, CampaignTableMap::COL_END_DATE, CampaignTableMap::COL_UPDATE_TIME, CampaignTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('campaign_id', 'credit_card_id', 'campaign_name', 'description', 'max_points', 'value_in_yen', 'start_date', 'end_date', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('CampaignId', 'CreditCardId', 'CampaignName', 'Description', 'MaxPoints', 'ValueInYen', 'StartDate', 'EndDate', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('campaignId', 'creditCardId', 'campaignName', 'description', 'maxPoints', 'valueInYen', 'startDate', 'endDate', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(CampaignTableMap::COL_CAMPAIGN_ID, CampaignTableMap::COL_CREDIT_CARD_ID, CampaignTableMap::COL_CAMPAIGN_NAME, CampaignTableMap::COL_DESCRIPTION, CampaignTableMap::COL_MAX_POINTS, CampaignTableMap::COL_VALUE_IN_YEN, CampaignTableMap::COL_START_DATE, CampaignTableMap::COL_END_DATE, CampaignTableMap::COL_UPDATE_TIME, CampaignTableMap::COL_UPDATE_USER, CampaignTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('campaign_id', 'credit_card_id', 'campaign_name', 'description', 'max_points', 'value_in_yen', 'start_date', 'end_date', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -147,11 +152,11 @@ class CampaignTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('CampaignId' => 0, 'CreditCardId' => 1, 'CampaignName' => 2, 'Description' => 3, 'MaxPoints' => 4, 'ValueInYen' => 5, 'StartDate' => 6, 'EndDate' => 7, 'UpdateTime' => 8, 'UpdateUser' => 9, ),
-        self::TYPE_CAMELNAME     => array('campaignId' => 0, 'creditCardId' => 1, 'campaignName' => 2, 'description' => 3, 'maxPoints' => 4, 'valueInYen' => 5, 'startDate' => 6, 'endDate' => 7, 'updateTime' => 8, 'updateUser' => 9, ),
-        self::TYPE_COLNAME       => array(CampaignTableMap::COL_CAMPAIGN_ID => 0, CampaignTableMap::COL_CREDIT_CARD_ID => 1, CampaignTableMap::COL_CAMPAIGN_NAME => 2, CampaignTableMap::COL_DESCRIPTION => 3, CampaignTableMap::COL_MAX_POINTS => 4, CampaignTableMap::COL_VALUE_IN_YEN => 5, CampaignTableMap::COL_START_DATE => 6, CampaignTableMap::COL_END_DATE => 7, CampaignTableMap::COL_UPDATE_TIME => 8, CampaignTableMap::COL_UPDATE_USER => 9, ),
-        self::TYPE_FIELDNAME     => array('campaign_id' => 0, 'credit_card_id' => 1, 'campaign_name' => 2, 'description' => 3, 'max_points' => 4, 'value_in_yen' => 5, 'start_date' => 6, 'end_date' => 7, 'update_time' => 8, 'update_user' => 9, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('CampaignId' => 0, 'CreditCardId' => 1, 'CampaignName' => 2, 'Description' => 3, 'MaxPoints' => 4, 'ValueInYen' => 5, 'StartDate' => 6, 'EndDate' => 7, 'UpdateTime' => 8, 'UpdateUser' => 9, 'Reference' => 10, ),
+        self::TYPE_CAMELNAME     => array('campaignId' => 0, 'creditCardId' => 1, 'campaignName' => 2, 'description' => 3, 'maxPoints' => 4, 'valueInYen' => 5, 'startDate' => 6, 'endDate' => 7, 'updateTime' => 8, 'updateUser' => 9, 'reference' => 10, ),
+        self::TYPE_COLNAME       => array(CampaignTableMap::COL_CAMPAIGN_ID => 0, CampaignTableMap::COL_CREDIT_CARD_ID => 1, CampaignTableMap::COL_CAMPAIGN_NAME => 2, CampaignTableMap::COL_DESCRIPTION => 3, CampaignTableMap::COL_MAX_POINTS => 4, CampaignTableMap::COL_VALUE_IN_YEN => 5, CampaignTableMap::COL_START_DATE => 6, CampaignTableMap::COL_END_DATE => 7, CampaignTableMap::COL_UPDATE_TIME => 8, CampaignTableMap::COL_UPDATE_USER => 9, CampaignTableMap::COL_REFERENCE => 10, ),
+        self::TYPE_FIELDNAME     => array('campaign_id' => 0, 'credit_card_id' => 1, 'campaign_name' => 2, 'description' => 3, 'max_points' => 4, 'value_in_yen' => 5, 'start_date' => 6, 'end_date' => 7, 'update_time' => 8, 'update_user' => 9, 'reference' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -181,6 +186,7 @@ class CampaignTableMap extends TableMap
         $this->addColumn('end_date', 'EndDate', 'DATE', false, null, '9999-12-31');
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -342,6 +348,7 @@ class CampaignTableMap extends TableMap
             $criteria->addSelectColumn(CampaignTableMap::COL_END_DATE);
             $criteria->addSelectColumn(CampaignTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CampaignTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(CampaignTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.campaign_id');
             $criteria->addSelectColumn($alias . '.credit_card_id');
@@ -353,6 +360,7 @@ class CampaignTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.end_date');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

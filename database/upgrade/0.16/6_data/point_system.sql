@@ -26,6 +26,7 @@ insert into point_system (point_system_name,default_points_per_yen,default_yen_p
 
 
 delete from card_point_system where credit_card_id>0;
+ALTER TABLE card_point_system AUTO_INCREMENT = 1;
 
 insert into card_point_system ( credit_card_id,  priority_id, point_system_id,update_time, update_user) values
 ( 1, 100, 2, NOW(),'ben'),
@@ -66,3 +67,4 @@ insert into card_point_system ( credit_card_id,  priority_id, point_system_id,up
 
 
 SET FOREIGN_KEY_CHECKS = 1;
+

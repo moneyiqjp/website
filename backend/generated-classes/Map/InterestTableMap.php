@@ -59,7 +59,7 @@ class InterestTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class InterestTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the interest_id field
@@ -107,6 +107,11 @@ class InterestTableMap extends TableMap
     const COL_UPDATE_USER = 'interest.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'interest.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -118,11 +123,11 @@ class InterestTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('InterestId', 'CreditCardId', 'PaymentTypeId', 'MinInterest', 'MaxInterest', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('interestId', 'creditCardId', 'paymentTypeId', 'minInterest', 'maxInterest', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(InterestTableMap::COL_INTEREST_ID, InterestTableMap::COL_CREDIT_CARD_ID, InterestTableMap::COL_PAYMENT_TYPE_ID, InterestTableMap::COL_MIN_INTEREST, InterestTableMap::COL_MAX_INTEREST, InterestTableMap::COL_UPDATE_TIME, InterestTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('interest_id', 'credit_card_id', 'payment_type_id', 'min_interest', 'max_interest', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('InterestId', 'CreditCardId', 'PaymentTypeId', 'MinInterest', 'MaxInterest', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('interestId', 'creditCardId', 'paymentTypeId', 'minInterest', 'maxInterest', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(InterestTableMap::COL_INTEREST_ID, InterestTableMap::COL_CREDIT_CARD_ID, InterestTableMap::COL_PAYMENT_TYPE_ID, InterestTableMap::COL_MIN_INTEREST, InterestTableMap::COL_MAX_INTEREST, InterestTableMap::COL_UPDATE_TIME, InterestTableMap::COL_UPDATE_USER, InterestTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('interest_id', 'credit_card_id', 'payment_type_id', 'min_interest', 'max_interest', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -132,11 +137,11 @@ class InterestTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('InterestId' => 0, 'CreditCardId' => 1, 'PaymentTypeId' => 2, 'MinInterest' => 3, 'MaxInterest' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
-        self::TYPE_CAMELNAME     => array('interestId' => 0, 'creditCardId' => 1, 'paymentTypeId' => 2, 'minInterest' => 3, 'maxInterest' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
-        self::TYPE_COLNAME       => array(InterestTableMap::COL_INTEREST_ID => 0, InterestTableMap::COL_CREDIT_CARD_ID => 1, InterestTableMap::COL_PAYMENT_TYPE_ID => 2, InterestTableMap::COL_MIN_INTEREST => 3, InterestTableMap::COL_MAX_INTEREST => 4, InterestTableMap::COL_UPDATE_TIME => 5, InterestTableMap::COL_UPDATE_USER => 6, ),
-        self::TYPE_FIELDNAME     => array('interest_id' => 0, 'credit_card_id' => 1, 'payment_type_id' => 2, 'min_interest' => 3, 'max_interest' => 4, 'update_time' => 5, 'update_user' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('InterestId' => 0, 'CreditCardId' => 1, 'PaymentTypeId' => 2, 'MinInterest' => 3, 'MaxInterest' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, 'Reference' => 7, ),
+        self::TYPE_CAMELNAME     => array('interestId' => 0, 'creditCardId' => 1, 'paymentTypeId' => 2, 'minInterest' => 3, 'maxInterest' => 4, 'updateTime' => 5, 'updateUser' => 6, 'reference' => 7, ),
+        self::TYPE_COLNAME       => array(InterestTableMap::COL_INTEREST_ID => 0, InterestTableMap::COL_CREDIT_CARD_ID => 1, InterestTableMap::COL_PAYMENT_TYPE_ID => 2, InterestTableMap::COL_MIN_INTEREST => 3, InterestTableMap::COL_MAX_INTEREST => 4, InterestTableMap::COL_UPDATE_TIME => 5, InterestTableMap::COL_UPDATE_USER => 6, InterestTableMap::COL_REFERENCE => 7, ),
+        self::TYPE_FIELDNAME     => array('interest_id' => 0, 'credit_card_id' => 1, 'payment_type_id' => 2, 'min_interest' => 3, 'max_interest' => 4, 'update_time' => 5, 'update_user' => 6, 'reference' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -163,6 +168,7 @@ class InterestTableMap extends TableMap
         $this->addColumn('max_interest', 'MaxInterest', 'DOUBLE', false, 15, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -322,6 +328,7 @@ class InterestTableMap extends TableMap
             $criteria->addSelectColumn(InterestTableMap::COL_MAX_INTEREST);
             $criteria->addSelectColumn(InterestTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(InterestTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(InterestTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.interest_id');
             $criteria->addSelectColumn($alias . '.credit_card_id');
@@ -330,6 +337,7 @@ class InterestTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.max_interest');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

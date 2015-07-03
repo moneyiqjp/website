@@ -17,6 +17,8 @@ CREATE TABLE card_feature_type (
     name varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     category varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,    
+	`foreground_color` VARCHAR(250) NULL DEFAULT NULL,
+	`background_color` VARCHAR(250) NULL DEFAULT NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     CONSTRAINT card_features_pk PRIMARY KEY (feature_type_id)
@@ -25,10 +27,12 @@ CREATE TABLE card_feature_type (
 CREATE TABLE card_feature_type_history (
     feature_type_id int    NOT NULL,
     name varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+    description text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,   
     category varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,   
     time_beg datetime NOT NULL,
     time_end datetime NULL,
+	`foreground_color` VARCHAR(250) NULL DEFAULT NULL,
+	`background_color` VARCHAR(250) NULL DEFAULT NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
     CONSTRAINT card_features_pk PRIMARY KEY (feature_type_id,time_beg)

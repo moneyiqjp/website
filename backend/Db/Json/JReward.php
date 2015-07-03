@@ -10,6 +10,7 @@ namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 
 class JReward  implements JSONInterface {
@@ -30,16 +31,17 @@ class JReward  implements JSONInterface {
     public $UpdateTime;
     public $UpdateUser;
 
-    public function JPointAcquisition(){
+    public function JReward(){
         return $this;
     }
 
     public static function CREATE_FROM_DB(\Reward $item)
     {
         $mine = new JReward();
-
         $mine->RewardId = $item->getRewardId();
         $mine->PointSystemId = $item->getPointSystemId();
+        if (is_null($item->getRewardType())) throw new Exception("JReward: RewardType is not available for Reward " . $mine->RewardId . ": " . $item->getRewardTypeId() );
+        if (is_null($item->getRewardCategory())) throw new Exception("JReward: RewardCategory is not available for Reward " . $mine->RewardId . ": " . $item->getRewardCategoryId() );
         $mine->Type = JRewardType::CREATE_FROM_DB($item->getRewardType());
         $mine->Category = JRewardCategory::CREATE_FROM_DB($item->getRewardCategory());
         $mine->Title = $item->getTitle();
@@ -60,6 +62,10 @@ class JReward  implements JSONInterface {
     public static function CREATE_FROM_ARRAY($data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'RewardId')) throw new \Exception("JReward: Mandatory field RewardId missing");
+        if (!ArrayUtils::KEY_EXISTS($data, 'Category')) throw new \Exception("JReward: Mandatory field Category missing");
+        if (!ArrayUtils::KEY_EXISTS($data['Category'], 'RewardCategoryId')) throw new \Exception("JReward: Mandatory field Category-RewardCategoryId missing");
+        if (!ArrayUtils::KEY_EXISTS($data, 'Type')) throw new \Exception("JReward: Mandatory field Type missing");
+        if (!ArrayUtils::KEY_EXISTS($data['Type'], 'RewardTypeId')) throw new \Exception("JReward: Mandatory field Category-RewardTypeId missing");
         return JReward::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
@@ -123,10 +129,10 @@ class JReward  implements JSONInterface {
     public function updateDB(\Reward &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->RewardId)) $item->setRewardId($this->RewardId);
         if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) $item->setPointSystemId($this->PointSystemId);
-        if(is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->RewardTypeId)) {
+        if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->RewardTypeId)) {
             $item->setRewardTypeId($this->Type->RewardTypeId);
         }
-        if(is_null($this->Category) && FieldUtils::ID_IS_DEFINED($this->Category->RewardCategoryId)) {
+        if(!is_null($this->Category) && FieldUtils::ID_IS_DEFINED($this->Category->RewardCategoryId)) {
             $item->setRewardCategoryId($this->Category->RewardCategoryId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Title)) $item->setTitle($this->Title);

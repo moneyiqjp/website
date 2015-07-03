@@ -59,7 +59,7 @@ class CardFeatureTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CardFeatureTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 8;
 
     /**
      * the column name for the feature_type_id field
@@ -90,6 +90,16 @@ class CardFeatureTypeTableMap extends TableMap
      * the column name for the category field
      */
     const COL_CATEGORY = 'card_feature_type.category';
+
+    /**
+     * the column name for the foreground_color field
+     */
+    const COL_FOREGROUND_COLOR = 'card_feature_type.foreground_color';
+
+    /**
+     * the column name for the background_color field
+     */
+    const COL_BACKGROUND_COLOR = 'card_feature_type.background_color';
 
     /**
      * the column name for the update_time field
@@ -113,11 +123,11 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId', 'Name', 'Description', 'Category', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('featureTypeId', 'name', 'description', 'category', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, CardFeatureTypeTableMap::COL_NAME, CardFeatureTypeTableMap::COL_DESCRIPTION, CardFeatureTypeTableMap::COL_CATEGORY, CardFeatureTypeTableMap::COL_UPDATE_TIME, CardFeatureTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id', 'name', 'description', 'category', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('FeatureTypeId', 'Name', 'Description', 'Category', 'ForegroundColor', 'BackgroundColor', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('featureTypeId', 'name', 'description', 'category', 'foregroundColor', 'backgroundColor', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, CardFeatureTypeTableMap::COL_NAME, CardFeatureTypeTableMap::COL_DESCRIPTION, CardFeatureTypeTableMap::COL_CATEGORY, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, CardFeatureTypeTableMap::COL_UPDATE_TIME, CardFeatureTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('feature_type_id', 'name', 'description', 'category', 'foreground_color', 'background_color', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -127,11 +137,11 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Category' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
-        self::TYPE_CAMELNAME     => array('featureTypeId' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID => 0, CardFeatureTypeTableMap::COL_NAME => 1, CardFeatureTypeTableMap::COL_DESCRIPTION => 2, CardFeatureTypeTableMap::COL_CATEGORY => 3, CardFeatureTypeTableMap::COL_UPDATE_TIME => 4, CardFeatureTypeTableMap::COL_UPDATE_USER => 5, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'update_time' => 4, 'update_user' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('FeatureTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Category' => 3, 'ForegroundColor' => 4, 'BackgroundColor' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
+        self::TYPE_CAMELNAME     => array('featureTypeId' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'foregroundColor' => 4, 'backgroundColor' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
+        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID => 0, CardFeatureTypeTableMap::COL_NAME => 1, CardFeatureTypeTableMap::COL_DESCRIPTION => 2, CardFeatureTypeTableMap::COL_CATEGORY => 3, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR => 4, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR => 5, CardFeatureTypeTableMap::COL_UPDATE_TIME => 6, CardFeatureTypeTableMap::COL_UPDATE_USER => 7, ),
+        self::TYPE_FIELDNAME     => array('feature_type_id' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'foreground_color' => 4, 'background_color' => 5, 'update_time' => 6, 'update_user' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -155,6 +165,8 @@ class CardFeatureTypeTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', true, 250, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('category', 'Category', 'VARCHAR', true, 250, null);
+        $this->addColumn('foreground_color', 'ForegroundColor', 'VARCHAR', false, 250, null);
+        $this->addColumn('background_color', 'BackgroundColor', 'VARCHAR', false, 250, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
@@ -312,6 +324,8 @@ class CardFeatureTypeTableMap extends TableMap
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_NAME);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_CATEGORY);
+            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR);
+            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_USER);
         } else {
@@ -319,6 +333,8 @@ class CardFeatureTypeTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.category');
+            $criteria->addSelectColumn($alias . '.foreground_color');
+            $criteria->addSelectColumn($alias . '.background_color');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

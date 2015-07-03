@@ -2,31 +2,89 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/adminFunctions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rewards.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stores.php" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\popint_use.sql" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Campaign.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Campaign.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatures.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatures.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/CreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCreditCardToPointSystemMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCreditCardToPointSystemMapping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JObject.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JObject.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Discounts.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Discounts.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Fees.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Fees.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Insurance.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Insurance.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Interest.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Interest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JAffiliateCompany.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JAffiliateCompany.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFeatureType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFeatureType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFee.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFee.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JReward.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JReward.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JRewardCategory.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JRewardCategory.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JRewardType.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JRewardType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisition.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisition.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionTableMap.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUsage.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUsage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUsageQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUsageQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUsageTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUsageTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUse.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUse.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUseQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUseQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUseTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUseTableMap.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/header.php" afterPath="$PROJECT_DIR$/header.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/css/admin_editor.css" afterPath="$PROJECT_DIR$/media/css/admin_editor.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/campaign.sql" afterPath="$PROJECT_DIR$/../database/2_tables/campaign.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_feature_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_feature_type.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_features.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_features.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-conf/config.php" afterPath="$PROJECT_DIR$/../backend/generated-conf/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" afterPath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_details.php" afterPath="$PROJECT_DIR$/creditcard_details.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_other.php" afterPath="$PROJECT_DIR$/creditcard_other.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/discounts.sql" afterPath="$PROJECT_DIR$/../database/6_data/discounts.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/interest.sql" afterPath="$PROJECT_DIR$/../database/2_tables/interest.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/point_system.sql" afterPath="$PROJECT_DIR$/../database/2_tables/point_system.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/point_system.sql" afterPath="$PROJECT_DIR$/../database/6_data/point_system.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/point_system.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/point_system.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/6_data/point_system.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/6_data/point_system.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pointprogram_details.php" afterPath="$PROJECT_DIR$/pointprogram_details.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/moneyiq/reward.sql" afterPath="$PROJECT_DIR$/../database/6_data/moneyiq/reward.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/reward.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/reward.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward_category.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward_category.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward_type.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward_type.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rewards.php" afterPath="$PROJECT_DIR$/rewards.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="F:\Development\website\admin\other.php" afterPath="$PROJECT_DIR$/creditcard_other.php" />
     </list>
     <ignored path="admin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,41 +112,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="rewards.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rewards.php">
+      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.458333" vertical-offset="7198" max-vertical-offset="8235">
-              <caret line="503" column="25" selection-start-line="503" selection-start-column="25" selection-end-line="503" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pointprogram_overview.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pointprogram_overview.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="9.625" vertical-offset="621" max-vertical-offset="2055">
-              <caret line="26" column="90" selection-start-line="26" selection-start-column="88" selection-end-line="26" selection-end-column="90" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pointprogram_details.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pointprogram_details.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.1976285" vertical-offset="4320" max-vertical-offset="11685">
-              <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stores.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/stores.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5" vertical-offset="546" max-vertical-offset="2025">
-              <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.35884354" vertical-offset="4258" max-vertical-offset="18060">
+              <caret line="312" column="20" selection-start-line="312" selection-start-column="20" selection-end-line="312" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -97,8 +125,38 @@
       <file leaf-file-name="creditcard_other.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_other.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.3536587" vertical-offset="6019" max-vertical-offset="6720">
-              <caret line="436" column="0" selection-start-line="436" selection-start-column="0" selection-end-line="436" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.3962264" vertical-offset="5143" max-vertical-offset="7080">
+              <caret line="369" column="19" selection-start-line="369" selection-start-column="18" selection-end-line="369" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rewards.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rewards.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.708334" vertical-offset="1240" max-vertical-offset="6990">
+              <caret line="111" column="30" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pointprogram_details.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pointprogram_details.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-20.393442" vertical-offset="3286" max-vertical-offset="11040">
+              <caret line="302" column="42" selection-start-line="302" selection-start-column="42" selection-end-line="302" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pointprogram_overview.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pointprogram_overview.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.3962264" vertical-offset="463" max-vertical-offset="2055">
+              <caret line="57" column="45" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -120,16 +178,16 @@
         <option value="$PROJECT_DIR$/other.php" />
         <option value="F:/xampp/htdocs/phpinfo.php" />
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/media/css/admin_editor.css" />
-        <option value="$PROJECT_DIR$/creditcard_details.php" />
         <option value="$PROJECT_DIR$/pointprogram_overview.php" />
-        <option value="$PROJECT_DIR$/pointprogram_details.php" />
         <option value="$PROJECT_DIR$/creditcard_overview.php" />
         <option value="$PROJECT_DIR$/scripts/adminFunctions.js" />
         <option value="$PROJECT_DIR$/header.php" />
-        <option value="$PROJECT_DIR$/rewards.php" />
         <option value="$PROJECT_DIR$/stores.php" />
+        <option value="$PROJECT_DIR$/media/css/admin_editor.css" />
+        <option value="$PROJECT_DIR$/pointprogram_details.php" />
         <option value="$PROJECT_DIR$/creditcard_other.php" />
+        <option value="$PROJECT_DIR$/rewards.php" />
+        <option value="$PROJECT_DIR$/creditcard_details.php" />
       </list>
     </option>
   </component>
@@ -138,10 +196,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="310" />
-    <option name="y" value="115" />
+    <option name="x" value="1280" />
+    <option name="y" value="40" />
     <option name="width" value="1280" />
-    <option name="height" value="1160" />
+    <option name="height" value="1400" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -188,7 +246,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -217,26 +274,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -249,6 +293,7 @@
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://F:/Development/website/admin/pointprogram_details.php" />
   </component>
   <component name="RunManager" selected="PHP Script.datatablestest.php">
     <configuration default="false" name="datatablestest.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/datatablestest.php">
@@ -270,9 +315,6 @@
       <BehatRunner />
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -280,6 +322,9 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" server_id="cb8cc768-199d-45f9-94ec-364ee9874b0d" server_name="Local (FILE)">
       <method />
     </configuration>
     <list size="1">
@@ -325,10 +370,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="310" y="115" width="1280" height="1160" extended-state="0" />
+    <frame x="1280" y="40" width="1280" height="1400" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19922255" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.066981874" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11732283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -336,19 +380,20 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2147541" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22459017" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1407767" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16154452" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32939324" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -369,9 +414,9 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20925926" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -395,20 +440,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1190">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/media/css/jquery.dataTables.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6959" max-vertical-offset="8279">
-          <caret line="452" column="1" selection-start-line="452" selection-start-column="1" selection-end-line="452" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1173" max-vertical-offset="5746">
@@ -675,13 +706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2173913" vertical-offset="180" max-vertical-offset="1455">
-          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14778325" vertical-offset="0" max-vertical-offset="1218">
@@ -697,21 +721,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_details.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.208333" vertical-offset="9223" max-vertical-offset="13725">
-          <caret line="636" column="2" selection-start-line="636" selection-start-column="2" selection-end-line="636" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/adminFunctions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
           <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc;n#adminGetissuers#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -719,48 +732,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="810">
           <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-          <folding>
-            <element signature="e#6#86#0#PHP" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/demo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84909457" vertical-offset="4091" max-vertical-offset="5085">
+          <caret line="329" column="15" selection-start-line="329" selection-start-column="8" selection-end-line="329" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/stores.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="546" max-vertical-offset="2025">
-          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="2025">
+          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_other.php">
+    <entry file="file://$PROJECT_DIR$/themes/base/jquery.ui.autocomplete.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3536587" vertical-offset="6019" max-vertical-offset="6720">
-          <caret line="436" column="0" selection-start-line="436" selection-start-column="0" selection-end-line="436" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1036">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rewards.php">
+    <entry file="file://$PROJECT_DIR$/media/css/admin_editor.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.458333" vertical-offset="7198" max-vertical-offset="8235">
-          <caret line="503" column="25" selection-start-line="503" selection-start-column="25" selection-end-line="503" selection-end-column="25" />
-          <folding />
+        <state vertical-scroll-proportion="-0.07487923" vertical-offset="438" max-vertical-offset="1680">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pointprogram_overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="9.625" vertical-offset="621" max-vertical-offset="2055">
-          <caret line="26" column="90" selection-start-line="26" selection-start-column="88" selection-end-line="26" selection-end-column="90" />
+        <state vertical-scroll-proportion="-7.3962264" vertical-offset="463" max-vertical-offset="2055">
+          <caret line="57" column="45" selection-start-line="57" selection-start-column="43" selection-end-line="57" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pointprogram_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.1976285" vertical-offset="4320" max-vertical-offset="11685">
-          <caret line="25" column="19" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
+        <state vertical-scroll-proportion="-20.393442" vertical-offset="3286" max-vertical-offset="11040">
+          <caret line="302" column="42" selection-start-line="302" selection-start-column="42" selection-end-line="302" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rewards.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.708334" vertical-offset="1240" max-vertical-offset="6990">
+          <caret line="111" column="30" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_other.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.3962264" vertical-offset="5143" max-vertical-offset="7080">
+          <caret line="369" column="19" selection-start-line="369" selection-start-column="18" selection-end-line="369" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_details.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35884354" vertical-offset="4258" max-vertical-offset="18060">
+          <caret line="312" column="20" selection-start-line="312" selection-start-column="20" selection-end-line="312" selection-end-column="20" />
           <folding />
         </state>
       </provider>

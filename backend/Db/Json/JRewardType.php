@@ -17,6 +17,7 @@ class JRewardType  implements JSONInterface
     public $RewardTypeId;
     public $Name;
     public $Description;
+    public $IsFinite;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -30,7 +31,12 @@ class JRewardType  implements JSONInterface
         $mine->RewardTypeId = $item->getRewardTypeId();
         $mine->Name = $item->getName();
         $mine->Description = $item->getDescription();
-        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        $time = new \DateTime();
+        if(!is_null($item->getUpdateTime())) {
+            $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        }
+        $mine->IsFinite = $item->getIsFinite();
+        $mine->UpdateTime = $time;
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
     }
@@ -46,7 +52,8 @@ class JRewardType  implements JSONInterface
 
         if (ArrayUtils::KEY_EXISTS($data, 'Name')) $mine->Name = $data['Name'];
         if (ArrayUtils::KEY_EXISTS($data, 'Description')) $mine->Description = $data['Description'];
-        if (ArrayUtils::KEY_EXISTS($data, 'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if (ArrayUtils::KEY_EXISTS($data,'IsFinite')) $mine->IsFinite = $data['IsFinite'];
+        if (ArrayUtils::KEY_EXISTS($data, 'UpdateTime'    )) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if (ArrayUtils::KEY_EXISTS($data, 'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
@@ -57,7 +64,7 @@ class JRewardType  implements JSONInterface
     }
 
     public function toDB() {
-        $usage = new \Reward();
+        $usage = new \RewardType();
         if(FieldUtils::ID_IS_DEFINED($this->RewardTypeId)) {
             $usage=(new \RewardTypeQuery())->findPk($this->RewardTypeId);
             if(is_null($usage)) $usage = new \RewardType();
@@ -70,6 +77,7 @@ class JRewardType  implements JSONInterface
         if(FieldUtils::ID_IS_DEFINED($this->RewardTypeId)) $item->setRewardTypeId($this->RewardTypeId);
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->IsFinite)) $item->setIsFinite($this->IsFinite);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

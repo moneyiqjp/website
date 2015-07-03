@@ -20,6 +20,7 @@ class Reward{
     public $requiredPoints;
     public $maxPeriod;
     public $pointSystemName;
+    public $isFinite = 0;
 
     function PointsData()
     {
@@ -27,8 +28,8 @@ class Reward{
 
     function UpdateFromDB(\Reward $rew)
     {
-        $this->category = $rew->getCategory();
-        $this->type    = $rew->getType();
+        $this->category = $rew->getRewardCategory()->getName();
+        $this->type    = $rew->getRewardType()->getName();
         $this->description = $rew->getDescription();
         $this->icon = $rew->getIcon();
         $this->yenPerPoint = $rew->getYenPerPoint();
@@ -38,6 +39,7 @@ class Reward{
         $this->requiredPoints = $rew->getRequiredPoints();
         $this->maxPeriod = $rew->getMaxPeriod();
         $this->pointSystemName = $rew->getPointSystem()->getPointSystemName();
+        $this->isFinite = $rew->getRewardType()->getIsFinite();
         return $this;
     }
 
@@ -52,6 +54,8 @@ class Reward{
 class Feature {
     public $category;
     public $feature;
+    public $backgroundColor;
+    public $foregroundColor;
 
     function Feature()
     {
@@ -59,10 +63,13 @@ class Feature {
     }
 
 
-    function SetFeature($category_,$feature_ )
+    function SetFeature(\CardFeatureType $feattype)
     {
-        $this->category = $category_;
-        $this->feature = $feature_;
+
+        $this->category = $feattype->getCategory();
+        $this->feature = $feattype->getName();
+        $this->backgroundColor = $feattype->getBackgroundColor();
+        $this->foregroundColor = $feattype->getForegroundColor();
     }
 }
 
@@ -120,10 +127,10 @@ class CreditCard {
         return $this;
     }
 
-    function AddFeature($id_, $text_)
+    function AddFeature(\CardFeatureType $type)
     {
         $feat = new Feature();
-        $feat->SetFeature($id_, $text_);
+        $feat->SetFeature($type);
 
         if(!is_array($this->features) || empty($this->features))
         {
@@ -164,7 +171,7 @@ class CreditCard {
 
     function AddReward(\Reward $rew)
     {
-        $key = $rew->getCategory();
+        $key = $rew->getRewardCategory()->getName();
         if (!array_key_exists($key,$this->rewards))
         {
             $this->rewards[$key] = array();
@@ -193,12 +200,18 @@ class CreditCard {
 
         $mine->annualFeeFirstYear = 0.0;
         $mine->annualFeeSubseqYear = 0;
-        /*
+
         foreach($cc->getFeess() as $fee)
         {
-         //TODO add fee data
+            if($fee->getFeeType()==1) {
+                $mine->annualFeeFirstYear = $fee->getFeeAmount();
+            }
+
+            if($fee->getFeeType()>1) {
+                $mine->annualFeeSubseqYear = $fee->getFeeAmount();
+            }
         }
-        */
+
 
         foreach($cc->getDiscountss() as $disc)
         {
@@ -208,7 +221,7 @@ class CreditCard {
         foreach($cc->getCardFeaturess() as $feature) {
            $feattype = $feature->getCardFeatureType();
             if(strtoupper($feattype->getCategory())!=strtoupper("Network")) {//TODO remove hard coded netowrk
-                $mine->AddFeature($feattype->getCategory(), $feattype->getName());
+                $mine->AddFeature($feattype);
             }
         }
 
@@ -232,18 +245,7 @@ class CreditCard {
         }
 
 
-        $mine->pointsToMoneyConversionRate = 1;
-        foreach($cc->getPointUsages() as $use)
-        {
-            $mine->AddPointsData($use->getStore()->getStoreName(),$use->getStore()->getCategory(), $use->getYenPerPoint(),1.0);
 
-            //TODO point usage/points to money conversion rate/store where should the date go
-            if($mine->pointsToMoneyConversionRate > $use->getYenPerPoint())
-            {
-                //todo should we return min yen per point conversion?
-                $mine->pointsToMoneyConversionRate = $use->getYenPerPoint();
-            }
-        }
 
         //TODO how are we handling interest
         foreach($cc->getInterests() as $int) {
@@ -254,12 +256,23 @@ class CreditCard {
 
         //todo points expiry period
         $mine->pointsExpiryPeriod = 1;
+        $mine->pointsToMoneyConversionRate = 0;
 
         foreach($cc->getCardPointSystems() as $pcs)
         {
-            foreach($pcs->getPointSystem()->getRewards() as $rew)
+            $ps = $pcs->getPointSystem();
+            foreach($ps->getRewards() as $rew)
             {
                 $mine->AddReward($rew);
+            }
+
+            $mine->pointsToMoneyConversionRate = max ($ps->getDefaultYenPerPoint(),$mine->pointsToMoneyConversionRate);
+            foreach($ps->getPointAcquisitions() as $use)
+            {
+                $mine->AddPointsData($use->getStore()->getStoreName(),$use->getStore()->getCategory(), $use->getPointsPerYen(),1.0);
+
+
+                /* $mine->pointsToMoneyConversionRate = max ($use->getYenPerPoint(),$mine->pointsToMoneyConversionRate); */
             }
         }
 

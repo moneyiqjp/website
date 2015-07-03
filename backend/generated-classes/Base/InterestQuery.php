@@ -27,6 +27,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInterestQuery orderByMaxInterest($order = Criteria::ASC) Order by the max_interest column
  * @method     ChildInterestQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildInterestQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildInterestQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildInterestQuery groupByInterestId() Group by the interest_id column
  * @method     ChildInterestQuery groupByCreditCardId() Group by the credit_card_id column
@@ -35,6 +36,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInterestQuery groupByMaxInterest() Group by the max_interest column
  * @method     ChildInterestQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildInterestQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildInterestQuery groupByReference() Group by the reference column
  *
  * @method     ChildInterestQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildInterestQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -60,6 +62,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInterest findOneByMaxInterest(double $max_interest) Return the first ChildInterest filtered by the max_interest column
  * @method     ChildInterest findOneByUpdateTime(string $update_time) Return the first ChildInterest filtered by the update_time column
  * @method     ChildInterest findOneByUpdateUser(string $update_user) Return the first ChildInterest filtered by the update_user column
+ * @method     ChildInterest findOneByReference(string $reference) Return the first ChildInterest filtered by the reference column
  *
  * @method     ChildInterest[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildInterest objects based on current ModelCriteria
  * @method     ChildInterest[]|ObjectCollection findByInterestId(int $interest_id) Return ChildInterest objects filtered by the interest_id column
@@ -69,6 +72,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInterest[]|ObjectCollection findByMaxInterest(double $max_interest) Return ChildInterest objects filtered by the max_interest column
  * @method     ChildInterest[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildInterest objects filtered by the update_time column
  * @method     ChildInterest[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildInterest objects filtered by the update_user column
+ * @method     ChildInterest[]|ObjectCollection findByReference(string $reference) Return ChildInterest objects filtered by the reference column
  * @method     ChildInterest[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -160,7 +164,7 @@ abstract class InterestQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT interest_id, credit_card_id, payment_type_id, min_interest, max_interest, update_time, update_user FROM interest WHERE interest_id = :p0';
+        $sql = 'SELECT interest_id, credit_card_id, payment_type_id, min_interest, max_interest, update_time, update_user, reference FROM interest WHERE interest_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -529,6 +533,35 @@ abstract class InterestQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(InterestTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildInterestQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(InterestTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

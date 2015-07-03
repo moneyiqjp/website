@@ -31,7 +31,9 @@ class JPointSystem implements JSONInterface{
         $mine->PointSystemName = $item->getPointSystemName();
         $mine->PointsPerYen = $item->getDefaultPointsPerYen();
         $mine->YenPerPoint = $item->getDefaultYenPerPoint();
-        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        if(!is_null($item->getUpdateTime())) {
+            $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
+        }
         $mine->UpdateUser = $item->getUpdateUser();
 
         return $mine;
@@ -98,13 +100,17 @@ class JPointSystem implements JSONInterface{
     }
 
     public function updateDB(\PointSystem &$item) {
+
         if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) $item->setPointSystemId($this->PointSystemId);
-        if(FieldUtils::ID_IS_DEFINED($this->PointsPerYen)) $item->setDefaultPointsPerYen($this->PointsPerYen);
-        if(FieldUtils::ID_IS_DEFINED($this->YenPerPoint)) $item->setDefaultYenPerPoint($this->YenPerPoint);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->PointsPerYen)) $item->setDefaultPointsPerYen($this->PointsPerYen);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->YenPerPoint)) $item->setDefaultYenPerPoint($this->YenPerPoint);
         if(FieldUtils::STRING_IS_DEFINED($this->PointSystemName)) $item->setPointSystemName($this->PointSystemName);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
+
         return $item;
+
+
     }
 
 }

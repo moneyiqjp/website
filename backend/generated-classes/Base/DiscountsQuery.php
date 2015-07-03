@@ -31,6 +31,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildDiscountsQuery orderByConditions($order = Criteria::ASC) Order by the conditions column
  * @method     ChildDiscountsQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildDiscountsQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildDiscountsQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildDiscountsQuery groupByDiscountId() Group by the discount_id column
  * @method     ChildDiscountsQuery groupByPercentage() Group by the percentage column
@@ -43,6 +44,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildDiscountsQuery groupByConditions() Group by the conditions column
  * @method     ChildDiscountsQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildDiscountsQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildDiscountsQuery groupByReference() Group by the reference column
  *
  * @method     ChildDiscountsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildDiscountsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -72,6 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildDiscounts findOneByConditions(string $conditions) Return the first ChildDiscounts filtered by the conditions column
  * @method     ChildDiscounts findOneByUpdateTime(string $update_time) Return the first ChildDiscounts filtered by the update_time column
  * @method     ChildDiscounts findOneByUpdateUser(string $update_user) Return the first ChildDiscounts filtered by the update_user column
+ * @method     ChildDiscounts findOneByReference(string $reference) Return the first ChildDiscounts filtered by the reference column
  *
  * @method     ChildDiscounts[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildDiscounts objects based on current ModelCriteria
  * @method     ChildDiscounts[]|ObjectCollection findByDiscountId(int $discount_id) Return ChildDiscounts objects filtered by the discount_id column
@@ -85,6 +88,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildDiscounts[]|ObjectCollection findByConditions(string $conditions) Return ChildDiscounts objects filtered by the conditions column
  * @method     ChildDiscounts[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildDiscounts objects filtered by the update_time column
  * @method     ChildDiscounts[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildDiscounts objects filtered by the update_user column
+ * @method     ChildDiscounts[]|ObjectCollection findByReference(string $reference) Return ChildDiscounts objects filtered by the reference column
  * @method     ChildDiscounts[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -176,7 +180,7 @@ abstract class DiscountsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT discount_id, percentage, start_date, end_date, description, credit_card_id, store_id, multiple, conditions, update_time, update_user FROM discounts WHERE discount_id = :p0';
+        $sql = 'SELECT discount_id, percentage, start_date, end_date, description, credit_card_id, store_id, multiple, conditions, update_time, update_user, reference FROM discounts WHERE discount_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -689,6 +693,35 @@ abstract class DiscountsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(DiscountsTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildDiscountsQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(DiscountsTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

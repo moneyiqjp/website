@@ -59,7 +59,7 @@ class FeesTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 10;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class FeesTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 10;
 
     /**
      * the column name for the fee_id field
@@ -117,6 +117,11 @@ class FeesTableMap extends TableMap
     const COL_UPDATE_USER = 'fees.update_user';
 
     /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'fees.reference';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -128,11 +133,11 @@ class FeesTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeeId', 'FeeType', 'FeeAmount', 'YearlyOccurrence', 'StartYear', 'EndYear', 'CreditCardId', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('feeId', 'feeType', 'feeAmount', 'yearlyOccurrence', 'startYear', 'endYear', 'creditCardId', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(FeesTableMap::COL_FEE_ID, FeesTableMap::COL_FEE_TYPE, FeesTableMap::COL_FEE_AMOUNT, FeesTableMap::COL_YEARLY_OCCURRENCE, FeesTableMap::COL_START_YEAR, FeesTableMap::COL_END_YEAR, FeesTableMap::COL_CREDIT_CARD_ID, FeesTableMap::COL_UPDATE_TIME, FeesTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('fee_id', 'fee_type', 'fee_amount', 'yearly_occurrence', 'start_year', 'end_year', 'credit_card_id', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('FeeId', 'FeeType', 'FeeAmount', 'YearlyOccurrence', 'StartYear', 'EndYear', 'CreditCardId', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('feeId', 'feeType', 'feeAmount', 'yearlyOccurrence', 'startYear', 'endYear', 'creditCardId', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(FeesTableMap::COL_FEE_ID, FeesTableMap::COL_FEE_TYPE, FeesTableMap::COL_FEE_AMOUNT, FeesTableMap::COL_YEARLY_OCCURRENCE, FeesTableMap::COL_START_YEAR, FeesTableMap::COL_END_YEAR, FeesTableMap::COL_CREDIT_CARD_ID, FeesTableMap::COL_UPDATE_TIME, FeesTableMap::COL_UPDATE_USER, FeesTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('fee_id', 'fee_type', 'fee_amount', 'yearly_occurrence', 'start_year', 'end_year', 'credit_card_id', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -142,11 +147,11 @@ class FeesTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeeId' => 0, 'FeeType' => 1, 'FeeAmount' => 2, 'YearlyOccurrence' => 3, 'StartYear' => 4, 'EndYear' => 5, 'CreditCardId' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
-        self::TYPE_CAMELNAME     => array('feeId' => 0, 'feeType' => 1, 'feeAmount' => 2, 'yearlyOccurrence' => 3, 'startYear' => 4, 'endYear' => 5, 'creditCardId' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
-        self::TYPE_COLNAME       => array(FeesTableMap::COL_FEE_ID => 0, FeesTableMap::COL_FEE_TYPE => 1, FeesTableMap::COL_FEE_AMOUNT => 2, FeesTableMap::COL_YEARLY_OCCURRENCE => 3, FeesTableMap::COL_START_YEAR => 4, FeesTableMap::COL_END_YEAR => 5, FeesTableMap::COL_CREDIT_CARD_ID => 6, FeesTableMap::COL_UPDATE_TIME => 7, FeesTableMap::COL_UPDATE_USER => 8, ),
-        self::TYPE_FIELDNAME     => array('fee_id' => 0, 'fee_type' => 1, 'fee_amount' => 2, 'yearly_occurrence' => 3, 'start_year' => 4, 'end_year' => 5, 'credit_card_id' => 6, 'update_time' => 7, 'update_user' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('FeeId' => 0, 'FeeType' => 1, 'FeeAmount' => 2, 'YearlyOccurrence' => 3, 'StartYear' => 4, 'EndYear' => 5, 'CreditCardId' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, 'Reference' => 9, ),
+        self::TYPE_CAMELNAME     => array('feeId' => 0, 'feeType' => 1, 'feeAmount' => 2, 'yearlyOccurrence' => 3, 'startYear' => 4, 'endYear' => 5, 'creditCardId' => 6, 'updateTime' => 7, 'updateUser' => 8, 'reference' => 9, ),
+        self::TYPE_COLNAME       => array(FeesTableMap::COL_FEE_ID => 0, FeesTableMap::COL_FEE_TYPE => 1, FeesTableMap::COL_FEE_AMOUNT => 2, FeesTableMap::COL_YEARLY_OCCURRENCE => 3, FeesTableMap::COL_START_YEAR => 4, FeesTableMap::COL_END_YEAR => 5, FeesTableMap::COL_CREDIT_CARD_ID => 6, FeesTableMap::COL_UPDATE_TIME => 7, FeesTableMap::COL_UPDATE_USER => 8, FeesTableMap::COL_REFERENCE => 9, ),
+        self::TYPE_FIELDNAME     => array('fee_id' => 0, 'fee_type' => 1, 'fee_amount' => 2, 'yearly_occurrence' => 3, 'start_year' => 4, 'end_year' => 5, 'credit_card_id' => 6, 'update_time' => 7, 'update_user' => 8, 'reference' => 9, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -175,6 +180,7 @@ class FeesTableMap extends TableMap
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -335,6 +341,7 @@ class FeesTableMap extends TableMap
             $criteria->addSelectColumn(FeesTableMap::COL_CREDIT_CARD_ID);
             $criteria->addSelectColumn(FeesTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(FeesTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(FeesTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.fee_id');
             $criteria->addSelectColumn($alias . '.fee_type');
@@ -345,6 +352,7 @@ class FeesTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
+            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

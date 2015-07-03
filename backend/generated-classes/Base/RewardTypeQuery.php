@@ -23,12 +23,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardTypeQuery orderByRewardTypeId($order = Criteria::ASC) Order by the reward_type_id column
  * @method     ChildRewardTypeQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildRewardTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildRewardTypeQuery orderByIsFinite($order = Criteria::ASC) Order by the is_finite column
  * @method     ChildRewardTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildRewardTypeQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildRewardTypeQuery groupByRewardTypeId() Group by the reward_type_id column
  * @method     ChildRewardTypeQuery groupByName() Group by the name column
  * @method     ChildRewardTypeQuery groupByDescription() Group by the description column
+ * @method     ChildRewardTypeQuery groupByIsFinite() Group by the is_finite column
  * @method     ChildRewardTypeQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildRewardTypeQuery groupByUpdateUser() Group by the update_user column
  *
@@ -48,6 +50,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardType findOneByRewardTypeId(int $reward_type_id) Return the first ChildRewardType filtered by the reward_type_id column
  * @method     ChildRewardType findOneByName(string $name) Return the first ChildRewardType filtered by the name column
  * @method     ChildRewardType findOneByDescription(string $description) Return the first ChildRewardType filtered by the description column
+ * @method     ChildRewardType findOneByIsFinite(int $is_finite) Return the first ChildRewardType filtered by the is_finite column
  * @method     ChildRewardType findOneByUpdateTime(string $update_time) Return the first ChildRewardType filtered by the update_time column
  * @method     ChildRewardType findOneByUpdateUser(string $update_user) Return the first ChildRewardType filtered by the update_user column
  *
@@ -55,6 +58,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardType[]|ObjectCollection findByRewardTypeId(int $reward_type_id) Return ChildRewardType objects filtered by the reward_type_id column
  * @method     ChildRewardType[]|ObjectCollection findByName(string $name) Return ChildRewardType objects filtered by the name column
  * @method     ChildRewardType[]|ObjectCollection findByDescription(string $description) Return ChildRewardType objects filtered by the description column
+ * @method     ChildRewardType[]|ObjectCollection findByIsFinite(int $is_finite) Return ChildRewardType objects filtered by the is_finite column
  * @method     ChildRewardType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildRewardType objects filtered by the update_time column
  * @method     ChildRewardType[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildRewardType objects filtered by the update_user column
  * @method     ChildRewardType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -148,7 +152,7 @@ abstract class RewardTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_type_id, name, description, update_time, update_user FROM reward_type WHERE reward_type_id = :p0';
+        $sql = 'SELECT reward_type_id, name, description, is_finite, update_time, update_user FROM reward_type WHERE reward_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -335,6 +339,47 @@ abstract class RewardTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RewardTypeTableMap::COL_DESCRIPTION, $description, $comparison);
+    }
+
+    /**
+     * Filter the query on the is_finite column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByIsFinite(1234); // WHERE is_finite = 1234
+     * $query->filterByIsFinite(array(12, 34)); // WHERE is_finite IN (12, 34)
+     * $query->filterByIsFinite(array('min' => 12)); // WHERE is_finite > 12
+     * </code>
+     *
+     * @param     mixed $isFinite The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardTypeQuery The current query, for fluid interface
+     */
+    public function filterByIsFinite($isFinite = null, $comparison = null)
+    {
+        if (is_array($isFinite)) {
+            $useMinMax = false;
+            if (isset($isFinite['min'])) {
+                $this->addUsingAlias(RewardTypeTableMap::COL_IS_FINITE, $isFinite['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($isFinite['max'])) {
+                $this->addUsingAlias(RewardTypeTableMap::COL_IS_FINITE, $isFinite['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTypeTableMap::COL_IS_FINITE, $isFinite, $comparison);
     }
 
     /**

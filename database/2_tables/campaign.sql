@@ -21,6 +21,7 @@ CREATE TABLE campaign (
     value_in_yen int    NULL ,
     start_date date    NULL DEFAULT '1000-01-01' ,
     end_date date    NULL DEFAULT '9999-12-31' ,
+	`reference` VARCHAR(255) NULL DEFAULT NULL,
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT campaign_pk PRIMARY KEY (campaign_id)
@@ -36,6 +37,7 @@ CREATE TABLE campaign_history (
     value_in_yen int    NULL ,
     start_date date    DEFAULT '1000-01-01' ,
     end_date date    NULL ,
+	`reference` VARCHAR(255) NULL DEFAULT NULL,
     time_beg datetime NOT NULL,
     time_end datetime NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

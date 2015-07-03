@@ -30,6 +30,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCampaignQuery orderByEndDate($order = Criteria::ASC) Order by the end_date column
  * @method     ChildCampaignQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCampaignQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
+ * @method     ChildCampaignQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildCampaignQuery groupByCampaignId() Group by the campaign_id column
  * @method     ChildCampaignQuery groupByCreditCardId() Group by the credit_card_id column
@@ -41,6 +42,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCampaignQuery groupByEndDate() Group by the end_date column
  * @method     ChildCampaignQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCampaignQuery groupByUpdateUser() Group by the update_user column
+ * @method     ChildCampaignQuery groupByReference() Group by the reference column
  *
  * @method     ChildCampaignQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildCampaignQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -65,6 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCampaign findOneByEndDate(string $end_date) Return the first ChildCampaign filtered by the end_date column
  * @method     ChildCampaign findOneByUpdateTime(string $update_time) Return the first ChildCampaign filtered by the update_time column
  * @method     ChildCampaign findOneByUpdateUser(string $update_user) Return the first ChildCampaign filtered by the update_user column
+ * @method     ChildCampaign findOneByReference(string $reference) Return the first ChildCampaign filtered by the reference column
  *
  * @method     ChildCampaign[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCampaign objects based on current ModelCriteria
  * @method     ChildCampaign[]|ObjectCollection findByCampaignId(int $campaign_id) Return ChildCampaign objects filtered by the campaign_id column
@@ -77,6 +80,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCampaign[]|ObjectCollection findByEndDate(string $end_date) Return ChildCampaign objects filtered by the end_date column
  * @method     ChildCampaign[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCampaign objects filtered by the update_time column
  * @method     ChildCampaign[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCampaign objects filtered by the update_user column
+ * @method     ChildCampaign[]|ObjectCollection findByReference(string $reference) Return ChildCampaign objects filtered by the reference column
  * @method     ChildCampaign[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -168,7 +172,7 @@ abstract class CampaignQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT campaign_id, credit_card_id, campaign_name, description, max_points, value_in_yen, start_date, end_date, update_time, update_user FROM campaign WHERE campaign_id = :p0';
+        $sql = 'SELECT campaign_id, credit_card_id, campaign_name, description, max_points, value_in_yen, start_date, end_date, update_time, update_user, reference FROM campaign WHERE campaign_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -638,6 +642,35 @@ abstract class CampaignQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CampaignTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCampaignQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CampaignTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**
