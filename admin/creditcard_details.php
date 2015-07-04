@@ -346,6 +346,9 @@
                 label: "endYear:",
                 name: "endYear"
             }, {
+                label: "Reference",
+                name:  "Reference"
+            }, {
                 label: "Update date:",
                 name: "UpdateTime",
                 type: "readonly"
@@ -723,6 +726,7 @@
                     {"data": "YearlyOccurrence", width: 10},
                     {"data": "startYear", width: 10},
                     {"data": "endYear", width: 10},
+                    {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -1053,6 +1057,7 @@
                     <th>YearlyOccurrence</th>
                     <th>StartYear</th>
                     <th>EndYear</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1067,6 +1072,7 @@
                     <th>YearlyOccurrence</th>
                     <th>StartYear</th>
                     <th>EndYear</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>

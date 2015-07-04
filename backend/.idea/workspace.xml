@@ -5,89 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="">
-      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\popint_use.sql" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Campaign.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Campaign.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CampaignQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CampaignQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/CampaignTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/CampaignTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CardFeatureType.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CardFeatureType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CardFeatureTypeQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CardFeatureTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/CardFeatureTypeTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/CardFeatureTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CardFeatures.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CardFeatures.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CardFeaturesQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CardFeaturesQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/CardFeaturesTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/CardFeaturesTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Core/CreditCard.php" afterPath="$PROJECT_DIR$/Db/Core/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CreditCardQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CreditCardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/CreditCardTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/CreditCardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Core/Db.php" afterPath="$PROJECT_DIR$/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Discounts.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Discounts.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/DiscountsQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/DiscountsQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/DiscountsTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/DiscountsTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Fees.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Fees.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/FeesQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/FeesQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/FeesTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/FeesTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Insurance.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Insurance.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/InsuranceQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/InsuranceQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/InsuranceTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/InsuranceTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Interest.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Interest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/InterestQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/InterestQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/InterestTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/InterestTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" afterPath="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/Db/Json/JCampaign.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/Db/Json/JFeature.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFeatureType.php" afterPath="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFee.php" afterPath="$PROJECT_DIR$/Db/Json/JFee.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JReward.php" afterPath="$PROJECT_DIR$/Db/Json/JReward.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JRewardCategory.php" afterPath="$PROJECT_DIR$/Db/Json/JRewardCategory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JRewardType.php" afterPath="$PROJECT_DIR$/Db/Json/JRewardType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/Db/Json/Jinterest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointAcquisition.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointAcquisition.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointAcquisitionQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointAcquisitionQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/PointAcquisitionTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/PointAcquisitionTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointSystem.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointSystemQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointSystemQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/PointSystemTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/PointSystemTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointUsage.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointUsage.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointUsageQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointUsageQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/PointUsageTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/PointUsageTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointUse.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointUse.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointUseQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointUseQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/PointUseTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/PointUseTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Reward.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Reward.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/RewardTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/RewardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardType.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardTypeQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/RewardTypeTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/RewardTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/media/css/admin_editor.css" afterPath="$PROJECT_DIR$/../admin/media/css/admin_editor.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/campaign.sql" afterPath="$PROJECT_DIR$/../database/2_tables/campaign.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_feature_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_feature_type.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/card_features.sql" afterPath="$PROJECT_DIR$/../database/2_tables/card_features.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-conf/config.php" afterPath="$PROJECT_DIR$/generated-conf/config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" afterPath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_details.php" afterPath="$PROJECT_DIR$/../admin/creditcard_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_other.php" afterPath="$PROJECT_DIR$/../admin/creditcard_other.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/discounts.sql" afterPath="$PROJECT_DIR$/../database/6_data/discounts.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/interest.sql" afterPath="$PROJECT_DIR$/../database/2_tables/interest.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/point_system.sql" afterPath="$PROJECT_DIR$/../database/2_tables/point_system.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/point_system.sql" afterPath="$PROJECT_DIR$/../database/6_data/point_system.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/point_system.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/point_system.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/6_data/point_system.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/6_data/point_system.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/pointprogram_details.php" afterPath="$PROJECT_DIR$/../admin/pointprogram_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/moneyiq/reward.sql" afterPath="$PROJECT_DIR$/../database/6_data/moneyiq/reward.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/reward.sql" afterPath="$PROJECT_DIR$/../database/upgrade/0.16/2_tables/reward.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward_category.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward_category.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/6_data/reward_type.sql" afterPath="$PROJECT_DIR$/../database/6_data/reward_type.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/rewards.php" afterPath="$PROJECT_DIR$/../admin/rewards.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/generated-reversed-database/schema.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="backend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -110,6 +29,26 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="JFee.php" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state vertical-scroll-proportion="0.14461792" vertical-offset="34" max-vertical-offset="1500">
+                    <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="21" selection-end-column="22" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="backend" />
@@ -119,8 +58,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.18868" vertical-offset="45" max-vertical-offset="10125">
-              <caret line="104" column="66" selection-start-line="104" selection-start-column="66" selection-end-line="104" selection-end-column="66" />
+            <state vertical-scroll-proportion="-7.3584905" vertical-offset="0" max-vertical-offset="10125">
+              <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
               <folding>
                 <element signature="e#42#161#0#PHP" expanded="false" />
                 <element signature="e#193#273#0#PHP" expanded="false" />
@@ -535,66 +474,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JCreditCard.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.924528" vertical-offset="190" max-vertical-offset="1365">
-              <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JFeature.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="JFeature.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="2385">
+            <state vertical-scroll-proportion="0.038135592" vertical-offset="9" max-vertical-offset="2385">
               <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="9" selection-end-column="26" />
               <folding>
                 <element signature="e#107#133#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JFeatureType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-43.916668" vertical-offset="11" max-vertical-offset="1215">
-              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-              <folding>
-                <element signature="e#107#133#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JRewardType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JRewardType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.541666" vertical-offset="386" max-vertical-offset="1605">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JFee.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8504983" vertical-offset="236" max-vertical-offset="1440">
-              <caret line="90" column="40" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CreditCard.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.75" vertical-offset="945" max-vertical-offset="4305">
-              <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -656,9 +543,9 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/Db/Core/Db.php" />
         <option value="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JRewardType.php" />
         <option value="$PROJECT_DIR$/Db/Core/CreditCard.php" />
         <option value="$PROJECT_DIR$/Db/Json/JFee.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JRewardType.php" />
       </list>
     </option>
   </component>
@@ -681,9 +568,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="40" />
+    <option name="x" value="89" />
+    <option name="y" value="145" />
     <option name="width" value="1280" />
-    <option name="height" value="1400" />
+    <option name="height" value="1140" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -912,7 +800,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="40" width="1280" height="1400" extended-state="0" />
+    <frame x="89" y="145" width="1280" height="1140" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -938,27 +826,27 @@
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.119779356" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36327818" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527559" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20409836" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33770493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32939324" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -990,8 +878,13 @@
           <line>200</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/index.php</url>
+          <line>19</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="23" />
+      <option name="time" value="24" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1223,6 +1116,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4983388" vertical-offset="3386" max-vertical-offset="24720">
           <caret line="364" column="20" selection-start-line="364" selection-start-column="20" selection-end-line="364" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1326,210 +1220,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.754717" vertical-offset="130" max-vertical-offset="4275">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-            <element signature="e#133#145#0#PHP" expanded="true" />
-            <element signature="e#598#975#2#PHP" expanded="false" />
-            <element signature="e#625#717#0#PHP" expanded="false" />
-            <element signature="e#1024#1071#0#PHP" expanded="false" />
-            <element signature="e#1356#1609#0#PHP" expanded="false" />
-            <element signature="e#1421#1578#0#PHP" expanded="false" />
-            <element signature="e#1614#1893#0#PHP" expanded="false" />
-            <element signature="e#1681#1862#0#PHP" expanded="false" />
-            <element signature="e#1898#2196#0#PHP" expanded="false" />
-            <element signature="e#1971#2166#0#PHP" expanded="false" />
-            <element signature="e#2201#2564#0#PHP" expanded="false" />
-            <element signature="e#2277#2473#0#PHP" expanded="false" />
-            <element signature="e#3125#4664#0#PHP" expanded="false" />
-            <element signature="e#3350#3424#0#PHP" expanded="false" />
-            <element signature="e#3437#3523#0#PHP" expanded="false" />
-            <element signature="e#3536#3619#0#PHP" expanded="false" />
-            <element signature="e#3632#3720#0#PHP" expanded="false" />
-            <element signature="e#3733#3818#0#PHP" expanded="false" />
-            <element signature="e#3831#3907#0#PHP" expanded="false" />
-            <element signature="e#3920#4000#0#PHP" expanded="false" />
-            <element signature="e#4013#4087#0#PHP" expanded="false" />
-            <element signature="e#4100#4176#0#PHP" expanded="false" />
-            <element signature="e#4189#4269#0#PHP" expanded="false" />
-            <element signature="e#4282#4375#0#PHP" expanded="false" />
-            <element signature="e#4388#4477#0#PHP" expanded="false" />
-            <element signature="e#4490#4577#0#PHP" expanded="false" />
-            <element signature="e#4669#4969#0#PHP" expanded="false" />
-            <element signature="e#4736#4918#0#PHP" expanded="false" />
-            <element signature="e#4974#5568#0#PHP" expanded="false" />
-            <element signature="e#5573#6219#0#PHP" expanded="false" />
-            <element signature="e#5654#6004#0#PHP" expanded="false" />
-            <element signature="e#6224#6462#0#PHP" expanded="false" />
-            <element signature="e#6468#6731#0#PHP" expanded="false" />
-            <element signature="e#6541#6701#0#PHP" expanded="false" />
-            <element signature="e#6736#7406#0#PHP" expanded="false" />
-            <element signature="e#7411#7913#0#PHP" expanded="false" />
-            <element signature="e#7918#8177#0#PHP" expanded="false" />
-            <element signature="e#8194#8458#0#PHP" expanded="false" />
-            <element signature="e#8266#8428#0#PHP" expanded="false" />
-            <element signature="e#8463#8547#0#PHP" expanded="false" />
-            <element signature="e#8552#9328#0#PHP" expanded="false" />
-            <element signature="e#9333#9807#0#PHP" expanded="false" />
-            <element signature="e#9812#10043#0#PHP" expanded="false" />
-            <element signature="e#10156#10314#0#PHP" expanded="false" />
-            <element signature="e#10349#10654#0#PHP" expanded="false" />
-            <element signature="e#10444#10624#0#PHP" expanded="false" />
-            <element signature="e#10659#10956#0#PHP" expanded="false" />
-            <element signature="e#10747#10926#0#PHP" expanded="false" />
-            <element signature="e#11035#11192#0#PHP" expanded="false" />
-            <element signature="e#11228#11886#0#PHP" expanded="false" />
-            <element signature="e#11891#12195#0#PHP" expanded="false" />
-            <element signature="e#12200#12495#0#PHP" expanded="false" />
-            <element signature="e#12325#12440#0#PHP" expanded="false" />
-            <element signature="e#12529#12814#0#PHP" expanded="false" />
-            <element signature="e#12608#12784#0#PHP" expanded="false" />
-            <element signature="e#12819#13109#0#PHP" expanded="false" />
-            <element signature="e#12898#13079#0#PHP" expanded="false" />
-            <element signature="e#13114#13428#0#PHP" expanded="false" />
-            <element signature="e#13204#13398#0#PHP" expanded="false" />
-            <element signature="e#13433#14130#0#PHP" expanded="false" />
-            <element signature="e#14135#14405#0#PHP" expanded="false" />
-            <element signature="e#14410#14698#0#PHP" expanded="false" />
-            <element signature="e#14530#14643#0#PHP" expanded="false" />
-            <element signature="e#14722#14968#0#PHP" expanded="false" />
-            <element signature="e#14791#14938#0#PHP" expanded="false" />
-            <element signature="e#14973#15224#0#PHP" expanded="false" />
-            <element signature="e#15042#15194#0#PHP" expanded="false" />
-            <element signature="e#15229#15504#0#PHP" expanded="false" />
-            <element signature="e#15309#15474#0#PHP" expanded="false" />
-            <element signature="e#16111#16343#0#PHP" expanded="false" />
-            <element signature="e#16348#16606#0#PHP" expanded="false" />
-            <element signature="e#16448#16551#0#PHP" expanded="false" />
-            <element signature="e#16633#16910#0#PHP" expanded="false" />
-            <element signature="e#16709#16880#0#PHP" expanded="false" />
-            <element signature="e#16915#17166#0#PHP" expanded="false" />
-            <element signature="e#16988#17136#0#PHP" expanded="false" />
-            <element signature="e#17171#17427#0#PHP" expanded="false" />
-            <element signature="e#17244#17397#0#PHP" expanded="false" />
-            <element signature="e#17432#18069#0#PHP" expanded="false" />
-            <element signature="e#18074#18318#0#PHP" expanded="false" />
-            <element signature="e#18323#18593#0#PHP" expanded="false" />
-            <element signature="e#18431#18538#0#PHP" expanded="false" />
-            <element signature="e#18629#18919#0#PHP" expanded="false" />
-            <element signature="e#18710#18889#0#PHP" expanded="false" />
-            <element signature="e#18924#19187#0#PHP" expanded="false" />
-            <element signature="e#19001#19157#0#PHP" expanded="false" />
-            <element signature="e#19192#19460#0#PHP" expanded="false" />
-            <element signature="e#19269#19430#0#PHP" expanded="false" />
-            <element signature="e#19465#20142#0#PHP" expanded="false" />
-            <element signature="e#20147#20403#0#PHP" expanded="false" />
-            <element signature="e#20408#20690#0#PHP" expanded="false" />
-            <element signature="e#20524#20635#0#PHP" expanded="false" />
-            <element signature="e#20719#20974#0#PHP" expanded="false" />
-            <element signature="e#20792#20944#0#PHP" expanded="false" />
-            <element signature="e#20979#21239#0#PHP" expanded="false" />
-            <element signature="e#21052#21209#0#PHP" expanded="false" />
-            <element signature="e#21244#21528#0#PHP" expanded="false" />
-            <element signature="e#21328#21498#0#PHP" expanded="false" />
-            <element signature="e#21533#22166#0#PHP" expanded="false" />
-            <element signature="e#22171#22423#0#PHP" expanded="false" />
-            <element signature="e#22428#22696#0#PHP" expanded="false" />
-            <element signature="e#22534#22641#0#PHP" expanded="false" />
-            <element signature="e#22725#22990#0#PHP" expanded="false" />
-            <element signature="e#22799#22960#0#PHP" expanded="false" />
-            <element signature="e#22995#23280#0#PHP" expanded="false" />
-            <element signature="e#23072#23250#0#PHP" expanded="false" />
-            <element signature="e#23285#23932#0#PHP" expanded="false" />
-            <element signature="e#23937#24192#0#PHP" expanded="false" />
-            <element signature="e#24197#24470#0#PHP" expanded="false" />
-            <element signature="e#24307#24415#0#PHP" expanded="false" />
-            <element signature="e#24743#25340#0#PHP" expanded="false" />
-            <element signature="e#25345#25577#0#PHP" expanded="false" />
-            <element signature="e#25582#25844#0#PHP" expanded="false" />
-            <element signature="e#25682#25789#0#PHP" expanded="false" />
-            <element signature="e#26147#26806#0#PHP" expanded="false" />
-            <element signature="e#26811#27064#0#PHP" expanded="false" />
-            <element signature="e#27069#27344#0#PHP" expanded="false" />
-            <element signature="e#27183#27289#0#PHP" expanded="false" />
-            <element signature="e#27372#27634#0#PHP" expanded="false" />
-            <element signature="e#27639#28296#0#PHP" expanded="false" />
-            <element signature="e#28301#28548#0#PHP" expanded="false" />
-            <element signature="e#28553#28831#0#PHP" expanded="false" />
-            <element signature="e#28667#28776#0#PHP" expanded="false" />
-            <element signature="e#28856#29112#0#PHP" expanded="false" />
-            <element signature="e#28926#29082#0#PHP" expanded="false" />
-            <element signature="e#29117#29814#0#PHP" expanded="false" />
-            <element signature="e#29819#30137#0#PHP" expanded="false" />
-            <element signature="e#30142#30462#0#PHP" expanded="false" />
-            <element signature="e#30298#30407#0#PHP" expanded="false" />
-            <element signature="e#30526#31739#0#PHP" expanded="false" />
-            <element signature="e#30643#30915#0#PHP" expanded="false" />
-            <element signature="e#30968#31309#0#PHP" expanded="false" />
-            <element signature="e#31344#31683#0#PHP" expanded="false" />
-            <element signature="e#31420#31588#0#PHP" expanded="false" />
-            <element signature="e#31484#31574#0#PHP" expanded="false" />
-            <element signature="e#31601#31673#0#PHP" expanded="false" />
-            <element signature="e#31744#32343#0#PHP" expanded="false" />
-            <element signature="e#31887#31980#0#PHP" expanded="false" />
-            <element signature="e#31990#32285#0#PHP" expanded="false" />
-            <element signature="e#32348#32443#0#PHP" expanded="false" />
-            <element signature="e#32448#33009#0#PHP" expanded="false" />
-            <element signature="e#32604#32713#0#PHP" expanded="false" />
-            <element signature="e#33038#33323#0#PHP" expanded="false" />
-            <element signature="e#33116#33293#0#PHP" expanded="false" />
-            <element signature="e#33328#33593#0#PHP" expanded="false" />
-            <element signature="e#33403#33563#0#PHP" expanded="false" />
-            <element signature="e#33598#34237#0#PHP" expanded="false" />
-            <element signature="e#34242#34504#0#PHP" expanded="false" />
-            <element signature="e#34509#34840#0#PHP" expanded="false" />
-            <element signature="e#34672#34785#0#PHP" expanded="false" />
-            <element signature="e#34866#35121#0#PHP" expanded="false" />
-            <element signature="e#34937#35091#0#PHP" expanded="false" />
-            <element signature="e#35126#35401#0#PHP" expanded="false" />
-            <element signature="e#35200#35371#0#PHP" expanded="false" />
-            <element signature="e#35406#36023#0#PHP" expanded="false" />
-            <element signature="e#36028#36282#0#PHP" expanded="false" />
-            <element signature="e#36287#36600#0#PHP" expanded="false" />
-            <element signature="e#36440#36545#0#PHP" expanded="false" />
-            <element signature="e#36626#36882#0#PHP" expanded="false" />
-            <element signature="e#36697#36852#0#PHP" expanded="false" />
-            <element signature="e#36887#37163#0#PHP" expanded="false" />
-            <element signature="e#36961#37133#0#PHP" expanded="false" />
-            <element signature="e#37168#37787#0#PHP" expanded="false" />
-            <element signature="e#37792#38046#0#PHP" expanded="false" />
-            <element signature="e#38051#38365#0#PHP" expanded="false" />
-            <element signature="e#38205#38310#0#PHP" expanded="false" />
-            <element signature="e#38396#38620#0#PHP" expanded="false" />
-            <element signature="e#38625#38976#0#PHP" expanded="false" />
-            <element signature="e#38981#39351#0#PHP" expanded="false" />
-            <element signature="e#39356#39647#0#PHP" expanded="false" />
-            <element signature="e#39673#39932#0#PHP" expanded="false" />
-            <element signature="e#39937#40216#0#PHP" expanded="false" />
-            <element signature="e#40221#40848#0#PHP" expanded="false" />
-            <element signature="e#40853#41110#0#PHP" expanded="false" />
-            <element signature="e#41115#41431#0#PHP" expanded="false" />
-            <element signature="e#41716#41991#0#PHP" expanded="false" />
-            <element signature="e#41996#42613#0#PHP" expanded="false" />
-            <element signature="e#42618#42872#0#PHP" expanded="false" />
-            <element signature="e#42877#43190#0#PHP" expanded="false" />
-            <element signature="e#43210#43446#0#PHP" expanded="false" />
-            <element signature="e#43451#43707#0#PHP" expanded="false" />
-            <element signature="e#43712#44281#0#PHP" expanded="false" />
-            <element signature="e#44286#44525#0#PHP" expanded="false" />
-            <element signature="e#44530#44829#0#PHP" expanded="false" />
-            <element signature="e#44857#45144#0#PHP" expanded="false" />
-            <element signature="e#45149#45410#0#PHP" expanded="false" />
-            <element signature="e#45415#45681#0#PHP" expanded="false" />
-            <element signature="e#45686#46333#0#PHP" expanded="false" />
-            <element signature="e#46338#46585#0#PHP" expanded="false" />
-            <element signature="e#46590#46863#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.18868" vertical-offset="45" max-vertical-offset="10125">
-          <caret line="104" column="66" selection-start-line="104" selection-start-column="66" selection-end-line="104" selection-end-column="66" />
+        <state vertical-scroll-proportion="-7.3584905" vertical-offset="0" max-vertical-offset="10125">
+          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
           <folding>
             <element signature="e#42#161#0#PHP" expanded="false" />
             <element signature="e#193#273#0#PHP" expanded="false" />
@@ -1741,27 +1435,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.924528" vertical-offset="190" max-vertical-offset="1365">
-          <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.14461792" vertical-offset="34" max-vertical-offset="1500">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="21" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JRewardType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.875" vertical-offset="0" max-vertical-offset="2385">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="9" selection-end-column="26" />
-          <folding>
-            <element signature="e#107#133#0#PHP" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.3360723" vertical-offset="56" max-vertical-offset="1605">
+          <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-43.916668" vertical-offset="11" max-vertical-offset="1215">
+        <state vertical-scroll-proportion="0.8751027" vertical-offset="0" max-vertical-offset="1217">
           <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding>
             <element signature="e#107#133#0#PHP" expanded="true" />
@@ -1769,27 +1461,229 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JRewardType.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.541666" vertical-offset="386" max-vertical-offset="1605">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.81060606" vertical-offset="177" max-vertical-offset="1365">
+          <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.75" vertical-offset="945" max-vertical-offset="4305">
+        <state vertical-scroll-proportion="0.22245763" vertical-offset="945" max-vertical-offset="4305">
           <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+    <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8504983" vertical-offset="236" max-vertical-offset="1440">
-          <caret line="90" column="40" selection-start-line="90" selection-start-column="40" selection-end-line="90" selection-end-column="40" />
-          <folding />
+        <state vertical-scroll-proportion="-5.754717" vertical-offset="130" max-vertical-offset="4275">
+          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+            <element signature="e#133#145#0#PHP" expanded="true" />
+            <element signature="e#598#975#2#PHP" expanded="false" />
+            <element signature="e#625#717#0#PHP" expanded="false" />
+            <element signature="e#1024#1071#0#PHP" expanded="false" />
+            <element signature="e#1356#1609#0#PHP" expanded="false" />
+            <element signature="e#1421#1578#0#PHP" expanded="false" />
+            <element signature="e#1614#1893#0#PHP" expanded="false" />
+            <element signature="e#1681#1862#0#PHP" expanded="false" />
+            <element signature="e#1898#2196#0#PHP" expanded="false" />
+            <element signature="e#1971#2166#0#PHP" expanded="false" />
+            <element signature="e#2201#2564#0#PHP" expanded="false" />
+            <element signature="e#2277#2473#0#PHP" expanded="false" />
+            <element signature="e#3125#4664#0#PHP" expanded="false" />
+            <element signature="e#3350#3424#0#PHP" expanded="false" />
+            <element signature="e#3437#3523#0#PHP" expanded="false" />
+            <element signature="e#3536#3619#0#PHP" expanded="false" />
+            <element signature="e#3632#3720#0#PHP" expanded="false" />
+            <element signature="e#3733#3818#0#PHP" expanded="false" />
+            <element signature="e#3831#3907#0#PHP" expanded="false" />
+            <element signature="e#3920#4000#0#PHP" expanded="false" />
+            <element signature="e#4013#4087#0#PHP" expanded="false" />
+            <element signature="e#4100#4176#0#PHP" expanded="false" />
+            <element signature="e#4189#4269#0#PHP" expanded="false" />
+            <element signature="e#4282#4375#0#PHP" expanded="false" />
+            <element signature="e#4388#4477#0#PHP" expanded="false" />
+            <element signature="e#4490#4577#0#PHP" expanded="false" />
+            <element signature="e#4669#4969#0#PHP" expanded="false" />
+            <element signature="e#4736#4918#0#PHP" expanded="false" />
+            <element signature="e#4974#5568#0#PHP" expanded="false" />
+            <element signature="e#5573#6219#0#PHP" expanded="false" />
+            <element signature="e#5654#6004#0#PHP" expanded="false" />
+            <element signature="e#6224#6462#0#PHP" expanded="false" />
+            <element signature="e#6468#6731#0#PHP" expanded="false" />
+            <element signature="e#6541#6701#0#PHP" expanded="false" />
+            <element signature="e#6736#7406#0#PHP" expanded="false" />
+            <element signature="e#7411#7913#0#PHP" expanded="false" />
+            <element signature="e#7918#8177#0#PHP" expanded="false" />
+            <element signature="e#8194#8458#0#PHP" expanded="false" />
+            <element signature="e#8266#8428#0#PHP" expanded="false" />
+            <element signature="e#8463#8547#0#PHP" expanded="false" />
+            <element signature="e#8552#9328#0#PHP" expanded="false" />
+            <element signature="e#9333#9807#0#PHP" expanded="false" />
+            <element signature="e#9812#10043#0#PHP" expanded="false" />
+            <element signature="e#10156#10314#0#PHP" expanded="false" />
+            <element signature="e#10349#10654#0#PHP" expanded="false" />
+            <element signature="e#10444#10624#0#PHP" expanded="false" />
+            <element signature="e#10659#10956#0#PHP" expanded="false" />
+            <element signature="e#10747#10926#0#PHP" expanded="false" />
+            <element signature="e#11035#11192#0#PHP" expanded="false" />
+            <element signature="e#11228#11886#0#PHP" expanded="false" />
+            <element signature="e#11891#12195#0#PHP" expanded="false" />
+            <element signature="e#12200#12495#0#PHP" expanded="false" />
+            <element signature="e#12325#12440#0#PHP" expanded="false" />
+            <element signature="e#12529#12814#0#PHP" expanded="false" />
+            <element signature="e#12608#12784#0#PHP" expanded="false" />
+            <element signature="e#12819#13109#0#PHP" expanded="false" />
+            <element signature="e#12898#13079#0#PHP" expanded="false" />
+            <element signature="e#13114#13428#0#PHP" expanded="false" />
+            <element signature="e#13204#13398#0#PHP" expanded="false" />
+            <element signature="e#13433#14130#0#PHP" expanded="false" />
+            <element signature="e#14135#14405#0#PHP" expanded="false" />
+            <element signature="e#14410#14698#0#PHP" expanded="false" />
+            <element signature="e#14530#14643#0#PHP" expanded="false" />
+            <element signature="e#14722#14968#0#PHP" expanded="false" />
+            <element signature="e#14791#14938#0#PHP" expanded="false" />
+            <element signature="e#14973#15224#0#PHP" expanded="false" />
+            <element signature="e#15042#15194#0#PHP" expanded="false" />
+            <element signature="e#15229#15504#0#PHP" expanded="false" />
+            <element signature="e#15309#15474#0#PHP" expanded="false" />
+            <element signature="e#16111#16343#0#PHP" expanded="false" />
+            <element signature="e#16348#16606#0#PHP" expanded="false" />
+            <element signature="e#16448#16551#0#PHP" expanded="false" />
+            <element signature="e#16633#16910#0#PHP" expanded="false" />
+            <element signature="e#16709#16880#0#PHP" expanded="false" />
+            <element signature="e#16915#17166#0#PHP" expanded="false" />
+            <element signature="e#16988#17136#0#PHP" expanded="false" />
+            <element signature="e#17171#17427#0#PHP" expanded="false" />
+            <element signature="e#17244#17397#0#PHP" expanded="false" />
+            <element signature="e#17432#18069#0#PHP" expanded="false" />
+            <element signature="e#18074#18318#0#PHP" expanded="false" />
+            <element signature="e#18323#18593#0#PHP" expanded="false" />
+            <element signature="e#18431#18538#0#PHP" expanded="false" />
+            <element signature="e#18629#18919#0#PHP" expanded="false" />
+            <element signature="e#18710#18889#0#PHP" expanded="false" />
+            <element signature="e#18924#19187#0#PHP" expanded="false" />
+            <element signature="e#19001#19157#0#PHP" expanded="false" />
+            <element signature="e#19192#19460#0#PHP" expanded="false" />
+            <element signature="e#19269#19430#0#PHP" expanded="false" />
+            <element signature="e#19465#20142#0#PHP" expanded="false" />
+            <element signature="e#20147#20403#0#PHP" expanded="false" />
+            <element signature="e#20408#20690#0#PHP" expanded="false" />
+            <element signature="e#20524#20635#0#PHP" expanded="false" />
+            <element signature="e#20719#20974#0#PHP" expanded="false" />
+            <element signature="e#20792#20944#0#PHP" expanded="false" />
+            <element signature="e#20979#21239#0#PHP" expanded="false" />
+            <element signature="e#21052#21209#0#PHP" expanded="false" />
+            <element signature="e#21244#21528#0#PHP" expanded="false" />
+            <element signature="e#21328#21498#0#PHP" expanded="false" />
+            <element signature="e#21533#22166#0#PHP" expanded="false" />
+            <element signature="e#22171#22423#0#PHP" expanded="false" />
+            <element signature="e#22428#22696#0#PHP" expanded="false" />
+            <element signature="e#22534#22641#0#PHP" expanded="false" />
+            <element signature="e#22725#22990#0#PHP" expanded="false" />
+            <element signature="e#22799#22960#0#PHP" expanded="false" />
+            <element signature="e#22995#23280#0#PHP" expanded="false" />
+            <element signature="e#23072#23250#0#PHP" expanded="false" />
+            <element signature="e#23285#23932#0#PHP" expanded="false" />
+            <element signature="e#23937#24192#0#PHP" expanded="false" />
+            <element signature="e#24197#24470#0#PHP" expanded="false" />
+            <element signature="e#24307#24415#0#PHP" expanded="false" />
+            <element signature="e#24743#25340#0#PHP" expanded="false" />
+            <element signature="e#25345#25577#0#PHP" expanded="false" />
+            <element signature="e#25582#25844#0#PHP" expanded="false" />
+            <element signature="e#25682#25789#0#PHP" expanded="false" />
+            <element signature="e#26147#26806#0#PHP" expanded="false" />
+            <element signature="e#26811#27064#0#PHP" expanded="false" />
+            <element signature="e#27069#27344#0#PHP" expanded="false" />
+            <element signature="e#27183#27289#0#PHP" expanded="false" />
+            <element signature="e#27372#27634#0#PHP" expanded="false" />
+            <element signature="e#27639#28296#0#PHP" expanded="false" />
+            <element signature="e#28301#28548#0#PHP" expanded="false" />
+            <element signature="e#28553#28831#0#PHP" expanded="false" />
+            <element signature="e#28667#28776#0#PHP" expanded="false" />
+            <element signature="e#28856#29112#0#PHP" expanded="false" />
+            <element signature="e#28926#29082#0#PHP" expanded="false" />
+            <element signature="e#29117#29814#0#PHP" expanded="false" />
+            <element signature="e#29819#30137#0#PHP" expanded="false" />
+            <element signature="e#30142#30462#0#PHP" expanded="false" />
+            <element signature="e#30298#30407#0#PHP" expanded="false" />
+            <element signature="e#30526#31739#0#PHP" expanded="false" />
+            <element signature="e#30643#30915#0#PHP" expanded="false" />
+            <element signature="e#30968#31309#0#PHP" expanded="false" />
+            <element signature="e#31344#31683#0#PHP" expanded="false" />
+            <element signature="e#31420#31588#0#PHP" expanded="false" />
+            <element signature="e#31484#31574#0#PHP" expanded="false" />
+            <element signature="e#31601#31673#0#PHP" expanded="false" />
+            <element signature="e#31744#32343#0#PHP" expanded="false" />
+            <element signature="e#31887#31980#0#PHP" expanded="false" />
+            <element signature="e#31990#32285#0#PHP" expanded="false" />
+            <element signature="e#32348#32443#0#PHP" expanded="false" />
+            <element signature="e#32448#33009#0#PHP" expanded="false" />
+            <element signature="e#32604#32713#0#PHP" expanded="false" />
+            <element signature="e#33038#33323#0#PHP" expanded="false" />
+            <element signature="e#33116#33293#0#PHP" expanded="false" />
+            <element signature="e#33328#33593#0#PHP" expanded="false" />
+            <element signature="e#33403#33563#0#PHP" expanded="false" />
+            <element signature="e#33598#34237#0#PHP" expanded="false" />
+            <element signature="e#34242#34504#0#PHP" expanded="false" />
+            <element signature="e#34509#34840#0#PHP" expanded="false" />
+            <element signature="e#34672#34785#0#PHP" expanded="false" />
+            <element signature="e#34866#35121#0#PHP" expanded="false" />
+            <element signature="e#34937#35091#0#PHP" expanded="false" />
+            <element signature="e#35126#35401#0#PHP" expanded="false" />
+            <element signature="e#35200#35371#0#PHP" expanded="false" />
+            <element signature="e#35406#36023#0#PHP" expanded="false" />
+            <element signature="e#36028#36282#0#PHP" expanded="false" />
+            <element signature="e#36287#36600#0#PHP" expanded="false" />
+            <element signature="e#36440#36545#0#PHP" expanded="false" />
+            <element signature="e#36626#36882#0#PHP" expanded="false" />
+            <element signature="e#36697#36852#0#PHP" expanded="false" />
+            <element signature="e#36887#37163#0#PHP" expanded="false" />
+            <element signature="e#36961#37133#0#PHP" expanded="false" />
+            <element signature="e#37168#37787#0#PHP" expanded="false" />
+            <element signature="e#37792#38046#0#PHP" expanded="false" />
+            <element signature="e#38051#38365#0#PHP" expanded="false" />
+            <element signature="e#38205#38310#0#PHP" expanded="false" />
+            <element signature="e#38396#38620#0#PHP" expanded="false" />
+            <element signature="e#38625#38976#0#PHP" expanded="false" />
+            <element signature="e#38981#39351#0#PHP" expanded="false" />
+            <element signature="e#39356#39647#0#PHP" expanded="false" />
+            <element signature="e#39673#39932#0#PHP" expanded="false" />
+            <element signature="e#39937#40216#0#PHP" expanded="false" />
+            <element signature="e#40221#40848#0#PHP" expanded="false" />
+            <element signature="e#40853#41110#0#PHP" expanded="false" />
+            <element signature="e#41115#41431#0#PHP" expanded="false" />
+            <element signature="e#41716#41991#0#PHP" expanded="false" />
+            <element signature="e#41996#42613#0#PHP" expanded="false" />
+            <element signature="e#42618#42872#0#PHP" expanded="false" />
+            <element signature="e#42877#43190#0#PHP" expanded="false" />
+            <element signature="e#43210#43446#0#PHP" expanded="false" />
+            <element signature="e#43451#43707#0#PHP" expanded="false" />
+            <element signature="e#43712#44281#0#PHP" expanded="false" />
+            <element signature="e#44286#44525#0#PHP" expanded="false" />
+            <element signature="e#44530#44829#0#PHP" expanded="false" />
+            <element signature="e#44857#45144#0#PHP" expanded="false" />
+            <element signature="e#45149#45410#0#PHP" expanded="false" />
+            <element signature="e#45415#45681#0#PHP" expanded="false" />
+            <element signature="e#45686#46333#0#PHP" expanded="false" />
+            <element signature="e#46338#46585#0#PHP" expanded="false" />
+            <element signature="e#46590#46863#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.038135592" vertical-offset="9" max-vertical-offset="2385">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="9" selection-end-column="26" />
+          <folding>
+            <element signature="e#107#133#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

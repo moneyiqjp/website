@@ -19,6 +19,7 @@ class JFee implements JSONInterface{
     public $startYear;
     public $endYear;
     public $CreditCard;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -39,6 +40,7 @@ class JFee implements JSONInterface{
         $mine->YearlyOccurrence = $item->getYearlyOccurrence();
         $mine->startYear = $item->getStartYear();
         $mine->endYear= $item->getEndYear();
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -54,6 +56,7 @@ class JFee implements JSONInterface{
         if(ArrayUtils::KEY_EXISTS($data,'YearlyOccurrence')) $mine->YearlyOccurrence = $data['YearlyOccurrence'];
         if(ArrayUtils::KEY_EXISTS($data,'startYear')) $mine->startYear = $data['startYear'];
         if(ArrayUtils::KEY_EXISTS($data,'endYear')) $mine->endYear = $data['endYear'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
 
         $tmp = $data['CreditCard'];
         if(!ArrayUtils::KEY_EXISTS($tmp,'Name')) $tmp['Name']="";
@@ -89,8 +92,9 @@ class JFee implements JSONInterface{
         if(FieldUtils::NUMBER_IS_DEFINED($this->YearlyOccurrence)) $item->setYearlyOccurrence($this->YearlyOccurrence);
         if(FieldUtils::NUMBER_IS_DEFINED($this->startYear)) $item->setStartYear($this->startYear);
         if(FieldUtils::NUMBER_IS_DEFINED($this->endYear)) $item->setEndYear($this->endYear);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
         $item->setUpdateTime(new \DateTime());
-        if(FieldUtils::ID_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
+        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
 
