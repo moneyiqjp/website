@@ -5,8 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d96040a-c7f8-4cdb-9a2d-96302bc20952" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFee.php" afterPath="$PROJECT_DIR$/Db/Json/JFee.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Db/Json/JUnit.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../admin/scripts/datatables_ext.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../admin/link.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Core/CreditCard.php" afterPath="$PROJECT_DIR$/Db/Core/CreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/CreditCardQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/CreditCardQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/CreditCardTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/CreditCardTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Core/Db.php" afterPath="$PROJECT_DIR$/Db/Core/Db.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Utility/FieldUtils.php" afterPath="$PROJECT_DIR$/Db/Utility/FieldUtils.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/Db/Json/JCampaign.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JCreditCard.php" afterPath="$PROJECT_DIR$/Db/Json/JCreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JDiscount.php" afterPath="$PROJECT_DIR$/Db/Json/JDiscount.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/Db/Json/JFeature.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JInsurance.php" afterPath="$PROJECT_DIR$/Db/Json/JInsurance.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointAcquisition.php" afterPath="$PROJECT_DIR$/Db/Json/JPointAcquisition.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/JReward.php" afterPath="$PROJECT_DIR$/Db/Json/JReward.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/Db/Json/Jinterest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/PointSystem.php" afterPath="$PROJECT_DIR$/generated-classes/Base/PointSystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/Reward.php" afterPath="$PROJECT_DIR$/generated-classes/Base/Reward.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardCategory.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardCategory.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardQuery.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Map/RewardTableMap.php" afterPath="$PROJECT_DIR$/generated-classes/Map/RewardTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-classes/Base/RewardType.php" afterPath="$PROJECT_DIR$/generated-classes/Base/RewardType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" afterPath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_details.php" afterPath="$PROJECT_DIR$/../admin/creditcard_details.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/creditcard_overview.php" afterPath="$PROJECT_DIR$/../admin/creditcard_overview.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/pointprogram_details.php" afterPath="$PROJECT_DIR$/../admin/pointprogram_details.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/pointprogram_overview.php" afterPath="$PROJECT_DIR$/../admin/pointprogram_overview.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/rewards.php" afterPath="$PROJECT_DIR$/../admin/rewards.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/generated-reversed-database/schema.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../admin/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="backend.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,29 +64,6 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="DaemonCodeAnalyzer">
-    <disable_hints />
-  </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="JFee.php" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.14461792" vertical-offset="34" max-vertical-offset="1500">
-                    <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="21" selection-end-column="22" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="backend" />
@@ -58,15 +73,11 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3584905" vertical-offset="0" max-vertical-offset="10125">
-              <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
+            <state vertical-scroll-proportion="-4.375">
+              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
               <folding>
-                <element signature="e#42#161#0#PHP" expanded="false" />
-                <element signature="e#193#273#0#PHP" expanded="false" />
-                <element signature="e#903#1250#1#PHP" expanded="false" />
                 <element signature="e#1281#1630#1#PHP" expanded="false" />
                 <element signature="e#1664#2019#1#PHP" expanded="false" />
-                <element signature="e#2055#2413#1#PHP" expanded="false" />
                 <element signature="e#2445#2843#1#PHP" expanded="false" />
                 <element signature="e#2613#2803#0#PHP" expanded="false" />
                 <element signature="e#2685#2803#0#PHP" expanded="false" />
@@ -83,6 +94,7 @@
                 <element signature="e#6190#6706#1#PHP" expanded="false" />
                 <element signature="e#6748#7198#1#PHP" expanded="false" />
                 <element signature="e#7239#7690#1#PHP" expanded="false" />
+                <element signature="e#7730#8128#1#PHP" expanded="false" />
                 <element signature="e#10494#10697#1#PHP" expanded="false" />
                 <element signature="e#10741#11258#1#PHP" expanded="false" />
                 <element signature="e#10975#11219#0#PHP" expanded="false" />
@@ -272,215 +284,90 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Db.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Db.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.754717" vertical-offset="130" max-vertical-offset="4275">
-              <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+            <state vertical-scroll-proportion="1.1738672">
+              <caret line="1421" column="22" selection-start-line="1421" selection-start-column="22" selection-end-line="1421" selection-end-column="22" />
               <folding>
                 <element signature="e#6#87#0#PHP" expanded="true" />
                 <element signature="e#133#145#0#PHP" expanded="true" />
-                <element signature="e#598#975#2#PHP" expanded="false" />
-                <element signature="e#625#717#0#PHP" expanded="false" />
-                <element signature="e#1024#1071#0#PHP" expanded="false" />
-                <element signature="e#1356#1609#0#PHP" expanded="false" />
-                <element signature="e#1421#1578#0#PHP" expanded="false" />
-                <element signature="e#1614#1893#0#PHP" expanded="false" />
-                <element signature="e#1681#1862#0#PHP" expanded="false" />
-                <element signature="e#1898#2196#0#PHP" expanded="false" />
-                <element signature="e#1971#2166#0#PHP" expanded="false" />
-                <element signature="e#2201#2564#0#PHP" expanded="false" />
-                <element signature="e#2277#2473#0#PHP" expanded="false" />
-                <element signature="e#3125#4664#0#PHP" expanded="false" />
-                <element signature="e#3350#3424#0#PHP" expanded="false" />
-                <element signature="e#3437#3523#0#PHP" expanded="false" />
-                <element signature="e#3536#3619#0#PHP" expanded="false" />
-                <element signature="e#3632#3720#0#PHP" expanded="false" />
-                <element signature="e#3733#3818#0#PHP" expanded="false" />
-                <element signature="e#3831#3907#0#PHP" expanded="false" />
-                <element signature="e#3920#4000#0#PHP" expanded="false" />
-                <element signature="e#4013#4087#0#PHP" expanded="false" />
-                <element signature="e#4100#4176#0#PHP" expanded="false" />
-                <element signature="e#4189#4269#0#PHP" expanded="false" />
-                <element signature="e#4282#4375#0#PHP" expanded="false" />
-                <element signature="e#4388#4477#0#PHP" expanded="false" />
-                <element signature="e#4490#4577#0#PHP" expanded="false" />
-                <element signature="e#4669#4969#0#PHP" expanded="false" />
-                <element signature="e#4736#4918#0#PHP" expanded="false" />
-                <element signature="e#4974#5568#0#PHP" expanded="false" />
-                <element signature="e#5573#6219#0#PHP" expanded="false" />
-                <element signature="e#5654#6004#0#PHP" expanded="false" />
-                <element signature="e#6224#6462#0#PHP" expanded="false" />
-                <element signature="e#6468#6731#0#PHP" expanded="false" />
-                <element signature="e#6541#6701#0#PHP" expanded="false" />
-                <element signature="e#6736#7406#0#PHP" expanded="false" />
-                <element signature="e#7411#7913#0#PHP" expanded="false" />
-                <element signature="e#7918#8177#0#PHP" expanded="false" />
-                <element signature="e#8194#8458#0#PHP" expanded="false" />
-                <element signature="e#8266#8428#0#PHP" expanded="false" />
-                <element signature="e#8463#8547#0#PHP" expanded="false" />
-                <element signature="e#8552#9328#0#PHP" expanded="false" />
-                <element signature="e#9333#9807#0#PHP" expanded="false" />
-                <element signature="e#9812#10043#0#PHP" expanded="false" />
-                <element signature="e#10156#10314#0#PHP" expanded="false" />
-                <element signature="e#10349#10654#0#PHP" expanded="false" />
-                <element signature="e#10444#10624#0#PHP" expanded="false" />
-                <element signature="e#10659#10956#0#PHP" expanded="false" />
-                <element signature="e#10747#10926#0#PHP" expanded="false" />
-                <element signature="e#11035#11192#0#PHP" expanded="false" />
-                <element signature="e#11228#11886#0#PHP" expanded="false" />
-                <element signature="e#11891#12195#0#PHP" expanded="false" />
-                <element signature="e#12200#12495#0#PHP" expanded="false" />
-                <element signature="e#12325#12440#0#PHP" expanded="false" />
-                <element signature="e#12529#12814#0#PHP" expanded="false" />
-                <element signature="e#12608#12784#0#PHP" expanded="false" />
-                <element signature="e#12819#13109#0#PHP" expanded="false" />
-                <element signature="e#12898#13079#0#PHP" expanded="false" />
-                <element signature="e#13114#13428#0#PHP" expanded="false" />
-                <element signature="e#13204#13398#0#PHP" expanded="false" />
-                <element signature="e#13433#14130#0#PHP" expanded="false" />
-                <element signature="e#14135#14405#0#PHP" expanded="false" />
-                <element signature="e#14410#14698#0#PHP" expanded="false" />
-                <element signature="e#14530#14643#0#PHP" expanded="false" />
-                <element signature="e#14722#14968#0#PHP" expanded="false" />
-                <element signature="e#14791#14938#0#PHP" expanded="false" />
-                <element signature="e#14973#15224#0#PHP" expanded="false" />
-                <element signature="e#15042#15194#0#PHP" expanded="false" />
-                <element signature="e#15229#15504#0#PHP" expanded="false" />
-                <element signature="e#15309#15474#0#PHP" expanded="false" />
-                <element signature="e#16111#16343#0#PHP" expanded="false" />
-                <element signature="e#16348#16606#0#PHP" expanded="false" />
-                <element signature="e#16448#16551#0#PHP" expanded="false" />
-                <element signature="e#16633#16910#0#PHP" expanded="false" />
-                <element signature="e#16709#16880#0#PHP" expanded="false" />
-                <element signature="e#16915#17166#0#PHP" expanded="false" />
-                <element signature="e#16988#17136#0#PHP" expanded="false" />
-                <element signature="e#17171#17427#0#PHP" expanded="false" />
-                <element signature="e#17244#17397#0#PHP" expanded="false" />
-                <element signature="e#17432#18069#0#PHP" expanded="false" />
-                <element signature="e#18074#18318#0#PHP" expanded="false" />
-                <element signature="e#18323#18593#0#PHP" expanded="false" />
-                <element signature="e#18431#18538#0#PHP" expanded="false" />
-                <element signature="e#18629#18919#0#PHP" expanded="false" />
-                <element signature="e#18710#18889#0#PHP" expanded="false" />
-                <element signature="e#18924#19187#0#PHP" expanded="false" />
-                <element signature="e#19001#19157#0#PHP" expanded="false" />
-                <element signature="e#19192#19460#0#PHP" expanded="false" />
-                <element signature="e#19269#19430#0#PHP" expanded="false" />
-                <element signature="e#19465#20142#0#PHP" expanded="false" />
-                <element signature="e#20147#20403#0#PHP" expanded="false" />
-                <element signature="e#20408#20690#0#PHP" expanded="false" />
-                <element signature="e#20524#20635#0#PHP" expanded="false" />
-                <element signature="e#20719#20974#0#PHP" expanded="false" />
-                <element signature="e#20792#20944#0#PHP" expanded="false" />
-                <element signature="e#20979#21239#0#PHP" expanded="false" />
-                <element signature="e#21052#21209#0#PHP" expanded="false" />
-                <element signature="e#21244#21528#0#PHP" expanded="false" />
-                <element signature="e#21328#21498#0#PHP" expanded="false" />
-                <element signature="e#21533#22166#0#PHP" expanded="false" />
-                <element signature="e#22171#22423#0#PHP" expanded="false" />
-                <element signature="e#22428#22696#0#PHP" expanded="false" />
-                <element signature="e#22534#22641#0#PHP" expanded="false" />
-                <element signature="e#22725#22990#0#PHP" expanded="false" />
-                <element signature="e#22799#22960#0#PHP" expanded="false" />
-                <element signature="e#22995#23280#0#PHP" expanded="false" />
-                <element signature="e#23072#23250#0#PHP" expanded="false" />
-                <element signature="e#23285#23932#0#PHP" expanded="false" />
-                <element signature="e#23937#24192#0#PHP" expanded="false" />
-                <element signature="e#24197#24470#0#PHP" expanded="false" />
-                <element signature="e#24307#24415#0#PHP" expanded="false" />
-                <element signature="e#24743#25340#0#PHP" expanded="false" />
-                <element signature="e#25345#25577#0#PHP" expanded="false" />
-                <element signature="e#25582#25844#0#PHP" expanded="false" />
-                <element signature="e#25682#25789#0#PHP" expanded="false" />
-                <element signature="e#26147#26806#0#PHP" expanded="false" />
-                <element signature="e#26811#27064#0#PHP" expanded="false" />
-                <element signature="e#27069#27344#0#PHP" expanded="false" />
-                <element signature="e#27183#27289#0#PHP" expanded="false" />
-                <element signature="e#27372#27634#0#PHP" expanded="false" />
-                <element signature="e#27639#28296#0#PHP" expanded="false" />
-                <element signature="e#28301#28548#0#PHP" expanded="false" />
-                <element signature="e#28553#28831#0#PHP" expanded="false" />
-                <element signature="e#28667#28776#0#PHP" expanded="false" />
-                <element signature="e#28856#29112#0#PHP" expanded="false" />
-                <element signature="e#28926#29082#0#PHP" expanded="false" />
-                <element signature="e#29117#29814#0#PHP" expanded="false" />
-                <element signature="e#29819#30137#0#PHP" expanded="false" />
-                <element signature="e#30142#30462#0#PHP" expanded="false" />
-                <element signature="e#30298#30407#0#PHP" expanded="false" />
-                <element signature="e#30526#31739#0#PHP" expanded="false" />
-                <element signature="e#30643#30915#0#PHP" expanded="false" />
-                <element signature="e#30968#31309#0#PHP" expanded="false" />
-                <element signature="e#31344#31683#0#PHP" expanded="false" />
-                <element signature="e#31420#31588#0#PHP" expanded="false" />
-                <element signature="e#31484#31574#0#PHP" expanded="false" />
-                <element signature="e#31601#31673#0#PHP" expanded="false" />
-                <element signature="e#31744#32343#0#PHP" expanded="false" />
-                <element signature="e#31887#31980#0#PHP" expanded="false" />
-                <element signature="e#31990#32285#0#PHP" expanded="false" />
-                <element signature="e#32348#32443#0#PHP" expanded="false" />
-                <element signature="e#32448#33009#0#PHP" expanded="false" />
-                <element signature="e#32604#32713#0#PHP" expanded="false" />
-                <element signature="e#33038#33323#0#PHP" expanded="false" />
-                <element signature="e#33116#33293#0#PHP" expanded="false" />
-                <element signature="e#33328#33593#0#PHP" expanded="false" />
-                <element signature="e#33403#33563#0#PHP" expanded="false" />
-                <element signature="e#33598#34237#0#PHP" expanded="false" />
-                <element signature="e#34242#34504#0#PHP" expanded="false" />
-                <element signature="e#34509#34840#0#PHP" expanded="false" />
-                <element signature="e#34672#34785#0#PHP" expanded="false" />
-                <element signature="e#34866#35121#0#PHP" expanded="false" />
-                <element signature="e#34937#35091#0#PHP" expanded="false" />
-                <element signature="e#35126#35401#0#PHP" expanded="false" />
-                <element signature="e#35200#35371#0#PHP" expanded="false" />
-                <element signature="e#35406#36023#0#PHP" expanded="false" />
-                <element signature="e#36028#36282#0#PHP" expanded="false" />
-                <element signature="e#36287#36600#0#PHP" expanded="false" />
-                <element signature="e#36440#36545#0#PHP" expanded="false" />
-                <element signature="e#36626#36882#0#PHP" expanded="false" />
-                <element signature="e#36697#36852#0#PHP" expanded="false" />
-                <element signature="e#36887#37163#0#PHP" expanded="false" />
-                <element signature="e#36961#37133#0#PHP" expanded="false" />
-                <element signature="e#37168#37787#0#PHP" expanded="false" />
-                <element signature="e#37792#38046#0#PHP" expanded="false" />
-                <element signature="e#38051#38365#0#PHP" expanded="false" />
-                <element signature="e#38205#38310#0#PHP" expanded="false" />
-                <element signature="e#38396#38620#0#PHP" expanded="false" />
-                <element signature="e#38625#38976#0#PHP" expanded="false" />
-                <element signature="e#38981#39351#0#PHP" expanded="false" />
-                <element signature="e#39356#39647#0#PHP" expanded="false" />
-                <element signature="e#39673#39932#0#PHP" expanded="false" />
-                <element signature="e#39937#40216#0#PHP" expanded="false" />
-                <element signature="e#40221#40848#0#PHP" expanded="false" />
-                <element signature="e#40853#41110#0#PHP" expanded="false" />
-                <element signature="e#41115#41431#0#PHP" expanded="false" />
-                <element signature="e#41716#41991#0#PHP" expanded="false" />
-                <element signature="e#41996#42613#0#PHP" expanded="false" />
-                <element signature="e#42618#42872#0#PHP" expanded="false" />
-                <element signature="e#42877#43190#0#PHP" expanded="false" />
-                <element signature="e#43210#43446#0#PHP" expanded="false" />
-                <element signature="e#43451#43707#0#PHP" expanded="false" />
-                <element signature="e#43712#44281#0#PHP" expanded="false" />
-                <element signature="e#44286#44525#0#PHP" expanded="false" />
-                <element signature="e#44530#44829#0#PHP" expanded="false" />
-                <element signature="e#44857#45144#0#PHP" expanded="false" />
-                <element signature="e#45149#45410#0#PHP" expanded="false" />
-                <element signature="e#45415#45681#0#PHP" expanded="false" />
-                <element signature="e#45686#46333#0#PHP" expanded="false" />
-                <element signature="e#46338#46585#0#PHP" expanded="false" />
-                <element signature="e#46590#46863#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JFeature.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
+      <file leaf-file-name="ArrayUtils.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Utility/ArrayUtils.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.038135592" vertical-offset="9" max-vertical-offset="2385">
-              <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="9" selection-end-column="26" />
+            <state vertical-scroll-proportion="-3.75">
+              <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FieldUtils.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Utility/FieldUtils.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.25">
+              <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JSONInterface.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JReward.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Json/JReward.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.875">
+              <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JInsurance.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Json/JInsurance.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.375">
+              <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
               <folding>
                 <element signature="e#107#133#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JFee.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.5">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="e#114#140#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreditCard.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.625">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="e#6#87#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -495,7 +382,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Db/Json/Feature.php" />
         <option value="$PROJECT_DIR$/Db/Json/Description.php" />
         <option value="$PROJECT_DIR$/Db/Json/Classes.php" />
         <option value="$PROJECT_DIR$/Db/Core/db.php" />
@@ -516,43 +402,55 @@
         <option value="$PROJECT_DIR$/Utility/FieldUtils.php" />
         <option value="$PROJECT_DIR$/Utility/ArrayUtils.php" />
         <option value="$PROJECT_DIR$/Db/Json/JSONInterface.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JDiscount.php" />
         <option value="$PROJECT_DIR$/Db/Utility/ArrayUtils.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JInsuranceType.php" />
         <option value="$PROJECT_DIR$/generated-classes/Base/Reward.php" />
         <option value="$PROJECT_DIR$/Db/Json/CStorePointMapping.php" />
         <option value="$PROJECT_DIR$/generated-classes/Base/CreditCard.php" />
         <option value="$PROJECT_DIR$/generated-classes/CardPointSystem.php" />
         <option value="$PROJECT_DIR$/generated-classes/CardPointSystemQuery.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JCreditCard.php" />
-        <option value="$PROJECT_DIR$/Db/Utility/FieldUtils.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPointAcquisition.php" />
         <option value="$PROJECT_DIR$/Db/Json/JStore.php" />
         <option value="$PROJECT_DIR$/Db/Json/JCreditCardToPointSystemMapping.php" />
         <option value="$PROJECT_DIR$/Db/Json/JObject.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JInsurance.php" />
         <option value="$PROJECT_DIR$/../../test.html" />
         <option value="$PROJECT_DIR$/Db/Json/JAffiliateCompany.php" />
         <option value="$PROJECT_DIR$/Db/Json/JRewardCategory.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JReward.php" />
-        <option value="$PROJECT_DIR$/Db/Json/Jinterest.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JCampaign.php" />
-        <option value="$PROJECT_DIR$/Db/Json/JFeature.php" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/Db/Core/Db.php" />
         <option value="$PROJECT_DIR$/Db/Json/JFeatureType.php" />
-        <option value="$PROJECT_DIR$/Db/Core/CreditCard.php" />
         <option value="$PROJECT_DIR$/Db/Json/JFee.php" />
         <option value="$PROJECT_DIR$/Db/Json/JRewardType.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JFeature.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JDiscount.php" />
+        <option value="$PROJECT_DIR$/Db/Json/Jinterest.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPointUsage.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPointAcquisition.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JCampaign.php" />
+        <option value="$PROJECT_DIR$/Db/Utility/FieldUtils.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JPointSystem.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JInsuranceType.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JInsurance.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JCreditCard.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JUnit.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/Db/Core/CreditCard.php" />
+        <option value="$PROJECT_DIR$/Db/Core/Db.php" />
+        <option value="$PROJECT_DIR$/Db/Json/JReward.php" />
       </list>
     </option>
   </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP 5.4">
+  <component name="NamedScopeManager">
+    <order />
+  </component>
+  <component name="PhpServers">
+    <servers>
+      <server host="http://localhost/" id="47f130bd-612b-4da2-8d03-87ce57706d42" name="Local" />
+      <server host="localhost" id="4bbced71-3426-4582-a9cc-b545a468eb63" name="localhost" />
+    </servers>
+  </component>
+  <component name="PhpWebServerValidation" path_to_validation_script="F:\xampp\htdocs" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/" />
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP 5.5">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/slim/slim" />
@@ -568,10 +466,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="89" />
-    <option name="y" value="145" />
+    <option name="x" value="475" />
+    <option name="y" value="106" />
     <option name="width" value="1280" />
-    <option name="height" value="1140" />
+    <option name="height" value="1160" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -596,6 +494,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -703,13 +602,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="F:/xampp/htdocs" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="reference.webide.settings.project.settings.php" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="SearchEverywhereHistoryKey" value="PointSystemId&#9;null&#9;null&#10;Mandatory field&#9;null&#9;null" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -722,24 +623,30 @@
       <recent name="F:\Development\website\backend\Db\Core\" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.php">
+  <component name="RunManager" selected="PHP Script.index.php">
     <configuration default="false" name="index.php" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost/backend/index.php">
       <RunnerSettings RunnerId="JavascriptDebugRunner" />
       <ConfigurationWrapper RunnerId="JavascriptDebugRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="index.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/index.php">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
+      <method />
+    </configuration>
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
-      <BehatRunner />
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" server_id="b6b46088-52a6-496f-ad32-86d60b2f9a4c" server_name="MoneyIQ (Local)">
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -751,15 +658,14 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server" server_id="b6b46088-52a6-496f-ad32-86d60b2f9a4c" server_name="MoneyIQ (Local)">
-      <method />
-    </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.php" />
+      <item index="1" class="java.lang.String" itemvalue="PHP Script.index.php" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.php" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="PHP Script.index.php" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.php" />
       </list>
     </recent_temporary>
   </component>
@@ -800,53 +706,54 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="89" y="145" width="1280" height="1140" extended-state="0" />
+    <frame x="475" y="106" width="1280" height="1160" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36327818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23606557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33770493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36327818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527559" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33018124" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527559" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27265564" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939324" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36327818" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33770493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527559" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08188976" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33770493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18754925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Command Line Tools Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -860,377 +767,367 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <option name="myTodoPanelSettings">
-      <TodoPanelSettings />
-    </option>
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="php">
+        <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/Db/Json/JStore.php</url>
           <line>40</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
+        <line-breakpoint type="php">
           <url>file://$PROJECT_DIR$/Db/Core/Db.php</url>
-          <line>200</line>
+          <line>206</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/index.php</url>
-          <line>19</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="24" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="30" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Db/Json/JDescription.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7138158" vertical-offset="67" max-vertical-offset="1394">
-          <caret line="60" column="5" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.045863308" vertical-offset="0" max-vertical-offset="1112">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generated-conf/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12718205" vertical-offset="0" max-vertical-offset="1203">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Utility/ArrayUtils.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="119" max-vertical-offset="561">
-          <caret line="12" column="96" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generated-classes/Base/Store.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34026623" vertical-offset="11695" max-vertical-offset="39202">
-          <caret line="736" column="20" selection-start-line="736" selection-start-column="20" selection-end-line="736" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JInsuranceType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="226" max-vertical-offset="1428">
-          <caret line="65" column="5" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generated-classes/Base/Reward.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06468085" vertical-offset="25859" max-vertical-offset="30390">
-          <caret line="1729" column="12" selection-start-line="1729" selection-start-column="12" selection-end-line="1729" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/generated-classes/PointSystem.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="360">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19720624" vertical-offset="0" max-vertical-offset="1217">
-          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/CardFeatureTypeQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="360">
+        <state vertical-scroll-proportion="-11.25">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/JSONClasses.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7305">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_namespaces.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1241">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_psr4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11092851" vertical-offset="0" max-vertical-offset="1217">
+        <state vertical-scroll-proportion="0.11092851">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/installed.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.012458472" vertical-offset="3285" max-vertical-offset="8280">
+        <state vertical-scroll-proportion="0.012458472">
           <caret line="220" column="18" selection-start-line="219" selection-start-column="26" selection-end-line="220" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/ClassLoader.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.63538206" vertical-offset="1035" max-vertical-offset="6165">
+        <state vertical-scroll-proportion="-0.63538206">
           <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/CardPointSystemQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1217">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/CardPointSystem.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1217">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/Base/CreditCardQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1370432" vertical-offset="0" max-vertical-offset="24750">
+        <state vertical-scroll-proportion="0.1370432">
           <caret line="22" column="3" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/IssuerQuery.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17255546" vertical-offset="0" max-vertical-offset="1217">
+        <state vertical-scroll-proportion="0.17255546">
           <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/Base/CreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37707642" vertical-offset="36851" max-vertical-offset="73395">
+        <state vertical-scroll-proportion="0.37707642">
           <caret line="2487" column="40" selection-start-line="2487" selection-start-column="40" selection-end-line="2487" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/Base/Issuer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4436" max-vertical-offset="23670">
+        <state vertical-scroll-proportion="0.0">
           <caret line="333" column="27" selection-start-line="333" selection-start-column="27" selection-end-line="333" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JDiscount.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="970" max-vertical-offset="1935">
-          <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="126" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/CStorePointMapping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3773584" vertical-offset="794" max-vertical-offset="3180">
+        <state vertical-scroll-proportion="-7.3773584">
           <caret line="84" column="34" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="34" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JStore.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2780083" vertical-offset="205" max-vertical-offset="1410">
+        <state vertical-scroll-proportion="0.2780083">
           <caret line="42" column="56" selection-start-line="42" selection-start-column="56" selection-end-line="42" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPointAcquisition.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12873754" vertical-offset="700" max-vertical-offset="1905">
-          <caret line="57" column="96" selection-start-line="57" selection-start-column="96" selection-end-line="57" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/slim/slim/Slim/Http/Request.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.339701" vertical-offset="2876" max-vertical-offset="8895">
+        <state vertical-scroll-proportion="0.339701">
           <caret line="249" column="20" selection-start-line="249" selection-start-column="20" selection-end-line="249" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCardToPointSystemMapping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28630707" vertical-offset="0" max-vertical-offset="1500">
+        <state vertical-scroll-proportion="0.28630707">
           <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JObject.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2093596" vertical-offset="0" max-vertical-offset="1218">
+        <state vertical-scroll-proportion="0.2093596">
           <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JIssuer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="900">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JInsurance.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36099586" vertical-offset="0" max-vertical-offset="1740">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JAffiliateCompany.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-31.875" vertical-offset="0" max-vertical-offset="1125">
-          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
-          <folding>
-            <element signature="e#107#133#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/Base/Fees.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4983388" vertical-offset="3386" max-vertical-offset="24720">
+        <state vertical-scroll-proportion="1.4983388">
           <caret line="364" column="20" selection-start-line="364" selection-start-column="20" selection-end-line="364" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JReward.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1076" max-vertical-offset="2280">
-          <caret line="129" column="55" selection-start-line="129" selection-start-column="8" selection-end-line="129" selection-end-column="55" />
-          <folding>
-            <element signature="e#108#134#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/Jinterest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1560">
-          <caret line="61" column="8" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="65" />
-          <folding>
-            <element signature="e#114#140#0#PHP" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JPaymentType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="1035">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="47" selection-start-line="22" selection-start-column="47" selection-end-line="22" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/autoload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1217">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/composer/autoload_real.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38621262" vertical-offset="0" max-vertical-offset="1204">
+        <state vertical-scroll-proportion="0.38621262">
           <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JRewardCategory.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-28.291666" vertical-offset="281" max-vertical-offset="1485">
+        <state vertical-scroll-proportion="-28.291666">
           <caret line="69" column="8" selection-start-line="69" selection-start-column="8" selection-end-line="69" selection-end-column="55" />
-          <folding>
-            <element signature="e#107#133#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Utility/FieldUtils.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="360">
-          <caret line="16" column="44" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/generated-classes/Base/PointSystem.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8629568" vertical-offset="2074" max-vertical-offset="44085">
+        <state vertical-scroll-proportion="-0.8629568">
           <caret line="97" column="14" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="14" />
-          <folding>
-            <marker date="1435840384099" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8751027">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18687707">
+          <caret line="92" column="51" selection-start-line="92" selection-start-column="51" selection-end-line="92" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JAffiliateCompany.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6229236">
+          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JIssuer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.75">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JDiscount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48920265">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Json/JCampaign.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.125" vertical-offset="0" max-vertical-offset="1650">
-          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.4">
+          <caret line="69" column="86" selection-start-line="69" selection-start-column="86" selection-end-line="69" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/Jinterest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8453608">
+          <caret line="105" column="9" selection-start-line="105" selection-start-column="9" selection-end-line="106" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPointUsage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.875">
+          <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/date_c.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.041666">
+          <caret line="316" column="20" selection-start-line="316" selection-start-column="20" selection-end-line="316" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPointAcquisition.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.7916665">
+          <caret line="39" column="50" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JInsuranceType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11046512">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JPointSystem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5016611">
+          <caret line="56" column="89" selection-start-line="56" selection-start-column="89" selection-end-line="56" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/standard_8.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.80829877">
+          <caret line="1085" column="40" selection-start-line="1085" selection-start-column="40" selection-end-line="1085" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/generated-classes/Base/Reward.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="2062" column="10" selection-start-line="2062" selection-start-column="7" selection-end-line="2062" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JRewardType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17427386">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JUnit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="33" selection-start-line="71" selection-start-column="33" selection-end-line="71" selection-end-column="33" />
+          <folding>
+            <element signature="e#6#86#0#PHP" expanded="true" />
+            <element signature="e#107#133#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/slim/slim/Slim/Route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="467" column="0" selection-start-line="467" selection-start-column="0" selection-end-line="467" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#114#140#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Json/JInsurance.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.375">
+          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
           <folding>
             <element signature="e#107#133#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPointSystem.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4150944" vertical-offset="0" max-vertical-offset="1740">
-          <caret line="10" column="26" selection-start-line="8" selection-start-column="18" selection-end-line="10" selection-end-column="26" />
-          <folding>
-            <element signature="e#114#140#0#PHP" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.024630541">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JPointUsage.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JSONInterface.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.25" vertical-offset="405" max-vertical-offset="2025">
-          <caret line="66" column="56" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#114#140#0#PHP" expanded="true" />
+            <element signature="e#6#87#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3584905" vertical-offset="0" max-vertical-offset="10125">
-          <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
+        <state vertical-scroll-proportion="-4.375">
+          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
           <folding>
-            <element signature="e#42#161#0#PHP" expanded="false" />
-            <element signature="e#193#273#0#PHP" expanded="false" />
-            <element signature="e#903#1250#1#PHP" expanded="false" />
             <element signature="e#1281#1630#1#PHP" expanded="false" />
             <element signature="e#1664#2019#1#PHP" expanded="false" />
-            <element signature="e#2055#2413#1#PHP" expanded="false" />
             <element signature="e#2445#2843#1#PHP" expanded="false" />
             <element signature="e#2613#2803#0#PHP" expanded="false" />
             <element signature="e#2685#2803#0#PHP" expanded="false" />
@@ -1247,6 +1144,7 @@
             <element signature="e#6190#6706#1#PHP" expanded="false" />
             <element signature="e#6748#7198#1#PHP" expanded="false" />
             <element signature="e#7239#7690#1#PHP" expanded="false" />
+            <element signature="e#7730#8128#1#PHP" expanded="false" />
             <element signature="e#10494#10697#1#PHP" expanded="false" />
             <element signature="e#10741#11258#1#PHP" expanded="false" />
             <element signature="e#10975#11219#0#PHP" expanded="false" />
@@ -1435,254 +1333,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFee.php">
+    <entry file="file://$PROJECT_DIR$/Db/Utility/FieldUtils.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14461792" vertical-offset="34" max-vertical-offset="1500">
-          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="21" selection-end-column="22" />
+        <state vertical-scroll-proportion="-11.25">
+          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JRewardType.php">
+    <entry file="file://$PROJECT_DIR$/Db/Utility/ArrayUtils.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3360723" vertical-offset="56" max-vertical-offset="1605">
-          <caret line="37" column="47" selection-start-line="37" selection-start-column="47" selection-end-line="37" selection-end-column="47" />
+        <state vertical-scroll-proportion="-3.75">
+          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFeatureType.php">
+    <entry file="file://F:/xampp/htdocs/admin/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8751027" vertical-offset="0" max-vertical-offset="1217">
-          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding>
-            <element signature="e#107#133#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JCreditCard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.81060606" vertical-offset="177" max-vertical-offset="1365">
-          <caret line="81" column="12" selection-start-line="81" selection-start-column="12" selection-end-line="81" selection-end-column="58" />
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Core/CreditCard.php">
+    <entry file="file://$PROJECT_DIR$/Db/Json/JReward.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22245763" vertical-offset="945" max-vertical-offset="4305">
-          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+        <state vertical-scroll-proportion="-13.875">
+          <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Db/Core/Db.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.754717" vertical-offset="130" max-vertical-offset="4275">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+        <state vertical-scroll-proportion="1.1738672">
+          <caret line="1421" column="22" selection-start-line="1421" selection-start-column="22" selection-end-line="1421" selection-end-column="22" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
             <element signature="e#133#145#0#PHP" expanded="true" />
-            <element signature="e#598#975#2#PHP" expanded="false" />
-            <element signature="e#625#717#0#PHP" expanded="false" />
-            <element signature="e#1024#1071#0#PHP" expanded="false" />
-            <element signature="e#1356#1609#0#PHP" expanded="false" />
-            <element signature="e#1421#1578#0#PHP" expanded="false" />
-            <element signature="e#1614#1893#0#PHP" expanded="false" />
-            <element signature="e#1681#1862#0#PHP" expanded="false" />
-            <element signature="e#1898#2196#0#PHP" expanded="false" />
-            <element signature="e#1971#2166#0#PHP" expanded="false" />
-            <element signature="e#2201#2564#0#PHP" expanded="false" />
-            <element signature="e#2277#2473#0#PHP" expanded="false" />
-            <element signature="e#3125#4664#0#PHP" expanded="false" />
-            <element signature="e#3350#3424#0#PHP" expanded="false" />
-            <element signature="e#3437#3523#0#PHP" expanded="false" />
-            <element signature="e#3536#3619#0#PHP" expanded="false" />
-            <element signature="e#3632#3720#0#PHP" expanded="false" />
-            <element signature="e#3733#3818#0#PHP" expanded="false" />
-            <element signature="e#3831#3907#0#PHP" expanded="false" />
-            <element signature="e#3920#4000#0#PHP" expanded="false" />
-            <element signature="e#4013#4087#0#PHP" expanded="false" />
-            <element signature="e#4100#4176#0#PHP" expanded="false" />
-            <element signature="e#4189#4269#0#PHP" expanded="false" />
-            <element signature="e#4282#4375#0#PHP" expanded="false" />
-            <element signature="e#4388#4477#0#PHP" expanded="false" />
-            <element signature="e#4490#4577#0#PHP" expanded="false" />
-            <element signature="e#4669#4969#0#PHP" expanded="false" />
-            <element signature="e#4736#4918#0#PHP" expanded="false" />
-            <element signature="e#4974#5568#0#PHP" expanded="false" />
-            <element signature="e#5573#6219#0#PHP" expanded="false" />
-            <element signature="e#5654#6004#0#PHP" expanded="false" />
-            <element signature="e#6224#6462#0#PHP" expanded="false" />
-            <element signature="e#6468#6731#0#PHP" expanded="false" />
-            <element signature="e#6541#6701#0#PHP" expanded="false" />
-            <element signature="e#6736#7406#0#PHP" expanded="false" />
-            <element signature="e#7411#7913#0#PHP" expanded="false" />
-            <element signature="e#7918#8177#0#PHP" expanded="false" />
-            <element signature="e#8194#8458#0#PHP" expanded="false" />
-            <element signature="e#8266#8428#0#PHP" expanded="false" />
-            <element signature="e#8463#8547#0#PHP" expanded="false" />
-            <element signature="e#8552#9328#0#PHP" expanded="false" />
-            <element signature="e#9333#9807#0#PHP" expanded="false" />
-            <element signature="e#9812#10043#0#PHP" expanded="false" />
-            <element signature="e#10156#10314#0#PHP" expanded="false" />
-            <element signature="e#10349#10654#0#PHP" expanded="false" />
-            <element signature="e#10444#10624#0#PHP" expanded="false" />
-            <element signature="e#10659#10956#0#PHP" expanded="false" />
-            <element signature="e#10747#10926#0#PHP" expanded="false" />
-            <element signature="e#11035#11192#0#PHP" expanded="false" />
-            <element signature="e#11228#11886#0#PHP" expanded="false" />
-            <element signature="e#11891#12195#0#PHP" expanded="false" />
-            <element signature="e#12200#12495#0#PHP" expanded="false" />
-            <element signature="e#12325#12440#0#PHP" expanded="false" />
-            <element signature="e#12529#12814#0#PHP" expanded="false" />
-            <element signature="e#12608#12784#0#PHP" expanded="false" />
-            <element signature="e#12819#13109#0#PHP" expanded="false" />
-            <element signature="e#12898#13079#0#PHP" expanded="false" />
-            <element signature="e#13114#13428#0#PHP" expanded="false" />
-            <element signature="e#13204#13398#0#PHP" expanded="false" />
-            <element signature="e#13433#14130#0#PHP" expanded="false" />
-            <element signature="e#14135#14405#0#PHP" expanded="false" />
-            <element signature="e#14410#14698#0#PHP" expanded="false" />
-            <element signature="e#14530#14643#0#PHP" expanded="false" />
-            <element signature="e#14722#14968#0#PHP" expanded="false" />
-            <element signature="e#14791#14938#0#PHP" expanded="false" />
-            <element signature="e#14973#15224#0#PHP" expanded="false" />
-            <element signature="e#15042#15194#0#PHP" expanded="false" />
-            <element signature="e#15229#15504#0#PHP" expanded="false" />
-            <element signature="e#15309#15474#0#PHP" expanded="false" />
-            <element signature="e#16111#16343#0#PHP" expanded="false" />
-            <element signature="e#16348#16606#0#PHP" expanded="false" />
-            <element signature="e#16448#16551#0#PHP" expanded="false" />
-            <element signature="e#16633#16910#0#PHP" expanded="false" />
-            <element signature="e#16709#16880#0#PHP" expanded="false" />
-            <element signature="e#16915#17166#0#PHP" expanded="false" />
-            <element signature="e#16988#17136#0#PHP" expanded="false" />
-            <element signature="e#17171#17427#0#PHP" expanded="false" />
-            <element signature="e#17244#17397#0#PHP" expanded="false" />
-            <element signature="e#17432#18069#0#PHP" expanded="false" />
-            <element signature="e#18074#18318#0#PHP" expanded="false" />
-            <element signature="e#18323#18593#0#PHP" expanded="false" />
-            <element signature="e#18431#18538#0#PHP" expanded="false" />
-            <element signature="e#18629#18919#0#PHP" expanded="false" />
-            <element signature="e#18710#18889#0#PHP" expanded="false" />
-            <element signature="e#18924#19187#0#PHP" expanded="false" />
-            <element signature="e#19001#19157#0#PHP" expanded="false" />
-            <element signature="e#19192#19460#0#PHP" expanded="false" />
-            <element signature="e#19269#19430#0#PHP" expanded="false" />
-            <element signature="e#19465#20142#0#PHP" expanded="false" />
-            <element signature="e#20147#20403#0#PHP" expanded="false" />
-            <element signature="e#20408#20690#0#PHP" expanded="false" />
-            <element signature="e#20524#20635#0#PHP" expanded="false" />
-            <element signature="e#20719#20974#0#PHP" expanded="false" />
-            <element signature="e#20792#20944#0#PHP" expanded="false" />
-            <element signature="e#20979#21239#0#PHP" expanded="false" />
-            <element signature="e#21052#21209#0#PHP" expanded="false" />
-            <element signature="e#21244#21528#0#PHP" expanded="false" />
-            <element signature="e#21328#21498#0#PHP" expanded="false" />
-            <element signature="e#21533#22166#0#PHP" expanded="false" />
-            <element signature="e#22171#22423#0#PHP" expanded="false" />
-            <element signature="e#22428#22696#0#PHP" expanded="false" />
-            <element signature="e#22534#22641#0#PHP" expanded="false" />
-            <element signature="e#22725#22990#0#PHP" expanded="false" />
-            <element signature="e#22799#22960#0#PHP" expanded="false" />
-            <element signature="e#22995#23280#0#PHP" expanded="false" />
-            <element signature="e#23072#23250#0#PHP" expanded="false" />
-            <element signature="e#23285#23932#0#PHP" expanded="false" />
-            <element signature="e#23937#24192#0#PHP" expanded="false" />
-            <element signature="e#24197#24470#0#PHP" expanded="false" />
-            <element signature="e#24307#24415#0#PHP" expanded="false" />
-            <element signature="e#24743#25340#0#PHP" expanded="false" />
-            <element signature="e#25345#25577#0#PHP" expanded="false" />
-            <element signature="e#25582#25844#0#PHP" expanded="false" />
-            <element signature="e#25682#25789#0#PHP" expanded="false" />
-            <element signature="e#26147#26806#0#PHP" expanded="false" />
-            <element signature="e#26811#27064#0#PHP" expanded="false" />
-            <element signature="e#27069#27344#0#PHP" expanded="false" />
-            <element signature="e#27183#27289#0#PHP" expanded="false" />
-            <element signature="e#27372#27634#0#PHP" expanded="false" />
-            <element signature="e#27639#28296#0#PHP" expanded="false" />
-            <element signature="e#28301#28548#0#PHP" expanded="false" />
-            <element signature="e#28553#28831#0#PHP" expanded="false" />
-            <element signature="e#28667#28776#0#PHP" expanded="false" />
-            <element signature="e#28856#29112#0#PHP" expanded="false" />
-            <element signature="e#28926#29082#0#PHP" expanded="false" />
-            <element signature="e#29117#29814#0#PHP" expanded="false" />
-            <element signature="e#29819#30137#0#PHP" expanded="false" />
-            <element signature="e#30142#30462#0#PHP" expanded="false" />
-            <element signature="e#30298#30407#0#PHP" expanded="false" />
-            <element signature="e#30526#31739#0#PHP" expanded="false" />
-            <element signature="e#30643#30915#0#PHP" expanded="false" />
-            <element signature="e#30968#31309#0#PHP" expanded="false" />
-            <element signature="e#31344#31683#0#PHP" expanded="false" />
-            <element signature="e#31420#31588#0#PHP" expanded="false" />
-            <element signature="e#31484#31574#0#PHP" expanded="false" />
-            <element signature="e#31601#31673#0#PHP" expanded="false" />
-            <element signature="e#31744#32343#0#PHP" expanded="false" />
-            <element signature="e#31887#31980#0#PHP" expanded="false" />
-            <element signature="e#31990#32285#0#PHP" expanded="false" />
-            <element signature="e#32348#32443#0#PHP" expanded="false" />
-            <element signature="e#32448#33009#0#PHP" expanded="false" />
-            <element signature="e#32604#32713#0#PHP" expanded="false" />
-            <element signature="e#33038#33323#0#PHP" expanded="false" />
-            <element signature="e#33116#33293#0#PHP" expanded="false" />
-            <element signature="e#33328#33593#0#PHP" expanded="false" />
-            <element signature="e#33403#33563#0#PHP" expanded="false" />
-            <element signature="e#33598#34237#0#PHP" expanded="false" />
-            <element signature="e#34242#34504#0#PHP" expanded="false" />
-            <element signature="e#34509#34840#0#PHP" expanded="false" />
-            <element signature="e#34672#34785#0#PHP" expanded="false" />
-            <element signature="e#34866#35121#0#PHP" expanded="false" />
-            <element signature="e#34937#35091#0#PHP" expanded="false" />
-            <element signature="e#35126#35401#0#PHP" expanded="false" />
-            <element signature="e#35200#35371#0#PHP" expanded="false" />
-            <element signature="e#35406#36023#0#PHP" expanded="false" />
-            <element signature="e#36028#36282#0#PHP" expanded="false" />
-            <element signature="e#36287#36600#0#PHP" expanded="false" />
-            <element signature="e#36440#36545#0#PHP" expanded="false" />
-            <element signature="e#36626#36882#0#PHP" expanded="false" />
-            <element signature="e#36697#36852#0#PHP" expanded="false" />
-            <element signature="e#36887#37163#0#PHP" expanded="false" />
-            <element signature="e#36961#37133#0#PHP" expanded="false" />
-            <element signature="e#37168#37787#0#PHP" expanded="false" />
-            <element signature="e#37792#38046#0#PHP" expanded="false" />
-            <element signature="e#38051#38365#0#PHP" expanded="false" />
-            <element signature="e#38205#38310#0#PHP" expanded="false" />
-            <element signature="e#38396#38620#0#PHP" expanded="false" />
-            <element signature="e#38625#38976#0#PHP" expanded="false" />
-            <element signature="e#38981#39351#0#PHP" expanded="false" />
-            <element signature="e#39356#39647#0#PHP" expanded="false" />
-            <element signature="e#39673#39932#0#PHP" expanded="false" />
-            <element signature="e#39937#40216#0#PHP" expanded="false" />
-            <element signature="e#40221#40848#0#PHP" expanded="false" />
-            <element signature="e#40853#41110#0#PHP" expanded="false" />
-            <element signature="e#41115#41431#0#PHP" expanded="false" />
-            <element signature="e#41716#41991#0#PHP" expanded="false" />
-            <element signature="e#41996#42613#0#PHP" expanded="false" />
-            <element signature="e#42618#42872#0#PHP" expanded="false" />
-            <element signature="e#42877#43190#0#PHP" expanded="false" />
-            <element signature="e#43210#43446#0#PHP" expanded="false" />
-            <element signature="e#43451#43707#0#PHP" expanded="false" />
-            <element signature="e#43712#44281#0#PHP" expanded="false" />
-            <element signature="e#44286#44525#0#PHP" expanded="false" />
-            <element signature="e#44530#44829#0#PHP" expanded="false" />
-            <element signature="e#44857#45144#0#PHP" expanded="false" />
-            <element signature="e#45149#45410#0#PHP" expanded="false" />
-            <element signature="e#45415#45681#0#PHP" expanded="false" />
-            <element signature="e#45686#46333#0#PHP" expanded="false" />
-            <element signature="e#46338#46585#0#PHP" expanded="false" />
-            <element signature="e#46590#46863#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Db/Json/JFeature.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.038135592" vertical-offset="9" max-vertical-offset="2385">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="9" selection-end-column="26" />
-          <folding>
-            <element signature="e#107#133#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -15,6 +15,7 @@ class JPointUsage implements JSONInterface {
     public $Store;
     public $YenPerPoint;
     public $PointSystem;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -35,6 +36,7 @@ class JPointUsage implements JSONInterface {
             'Name' => $item->getStore()->getCategory() . "-" . $item->getStore()->getStoreName()
         );
         $mine->YenPerPoint = $item->getYenPerPoint();
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -63,8 +65,9 @@ class JPointUsage implements JSONInterface {
             $mine->Store = array('Id' => $tmp['Id']);
             if (ArrayUtils::KEY_EXISTS($tmp, 'Name')) $mine->Store['Name'] = $tmp['Name'];
         }
-
         if(ArrayUtils::KEY_EXISTS($data,'YenPerPoint')) $mine->YenPerPoint = $data['YenPerPoint'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -127,6 +130,8 @@ class JPointUsage implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($this->Store,'Id')) {
             $item->setStore((new \StoreQuery())->findPk($this->Store['Id']));
         }
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
+
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

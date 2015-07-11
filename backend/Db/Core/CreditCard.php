@@ -8,9 +8,13 @@
 
 namespace Db\Core;
 
+include_once(__DIR__ . "/../Json/JInsurance.php");
+use Db\Json\JInsurance;
+
 class Reward{
     public $category;
     public $type;
+    public $title;
     public $description;
     public $icon;
     public $yenPerPoint;
@@ -20,21 +24,25 @@ class Reward{
     public $requiredPoints;
     public $maxPeriod;
     public $pointSystemName;
+    public $pointMultiplier;
     public $isFinite = 0;
 
     function PointsData()
     {
+        $this->pointMultiplier = 1;
     }
 
     function UpdateFromDB(\Reward $rew)
     {
+        if(!is_null($rew->getPointMultiplier())) $this->pointMultiplier = $rew->getPointMultiplier();
         $this->category = $rew->getRewardCategory()->getName();
         $this->type    = $rew->getRewardType()->getName();
+        $this->title = $rew->getTitle();
         $this->description = $rew->getDescription();
         $this->icon = $rew->getIcon();
-        $this->yenPerPoint = $rew->getYenPerPoint();
+        $this->yenPerPoint = $rew->getYenPerPoint() * $this->pointMultiplier;
         $this->pricePerUnit = $rew->getPricePerUnit();
-        $this->minPoints = $rew->getMinPoints();
+        $this->minPoints = $rew->getMinPoints() * $this->pointMultiplier;;
         $this->maxPoints = $rew->getMaxPoints();
         $this->requiredPoints = $rew->getRequiredPoints();
         $this->maxPeriod = $rew->getMaxPeriod();
@@ -71,6 +79,20 @@ class Feature {
         $this->backgroundColor = $feattype->getBackgroundColor();
         $this->foregroundColor = $feattype->getForegroundColor();
     }
+
+    function SetInsurance(\Insurance $ins) {
+        $in = JInsurance::CREATE_FROM_DB($ins);
+        $this->category = $in->getCategory();
+        $this->feature = $in->getFeature();
+
+    }
+
+
+    public function __toString()
+    {
+        return $this->category;
+    }
+
 }
 
 class PointsData {
@@ -103,12 +125,14 @@ class CreditCard {
     public $campaignText;
     public $pointsExpiryPeriod;
     public $campaignPoints;
+    public $campaignYenValue;
     public $annualFeeFirstYear;
     public $annualFeeSubseqYear;
     public $interestShopping;
     public $pointsToMoneyConversionRate;
     public $affiliateUrl;
     public $features = array();
+    public $insurances = array();
     public $pointsData = array();
     public $discountData = array();
     public $supportedBrands = array();
@@ -140,6 +164,27 @@ class CreditCard {
 
         array_push($this->features, $feat);
 
+        return $this;
+    }
+
+    function getAffiliateLink($link) {
+        return "http://moneyiq.jp/link.php?Link1=" . $link . "&Link2=https%3A%2F%2Fjp.surveymonkey.com%2Fs%2FQJKXMHC";
+    }
+
+    function AddInsurance(\Insurance $type)
+    {
+        $feat = new Feature();
+        $feat->SetInsurance($type);
+
+        if(!is_array($this->insurances) || empty($this->insurances))
+        {
+            $this->insurances = Array($feat);
+            return $this;
+        }
+
+        array_push($this->insurances, $feat);
+
+        $this->insurances = array_unique($this->insurances);
         return $this;
     }
 
@@ -190,7 +235,7 @@ class CreditCard {
             $mine->cardIssuer = $issuer->getIssuerName();
         }
         $mine->cardImg = $cc->getImageLink();
-        $mine->affiliateUrl = $cc->getAfilliateLink();
+        $mine->affiliateUrl = $mine->getAffiliateLink($cc->getAfilliateLink());
 
         if($cc->getAmex()) $mine->AddPaymentNetwork("American Express");
         if($cc->getVisa()) $mine->AddPaymentNetwork("VISA");
@@ -225,13 +270,17 @@ class CreditCard {
             }
         }
 
-        /*
+
+
         foreach($cc->getInsurances() as $insurance )
         {
-           #$insurance->get
-            //TODO add insurance data
+            $mine->AddInsurance($insurance);
         }
-        */
+
+        //add insurances to features
+        foreach($mine->insurances as $insurance) {
+            array_push($mine->features,$insurance);
+        }
 
         $now = new \DateTime('NOW');
         foreach($cc->getCampaigns() as $camp)
@@ -240,6 +289,7 @@ class CreditCard {
             if( $camp->getEndDate()> $now)
             {
                 $mine->campaignPoints = $camp->getMaxPoints();
+                $mine->campaignYenValue = $camp->getValueInYen();
                 $mine->campaignText = $camp->getDescription();
             }
         }
@@ -255,7 +305,10 @@ class CreditCard {
         }
 
         //todo points expiry period
-        $mine->pointsExpiryPeriod = 1;
+        $mine->pointsExpiryPeriod = 1.0;
+        if(!is_null($cc->getPointexpirymonths())) {
+            $mine->pointsExpiryPeriod=$cc->getPointexpirymonths()/12;
+        }
         $mine->pointsToMoneyConversionRate = 0;
 
         foreach($cc->getCardPointSystems() as $pcs)

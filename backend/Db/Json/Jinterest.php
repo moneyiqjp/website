@@ -17,6 +17,7 @@ class Jinterest implements JSONInterface{
     public $PaymentType;
     public $MinInterest;
     public $MaxInterest;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -38,6 +39,7 @@ class Jinterest implements JSONInterface{
         );
         $mine->MinInterest = $item->getMinInterest();
         $mine->MaxInterest = $item->getMaxInterest();
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -65,8 +67,9 @@ class Jinterest implements JSONInterface{
             'Name' => $tmp['Name']
         );
 
-        $mine->MinInterest = $data['MinInterest'];
-        $mine->MaxInterest = $data['MaxInterest'];
+        if(ArrayUtils::KEY_EXISTS($data,'MinInterest')) $mine->MinInterest = $data['MinInterest'];
+        if(ArrayUtils::KEY_EXISTS($data,'MaxInterest')) $mine->MaxInterest = $data['MaxInterest'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
 
@@ -92,10 +95,16 @@ class Jinterest implements JSONInterface{
         $item->setMinInterest($this->MinInterest);
         $item->setMaxInterest($this->MaxInterest);
 
-        $it = $this->CreditCard;
-        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
-        $it = $this->PaymentType;
-        $item->setPaymentType((new \PaymentTypeQuery())->findPk( $it['Id']));
+        if(!is_null($this->CreditCard)) {
+            $it = $this->CreditCard;
+            $item->setCreditCard((new \CreditCardQuery())->findPk($it['Id']));
+        }
+
+        if(!is_null($this->PaymentType)) {
+            $it = $this->PaymentType;
+            $item->setPaymentType((new \PaymentTypeQuery())->findPk($it['Id']));
+        }
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
 
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);

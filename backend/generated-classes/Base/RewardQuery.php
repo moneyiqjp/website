@@ -33,9 +33,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery orderByMaxPoints($order = Criteria::ASC) Order by the max_points column
  * @method     ChildRewardQuery orderByRequiredPoints($order = Criteria::ASC) Order by the required_points column
  * @method     ChildRewardQuery orderByMaxPeriod($order = Criteria::ASC) Order by the max_period column
+ * @method     ChildRewardQuery orderByPointMultiplier($order = Criteria::ASC) Order by the point_multiplier column
+ * @method     ChildRewardQuery orderByUnitId($order = Criteria::ASC) Order by the unit_id column
+ * @method     ChildRewardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  * @method     ChildRewardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildRewardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
- * @method     ChildRewardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildRewardQuery groupByRewardId() Group by the reward_id column
  * @method     ChildRewardQuery groupByPointSystemId() Group by the point_system_id column
@@ -50,9 +52,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery groupByMaxPoints() Group by the max_points column
  * @method     ChildRewardQuery groupByRequiredPoints() Group by the required_points column
  * @method     ChildRewardQuery groupByMaxPeriod() Group by the max_period column
+ * @method     ChildRewardQuery groupByPointMultiplier() Group by the point_multiplier column
+ * @method     ChildRewardQuery groupByUnitId() Group by the unit_id column
+ * @method     ChildRewardQuery groupByReference() Group by the reference column
  * @method     ChildRewardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildRewardQuery groupByUpdateUser() Group by the update_user column
- * @method     ChildRewardQuery groupByReference() Group by the reference column
  *
  * @method     ChildRewardQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildRewardQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -70,7 +74,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery rightJoinRewardType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the RewardType relation
  * @method     ChildRewardQuery innerJoinRewardType($relationAlias = null) Adds a INNER JOIN clause to the query using the RewardType relation
  *
- * @method     \RewardCategoryQuery|\PointSystemQuery|\RewardTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildRewardQuery leftJoinUnit($relationAlias = null) Adds a LEFT JOIN clause to the query using the Unit relation
+ * @method     ChildRewardQuery rightJoinUnit($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Unit relation
+ * @method     ChildRewardQuery innerJoinUnit($relationAlias = null) Adds a INNER JOIN clause to the query using the Unit relation
+ *
+ * @method     \RewardCategoryQuery|\PointSystemQuery|\RewardTypeQuery|\UnitQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildReward findOne(ConnectionInterface $con = null) Return the first ChildReward matching the query
  * @method     ChildReward findOneOrCreate(ConnectionInterface $con = null) Return the first ChildReward matching the query, or a new ChildReward object populated from the query conditions when no match is found
@@ -88,9 +96,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReward findOneByMaxPoints(int $max_points) Return the first ChildReward filtered by the max_points column
  * @method     ChildReward findOneByRequiredPoints(int $required_points) Return the first ChildReward filtered by the required_points column
  * @method     ChildReward findOneByMaxPeriod(string $max_period) Return the first ChildReward filtered by the max_period column
+ * @method     ChildReward findOneByPointMultiplier(string $point_multiplier) Return the first ChildReward filtered by the point_multiplier column
+ * @method     ChildReward findOneByUnitId(int $unit_id) Return the first ChildReward filtered by the unit_id column
+ * @method     ChildReward findOneByReference(string $reference) Return the first ChildReward filtered by the reference column
  * @method     ChildReward findOneByUpdateTime(string $update_time) Return the first ChildReward filtered by the update_time column
  * @method     ChildReward findOneByUpdateUser(string $update_user) Return the first ChildReward filtered by the update_user column
- * @method     ChildReward findOneByReference(string $reference) Return the first ChildReward filtered by the reference column
  *
  * @method     ChildReward[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildReward objects based on current ModelCriteria
  * @method     ChildReward[]|ObjectCollection findByRewardId(int $reward_id) Return ChildReward objects filtered by the reward_id column
@@ -106,9 +116,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReward[]|ObjectCollection findByMaxPoints(int $max_points) Return ChildReward objects filtered by the max_points column
  * @method     ChildReward[]|ObjectCollection findByRequiredPoints(int $required_points) Return ChildReward objects filtered by the required_points column
  * @method     ChildReward[]|ObjectCollection findByMaxPeriod(string $max_period) Return ChildReward objects filtered by the max_period column
+ * @method     ChildReward[]|ObjectCollection findByPointMultiplier(string $point_multiplier) Return ChildReward objects filtered by the point_multiplier column
+ * @method     ChildReward[]|ObjectCollection findByUnitId(int $unit_id) Return ChildReward objects filtered by the unit_id column
+ * @method     ChildReward[]|ObjectCollection findByReference(string $reference) Return ChildReward objects filtered by the reference column
  * @method     ChildReward[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildReward objects filtered by the update_time column
  * @method     ChildReward[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildReward objects filtered by the update_user column
- * @method     ChildReward[]|ObjectCollection findByReference(string $reference) Return ChildReward objects filtered by the reference column
  * @method     ChildReward[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -200,7 +212,7 @@ abstract class RewardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, update_time, update_user, reference FROM reward WHERE reward_id = :p0';
+        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, point_multiplier, unit_id, reference, update_time, update_user FROM reward WHERE reward_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -782,6 +794,119 @@ abstract class RewardQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the point_multiplier column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPointMultiplier(1234); // WHERE point_multiplier = 1234
+     * $query->filterByPointMultiplier(array(12, 34)); // WHERE point_multiplier IN (12, 34)
+     * $query->filterByPointMultiplier(array('min' => 12)); // WHERE point_multiplier > 12
+     * </code>
+     *
+     * @param     mixed $pointMultiplier The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByPointMultiplier($pointMultiplier = null, $comparison = null)
+    {
+        if (is_array($pointMultiplier)) {
+            $useMinMax = false;
+            if (isset($pointMultiplier['min'])) {
+                $this->addUsingAlias(RewardTableMap::COL_POINT_MULTIPLIER, $pointMultiplier['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($pointMultiplier['max'])) {
+                $this->addUsingAlias(RewardTableMap::COL_POINT_MULTIPLIER, $pointMultiplier['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTableMap::COL_POINT_MULTIPLIER, $pointMultiplier, $comparison);
+    }
+
+    /**
+     * Filter the query on the unit_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUnitId(1234); // WHERE unit_id = 1234
+     * $query->filterByUnitId(array(12, 34)); // WHERE unit_id IN (12, 34)
+     * $query->filterByUnitId(array('min' => 12)); // WHERE unit_id > 12
+     * </code>
+     *
+     * @see       filterByUnit()
+     *
+     * @param     mixed $unitId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByUnitId($unitId = null, $comparison = null)
+    {
+        if (is_array($unitId)) {
+            $useMinMax = false;
+            if (isset($unitId['min'])) {
+                $this->addUsingAlias(RewardTableMap::COL_UNIT_ID, $unitId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($unitId['max'])) {
+                $this->addUsingAlias(RewardTableMap::COL_UNIT_ID, $unitId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTableMap::COL_UNIT_ID, $unitId, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTableMap::COL_REFERENCE, $reference, $comparison);
+    }
+
+    /**
      * Filter the query on the update_time column
      *
      * Example usage:
@@ -851,35 +976,6 @@ abstract class RewardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RewardTableMap::COL_UPDATE_USER, $updateUser, $comparison);
-    }
-
-    /**
-     * Filter the query on the reference column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
-     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $reference The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildRewardQuery The current query, for fluid interface
-     */
-    public function filterByReference($reference = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($reference)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $reference)) {
-                $reference = str_replace('*', '%', $reference);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(RewardTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**
@@ -1111,6 +1207,83 @@ abstract class RewardQuery extends ModelCriteria
         return $this
             ->joinRewardType($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'RewardType', '\RewardTypeQuery');
+    }
+
+    /**
+     * Filter the query by a related \Unit object
+     *
+     * @param \Unit|ObjectCollection $unit The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByUnit($unit, $comparison = null)
+    {
+        if ($unit instanceof \Unit) {
+            return $this
+                ->addUsingAlias(RewardTableMap::COL_UNIT_ID, $unit->getUnitId(), $comparison);
+        } elseif ($unit instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(RewardTableMap::COL_UNIT_ID, $unit->toKeyValue('PrimaryKey', 'UnitId'), $comparison);
+        } else {
+            throw new PropelException('filterByUnit() only accepts arguments of type \Unit or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Unit relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function joinUnit($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Unit');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Unit');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Unit relation Unit object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \UnitQuery A secondary query class using the current class as primary query
+     */
+    public function useUnitQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinUnit($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Unit', '\UnitQuery');
     }
 
     /**

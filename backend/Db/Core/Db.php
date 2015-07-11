@@ -11,24 +11,24 @@ namespace Db\Core;
 use Db\Json;
 use Db\Utility\FieldUtils;
 
-require_once $_SERVER['DOCUMENT_ROOT'] .'/backend/vendor/autoload.php';
+require_once(__DIR__.'/../../vendor/autoload.php');
 // setup Propel
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/generated-conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/JSONInterface.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Json/Jinterest.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/Db/Utility/ArrayUtils.php';
+require_once(__DIR__ . '/../../generated-conf/config.php');
 
+include_once(__DIR__ . "/../Utility/ArrayUtils.php");
+include_once(__DIR__ . "/../Json/JSONInterface.php");
 
 spl_autoload_register(function($className)
 {
     if (0 !== strpos($className, __NAMESPACE__)) {//not my namespace
         return false;
     }
-
     //$namespace=str_replace("\\","/",__NAMESPACE__);
     $className=str_replace("\\","/",$className);
     $class=$_SERVER['DOCUMENT_ROOT'] . '/backend/'.(empty($namespace)?"":$namespace."/")."{$className}.php";
+
     include_once($class);
+
     return true;
 });
 
@@ -151,8 +151,14 @@ class Db
             case "affiliate_link":
                 $ccs->setAfilliateLink($value);
                 break;
+            case "reference":
+                $ccs->setReference($value);
+                break;
             case "affiliate_id":
                 $ccs->setAffiliateId($value);
+                break;
+            case "points_expiry_months":
+                $ccs->setPointexpirymonths($value);
                 break;
             case "update_user":
                 $ccs->setUpdateUser($value);
@@ -1373,6 +1379,65 @@ class Db
         $item = (new  \PaymentTypeQuery())->findPk($id);
         if(is_null($item)) {
             throw new \Exception ("PaymentType with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* Unit */
+    function GetUnitForDisplay()
+    {
+        $result = array();
+        foreach ((new \UnitQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getUnitId()));
+        }
+        return $result;
+    }
+    function GetUnitForCrud()
+    {
+        $result = array();
+        foreach ((new \UnitQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JUnit::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetUnitById($id)
+    {
+        $result = array();
+        foreach ((new \UnitQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JUnit::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateUnitForCrud($data)
+    {
+        $parsed = Json\JUnit::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Unit update request");
+
+        $item = (new  \UnitQuery())->findPk($parsed->UnitId);
+        if(is_null($item)) throw new \Exception ("Unit with id ". $parsed->UnitId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \UnitQuery())->findPk($parsed->UnitId);
+        return Json\JUnit::CREATE_FROM_DB($item);
+    }
+    function CreateUnitForCrud($data)
+    {
+        $item = Json\JUnit::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JUnit::CREATE_FROM_DB($item);
+    }
+    function DeleteUnitForCrud($id)
+    {
+        $item = (new  \UnitQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Unit with id ". $id ." not found");
         }
         $item->delete();
         return array();

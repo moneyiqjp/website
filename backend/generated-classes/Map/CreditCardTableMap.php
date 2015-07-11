@@ -59,7 +59,7 @@ class CreditCardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 15;
+    const NUM_COLUMNS = 16;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CreditCardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 15;
+    const NUM_HYDRATE_COLUMNS = 16;
 
     /**
      * the column name for the credit_card_id field
@@ -132,6 +132,16 @@ class CreditCardTableMap extends TableMap
     const COL_AFFILIATE_ID = 'credit_card.affiliate_id';
 
     /**
+     * the column name for the pointExpiryMonths field
+     */
+    const COL_POINTEXPIRYMONTHS = 'credit_card.pointExpiryMonths';
+
+    /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'credit_card.reference';
+
+    /**
      * the column name for the update_time field
      */
     const COL_UPDATE_TIME = 'credit_card.update_time';
@@ -140,11 +150,6 @@ class CreditCardTableMap extends TableMap
      * the column name for the update_user field
      */
     const COL_UPDATE_USER = 'credit_card.update_user';
-
-    /**
-     * the column name for the reference field
-     */
-    const COL_REFERENCE = 'credit_card.reference';
 
     /**
      * The default string format for model objects of the related table
@@ -158,11 +163,11 @@ class CreditCardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('CreditCardId', 'Name', 'IssuerId', 'Description', 'ImageLink', 'Visa', 'Master', 'Jcb', 'Amex', 'Diners', 'AfilliateLink', 'AffiliateId', 'UpdateTime', 'UpdateUser', 'Reference', ),
-        self::TYPE_CAMELNAME     => array('creditCardId', 'name', 'issuerId', 'description', 'imageLink', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliateLink', 'affiliateId', 'updateTime', 'updateUser', 'reference', ),
-        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID, CreditCardTableMap::COL_NAME, CreditCardTableMap::COL_ISSUER_ID, CreditCardTableMap::COL_DESCRIPTION, CreditCardTableMap::COL_IMAGE_LINK, CreditCardTableMap::COL_VISA, CreditCardTableMap::COL_MASTER, CreditCardTableMap::COL_JCB, CreditCardTableMap::COL_AMEX, CreditCardTableMap::COL_DINERS, CreditCardTableMap::COL_AFILLIATE_LINK, CreditCardTableMap::COL_AFFILIATE_ID, CreditCardTableMap::COL_UPDATE_TIME, CreditCardTableMap::COL_UPDATE_USER, CreditCardTableMap::COL_REFERENCE, ),
-        self::TYPE_FIELDNAME     => array('credit_card_id', 'name', 'issuer_id', 'description', 'image_link', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliate_link', 'affiliate_id', 'update_time', 'update_user', 'reference', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('CreditCardId', 'Name', 'IssuerId', 'Description', 'ImageLink', 'Visa', 'Master', 'Jcb', 'Amex', 'Diners', 'AfilliateLink', 'AffiliateId', 'Pointexpirymonths', 'Reference', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('creditCardId', 'name', 'issuerId', 'description', 'imageLink', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliateLink', 'affiliateId', 'pointexpirymonths', 'reference', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID, CreditCardTableMap::COL_NAME, CreditCardTableMap::COL_ISSUER_ID, CreditCardTableMap::COL_DESCRIPTION, CreditCardTableMap::COL_IMAGE_LINK, CreditCardTableMap::COL_VISA, CreditCardTableMap::COL_MASTER, CreditCardTableMap::COL_JCB, CreditCardTableMap::COL_AMEX, CreditCardTableMap::COL_DINERS, CreditCardTableMap::COL_AFILLIATE_LINK, CreditCardTableMap::COL_AFFILIATE_ID, CreditCardTableMap::COL_POINTEXPIRYMONTHS, CreditCardTableMap::COL_REFERENCE, CreditCardTableMap::COL_UPDATE_TIME, CreditCardTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id', 'name', 'issuer_id', 'description', 'image_link', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliate_link', 'affiliate_id', 'pointExpiryMonths', 'reference', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
     );
 
     /**
@@ -172,11 +177,11 @@ class CreditCardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('CreditCardId' => 0, 'Name' => 1, 'IssuerId' => 2, 'Description' => 3, 'ImageLink' => 4, 'Visa' => 5, 'Master' => 6, 'Jcb' => 7, 'Amex' => 8, 'Diners' => 9, 'AfilliateLink' => 10, 'AffiliateId' => 11, 'UpdateTime' => 12, 'UpdateUser' => 13, 'Reference' => 14, ),
-        self::TYPE_CAMELNAME     => array('creditCardId' => 0, 'name' => 1, 'issuerId' => 2, 'description' => 3, 'imageLink' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliateLink' => 10, 'affiliateId' => 11, 'updateTime' => 12, 'updateUser' => 13, 'reference' => 14, ),
-        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID => 0, CreditCardTableMap::COL_NAME => 1, CreditCardTableMap::COL_ISSUER_ID => 2, CreditCardTableMap::COL_DESCRIPTION => 3, CreditCardTableMap::COL_IMAGE_LINK => 4, CreditCardTableMap::COL_VISA => 5, CreditCardTableMap::COL_MASTER => 6, CreditCardTableMap::COL_JCB => 7, CreditCardTableMap::COL_AMEX => 8, CreditCardTableMap::COL_DINERS => 9, CreditCardTableMap::COL_AFILLIATE_LINK => 10, CreditCardTableMap::COL_AFFILIATE_ID => 11, CreditCardTableMap::COL_UPDATE_TIME => 12, CreditCardTableMap::COL_UPDATE_USER => 13, CreditCardTableMap::COL_REFERENCE => 14, ),
-        self::TYPE_FIELDNAME     => array('credit_card_id' => 0, 'name' => 1, 'issuer_id' => 2, 'description' => 3, 'image_link' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliate_link' => 10, 'affiliate_id' => 11, 'update_time' => 12, 'update_user' => 13, 'reference' => 14, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+        self::TYPE_PHPNAME       => array('CreditCardId' => 0, 'Name' => 1, 'IssuerId' => 2, 'Description' => 3, 'ImageLink' => 4, 'Visa' => 5, 'Master' => 6, 'Jcb' => 7, 'Amex' => 8, 'Diners' => 9, 'AfilliateLink' => 10, 'AffiliateId' => 11, 'Pointexpirymonths' => 12, 'Reference' => 13, 'UpdateTime' => 14, 'UpdateUser' => 15, ),
+        self::TYPE_CAMELNAME     => array('creditCardId' => 0, 'name' => 1, 'issuerId' => 2, 'description' => 3, 'imageLink' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliateLink' => 10, 'affiliateId' => 11, 'pointexpirymonths' => 12, 'reference' => 13, 'updateTime' => 14, 'updateUser' => 15, ),
+        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID => 0, CreditCardTableMap::COL_NAME => 1, CreditCardTableMap::COL_ISSUER_ID => 2, CreditCardTableMap::COL_DESCRIPTION => 3, CreditCardTableMap::COL_IMAGE_LINK => 4, CreditCardTableMap::COL_VISA => 5, CreditCardTableMap::COL_MASTER => 6, CreditCardTableMap::COL_JCB => 7, CreditCardTableMap::COL_AMEX => 8, CreditCardTableMap::COL_DINERS => 9, CreditCardTableMap::COL_AFILLIATE_LINK => 10, CreditCardTableMap::COL_AFFILIATE_ID => 11, CreditCardTableMap::COL_POINTEXPIRYMONTHS => 12, CreditCardTableMap::COL_REFERENCE => 13, CreditCardTableMap::COL_UPDATE_TIME => 14, CreditCardTableMap::COL_UPDATE_USER => 15, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id' => 0, 'name' => 1, 'issuer_id' => 2, 'description' => 3, 'image_link' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliate_link' => 10, 'affiliate_id' => 11, 'pointExpiryMonths' => 12, 'reference' => 13, 'update_time' => 14, 'update_user' => 15, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
     );
 
     /**
@@ -208,9 +213,10 @@ class CreditCardTableMap extends TableMap
         $this->addColumn('diners', 'Diners', 'BOOLEAN', false, 1, false);
         $this->addColumn('afilliate_link', 'AfilliateLink', 'LONGVARCHAR', false, null, null);
         $this->addForeignKey('affiliate_id', 'AffiliateId', 'INTEGER', 'affiliate_company', 'affiliate_id', true, null, null);
+        $this->addColumn('pointExpiryMonths', 'Pointexpirymonths', 'INTEGER', false, null, 12);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -384,9 +390,10 @@ class CreditCardTableMap extends TableMap
             $criteria->addSelectColumn(CreditCardTableMap::COL_DINERS);
             $criteria->addSelectColumn(CreditCardTableMap::COL_AFILLIATE_LINK);
             $criteria->addSelectColumn(CreditCardTableMap::COL_AFFILIATE_ID);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_POINTEXPIRYMONTHS);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_REFERENCE);
             $criteria->addSelectColumn(CreditCardTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CreditCardTableMap::COL_UPDATE_USER);
-            $criteria->addSelectColumn(CreditCardTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.name');
@@ -400,9 +407,10 @@ class CreditCardTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.diners');
             $criteria->addSelectColumn($alias . '.afilliate_link');
             $criteria->addSelectColumn($alias . '.affiliate_id');
+            $criteria->addSelectColumn($alias . '.pointExpiryMonths');
+            $criteria->addSelectColumn($alias . '.reference');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
-            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

@@ -20,6 +20,7 @@ class JCampaign implements JSONInterface{
     public $ValueInYen;
     public $StartDate;
     public $EndDate;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -45,6 +46,7 @@ class JCampaign implements JSONInterface{
         if(!is_null($item->getEndDate())) {
             $mine->EndDate = $item->getEndDate()->format("Y-m-d");
         }
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format("Y-m-d");
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
@@ -53,17 +55,21 @@ class JCampaign implements JSONInterface{
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JCampaign();
-        $mine->CampaignId = $data['CampaignId'];
-        $mine->Name = $data['Name'];
-        $tmp = $data['CreditCard'];
-        $mine->CreditCard =  array('Id' => $tmp['Id']);
-        if(array_key_exists('Name',$tmp)) $mine->CreditCard['Name'] = $tmp['Name'];
+        if(ArrayUtils::KEY_EXISTS($data,'CampaignId')) $mine->CampaignId = $data['CampaignId'];
+        if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
+        if(ArrayUtils::KEY_EXISTS($data,'CreditCard')) {
+            $tmp = $data['CreditCard'];
+            $mine->CreditCard = array('Id' => $tmp['Id']);
+            if(ArrayUtils::KEY_EXISTS($tmp,'Name')) $mine->CreditCard['Name'] = $tmp['Name'];
+        }
 
-        $mine->Description = $data['Description'];
-        $mine->MaxPoints = $data['MaxPoints'];
-        $mine->ValueInYen = $data['ValueInYen'];
-        if(array_key_exists('StartDate',$data)) $mine->StartDate =  new \DateTime($data['StartDate']);
-        if(array_key_exists('EndDate',$data)) $mine->EndDate =  new \DateTime($data['EndDate']);
+        if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'MaxPoints')) $mine->MaxPoints = $data['MaxPoints'];
+        if(ArrayUtils::KEY_EXISTS($data,'ValueInYen')) $mine->ValueInYen = $data['ValueInYen'];
+        if(ArrayUtils::KEY_EXISTS($data,'StartDate')) $mine->StartDate =  new \DateTime($data['StartDate']);
+        if(ArrayUtils::KEY_EXISTS($data,'EndDate')) $mine->EndDate =  new \DateTime($data['EndDate']);
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+
         $mine->UpdateTime = new \DateTime();
         if(array_key_exists('UpdateUser',$data)) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -86,22 +92,23 @@ class JCampaign implements JSONInterface{
         if(!is_null($this->CampaignId) && $this->CampaignId>0) {
             $item->setCampaignId($this->CampaignId);
         }
-        $item->setCampaignName($this->Name);
+        if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setCampaignName($this->Name);
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
-        $item->setDescription($this->Description);
-        $item->setMaxPoints($this->MaxPoints);
-        $item->setValueInYen($this->ValueInYen);
+        if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->MaxPoints)) $item->setMaxPoints($this->MaxPoints);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->ValueInYen)) $item->setValueInYen($this->ValueInYen);
         if(FieldUtils::STRING_IS_DEFINED($this->StartDate)) {
             $item->setStartDate($this->StartDate);
         } else {
             $item->setStartDate(new \DateTime());
         }
-        if(FieldUtils::STRING_IS_DEFINED($this->EndDate)) {
+        if(!is_null($this->EndDate)) {
             $item->setEndDate($this->EndDate);
         }  else {
             $item->setEndDate(new \DateTime('9999-12-31'));
         }
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

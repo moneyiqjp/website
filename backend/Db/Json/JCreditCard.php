@@ -25,13 +25,15 @@ class JCreditCard {
     public $affiliate_link;
     public $affiliate_id;
     public $affiliate;
+    public $points_expiry_months;
+    public $reference;
     public $point_systems;
     public $update_time;
     public $update_user;
 
     function JCreditCard()
     {
-        return this;
+        return $this;
     }
 
     public static function CREATE_DB(\CreditCard $ccs)
@@ -54,6 +56,7 @@ class JCreditCard {
         $myself->diners = $ccs->getDiners();
         $myself->affiliate_link = $ccs->getAfilliateLink();
         $myself->affiliate_id = $ccs->getAffiliateId();
+        $myself->points_expiry_months = $ccs->getPointexpirymonths();
 
         if(!is_null($ccs->getAffiliateCompany())) {
             $myself->affiliate = array("id" => $ccs->getAffiliateId(), "name" => $ccs->getAffiliateCompany()->getName());
@@ -71,6 +74,7 @@ class JCreditCard {
                 }
             }
         }
+        $myself->reference = $ccs->getReference();
 
         $myself->update_time = $ccs->getUpdateTime()->format("Y-m-d");
         $myself->update_user = $ccs->getUpdateUser();

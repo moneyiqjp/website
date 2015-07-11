@@ -72,5 +72,6 @@ ALTER TABLE card_point_system ADD 	CONSTRAINT `fk_point_system` FOREIGN KEY (`po
 ALTER TABLE point_acquisition ADD 	CONSTRAINT `FK_point_acquisition_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`);
 ALTER TABLE point_acquisition ADD 	CONSTRAINT `ps_point_acquisition` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`);
 
+ALTER TABLE reward	ADD CONSTRAINT `FK_unit` FOREIGN KEY (`unit_id`) REFERENCES unit (`unit_id`);
 
 SET FOREIGN_KEY_CHECKS = 1;

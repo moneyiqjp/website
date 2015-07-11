@@ -2,20 +2,16 @@
 
 namespace Base;
 
-use \Reward as ChildReward;
-use \RewardQuery as ChildRewardQuery;
-use \RewardType as ChildRewardType;
-use \RewardTypeQuery as ChildRewardTypeQuery;
+use \UnitHistoryQuery as ChildUnitHistoryQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\RewardTypeTableMap;
+use Map\UnitHistoryTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -25,18 +21,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'reward_type' table.
+ * Base class that represents a row from the 'unit_history' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class RewardType implements ActiveRecordInterface
+abstract class UnitHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\RewardTypeTableMap';
+    const TABLE_MAP = '\\Map\\UnitHistoryTableMap';
 
 
     /**
@@ -66,10 +62,10 @@ abstract class RewardType implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the reward_type_id field.
+     * The value for the unit_id field.
      * @var        int
      */
-    protected $reward_type_id;
+    protected $unit_id;
 
     /**
      * The value for the name field.
@@ -84,29 +80,22 @@ abstract class RewardType implements ActiveRecordInterface
     protected $description;
 
     /**
-     * The value for the is_finite field.
-     * Note: this column has a database default value of: 0
-     * @var        int
-     */
-    protected $is_finite;
-
-    /**
-     * The value for the update_time field.
+     * The value for the time_beg field.
      * @var        \DateTime
      */
-    protected $update_time;
+    protected $time_beg;
+
+    /**
+     * The value for the time_end field.
+     * @var        \DateTime
+     */
+    protected $time_end;
 
     /**
      * The value for the update_user field.
      * @var        string
      */
     protected $update_user;
-
-    /**
-     * @var        ObjectCollection|ChildReward[] Collection to store aggregation of ChildReward objects.
-     */
-    protected $collRewards;
-    protected $collRewardsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -117,29 +106,10 @@ abstract class RewardType implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildReward[]
-     */
-    protected $rewardsScheduledForDeletion = null;
-
-    /**
-     * Applies default values to this object.
-     * This method should be called from the object's constructor (or
-     * equivalent initialization method).
-     * @see __construct()
-     */
-    public function applyDefaultValues()
-    {
-        $this->is_finite = 0;
-    }
-
-    /**
-     * Initializes internal state of Base\RewardType object.
-     * @see applyDefaults()
+     * Initializes internal state of Base\UnitHistory object.
      */
     public function __construct()
     {
-        $this->applyDefaultValues();
     }
 
     /**
@@ -231,9 +201,9 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>RewardType</code> instance.  If
-     * <code>obj</code> is an instance of <code>RewardType</code>, delegates to
-     * <code>equals(RewardType)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>UnitHistory</code> instance.  If
+     * <code>obj</code> is an instance of <code>UnitHistory</code>, delegates to
+     * <code>equals(UnitHistory)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -299,7 +269,7 @@ abstract class RewardType implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|RewardType The current object, for fluid interface
+     * @return $this|UnitHistory The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -353,13 +323,13 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [reward_type_id] column value.
+     * Get the [unit_id] column value.
      *
      * @return int
      */
-    public function getRewardTypeId()
+    public function getUnitId()
     {
-        return $this->reward_type_id;
+        return $this->unit_id;
     }
 
     /**
@@ -383,17 +353,7 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [is_finite] column value.
-     *
-     * @return int
-     */
-    public function getIsFinite()
-    {
-        return $this->is_finite;
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [update_time] column value.
+     * Get the [optionally formatted] temporal [time_beg] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -403,12 +363,32 @@ abstract class RewardType implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getUpdateTime($format = NULL)
+    public function getTimeBeg($format = NULL)
     {
         if ($format === null) {
-            return $this->update_time;
+            return $this->time_beg;
         } else {
-            return $this->update_time instanceof \DateTime ? $this->update_time->format($format) : null;
+            return $this->time_beg instanceof \DateTime ? $this->time_beg->format($format) : null;
+        }
+    }
+
+    /**
+     * Get the [optionally formatted] temporal [time_end] column value.
+     *
+     *
+     * @param      string $format The date/time format string (either date()-style or strftime()-style).
+     *                            If format is NULL, then the raw DateTime object will be returned.
+     *
+     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+     *
+     * @throws PropelException - if unable to parse/validate the date/time value.
+     */
+    public function getTimeEnd($format = NULL)
+    {
+        if ($format === null) {
+            return $this->time_end;
+        } else {
+            return $this->time_end instanceof \DateTime ? $this->time_end->format($format) : null;
         }
     }
 
@@ -423,30 +403,30 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [reward_type_id] column.
+     * Set the value of [unit_id] column.
      *
      * @param  int $v new value
-     * @return $this|\RewardType The current object (for fluent API support)
+     * @return $this|\UnitHistory The current object (for fluent API support)
      */
-    public function setRewardTypeId($v)
+    public function setUnitId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->reward_type_id !== $v) {
-            $this->reward_type_id = $v;
-            $this->modifiedColumns[RewardTypeTableMap::COL_REWARD_TYPE_ID] = true;
+        if ($this->unit_id !== $v) {
+            $this->unit_id = $v;
+            $this->modifiedColumns[UnitHistoryTableMap::COL_UNIT_ID] = true;
         }
 
         return $this;
-    } // setRewardTypeId()
+    } // setUnitId()
 
     /**
      * Set the value of [name] column.
      *
      * @param  string $v new value
-     * @return $this|\RewardType The current object (for fluent API support)
+     * @return $this|\UnitHistory The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -456,7 +436,7 @@ abstract class RewardType implements ActiveRecordInterface
 
         if ($this->name !== $v) {
             $this->name = $v;
-            $this->modifiedColumns[RewardTypeTableMap::COL_NAME] = true;
+            $this->modifiedColumns[UnitHistoryTableMap::COL_NAME] = true;
         }
 
         return $this;
@@ -466,7 +446,7 @@ abstract class RewardType implements ActiveRecordInterface
      * Set the value of [description] column.
      *
      * @param  string $v new value
-     * @return $this|\RewardType The current object (for fluent API support)
+     * @return $this|\UnitHistory The current object (for fluent API support)
      */
     public function setDescription($v)
     {
@@ -476,57 +456,57 @@ abstract class RewardType implements ActiveRecordInterface
 
         if ($this->description !== $v) {
             $this->description = $v;
-            $this->modifiedColumns[RewardTypeTableMap::COL_DESCRIPTION] = true;
+            $this->modifiedColumns[UnitHistoryTableMap::COL_DESCRIPTION] = true;
         }
 
         return $this;
     } // setDescription()
 
     /**
-     * Set the value of [is_finite] column.
-     *
-     * @param  int $v new value
-     * @return $this|\RewardType The current object (for fluent API support)
-     */
-    public function setIsFinite($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->is_finite !== $v) {
-            $this->is_finite = $v;
-            $this->modifiedColumns[RewardTypeTableMap::COL_IS_FINITE] = true;
-        }
-
-        return $this;
-    } // setIsFinite()
-
-    /**
-     * Sets the value of [update_time] column to a normalized version of the date/time value specified.
+     * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\RewardType The current object (for fluent API support)
+     * @return $this|\UnitHistory The current object (for fluent API support)
      */
-    public function setUpdateTime($v)
+    public function setTimeBeg($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->update_time !== null || $dt !== null) {
-            if ($dt !== $this->update_time) {
-                $this->update_time = $dt;
-                $this->modifiedColumns[RewardTypeTableMap::COL_UPDATE_TIME] = true;
+        if ($this->time_beg !== null || $dt !== null) {
+            if ($dt !== $this->time_beg) {
+                $this->time_beg = $dt;
+                $this->modifiedColumns[UnitHistoryTableMap::COL_TIME_BEG] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setUpdateTime()
+    } // setTimeBeg()
+
+    /**
+     * Sets the value of [time_end] column to a normalized version of the date/time value specified.
+     *
+     * @param  mixed $v string, integer (timestamp), or \DateTime value.
+     *               Empty strings are treated as NULL.
+     * @return $this|\UnitHistory The current object (for fluent API support)
+     */
+    public function setTimeEnd($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->time_end !== null || $dt !== null) {
+            if ($dt !== $this->time_end) {
+                $this->time_end = $dt;
+                $this->modifiedColumns[UnitHistoryTableMap::COL_TIME_END] = true;
+            }
+        } // if either are not null
+
+        return $this;
+    } // setTimeEnd()
 
     /**
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\RewardType The current object (for fluent API support)
+     * @return $this|\UnitHistory The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -536,7 +516,7 @@ abstract class RewardType implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[RewardTypeTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[UnitHistoryTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -552,10 +532,6 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->is_finite !== 0) {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -582,25 +558,28 @@ abstract class RewardType implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : RewardTypeTableMap::translateFieldName('RewardTypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reward_type_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UnitHistoryTableMap::translateFieldName('UnitId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->unit_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RewardTypeTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UnitHistoryTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UnitHistoryTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardTypeTableMap::translateFieldName('IsFinite', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->is_finite = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UnitHistoryTableMap::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->time_beg = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RewardTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UnitHistoryTableMap::translateFieldName('TimeEnd', TableMap::TYPE_PHPNAME, $indexType)];
+            if ($col === '0000-00-00 00:00:00') {
+                $col = null;
+            }
+            $this->time_end = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UnitHistoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -610,10 +589,10 @@ abstract class RewardType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = RewardTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = UnitHistoryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\RewardType'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\UnitHistory'), 0, $e);
         }
     }
 
@@ -655,13 +634,13 @@ abstract class RewardType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(RewardTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(UnitHistoryTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildRewardTypeQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildUnitHistoryQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -670,8 +649,6 @@ abstract class RewardType implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
-
-            $this->collRewards = null;
 
         } // if (deep)
     }
@@ -682,8 +659,8 @@ abstract class RewardType implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see RewardType::setDeleted()
-     * @see RewardType::isDeleted()
+     * @see UnitHistory::setDeleted()
+     * @see UnitHistory::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -692,11 +669,11 @@ abstract class RewardType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UnitHistoryTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildRewardTypeQuery::create()
+            $deleteQuery = ChildUnitHistoryQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -727,7 +704,7 @@ abstract class RewardType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(RewardTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UnitHistoryTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -746,7 +723,7 @@ abstract class RewardType implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                RewardTypeTableMap::addInstanceToPool($this);
+                UnitHistoryTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -783,24 +760,6 @@ abstract class RewardType implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->rewardsScheduledForDeletion !== null) {
-                if (!$this->rewardsScheduledForDeletion->isEmpty()) {
-                    foreach ($this->rewardsScheduledForDeletion as $reward) {
-                        // need to save related object because we set the relation to null
-                        $reward->save($con);
-                    }
-                    $this->rewardsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collRewards !== null) {
-                foreach ($this->collRewards as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             $this->alreadyInSave = false;
 
         }
@@ -821,33 +780,29 @@ abstract class RewardType implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[RewardTypeTableMap::COL_REWARD_TYPE_ID] = true;
-        if (null !== $this->reward_type_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . RewardTypeTableMap::COL_REWARD_TYPE_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(RewardTypeTableMap::COL_REWARD_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'reward_type_id';
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_UNIT_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'unit_id';
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_NAME)) {
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_DESCRIPTION)) {
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_IS_FINITE)) {
-            $modifiedColumns[':p' . $index++]  = 'is_finite';
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_TIME_BEG)) {
+            $modifiedColumns[':p' . $index++]  = 'time_beg';
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_TIME)) {
-            $modifiedColumns[':p' . $index++]  = 'update_time';
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_TIME_END)) {
+            $modifiedColumns[':p' . $index++]  = 'time_end';
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO reward_type (%s) VALUES (%s)',
+            'INSERT INTO unit_history (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -856,8 +811,8 @@ abstract class RewardType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'reward_type_id':
-                        $stmt->bindValue($identifier, $this->reward_type_id, PDO::PARAM_INT);
+                    case 'unit_id':
+                        $stmt->bindValue($identifier, $this->unit_id, PDO::PARAM_INT);
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
@@ -865,11 +820,11 @@ abstract class RewardType implements ActiveRecordInterface
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'is_finite':
-                        $stmt->bindValue($identifier, $this->is_finite, PDO::PARAM_INT);
+                    case 'time_beg':
+                        $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
-                        $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'time_end':
+                        $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
@@ -881,13 +836,6 @@ abstract class RewardType implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setRewardTypeId($pk);
 
         $this->setNew(false);
     }
@@ -920,7 +868,7 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RewardTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UnitHistoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -937,7 +885,7 @@ abstract class RewardType implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getRewardTypeId();
+                return $this->getUnitId();
                 break;
             case 1:
                 return $this->getName();
@@ -946,10 +894,10 @@ abstract class RewardType implements ActiveRecordInterface
                 return $this->getDescription();
                 break;
             case 3:
-                return $this->getIsFinite();
+                return $this->getTimeBeg();
                 break;
             case 4:
-                return $this->getUpdateTime();
+                return $this->getTimeEnd();
                 break;
             case 5:
                 return $this->getUpdateUser();
@@ -971,24 +919,23 @@ abstract class RewardType implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['RewardType'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['UnitHistory'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['RewardType'][$this->hashCode()] = true;
-        $keys = RewardTypeTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['UnitHistory'][$this->hashCode()] = true;
+        $keys = UnitHistoryTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getRewardTypeId(),
+            $keys[0] => $this->getUnitId(),
             $keys[1] => $this->getName(),
             $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getIsFinite(),
-            $keys[4] => $this->getUpdateTime(),
+            $keys[3] => $this->getTimeBeg(),
+            $keys[4] => $this->getTimeEnd(),
             $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
@@ -996,23 +943,6 @@ abstract class RewardType implements ActiveRecordInterface
             $result[$key] = $virtualColumn;
         }
 
-        if ($includeForeignObjects) {
-            if (null !== $this->collRewards) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'rewards';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'rewards';
-                        break;
-                    default:
-                        $key = 'Rewards';
-                }
-
-                $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
-        }
 
         return $result;
     }
@@ -1026,11 +956,11 @@ abstract class RewardType implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\RewardType
+     * @return $this|\UnitHistory
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = RewardTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UnitHistoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1041,13 +971,13 @@ abstract class RewardType implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\RewardType
+     * @return $this|\UnitHistory
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setRewardTypeId($value);
+                $this->setUnitId($value);
                 break;
             case 1:
                 $this->setName($value);
@@ -1056,10 +986,10 @@ abstract class RewardType implements ActiveRecordInterface
                 $this->setDescription($value);
                 break;
             case 3:
-                $this->setIsFinite($value);
+                $this->setTimeBeg($value);
                 break;
             case 4:
-                $this->setUpdateTime($value);
+                $this->setTimeEnd($value);
                 break;
             case 5:
                 $this->setUpdateUser($value);
@@ -1088,10 +1018,10 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = RewardTypeTableMap::getFieldNames($keyType);
+        $keys = UnitHistoryTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setRewardTypeId($arr[$keys[0]]);
+            $this->setUnitId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setName($arr[$keys[1]]);
@@ -1100,10 +1030,10 @@ abstract class RewardType implements ActiveRecordInterface
             $this->setDescription($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setIsFinite($arr[$keys[3]]);
+            $this->setTimeBeg($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateTime($arr[$keys[4]]);
+            $this->setTimeEnd($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setUpdateUser($arr[$keys[5]]);
@@ -1127,7 +1057,7 @@ abstract class RewardType implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\RewardType The current object, for fluid interface
+     * @return $this|\UnitHistory The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1147,25 +1077,25 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(RewardTypeTableMap::DATABASE_NAME);
+        $criteria = new Criteria(UnitHistoryTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(RewardTypeTableMap::COL_REWARD_TYPE_ID)) {
-            $criteria->add(RewardTypeTableMap::COL_REWARD_TYPE_ID, $this->reward_type_id);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_UNIT_ID)) {
+            $criteria->add(UnitHistoryTableMap::COL_UNIT_ID, $this->unit_id);
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_NAME)) {
-            $criteria->add(RewardTypeTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_NAME)) {
+            $criteria->add(UnitHistoryTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_DESCRIPTION)) {
-            $criteria->add(RewardTypeTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_DESCRIPTION)) {
+            $criteria->add(UnitHistoryTableMap::COL_DESCRIPTION, $this->description);
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_IS_FINITE)) {
-            $criteria->add(RewardTypeTableMap::COL_IS_FINITE, $this->is_finite);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_TIME_BEG)) {
+            $criteria->add(UnitHistoryTableMap::COL_TIME_BEG, $this->time_beg);
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(RewardTypeTableMap::COL_UPDATE_TIME, $this->update_time);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_TIME_END)) {
+            $criteria->add(UnitHistoryTableMap::COL_TIME_END, $this->time_end);
         }
-        if ($this->isColumnModified(RewardTypeTableMap::COL_UPDATE_USER)) {
-            $criteria->add(RewardTypeTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(UnitHistoryTableMap::COL_UPDATE_USER)) {
+            $criteria->add(UnitHistoryTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1183,8 +1113,9 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildRewardTypeQuery::create();
-        $criteria->add(RewardTypeTableMap::COL_REWARD_TYPE_ID, $this->reward_type_id);
+        $criteria = ChildUnitHistoryQuery::create();
+        $criteria->add(UnitHistoryTableMap::COL_UNIT_ID, $this->unit_id);
+        $criteria->add(UnitHistoryTableMap::COL_TIME_BEG, $this->time_beg);
 
         return $criteria;
     }
@@ -1197,7 +1128,8 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getRewardTypeId();
+        $validPk = null !== $this->getUnitId() &&
+            null !== $this->getTimeBeg();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1212,23 +1144,29 @@ abstract class RewardType implements ActiveRecordInterface
     }
 
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getRewardTypeId();
+        $pks = array();
+        $pks[0] = $this->getUnitId();
+        $pks[1] = $this->getTimeBeg();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (reward_type_id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setRewardTypeId($key);
+        $this->setUnitId($keys[0]);
+        $this->setTimeBeg($keys[1]);
     }
 
     /**
@@ -1237,7 +1175,7 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getRewardTypeId();
+        return (null === $this->getUnitId()) && (null === $this->getTimeBeg());
     }
 
     /**
@@ -1246,35 +1184,21 @@ abstract class RewardType implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \RewardType (or compatible) type.
+     * @param      object $copyObj An object of \UnitHistory (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setUnitId($this->getUnitId());
         $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
-        $copyObj->setIsFinite($this->getIsFinite());
-        $copyObj->setUpdateTime($this->getUpdateTime());
+        $copyObj->setTimeBeg($this->getTimeBeg());
+        $copyObj->setTimeEnd($this->getTimeEnd());
         $copyObj->setUpdateUser($this->getUpdateUser());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getRewards() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addReward($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setRewardTypeId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1287,7 +1211,7 @@ abstract class RewardType implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \RewardType Clone of current object.
+     * @return \UnitHistory Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1300,315 +1224,6 @@ abstract class RewardType implements ActiveRecordInterface
         return $copyObj;
     }
 
-
-    /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
-     *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Reward' == $relationName) {
-            return $this->initRewards();
-        }
-    }
-
-    /**
-     * Clears out the collRewards collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addRewards()
-     */
-    public function clearRewards()
-    {
-        $this->collRewards = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collRewards collection loaded partially.
-     */
-    public function resetPartialRewards($v = true)
-    {
-        $this->collRewardsPartial = $v;
-    }
-
-    /**
-     * Initializes the collRewards collection.
-     *
-     * By default this just sets the collRewards collection to an empty array (like clearcollRewards());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initRewards($overrideExisting = true)
-    {
-        if (null !== $this->collRewards && !$overrideExisting) {
-            return;
-        }
-        $this->collRewards = new ObjectCollection();
-        $this->collRewards->setModel('\Reward');
-    }
-
-    /**
-     * Gets an array of ChildReward objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildRewardType is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildReward[] List of ChildReward objects
-     * @throws PropelException
-     */
-    public function getRewards(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collRewardsPartial && !$this->isNew();
-        if (null === $this->collRewards || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collRewards) {
-                // return empty collection
-                $this->initRewards();
-            } else {
-                $collRewards = ChildRewardQuery::create(null, $criteria)
-                    ->filterByRewardType($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collRewardsPartial && count($collRewards)) {
-                        $this->initRewards(false);
-
-                        foreach ($collRewards as $obj) {
-                            if (false == $this->collRewards->contains($obj)) {
-                                $this->collRewards->append($obj);
-                            }
-                        }
-
-                        $this->collRewardsPartial = true;
-                    }
-
-                    return $collRewards;
-                }
-
-                if ($partial && $this->collRewards) {
-                    foreach ($this->collRewards as $obj) {
-                        if ($obj->isNew()) {
-                            $collRewards[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collRewards = $collRewards;
-                $this->collRewardsPartial = false;
-            }
-        }
-
-        return $this->collRewards;
-    }
-
-    /**
-     * Sets a collection of ChildReward objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $rewards A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildRewardType The current object (for fluent API support)
-     */
-    public function setRewards(Collection $rewards, ConnectionInterface $con = null)
-    {
-        /** @var ChildReward[] $rewardsToDelete */
-        $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
-
-
-        $this->rewardsScheduledForDeletion = $rewardsToDelete;
-
-        foreach ($rewardsToDelete as $rewardRemoved) {
-            $rewardRemoved->setRewardType(null);
-        }
-
-        $this->collRewards = null;
-        foreach ($rewards as $reward) {
-            $this->addReward($reward);
-        }
-
-        $this->collRewards = $rewards;
-        $this->collRewardsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Reward objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Reward objects.
-     * @throws PropelException
-     */
-    public function countRewards(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collRewardsPartial && !$this->isNew();
-        if (null === $this->collRewards || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collRewards) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getRewards());
-            }
-
-            $query = ChildRewardQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByRewardType($this)
-                ->count($con);
-        }
-
-        return count($this->collRewards);
-    }
-
-    /**
-     * Method called to associate a ChildReward object to this object
-     * through the ChildReward foreign key attribute.
-     *
-     * @param  ChildReward $l ChildReward
-     * @return $this|\RewardType The current object (for fluent API support)
-     */
-    public function addReward(ChildReward $l)
-    {
-        if ($this->collRewards === null) {
-            $this->initRewards();
-            $this->collRewardsPartial = true;
-        }
-
-        if (!$this->collRewards->contains($l)) {
-            $this->doAddReward($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildReward $reward The ChildReward object to add.
-     */
-    protected function doAddReward(ChildReward $reward)
-    {
-        $this->collRewards[]= $reward;
-        $reward->setRewardType($this);
-    }
-
-    /**
-     * @param  ChildReward $reward The ChildReward object to remove.
-     * @return $this|ChildRewardType The current object (for fluent API support)
-     */
-    public function removeReward(ChildReward $reward)
-    {
-        if ($this->getRewards()->contains($reward)) {
-            $pos = $this->collRewards->search($reward);
-            $this->collRewards->remove($pos);
-            if (null === $this->rewardsScheduledForDeletion) {
-                $this->rewardsScheduledForDeletion = clone $this->collRewards;
-                $this->rewardsScheduledForDeletion->clear();
-            }
-            $this->rewardsScheduledForDeletion[]= $reward;
-            $reward->setRewardType(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this RewardType is new, it will return
-     * an empty collection; or if this RewardType has previously
-     * been saved, it will retrieve related Rewards from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in RewardType.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildReward[] List of ChildReward objects
-     */
-    public function getRewardsJoinRewardCategory(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildRewardQuery::create(null, $criteria);
-        $query->joinWith('RewardCategory', $joinBehavior);
-
-        return $this->getRewards($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this RewardType is new, it will return
-     * an empty collection; or if this RewardType has previously
-     * been saved, it will retrieve related Rewards from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in RewardType.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildReward[] List of ChildReward objects
-     */
-    public function getRewardsJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildRewardQuery::create(null, $criteria);
-        $query->joinWith('PointSystem', $joinBehavior);
-
-        return $this->getRewards($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this RewardType is new, it will return
-     * an empty collection; or if this RewardType has previously
-     * been saved, it will retrieve related Rewards from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in RewardType.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildReward[] List of ChildReward objects
-     */
-    public function getRewardsJoinUnit(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildRewardQuery::create(null, $criteria);
-        $query->joinWith('Unit', $joinBehavior);
-
-        return $this->getRewards($query, $con);
-    }
-
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1616,15 +1231,14 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->reward_type_id = null;
+        $this->unit_id = null;
         $this->name = null;
         $this->description = null;
-        $this->is_finite = null;
-        $this->update_time = null;
+        $this->time_beg = null;
+        $this->time_end = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
-        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1641,14 +1255,8 @@ abstract class RewardType implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collRewards) {
-                foreach ($this->collRewards as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collRewards = null;
     }
 
     /**
@@ -1658,7 +1266,7 @@ abstract class RewardType implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(RewardTypeTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(UnitHistoryTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

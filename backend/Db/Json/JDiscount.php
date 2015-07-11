@@ -9,6 +9,7 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 
 class JDiscount implements JSONInterface{
@@ -20,9 +21,10 @@ class JDiscount implements JSONInterface{
     public $Conditions;
     public $CreditCard;
     public $Description;
+    public $Store;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
-    public $Store;
 
     public function JDiscount(){
         return $this;
@@ -52,6 +54,7 @@ class JDiscount implements JSONInterface{
         if (!is_null($item->getEndDate())) {
             $mine->EndDate = $item->getEndDate()->format("Y-m-d");
         }
+        $mine->Reference = $item->getReference();
 
         $mine->UpdateTime = $item->getUpdateTime()->format("Y-m-d");
         $mine->UpdateUser = $item->getUpdateUser();
@@ -88,6 +91,7 @@ class JDiscount implements JSONInterface{
         $mine->Store =  array('Id' => $tmp['Id'] );
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Store['Name'] = $tmp['Name'];
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Store['Category'] = $tmp['Category'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
 
         return $mine;
 
@@ -113,13 +117,21 @@ class JDiscount implements JSONInterface{
         $item->setPercentage($this->Percentage);
         if(!is_null($this->StartDate)) $item->setStartDate($this->StartDate);
         if(!is_null($this->EndDate)) $item->setEndDate($this->EndDate);
-        $item->setMultiple($this->Multiple);
-        $item->setConditions($this->Conditions);
-        $item->setDescription($this->Description);
-        $it = $this->CreditCard;
-        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
-        $it = $this->Store;
-        $item->setStore((new \StoreQuery())->findPk( $it['Id']));
+        if(FieldUtils::NUMBER_IS_DEFINED($this->Multiple)) $item->setMultiple($this->Multiple);
+        if(FieldUtils::STRING_IS_DEFINED($this->Conditions)) $item->setConditions($this->Conditions);
+        if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+
+        if(!is_null($this->CreditCard)) {
+            $it = $this->CreditCard;
+            $item->setCreditCard((new \CreditCardQuery())->findPk($it['Id']));
+        }
+
+        if(!is_null($this->Store)) {
+            $it = $this->Store;
+            $item->setStore((new \StoreQuery())->findPk($it['Id']));
+        }
+
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
 
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);

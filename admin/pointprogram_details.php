@@ -16,6 +16,7 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/datatables_ext.js"></script>
     <script type="text/javascript" language="javascript" class="init">
         var pointSystemId = -1;
         <?php if(array_key_exists('Id',$_GET)) { echo "pointSystemId=" . htmlspecialchars($_GET["Id"]) . ";\n"; } ?>
@@ -127,6 +128,31 @@
                 }
             }
 
+            var units = [];
+            tmp = $.ajax({
+                url: '../backend/crud/unit/all',
+                data: {
+                    format: 'json',
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                type: 'GET',
+                async: false
+            }).responseText;
+
+            if(tmp) {
+                jason = JSON.parse(tmp);
+                if(jason["data"]!=undefined) {
+                    tmpStore = jason["data"];
+                    for (index = 0; index < tmpStore.length; ++index) {
+                        units.push({
+                            value: tmpStore[index]["UnitId"],
+                            label: tmpStore[index]["Description"]
+                        })
+                    }
+                }
+            }
+
             pointSystemEditor = new $.fn.dataTable.Editor(
                 {
                     ajax: {
@@ -152,17 +178,19 @@
                             name: "PointSystemName"
                         }, {
                             label: "PointsPerYen:",
-                            name: "PointsPerYen"
+                            name: "PointsPerYen",
+                            def: 0.01
                         }, {
                             label: "YenPerPoint:",
-                            name: "YenPerPoint"
+                            name: "YenPerPoint",
+                            def:1.0
                         }, {
                             label: "Update date:",
-                            name: "update_time",
+                            name: "UpdateTime",
                             type: "readonly"
                         }, {
                             label: "Update user:",
-                            name: "update_user"
+                            name: "UpdateUser"
                         }
                     ]
                 });
@@ -224,19 +252,23 @@
                         }, {
                             label: "PointsPerYen:",
                             name: "PointsPerYen",
-                            def: 1.0
+                            def: 0.01
                         }, {
                             label: "Category/Store:",
                             name: "Store.StoreId",
                             type:  "select",
                             options: stores
-                        },    {
+                        }, {
+                            label: "Reference",
+                            name:  "Reference",
+                            type: "EditAndLink"
+                        }, {
                             label: "Update date:",
-                            name: "update_time",
+                            name: "UpdateTime",
                             type: "readonly"
                         }, {
                             label: "Update user:",
-                            name: "update_user"
+                            name: "UpdateUser"
                         }
                     ]
                 });
@@ -275,7 +307,11 @@
                             name: "Store.Id",
                             type:  "select",
                             options: stores
-                        },    {
+                        }, {
+                            label: "Reference",
+                            name:  "Reference",
+                            type:"EditAndLink"
+                        }, {
                             label: "Update date:",
                             name: "UpdateTime",
                             type: "readonly"
@@ -351,13 +387,25 @@
                         },  {
                             label: "MaxPeriod:",
                             name: "MaxPeriod"
+                        }, {
+                            label: "Reference",
+                            name:  "Reference",
+                            type:"EditAndLink"
+                        }, {
+                            label: "PointMultiplier",
+                            name:  "PointMultiplier"
                         },  {
+                            label: "Unit",
+                            name:  "Unit.UnitId",
+                            type: "select",
+                            options: units,
+                            def:1
+                        },{
                             label: "Update date:",
-                            name: "update_time",
-                            type: "readonly"
+                            name: "UpdateTime"
                         }, {
                             label: "Update user:",
-                            name: "update_user"
+                            name: "UpdateUser"
                         }
                     ]
                 });
@@ -389,6 +437,9 @@
                         {"data": "MaxPoints",width:20},
                         {"data": "RequiredPoints",width:20},
                         {"data": "MaxPeriod",width:50},
+                        {"data": "Reference", visible:false},
+                        {"data": "PointMultiplier",width:"20px"},
+                        {"data": "Unit.Description", editField: "Unit.UnitId",width:"40px"},
                         {"data": "UpdateTime", visible:false,width:50},
                         {"data": "UpdateUser",  visible:false,width:25}
                     ],
@@ -420,6 +471,7 @@
                         {"data": "Store.Id",width:1,visible: false},
                         {"data": "Store.Name",width:1},
                         {"data": "YenPerPoint",width:2},
+                        {"data": "Reference", visible:false},
                         {"data": "UpdateTime", visible:false,width:2},
                         {"data": "UpdateUser",  visible:false,width:2}
                     ]
@@ -455,6 +507,7 @@
                         {"data": "PointsPerYen",width:1},
                         {"data": "Store.Category",width:2},
                         {"data": "Store.StoreName",width:3},
+                        {"data": "Reference", visible:false},
                         {"data": "UpdateTime", visible:false},
                         {"data": "UpdateUser",  visible:false}
                     ]
@@ -625,6 +678,7 @@ if(!array_key_exists('Id',$_GET)) {
                     <th>PointsPerYen</th>
                     <th>Category</th>
                     <th>Store</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -638,6 +692,7 @@ if(!array_key_exists('Id',$_GET)) {
                     <th>PointsPerYen</th>
                     <th>Category</th>
                     <th>Store</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -660,6 +715,7 @@ if(!array_key_exists('Id',$_GET)) {
                     <th>Category</th>
                     <th>Store</th>
                     <th>YenPerPoint</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -672,6 +728,7 @@ if(!array_key_exists('Id',$_GET)) {
                     <th>Category</th>
                     <th>Store</th>
                     <th>YenPerPoint</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -701,6 +758,9 @@ if(!array_key_exists('Id',$_GET)) {
         <th>MaxPoints</th>
         <th>RequiredPoints</th>
         <th>MaxPeriod</th>
+        <th>Reference</th>
+        <th>PointsPerUnit</th>
+        <th>Unit</th>
         <th>Update</th>
         <th>User</th>
     </tr>
@@ -721,6 +781,9 @@ if(!array_key_exists('Id',$_GET)) {
         <th>MaxPoints</th>
         <th>RequiredPoints</th>
         <th>MaxPeriod</th>
+        <th>PointsPerUnit</th>
+        <th>Unit</th>
+        <th>Reference</th>
         <th>Update</th>
         <th>User</th>
     </tr>

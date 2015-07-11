@@ -19,6 +19,7 @@ class JPointAcquisition implements JSONInterface
     public $PointAcquisitionName;
     public $PointsPerYen;
     public $Store;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -35,6 +36,7 @@ class JPointAcquisition implements JSONInterface
         $mine->PointAcquisitionName = $item->getPointAcquisitionName();
         $mine->PointsPerYen = $item->getPointsPerYen();
         $mine->Store = JStore::CREATE_FROM_DB($item->getStore());
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -56,6 +58,8 @@ class JPointAcquisition implements JSONInterface
         if(ArrayUtils::KEY_EXISTS($data,'PointAcquisitionName')) $mine->PointAcquisitionName = $data['PointAcquisitionName'];
         if(ArrayUtils::KEY_EXISTS($data,'PointsPerYen')) $mine->PointsPerYen = $data['PointsPerYen'];
         if(ArrayUtils::KEY_EXISTS($data,'Store')) $mine->Store = JStore::CREATE_FROM_ARRAY($data['Store']);
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -113,6 +117,8 @@ class JPointAcquisition implements JSONInterface
             $item->setStoreId($tmp->StoreId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->PointAcquisitionName)) $item->setPointAcquisitionName($this->PointAcquisitionName);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
+
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

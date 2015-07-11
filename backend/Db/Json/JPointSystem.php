@@ -17,6 +17,7 @@ class JPointSystem implements JSONInterface{
     public $PointSystemName;
     public $PointsPerYen;
     public $YenPerPoint;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -34,6 +35,7 @@ class JPointSystem implements JSONInterface{
         if(!is_null($item->getUpdateTime())) {
             $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         }
+        $mine->Reference = $item->getReference();
         $mine->UpdateUser = $item->getUpdateUser();
 
         return $mine;
@@ -51,8 +53,10 @@ class JPointSystem implements JSONInterface{
         if(ArrayUtils::KEY_EXISTS($data,'PointSystemName')) $mine->PointSystemName = $data['PointSystemName'];
         if(ArrayUtils::KEY_EXISTS($data,'PointsPerYen')) $mine->PointsPerYen = $data['PointsPerYen'];
         if(ArrayUtils::KEY_EXISTS($data,'YenPerPoint')) $mine->YenPerPoint = $data['YenPerPoint'];
-        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
+
 
         return $mine;
 
@@ -105,6 +109,7 @@ class JPointSystem implements JSONInterface{
         if(FieldUtils::NUMBER_IS_DEFINED($this->PointsPerYen)) $item->setDefaultPointsPerYen($this->PointsPerYen);
         if(FieldUtils::NUMBER_IS_DEFINED($this->YenPerPoint)) $item->setDefaultYenPerPoint($this->YenPerPoint);
         if(FieldUtils::STRING_IS_DEFINED($this->PointSystemName)) $item->setPointSystemName($this->PointSystemName);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
 

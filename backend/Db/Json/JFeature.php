@@ -19,6 +19,7 @@ class JFeature implements JSONInterface{
     public $IssuingFee;
     public $OngoingFee;
     public $Active;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -90,6 +91,7 @@ class JFeature implements JSONInterface{
         $mine->Description = $item->getDescription();
         $mine->IssuingFee = $item->getIssuingFee();
         $mine->OngoingFee = $item->getOngoingFee();
+        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
         $mine->Active = true;
@@ -118,6 +120,7 @@ class JFeature implements JSONInterface{
         if(ArrayUtils::KEY_EXISTS($data,'IssuingFee')) $mine->IssuingFee = $data['IssuingFee'];
         if(ArrayUtils::KEY_EXISTS($data,'OngoingFee')) $mine->OngoingFee = $data['OngoingFee'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
         $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -144,13 +147,19 @@ class JFeature implements JSONInterface{
             $item->setFeatureId($this->FeatureId);
         }
 
-        $it = $this->CreditCard;
-        $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
-        $it = $this->FeatureType;
-        $item->setCardFeatureType((new \CardFeatureTypeQuery())->findPk( $it['Id']));
-        $item->setDescription($this->Description);
-        $item->setIssuingFee($this->IssuingFee);
-        $item->setOngoingFee($this->OngoingFee);
+        if(!is_null($this->CreditCard)) {
+            $it = $this->CreditCard;
+            $item->setCreditCard((new \CreditCardQuery())->findPk($it['Id']));
+        }
+
+        if(!is_null($this->FeatureType)) {
+            $it = $this->FeatureType;
+            $item->setCardFeatureType((new \CardFeatureTypeQuery())->findPk($it['Id']));
+        }
+        if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->IssuingFee)) $item->setIssuingFee($this->IssuingFee);
+        if(FieldUtils::STRING_IS_DEFINED($this->OngoingFee)) $item->setOngoingFee($this->OngoingFee);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

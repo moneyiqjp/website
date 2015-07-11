@@ -9,6 +9,8 @@ use \RewardCategoryQuery as ChildRewardCategoryQuery;
 use \RewardQuery as ChildRewardQuery;
 use \RewardType as ChildRewardType;
 use \RewardTypeQuery as ChildRewardTypeQuery;
+use \Unit as ChildUnit;
+use \UnitQuery as ChildUnitQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -146,6 +148,26 @@ abstract class Reward implements ActiveRecordInterface
     protected $max_period;
 
     /**
+     * The value for the point_multiplier field.
+     * Note: this column has a database default value of: '1.00000000'
+     * @var        string
+     */
+    protected $point_multiplier;
+
+    /**
+     * The value for the unit_id field.
+     * Note: this column has a database default value of: 1
+     * @var        int
+     */
+    protected $unit_id;
+
+    /**
+     * The value for the reference field.
+     * @var        string
+     */
+    protected $reference;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -156,12 +178,6 @@ abstract class Reward implements ActiveRecordInterface
      * @var        string
      */
     protected $update_user;
-
-    /**
-     * The value for the reference field.
-     * @var        string
-     */
-    protected $reference;
 
     /**
      * @var        ChildRewardCategory
@@ -179,6 +195,11 @@ abstract class Reward implements ActiveRecordInterface
     protected $aRewardType;
 
     /**
+     * @var        ChildUnit
+     */
+    protected $aUnit;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -187,10 +208,24 @@ abstract class Reward implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->point_multiplier = '1.00000000';
+        $this->unit_id = 1;
+    }
+
+    /**
      * Initializes internal state of Base\Reward object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -534,6 +569,36 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
+     * Get the [point_multiplier] column value.
+     *
+     * @return string
+     */
+    public function getPointMultiplier()
+    {
+        return $this->point_multiplier;
+    }
+
+    /**
+     * Get the [unit_id] column value.
+     *
+     * @return int
+     */
+    public function getUnitId()
+    {
+        return $this->unit_id;
+    }
+
+    /**
+     * Get the [reference] column value.
+     *
+     * @return string
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -561,16 +626,6 @@ abstract class Reward implements ActiveRecordInterface
     public function getUpdateUser()
     {
         return $this->update_user;
-    }
-
-    /**
-     * Get the [reference] column value.
-     *
-     * @return string
-     */
-    public function getReference()
-    {
-        return $this->reference;
     }
 
     /**
@@ -846,6 +901,70 @@ abstract class Reward implements ActiveRecordInterface
     } // setMaxPeriod()
 
     /**
+     * Set the value of [point_multiplier] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Reward The current object (for fluent API support)
+     */
+    public function setPointMultiplier($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->point_multiplier !== $v) {
+            $this->point_multiplier = $v;
+            $this->modifiedColumns[RewardTableMap::COL_POINT_MULTIPLIER] = true;
+        }
+
+        return $this;
+    } // setPointMultiplier()
+
+    /**
+     * Set the value of [unit_id] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Reward The current object (for fluent API support)
+     */
+    public function setUnitId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->unit_id !== $v) {
+            $this->unit_id = $v;
+            $this->modifiedColumns[RewardTableMap::COL_UNIT_ID] = true;
+        }
+
+        if ($this->aUnit !== null && $this->aUnit->getUnitId() !== $v) {
+            $this->aUnit = null;
+        }
+
+        return $this;
+    } // setUnitId()
+
+    /**
+     * Set the value of [reference] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Reward The current object (for fluent API support)
+     */
+    public function setReference($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->reference !== $v) {
+            $this->reference = $v;
+            $this->modifiedColumns[RewardTableMap::COL_REFERENCE] = true;
+        }
+
+        return $this;
+    } // setReference()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -886,26 +1005,6 @@ abstract class Reward implements ActiveRecordInterface
     } // setUpdateUser()
 
     /**
-     * Set the value of [reference] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Reward The current object (for fluent API support)
-     */
-    public function setReference($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->reference !== $v) {
-            $this->reference = $v;
-            $this->modifiedColumns[RewardTableMap::COL_REFERENCE] = true;
-        }
-
-        return $this;
-    } // setReference()
-
-    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -915,6 +1014,14 @@ abstract class Reward implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->point_multiplier !== '1.00000000') {
+                return false;
+            }
+
+            if ($this->unit_id !== 1) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -980,17 +1087,23 @@ abstract class Reward implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : RewardTableMap::translateFieldName('MaxPeriod', TableMap::TYPE_PHPNAME, $indexType)];
             $this->max_period = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : RewardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : RewardTableMap::translateFieldName('PointMultiplier', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->point_multiplier = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : RewardTableMap::translateFieldName('UnitId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->unit_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : RewardTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->reference = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : RewardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : RewardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 17 + $startcol : RewardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : RewardTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reference = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -999,7 +1112,7 @@ abstract class Reward implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 16; // 16 = RewardTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 18; // 18 = RewardTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Reward'), 0, $e);
@@ -1029,6 +1142,9 @@ abstract class Reward implements ActiveRecordInterface
         }
         if ($this->aRewardType !== null && $this->reward_type_id !== $this->aRewardType->getRewardTypeId()) {
             $this->aRewardType = null;
+        }
+        if ($this->aUnit !== null && $this->unit_id !== $this->aUnit->getUnitId()) {
+            $this->aUnit = null;
         }
     } // ensureConsistency
 
@@ -1072,6 +1188,7 @@ abstract class Reward implements ActiveRecordInterface
             $this->aRewardCategory = null;
             $this->aPointSystem = null;
             $this->aRewardType = null;
+            $this->aUnit = null;
         } // if (deep)
     }
 
@@ -1197,6 +1314,13 @@ abstract class Reward implements ActiveRecordInterface
                 $this->setRewardType($this->aRewardType);
             }
 
+            if ($this->aUnit !== null) {
+                if ($this->aUnit->isModified() || $this->aUnit->isNew()) {
+                    $affectedRows += $this->aUnit->save($con);
+                }
+                $this->setUnit($this->aUnit);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -1273,14 +1397,20 @@ abstract class Reward implements ActiveRecordInterface
         if ($this->isColumnModified(RewardTableMap::COL_MAX_PERIOD)) {
             $modifiedColumns[':p' . $index++]  = 'max_period';
         }
+        if ($this->isColumnModified(RewardTableMap::COL_POINT_MULTIPLIER)) {
+            $modifiedColumns[':p' . $index++]  = 'point_multiplier';
+        }
+        if ($this->isColumnModified(RewardTableMap::COL_UNIT_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'unit_id';
+        }
+        if ($this->isColumnModified(RewardTableMap::COL_REFERENCE)) {
+            $modifiedColumns[':p' . $index++]  = 'reference';
+        }
         if ($this->isColumnModified(RewardTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
         if ($this->isColumnModified(RewardTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_REFERENCE)) {
-            $modifiedColumns[':p' . $index++]  = 'reference';
         }
 
         $sql = sprintf(
@@ -1332,14 +1462,20 @@ abstract class Reward implements ActiveRecordInterface
                     case 'max_period':
                         $stmt->bindValue($identifier, $this->max_period, PDO::PARAM_STR);
                         break;
+                    case 'point_multiplier':
+                        $stmt->bindValue($identifier, $this->point_multiplier, PDO::PARAM_STR);
+                        break;
+                    case 'unit_id':
+                        $stmt->bindValue($identifier, $this->unit_id, PDO::PARAM_INT);
+                        break;
+                    case 'reference':
+                        $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
+                        break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
-                        break;
-                    case 'reference':
-                        $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1443,13 +1579,19 @@ abstract class Reward implements ActiveRecordInterface
                 return $this->getMaxPeriod();
                 break;
             case 13:
-                return $this->getUpdateTime();
+                return $this->getPointMultiplier();
                 break;
             case 14:
-                return $this->getUpdateUser();
+                return $this->getUnitId();
                 break;
             case 15:
                 return $this->getReference();
+                break;
+            case 16:
+                return $this->getUpdateTime();
+                break;
+            case 17:
+                return $this->getUpdateUser();
                 break;
             default:
                 return null;
@@ -1494,9 +1636,11 @@ abstract class Reward implements ActiveRecordInterface
             $keys[10] => $this->getMaxPoints(),
             $keys[11] => $this->getRequiredPoints(),
             $keys[12] => $this->getMaxPeriod(),
-            $keys[13] => $this->getUpdateTime(),
-            $keys[14] => $this->getUpdateUser(),
+            $keys[13] => $this->getPointMultiplier(),
+            $keys[14] => $this->getUnitId(),
             $keys[15] => $this->getReference(),
+            $keys[16] => $this->getUpdateTime(),
+            $keys[17] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1548,6 +1692,21 @@ abstract class Reward implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aRewardType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUnit) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'unit';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'unit';
+                        break;
+                    default:
+                        $key = 'Unit';
+                }
+
+                $result[$key] = $this->aUnit->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1623,13 +1782,19 @@ abstract class Reward implements ActiveRecordInterface
                 $this->setMaxPeriod($value);
                 break;
             case 13:
-                $this->setUpdateTime($value);
+                $this->setPointMultiplier($value);
                 break;
             case 14:
-                $this->setUpdateUser($value);
+                $this->setUnitId($value);
                 break;
             case 15:
                 $this->setReference($value);
+                break;
+            case 16:
+                $this->setUpdateTime($value);
+                break;
+            case 17:
+                $this->setUpdateUser($value);
                 break;
         } // switch()
 
@@ -1697,13 +1862,19 @@ abstract class Reward implements ActiveRecordInterface
             $this->setMaxPeriod($arr[$keys[12]]);
         }
         if (array_key_exists($keys[13], $arr)) {
-            $this->setUpdateTime($arr[$keys[13]]);
+            $this->setPointMultiplier($arr[$keys[13]]);
         }
         if (array_key_exists($keys[14], $arr)) {
-            $this->setUpdateUser($arr[$keys[14]]);
+            $this->setUnitId($arr[$keys[14]]);
         }
         if (array_key_exists($keys[15], $arr)) {
             $this->setReference($arr[$keys[15]]);
+        }
+        if (array_key_exists($keys[16], $arr)) {
+            $this->setUpdateTime($arr[$keys[16]]);
+        }
+        if (array_key_exists($keys[17], $arr)) {
+            $this->setUpdateUser($arr[$keys[17]]);
         }
     }
 
@@ -1785,14 +1956,20 @@ abstract class Reward implements ActiveRecordInterface
         if ($this->isColumnModified(RewardTableMap::COL_MAX_PERIOD)) {
             $criteria->add(RewardTableMap::COL_MAX_PERIOD, $this->max_period);
         }
+        if ($this->isColumnModified(RewardTableMap::COL_POINT_MULTIPLIER)) {
+            $criteria->add(RewardTableMap::COL_POINT_MULTIPLIER, $this->point_multiplier);
+        }
+        if ($this->isColumnModified(RewardTableMap::COL_UNIT_ID)) {
+            $criteria->add(RewardTableMap::COL_UNIT_ID, $this->unit_id);
+        }
+        if ($this->isColumnModified(RewardTableMap::COL_REFERENCE)) {
+            $criteria->add(RewardTableMap::COL_REFERENCE, $this->reference);
+        }
         if ($this->isColumnModified(RewardTableMap::COL_UPDATE_TIME)) {
             $criteria->add(RewardTableMap::COL_UPDATE_TIME, $this->update_time);
         }
         if ($this->isColumnModified(RewardTableMap::COL_UPDATE_USER)) {
             $criteria->add(RewardTableMap::COL_UPDATE_USER, $this->update_user);
-        }
-        if ($this->isColumnModified(RewardTableMap::COL_REFERENCE)) {
-            $criteria->add(RewardTableMap::COL_REFERENCE, $this->reference);
         }
 
         return $criteria;
@@ -1892,9 +2069,11 @@ abstract class Reward implements ActiveRecordInterface
         $copyObj->setMaxPoints($this->getMaxPoints());
         $copyObj->setRequiredPoints($this->getRequiredPoints());
         $copyObj->setMaxPeriod($this->getMaxPeriod());
+        $copyObj->setPointMultiplier($this->getPointMultiplier());
+        $copyObj->setUnitId($this->getUnitId());
+        $copyObj->setReference($this->getReference());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
-        $copyObj->setReference($this->getReference());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setRewardId(NULL); // this is a auto-increment column, so set to default value
@@ -2077,6 +2256,57 @@ abstract class Reward implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildUnit object.
+     *
+     * @param  ChildUnit $v
+     * @return $this|\Reward The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUnit(ChildUnit $v = null)
+    {
+        if ($v === null) {
+            $this->setUnitId(1);
+        } else {
+            $this->setUnitId($v->getUnitId());
+        }
+
+        $this->aUnit = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUnit object, it will not be re-added.
+        if ($v !== null) {
+            $v->addReward($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUnit object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUnit The associated ChildUnit object.
+     * @throws PropelException
+     */
+    public function getUnit(ConnectionInterface $con = null)
+    {
+        if ($this->aUnit === null && ($this->unit_id !== null)) {
+            $this->aUnit = ChildUnitQuery::create()->findPk($this->unit_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUnit->addRewards($this);
+             */
+        }
+
+        return $this->aUnit;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2092,6 +2322,9 @@ abstract class Reward implements ActiveRecordInterface
         if (null !== $this->aRewardType) {
             $this->aRewardType->removeReward($this);
         }
+        if (null !== $this->aUnit) {
+            $this->aUnit->removeReward($this);
+        }
         $this->reward_id = null;
         $this->point_system_id = null;
         $this->reward_category_id = null;
@@ -2105,11 +2338,14 @@ abstract class Reward implements ActiveRecordInterface
         $this->max_points = null;
         $this->required_points = null;
         $this->max_period = null;
+        $this->point_multiplier = null;
+        $this->unit_id = null;
+        $this->reference = null;
         $this->update_time = null;
         $this->update_user = null;
-        $this->reference = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -2131,6 +2367,7 @@ abstract class Reward implements ActiveRecordInterface
         $this->aRewardCategory = null;
         $this->aPointSystem = null;
         $this->aRewardType = null;
+        $this->aUnit = null;
     }
 
     /**

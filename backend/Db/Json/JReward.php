@@ -28,6 +28,9 @@ class JReward  implements JSONInterface {
     public $MaxPoints;
     public $RequiredPoints;
     public $MaxPeriod;
+    public $PointMultiplier;
+    public $Unit;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -53,7 +56,10 @@ class JReward  implements JSONInterface {
         $mine->MaxPoints = $item->getMaxPoints();
         $mine->RequiredPoints = $item->getRequiredPoints();
         $mine->MaxPeriod = $item->getMaxPeriod();
-        $mine->UpdateTime = $item->getUpdateTime();
+        $mine->Reference = $item->getReference();
+        $mine->PointMultiplier = $item->getPointMultiplier();
+        $mine->Unit = JUnit::CREATE_FROM_DB($item->getUnit());
+        $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
         
         return $mine;
@@ -85,7 +91,11 @@ class JReward  implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($data,'MaxPoints')) $mine->MaxPoints = $data['MaxPoints'];
         if(ArrayUtils::KEY_EXISTS($data,'RequiredPoints')) $mine->RequiredPoints = $data['RequiredPoints'];
         if(ArrayUtils::KEY_EXISTS($data,'MaxPeriod')) $mine->MaxPeriod = $data['MaxPeriod'];
-        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+        if(ArrayUtils::KEY_EXISTS($data,'PointMultiplier')) $mine->PointMultiplier = $data['PointMultiplier'];
+        if(ArrayUtils::KEY_EXISTS($data,'Unit')) $mine->Unit = JUnit::CREATE_FROM_ARRAY($data['Unit']);
+
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
@@ -144,6 +154,9 @@ class JReward  implements JSONInterface {
         if(FieldUtils::NUMBER_IS_DEFINED($this->MaxPoints)) $item->setMaxPoints($this->MaxPoints);
         if(FieldUtils::NUMBER_IS_DEFINED($this->RequiredPoints)) $item->setRequiredPoints($this->RequiredPoints);
         if(FieldUtils::STRING_IS_DEFINED($this->MaxPeriod)) $item->setMaxPeriod($this->MaxPeriod);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->PointMultiplier)) $item->setPointMultiplier($this->PointMultiplier);
+        if(!is_null($this->Unit)) $item->setUnit($this->Unit->toDB());
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

@@ -17,6 +17,7 @@ class JInsurance  implements JSONInterface {
     public $InsuranceType;
     public $MaxInsuredAmount;
     public $Value;
+    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -43,6 +44,7 @@ class JInsurance  implements JSONInterface {
 
         if(!is_null($item->getMaxInsuredAmount())) $mine->MaxInsuredAmount = $item->getMaxInsuredAmount();
         if(!is_null($item->getValue())) $mine->Value = $item->getValue();
+        $mine->Reference = $item->getReference();
 
         if(!is_null($item->getUpdateTime())) $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         if(FieldUtils::STRING_IS_DEFINED($item->getUpdateUser())) $mine->UpdateUser = $item->getUpdateUser();
@@ -68,6 +70,7 @@ class JInsurance  implements JSONInterface {
 
         if(ArrayUtils::KEY_EXISTS($data,'MaxInsuredAmount')) $mine->MaxInsuredAmount = $data['MaxInsuredAmount'];
         if(ArrayUtils::KEY_EXISTS($data,'Value')) $mine->Value = $data['Value'];
+        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
 
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
@@ -81,8 +84,7 @@ class JInsurance  implements JSONInterface {
     }
 
 
-    public function toDB()
-    {
+    public function toDB() {
         $item = new \Insurance();
         if(FieldUtils::ID_IS_DEFINED($this->InsuranceId)) {
             $item =(new \InsuranceQuery())->findPk($this->InsuranceId);
@@ -91,8 +93,7 @@ class JInsurance  implements JSONInterface {
         return $this->updateDB($item);
     }
 
-    public function updateDB(\Insurance &$item)
-    {
+    public function updateDB(\Insurance &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->InsuranceId)) $item->setInsuranceId($this->InsuranceId);
 
         if(!is_null($this->CreditCard)) {
@@ -105,12 +106,41 @@ class JInsurance  implements JSONInterface {
             }
         }
 
-        if(!is_null($this->MaxInsuredAmount)) $item->setMaxInsuredAmount($this->MaxInsuredAmount);
-        if(!is_null($this->Value)) $item->setValue($this->Value);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->MaxInsuredAmount)) $item->setMaxInsuredAmount($this->MaxInsuredAmount);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->Value)) $item->setValue($this->Value);
+        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
 
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+/*
+ *     public $TypeName;
+    public $SubtypeName;
+    public $Description;
+    public $Region;
+ */
+
+    public function getCategory() {
+        if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
+        $it = $this->InsuranceType;
+
+        switch(strtoupper($it->TypeName)) {
+            case "TRAVEL":
+                return "travel_insurance";
+            case "SHOPPING":
+                return "shopping_insurance";
+            default:
+                return "";
+        }
+    }
+
+    public function getFeature() {
+        if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
+        $it = $this->InsuranceType;
+
+        return $it->Description;
     }
 
 

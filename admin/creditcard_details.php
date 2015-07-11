@@ -16,6 +16,7 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/datatables_ext.js"></script>
     <script type="text/javascript" language="javascript" class="init">
         var creditCardId = -1;
         <?php if(array_key_exists('Id',$_GET)) { echo "creditCardId=" . htmlspecialchars($_GET["Id"]) . ";\n"; } ?>
@@ -291,6 +292,10 @@
                 label: "MaxInterest:",
                 name: "MaxInterest"
             }, {
+                label: "Reference",
+                name:  "Reference",
+                type:"EditAndLink"
+            }, {
                 label: "Update date:",
                 name: "UpdateTime",
                 type: "readonly"
@@ -347,7 +352,8 @@
                 name: "endYear"
             }, {
                 label: "Reference",
-                name:  "Reference"
+                name:  "Reference",
+                type:"EditAndLink"
             }, {
                 label: "Update date:",
                 name: "UpdateTime",
@@ -410,6 +416,10 @@
                 type:       "date",
                 dateFormat: 'yy-mm-dd'
             }, {
+                label: "Reference",
+                name:  "Reference",
+                type:"EditAndLink"
+            }, {
                 label: "Update date:",
                 name: "UpdateTime",
                 type: "readonly"
@@ -466,6 +476,10 @@
                 type:  "date",
                 def:   isoMaxString
             }, {
+                label: "Reference",
+                name:  "Reference",
+                type:"EditAndLink"
+            },  {
                 label: "Update date:",
                 name:  "UpdateTime",
                 type:  "readonly"
@@ -544,6 +558,10 @@
             }, {
                 label: "Value:",
                 name: "Value"
+            },  {
+                label: "Reference",
+                name:  "Reference",
+                type:"EditAndLink"
             }, {
                 label: "UpdateTime:",
                 name: "UpdateTime",
@@ -659,6 +677,7 @@
                     {"data": "ValueInYen", width: 10},
                     {"data": "StartDate", width: 10},
                     {"data": "EndDate", width: 10},
+                    {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -695,6 +714,7 @@
                     {"data": "Conditions", width: 20},
                     {"data": "StartDate", width: 20},
                     {"data": "EndDate", width: 20},
+                    {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -757,6 +777,7 @@
                     {"data": "PaymentType.Name", editField: "PaymentType.Id"},
                     {"data": "MinInterest", width: 20},
                     {"data": "MaxInterest", width: 10},
+                    {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -789,6 +810,7 @@
                     {"data": "InsuranceType.Region", editField: "InsuranceType.Region"},
                     {"data": "MaxInsuredAmount", editField: "MaxInsuredAmount"},
                     {"data": "Value", editField: "Value"},
+                    {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", visible:false},
                     {"data": "UpdateUser", visible:false}
                 ]
@@ -859,12 +881,21 @@
     <tr>
         <td colspan="2">
             <div class="table-headline"><a name="issuers">Card details</a></div>
-            <a href="creditcard_overview.php" class="subheader">Back</a>
-            <!--
-            <a href="#" class="subheader">#2</a>
-            <a href="#" class="subheader">#4</a>
-            <a href="#" class="subheader">#4</a>
-            -->
+            <div>
+                <div style="position: relative;float: left;">
+                    <!--
+                        <a href="pointprogram_overview.php" class="subheader">Back</a>
+                    -->
+                    <a href="javascript:void(0)" onclick="window.history.back();" class="subheader">Back</a>
+                </div>
+
+                <div style="position: relative;float: right;">
+                    <!--
+                    <a href="pointprogram_details.php?<?php if(array_key_exists('Id',$_GET)) { echo "Id=" . htmlspecialchars($_GET["Id"]); } ?>" class="subheader">Reload</a>
+                    -->
+                    <a href="javascript:void(0)" onclick="location.reload();" class="subheader">Reload</a>
+                </div>
+            </div>
         </td>
     </tr>
     <tr>
@@ -984,6 +1015,7 @@
                     <th>ValueInYen</th>
                     <th>StartDate</th>
                     <th>EndDate</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -999,6 +1031,7 @@
                     <th>ValueInYen</th>
                     <th>StartDate</th>
                     <th>EndDate</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1021,6 +1054,7 @@
                     <th>PaymentType</th>
                     <th>MinInterest</th>
                     <th>MaxInterest</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1033,6 +1067,7 @@
                     <th>PaymentType</th>
                     <th>MinInterest</th>
                     <th>MaxInterest</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1100,6 +1135,7 @@
                     <th>Conditions</th>
                     <th>StartDate</th>
                     <th>EndDate</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1117,6 +1153,7 @@
                     <th>Conditions</th>
                     <th>StartDate</th>
                     <th>EndDate</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1141,6 +1178,7 @@
                     <th>Region</th>
                     <th>Amount</th>
                     <th>Value</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -1155,6 +1193,7 @@
                     <th>Region</th>
                     <th>Amount</th>
                     <th>Value</th>
+                    <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>

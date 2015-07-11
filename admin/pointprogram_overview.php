@@ -16,6 +16,7 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/datatables_ext.js"></script>
     <script type="text/javascript" language="javascript" class="init">
         var editor;
         $(document).ready(function() {
@@ -46,17 +47,23 @@
                             name: "PointSystemName"
                         }, {
                             label: "PointsPerYen:",
-                            name: "PointsPerYen"
+                            name: "PointsPerYen",
+                            def: 0.01
                         }, {
                             label: "YenPerPoint:",
-                            name: "YenPerPoint"
+                            name: "YenPerPoint",
+                            def: 1.0
+                        }, {
+                            label: "Reference:",
+                            name: "Reference",
+                            type:"EditAndLink"
                         }, {
                             label: "Update date:",
-                            name: "update_time",
+                            name: "UpdateTime",
                             type: "readonly"
                         }, {
                             label: "Update user:",
-                            name: "update_user"
+                            name: "UpdateUser"
                         }
                     ]
                 });
@@ -83,7 +90,10 @@
                             }
                             return data;
                         }
-                    }
+                    },
+                    {"data": "Reference", visible:false},
+                    {"data": "UpdateTime", visible:false},
+                    {"data": "UpdateUser", visible:false}
                 ],
                 tableTools: {
                     sRowSelect: "os",
@@ -115,6 +125,9 @@
         <th>points-per-yen<br>(default)</th>
         <th>yen-per-point<br>(default)</th>
         <th>update</th>
+        <th>Reference</th>
+        <th>Update</th>
+        <th>User</th>
     </tr>
     </thead>
 
@@ -125,6 +138,9 @@
         <th>points-per-yen<br>(default)</th>
         <th>yen-per-point<br>(default)</th>
         <th>update</th>
+        <th>Reference</th>
+        <th>Update</th>
+        <th>User</th>
     </tr>
     </tfoot>
 </table>

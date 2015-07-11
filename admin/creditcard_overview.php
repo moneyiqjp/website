@@ -14,6 +14,7 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/datatables_ext.js"></script>
 
     <script type="text/javascript" language="javascript" class="init">
         var editor;
@@ -135,6 +136,13 @@
                         name: "affiliate_id",
                         type: "select",
                         options: values["affiliates"]
+                    },  {
+                        label:  "reference",
+                        name:   "reference",
+                        type:"EditAndLink"
+                    },  {
+                        label:  "Points expiry (months)",
+                        name:   "points_expiry_months"
                     }, {
                         label: "Update date:",
                         name: "update_time",
@@ -261,6 +269,8 @@
                         visible: true
                     },
                     { "data": "affiliate.name", editField: "affiliate.id" },
+                    { "data": "points_expiry_months" },
+                    { "data": "reference", editField: "reference" },
                     {
                         "data": "credit_card_id",
                         render: function ( data, type, row ) {
@@ -342,6 +352,8 @@
             <th>diners</th>
             <th>affiliate_link</th>
             <th>affiliate</th>
+            <th>expiry<br>(months)</th>
+            <th>reference</th>
             <th>update</th>
         </tr>
     </thead>
@@ -360,6 +372,8 @@
             <th>diners</th>
             <th>affiliate_link</th>
             <th>affiliate</th>
+            <th>expiry<br>(months)</th>
+            <th>reference</th>
             <th>update</th>
         </tr>
     </tfoot>
