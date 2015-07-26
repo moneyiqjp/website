@@ -47,21 +47,8 @@ class CStorePointMapping implements JSONInterface {
         return $mine;
     }
 
-    /**
-     * @param \PointSystem $item
-     * @return CStorePointMapping
-     * @throws \Exception
-     */
-    public static function CREATE_FROM_POINT_SYSTEM(\PointSystem $item) {
-        $mine = CStorePointMapping::CREATE_FROM_STORE($item->getStore());
-        return $mine->UpdateFromPointSystem($item);
-    }
 
-    /**
-     * @param \PointSystem $item
-     * @return CStorePointMapping
-     * @throws \Exception
-     */
+
     public static function CREATE_FROM_POINT_USAGE(\PointUsage $item) {
         $mine = CStorePointMapping::CREATE_FROM_STORE($item->getStore());
         return $mine->UpdateFromPointUsage($item);
@@ -82,19 +69,13 @@ class CStorePointMapping implements JSONInterface {
      */
     public function UpdateFromPointSystem(\PointSystem $item) {
         if(is_null($this->Store)) throw new \Exception('No store defined, can\'t update');
-        if( $this->Store->StoreId != $item->getStoreId()) return $this;
 
         $this->PointSystem = JPointSystem::CREATE_FROM_DB($item);
         $this->MappingId = CStorePointMapping::GET_ID($this);
         return $this;
     }
 
-    /**
-     * @param \PointUsage $item
-     * @return $this
-     * @throws \Exception
-     */
-    public function UpdateFromPointUsage(\PointUsage $item) {
+    public function UpdateFromPointUsage(\PointUse $item) {
         if(is_null($this->Store)) throw new \Exception('No store defined, can\'t update');
         if( $this->Store->StoreId != $item->getStoreId()) return $this;
 
@@ -107,10 +88,8 @@ class CStorePointMapping implements JSONInterface {
      * @throws \Exception
      */
     public function saveToDb() {
-        $res = $this->PointSystem->saveToDb();
-        $res = $this->PointUsage->saveToDb() || $res;
         $this->MappingId = CStorePointMapping::GET_ID($this);
-        return $res;
+        return $this;
     }
 
     /**
@@ -120,16 +99,6 @@ class CStorePointMapping implements JSONInterface {
     {
         throw new \Exception("Unsupported Behaviour CStorePointMapping::toDB");
     }
-
-
-    public function Reload() {
-        $this->Store = JStore::CREATE_FROM_DB($this->Store->toDB());
-        $this->PointSystem = JPointSystem::CREATE_FROM_DB($this->PointSystem->toDB());
-        $this->PointUsage = JPointUsage::CREATE_FROM_DB($this->PointUsage->toDB());
-        $this->MappingId = CStorePointMapping::GET_ID($this);
-        return $this;
-    }
-
 
     public static function CREATE_FROM_ARRAY($data) {
         if (!array_key_exists('PointUsage', $data)) throw new \Exception('No PointUsage defined in request');
@@ -150,7 +119,7 @@ class CStorePointMapping implements JSONInterface {
         $mine->PointUsage = JPointUsage::CREATE_FROM_ARRAY($data['PointUsage']);
         $mine->PointUsage->updateStore($mine->Store);
         $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
-        $mine->PointSystem->updateStore($mine->Store);
+
 
         return $mine;
     }
@@ -182,16 +151,11 @@ class CStorePointMapping implements JSONInterface {
         return true;
     }
 
-
-
-     /**
-     * @param \CreditCard $cc
-     * @return array
-     */
+/*
     public static function GET_POINT_MAPPINGS_FROM_CREDIT_CARD(\CreditCard $cc) {
         $store_map = array();
 
-        foreach($cc->getPointSystems() as $ps) {
+        foreach($cc->getCardPointSystems() as $ps) {
             $store_map[$ps->GetStoreId()] = CStorePointMapping::CREATE_FROM_POINT_SYSTEM($ps);
         }
 
@@ -207,6 +171,6 @@ class CStorePointMapping implements JSONInterface {
 
         return array_values($store_map);
     }
-
+*/
 
 }

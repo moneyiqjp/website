@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class JReward  implements JSONInterface {
 
     public $RewardId;
-    public $PointSystemId;
+    public $PointSystem;
     public $Type;
     public $Category;
     public $Title;
@@ -42,7 +42,7 @@ class JReward  implements JSONInterface {
     {
         $mine = new JReward();
         $mine->RewardId = $item->getRewardId();
-        $mine->PointSystemId = $item->getPointSystemId();
+        $mine->PointSystem = JPointSystem::CREATE_FROM_DB($item->getPointSystem());
         if (is_null($item->getRewardType())) throw new Exception("JReward: RewardType is not available for Reward " . $mine->RewardId . ": " . $item->getRewardTypeId() );
         if (is_null($item->getRewardCategory())) throw new Exception("JReward: RewardCategory is not available for Reward " . $mine->RewardId . ": " . $item->getRewardCategoryId() );
         $mine->Type = JRewardType::CREATE_FROM_DB($item->getRewardType());
@@ -79,7 +79,10 @@ class JReward  implements JSONInterface {
         $mine = new JReward();
 
         if(ArrayUtils::KEY_EXISTS($data,'RewardId')) $mine->RewardId = $data['RewardId'];
-        if(ArrayUtils::KEY_EXISTS($data,'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
+        if(ArrayUtils::KEY_EXISTS($data,'PointSystemId')) {
+            $mine->PointSystem = (new \PointSystemQuery())->findPK($data['PointSystem']);
+        }
+        if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JRewardType::CREATE_FROM_ARRAY($data['Type']);
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = JRewardCategory::CREATE_FROM_ARRAY($data['Category']);
         if(ArrayUtils::KEY_EXISTS($data,'Title')) $mine->Title = $data['Title'];
@@ -103,7 +106,7 @@ class JReward  implements JSONInterface {
 
 
     public function isEmpty() {
-        return is_null($this->PointSystemId) || is_null($this->Category) || is_null($this->YenPerPoint);
+        return is_null($this->PointSystem) || is_null($this->Category) || is_null($this->YenPerPoint);
     }
 
     public function isValid() {
@@ -138,7 +141,7 @@ class JReward  implements JSONInterface {
 
     public function updateDB(\Reward &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->RewardId)) $item->setRewardId($this->RewardId);
-        if(FieldUtils::ID_IS_DEFINED($this->PointSystemId)) $item->setPointSystemId($this->PointSystemId);
+        if(!is_null($this->PointSystem)) $item->setPointSystemId($this->PointSystem->PointSystemId);
         if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->RewardTypeId)) {
             $item->setRewardTypeId($this->Type->RewardTypeId);
         }

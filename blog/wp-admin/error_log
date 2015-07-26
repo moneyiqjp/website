@@ -1,0 +1,1 @@
+[27-Jun-2015 14:35:22 UTC] WordPress database error Can't DROP 'slug'; check that column/key exists for query ALTER TABLE wp_terms DROP INDEX slug, ADD INDEX slug(slug(191)) made by wp_upgrade, pre_schema_upgrade

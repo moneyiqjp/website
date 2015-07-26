@@ -41,7 +41,7 @@
                 for (index = 0; index < tmpStore.length; ++index) {
                     stores.push({
                         value: tmpStore[index]["StoreId"],
-                        label: tmpStore[index]["Category"] + " - " + tmpStore[index]["StoreName"]
+                        label: tmpStore[index]["StoreCategory"]["Name"] + " - " + tmpStore[index]["StoreName"]
                     })
                 }
             }
@@ -345,7 +345,7 @@
                             type:  "readonly"
                         },{
                             label: "PointSystem:",
-                            name: "PointSystemId",
+                            name: "PointSystem.PointSystemId",
                             type:  "readonly",
                             def: pointSystemId
                         },{
@@ -425,7 +425,7 @@
                     },
                     "columns": [
                         {"data": "RewardId",width:20},
-                        {"data": "PointSystemId", visible: false,width:20},
+                        {"data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId",visible: false,width:20},
                         {"data": "Type.Name", editField: "Type.RewardTypeId",width:50},
                         {"data": "Category.Name", editField: "Category.RewardCategoryId",width:100},
                         {"data": "Title",width:150},

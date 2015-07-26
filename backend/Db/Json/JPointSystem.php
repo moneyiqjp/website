@@ -62,12 +62,6 @@ class JPointSystem implements JSONInterface{
 
     }
 
-    public function updateStore(JStore $store) {
-        if(FieldUtils::ID_IS_DEFINED($store->StoreId)) $this->Store['Id']=$store->StoreId;
-        if(FieldUtils::STRING_IS_DEFINED($store->StoreName)) $this->Store['Name']=$store->StoreName;
-        return $this;
-    }
-
 
     public function isEmpty() {
         return !FieldUtils::STRING_IS_DEFINED($this->PointSystemName) ||   (is_null($this->PointsPerYen));

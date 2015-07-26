@@ -15,4 +15,10 @@ use Base\Store as BaseStore;
 class Store extends BaseStore
 {
 
+    public function getCategory() {
+        if(is_null($this->getStoreCategory())) return "";
+
+        return $this->getStoreCategory()->getName();
+    }
+
 }

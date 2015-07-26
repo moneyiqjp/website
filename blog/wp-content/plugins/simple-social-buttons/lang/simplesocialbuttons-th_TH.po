@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simplesocialbuttons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-01 11:19+0100\n"
+"PO-Revision-Date: 2012-05-08 13:37+0100\n"
+"Last-Translator: Mads Phikamphon <mads@genvejen.dk>\n"
+"Language-Team: Paweł Rabinek (DE: Dennis Schreiber) <pawel@rabinek.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:424
+#: ../ssb-admin.php:11
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:452
+msgid "SSB Settings"
+msgstr "SSB การตั้งค่า"
+
+#: ../simple-social-buttons.php:463
+msgid "Hide Simple Social Buttons"
+msgstr "ซ่อนปุ่มสังคมแบบง่าย ๆ"
+
+#: ../ssb-admin.php:13
+msgid "<strong>Simple Social Buttons</strong> by <strong>Paweł Rabinek</strong>. This plugin adds a social media buttons, such as: <strong>Google +1</strong>, <strong>Facebook Like it</strong> and <strong>Twitter share</strong>. The most flexible social buttons plugin ever."
+msgstr "<strong>Simple Social Buttons</strong>, จาก <strong>Paweł Rabinek</strong>. ปลั๊กอินนี้จะเพิ่มปุ่มสื่อสังคมเช่น <strong>Google +1</strong>, <strong>Facebook ชอบมัน</strong> et <strong>Twitter</strong>. ความยืดหยุ่นมากที่สุดปุ่มสังคมปลั๊กอินที่เคย"
+
+#: ../ssb-admin.php:68
+msgid "Select buttons"
+msgstr "เลื่อกปุ่ม"
+
+#: ../ssb-admin.php:70
+msgid "Select social media buttons:"
+msgstr "เลื่อกปุ่มสังคมในการสื่อ"
+
+#: ../ssb-admin.php:76
+#: ../ssb-admin.php:90
+#: ../ssb-admin.php:105
+msgid "inactive"
+msgstr "เฉื่อยชา"
+
+#: ../ssb-admin.php:84
+msgid "Google plus one (+1)"
+msgstr "Google บวก หนึ่ง (+1)"
+
+#: ../ssb-admin.php:98
+msgid "Facebook Like it"
+msgstr "Facebook ชอบมัน"
+
+#: ../ssb-admin.php:113
+msgid "Twitter share"
+msgstr "Twitter แบ่งปั่น"
+
+#: ../ssb-admin.php:116
+msgid "Disable plugin CSS (only advanced users)"
+msgstr "ปิดการใช้งานปลั๊กอิน (เฉพาะผู้ใช้ขั้นสูง)"
+
+#: ../ssb-admin.php:121
+msgid "Single posts - display settings"
+msgstr "โพสต์เดี่ยว - ตั้งค่าการแสดง"
+
+#: ../ssb-admin.php:123
+msgid "Place buttons on single post:"
+msgstr "วางปุ่มบนโพสต์เดียว:"
+
+#: ../ssb-admin.php:124
+#: ../ssb-admin.php:148
+msgid "Before the content"
+msgstr "ก่อนหน้าเนื่อหา"
+
+#: ../ssb-admin.php:125
+#: ../ssb-admin.php:149
+msgid "After the content"
+msgstr "หลังจากเนื้อหา"
+
+#: ../ssb-admin.php:130
+msgid "Single pages - display settings"
+msgstr "หน้าเดี่ยว - ตั้งค่าการแสดง"
+
+#: ../ssb-admin.php:132
+msgid "Place buttons on single pages:"
+msgstr "วางปุ่มบนหน้าเดี่ยว"
+
+#: ../ssb-admin.php:133
+msgid "Before the page content"
+msgstr "ก่อนหน้าเนื้อหาบนหน้าเว็บ"
+
+#: ../ssb-admin.php:134
+msgid "After the page content"
+msgstr "หลังจากเนื้อหาบนหน้าเว็บ"
+
+#: ../ssb-admin.php:139
+msgid "Archives - display settings"
+msgstr "คลังเก็บ - ตั้งค่าการแสดง"
+
+#: ../ssb-admin.php:141
+msgid "Select additional places to display buttons:"
+msgstr "เลือกสถานที่เพิ่มเติมเพื่อแสดงปุ่ม:"
+
+#: ../ssb-admin.php:142
+msgid "Show at frontpage"
+msgstr "แสดงที่หน้าแรก"
+
+#: ../ssb-admin.php:143
+msgid "Show at category pages"
+msgstr "แสดงที่หน้าหมวดหมู่"
+
+#: ../ssb-admin.php:144
+msgid "Show at archive pages"
+msgstr "แสดงที่หน้าเว็บที่เก็บ"
+
+#: ../ssb-admin.php:145
+msgid "Show at tag pages"
+msgstr "แสดงที่หน้าแท็ก"
+
+#: ../ssb-admin.php:147
+msgid "Place buttons on archives:"
+msgstr "วางปุ่มบนที่เก็บ"
+
+#: ../ssb-admin.php:155
+msgid "Save Changes"
+msgstr "บันทึกการเปลี่ยนแปลง"
+
+#: ../ssb-admin.php:165
+msgid "About this plugin:"
+msgstr "เกี่ยวกับปลั๊กอินนี้:"
+
+#: ../ssb-admin.php:167
+msgid "Talk to <a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> on twitter for bugs or feature requests."
+msgstr "พูดกับ<a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> ได้ที่ Twitter สำหรับข้อบกพร่องหรือแสดงคุณสมบัติ"
+
+#: ../ssb-admin.php:168
+msgid "Enjoy the plugin?"
+msgstr "เพลิดเพลินไปกับปลั๊กอิน?"
+
+#: ../ssb-admin.php:169
+msgid "<a href=\"http://twitter.com/?status=I'm using @rabinek's WordPress Simple Social Buttons plugin - check it out! http://blog.rabinek.pl/\" target=\"_blank\">Tweet about it</a> and consider donating."
+msgstr "<a href=\"http://twitter.com/?status=Ich verwende @rabinek's - WordPress Simple Social Buttons ตรวจสอบ! http://blog.rabinek.pl/\" target=\"_blank\">บอกเกี่ยวกับ tweet</a>และพิจารณาการบริจาค"
+
+#: ../ssb-admin.php:170
+msgid "<strong>Donate:</strong> A lot of hard work goes into building plugins - support your open source developers. Thank you!"
+msgstr "<strong>Spenden :</strong> ทำงานหนักมากที่จะเข้าสู่ปลั๊กอิน - สนับสนุนนักพัฒนาโอเพนซอร์สของคุณ ขอขอบคุณ!"
+
+#: ../ssb-admin.php:182
+msgid "About the author:"
+msgstr "เกี่ยวกับผู้เขียน :"
+
+#: ../ssb-admin.php:184
+msgid "Hi! My name is Paweł Rabinek (aka xradar). I'm interesed in SEO and social media, PHP and Wordpress developement."
+msgstr "สวัสดี! ชื่อของฉันคือ Paweł Rabinek (aka xradar) ฉัน สนใจ ใน SEO และสื่อสังคม, PHP และ Wordpress developement."
+
+#: ../ssb-admin.php:186
+msgid "My blog about SEO"
+msgstr "บล็อกของฉันเกี่ยวกับ SEO"
+
+#: ../ssb-admin.php:186
+msgid "[Polish]"
+msgstr "ขัด"
+
+#: ../ssb-admin.php:187
+msgid "Follow me on Twitter"
+msgstr "ตามผมมาใน twitter"
+
+#: ../ssb-admin.php:188
+msgid "Paweł Rabinek on Facebook"
+msgstr "Pawel Rabinek ใน Facebook"
+
+#: ../ssb-admin.php:189
+msgid "Paweł Rabinek on Google Plus"
+msgstr "Paweł Rabinek ใน google บวกหนึ่ง"
+
+#: ../ssb-admin.php:190
+msgid "LinkedIn profile"
+msgstr "ประวัตของลิ้ง"
+
+#: ../ssb-admin.php:196
+msgid "Usefull links:"
+msgstr "ลิ้งที่มีประโชย์"
+
+#: ../ssb-admin.php:199
+msgid "Unlimited web hosting"
+msgstr "โฮสติ้ง จำกัด เว็บ"
+
+#: ../ssb-admin.php:200
+msgid "Best SEO software"
+msgstr "ซอฟต์แวร์ SEO ที่ดีที่สุด"
+
+#: ../ssb-admin.php:201
+msgid "Wordpress templates"
+msgstr "แม่แบบ Wordpress"
+
+#~ msgid "Hi! My name is Paweł Rabinek (aka xradar)."
+#~ msgstr "Hej! Nazywam się Paweł Rabinek (nick xradar)."

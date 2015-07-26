@@ -47,10 +47,10 @@ class JSONCreditCard {
 
     function JSONCreditCard()
     {
-        return this;
+        return $this;
     }
 
-    public static function CREATE_DB($ccs)
+    public static function CREATE_DB(\CreditCard $ccs)
     {
         $myself = new JSONCreditCard();
         $myself->credit_card_id = $ccs->getCreditCardId();
@@ -68,6 +68,7 @@ class JSONCreditCard {
         $myself->affiliate = array("id" => $ccs->getAffiliateId(), "name" => $ccs->getAffiliateCompany()->getName());
         $myself->update_time = $ccs->getUpdateTime()->format("Y-m-d");
         $myself->update_user = $ccs->getUpdateUser();
+
         return $myself;
     }
 }
@@ -301,7 +302,7 @@ class DBCartFeature
     public static function CREATE_FROM_DB(\CardFeatures $item)
     {
         $mine = new DBCartFeature();
-        $mine->FeatureId = $item->getCampaignId();
+        $mine->FeatureId = $item->getFeatureId();
         $mine->FeatureType = array(
             'Id' => $item->getFeatureTypeId(),
             'Name' => $item->getCardFeatureType()->getCategory() . "-" . $item->getCardFeatureType()->getName()
@@ -311,7 +312,7 @@ class DBCartFeature
             'Name' => $item->getCreditCard()->getName()
         );
         $mine->Description = $item->getDescription();
-        $mine->FeatureCost = $item->getFeatureCost();
+        $mine->FeatureCost = $item->getIssuingFee();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
@@ -322,7 +323,7 @@ class DBCartFeature
         $mine = new DBCartFeature();
         $mine->FeatureId = $data['FeatureId'];
         $tmp = $data['FeatureType'];
-        $mine->$FeatureType = array(
+        $mine->FeatureType = array(
             'Id' => $tmp['Id'],
             'Name' => $tmp['Name']
         );
@@ -353,7 +354,7 @@ class DBCartFeature
         $it = $this->FeatureType;
         $item->setCardFeatureType((new \CardFeatureTypeQuery())->findPk( $it['Id']));
         $item->setDescription($this->Description);
-        $item->setFeatureCost($this->FeatureCost);
+        $item->setCardFeatureType($this->FeatureCost);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

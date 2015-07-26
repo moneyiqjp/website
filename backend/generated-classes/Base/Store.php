@@ -13,6 +13,8 @@ use \PointUsageQuery as ChildPointUsageQuery;
 use \PointUse as ChildPointUse;
 use \PointUseQuery as ChildPointUseQuery;
 use \Store as ChildStore;
+use \StoreCategory as ChildStoreCategory;
+use \StoreCategoryQuery as ChildStoreCategoryQuery;
 use \StoreQuery as ChildStoreQuery;
 use \DateTime;
 use \Exception;
@@ -86,16 +88,24 @@ abstract class Store implements ActiveRecordInterface
     protected $store_name;
 
     /**
-     * The value for the category field.
-     * @var        string
+     * The value for the store_category_id field.
+     * Note: this column has a database default value of: 1
+     * @var        int
      */
-    protected $category;
+    protected $store_category_id;
 
     /**
      * The value for the description field.
      * @var        string
      */
     protected $description;
+
+    /**
+     * The value for the is_major field.
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $is_major;
 
     /**
      * The value for the update_time field.
@@ -108,6 +118,11 @@ abstract class Store implements ActiveRecordInterface
      * @var        string
      */
     protected $update_user;
+
+    /**
+     * @var        ChildStoreCategory
+     */
+    protected $aStoreCategory;
 
     /**
      * @var        ObjectCollection|ChildDiscount[] Collection to store aggregation of ChildDiscount objects.
@@ -178,10 +193,24 @@ abstract class Store implements ActiveRecordInterface
     protected $pointUsesScheduledForDeletion = null;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->store_category_id = 1;
+        $this->is_major = 0;
+    }
+
+    /**
      * Initializes internal state of Base\Store object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -415,13 +444,13 @@ abstract class Store implements ActiveRecordInterface
     }
 
     /**
-     * Get the [category] column value.
+     * Get the [store_category_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getCategory()
+    public function getStoreCategoryId()
     {
-        return $this->category;
+        return $this->store_category_id;
     }
 
     /**
@@ -432,6 +461,16 @@ abstract class Store implements ActiveRecordInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Get the [is_major] column value.
+     *
+     * @return int
+     */
+    public function getIsMajor()
+    {
+        return $this->is_major;
     }
 
     /**
@@ -505,24 +544,28 @@ abstract class Store implements ActiveRecordInterface
     } // setStoreName()
 
     /**
-     * Set the value of [category] column.
+     * Set the value of [store_category_id] column.
      *
-     * @param  string $v new value
+     * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
-    public function setCategory($v)
+    public function setStoreCategoryId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->category !== $v) {
-            $this->category = $v;
-            $this->modifiedColumns[StoreTableMap::COL_CATEGORY] = true;
+        if ($this->store_category_id !== $v) {
+            $this->store_category_id = $v;
+            $this->modifiedColumns[StoreTableMap::COL_STORE_CATEGORY_ID] = true;
+        }
+
+        if ($this->aStoreCategory !== null && $this->aStoreCategory->getStoreCategoryId() !== $v) {
+            $this->aStoreCategory = null;
         }
 
         return $this;
-    } // setCategory()
+    } // setStoreCategoryId()
 
     /**
      * Set the value of [description] column.
@@ -543,6 +586,26 @@ abstract class Store implements ActiveRecordInterface
 
         return $this;
     } // setDescription()
+
+    /**
+     * Set the value of [is_major] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Store The current object (for fluent API support)
+     */
+    public function setIsMajor($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->is_major !== $v) {
+            $this->is_major = $v;
+            $this->modifiedColumns[StoreTableMap::COL_IS_MAJOR] = true;
+        }
+
+        return $this;
+    } // setIsMajor()
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
@@ -594,6 +657,14 @@ abstract class Store implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->store_category_id !== 1) {
+                return false;
+            }
+
+            if ($this->is_major !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -626,19 +697,22 @@ abstract class Store implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : StoreTableMap::translateFieldName('StoreName', TableMap::TYPE_PHPNAME, $indexType)];
             $this->store_name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : StoreTableMap::translateFieldName('Category', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->category = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : StoreTableMap::translateFieldName('StoreCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->store_category_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : StoreTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : StoreTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : StoreTableMap::translateFieldName('IsMajor', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->is_major = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : StoreTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : StoreTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : StoreTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -648,7 +722,7 @@ abstract class Store implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = StoreTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = StoreTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Store'), 0, $e);
@@ -670,6 +744,9 @@ abstract class Store implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aStoreCategory !== null && $this->store_category_id !== $this->aStoreCategory->getStoreCategoryId()) {
+            $this->aStoreCategory = null;
+        }
     } // ensureConsistency
 
     /**
@@ -709,6 +786,7 @@ abstract class Store implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aStoreCategory = null;
             $this->collDiscounts = null;
 
             $this->collDiscountss = null;
@@ -817,6 +895,18 @@ abstract class Store implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
+
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aStoreCategory !== null) {
+                if ($this->aStoreCategory->isModified() || $this->aStoreCategory->isNew()) {
+                    $affectedRows += $this->aStoreCategory->save($con);
+                }
+                $this->setStoreCategory($this->aStoreCategory);
+            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -946,11 +1036,14 @@ abstract class Store implements ActiveRecordInterface
         if ($this->isColumnModified(StoreTableMap::COL_STORE_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'store_name';
         }
-        if ($this->isColumnModified(StoreTableMap::COL_CATEGORY)) {
-            $modifiedColumns[':p' . $index++]  = 'category';
+        if ($this->isColumnModified(StoreTableMap::COL_STORE_CATEGORY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'store_category_id';
         }
         if ($this->isColumnModified(StoreTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
+        }
+        if ($this->isColumnModified(StoreTableMap::COL_IS_MAJOR)) {
+            $modifiedColumns[':p' . $index++]  = 'is_major';
         }
         if ($this->isColumnModified(StoreTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
@@ -975,11 +1068,14 @@ abstract class Store implements ActiveRecordInterface
                     case 'store_name':
                         $stmt->bindValue($identifier, $this->store_name, PDO::PARAM_STR);
                         break;
-                    case 'category':
-                        $stmt->bindValue($identifier, $this->category, PDO::PARAM_STR);
+                    case 'store_category_id':
+                        $stmt->bindValue($identifier, $this->store_category_id, PDO::PARAM_INT);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                        break;
+                    case 'is_major':
+                        $stmt->bindValue($identifier, $this->is_major, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1056,15 +1152,18 @@ abstract class Store implements ActiveRecordInterface
                 return $this->getStoreName();
                 break;
             case 2:
-                return $this->getCategory();
+                return $this->getStoreCategoryId();
                 break;
             case 3:
                 return $this->getDescription();
                 break;
             case 4:
-                return $this->getUpdateTime();
+                return $this->getIsMajor();
                 break;
             case 5:
+                return $this->getUpdateTime();
+                break;
+            case 6:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1099,10 +1198,11 @@ abstract class Store implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getStoreId(),
             $keys[1] => $this->getStoreName(),
-            $keys[2] => $this->getCategory(),
+            $keys[2] => $this->getStoreCategoryId(),
             $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getUpdateTime(),
-            $keys[5] => $this->getUpdateUser(),
+            $keys[4] => $this->getIsMajor(),
+            $keys[5] => $this->getUpdateTime(),
+            $keys[6] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1110,6 +1210,21 @@ abstract class Store implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aStoreCategory) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'storeCategory';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'store_category';
+                        break;
+                    default:
+                        $key = 'StoreCategory';
+                }
+
+                $result[$key] = $this->aStoreCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->collDiscounts) {
 
                 switch ($keyType) {
@@ -1226,15 +1341,18 @@ abstract class Store implements ActiveRecordInterface
                 $this->setStoreName($value);
                 break;
             case 2:
-                $this->setCategory($value);
+                $this->setStoreCategoryId($value);
                 break;
             case 3:
                 $this->setDescription($value);
                 break;
             case 4:
-                $this->setUpdateTime($value);
+                $this->setIsMajor($value);
                 break;
             case 5:
+                $this->setUpdateTime($value);
+                break;
+            case 6:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1270,16 +1388,19 @@ abstract class Store implements ActiveRecordInterface
             $this->setStoreName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setCategory($arr[$keys[2]]);
+            $this->setStoreCategoryId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setDescription($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateTime($arr[$keys[4]]);
+            $this->setIsMajor($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateUser($arr[$keys[5]]);
+            $this->setUpdateTime($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setUpdateUser($arr[$keys[6]]);
         }
     }
 
@@ -1328,11 +1449,14 @@ abstract class Store implements ActiveRecordInterface
         if ($this->isColumnModified(StoreTableMap::COL_STORE_NAME)) {
             $criteria->add(StoreTableMap::COL_STORE_NAME, $this->store_name);
         }
-        if ($this->isColumnModified(StoreTableMap::COL_CATEGORY)) {
-            $criteria->add(StoreTableMap::COL_CATEGORY, $this->category);
+        if ($this->isColumnModified(StoreTableMap::COL_STORE_CATEGORY_ID)) {
+            $criteria->add(StoreTableMap::COL_STORE_CATEGORY_ID, $this->store_category_id);
         }
         if ($this->isColumnModified(StoreTableMap::COL_DESCRIPTION)) {
             $criteria->add(StoreTableMap::COL_DESCRIPTION, $this->description);
+        }
+        if ($this->isColumnModified(StoreTableMap::COL_IS_MAJOR)) {
+            $criteria->add(StoreTableMap::COL_IS_MAJOR, $this->is_major);
         }
         if ($this->isColumnModified(StoreTableMap::COL_UPDATE_TIME)) {
             $criteria->add(StoreTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1427,8 +1551,9 @@ abstract class Store implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setStoreName($this->getStoreName());
-        $copyObj->setCategory($this->getCategory());
+        $copyObj->setStoreCategoryId($this->getStoreCategoryId());
         $copyObj->setDescription($this->getDescription());
+        $copyObj->setIsMajor($this->getIsMajor());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1495,6 +1620,57 @@ abstract class Store implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildStoreCategory object.
+     *
+     * @param  ChildStoreCategory $v
+     * @return $this|\Store The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setStoreCategory(ChildStoreCategory $v = null)
+    {
+        if ($v === null) {
+            $this->setStoreCategoryId(1);
+        } else {
+            $this->setStoreCategoryId($v->getStoreCategoryId());
+        }
+
+        $this->aStoreCategory = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildStoreCategory object, it will not be re-added.
+        if ($v !== null) {
+            $v->addStore($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildStoreCategory object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildStoreCategory The associated ChildStoreCategory object.
+     * @throws PropelException
+     */
+    public function getStoreCategory(ConnectionInterface $con = null)
+    {
+        if ($this->aStoreCategory === null && ($this->store_category_id !== null)) {
+            $this->aStoreCategory = ChildStoreCategoryQuery::create()->findPk($this->store_category_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aStoreCategory->addStores($this);
+             */
+        }
+
+        return $this->aStoreCategory;
     }
 
 
@@ -2747,14 +2923,19 @@ abstract class Store implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aStoreCategory) {
+            $this->aStoreCategory->removeStore($this);
+        }
         $this->store_id = null;
         $this->store_name = null;
-        $this->category = null;
+        $this->store_category_id = null;
         $this->description = null;
+        $this->is_major = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -2803,6 +2984,7 @@ abstract class Store implements ActiveRecordInterface
         $this->collPointAcquisitions = null;
         $this->collPointUsages = null;
         $this->collPointUses = null;
+        $this->aStoreCategory = null;
     }
 
     /**

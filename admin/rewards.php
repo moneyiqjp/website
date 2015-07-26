@@ -279,7 +279,7 @@
                         type:  "readonly"
                     },{
                         label: "PointSystem:",
-                        name: "PointSystemId",
+                        name: "PointSystem.PointSystemId",
                         type:  "readonly"
                     },{
                         label: "Type:",
@@ -409,7 +409,7 @@
                 },
                 "columns": [
                     {"data": "RewardId",width:"20px"},
-                    {"data": "PointSystemId", width:"20px"},
+                    {"data": "PointSystem.PointSystemName",editField: "PointSystem.PointSystemId", width:"20px"},
                     {"data": "Type.Name", editField: "Type.RewardTypeId",width:"50px"},
                     {"data": "Category.Name", editField: "Category.RewardCategoryId",width:"50px"},
                     {"data": "Title",width:"150px"},

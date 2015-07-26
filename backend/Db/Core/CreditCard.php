@@ -40,9 +40,9 @@ class Reward{
         $this->title = $rew->getTitle();
         $this->description = $rew->getDescription();
         $this->icon = $rew->getIcon();
-        $this->yenPerPoint = $rew->getYenPerPoint() * $this->pointMultiplier;
+        $this->yenPerPoint = $rew->getYenPerPoint() / $this->pointMultiplier;
         $this->pricePerUnit = $rew->getPricePerUnit();
-        $this->minPoints = $rew->getMinPoints() * $this->pointMultiplier;;
+        $this->minPoints = $rew->getMinPoints() * $this->pointMultiplier;
         $this->maxPoints = $rew->getMaxPoints();
         $this->requiredPoints = $rew->getRequiredPoints();
         $this->maxPeriod = $rew->getMaxPeriod();
@@ -131,6 +131,7 @@ class CreditCard {
     public $interestShopping;
     public $pointsToMoneyConversionRate;
     public $affiliateUrl;
+    public $shortDescription;
     public $features = array();
     public $insurances = array();
     public $pointsData = array();
@@ -272,8 +273,7 @@ class CreditCard {
 
 
 
-        foreach($cc->getInsurances() as $insurance )
-        {
+        foreach($cc->getInsurances() as $insurance ) {
             $mine->AddInsurance($insurance);
         }
 
@@ -283,56 +283,36 @@ class CreditCard {
         }
 
         $now = new \DateTime('NOW');
-        foreach($cc->getCampaigns() as $camp)
-        {
-            //TODO campaign text not available in data
-            if( $camp->getEndDate()> $now)
-            {
+        foreach($cc->getCampaigns() as $camp) {
+            if( $camp->getEndDate()> $now) {
                 $mine->campaignPoints = $camp->getMaxPoints();
                 $mine->campaignYenValue = $camp->getValueInYen();
                 $mine->campaignText = $camp->getDescription();
             }
         }
 
-
-
-
-        //TODO how are we handling interest
-        foreach($cc->getInterests() as $int) {
-            if($int->getPaymentType()->getPaymentType()=="ikkai") {
-                $mine->interestShopping = $int->getMinInterest();
-            }
-        }
-
-        //todo points expiry period
-        $mine->pointsExpiryPeriod = 1.0;
+        $mine->pointsToMoneyConversionRate = $cc->getPointsToMoneyConversionRate();
+        $mine->interestShopping = $cc->getShoppingInterestRate();
+        $mine->shortDescription = $cc->getShortDescription();
         if(!is_null($cc->getPointexpirymonths())) {
             $mine->pointsExpiryPeriod=$cc->getPointexpirymonths()/12;
         }
-        $mine->pointsToMoneyConversionRate = 0;
 
-        foreach($cc->getCardPointSystems() as $pcs)
-        {
+
+        foreach($cc->getCardPointSystems() as $pcs) {
             $ps = $pcs->getPointSystem();
-            foreach($ps->getRewards() as $rew)
-            {
+            foreach($ps->getRewards() as $rew) {
                 $mine->AddReward($rew);
             }
 
-            $mine->pointsToMoneyConversionRate = max ($ps->getDefaultYenPerPoint(),$mine->pointsToMoneyConversionRate);
-            foreach($ps->getPointAcquisitions() as $use)
-            {
-                $mine->AddPointsData($use->getStore()->getStoreName(),$use->getStore()->getCategory(), $use->getPointsPerYen(),1.0);
-
-
-                /* $mine->pointsToMoneyConversionRate = max ($use->getYenPerPoint(),$mine->pointsToMoneyConversionRate); */
+            foreach($ps->getPointAcquisitions() as $use) {
+                $mine->AddPointsData($use->getStore()->getStoreName(),
+                                     $use->getStore()->getCategory(),
+                                     $use->getPointsPerYen(), 1.0);
             }
         }
 
 
-        #$this->AddPointsData("標準ポイント",0.005,1.0);
-        #$this->AddPointsData("ローソン",0.012,1.0);
-        #$this->AddPointsData("イーオン",0.02,1.0);
 
         return $mine;
     }

@@ -23,7 +23,7 @@ class SimpleStore {
     {
         $my_store = new SimpleStore();
         $my_store->storeName = $store->getStoreName();
-        $my_store->category = $store->getCategory();
+        $my_store->category = $store->getStoreCategory()->getName();
         return $my_store;
     }
 }

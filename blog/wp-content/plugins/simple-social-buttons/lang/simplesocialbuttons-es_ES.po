@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simplesocialbuttons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-01 11:28+0100\n"
+"PO-Revision-Date: 2012-02-01 11:29+0100\n"
+"Last-Translator: \n"
+"Language-Team: Paweł Rabinek (DE: Dennis Schreiber) <pawel@rabinek.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:424
+#: ../ssb-admin.php:11
+msgid "Settings"
+msgstr "Opciones"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:452
+msgid "SSB Settings"
+msgstr "SSB opciones"
+
+#: ../simple-social-buttons.php:463
+msgid "Hide Simple Social Buttons"
+msgstr "Ocultar Simple Social Buttons"
+
+#: ../ssb-admin.php:13
+msgid "<strong>Simple Social Buttons</strong> by <strong>Paweł Rabinek</strong>. This plugin adds a social media buttons, such as: <strong>Google +1</strong>, <strong>Facebook Like it</strong> and <strong>Twitter share</strong>. The most flexible social buttons plugin ever."
+msgstr "<strong>Simple Social Buttons</strong>, autor <strong>Paweł Rabinek</strong>. Este plugin añade iconos de redes sociales como: <strong>Google +1</strong>, <strong>Facebook Me gusta</strong> y <strong>Compartir en Twitter</strong>. El plugin social más flexible que puedes encontrar."
+
+#: ../ssb-admin.php:68
+msgid "Select buttons"
+msgstr "Selecciona botones"
+
+#: ../ssb-admin.php:70
+msgid "Select social media buttons:"
+msgstr "Selecciona botones de redes sociales: "
+
+#: ../ssb-admin.php:76
+#: ../ssb-admin.php:90
+#: ../ssb-admin.php:105
+msgid "inactive"
+msgstr "inactivo"
+
+#: ../ssb-admin.php:84
+msgid "Google plus one (+1)"
+msgstr "Google plus (+1) "
+
+#: ../ssb-admin.php:98
+msgid "Facebook Like it"
+msgstr "Facebook Me gusta"
+
+#: ../ssb-admin.php:113
+msgid "Twitter share"
+msgstr "Compartir en Twitter"
+
+#: ../ssb-admin.php:116
+msgid "Disable plugin CSS (only advanced users)"
+msgstr "Desactivar los CSS del plugin (solo para usuarios avanzados)"
+
+#: ../ssb-admin.php:121
+msgid "Single posts - display settings"
+msgstr "Post individuales - mostrar opciones"
+
+#: ../ssb-admin.php:123
+msgid "Place buttons on single post:"
+msgstr "Colocar los botones en un post individual:"
+
+#: ../ssb-admin.php:124
+#: ../ssb-admin.php:148
+msgid "Before the content"
+msgstr "Antes del contenido"
+
+#: ../ssb-admin.php:125
+#: ../ssb-admin.php:149
+msgid "After the content"
+msgstr "Después del contenido"
+
+#: ../ssb-admin.php:130
+msgid "Single pages - display settings"
+msgstr "Páginas individuales - mostrar opciones"
+
+#: ../ssb-admin.php:132
+msgid "Place buttons on single pages:"
+msgstr "Colocar los botones en páginas individuales:"
+
+#: ../ssb-admin.php:133
+msgid "Before the page content"
+msgstr "Antes del contenido de la página"
+
+#: ../ssb-admin.php:134
+msgid "After the page content"
+msgstr "Después del contenido de la página"
+
+#: ../ssb-admin.php:139
+msgid "Archives - display settings"
+msgstr "Archivo - mostrar opciones"
+
+#: ../ssb-admin.php:141
+msgid "Select additional places to display buttons:"
+msgstr "Selecciona lugares adicionales donde mostrar los botones:"
+
+#: ../ssb-admin.php:142
+msgid "Show at frontpage"
+msgstr "Pagina de entrada"
+
+#: ../ssb-admin.php:143
+msgid "Show at category pages"
+msgstr "Páginas de categorías"
+
+#: ../ssb-admin.php:144
+msgid "Show at archive pages"
+msgstr "Páginas de archivo"
+
+#: ../ssb-admin.php:145
+msgid "Show at tag pages"
+msgstr "Páginas de etiquetas"
+
+#: ../ssb-admin.php:147
+msgid "Place buttons on archives:"
+msgstr "Colocar los botones en archivo:"
+
+#: ../ssb-admin.php:155
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: ../ssb-admin.php:165
+msgid "About this plugin:"
+msgstr "Sobre este plugin:"
+
+#: ../ssb-admin.php:167
+msgid "Talk to <a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> on twitter for bugs or feature requests."
+msgstr "Habla con <a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> en Twitter para solución de bugs o peticiones de nuevas características."
+
+#: ../ssb-admin.php:168
+msgid "Enjoy the plugin?"
+msgstr "Te gusta el plugin?"
+
+#: ../ssb-admin.php:169
+msgid "<a href=\"http://twitter.com/?status=I'm using @rabinek's WordPress Simple Social Buttons plugin - check it out! http://blog.rabinek.pl/\" target=\"_blank\">Tweet about it</a> and consider donating."
+msgstr "<a href=\"http://twitter.com/?status=Estoy usando el plugin Simple Social Buttons! de @rabinek - para WordPress http://blog.rabinek.pl/\" target=\"_blank\">Twittea sobre él</a> y piensa en hacer una donación."
+
+#: ../ssb-admin.php:170
+msgid "<strong>Donate:</strong> A lot of hard work goes into building plugins - support your open source developers. Thank you!"
+msgstr "<strong>Dona:</strong> Hay mucho trabajo a la hora de realizar plugins, apoya a tus desarrolladores open source. Gracias!"
+
+#: ../ssb-admin.php:182
+msgid "About the author:"
+msgstr "Sobre el autor:"
+
+#: ../ssb-admin.php:184
+msgid "Hi! My name is Paweł Rabinek (aka xradar). I'm interesed in SEO and social media, PHP and Wordpress developement."
+msgstr "Hola! mi nombre es Pawel Rabinek (aka xradar). Estoy interesado en SEO y Social Media, así como desarrollo en PHP y Wordpress."
+
+#: ../ssb-admin.php:186
+msgid "My blog about SEO"
+msgstr "Mi blog sobre SEO"
+
+#: ../ssb-admin.php:186
+msgid "[Polish]"
+msgstr " "
+
+#: ../ssb-admin.php:187
+msgid "Follow me on Twitter"
+msgstr "Sígueme en Twitter"
+
+#: ../ssb-admin.php:188
+msgid "Paweł Rabinek on Facebook"
+msgstr "Paweł Rabinek en Facebook"
+
+#: ../ssb-admin.php:189
+msgid "Paweł Rabinek on Google Plus"
+msgstr "Paweł Rabinek en Google Plus"
+
+#: ../ssb-admin.php:190
+msgid "LinkedIn profile"
+msgstr "Perfil en LinkedIn"
+
+#: ../ssb-admin.php:196
+msgid "Usefull links:"
+msgstr "Links interesantes:"
+
+#: ../ssb-admin.php:199
+msgid "Unlimited web hosting"
+msgstr "Alojamiento web ilimitado"
+
+#: ../ssb-admin.php:200
+msgid "Best SEO software"
+msgstr "Mejor software SEO"
+
+#: ../ssb-admin.php:201
+msgid "Wordpress templates"
+msgstr "Plantillas de Wordpress"
+
+#~ msgid "Hi! My name is Paweł Rabinek (aka xradar)."
+#~ msgstr "Hej! Nazywam się Paweł Rabinek (nick xradar)."

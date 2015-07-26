@@ -2,44 +2,196 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JUnit.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/datatables_ext.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/link.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/.idea/php.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPersona.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPersonaSceneMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JScene.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JSceneCategoryMapping.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStoreCategory.php" />
+      <change type="DELETED" beforePath="F:\Development\website\database\1_setup\UpdateTablesToInnoDB.txt" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\1_setup\db_moneyiq.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\affiliate_company.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\campaign.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\card_description.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\card_feature_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\card_features.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\card_point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\core_unit.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\credit_card.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\discount.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\discounts.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\fees.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\insurance.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\insurance_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\interest.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\issuer.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\payment_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\point_acquisition.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\point_usage" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\point_usage.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\point_use.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\reward.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\reward_category.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\reward_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\store.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\2_tables\unit.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\3_constraints\foreign_key.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\affiliate_company.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\campaign.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\card_description.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\card_features.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\credit_card.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\discounts.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\fees.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\insurance.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\interest.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\issuer.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\payment_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\point_acquisition.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\point_usage.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\4_triggers\store.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_active_campaign.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_affiliate_company.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_campaign.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_card_description.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_card_features.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_credit_card.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_discounts.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_fees.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_insurance.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_interest.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_issuer.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_payment_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_point_usage.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\5_views\vw_store.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\Update cards.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\affiliate_company.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\campaign.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\card_description.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\card_feature_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\card_features.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\credit_card.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\discounts.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\fees.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\insurance.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\insurance_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\interest.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\issuer.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\moneyiq\reward.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\moneyiq\reward_category.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\moneyiq\reward_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\payment_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\point_acquisition.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\point_usage.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\reward.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\reward_category.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\reward_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\6_data\store.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\card_point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\point_acquisition.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\reward.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\reward_category.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\2_tables\reward_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\point_acquisition.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\point_system.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\point_usage.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\reward.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\reward_category.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\upgrade\0.16\6_data\reward_type.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\version\Milestone 15\moneyiq_2015_06_05.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\version\Milestone 15\moneyiq_data.sql" afterPath="" />
+      <change type="DELETED" beforePath="F:\Development\website\database\version\Milestone 15\moneyiq_structure.sql" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/Abstract2Dot5ApiTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/Abstract2Dot5ApiTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/AbstractConstraintValidatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/AbstractConstraintValidatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/AbstractLegacyApiTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/AbstractLegacyApiTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/AbstractValidatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/AbstractValidatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Application.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Application.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/ApplicationTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/ApplicationTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Input/ArgvInput.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Input/ArgvInput.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/ArrayNode.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/ArrayNode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/BaseNode.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/BaseNode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/CStorePointMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/CStorePointMapping.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/CallbackValidator.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/CallbackValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/CallbackValidatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/CallbackValidatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/CardSchemeValidator.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/CardSchemeValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/CardSchemeValidatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/CardSchemeValidatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Question/ChoiceQuestion.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Question/ChoiceQuestion.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Shell/Command.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Shell/Command.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Command/CommandTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Command/CommandTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Output/ConsoleOutput.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Output/ConsoleOutput.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/CreditCard.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/Iterator/CustomFilterIteratorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/Iterator/CustomFilterIteratorTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Utility/FieldUtils.php" afterPath="$PROJECT_DIR$/../backend/Db/Utility/FieldUtils.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCampaign.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCreditCard.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JDiscount.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JDiscount.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JFeature.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JInsurance.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointAcquisition.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointAcquisition.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/DebugFormatterHelper.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/DebugFormatterHelper.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/DialogHelper.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/DialogHelper.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Tests/Resource/DirectoryResourceTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Tests/Resource/DirectoryResourceTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/EmailValidator.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/EmailValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/EmailValidatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/EmailValidatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/File.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Constraints/File.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Loader/FileLoader.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Loader/FileLoader.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/FileLocator.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/FileLocator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Tests/Resource/FileResourceTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Tests/Resource/FileResourceTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/FileTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/FileTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Filesystem.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Filesystem.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Tests/FilesystemTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Tests/FilesystemTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Tests/FilesystemTestCase.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/filesystem/Tests/FilesystemTestCase.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/FinderTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/FinderTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/GlobTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/GlobTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/GroupSequenceTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Constraints/GroupSequenceTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Inline.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Inline.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Tests/InlineTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Tests/InlineTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Input/InputDefinitionTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Input/InputDefinitionTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JCreditCardToPointSystemMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JCreditCardToPointSystemMapping.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JPointUsage.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JReward.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JReward.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/Jinterest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/JSONClasses.php" afterPath="$PROJECT_DIR$/../backend/Db/JSONClasses.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/translation/Loader/JsonFileLoader.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/translation/Loader/JsonFileLoader.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/Cache/LegacyApcCacheTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/Cache/LegacyApcCacheTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyDialogHelperTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyDialogHelperTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/LegacyElementMetadataTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/LegacyElementMetadataTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/LegacyExecutionContextTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/LegacyExecutionContextTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyProgressHelperTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyProgressHelperTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyTableHelperTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/LegacyTableHelperTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/MemberMetadataTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Mapping/MemberMetadataTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/Iterator/MockSplFileInfo.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/finder/Tests/Iterator/MockSplFileInfo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Descriptor/ObjectsProvider.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Descriptor/ObjectsProvider.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Formatter/OutputFormatter.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Formatter/OutputFormatter.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Formatter/OutputFormatterStyle.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Formatter/OutputFormatterStyle.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Formatter/OutputFormatterStyleTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Formatter/OutputFormatterStyleTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Parser.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Parser.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/translation/PluralizationRules.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/translation/PluralizationRules.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/ProcessHelperTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/ProcessHelperTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/ProgressBar.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/ProgressBar.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/ProgressBarTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/ProgressBarTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/PrototypedArrayNode.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Definition/PrototypedArrayNode.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Validator/RecursiveValidator.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Validator/RecursiveValidator.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/RecursiveValidator2Dot5ApiTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Tests/Validator/RecursiveValidator2Dot5ApiTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Shell.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Shell.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/SimpleStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/SimpleStore.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Store.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Store.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Store.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Store.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreQuery.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreTableMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Input/StringInputTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Input/StringInputTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/Table.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Helper/Table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/TableTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Tests/Helper/TableTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/console/Descriptor/TextDescriptor.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/console/Descriptor/TextDescriptor.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/translation/Tests/TranslatorTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/translation/Tests/TranslatorTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/config/Util/XmlUtils.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/config/Util/XmlUtils.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Tests/YamlTest.php" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/yaml/Tests/YamlTest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" afterPath="$PROJECT_DIR$/../database/2_tables/credit_card.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_details.php" afterPath="$PROJECT_DIR$/creditcard_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/creditcard_overview.php" afterPath="$PROJECT_DIR$/creditcard_overview.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" afterPath="$PROJECT_DIR$/../database/3_constraints/foreign_key.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/composer.lock" afterPath="$PROJECT_DIR$/../backend/composer.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/../backend/vendor/composer/installed.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pointprogram_details.php" afterPath="$PROJECT_DIR$/pointprogram_details.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pointprogram_overview.php" afterPath="$PROJECT_DIR$/pointprogram_overview.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" afterPath="$PROJECT_DIR$/../database/2_tables/reward_type.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rewards.php" afterPath="$PROJECT_DIR$/rewards.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Resources/translations/validators.it.xlf" afterPath="$PROJECT_DIR$/../backend/vendor/symfony/validator/Resources/translations/validators.it.xlf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
     </list>
@@ -69,28 +221,28 @@
       <file leaf-file-name="pointprogram_overview.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pointprogram_overview.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-25.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="58" column="46" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="creditcard_overview.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="84.291664">
-              <caret line="141" column="42" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.2760736">
+              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pointprogram_details.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pointprogram_details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pointprogram_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.989899">
-              <caret line="392" column="46" selection-start-line="392" selection-start-column="46" selection-end-line="392" selection-end-column="46" />
+            <state vertical-scroll-proportion="-21.875">
+              <caret line="38" column="45" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -99,7 +251,7 @@
       <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="51.25">
+            <state vertical-scroll-proportion="0.0">
               <caret line="563" column="34" selection-start-line="563" selection-start-column="34" selection-end-line="563" selection-end-column="34" />
               <folding />
             </state>
@@ -109,8 +261,8 @@
       <file leaf-file-name="rewards.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rewards.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="69.0566">
-              <caret line="17" column="101" selection-start-line="17" selection-start-column="101" selection-end-line="18" selection-end-column="98" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="281" column="43" selection-start-line="281" selection-start-column="43" selection-end-line="281" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -141,7 +293,7 @@
       <file leaf-file-name="dataTables.editor.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/dataTables.editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.25">
+            <state vertical-scroll-proportion="0.0">
               <caret line="5479" column="0" selection-start-line="5479" selection-start-column="0" selection-end-line="5481" selection-end-column="6" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -181,10 +333,10 @@
         <option value="$PROJECT_DIR$/link.php" />
         <option value="$PROJECT_DIR$/scripts/dataTables.editor.js" />
         <option value="$PROJECT_DIR$/scripts/datatables_ext.js" />
-        <option value="$PROJECT_DIR$/rewards.php" />
         <option value="$PROJECT_DIR$/creditcard_overview.php" />
         <option value="$PROJECT_DIR$/pointprogram_overview.php" />
         <option value="$PROJECT_DIR$/creditcard_details.php" />
+        <option value="$PROJECT_DIR$/rewards.php" />
         <option value="$PROJECT_DIR$/pointprogram_details.php" />
       </list>
     </option>
@@ -198,9 +350,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="y" value="40" />
+    <option name="y" value="48" />
     <option name="width" value="1280" />
-    <option name="height" value="1400" />
+    <option name="height" value="1160" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -247,6 +399,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -266,55 +419,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -404,11 +510,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="40" width="1280" height="1400" extended-state="0" />
+    <frame x="0" y="48" width="1280" height="1160" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24016394" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25245902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11732283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1407767" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -753,13 +859,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/dataTables.editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25">
+        <state vertical-scroll-proportion="0.0">
           <caret line="5479" column="0" selection-start-line="5479" selection-start-column="0" selection-end-line="5481" selection-end-column="6" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -779,9 +884,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1381781">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#6#86#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -789,9 +891,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="14" selection-end-column="7" />
-          <folding>
-            <element signature="e#6#86#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -805,25 +904,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rewards.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="69.0566">
-          <caret line="17" column="101" selection-start-line="17" selection-start-column="101" selection-end-line="18" selection-end-column="98" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="84.291664">
-          <caret line="141" column="42" selection-start-line="141" selection-start-column="42" selection-end-line="141" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pointprogram_overview.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.0">
+        <state vertical-scroll-proportion="0.0">
           <caret line="58" column="46" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
           <folding />
         </state>
@@ -831,16 +914,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="51.25">
+        <state vertical-scroll-proportion="0.0">
           <caret line="563" column="34" selection-start-line="563" selection-start-column="34" selection-end-line="563" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rewards.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="281" column="43" selection-start-line="281" selection-start-column="43" selection-end-line="281" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pointprogram_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.989899">
-          <caret line="392" column="46" selection-start-line="392" selection-start-column="46" selection-end-line="392" selection-end-column="46" />
+        <state vertical-scroll-proportion="-21.875">
+          <caret line="38" column="45" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/creditcard_overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2760736">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
           <folding />
         </state>
       </provider>

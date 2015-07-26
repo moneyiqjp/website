@@ -59,7 +59,7 @@ class StoreTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class StoreTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the store_id field
@@ -82,14 +82,19 @@ class StoreTableMap extends TableMap
     const COL_STORE_NAME = 'store.store_name';
 
     /**
-     * the column name for the category field
+     * the column name for the store_category_id field
      */
-    const COL_CATEGORY = 'store.category';
+    const COL_STORE_CATEGORY_ID = 'store.store_category_id';
 
     /**
      * the column name for the description field
      */
     const COL_DESCRIPTION = 'store.description';
+
+    /**
+     * the column name for the is_major field
+     */
+    const COL_IS_MAJOR = 'store.is_major';
 
     /**
      * the column name for the update_time field
@@ -113,11 +118,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('StoreId', 'StoreName', 'Category', 'Description', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('storeId', 'storeName', 'category', 'description', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID, StoreTableMap::COL_STORE_NAME, StoreTableMap::COL_CATEGORY, StoreTableMap::COL_DESCRIPTION, StoreTableMap::COL_UPDATE_TIME, StoreTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('store_id', 'store_name', 'category', 'description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('StoreId', 'StoreName', 'StoreCategoryId', 'Description', 'IsMajor', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('storeId', 'storeName', 'storeCategoryId', 'description', 'isMajor', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID, StoreTableMap::COL_STORE_NAME, StoreTableMap::COL_STORE_CATEGORY_ID, StoreTableMap::COL_DESCRIPTION, StoreTableMap::COL_IS_MAJOR, StoreTableMap::COL_UPDATE_TIME, StoreTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('store_id', 'store_name', 'store_category_id', 'description', 'is_major', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('StoreId' => 0, 'StoreName' => 1, 'Category' => 2, 'Description' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
-        self::TYPE_CAMELNAME     => array('storeId' => 0, 'storeName' => 1, 'category' => 2, 'description' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID => 0, StoreTableMap::COL_STORE_NAME => 1, StoreTableMap::COL_CATEGORY => 2, StoreTableMap::COL_DESCRIPTION => 3, StoreTableMap::COL_UPDATE_TIME => 4, StoreTableMap::COL_UPDATE_USER => 5, ),
-        self::TYPE_FIELDNAME     => array('store_id' => 0, 'store_name' => 1, 'category' => 2, 'description' => 3, 'update_time' => 4, 'update_user' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('StoreId' => 0, 'StoreName' => 1, 'StoreCategoryId' => 2, 'Description' => 3, 'IsMajor' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
+        self::TYPE_CAMELNAME     => array('storeId' => 0, 'storeName' => 1, 'storeCategoryId' => 2, 'description' => 3, 'isMajor' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
+        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID => 0, StoreTableMap::COL_STORE_NAME => 1, StoreTableMap::COL_STORE_CATEGORY_ID => 2, StoreTableMap::COL_DESCRIPTION => 3, StoreTableMap::COL_IS_MAJOR => 4, StoreTableMap::COL_UPDATE_TIME => 5, StoreTableMap::COL_UPDATE_USER => 6, ),
+        self::TYPE_FIELDNAME     => array('store_id' => 0, 'store_name' => 1, 'store_category_id' => 2, 'description' => 3, 'is_major' => 4, 'update_time' => 5, 'update_user' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -153,8 +158,9 @@ class StoreTableMap extends TableMap
         // columns
         $this->addPrimaryKey('store_id', 'StoreId', 'INTEGER', true, null, null);
         $this->addColumn('store_name', 'StoreName', 'LONGVARCHAR', true, null, null);
-        $this->addColumn('category', 'Category', 'VARCHAR', true, 255, null);
+        $this->addForeignKey('store_category_id', 'StoreCategoryId', 'INTEGER', 'store_category', 'store_category_id', true, null, 1);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('is_major', 'IsMajor', 'TINYINT', true, null, 0);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -164,6 +170,7 @@ class StoreTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('StoreCategory', '\\StoreCategory', RelationMap::MANY_TO_ONE, array('store_category_id' => 'store_category_id', ), null, null);
         $this->addRelation('Discount', '\\Discount', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discounts');
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
         $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
@@ -314,15 +321,17 @@ class StoreTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(StoreTableMap::COL_STORE_ID);
             $criteria->addSelectColumn(StoreTableMap::COL_STORE_NAME);
-            $criteria->addSelectColumn(StoreTableMap::COL_CATEGORY);
+            $criteria->addSelectColumn(StoreTableMap::COL_STORE_CATEGORY_ID);
             $criteria->addSelectColumn(StoreTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(StoreTableMap::COL_IS_MAJOR);
             $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.store_id');
             $criteria->addSelectColumn($alias . '.store_name');
-            $criteria->addSelectColumn($alias . '.category');
+            $criteria->addSelectColumn($alias . '.store_category_id');
             $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.is_major');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

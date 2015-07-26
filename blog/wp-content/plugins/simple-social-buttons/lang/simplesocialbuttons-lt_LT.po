@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: simplesocialbuttons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-01 11:19+0100\n"
+"PO-Revision-Date: 2012-03-10 16:08+0200\n"
+"Last-Translator: \n"
+"Language-Team: Paweł Rabinek (DE: Dennis Schreiber) <pawel@rabinek.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:424
+#: ../ssb-admin.php:11
+msgid "Settings"
+msgstr "Nuostatos"
+
+# Traduit par @RhooManu - www.infographizm.com
+#: ../simple-social-buttons.php:452
+msgid "SSB Settings"
+msgstr "SSB Nuostatos"
+
+#: ../simple-social-buttons.php:463
+msgid "Hide Simple Social Buttons"
+msgstr "Paslėpti Simple Social Buttons"
+
+#: ../ssb-admin.php:13
+msgid "<strong>Simple Social Buttons</strong> by <strong>Paweł Rabinek</strong>. This plugin adds a social media buttons, such as: <strong>Google +1</strong>, <strong>Facebook Like it</strong> and <strong>Twitter share</strong>. The most flexible social buttons plugin ever."
+msgstr "<strong>Simple Social Buttons</strong>, sukurta <strong>Paweł Rabinek</strong>. Šis papildinys prideda socialinių tinklų, tokių kaip <strong>Google +1</strong>, <strong>Facebook Like It</strong> ir <strong>Twitter Share</strong> panaudojimo galimybę. Lanksčiausias kada nors sukurtas socialinių tinklų mygtukų papildinys."
+
+#: ../ssb-admin.php:68
+msgid "Select buttons"
+msgstr "Pasirinkti mygtukus"
+
+#: ../ssb-admin.php:70
+msgid "Select social media buttons:"
+msgstr "Pasirinkti socialinių tinklų mygtukus:"
+
+#: ../ssb-admin.php:76
+#: ../ssb-admin.php:90
+#: ../ssb-admin.php:105
+msgid "inactive"
+msgstr "neaktyvus"
+
+#: ../ssb-admin.php:84
+msgid "Google plus one (+1)"
+msgstr "Google plus one (+1)"
+
+#: ../ssb-admin.php:98
+msgid "Facebook Like it"
+msgstr "Facebook Like it"
+
+#: ../ssb-admin.php:113
+msgid "Twitter share"
+msgstr "Twitter share"
+
+#: ../ssb-admin.php:116
+msgid "Disable plugin CSS (only advanced users)"
+msgstr "Išjungti papildinio CSS (tik pažengusiems vartotojams)"
+
+#: ../ssb-admin.php:121
+msgid "Single posts - display settings"
+msgstr "Pavieniai įrašai - rodyti nuostatas"
+
+#: ../ssb-admin.php:123
+msgid "Place buttons on single post:"
+msgstr "Pridėti mygtukus pavieniame įraše:"
+
+#: ../ssb-admin.php:124
+#: ../ssb-admin.php:148
+msgid "Before the content"
+msgstr "Prieš turinį"
+
+#: ../ssb-admin.php:125
+#: ../ssb-admin.php:149
+msgid "After the content"
+msgstr "Po turinio"
+
+#: ../ssb-admin.php:130
+msgid "Single pages - display settings"
+msgstr "Pavieniai puslapiai - rodyti parinktis"
+
+#: ../ssb-admin.php:132
+msgid "Place buttons on single pages:"
+msgstr "Pridėti mygtukus pavieniuose puslapiuose:"
+
+#: ../ssb-admin.php:133
+msgid "Before the page content"
+msgstr "Prieš puslapio turinį"
+
+#: ../ssb-admin.php:134
+msgid "After the page content"
+msgstr "Po puslapio turinio"
+
+#: ../ssb-admin.php:139
+msgid "Archives - display settings"
+msgstr "Archyvai - parodyti nuostatas"
+
+#: ../ssb-admin.php:141
+msgid "Select additional places to display buttons:"
+msgstr "Pasirinkti papildomas mygtukų rodymo sritis:"
+
+#: ../ssb-admin.php:142
+msgid "Show at frontpage"
+msgstr "Rodyti tituliniame puslapyje"
+
+#: ../ssb-admin.php:143
+msgid "Show at category pages"
+msgstr "Rodyti kategorijų puslapiuose"
+
+#: ../ssb-admin.php:144
+msgid "Show at archive pages"
+msgstr "Rodyti archyvo puslapiuose"
+
+#: ../ssb-admin.php:145
+msgid "Show at tag pages"
+msgstr "Rodyti gairių puslapiuose"
+
+#: ../ssb-admin.php:147
+msgid "Place buttons on archives:"
+msgstr "Pridėti mygtukus archyvuose:"
+
+#: ../ssb-admin.php:155
+msgid "Save Changes"
+msgstr "Įrašyti Pakeitimus"
+
+#: ../ssb-admin.php:165
+msgid "About this plugin:"
+msgstr "Apie šį papildinį:"
+
+#: ../ssb-admin.php:167
+msgid "Talk to <a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> on twitter for bugs or feature requests."
+msgstr "Praneškite <a href=\"http://twitter.com/rabinek\" target=\"_blank\">@rabinek</a> Twitter socialiniame tinkle apie rastas programavimo klaidas arba ateities pageidavimus."
+
+#: ../ssb-admin.php:168
+msgid "Enjoy the plugin?"
+msgstr "Patinka šis papildinys?"
+
+#: ../ssb-admin.php:169
+msgid "<a href=\"http://twitter.com/?status=I'm using @rabinek's WordPress Simple Social Buttons plugin - check it out! http://blog.rabinek.pl/\" target=\"_blank\">Tweet about it</a> and consider donating."
+msgstr "<a href=\"http://twitter.com/?status=Aš naudoju @rabinek's WordPress Simple Social Buttons papildinį - pažiūrėkite patys! http://blog.rabinek.pl/\" target=\"_blank\">Paskelbkite apie tai Twitter socialiniame tinkle</a> ir pagalvokite, galbūt vertėtų paaukoti atsidėkojant autoriui?"
+
+#: ../ssb-admin.php:170
+msgid "<strong>Donate:</strong> A lot of hard work goes into building plugins - support your open source developers. Thank you!"
+msgstr "<strong>Paaukokite :</strong> Papildinių kūrimas - labai sudėtingas ir daug sunkaus darbo reikalaujantis procesas - paremkite atvirojo kodo programinės įrangos kūrėjus ir plėtotojus. Ačiū Jums!"
+
+#: ../ssb-admin.php:182
+msgid "About the author:"
+msgstr "Apie autorių:"
+
+#: ../ssb-admin.php:184
+msgid "Hi! My name is Paweł Rabinek (aka xradar). I'm interesed in SEO and social media, PHP and Wordpress developement."
+msgstr "Sveiki! Mano vardas Paweł Rabinek (dar esu žinomas kaip xradar). Domiuosi paieškų sistemų optimizavimu (SEO) ir socialiniais tinklais, PHP programavimu ir WordPress plėtinių kūrimu."
+
+#: ../ssb-admin.php:186
+msgid "My blog about SEO"
+msgstr "Mano tinklaraštis apie paieškų sistemų optimizavimą (SEO)"
+
+#: ../ssb-admin.php:186
+msgid "[Polish]"
+msgstr " [Lenkiškai]"
+
+#: ../ssb-admin.php:187
+msgid "Follow me on Twitter"
+msgstr "Sekite mane Twitter socialiniame tinkle"
+
+#: ../ssb-admin.php:188
+msgid "Paweł Rabinek on Facebook"
+msgstr "Paweł Rabinek Facebook socialiniame tinkle"
+
+#: ../ssb-admin.php:189
+msgid "Paweł Rabinek on Google Plus"
+msgstr "Paweł Rabinek Google Plus socialiniame tinkle"
+
+#: ../ssb-admin.php:190
+msgid "LinkedIn profile"
+msgstr "LinkedIn Profilis"
+
+#: ../ssb-admin.php:196
+msgid "Usefull links:"
+msgstr "Naudingos nuorodos :"
+
+#: ../ssb-admin.php:199
+msgid "Unlimited web hosting"
+msgstr "Neribojamo svetainių talpinimo paslaugos"
+
+#: ../ssb-admin.php:200
+msgid "Best SEO software"
+msgstr "Geriausia paieškų optimizavimo sistemų (SEO) programinė įranga"
+
+#: ../ssb-admin.php:201
+msgid "Wordpress templates"
+msgstr "WordPress šablonai"
+
+#~ msgid "Hi! My name is Paweł Rabinek (aka xradar)."
+#~ msgstr "Hej! Nazywam się Paweł Rabinek (nick xradar)."

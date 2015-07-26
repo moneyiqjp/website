@@ -1226,6 +1226,7 @@ $app->put('/crud/discount/update', function () use ($app) {
 });
 
 /*Point Mapping*/
+/*
 $app->get('/crud/pointmapping/by/creditcard', function () use ($app) {
     $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -1288,7 +1289,7 @@ $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
-
+*/
 
 
 /*Store*/

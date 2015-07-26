@@ -2,7 +2,6 @@
 
 namespace Db\Json;
 
-use Base\CardPointSystemQuery;
 use Db\Utility\ArrayUtils;
 
 /**
@@ -60,7 +59,7 @@ class JCreditCardToPointSystemMapping {
         $mine = new JCreditCardToPointSystemMapping();
         if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId') && ArrayUtils::KEY_EXISTS($data, 'CreditCardId'))
         {
-            $mine = JCreditCardToPointSystemMapping::LOAD_FROM_DB($data['PointSystemId'], $data['CreditCardId']);
+            $mine = JCreditCardToPointSystemMapping::LOAD_FROM_DB($data['CreditCardId'],$data['PointSystemId']);
         }
         if (ArrayUtils::KEY_EXISTS($data, 'CreditCard')) {
             $mine->CreditCard = JCreditCard::CREATE_FROM_ARRAY($data['CreditCard']);

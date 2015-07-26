@@ -22,21 +22,27 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildStoreQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
  * @method     ChildStoreQuery orderByStoreName($order = Criteria::ASC) Order by the store_name column
- * @method     ChildStoreQuery orderByCategory($order = Criteria::ASC) Order by the category column
+ * @method     ChildStoreQuery orderByStoreCategoryId($order = Criteria::ASC) Order by the store_category_id column
  * @method     ChildStoreQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildStoreQuery orderByIsMajor($order = Criteria::ASC) Order by the is_major column
  * @method     ChildStoreQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildStoreQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildStoreQuery groupByStoreId() Group by the store_id column
  * @method     ChildStoreQuery groupByStoreName() Group by the store_name column
- * @method     ChildStoreQuery groupByCategory() Group by the category column
+ * @method     ChildStoreQuery groupByStoreCategoryId() Group by the store_category_id column
  * @method     ChildStoreQuery groupByDescription() Group by the description column
+ * @method     ChildStoreQuery groupByIsMajor() Group by the is_major column
  * @method     ChildStoreQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildStoreQuery groupByUpdateUser() Group by the update_user column
  *
  * @method     ChildStoreQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildStoreQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildStoreQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method     ChildStoreQuery leftJoinStoreCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the StoreCategory relation
+ * @method     ChildStoreQuery rightJoinStoreCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the StoreCategory relation
+ * @method     ChildStoreQuery innerJoinStoreCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the StoreCategory relation
  *
  * @method     ChildStoreQuery leftJoinDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discount relation
  * @method     ChildStoreQuery rightJoinDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discount relation
@@ -58,23 +64,25 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinPointUse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUse relation
  * @method     ChildStoreQuery innerJoinPointUse($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUse relation
  *
- * @method     \DiscountQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \StoreCategoryQuery|\DiscountQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
  *
  * @method     ChildStore findOneByStoreId(int $store_id) Return the first ChildStore filtered by the store_id column
  * @method     ChildStore findOneByStoreName(string $store_name) Return the first ChildStore filtered by the store_name column
- * @method     ChildStore findOneByCategory(string $category) Return the first ChildStore filtered by the category column
+ * @method     ChildStore findOneByStoreCategoryId(int $store_category_id) Return the first ChildStore filtered by the store_category_id column
  * @method     ChildStore findOneByDescription(string $description) Return the first ChildStore filtered by the description column
+ * @method     ChildStore findOneByIsMajor(int $is_major) Return the first ChildStore filtered by the is_major column
  * @method     ChildStore findOneByUpdateTime(string $update_time) Return the first ChildStore filtered by the update_time column
  * @method     ChildStore findOneByUpdateUser(string $update_user) Return the first ChildStore filtered by the update_user column
  *
  * @method     ChildStore[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildStore objects based on current ModelCriteria
  * @method     ChildStore[]|ObjectCollection findByStoreId(int $store_id) Return ChildStore objects filtered by the store_id column
  * @method     ChildStore[]|ObjectCollection findByStoreName(string $store_name) Return ChildStore objects filtered by the store_name column
- * @method     ChildStore[]|ObjectCollection findByCategory(string $category) Return ChildStore objects filtered by the category column
+ * @method     ChildStore[]|ObjectCollection findByStoreCategoryId(int $store_category_id) Return ChildStore objects filtered by the store_category_id column
  * @method     ChildStore[]|ObjectCollection findByDescription(string $description) Return ChildStore objects filtered by the description column
+ * @method     ChildStore[]|ObjectCollection findByIsMajor(int $is_major) Return ChildStore objects filtered by the is_major column
  * @method     ChildStore[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildStore objects filtered by the update_time column
  * @method     ChildStore[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildStore objects filtered by the update_user column
  * @method     ChildStore[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -168,7 +176,7 @@ abstract class StoreQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT store_id, store_name, category, description, update_time, update_user FROM store WHERE store_id = :p0';
+        $sql = 'SELECT store_id, store_name, store_category_id, description, is_major, update_time, update_user FROM store WHERE store_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -329,32 +337,46 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the category column
+     * Filter the query on the store_category_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByCategory('fooValue');   // WHERE category = 'fooValue'
-     * $query->filterByCategory('%fooValue%'); // WHERE category LIKE '%fooValue%'
+     * $query->filterByStoreCategoryId(1234); // WHERE store_category_id = 1234
+     * $query->filterByStoreCategoryId(array(12, 34)); // WHERE store_category_id IN (12, 34)
+     * $query->filterByStoreCategoryId(array('min' => 12)); // WHERE store_category_id > 12
      * </code>
      *
-     * @param     string $category The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @see       filterByStoreCategory()
+     *
+     * @param     mixed $storeCategoryId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildStoreQuery The current query, for fluid interface
      */
-    public function filterByCategory($category = null, $comparison = null)
+    public function filterByStoreCategoryId($storeCategoryId = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($category)) {
+        if (is_array($storeCategoryId)) {
+            $useMinMax = false;
+            if (isset($storeCategoryId['min'])) {
+                $this->addUsingAlias(StoreTableMap::COL_STORE_CATEGORY_ID, $storeCategoryId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($storeCategoryId['max'])) {
+                $this->addUsingAlias(StoreTableMap::COL_STORE_CATEGORY_ID, $storeCategoryId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $category)) {
-                $category = str_replace('*', '%', $category);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(StoreTableMap::COL_CATEGORY, $category, $comparison);
+        return $this->addUsingAlias(StoreTableMap::COL_STORE_CATEGORY_ID, $storeCategoryId, $comparison);
     }
 
     /**
@@ -384,6 +406,47 @@ abstract class StoreQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(StoreTableMap::COL_DESCRIPTION, $description, $comparison);
+    }
+
+    /**
+     * Filter the query on the is_major column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByIsMajor(1234); // WHERE is_major = 1234
+     * $query->filterByIsMajor(array(12, 34)); // WHERE is_major IN (12, 34)
+     * $query->filterByIsMajor(array('min' => 12)); // WHERE is_major > 12
+     * </code>
+     *
+     * @param     mixed $isMajor The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByIsMajor($isMajor = null, $comparison = null)
+    {
+        if (is_array($isMajor)) {
+            $useMinMax = false;
+            if (isset($isMajor['min'])) {
+                $this->addUsingAlias(StoreTableMap::COL_IS_MAJOR, $isMajor['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($isMajor['max'])) {
+                $this->addUsingAlias(StoreTableMap::COL_IS_MAJOR, $isMajor['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(StoreTableMap::COL_IS_MAJOR, $isMajor, $comparison);
     }
 
     /**
@@ -456,6 +519,83 @@ abstract class StoreQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(StoreTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \StoreCategory object
+     *
+     * @param \StoreCategory|ObjectCollection $storeCategory The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByStoreCategory($storeCategory, $comparison = null)
+    {
+        if ($storeCategory instanceof \StoreCategory) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_CATEGORY_ID, $storeCategory->getStoreCategoryId(), $comparison);
+        } elseif ($storeCategory instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_CATEGORY_ID, $storeCategory->toKeyValue('PrimaryKey', 'StoreCategoryId'), $comparison);
+        } else {
+            throw new PropelException('filterByStoreCategory() only accepts arguments of type \StoreCategory or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the StoreCategory relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinStoreCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('StoreCategory');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'StoreCategory');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the StoreCategory relation StoreCategory object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \StoreCategoryQuery A secondary query class using the current class as primary query
+     */
+    public function useStoreCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinStoreCategory($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'StoreCategory', '\StoreCategoryQuery');
     }
 
     /**

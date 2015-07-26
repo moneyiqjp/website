@@ -51,10 +51,9 @@ class Db
         }
         return $result;
     }
-    function GetAllStores()
-    {
+    function GetAllStores() {
         $result = array();
-        foreach( (new \StoreQuery())->orderByCategory()->find() as $store)
+        foreach( (new \StoreQuery())->orderByStoreCategoryId()->find() as $store)
         {
             array_push($result, SimpleStore::fromStoreObject($store));
         }
@@ -271,7 +270,7 @@ class Db
     function GetStoresForDisplay()
     {
         $result = array();
-        foreach ((new \StoreQuery())->orderByCategory()->orderByStoreName()->find() as $af) {
+        foreach ((new \StoreQuery())->orderByStoreCategoryId()->orderByStoreName()->find() as $af) {
             array_push($result, Json\JStore::CREATE_FROM_DB($af));
         }
         return $result;
@@ -969,7 +968,7 @@ class Db
         $stuff = Json\JFeature::CREATE_FROM_FEATURE_TYPE_AND_CC($item->getCardFeatureType(),$item->getCreditCard());
         $stuff->Active = false;
         $stuff->FeatureId = (-1) * mt_rand(10000,100000);
-        $stuff->FeatureCost = 0;
+        $stuff->IssuingFee = 0;
 
         $item->delete();
         return $stuff;
@@ -1134,6 +1133,7 @@ class Db
     }
 
     /* Point Mappings */
+    /*
     function GetPointMappingForCard($id)
     {
         $cc = (new\CreditCardQuery())->findPk($id);
@@ -1166,6 +1166,7 @@ class Db
 
         return array();
     }
+    */
 
     /* Insurance */
     function GetInsuranceForCrud()
