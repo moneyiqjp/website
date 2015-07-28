@@ -1,6 +1,7 @@
 <?php
 
 use Base\MapPersonaSceneQuery as BaseMapPersonaSceneQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'map_persona_scene' table.
@@ -14,5 +15,20 @@ use Base\MapPersonaSceneQuery as BaseMapPersonaSceneQuery;
  */
 class MapPersonaSceneQuery extends BaseMapPersonaSceneQuery
 {
+
+    /**
+     * @param $personaId
+     * @param $sceneId
+     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     */
+    public function findByPersonaIdSceneId($personaId, $sceneId) {
+        $result = array();
+        foreach($this->findByPersonaId($personaId) as $map) {
+            if($map->getSceneId()==$sceneId)
+                array_push($result, $map);
+        }
+
+        return $result;
+    }
 
 } // MapPersonaSceneQuery

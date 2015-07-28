@@ -19,6 +19,21 @@ class JSceneCategoryMapping implements JSONInterface
     public $UpdateTime;
     public $UpdateUser;
 
+    public static function GetSceneIdFromComplexId($complexId) {
+        $ids = explode("_",$complexId);
+        if(count($ids)>0) return $ids[0];
+
+        throw new \Exception("$complexId is not a valid Id");
+    }
+
+    public static function GetStoreCategoryIdFromComplexId($complexId) {
+        $ids = explode("_",$complexId);
+        if(count($ids)>1) return $ids[1];
+
+        throw new \Exception("$complexId is not a valid Id");
+    }
+
+
     public static function CREATE_FROM_DB(\MapSceneStoreCategory $item)
     {
         $mine = new JSceneCategoryMapping();
@@ -33,17 +48,17 @@ class JSceneCategoryMapping implements JSONInterface
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        if (ArrayUtils::KEY_EXISTS($data, 'CategoryId') && ArrayUtils::KEY_EXISTS($data, 'SceneId'))
+        if (ArrayUtils::KEY_EXISTS($data, 'StoreCategoryId') && ArrayUtils::KEY_EXISTS($data, 'SceneId'))
         {
-            return JSceneCategoryMapping::LOAD_FROM_DB($data['CategoryId'], $data['SceneId']);
+            return JSceneCategoryMapping::LOAD_FROM_DB($data['StoreCategoryId'], $data['SceneId']);
         }
-        if (!ArrayUtils::KEY_EXISTS($data, 'Category')) throw new \Exception("JSceneToCategoryMapping: Mandatory field Category (!) missing");
+        if (!ArrayUtils::KEY_EXISTS($data, 'StoreCategory')) throw new \Exception("JSceneToCategoryMapping: Mandatory field StoreCategory (!) missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'Scene')) throw new \Exception("JSceneToCategoryMapping: Mandatory field Scene missing");
         return JSceneCategoryMapping::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
 
-    public static function LOAD_FROM_DB($sceneId, $categoryId)
+    public static function TRY_LOAD_FROM_DB($sceneId, $categoryId)
     {
 
         foreach ( (new \MapSceneStoreCategoryQuery())->findBySceneId($sceneId) as $item)
@@ -53,6 +68,15 @@ class JSceneCategoryMapping implements JSONInterface
                 return JSceneCategoryMapping::CREATE_FROM_DB($item);
             }
         }
+
+        return null;
+    }
+
+    public static function LOAD_FROM_DB($sceneId, $categoryId)
+    {
+
+        $item = JSceneCategoryMapping::TRY_LOAD_FROM_DB($sceneId, $categoryId);
+        if(!is_null($item)) return $item;
         throw new \Exception("JSceneToCategoryMapping: no matching mapping found for $sceneId, $categoryId");
     }
 
@@ -65,8 +89,8 @@ class JSceneCategoryMapping implements JSONInterface
         if (ArrayUtils::KEY_EXISTS($data, 'Scene')) {
             $mine->Scene = JScene::CREATE_FROM_ARRAY($data['Scene']);
         }
-        if (ArrayUtils::KEY_EXISTS($data, 'Category')) {
-            $mine->StoreCategory = JStoreCategory::CREATE_FROM_ARRAY($data['Category']);
+        if (ArrayUtils::KEY_EXISTS($data, 'StoreCategory')) {
+            $mine->StoreCategory = JStoreCategory::CREATE_FROM_ARRAY($data['StoreCategory']);
         }
         return $mine;
     }
@@ -80,7 +104,7 @@ class JSceneCategoryMapping implements JSONInterface
     public function toDB()
     {
         if(!$this->isValid()) throw new \Exception("Invalid JSceneToCategoryMappiong, can't save");
-        $item = JSceneCategoryMapping::LOAD_FROM_DB($this->Scene->SceneId, $this->StoreCategory->StoreCategoryId);
+        $item = JSceneCategoryMapping::TRY_LOAD_FROM_DB($this->Scene->SceneId, $this->StoreCategory->StoreCategoryId);
         if(is_null($item)) $item = new \MapSceneStoreCategory();
 
         return $this->updateDB($item);

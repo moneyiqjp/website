@@ -18,6 +18,20 @@ class JPersonaSceneMapping implements JSONInterface
     public $UpdateTime;
     public $UpdateUser;
 
+    public static function GetSceneIdFromComplexId($complexId) {
+        $ids = explode("_",$complexId);
+        if(count($ids)>1) return $ids[1];
+
+        throw new \Exception("$complexId is not a valid Id");
+    }
+
+    public static function GetPersonaIdFromComplexId($complexId) {
+        $ids = explode("_",$complexId);
+        if(count($ids)>0) return $ids[0];
+
+        throw new \Exception("$complexId is not a valid Id");
+    }
+
     public static function CREATE_FROM_DB(\MapPersonaScene $item)
     {
         $mine = new JPersonaSceneMapping();
@@ -36,15 +50,13 @@ class JPersonaSceneMapping implements JSONInterface
         {
             return JPersonaSceneMapping::LOAD_FROM_DB($data['SceneId'], $data['PersonaId']);
         }
-        if (!ArrayUtils::KEY_EXISTS($data, 'Scene')) throw new \Exception("JPersonaToSceneMapping: Mandatory field Scene (!) missing");
+        if (!ArrayUtils::KEY_EXISTS($data, 'Scene')) throw new \Exception("JPersonaToSceneMapping: Mandatory field Scene missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'Persona')) throw new \Exception("JPersonaToSceneMapping: Mandatory field Persona missing");
         return JPersonaSceneMapping::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-
-    public static function LOAD_FROM_DB($personaId, $sceneId)
+    public static function TRY_LOAD_FROM_DB($personaId, $sceneId)
     {
-
         foreach ( (new \MapPersonaSceneQuery())->findByPersonaId($personaId) as $item)
         {
             if($sceneId == $item->getSceneId())
@@ -52,6 +64,15 @@ class JPersonaSceneMapping implements JSONInterface
                 return JPersonaSceneMapping::CREATE_FROM_DB($item);
             }
         }
+        return null;
+    }
+
+    public static function LOAD_FROM_DB($personaId, $sceneId)
+    {
+        $item = JPersonaSceneMapping::TRY_LOAD_FROM_DB($personaId, $sceneId);
+
+        if(!is_null($item)) return $item;
+
         throw new \Exception("JPersonaToSceneMapping: no matching mapping found for $personaId, $sceneId");
     }
 
@@ -67,6 +88,8 @@ class JPersonaSceneMapping implements JSONInterface
         if (ArrayUtils::KEY_EXISTS($data, 'Scene')) {
             $mine->Scene = JScene::CREATE_FROM_ARRAY($data['Scene']);
         }
+
+        $mine->Id = $mine->Persona->PersonaId . "_" . $mine->Scene->SceneId;
         return $mine;
     }
 
@@ -79,7 +102,7 @@ class JPersonaSceneMapping implements JSONInterface
     public function toDB()
     {
         if(!$this->isValid()) throw new \Exception("Invalid JPersonaToSceneMappiong, can't save");
-        $item = JPersonaSceneMapping::LOAD_FROM_DB($this->Persona->PersonaId, $this->Scene->SceneId);
+        $item = JPersonaSceneMapping::TRY_LOAD_FROM_DB($this->Persona->PersonaId, $this->Scene->SceneId);
         if(is_null($item)) $item = new \MapPersonaScene();
 
         return $this->updateDB($item);
@@ -88,7 +111,7 @@ class JPersonaSceneMapping implements JSONInterface
     public function updateDB(\MapPersonaScene &$item)
     {
         $item->setSceneId($this->Scene->SceneId);
-        $item->setPersonaId($this->Persona->credit_card_id);
+        $item->setPersonaId($this->Persona->PersonaId);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

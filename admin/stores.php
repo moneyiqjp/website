@@ -17,6 +17,33 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
     <script type="text/javascript" language="javascript" class="init">
+        var categories = [];
+        var tmp = $.ajax({
+            url: '../backend/crud/storecategory/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            var jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                var tmpStore = jason["data"];
+                var index;
+                for (index = 0; index < tmpStore.length; ++index) {
+                    categories.push({
+                        value: tmpStore[index]["StoreCategoryId"],
+                        label: tmpStore[index]["Name"]
+                    })
+                }
+            }
+        }
+
+
         storeEditor = new $.fn.dataTable.Editor(
             {
                 ajax: {
@@ -39,10 +66,50 @@
                         type:  "readonly"
                     },  {
                         label: "Category:",
-                        name: "Category"
+                        name: "StoreCategory.Id",
+                        type: "select",
+                        options:categories
+
                     },  {
                         label: "Name:",
                         name: "StoreName"
+                    },   {
+                        label: "Description:",
+                        name: "Description"
+                    },{
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
+        storeCategoryEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/storecategory/create', // default method is POST
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/storecategory/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/storecategory/delete'
+                    }
+                },
+                table: "#categories",
+                idSrc: "StoreCategoryId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "StoreCategoryId",
+                        type:  "readonly"
+                    },  {
+                        label: "Name:",
+                        name: "Name"
                     },   {
                         label: "Description:",
                         name: "Description"
@@ -70,7 +137,7 @@
                 "columns": [
                     { "data": "StoreId", visible: false },
                     { "data": "StoreName" },
-                    { "data": "Category" },
+                    { "data": "StoreCategory.Name", editField:"StoreCategory.StoreCategoryId" },
                     { "data": "Description" },
                     { "data": "UpdateTime", visible: false},
                     { "data": "UpdateUser", visible: false }
@@ -84,6 +151,32 @@
                     ]
                 }
             } );
+
+            $('#categories').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/storecategory/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "StoreCategoryId", visible: false },
+                    { "data": "Name" },
+                    { "data": "Description" },
+                    { "data": "UpdateTime", visible: false},
+                    { "data": "UpdateUser", visible: false }
+                ]
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: storeCategoryEditor },
+                        { sExtends: "editor_edit",   editor: storeCategoryEditor },
+                        { sExtends: "editor_remove", editor: storeCategoryEditor }
+                    ]
+                }
+            } );
         })
 
 
@@ -92,36 +185,69 @@
 </head>
 
 <body class="dt-other">
-<div class="table-headline"><a name="store">Stores</a></div>
-<!--
-<a href="#issuers" class="subheader">Issuers</a>
-<a href="#affiliates" class="subheader">Affiliates</a>
-<a href="#insurance_type" class="subheader">Insurance Type</a>
-<a href="#feature_type" class="subheader">Feature Type</a>
--->
-<table id="stores" class="display" cellspacing="0" width="98%">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </thead>
+<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="store">Stores</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="stores" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
 
-    <tfoot>
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Description</th>
-        <th>Updated</th>
-        <th>User</th>
-    </tr>
-    </tfoot>
-</table>
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="store">Categories</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="categories" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 <br>
 <br>
 <br>

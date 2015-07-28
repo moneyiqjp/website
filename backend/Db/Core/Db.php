@@ -621,7 +621,6 @@ class Db
     }
 
 
-
     /* PointUsage */
     function GetPointUsageForCrud()
     {
@@ -731,6 +730,7 @@ class Db
         return array();
     }
 
+
     /* Issuer */
     function GetIssuerForCrud()
     {
@@ -772,6 +772,7 @@ class Db
         $item->delete();
         return array();
     }
+
 
     /* InsuranceType */
     function GetInsuranceTypeForCrud()
@@ -815,6 +816,7 @@ class Db
         return array();
     }
 
+
     /* FeatureType */
     function GetFeatureTypeForCrud()
     {
@@ -856,6 +858,7 @@ class Db
         $item->delete();
         return array();
     }
+
 
     /* Features */
     function GetFeatureForCrud()
@@ -903,6 +906,7 @@ class Db
         $item->delete();
         return array();
     }
+
 
     /* added functionality for per credit card details */
     function GetFeaturesForCard($id) {
@@ -974,6 +978,7 @@ class Db
         return $stuff;
     }
 
+
     /* Descriptions */
     function GetDescriptionsForCard($id)
     {
@@ -1025,6 +1030,7 @@ class Db
         $item->delete();
         return array();
     }
+
 
     /* Campaigns */
     function GetCampaignForCrud()
@@ -1078,6 +1084,7 @@ class Db
         $item->delete();
         return array();
     }
+
 
     /* Discounts */
     function GetDiscountForCrud()
@@ -1445,4 +1452,277 @@ class Db
     }
 
 
+    /* StoreCategory */
+    function GetStoreCategoryForDisplay()
+    {
+        $result = array();
+        foreach ((new \StoreCategoryQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getStoreCategoryId()));
+        }
+        return $result;
+    }
+    function GetStoreCategoryForCrud()
+    {
+        $result = array();
+        foreach ((new \StoreCategoryQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JStoreCategory::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetStoreCategoryById($id)
+    {
+        $result = array();
+        foreach ((new \StoreCategoryQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JStoreCategory::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateStoreCategoryForCrud($data)
+    {
+        $parsed = Json\JStoreCategory::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse StoreCategory update request");
+
+        $item = (new  \StoreCategoryQuery())->findPk($parsed->StoreCategoryId);
+        if(is_null($item)) throw new \Exception ("StoreCategory with id ". $parsed->StoreCategoryId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \StoreCategoryQuery())->findPk($parsed->StoreCategoryId);
+        return Json\JStoreCategory::CREATE_FROM_DB($item);
+    }
+    function CreateStoreCategoryForCrud($data)
+    {
+        $item = Json\JStoreCategory::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JStoreCategory::CREATE_FROM_DB($item);
+    }
+    function DeleteStoreCategoryForCrud($id)
+    {
+        $item = (new  \StoreCategoryQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("StoreCategory with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* Persona */
+    function GetPersonaForDisplay()
+    {
+        $result = array();
+        foreach ((new \PersonaQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getPersonaId()));
+        }
+        return $result;
+    }
+    function GetPersonaForCrud()
+    {
+        $result = array();
+        foreach ((new \PersonaQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JPersona::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPersonaById($id)
+    {
+        $result = array();
+        foreach ((new \PersonaQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JPersona::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdatePersonaForCrud($data)
+    {
+        $parsed = Json\JPersona::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Persona update request");
+
+        $item = (new  \PersonaQuery())->findPk($parsed->PersonaId);
+        if(is_null($item)) throw new \Exception ("Persona with id ". $parsed->PersonaId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \PersonaQuery())->findPk($parsed->PersonaId);
+        return Json\JPersona::CREATE_FROM_DB($item);
+    }
+    function CreatePersonaForCrud($data)
+    {
+        $item = Json\JPersona::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPersona::CREATE_FROM_DB($item);
+    }
+    function DeletePersonaForCrud($id)
+    {
+        $item = (new  \PersonaQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Persona with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+
+    /* Scene */
+    function GetSceneForDisplay()
+    {
+        $result = array();
+        foreach ((new \SceneQuery())->orderByName()->find() as $af) {
+            array_push($result,  Json\JObject::CREATE($af->getName(),$af->getSceneId()));
+        }
+        return $result;
+    }
+    function GetSceneForCrud()
+    {
+        $result = array();
+        foreach ((new \SceneQuery())->orderByName()->find() as $af) {
+            array_push($result, Json\JScene::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetSceneById($id)
+    {
+        $result = array();
+        foreach ((new \SceneQuery())->orderByName()->findPk($id) as $af) {
+            array_push($result, Json\JScene::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function UpdateSceneForCrud($data)
+    {
+        $parsed = Json\JScene::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Scene update request");
+
+        $item = (new  \MapSceneStoreCategoryQuery())->findPk($parsed->SceneId);
+        if(is_null($item)) throw new \Exception ("Scene with id ". $parsed->SceneId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \SceneQuery())->findPk($parsed->SceneId);
+        return Json\JScene::CREATE_FROM_DB($item);
+    }
+    function CreateSceneForCrud($data)
+    {
+        $item = Json\JScene::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JScene::CREATE_FROM_DB($item);
+    }
+    function DeleteSceneForCrud($id)
+    {
+        $item = (new  \SceneQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("Scene with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* GetSceneToCategoryMap */
+    function GetSceneToCategoryMap()
+    {
+        $result = array();
+        foreach ((new \MapSceneStoreCategoryQuery())->orderBySceneId()->find() as $af) {
+            array_push($result,  Json\JSceneCategoryMapping::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function DeleteSceneToCategoryMap($complexId)
+    {
+        $sceneId = Json\JSceneCategoryMapping::GetSceneIdFromComplexId($complexId);
+        $categoryId = Json\JSceneCategoryMapping::GetStoreCategoryIdFromComplexId($complexId);
+        foreach ((new \MapSceneStoreCategoryQuery())->findBySceneIdStoreCategoryId($sceneId, $categoryId) as $item) {
+            if(!is_null($item)) {
+                $item->delete();
+            }
+        }
+        return array();
+    }
+    function UpdateSceneToCategoryMap($data) {
+        $complexId = $data["Id"];
+        $parsed = Json\JSceneCategoryMapping::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Scene to Category Mapping update request");
+        $items = (new \MapSceneStoreCategoryQuery())->findBySceneIdStoreCategoryId($sceneId,$categoryId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+        if(count($items)==0) throw new \Exception("Item not found for Mapping $complexId - Scene $sceneId, StoreCategory$categoryId");
+        if(!is_null($items[0])) {
+            $parsed->updateDB($items[0])->save();
+        }
+
+        //TODO implement cache, then refresh
+        $items = (new \MapSceneStoreCategoryQuery())->findBySceneIdStoreCategoryId($sceneId, $categoryId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+
+
+        return Json\JSceneCategoryMapping::CREATE_FROM_DB($items[0]);
+    }
+    function CreateSceneToCategoryMap($data)
+    {
+        $item = Json\JSceneCategoryMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JSceneCategoryMapping::CREATE_FROM_DB($item);
+    }
+
+
+    /* GetPersonaToSceneMap */
+    function GetPersonaToSceneMap()
+    {
+        $result = array();
+        foreach ((new \MapPersonaSceneQuery())->orderByPersonaId()->find() as $af) {
+            array_push($result,  Json\JPersonaSceneMapping::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function DeletePersonaToSceneMap($complexId)
+    {
+        $sceneId = Json\JPersonaSceneMapping::GetSceneIdFromComplexId($complexId);
+        $personaId = Json\JPersonaSceneMapping::GetPersonaIdFromComplexId($complexId);
+        foreach ((new \MapPersonaSceneQuery())->findByPersonaIdSceneId($personaId, $sceneId) as $item) {
+            if(!is_null($item)) {
+                $item->delete();
+            }
+        }
+        return array();
+    }
+    function UpdatePersonaToSceneMap($data) {
+        $complexId = $data["Id"];
+        $parsed = Json\JPersonaSceneMapping::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Scene to Category Mapping update request");
+        $personaId = $parsed->Persona->PersonaId;
+        $sceneId = $parsed->Scene->SceneId;
+        $items = (new \MapPersonaSceneQuery())->findByPersonaIdSceneId($personaId, $sceneId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+        if(count($items)==0) throw new \Exception("item not found for Persona $personaId, Scene $sceneId");
+
+        if(!is_null($items[0])) {
+            $parsed->updateDB($items[0])->save();
+        }
+
+        //TODO implement cache, then refresh
+        $items = (new \MapPersonaSceneQuery())->findByPersonaIdSceneId($personaId, $sceneId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+
+
+        return Json\JPersonaSceneMapping::CREATE_FROM_DB($items[0]);
+    }
+    function CreatePersonaToSceneMap($data)
+    {
+        $item = Json\JPersonaSceneMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JPersonaSceneMapping::CREATE_FROM_DB($item);
+    }
 }

@@ -14,5 +14,4 @@ use Base\MapSceneStoreCategory as BaseMapSceneStoreCategory;
  */
 class MapSceneStoreCategory extends BaseMapSceneStoreCategory
 {
-
 }

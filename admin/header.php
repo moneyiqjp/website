@@ -43,6 +43,12 @@
             Stores
         </a>
     </div>
+
+    <div class="adminlogo">
+        <a href="persona.php" target="frame_main" class="menulink">
+            Persona
+        </a>
+    </div>
 </div>
 
 </body>
