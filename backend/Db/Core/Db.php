@@ -41,6 +41,9 @@ class Db
         return $this;
     }
 
+    function GetAllPersonas() {
+        return PersonaMapping::CREATE()->Persona;
+    }
     function GetAllCards()
     {
         $result = array();

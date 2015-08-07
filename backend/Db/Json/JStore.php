@@ -31,7 +31,7 @@ class JStore implements JSONInterface {
         if(FieldUtils::STRING_IS_DEFINED($item->getStoreName())) $mine->StoreName = $item->getStoreName();
         if(FieldUtils::ID_IS_DEFINED($item->getStoreCategoryId())) $mine->StoreCategory = JStoreCategory::CREATE_FROM_DB($item->getStoreCategory());
         if(FieldUtils::STRING_IS_DEFINED($item->getDescription())) $mine->Description = $item->getDescription();
-        if(FieldUtils::ID_IS_DEFINED($item->getIsMajor())) $mine->IsMajor = $item->getIsMajor();
+        if(FieldUtils::NUMBER_IS_DEFINED($item->getIsMajor())) $mine->IsMajor = $item->getIsMajor();
         if(!is_null($item->getUpdateTime())) $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         if(FieldUtils::STRING_IS_DEFINED($item->getUpdateUser())) $mine->UpdateUser = $item->getUpdateUser();
 

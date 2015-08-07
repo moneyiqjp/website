@@ -77,6 +77,14 @@
                         label: "Description:",
                         name: "Description"
                     },{
+                        label: "Is Major:",
+                        name: "IsMajor",
+                        type: "select",
+                        options: [
+                            { label: "Yes", value: 1 },
+                            { label: "No", value: 0 }
+                        ]
+                    },{
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -139,6 +147,7 @@
                     { "data": "StoreName" },
                     { "data": "StoreCategory.Name", editField:"StoreCategory.StoreCategoryId" },
                     { "data": "Description" },
+                    { "data": "IsMajor" },
                     { "data": "UpdateTime", visible: false},
                     { "data": "UpdateUser", visible: false }
                 ]
@@ -200,6 +209,7 @@
             <th>Name</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Major</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -211,6 +221,7 @@
             <th>Name</th>
             <th>Category</th>
             <th>Description</th>
+            <th>Major</th>
             <th>Updated</th>
             <th>User</th>
         </tr>

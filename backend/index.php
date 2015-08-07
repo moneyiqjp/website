@@ -109,6 +109,22 @@ $app->get('/display/reward/category/all', function () use ($app) {
 });
 
 
+$app->get('/display/allpersonas', function () use ($app) {
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $db = new \Db\Core\Db();
+    $jTableResult = array();
+    try {
+        $jTableResult['data'] = $db->GetAllPersonas();
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+
+    echo json_encode($jTableResult);
+
+});
 
 $app->get('/display/creditcards', function () use ($app) {
     // query database for all cards
