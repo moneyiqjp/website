@@ -1,4 +1,3 @@
-use moneyiq;
 SET NAMES utf8;
 -- Table store]
 
@@ -19,7 +18,9 @@ CREATE TABLE store_category (
     update_time datetime NOT NULL,
     update_user varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
     CONSTRAINT category_pk PRIMARY KEY (store_category_id)
-);
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
 
 
 SET FOREIGN_KEY_CHECKS = 1;

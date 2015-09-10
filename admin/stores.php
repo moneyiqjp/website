@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DataTables example - Ajax data source (objects)</title>
+    <title>MoneyIQ Stores</title>
     <link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
     <script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="media/js/jquery.dataTables.js"></script>

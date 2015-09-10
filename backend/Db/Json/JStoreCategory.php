@@ -25,6 +25,7 @@ class JStoreCategory implements JSONInterface
     public static function CREATE_FROM_DB(\StoreCategory $item)
     {
         $mine = new JStoreCategory();
+        if($item==null) return $mine;
         $mine->StoreCategoryId = $item->getStoreCategoryId();
         $mine->Name = $item->getName();
         $mine->Description = $item->getDescription();

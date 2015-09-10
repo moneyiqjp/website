@@ -1,4 +1,3 @@
-use moneyiq;
 SET NAMES utf8;
 
 -- required as we want to be able to refresh our db table by table
@@ -9,7 +8,7 @@ ALTER TABLE store_category AUTO_INCREMENT = 1;
 insert into store_category (name, description, update_time,  update_user) values
 ('None','None',NOW(),'ben');
 
-insert into store_category (name, description, update_time,  update_user) 
+insert into store_category (name, description, update_timoneyiqme,  update_user) 
 select distinct category name, category description, NOW() update_time,  'ben' update_user from store;
 
 

@@ -109,7 +109,7 @@ $app->get('/display/reward/category/all', function () use ($app) {
 });
 
 
-$app->get('/display/allpersonas', function () use ($app) {
+$app->get('/allpersonas', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $db = new \Db\Core\Db();
