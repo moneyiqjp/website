@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_usage' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class PointUsage implements ActiveRecordInterface
+abstract class PointUsage implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -79,7 +79,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * The value for the yen_per_point field.
-     * @var        string
+     * @var        double
      */
     protected $yen_per_point;
 
@@ -100,12 +100,6 @@ abstract class PointUsage implements ActiveRecordInterface
      * @var        string
      */
     protected $update_user;
-
-    /**
-     * The value for the reference field.
-     * @var        string
-     */
-    protected $reference;
 
     /**
      * @var        ChildStore
@@ -344,7 +338,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [point_usage_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPointUsageId()
@@ -354,7 +348,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     *
+     * 
      * @return int
      */
     public function getStoreId()
@@ -364,8 +358,8 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [yen_per_point] column value.
-     *
-     * @return string
+     * 
+     * @return double
      */
     public function getYenPerPoint()
     {
@@ -374,7 +368,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCreditCardId()
@@ -384,7 +378,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -404,7 +398,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -413,18 +407,8 @@ abstract class PointUsage implements ActiveRecordInterface
     }
 
     /**
-     * Get the [reference] column value.
-     *
-     * @return string
-     */
-    public function getReference()
-    {
-        return $this->reference;
-    }
-
-    /**
      * Set the value of [point_usage_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
@@ -444,7 +428,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
@@ -468,14 +452,14 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Set the value of [yen_per_point] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param  double $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
     public function setYenPerPoint($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (double) $v;
         }
 
         if ($this->yen_per_point !== $v) {
@@ -488,7 +472,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
@@ -512,7 +496,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointUsage The current object (for fluent API support)
@@ -532,7 +516,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointUsage The current object (for fluent API support)
      */
@@ -549,26 +533,6 @@ abstract class PointUsage implements ActiveRecordInterface
 
         return $this;
     } // setUpdateUser()
-
-    /**
-     * Set the value of [reference] column.
-     *
-     * @param  string $v new value
-     * @return $this|\PointUsage The current object (for fluent API support)
-     */
-    public function setReference($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->reference !== $v) {
-            $this->reference = $v;
-            $this->modifiedColumns[PointUsageTableMap::COL_REFERENCE] = true;
-        }
-
-        return $this;
-    } // setReference()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -613,7 +577,7 @@ abstract class PointUsage implements ActiveRecordInterface
             $this->store_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PointUsageTableMap::translateFieldName('YenPerPoint', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->yen_per_point = (null !== $col) ? (string) $col : null;
+            $this->yen_per_point = (null !== $col) ? (double) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PointUsageTableMap::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->credit_card_id = (null !== $col) ? (int) $col : null;
@@ -626,9 +590,6 @@ abstract class PointUsage implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PointUsageTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PointUsageTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reference = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -637,7 +598,7 @@ abstract class PointUsage implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = PointUsageTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = PointUsageTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\PointUsage'), 0, $e);
@@ -879,9 +840,6 @@ abstract class PointUsage implements ActiveRecordInterface
         if ($this->isColumnModified(PointUsageTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
-        if ($this->isColumnModified(PointUsageTableMap::COL_REFERENCE)) {
-            $modifiedColumns[':p' . $index++]  = 'reference';
-        }
 
         $sql = sprintf(
             'INSERT INTO point_usage (%s) VALUES (%s)',
@@ -893,26 +851,23 @@ abstract class PointUsage implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_usage_id':
+                    case 'point_usage_id':                        
                         $stmt->bindValue($identifier, $this->point_usage_id, PDO::PARAM_INT);
                         break;
-                    case 'store_id':
+                    case 'store_id':                        
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'yen_per_point':
+                    case 'yen_per_point':                        
                         $stmt->bindValue($identifier, $this->yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'credit_card_id':
+                    case 'credit_card_id':                        
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
-                        break;
-                    case 'reference':
-                        $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -994,9 +949,6 @@ abstract class PointUsage implements ActiveRecordInterface
             case 5:
                 return $this->getUpdateUser();
                 break;
-            case 6:
-                return $this->getReference();
-                break;
             default:
                 return null;
                 break;
@@ -1033,16 +985,15 @@ abstract class PointUsage implements ActiveRecordInterface
             $keys[3] => $this->getCreditCardId(),
             $keys[4] => $this->getUpdateTime(),
             $keys[5] => $this->getUpdateUser(),
-            $keys[6] => $this->getReference(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aStore) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'store';
@@ -1053,11 +1004,11 @@ abstract class PointUsage implements ActiveRecordInterface
                     default:
                         $key = 'Store';
                 }
-
+        
                 $result[$key] = $this->aStore->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aCreditCard) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCard';
@@ -1068,7 +1019,7 @@ abstract class PointUsage implements ActiveRecordInterface
                     default:
                         $key = 'CreditCard';
                 }
-
+        
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1123,9 +1074,6 @@ abstract class PointUsage implements ActiveRecordInterface
             case 5:
                 $this->setUpdateUser($value);
                 break;
-            case 6:
-                $this->setReference($value);
-                break;
         } // switch()
 
         return $this;
@@ -1169,9 +1117,6 @@ abstract class PointUsage implements ActiveRecordInterface
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setUpdateUser($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setReference($arr[$keys[6]]);
         }
     }
 
@@ -1232,9 +1177,6 @@ abstract class PointUsage implements ActiveRecordInterface
         if ($this->isColumnModified(PointUsageTableMap::COL_UPDATE_USER)) {
             $criteria->add(PointUsageTableMap::COL_UPDATE_USER, $this->update_user);
         }
-        if ($this->isColumnModified(PointUsageTableMap::COL_REFERENCE)) {
-            $criteria->add(PointUsageTableMap::COL_REFERENCE, $this->reference);
-        }
 
         return $criteria;
     }
@@ -1278,7 +1220,7 @@ abstract class PointUsage implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1326,7 +1268,6 @@ abstract class PointUsage implements ActiveRecordInterface
         $copyObj->setCreditCardId($this->getCreditCardId());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
-        $copyObj->setReference($this->getReference());
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setPointUsageId(NULL); // this is a auto-increment column, so set to default value
@@ -1476,7 +1417,6 @@ abstract class PointUsage implements ActiveRecordInterface
         $this->credit_card_id = null;
         $this->update_time = null;
         $this->update_user = null;
-        $this->reference = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

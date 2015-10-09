@@ -71,6 +71,31 @@
             }
         }
 
+        var rewardCategories = [];
+        tmp = $.ajax({
+            url: '../backend/display/reward/category/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    rewardCategories.push({
+                        value: tmpStore[index]["value"],
+                        label: tmpStore[index]["label"]
+                    })
+                }
+            }
+        }
+
         var personas = [];
         tmp = $.ajax({
             url: '../backend/crud/persona/all',
@@ -201,7 +226,10 @@
                         name: "Scene.SceneId",
                         type: "select",
                         options: scenes
-                    },{
+                    }, {
+                        label: "Allocation:",
+                        name: "Allocation"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -253,6 +281,47 @@
                 ]
             });
 
+        sceneToRewardCategoryEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/scene/to/reward/category/create', // default method is POST
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/scene/to/reward/category/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/scene/to/reward/category/delete'
+                    }
+                },
+                table: "#sceneRewardCategoryMap",
+                idSrc: "Id",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "Id",
+                        type:  "readonly"
+                    },{
+                        label: "Scene:",
+                        name: "Scene.SceneId",
+                        type: "select",
+                        options: scenes
+                    }, {
+                        label: "Category:",
+                        name: "RewardCategory.RewardCategoryId",
+                        type: "select",
+                        options: rewardCategories
+                    },   {
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
         $(document).ready(function() {
 
             $('#personas').dataTable({
@@ -268,6 +337,15 @@
                     {"data": "PersonaId", edit: false},
                     {"data": "Name"},
                     {"data": "Description"},
+                    {
+                        "data": "PersonaId",
+                        render: function ( data, type, row ) {
+                            if ( type === 'display' ) {
+                                return "<a href='persona_details.php?Id=" + data + "'>Details</a>";
+                            }
+                            return data;
+                        }
+                    },
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -320,6 +398,7 @@
                     {"data": "Id", edit: false},
                     {"data": "Persona.Name", editField:"Persona.PersonaId"},
                     {"data": "Scene.Name", editField:"Scene.SceneId"},
+                    {"data": "Allocation"},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -327,6 +406,7 @@
                     sRowSelect: "os",
                     aButtons: [
                         {sExtends: "editor_create", editor: personaToSceneEditor},
+                        {sExtends: "editor_edit", editor: personaToSceneEditor},
                         {sExtends: "editor_remove", editor: personaToSceneEditor}
                     ]
                 }
@@ -357,6 +437,31 @@
                 }
             });
 
+            $('#sceneRewardCategoryMap').dataTable({
+                dom: "rtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/scene/to/reward/category/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "Id", edit: false},
+                    {"data": "Scene.Name", editField:"Scene.SceneId"},
+                    {"data": "RewardCategory.Name", editField:"RewardCategory.RewardCategoryId"},
+                    {"data": "UpdateTime", edit: false, visible: false},
+                    {"data": "UpdateUser", visible: false}
+                ]
+                , tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        {sExtends: "editor_create", editor: sceneToRewardCategoryEditor},
+                        {sExtends: "editor_remove", editor: sceneToRewardCategoryEditor}
+                    ]
+                }
+            });
+
         })
 
     </script>
@@ -370,6 +475,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Details</th>
                 <th>Updated</th>
                 <th>User</th>
             </thead>
@@ -379,6 +485,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Details</th>
                 <th>Updated</th>
                 <th>User</th>
             </tfoot>
@@ -429,10 +536,11 @@
                 <th>User</th>
             </tfoot>
         </table>
+        <a href="http://localhost/backend/crud/persona/to/scene/all" class="source">PersonaToScene JSON</a>
     </div>
 
     <div style="width: 40%; margin: 25px 25px 25px 25px;float: left">
-        <div class="table-headline"><a name="rewardtypes">Scene To Category</a></div>
+        <div class="table-headline"><a name="rewardtypes">Scene To Store Category</a></div>
         <table id="sceneCategoryMap" class="display" cellspacing="0" width="98%">
             <thead>
             <tr>
@@ -453,5 +561,32 @@
             </tfoot>
         </table>
     </div>
+
+    <div style="width: 40%; margin: 25px 25px 25px 25px;float: left">
+        <div class="table-headline"><a name="scenetorewardcategory">Scene To Reward Category</a></div>
+        <table id="sceneRewardCategoryMap" class="display" cellspacing="0" width="98%">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Scene</th>
+                <th>Reward</th>
+                <th>Updated</th>
+                <th>User</th>
+            </thead>
+
+            <tfoot>
+            <tr>
+                <th>Id</th>
+                <th>Scene</th>
+                <th>Reward</th>
+                <th>Updated</th>
+                <th>User</th>
+            </tfoot>
+        </table>
+        <a href="http://localhost/backend/crud/scene/to/reward/category" class="source">Source</a>
+    </div>
+
+
+
 </body>
 </html>

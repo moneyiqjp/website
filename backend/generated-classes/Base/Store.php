@@ -2,8 +2,6 @@
 
 namespace Base;
 
-use \Discount as ChildDiscount;
-use \DiscountQuery as ChildDiscountQuery;
 use \Discounts as ChildDiscounts;
 use \DiscountsQuery as ChildDiscountsQuery;
 use \PointAcquisition as ChildPointAcquisition;
@@ -12,6 +10,8 @@ use \PointUsage as ChildPointUsage;
 use \PointUsageQuery as ChildPointUsageQuery;
 use \PointUse as ChildPointUse;
 use \PointUseQuery as ChildPointUseQuery;
+use \Reward as ChildReward;
+use \RewardQuery as ChildRewardQuery;
 use \Store as ChildStore;
 use \StoreCategory as ChildStoreCategory;
 use \StoreCategoryQuery as ChildStoreCategoryQuery;
@@ -37,11 +37,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'store' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class Store implements ActiveRecordInterface
+abstract class Store implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -125,12 +125,6 @@ abstract class Store implements ActiveRecordInterface
     protected $aStoreCategory;
 
     /**
-     * @var        ObjectCollection|ChildDiscount[] Collection to store aggregation of ChildDiscount objects.
-     */
-    protected $collDiscounts;
-    protected $collDiscountsPartial;
-
-    /**
      * @var        ObjectCollection|ChildDiscounts[] Collection to store aggregation of ChildDiscounts objects.
      */
     protected $collDiscountss;
@@ -155,18 +149,18 @@ abstract class Store implements ActiveRecordInterface
     protected $collPointUsesPartial;
 
     /**
+     * @var        ObjectCollection|ChildReward[] Collection to store aggregation of ChildReward objects.
+     */
+    protected $collRewards;
+    protected $collRewardsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildDiscount[]
-     */
-    protected $discountsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -191,6 +185,12 @@ abstract class Store implements ActiveRecordInterface
      * @var ObjectCollection|ChildPointUse[]
      */
     protected $pointUsesScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildReward[]
+     */
+    protected $rewardsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -425,7 +425,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     *
+     * 
      * @return int
      */
     public function getStoreId()
@@ -435,7 +435,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_name] column value.
-     *
+     * 
      * @return string
      */
     public function getStoreName()
@@ -445,7 +445,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_category_id] column value.
-     *
+     * 
      * @return int
      */
     public function getStoreCategoryId()
@@ -455,7 +455,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -465,7 +465,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [is_major] column value.
-     *
+     * 
      * @return int
      */
     public function getIsMajor()
@@ -475,7 +475,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -495,7 +495,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -505,7 +505,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -525,7 +525,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -545,7 +545,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_category_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -569,7 +569,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -589,7 +589,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [is_major] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -609,7 +609,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Store The current object (for fluent API support)
@@ -629,7 +629,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -787,8 +787,6 @@ abstract class Store implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aStoreCategory = null;
-            $this->collDiscounts = null;
-
             $this->collDiscountss = null;
 
             $this->collPointAcquisitions = null;
@@ -796,6 +794,8 @@ abstract class Store implements ActiveRecordInterface
             $this->collPointUsages = null;
 
             $this->collPointUses = null;
+
+            $this->collRewards = null;
 
         } // if (deep)
     }
@@ -919,23 +919,6 @@ abstract class Store implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->discountsScheduledForDeletion !== null) {
-                if (!$this->discountsScheduledForDeletion->isEmpty()) {
-                    \DiscountQuery::create()
-                        ->filterByPrimaryKeys($this->discountsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->discountsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collDiscounts !== null) {
-                foreach ($this->collDiscounts as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->discountssScheduledForDeletion !== null) {
                 if (!$this->discountssScheduledForDeletion->isEmpty()) {
                     \DiscountsQuery::create()
@@ -1004,6 +987,24 @@ abstract class Store implements ActiveRecordInterface
                 }
             }
 
+            if ($this->rewardsScheduledForDeletion !== null) {
+                if (!$this->rewardsScheduledForDeletion->isEmpty()) {
+                    foreach ($this->rewardsScheduledForDeletion as $reward) {
+                        // need to save related object because we set the relation to null
+                        $reward->save($con);
+                    }
+                    $this->rewardsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collRewards !== null) {
+                foreach ($this->collRewards as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -1062,25 +1063,25 @@ abstract class Store implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'store_id':
+                    case 'store_id':                        
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'store_name':
+                    case 'store_name':                        
                         $stmt->bindValue($identifier, $this->store_name, PDO::PARAM_STR);
                         break;
-                    case 'store_category_id':
+                    case 'store_category_id':                        
                         $stmt->bindValue($identifier, $this->store_category_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'is_major':
+                    case 'is_major':                        
                         $stmt->bindValue($identifier, $this->is_major, PDO::PARAM_INT);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1208,10 +1209,10 @@ abstract class Store implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aStoreCategory) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'storeCategory';
@@ -1222,26 +1223,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'StoreCategory';
                 }
-
+        
                 $result[$key] = $this->aStoreCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->collDiscounts) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'discounts';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'discounts';
-                        break;
-                    default:
-                        $key = 'Discounts';
-                }
-
-                $result[$key] = $this->collDiscounts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collDiscountss) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'discountss';
@@ -1252,11 +1238,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'Discountss';
                 }
-
+        
                 $result[$key] = $this->collDiscountss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointAcquisitions) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointAcquisitions';
@@ -1267,11 +1253,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'PointAcquisitions';
                 }
-
+        
                 $result[$key] = $this->collPointAcquisitions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUsages) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUsages';
@@ -1282,11 +1268,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'PointUsages';
                 }
-
+        
                 $result[$key] = $this->collPointUsages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUses) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUses';
@@ -1297,8 +1283,23 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'PointUses';
                 }
-
+        
                 $result[$key] = $this->collPointUses->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collRewards) {
+                
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'rewards';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'rewards';
+                        break;
+                    default:
+                        $key = 'Rewards';
+                }
+        
+                $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1507,7 +1508,7 @@ abstract class Store implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1562,12 +1563,6 @@ abstract class Store implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getDiscounts() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addDiscount($relObj->copy($deepCopy));
-                }
-            }
-
             foreach ($this->getDiscountss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addDiscounts($relObj->copy($deepCopy));
@@ -1589,6 +1584,12 @@ abstract class Store implements ActiveRecordInterface
             foreach ($this->getPointUses() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPointUse($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getRewards() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addReward($relObj->copy($deepCopy));
                 }
             }
 
@@ -1684,9 +1685,6 @@ abstract class Store implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('Discount' == $relationName) {
-            return $this->initDiscounts();
-        }
         if ('Discounts' == $relationName) {
             return $this->initDiscountss();
         }
@@ -1699,249 +1697,9 @@ abstract class Store implements ActiveRecordInterface
         if ('PointUse' == $relationName) {
             return $this->initPointUses();
         }
-    }
-
-    /**
-     * Clears out the collDiscounts collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addDiscounts()
-     */
-    public function clearDiscounts()
-    {
-        $this->collDiscounts = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collDiscounts collection loaded partially.
-     */
-    public function resetPartialDiscounts($v = true)
-    {
-        $this->collDiscountsPartial = $v;
-    }
-
-    /**
-     * Initializes the collDiscounts collection.
-     *
-     * By default this just sets the collDiscounts collection to an empty array (like clearcollDiscounts());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initDiscounts($overrideExisting = true)
-    {
-        if (null !== $this->collDiscounts && !$overrideExisting) {
-            return;
+        if ('Reward' == $relationName) {
+            return $this->initRewards();
         }
-        $this->collDiscounts = new ObjectCollection();
-        $this->collDiscounts->setModel('\Discount');
-    }
-
-    /**
-     * Gets an array of ChildDiscount objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildStore is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildDiscount[] List of ChildDiscount objects
-     * @throws PropelException
-     */
-    public function getDiscounts(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collDiscountsPartial && !$this->isNew();
-        if (null === $this->collDiscounts || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collDiscounts) {
-                // return empty collection
-                $this->initDiscounts();
-            } else {
-                $collDiscounts = ChildDiscountQuery::create(null, $criteria)
-                    ->filterByStore($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collDiscountsPartial && count($collDiscounts)) {
-                        $this->initDiscounts(false);
-
-                        foreach ($collDiscounts as $obj) {
-                            if (false == $this->collDiscounts->contains($obj)) {
-                                $this->collDiscounts->append($obj);
-                            }
-                        }
-
-                        $this->collDiscountsPartial = true;
-                    }
-
-                    return $collDiscounts;
-                }
-
-                if ($partial && $this->collDiscounts) {
-                    foreach ($this->collDiscounts as $obj) {
-                        if ($obj->isNew()) {
-                            $collDiscounts[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collDiscounts = $collDiscounts;
-                $this->collDiscountsPartial = false;
-            }
-        }
-
-        return $this->collDiscounts;
-    }
-
-    /**
-     * Sets a collection of ChildDiscount objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $discounts A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildStore The current object (for fluent API support)
-     */
-    public function setDiscounts(Collection $discounts, ConnectionInterface $con = null)
-    {
-        /** @var ChildDiscount[] $discountsToDelete */
-        $discountsToDelete = $this->getDiscounts(new Criteria(), $con)->diff($discounts);
-
-
-        $this->discountsScheduledForDeletion = $discountsToDelete;
-
-        foreach ($discountsToDelete as $discountRemoved) {
-            $discountRemoved->setStore(null);
-        }
-
-        $this->collDiscounts = null;
-        foreach ($discounts as $discount) {
-            $this->addDiscount($discount);
-        }
-
-        $this->collDiscounts = $discounts;
-        $this->collDiscountsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Discount objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Discount objects.
-     * @throws PropelException
-     */
-    public function countDiscounts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collDiscountsPartial && !$this->isNew();
-        if (null === $this->collDiscounts || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collDiscounts) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getDiscounts());
-            }
-
-            $query = ChildDiscountQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByStore($this)
-                ->count($con);
-        }
-
-        return count($this->collDiscounts);
-    }
-
-    /**
-     * Method called to associate a ChildDiscount object to this object
-     * through the ChildDiscount foreign key attribute.
-     *
-     * @param  ChildDiscount $l ChildDiscount
-     * @return $this|\Store The current object (for fluent API support)
-     */
-    public function addDiscount(ChildDiscount $l)
-    {
-        if ($this->collDiscounts === null) {
-            $this->initDiscounts();
-            $this->collDiscountsPartial = true;
-        }
-
-        if (!$this->collDiscounts->contains($l)) {
-            $this->doAddDiscount($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildDiscount $discount The ChildDiscount object to add.
-     */
-    protected function doAddDiscount(ChildDiscount $discount)
-    {
-        $this->collDiscounts[]= $discount;
-        $discount->setStore($this);
-    }
-
-    /**
-     * @param  ChildDiscount $discount The ChildDiscount object to remove.
-     * @return $this|ChildStore The current object (for fluent API support)
-     */
-    public function removeDiscount(ChildDiscount $discount)
-    {
-        if ($this->getDiscounts()->contains($discount)) {
-            $pos = $this->collDiscounts->search($discount);
-            $this->collDiscounts->remove($pos);
-            if (null === $this->discountsScheduledForDeletion) {
-                $this->discountsScheduledForDeletion = clone $this->collDiscounts;
-                $this->discountsScheduledForDeletion->clear();
-            }
-            $this->discountsScheduledForDeletion[]= clone $discount;
-            $discount->setStore(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Store is new, it will return
-     * an empty collection; or if this Store has previously
-     * been saved, it will retrieve related Discounts from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Store.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildDiscount[] List of ChildDiscount objects
-     */
-    public function getDiscountsJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildDiscountQuery::create(null, $criteria);
-        $query->joinWith('PointSystem', $joinBehavior);
-
-        return $this->getDiscounts($query, $con);
     }
 
     /**
@@ -2060,7 +1818,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildDiscounts[] $discountssToDelete */
         $discountssToDelete = $this->getDiscountss(new Criteria(), $con)->diff($discountss);
 
-
+        
         $this->discountssScheduledForDeletion = $discountssToDelete;
 
         foreach ($discountssToDelete as $discountsRemoved) {
@@ -2303,7 +2061,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildPointAcquisition[] $pointAcquisitionsToDelete */
         $pointAcquisitionsToDelete = $this->getPointAcquisitions(new Criteria(), $con)->diff($pointAcquisitions);
 
-
+        
         $this->pointAcquisitionsScheduledForDeletion = $pointAcquisitionsToDelete;
 
         foreach ($pointAcquisitionsToDelete as $pointAcquisitionRemoved) {
@@ -2546,7 +2304,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildPointUsage[] $pointUsagesToDelete */
         $pointUsagesToDelete = $this->getPointUsages(new Criteria(), $con)->diff($pointUsages);
 
-
+        
         $this->pointUsagesScheduledForDeletion = $pointUsagesToDelete;
 
         foreach ($pointUsagesToDelete as $pointUsageRemoved) {
@@ -2789,7 +2547,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildPointUse[] $pointUsesToDelete */
         $pointUsesToDelete = $this->getPointUses(new Criteria(), $con)->diff($pointUses);
 
-
+        
         $this->pointUsesScheduledForDeletion = $pointUsesToDelete;
 
         foreach ($pointUsesToDelete as $pointUseRemoved) {
@@ -2917,6 +2675,324 @@ abstract class Store implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collRewards collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addRewards()
+     */
+    public function clearRewards()
+    {
+        $this->collRewards = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collRewards collection loaded partially.
+     */
+    public function resetPartialRewards($v = true)
+    {
+        $this->collRewardsPartial = $v;
+    }
+
+    /**
+     * Initializes the collRewards collection.
+     *
+     * By default this just sets the collRewards collection to an empty array (like clearcollRewards());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initRewards($overrideExisting = true)
+    {
+        if (null !== $this->collRewards && !$overrideExisting) {
+            return;
+        }
+        $this->collRewards = new ObjectCollection();
+        $this->collRewards->setModel('\Reward');
+    }
+
+    /**
+     * Gets an array of ChildReward objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildStore is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     * @throws PropelException
+     */
+    public function getRewards(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collRewardsPartial && !$this->isNew();
+        if (null === $this->collRewards || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collRewards) {
+                // return empty collection
+                $this->initRewards();
+            } else {
+                $collRewards = ChildRewardQuery::create(null, $criteria)
+                    ->filterByStore($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collRewardsPartial && count($collRewards)) {
+                        $this->initRewards(false);
+
+                        foreach ($collRewards as $obj) {
+                            if (false == $this->collRewards->contains($obj)) {
+                                $this->collRewards->append($obj);
+                            }
+                        }
+
+                        $this->collRewardsPartial = true;
+                    }
+
+                    return $collRewards;
+                }
+
+                if ($partial && $this->collRewards) {
+                    foreach ($this->collRewards as $obj) {
+                        if ($obj->isNew()) {
+                            $collRewards[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collRewards = $collRewards;
+                $this->collRewardsPartial = false;
+            }
+        }
+
+        return $this->collRewards;
+    }
+
+    /**
+     * Sets a collection of ChildReward objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $rewards A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildStore The current object (for fluent API support)
+     */
+    public function setRewards(Collection $rewards, ConnectionInterface $con = null)
+    {
+        /** @var ChildReward[] $rewardsToDelete */
+        $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
+
+        
+        $this->rewardsScheduledForDeletion = $rewardsToDelete;
+
+        foreach ($rewardsToDelete as $rewardRemoved) {
+            $rewardRemoved->setStore(null);
+        }
+
+        $this->collRewards = null;
+        foreach ($rewards as $reward) {
+            $this->addReward($reward);
+        }
+
+        $this->collRewards = $rewards;
+        $this->collRewardsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Reward objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Reward objects.
+     * @throws PropelException
+     */
+    public function countRewards(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collRewardsPartial && !$this->isNew();
+        if (null === $this->collRewards || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collRewards) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getRewards());
+            }
+
+            $query = ChildRewardQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByStore($this)
+                ->count($con);
+        }
+
+        return count($this->collRewards);
+    }
+
+    /**
+     * Method called to associate a ChildReward object to this object
+     * through the ChildReward foreign key attribute.
+     *
+     * @param  ChildReward $l ChildReward
+     * @return $this|\Store The current object (for fluent API support)
+     */
+    public function addReward(ChildReward $l)
+    {
+        if ($this->collRewards === null) {
+            $this->initRewards();
+            $this->collRewardsPartial = true;
+        }
+
+        if (!$this->collRewards->contains($l)) {
+            $this->doAddReward($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildReward $reward The ChildReward object to add.
+     */
+    protected function doAddReward(ChildReward $reward)
+    {
+        $this->collRewards[]= $reward;
+        $reward->setStore($this);
+    }
+
+    /**
+     * @param  ChildReward $reward The ChildReward object to remove.
+     * @return $this|ChildStore The current object (for fluent API support)
+     */
+    public function removeReward(ChildReward $reward)
+    {
+        if ($this->getRewards()->contains($reward)) {
+            $pos = $this->collRewards->search($reward);
+            $this->collRewards->remove($pos);
+            if (null === $this->rewardsScheduledForDeletion) {
+                $this->rewardsScheduledForDeletion = clone $this->collRewards;
+                $this->rewardsScheduledForDeletion->clear();
+            }
+            $this->rewardsScheduledForDeletion[]= $reward;
+            $reward->setStore(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Store is new, it will return
+     * an empty collection; or if this Store has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Store.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
+    public function getRewardsJoinRewardCategory(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('RewardCategory', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Store is new, it will return
+     * an empty collection; or if this Store has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Store.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
+    public function getRewardsJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('PointSystem', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Store is new, it will return
+     * an empty collection; or if this Store has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Store.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
+    public function getRewardsJoinRewardType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('RewardType', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Store is new, it will return
+     * an empty collection; or if this Store has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Store.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
+    public function getRewardsJoinUnit(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('Unit', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2952,11 +3028,6 @@ abstract class Store implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collDiscounts) {
-                foreach ($this->collDiscounts as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collDiscountss) {
                 foreach ($this->collDiscountss as $o) {
                     $o->clearAllReferences($deep);
@@ -2977,13 +3048,18 @@ abstract class Store implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collRewards) {
+                foreach ($this->collRewards as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
-        $this->collDiscounts = null;
         $this->collDiscountss = null;
         $this->collPointAcquisitions = null;
         $this->collPointUsages = null;
         $this->collPointUses = null;
+        $this->collRewards = null;
         $this->aStoreCategory = null;
     }
 

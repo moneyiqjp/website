@@ -171,7 +171,6 @@ class PointSystemTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('CardPointSystem', '\\CardPointSystem', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'CardPointSystems');
-        $this->addRelation('Discount', '\\Discount', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Discounts');
         $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'PointAcquisitions');
         $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'PointUses');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Rewards');
@@ -220,7 +219,7 @@ class PointSystemTableMap extends TableMap
                 : self::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -281,7 +280,7 @@ class PointSystemTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

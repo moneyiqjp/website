@@ -17,6 +17,11 @@
         <img class="adminlogo" src="images/moneyIQ_logo.png">
     </div>
     <div class="adminlogo">
+        <a href="analytics_overview.php" target="frame_main" class="menulink">
+            Analytics
+        </a>
+    </div>
+    <div class="adminlogo">
         <a href="creditcard_overview.php" target="frame_main" class="menulink">
             Credit Cards
         </a>
@@ -49,7 +54,11 @@
             Persona
         </a>
     </div>
-</div>
+    <div class="adminlogo">
+        <a href="restrictions.php" target="frame_main" class="menulink">
+            Restrictions
+        </a>
+    </div>
 
 </body>
 </html>

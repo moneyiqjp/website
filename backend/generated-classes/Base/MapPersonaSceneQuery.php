@@ -18,16 +18,18 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'map_persona_scene' table.
  *
- *
+ * 
  *
  * @method     ChildMapPersonaSceneQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildMapPersonaSceneQuery orderBySceneId($order = Criteria::ASC) Order by the scene_id column
+ * @method     ChildMapPersonaSceneQuery orderByPercentage($order = Criteria::ASC) Order by the percentage column
  * @method     ChildMapPersonaSceneQuery orderByPriorityId($order = Criteria::ASC) Order by the priority_id column
  * @method     ChildMapPersonaSceneQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildMapPersonaSceneQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildMapPersonaSceneQuery groupByPersonaId() Group by the persona_id column
  * @method     ChildMapPersonaSceneQuery groupBySceneId() Group by the scene_id column
+ * @method     ChildMapPersonaSceneQuery groupByPercentage() Group by the percentage column
  * @method     ChildMapPersonaSceneQuery groupByPriorityId() Group by the priority_id column
  * @method     ChildMapPersonaSceneQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildMapPersonaSceneQuery groupByUpdateUser() Group by the update_user column
@@ -51,6 +53,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildMapPersonaScene findOneByPersonaId(int $persona_id) Return the first ChildMapPersonaScene filtered by the persona_id column
  * @method     ChildMapPersonaScene findOneBySceneId(int $scene_id) Return the first ChildMapPersonaScene filtered by the scene_id column
+ * @method     ChildMapPersonaScene findOneByPercentage(double $percentage) Return the first ChildMapPersonaScene filtered by the percentage column
  * @method     ChildMapPersonaScene findOneByPriorityId(int $priority_id) Return the first ChildMapPersonaScene filtered by the priority_id column
  * @method     ChildMapPersonaScene findOneByUpdateTime(string $update_time) Return the first ChildMapPersonaScene filtered by the update_time column
  * @method     ChildMapPersonaScene findOneByUpdateUser(string $update_user) Return the first ChildMapPersonaScene filtered by the update_user column
@@ -58,6 +61,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapPersonaScene[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMapPersonaScene objects based on current ModelCriteria
  * @method     ChildMapPersonaScene[]|ObjectCollection findByPersonaId(int $persona_id) Return ChildMapPersonaScene objects filtered by the persona_id column
  * @method     ChildMapPersonaScene[]|ObjectCollection findBySceneId(int $scene_id) Return ChildMapPersonaScene objects filtered by the scene_id column
+ * @method     ChildMapPersonaScene[]|ObjectCollection findByPercentage(double $percentage) Return ChildMapPersonaScene objects filtered by the percentage column
  * @method     ChildMapPersonaScene[]|ObjectCollection findByPriorityId(int $priority_id) Return ChildMapPersonaScene objects filtered by the priority_id column
  * @method     ChildMapPersonaScene[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildMapPersonaScene objects filtered by the update_time column
  * @method     ChildMapPersonaScene[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildMapPersonaScene objects filtered by the update_user column
@@ -66,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class MapPersonaSceneQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\MapPersonaSceneQuery object.
      *
@@ -152,10 +156,10 @@ abstract class MapPersonaSceneQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT persona_id, scene_id, priority_id, update_time, update_user FROM map_persona_scene WHERE persona_id = :p0 AND scene_id = :p1';
+        $sql = 'SELECT persona_id, scene_id, percentage, priority_id, update_time, update_user FROM map_persona_scene WHERE persona_id = :p0 AND scene_id = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -338,6 +342,47 @@ abstract class MapPersonaSceneQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MapPersonaSceneTableMap::COL_SCENE_ID, $sceneId, $comparison);
+    }
+
+    /**
+     * Filter the query on the percentage column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPercentage(1234); // WHERE percentage = 1234
+     * $query->filterByPercentage(array(12, 34)); // WHERE percentage IN (12, 34)
+     * $query->filterByPercentage(array('min' => 12)); // WHERE percentage > 12
+     * </code>
+     *
+     * @param     mixed $percentage The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMapPersonaSceneQuery The current query, for fluid interface
+     */
+    public function filterByPercentage($percentage = null, $comparison = null)
+    {
+        if (is_array($percentage)) {
+            $useMinMax = false;
+            if (isset($percentage['min'])) {
+                $this->addUsingAlias(MapPersonaSceneTableMap::COL_PERCENTAGE, $percentage['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($percentage['max'])) {
+                $this->addUsingAlias(MapPersonaSceneTableMap::COL_PERCENTAGE, $percentage['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MapPersonaSceneTableMap::COL_PERCENTAGE, $percentage, $comparison);
     }
 
     /**
@@ -676,9 +721,9 @@ abstract class MapPersonaSceneQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             MapPersonaSceneTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             MapPersonaSceneTableMap::clearRelatedInstancePool();
 

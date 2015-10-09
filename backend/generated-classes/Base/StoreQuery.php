@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'store' table.
  *
- *
+ * 
  *
  * @method     ChildStoreQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
  * @method     ChildStoreQuery orderByStoreName($order = Criteria::ASC) Order by the store_name column
@@ -44,10 +44,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinStoreCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the StoreCategory relation
  * @method     ChildStoreQuery innerJoinStoreCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the StoreCategory relation
  *
- * @method     ChildStoreQuery leftJoinDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discount relation
- * @method     ChildStoreQuery rightJoinDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discount relation
- * @method     ChildStoreQuery innerJoinDiscount($relationAlias = null) Adds a INNER JOIN clause to the query using the Discount relation
- *
  * @method     ChildStoreQuery leftJoinDiscounts($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discounts relation
  * @method     ChildStoreQuery rightJoinDiscounts($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discounts relation
  * @method     ChildStoreQuery innerJoinDiscounts($relationAlias = null) Adds a INNER JOIN clause to the query using the Discounts relation
@@ -64,7 +60,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinPointUse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUse relation
  * @method     ChildStoreQuery innerJoinPointUse($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUse relation
  *
- * @method     \StoreCategoryQuery|\DiscountQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildStoreQuery leftJoinReward($relationAlias = null) Adds a LEFT JOIN clause to the query using the Reward relation
+ * @method     ChildStoreQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
+ * @method     ChildStoreQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
+ *
+ * @method     \StoreCategoryQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
@@ -90,7 +90,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class StoreQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\StoreQuery object.
      *
@@ -178,7 +178,7 @@ abstract class StoreQuery extends ModelCriteria
     {
         $sql = 'SELECT store_id, store_name, store_category_id, description, is_major, update_time, update_user FROM store WHERE store_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -599,79 +599,6 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Discount object
-     *
-     * @param \Discount|ObjectCollection $discount  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildStoreQuery The current query, for fluid interface
-     */
-    public function filterByDiscount($discount, $comparison = null)
-    {
-        if ($discount instanceof \Discount) {
-            return $this
-                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $discount->getStoreId(), $comparison);
-        } elseif ($discount instanceof ObjectCollection) {
-            return $this
-                ->useDiscountQuery()
-                ->filterByPrimaryKeys($discount->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByDiscount() only accepts arguments of type \Discount or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Discount relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildStoreQuery The current query, for fluid interface
-     */
-    public function joinDiscount($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Discount');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Discount');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Discount relation Discount object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \DiscountQuery A secondary query class using the current class as primary query
-     */
-    public function useDiscountQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinDiscount($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Discount', '\DiscountQuery');
-    }
-
-    /**
      * Filter the query by a related \Discounts object
      *
      * @param \Discounts|ObjectCollection $discounts  the related object to use as filter
@@ -964,6 +891,79 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \Reward object
+     *
+     * @param \Reward|ObjectCollection $reward  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByReward($reward, $comparison = null)
+    {
+        if ($reward instanceof \Reward) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $reward->getStoreId(), $comparison);
+        } elseif ($reward instanceof ObjectCollection) {
+            return $this
+                ->useRewardQuery()
+                ->filterByPrimaryKeys($reward->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByReward() only accepts arguments of type \Reward or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Reward relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinReward($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Reward');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Reward');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Reward relation Reward object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \RewardQuery A secondary query class using the current class as primary query
+     */
+    public function useRewardQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinReward($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Reward', '\RewardQuery');
+    }
+
+    /**
      * Exclude object from result
      *
      * @param   ChildStore $store Object to remove from the list of results
@@ -1030,9 +1030,9 @@ abstract class StoreQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             StoreTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             StoreTableMap::clearRelatedInstancePool();
 

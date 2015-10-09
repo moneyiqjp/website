@@ -10,6 +10,8 @@ namespace Db\Core;
 
 
 use Base\PersonaQuery;
+use Db\Json\JFeatureType;
+use Db\Json\JGeneralRestriction;
 use Db\Json\JStore;
 
 class Store {
@@ -61,11 +63,33 @@ class Scene {
     }
 }
 
+class Restriction {
+    public $FeatureRestriction = array();
+    public $GeneralRestriction = array();
+
+    public function Restriction(){}
+
+    public static function CREATE(\Persona $persona)
+    {
+        $that = new Restriction();
+        foreach($persona->getMapPersonaFeatureConstraints() as $item) {
+            array_push($that->FeatureRestriction,  JFeatureType::CREATE_FROM_DB($item->getCardFeatureType()));
+        }
+
+        foreach($persona->getPersonaRestrictions() as $item) {
+            array_push($that->GeneralRestriction,  JGeneralRestriction::CREATE_FROM_DB($item)->toKeyValueType());
+        }
+
+        return $that;
+    }
+}
+
 
 class Persona {
     public $Id;
     public $Name;
     public $Scene = array();
+    public $Restriction;
 
     public function Persona(){}
 
@@ -77,6 +101,8 @@ class Persona {
         foreach($pers->getMapPersonaScenes() as $pms) {
             array_push($that->Scene, Scene::CREATE($pms->getScene()));
         }
+
+        $that->Restriction = Restriction::CREATE($pers);
 
         return $that;
     }

@@ -18,10 +18,11 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'reward' table.
  *
- *
+ * 
  *
  * @method     ChildRewardQuery orderByRewardId($order = Criteria::ASC) Order by the reward_id column
  * @method     ChildRewardQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
+ * @method     ChildRewardQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
  * @method     ChildRewardQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
  * @method     ChildRewardQuery orderByRewardTypeId($order = Criteria::ASC) Order by the reward_type_id column
  * @method     ChildRewardQuery orderByTitle($order = Criteria::ASC) Order by the title column
@@ -41,6 +42,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRewardQuery groupByRewardId() Group by the reward_id column
  * @method     ChildRewardQuery groupByPointSystemId() Group by the point_system_id column
+ * @method     ChildRewardQuery groupByStoreId() Group by the store_id column
  * @method     ChildRewardQuery groupByRewardCategoryId() Group by the reward_category_id column
  * @method     ChildRewardQuery groupByRewardTypeId() Group by the reward_type_id column
  * @method     ChildRewardQuery groupByTitle() Group by the title column
@@ -74,17 +76,22 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardQuery rightJoinRewardType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the RewardType relation
  * @method     ChildRewardQuery innerJoinRewardType($relationAlias = null) Adds a INNER JOIN clause to the query using the RewardType relation
  *
+ * @method     ChildRewardQuery leftJoinStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the Store relation
+ * @method     ChildRewardQuery rightJoinStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Store relation
+ * @method     ChildRewardQuery innerJoinStore($relationAlias = null) Adds a INNER JOIN clause to the query using the Store relation
+ *
  * @method     ChildRewardQuery leftJoinUnit($relationAlias = null) Adds a LEFT JOIN clause to the query using the Unit relation
  * @method     ChildRewardQuery rightJoinUnit($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Unit relation
  * @method     ChildRewardQuery innerJoinUnit($relationAlias = null) Adds a INNER JOIN clause to the query using the Unit relation
  *
- * @method     \RewardCategoryQuery|\PointSystemQuery|\RewardTypeQuery|\UnitQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \RewardCategoryQuery|\PointSystemQuery|\RewardTypeQuery|\StoreQuery|\UnitQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildReward findOne(ConnectionInterface $con = null) Return the first ChildReward matching the query
  * @method     ChildReward findOneOrCreate(ConnectionInterface $con = null) Return the first ChildReward matching the query, or a new ChildReward object populated from the query conditions when no match is found
  *
  * @method     ChildReward findOneByRewardId(int $reward_id) Return the first ChildReward filtered by the reward_id column
  * @method     ChildReward findOneByPointSystemId(int $point_system_id) Return the first ChildReward filtered by the point_system_id column
+ * @method     ChildReward findOneByStoreId(int $store_id) Return the first ChildReward filtered by the store_id column
  * @method     ChildReward findOneByRewardCategoryId(int $reward_category_id) Return the first ChildReward filtered by the reward_category_id column
  * @method     ChildReward findOneByRewardTypeId(int $reward_type_id) Return the first ChildReward filtered by the reward_type_id column
  * @method     ChildReward findOneByTitle(string $title) Return the first ChildReward filtered by the title column
@@ -105,6 +112,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildReward[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildReward objects based on current ModelCriteria
  * @method     ChildReward[]|ObjectCollection findByRewardId(int $reward_id) Return ChildReward objects filtered by the reward_id column
  * @method     ChildReward[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildReward objects filtered by the point_system_id column
+ * @method     ChildReward[]|ObjectCollection findByStoreId(int $store_id) Return ChildReward objects filtered by the store_id column
  * @method     ChildReward[]|ObjectCollection findByRewardCategoryId(int $reward_category_id) Return ChildReward objects filtered by the reward_category_id column
  * @method     ChildReward[]|ObjectCollection findByRewardTypeId(int $reward_type_id) Return ChildReward objects filtered by the reward_type_id column
  * @method     ChildReward[]|ObjectCollection findByTitle(string $title) Return ChildReward objects filtered by the title column
@@ -126,7 +134,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class RewardQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\RewardQuery object.
      *
@@ -212,9 +220,9 @@ abstract class RewardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, point_multiplier, unit_id, reference, update_time, update_user FROM reward WHERE reward_id = :p0';
+        $sql = 'SELECT reward_id, point_system_id, store_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, point_multiplier, unit_id, reference, update_time, update_user FROM reward WHERE reward_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -384,6 +392,49 @@ abstract class RewardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RewardTableMap::COL_POINT_SYSTEM_ID, $pointSystemId, $comparison);
+    }
+
+    /**
+     * Filter the query on the store_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByStoreId(1234); // WHERE store_id = 1234
+     * $query->filterByStoreId(array(12, 34)); // WHERE store_id IN (12, 34)
+     * $query->filterByStoreId(array('min' => 12)); // WHERE store_id > 12
+     * </code>
+     *
+     * @see       filterByStore()
+     *
+     * @param     mixed $storeId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByStoreId($storeId = null, $comparison = null)
+    {
+        if (is_array($storeId)) {
+            $useMinMax = false;
+            if (isset($storeId['min'])) {
+                $this->addUsingAlias(RewardTableMap::COL_STORE_ID, $storeId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($storeId['max'])) {
+                $this->addUsingAlias(RewardTableMap::COL_STORE_ID, $storeId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(RewardTableMap::COL_STORE_ID, $storeId, $comparison);
     }
 
     /**
@@ -1210,6 +1261,83 @@ abstract class RewardQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \Store object
+     *
+     * @param \Store|ObjectCollection $store The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildRewardQuery The current query, for fluid interface
+     */
+    public function filterByStore($store, $comparison = null)
+    {
+        if ($store instanceof \Store) {
+            return $this
+                ->addUsingAlias(RewardTableMap::COL_STORE_ID, $store->getStoreId(), $comparison);
+        } elseif ($store instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(RewardTableMap::COL_STORE_ID, $store->toKeyValue('PrimaryKey', 'StoreId'), $comparison);
+        } else {
+            throw new PropelException('filterByStore() only accepts arguments of type \Store or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Store relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRewardQuery The current query, for fluid interface
+     */
+    public function joinStore($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Store');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Store');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Store relation Store object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \StoreQuery A secondary query class using the current class as primary query
+     */
+    public function useStoreQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinStore($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Store', '\StoreQuery');
+    }
+
+    /**
      * Filter the query by a related \Unit object
      *
      * @param \Unit|ObjectCollection $unit The related object(s) to use as filter
@@ -1353,9 +1481,9 @@ abstract class RewardQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             RewardTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             RewardTableMap::clearRelatedInstancePool();
 

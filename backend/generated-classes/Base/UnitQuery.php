@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'unit' table.
  *
- *
+ * 
  *
  * @method     ChildUnitQuery orderByUnitId($order = Criteria::ASC) Order by the unit_id column
  * @method     ChildUnitQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -62,7 +62,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class UnitQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\UnitQuery object.
      *
@@ -150,7 +150,7 @@ abstract class UnitQuery extends ModelCriteria
     {
         $sql = 'SELECT unit_id, name, description, update_time, update_user FROM unit WHERE unit_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -549,9 +549,9 @@ abstract class UnitQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             UnitTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             UnitTableMap::clearRelatedInstancePool();
 

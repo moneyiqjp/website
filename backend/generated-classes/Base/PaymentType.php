@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'payment_type' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class PaymentType implements ActiveRecordInterface
+abstract class PaymentType implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -334,7 +334,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Get the [payment_type_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPaymentTypeId()
@@ -344,7 +344,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Get the [payment_type] column value.
-     *
+     * 
      * @return string
      */
     public function getPaymentType()
@@ -354,7 +354,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Get the [payment_description] column value.
-     *
+     * 
      * @return string
      */
     public function getPaymentDescription()
@@ -364,7 +364,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -384,7 +384,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -394,7 +394,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Set the value of [payment_type_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
@@ -414,7 +414,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Set the value of [payment_type] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
@@ -434,7 +434,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Set the value of [payment_description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
@@ -454,7 +454,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PaymentType The current object (for fluent API support)
@@ -474,7 +474,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
@@ -795,19 +795,19 @@ abstract class PaymentType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'payment_type_id':
+                    case 'payment_type_id':                        
                         $stmt->bindValue($identifier, $this->payment_type_id, PDO::PARAM_INT);
                         break;
-                    case 'payment_type':
+                    case 'payment_type':                        
                         $stmt->bindValue($identifier, $this->payment_type, PDO::PARAM_STR);
                         break;
-                    case 'payment_description':
+                    case 'payment_description':                        
                         $stmt->bindValue($identifier, $this->payment_description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -927,10 +927,10 @@ abstract class PaymentType implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collInterests) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'interests';
@@ -941,7 +941,7 @@ abstract class PaymentType implements ActiveRecordInterface
                     default:
                         $key = 'Interests';
                 }
-
+        
                 $result[$key] = $this->collInterests->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1133,7 +1133,7 @@ abstract class PaymentType implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1354,7 +1354,7 @@ abstract class PaymentType implements ActiveRecordInterface
         /** @var ChildInterest[] $interestsToDelete */
         $interestsToDelete = $this->getInterests(new Criteria(), $con)->diff($interests);
 
-
+        
         $this->interestsScheduledForDeletion = $interestsToDelete;
 
         foreach ($interestsToDelete as $interestRemoved) {

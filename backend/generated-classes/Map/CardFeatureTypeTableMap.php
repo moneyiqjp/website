@@ -92,14 +92,14 @@ class CardFeatureTypeTableMap extends TableMap
     const COL_CATEGORY = 'card_feature_type.category';
 
     /**
-     * the column name for the foreground_color field
-     */
-    const COL_FOREGROUND_COLOR = 'card_feature_type.foreground_color';
-
-    /**
      * the column name for the background_color field
      */
     const COL_BACKGROUND_COLOR = 'card_feature_type.background_color';
+
+    /**
+     * the column name for the foreground_color field
+     */
+    const COL_FOREGROUND_COLOR = 'card_feature_type.foreground_color';
 
     /**
      * the column name for the update_time field
@@ -123,10 +123,10 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId', 'Name', 'Description', 'Category', 'ForegroundColor', 'BackgroundColor', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('featureTypeId', 'name', 'description', 'category', 'foregroundColor', 'backgroundColor', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, CardFeatureTypeTableMap::COL_NAME, CardFeatureTypeTableMap::COL_DESCRIPTION, CardFeatureTypeTableMap::COL_CATEGORY, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, CardFeatureTypeTableMap::COL_UPDATE_TIME, CardFeatureTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id', 'name', 'description', 'category', 'foreground_color', 'background_color', 'update_time', 'update_user', ),
+        self::TYPE_PHPNAME       => array('FeatureTypeId', 'Name', 'Description', 'Category', 'BackgroundColor', 'ForegroundColor', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('featureTypeId', 'name', 'description', 'category', 'backgroundColor', 'foregroundColor', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, CardFeatureTypeTableMap::COL_NAME, CardFeatureTypeTableMap::COL_DESCRIPTION, CardFeatureTypeTableMap::COL_CATEGORY, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, CardFeatureTypeTableMap::COL_UPDATE_TIME, CardFeatureTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('feature_type_id', 'name', 'description', 'category', 'background_color', 'foreground_color', 'update_time', 'update_user', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
@@ -137,10 +137,10 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Category' => 3, 'ForegroundColor' => 4, 'BackgroundColor' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('featureTypeId' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'foregroundColor' => 4, 'backgroundColor' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID => 0, CardFeatureTypeTableMap::COL_NAME => 1, CardFeatureTypeTableMap::COL_DESCRIPTION => 2, CardFeatureTypeTableMap::COL_CATEGORY => 3, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR => 4, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR => 5, CardFeatureTypeTableMap::COL_UPDATE_TIME => 6, CardFeatureTypeTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'foreground_color' => 4, 'background_color' => 5, 'update_time' => 6, 'update_user' => 7, ),
+        self::TYPE_PHPNAME       => array('FeatureTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Category' => 3, 'BackgroundColor' => 4, 'ForegroundColor' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
+        self::TYPE_CAMELNAME     => array('featureTypeId' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'backgroundColor' => 4, 'foregroundColor' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
+        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID => 0, CardFeatureTypeTableMap::COL_NAME => 1, CardFeatureTypeTableMap::COL_DESCRIPTION => 2, CardFeatureTypeTableMap::COL_CATEGORY => 3, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR => 4, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR => 5, CardFeatureTypeTableMap::COL_UPDATE_TIME => 6, CardFeatureTypeTableMap::COL_UPDATE_USER => 7, ),
+        self::TYPE_FIELDNAME     => array('feature_type_id' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'background_color' => 4, 'foreground_color' => 5, 'update_time' => 6, 'update_user' => 7, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
@@ -165,8 +165,8 @@ class CardFeatureTypeTableMap extends TableMap
         $this->addColumn('name', 'Name', 'VARCHAR', true, 250, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('category', 'Category', 'VARCHAR', true, 250, null);
-        $this->addColumn('foreground_color', 'ForegroundColor', 'VARCHAR', false, 250, null);
         $this->addColumn('background_color', 'BackgroundColor', 'VARCHAR', false, 250, null);
+        $this->addColumn('foreground_color', 'ForegroundColor', 'VARCHAR', false, 250, '0');
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
@@ -177,6 +177,7 @@ class CardFeatureTypeTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('CardFeatures', '\\CardFeatures', RelationMap::ONE_TO_MANY, array('feature_type_id' => 'feature_type_id', ), null, null, 'CardFeaturess');
+        $this->addRelation('MapPersonaFeatureConstraint', '\\MapPersonaFeatureConstraint', RelationMap::ONE_TO_MANY, array('feature_type_id' => 'feature_type_id', ), null, null, 'MapPersonaFeatureConstraints');
     } // buildRelations()
 
     /**
@@ -222,7 +223,7 @@ class CardFeatureTypeTableMap extends TableMap
                 : self::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -283,7 +284,7 @@ class CardFeatureTypeTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -324,8 +325,8 @@ class CardFeatureTypeTableMap extends TableMap
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_NAME);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_CATEGORY);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR);
+            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_USER);
         } else {
@@ -333,8 +334,8 @@ class CardFeatureTypeTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.category');
-            $criteria->addSelectColumn($alias . '.foreground_color');
             $criteria->addSelectColumn($alias . '.background_color');
+            $criteria->addSelectColumn($alias . '.foreground_color');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

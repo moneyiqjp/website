@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'reward_category' table.
  *
- *
+ * 
  *
  * @method     ChildRewardCategoryQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
  * @method     ChildRewardCategoryQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -36,11 +36,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardCategoryQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildRewardCategoryQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildRewardCategoryQuery leftJoinMapSceneRewardCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapSceneRewardCategory relation
+ * @method     ChildRewardCategoryQuery rightJoinMapSceneRewardCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapSceneRewardCategory relation
+ * @method     ChildRewardCategoryQuery innerJoinMapSceneRewardCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the MapSceneRewardCategory relation
+ *
  * @method     ChildRewardCategoryQuery leftJoinReward($relationAlias = null) Adds a LEFT JOIN clause to the query using the Reward relation
  * @method     ChildRewardCategoryQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildRewardCategoryQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \MapSceneRewardCategoryQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildRewardCategory findOne(ConnectionInterface $con = null) Return the first ChildRewardCategory matching the query
  * @method     ChildRewardCategory findOneOrCreate(ConnectionInterface $con = null) Return the first ChildRewardCategory matching the query, or a new ChildRewardCategory object populated from the query conditions when no match is found
@@ -62,7 +66,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class RewardCategoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\RewardCategoryQuery object.
      *
@@ -150,7 +154,7 @@ abstract class RewardCategoryQuery extends ModelCriteria
     {
         $sql = 'SELECT reward_category_id, name, description, update_time, update_user FROM reward_category WHERE reward_category_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -410,6 +414,79 @@ abstract class RewardCategoryQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \MapSceneRewardCategory object
+     *
+     * @param \MapSceneRewardCategory|ObjectCollection $mapSceneRewardCategory  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildRewardCategoryQuery The current query, for fluid interface
+     */
+    public function filterByMapSceneRewardCategory($mapSceneRewardCategory, $comparison = null)
+    {
+        if ($mapSceneRewardCategory instanceof \MapSceneRewardCategory) {
+            return $this
+                ->addUsingAlias(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, $mapSceneRewardCategory->getRewardCategoryId(), $comparison);
+        } elseif ($mapSceneRewardCategory instanceof ObjectCollection) {
+            return $this
+                ->useMapSceneRewardCategoryQuery()
+                ->filterByPrimaryKeys($mapSceneRewardCategory->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapSceneRewardCategory() only accepts arguments of type \MapSceneRewardCategory or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapSceneRewardCategory relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRewardCategoryQuery The current query, for fluid interface
+     */
+    public function joinMapSceneRewardCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapSceneRewardCategory');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapSceneRewardCategory');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapSceneRewardCategory relation MapSceneRewardCategory object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapSceneRewardCategoryQuery A secondary query class using the current class as primary query
+     */
+    public function useMapSceneRewardCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapSceneRewardCategory($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapSceneRewardCategory', '\MapSceneRewardCategoryQuery');
+    }
+
+    /**
      * Filter the query by a related \Reward object
      *
      * @param \Reward|ObjectCollection $reward  the related object to use as filter
@@ -549,9 +626,9 @@ abstract class RewardCategoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             RewardCategoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             RewardCategoryTableMap::clearRelatedInstancePool();
 

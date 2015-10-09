@@ -105,3 +105,24 @@ a.menulink:link{
 a.menulink:hover{
     text-decoration: underline overline;
 }
+
+a.source:link{
+    width:25%;
+    font-size: x-small;
+    text-align: center;
+    float: left;
+    color: #000000;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    text-decoration: none;
+}
+
+
+a.source:hover{
+    text-decoration: underline;
+    width:25%;
+    font-size: x-small;
+    text-align: center;
+    float: left;
+    color: #000000;
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}

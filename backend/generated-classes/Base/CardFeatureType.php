@@ -6,6 +6,8 @@ use \CardFeatureType as ChildCardFeatureType;
 use \CardFeatureTypeQuery as ChildCardFeatureTypeQuery;
 use \CardFeatures as ChildCardFeatures;
 use \CardFeaturesQuery as ChildCardFeaturesQuery;
+use \MapPersonaFeatureConstraint as ChildMapPersonaFeatureConstraint;
+use \MapPersonaFeatureConstraintQuery as ChildMapPersonaFeatureConstraintQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -27,11 +29,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'card_feature_type' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class CardFeatureType implements ActiveRecordInterface
+abstract class CardFeatureType implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -90,16 +92,17 @@ abstract class CardFeatureType implements ActiveRecordInterface
     protected $category;
 
     /**
-     * The value for the foreground_color field.
-     * @var        string
-     */
-    protected $foreground_color;
-
-    /**
      * The value for the background_color field.
      * @var        string
      */
     protected $background_color;
+
+    /**
+     * The value for the foreground_color field.
+     * Note: this column has a database default value of: '0'
+     * @var        string
+     */
+    protected $foreground_color;
 
     /**
      * The value for the update_time field.
@@ -120,6 +123,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
     protected $collCardFeaturessPartial;
 
     /**
+     * @var        ObjectCollection|ChildMapPersonaFeatureConstraint[] Collection to store aggregation of ChildMapPersonaFeatureConstraint objects.
+     */
+    protected $collMapPersonaFeatureConstraints;
+    protected $collMapPersonaFeatureConstraintsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -134,10 +143,29 @@ abstract class CardFeatureType implements ActiveRecordInterface
     protected $cardFeaturessScheduledForDeletion = null;
 
     /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMapPersonaFeatureConstraint[]
+     */
+    protected $mapPersonaFeatureConstraintsScheduledForDeletion = null;
+
+    /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->foreground_color = '0';
+    }
+
+    /**
      * Initializes internal state of Base\CardFeatureType object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -352,7 +380,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [feature_type_id] column value.
-     *
+     * 
      * @return int
      */
     public function getFeatureTypeId()
@@ -362,7 +390,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -372,7 +400,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -382,7 +410,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [category] column value.
-     *
+     * 
      * @return string
      */
     public function getCategory()
@@ -391,18 +419,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [foreground_color] column value.
-     *
-     * @return string
-     */
-    public function getForegroundColor()
-    {
-        return $this->foreground_color;
-    }
-
-    /**
      * Get the [background_color] column value.
-     *
+     * 
      * @return string
      */
     public function getBackgroundColor()
@@ -411,8 +429,18 @@ abstract class CardFeatureType implements ActiveRecordInterface
     }
 
     /**
+     * Get the [foreground_color] column value.
+     * 
+     * @return string
+     */
+    public function getForegroundColor()
+    {
+        return $this->foreground_color;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -432,7 +460,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -442,7 +470,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [feature_type_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -462,7 +490,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -482,7 +510,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -502,7 +530,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [category] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -521,28 +549,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
     } // setCategory()
 
     /**
-     * Set the value of [foreground_color] column.
-     *
-     * @param  string $v new value
-     * @return $this|\CardFeatureType The current object (for fluent API support)
-     */
-    public function setForegroundColor($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->foreground_color !== $v) {
-            $this->foreground_color = $v;
-            $this->modifiedColumns[CardFeatureTypeTableMap::COL_FOREGROUND_COLOR] = true;
-        }
-
-        return $this;
-    } // setForegroundColor()
-
-    /**
      * Set the value of [background_color] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -561,8 +569,28 @@ abstract class CardFeatureType implements ActiveRecordInterface
     } // setBackgroundColor()
 
     /**
+     * Set the value of [foreground_color] column.
+     * 
+     * @param  string $v new value
+     * @return $this|\CardFeatureType The current object (for fluent API support)
+     */
+    public function setForegroundColor($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->foreground_color !== $v) {
+            $this->foreground_color = $v;
+            $this->modifiedColumns[CardFeatureTypeTableMap::COL_FOREGROUND_COLOR] = true;
+        }
+
+        return $this;
+    } // setForegroundColor()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CardFeatureType The current object (for fluent API support)
@@ -582,7 +610,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -610,6 +638,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->foreground_color !== '0') {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -648,11 +680,11 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CardFeatureTypeTableMap::translateFieldName('Category', TableMap::TYPE_PHPNAME, $indexType)];
             $this->category = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeatureTypeTableMap::translateFieldName('ForegroundColor', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->foreground_color = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeatureTypeTableMap::translateFieldName('BackgroundColor', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardFeatureTypeTableMap::translateFieldName('BackgroundColor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->background_color = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardFeatureTypeTableMap::translateFieldName('ForegroundColor', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->foreground_color = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CardFeatureTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
@@ -732,6 +764,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->collCardFeaturess = null;
+
+            $this->collMapPersonaFeatureConstraints = null;
 
         } // if (deep)
     }
@@ -860,6 +894,23 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 }
             }
 
+            if ($this->mapPersonaFeatureConstraintsScheduledForDeletion !== null) {
+                if (!$this->mapPersonaFeatureConstraintsScheduledForDeletion->isEmpty()) {
+                    \MapPersonaFeatureConstraintQuery::create()
+                        ->filterByPrimaryKeys($this->mapPersonaFeatureConstraintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mapPersonaFeatureConstraintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMapPersonaFeatureConstraints !== null) {
+                foreach ($this->collMapPersonaFeatureConstraints as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -898,11 +949,11 @@ abstract class CardFeatureType implements ActiveRecordInterface
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_CATEGORY)) {
             $modifiedColumns[':p' . $index++]  = 'category';
         }
-        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
-            $modifiedColumns[':p' . $index++]  = 'foreground_color';
-        }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR)) {
             $modifiedColumns[':p' . $index++]  = 'background_color';
+        }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
+            $modifiedColumns[':p' . $index++]  = 'foreground_color';
         }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
@@ -921,28 +972,28 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'feature_type_id':
+                    case 'feature_type_id':                        
                         $stmt->bindValue($identifier, $this->feature_type_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'category':
+                    case 'category':                        
                         $stmt->bindValue($identifier, $this->category, PDO::PARAM_STR);
                         break;
-                    case 'foreground_color':
-                        $stmt->bindValue($identifier, $this->foreground_color, PDO::PARAM_STR);
-                        break;
-                    case 'background_color':
+                    case 'background_color':                        
                         $stmt->bindValue($identifier, $this->background_color, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'foreground_color':                        
+                        $stmt->bindValue($identifier, $this->foreground_color, PDO::PARAM_STR);
+                        break;
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1020,10 +1071,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 return $this->getCategory();
                 break;
             case 4:
-                return $this->getForegroundColor();
+                return $this->getBackgroundColor();
                 break;
             case 5:
-                return $this->getBackgroundColor();
+                return $this->getForegroundColor();
                 break;
             case 6:
                 return $this->getUpdateTime();
@@ -1065,8 +1116,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $keys[1] => $this->getName(),
             $keys[2] => $this->getDescription(),
             $keys[3] => $this->getCategory(),
-            $keys[4] => $this->getForegroundColor(),
-            $keys[5] => $this->getBackgroundColor(),
+            $keys[4] => $this->getBackgroundColor(),
+            $keys[5] => $this->getForegroundColor(),
             $keys[6] => $this->getUpdateTime(),
             $keys[7] => $this->getUpdateUser(),
         );
@@ -1074,10 +1125,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collCardFeaturess) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardFeaturess';
@@ -1088,8 +1139,23 @@ abstract class CardFeatureType implements ActiveRecordInterface
                     default:
                         $key = 'CardFeaturess';
                 }
-
+        
                 $result[$key] = $this->collCardFeaturess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMapPersonaFeatureConstraints) {
+                
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mapPersonaFeatureConstraints';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'map_persona_feature_constraints';
+                        break;
+                    default:
+                        $key = 'MapPersonaFeatureConstraints';
+                }
+        
+                $result[$key] = $this->collMapPersonaFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1138,10 +1204,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 $this->setCategory($value);
                 break;
             case 4:
-                $this->setForegroundColor($value);
+                $this->setBackgroundColor($value);
                 break;
             case 5:
-                $this->setBackgroundColor($value);
+                $this->setForegroundColor($value);
                 break;
             case 6:
                 $this->setUpdateTime($value);
@@ -1188,10 +1254,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $this->setCategory($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setForegroundColor($arr[$keys[4]]);
+            $this->setBackgroundColor($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setBackgroundColor($arr[$keys[5]]);
+            $this->setForegroundColor($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
             $this->setUpdateTime($arr[$keys[6]]);
@@ -1252,11 +1318,11 @@ abstract class CardFeatureType implements ActiveRecordInterface
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_CATEGORY)) {
             $criteria->add(CardFeatureTypeTableMap::COL_CATEGORY, $this->category);
         }
-        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
-            $criteria->add(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $this->foreground_color);
-        }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR)) {
             $criteria->add(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, $this->background_color);
+        }
+        if ($this->isColumnModified(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR)) {
+            $criteria->add(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $this->foreground_color);
         }
         if ($this->isColumnModified(CardFeatureTypeTableMap::COL_UPDATE_TIME)) {
             $criteria->add(CardFeatureTypeTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1307,7 +1373,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1353,8 +1419,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
         $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setCategory($this->getCategory());
-        $copyObj->setForegroundColor($this->getForegroundColor());
         $copyObj->setBackgroundColor($this->getBackgroundColor());
+        $copyObj->setForegroundColor($this->getForegroundColor());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1366,6 +1432,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
             foreach ($this->getCardFeaturess() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addCardFeatures($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getMapPersonaFeatureConstraints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMapPersonaFeatureConstraint($relObj->copy($deepCopy));
                 }
             }
 
@@ -1412,6 +1484,9 @@ abstract class CardFeatureType implements ActiveRecordInterface
     {
         if ('CardFeatures' == $relationName) {
             return $this->initCardFeaturess();
+        }
+        if ('MapPersonaFeatureConstraint' == $relationName) {
+            return $this->initMapPersonaFeatureConstraints();
         }
     }
 
@@ -1531,7 +1606,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
         /** @var ChildCardFeatures[] $cardFeaturessToDelete */
         $cardFeaturessToDelete = $this->getCardFeaturess(new Criteria(), $con)->diff($cardFeaturess);
 
-
+        
         $this->cardFeaturessScheduledForDeletion = $cardFeaturessToDelete;
 
         foreach ($cardFeaturessToDelete as $cardFeaturesRemoved) {
@@ -1659,6 +1734,252 @@ abstract class CardFeatureType implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collMapPersonaFeatureConstraints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMapPersonaFeatureConstraints()
+     */
+    public function clearMapPersonaFeatureConstraints()
+    {
+        $this->collMapPersonaFeatureConstraints = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMapPersonaFeatureConstraints collection loaded partially.
+     */
+    public function resetPartialMapPersonaFeatureConstraints($v = true)
+    {
+        $this->collMapPersonaFeatureConstraintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collMapPersonaFeatureConstraints collection.
+     *
+     * By default this just sets the collMapPersonaFeatureConstraints collection to an empty array (like clearcollMapPersonaFeatureConstraints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMapPersonaFeatureConstraints($overrideExisting = true)
+    {
+        if (null !== $this->collMapPersonaFeatureConstraints && !$overrideExisting) {
+            return;
+        }
+        $this->collMapPersonaFeatureConstraints = new ObjectCollection();
+        $this->collMapPersonaFeatureConstraints->setModel('\MapPersonaFeatureConstraint');
+    }
+
+    /**
+     * Gets an array of ChildMapPersonaFeatureConstraint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildCardFeatureType is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMapPersonaFeatureConstraint[] List of ChildMapPersonaFeatureConstraint objects
+     * @throws PropelException
+     */
+    public function getMapPersonaFeatureConstraints(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapPersonaFeatureConstraints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaFeatureConstraints) {
+                // return empty collection
+                $this->initMapPersonaFeatureConstraints();
+            } else {
+                $collMapPersonaFeatureConstraints = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria)
+                    ->filterByCardFeatureType($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMapPersonaFeatureConstraintsPartial && count($collMapPersonaFeatureConstraints)) {
+                        $this->initMapPersonaFeatureConstraints(false);
+
+                        foreach ($collMapPersonaFeatureConstraints as $obj) {
+                            if (false == $this->collMapPersonaFeatureConstraints->contains($obj)) {
+                                $this->collMapPersonaFeatureConstraints->append($obj);
+                            }
+                        }
+
+                        $this->collMapPersonaFeatureConstraintsPartial = true;
+                    }
+
+                    return $collMapPersonaFeatureConstraints;
+                }
+
+                if ($partial && $this->collMapPersonaFeatureConstraints) {
+                    foreach ($this->collMapPersonaFeatureConstraints as $obj) {
+                        if ($obj->isNew()) {
+                            $collMapPersonaFeatureConstraints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMapPersonaFeatureConstraints = $collMapPersonaFeatureConstraints;
+                $this->collMapPersonaFeatureConstraintsPartial = false;
+            }
+        }
+
+        return $this->collMapPersonaFeatureConstraints;
+    }
+
+    /**
+     * Sets a collection of ChildMapPersonaFeatureConstraint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mapPersonaFeatureConstraints A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildCardFeatureType The current object (for fluent API support)
+     */
+    public function setMapPersonaFeatureConstraints(Collection $mapPersonaFeatureConstraints, ConnectionInterface $con = null)
+    {
+        /** @var ChildMapPersonaFeatureConstraint[] $mapPersonaFeatureConstraintsToDelete */
+        $mapPersonaFeatureConstraintsToDelete = $this->getMapPersonaFeatureConstraints(new Criteria(), $con)->diff($mapPersonaFeatureConstraints);
+
+        
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->mapPersonaFeatureConstraintsScheduledForDeletion = clone $mapPersonaFeatureConstraintsToDelete;
+
+        foreach ($mapPersonaFeatureConstraintsToDelete as $mapPersonaFeatureConstraintRemoved) {
+            $mapPersonaFeatureConstraintRemoved->setCardFeatureType(null);
+        }
+
+        $this->collMapPersonaFeatureConstraints = null;
+        foreach ($mapPersonaFeatureConstraints as $mapPersonaFeatureConstraint) {
+            $this->addMapPersonaFeatureConstraint($mapPersonaFeatureConstraint);
+        }
+
+        $this->collMapPersonaFeatureConstraints = $mapPersonaFeatureConstraints;
+        $this->collMapPersonaFeatureConstraintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MapPersonaFeatureConstraint objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MapPersonaFeatureConstraint objects.
+     * @throws PropelException
+     */
+    public function countMapPersonaFeatureConstraints(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapPersonaFeatureConstraints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaFeatureConstraints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMapPersonaFeatureConstraints());
+            }
+
+            $query = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCardFeatureType($this)
+                ->count($con);
+        }
+
+        return count($this->collMapPersonaFeatureConstraints);
+    }
+
+    /**
+     * Method called to associate a ChildMapPersonaFeatureConstraint object to this object
+     * through the ChildMapPersonaFeatureConstraint foreign key attribute.
+     *
+     * @param  ChildMapPersonaFeatureConstraint $l ChildMapPersonaFeatureConstraint
+     * @return $this|\CardFeatureType The current object (for fluent API support)
+     */
+    public function addMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $l)
+    {
+        if ($this->collMapPersonaFeatureConstraints === null) {
+            $this->initMapPersonaFeatureConstraints();
+            $this->collMapPersonaFeatureConstraintsPartial = true;
+        }
+
+        if (!$this->collMapPersonaFeatureConstraints->contains($l)) {
+            $this->doAddMapPersonaFeatureConstraint($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint The ChildMapPersonaFeatureConstraint object to add.
+     */
+    protected function doAddMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint)
+    {
+        $this->collMapPersonaFeatureConstraints[]= $mapPersonaFeatureConstraint;
+        $mapPersonaFeatureConstraint->setCardFeatureType($this);
+    }
+
+    /**
+     * @param  ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint The ChildMapPersonaFeatureConstraint object to remove.
+     * @return $this|ChildCardFeatureType The current object (for fluent API support)
+     */
+    public function removeMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint)
+    {
+        if ($this->getMapPersonaFeatureConstraints()->contains($mapPersonaFeatureConstraint)) {
+            $pos = $this->collMapPersonaFeatureConstraints->search($mapPersonaFeatureConstraint);
+            $this->collMapPersonaFeatureConstraints->remove($pos);
+            if (null === $this->mapPersonaFeatureConstraintsScheduledForDeletion) {
+                $this->mapPersonaFeatureConstraintsScheduledForDeletion = clone $this->collMapPersonaFeatureConstraints;
+                $this->mapPersonaFeatureConstraintsScheduledForDeletion->clear();
+            }
+            $this->mapPersonaFeatureConstraintsScheduledForDeletion[]= clone $mapPersonaFeatureConstraint;
+            $mapPersonaFeatureConstraint->setCardFeatureType(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this CardFeatureType is new, it will return
+     * an empty collection; or if this CardFeatureType has previously
+     * been saved, it will retrieve related MapPersonaFeatureConstraints from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in CardFeatureType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMapPersonaFeatureConstraint[] List of ChildMapPersonaFeatureConstraint objects
+     */
+    public function getMapPersonaFeatureConstraintsJoinPersona(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria);
+        $query->joinWith('Persona', $joinBehavior);
+
+        return $this->getMapPersonaFeatureConstraints($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1669,12 +1990,13 @@ abstract class CardFeatureType implements ActiveRecordInterface
         $this->name = null;
         $this->description = null;
         $this->category = null;
-        $this->foreground_color = null;
         $this->background_color = null;
+        $this->foreground_color = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1696,9 +2018,15 @@ abstract class CardFeatureType implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMapPersonaFeatureConstraints) {
+                foreach ($this->collMapPersonaFeatureConstraints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collCardFeaturess = null;
+        $this->collMapPersonaFeatureConstraints = null;
     }
 
     /**

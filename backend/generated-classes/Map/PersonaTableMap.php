@@ -158,7 +158,9 @@ class PersonaTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('MapPersonaFeatureConstraint', '\\MapPersonaFeatureConstraint', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaFeatureConstraints');
         $this->addRelation('MapPersonaScene', '\\MapPersonaScene', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaScenes');
+        $this->addRelation('PersonaRestriction', '\\PersonaRestriction', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'PersonaRestrictions');
     } // buildRelations()
 
     /**
@@ -204,7 +206,7 @@ class PersonaTableMap extends TableMap
                 : self::translateFieldName('PersonaId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -265,7 +267,7 @@ class PersonaTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

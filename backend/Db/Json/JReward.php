@@ -19,6 +19,7 @@ class JReward  implements JSONInterface {
     public $PointSystem;
     public $Type;
     public $Category;
+    public $Store;
     public $Title;
     public $Description;
     public $Icon;
@@ -47,6 +48,7 @@ class JReward  implements JSONInterface {
         if (is_null($item->getRewardCategory())) throw new Exception("JReward: RewardCategory is not available for Reward " . $mine->RewardId . ": " . $item->getRewardCategoryId() );
         $mine->Type = JRewardType::CREATE_FROM_DB($item->getRewardType());
         $mine->Category = JRewardCategory::CREATE_FROM_DB($item->getRewardCategory());
+        if(!is_null($item->getStore())) $mine->Store = JStore::CREATE_FROM_DB($item->getStore());
         $mine->Title = $item->getTitle();
         $mine->Description = $item->getDescription();
         $mine->Icon = $item->getIcon();
@@ -85,6 +87,11 @@ class JReward  implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JRewardType::CREATE_FROM_ARRAY($data['Type']);
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = JRewardCategory::CREATE_FROM_ARRAY($data['Category']);
+        if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {
+            $mine->Store = (new \StoreQuery())->findPK($data['StoreId']);
+        } else if( ArrayUtils::KEY_EXISTS($data,'Store') && ArrayUtils::KEY_EXISTS($data['Store'],'StoreId') ) {
+            $mine->Store = (new \StoreQuery())->findPK( $data['Store']['StoreId']);
+        }
         if(ArrayUtils::KEY_EXISTS($data,'Title')) $mine->Title = $data['Title'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
         if(ArrayUtils::KEY_EXISTS($data,'Icon')) $mine->Icon = $data['Icon'];
@@ -148,6 +155,7 @@ class JReward  implements JSONInterface {
         if(!is_null($this->Category) && FieldUtils::ID_IS_DEFINED($this->Category->RewardCategoryId)) {
             $item->setRewardCategoryId($this->Category->RewardCategoryId);
         }
+        if(!is_null($this->Store) && FieldUtils::ID_IS_DEFINED($this->Store->StoreId)) $item->setStoreId($this->Store->StoreId);
         if(FieldUtils::STRING_IS_DEFINED($this->Title)) $item->setTitle($this->Title);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
         if(FieldUtils::STRING_IS_DEFINED($this->Icon)) $item->setIcon($this->Icon);

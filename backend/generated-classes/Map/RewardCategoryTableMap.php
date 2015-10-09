@@ -158,6 +158,7 @@ class RewardCategoryTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('MapSceneRewardCategory', '\\MapSceneRewardCategory', RelationMap::ONE_TO_MANY, array('reward_category_id' => 'reward_category_id', ), null, null, 'MapSceneRewardCategories');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('reward_category_id' => 'reward_category_id', ), null, null, 'Rewards');
     } // buildRelations()
 
@@ -204,7 +205,7 @@ class RewardCategoryTableMap extends TableMap
                 : self::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -265,7 +266,7 @@ class RewardCategoryTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

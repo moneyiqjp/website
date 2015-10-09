@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'affiliate_company' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class AffiliateCompany implements ActiveRecordInterface
+abstract class AffiliateCompany implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -346,7 +346,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [affiliate_id] column value.
-     *
+     * 
      * @return int
      */
     public function getAffiliateId()
@@ -356,7 +356,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -366,7 +366,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -376,7 +376,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [website] column value.
-     *
+     * 
      * @return string
      */
     public function getWebsite()
@@ -386,7 +386,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [signed_up_date] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -406,7 +406,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -426,7 +426,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -436,7 +436,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Set the value of [affiliate_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\AffiliateCompany The current object (for fluent API support)
      */
@@ -456,7 +456,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\AffiliateCompany The current object (for fluent API support)
      */
@@ -476,7 +476,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\AffiliateCompany The current object (for fluent API support)
      */
@@ -496,7 +496,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Set the value of [website] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\AffiliateCompany The current object (for fluent API support)
      */
@@ -516,7 +516,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Sets the value of [signed_up_date] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\AffiliateCompany The current object (for fluent API support)
@@ -536,7 +536,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\AffiliateCompany The current object (for fluent API support)
@@ -556,7 +556,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\AffiliateCompany The current object (for fluent API support)
      */
@@ -892,25 +892,25 @@ abstract class AffiliateCompany implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'affiliate_id':
+                    case 'affiliate_id':                        
                         $stmt->bindValue($identifier, $this->affiliate_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'website':
+                    case 'website':                        
                         $stmt->bindValue($identifier, $this->website, PDO::PARAM_STR);
                         break;
-                    case 'signed_up_date':
+                    case 'signed_up_date':                        
                         $stmt->bindValue($identifier, $this->signed_up_date ? $this->signed_up_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1038,10 +1038,10 @@ abstract class AffiliateCompany implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collCreditCards) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCards';
@@ -1052,7 +1052,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
                     default:
                         $key = 'CreditCards';
                 }
-
+        
                 $result[$key] = $this->collCreditCards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1262,7 +1262,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1485,7 +1485,7 @@ abstract class AffiliateCompany implements ActiveRecordInterface
         /** @var ChildCreditCard[] $creditCardsToDelete */
         $creditCardsToDelete = $this->getCreditCards(new Criteria(), $con)->diff($creditCards);
 
-
+        
         $this->creditCardsScheduledForDeletion = $creditCardsToDelete;
 
         foreach ($creditCardsToDelete as $creditCardRemoved) {

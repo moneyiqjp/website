@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'interest' table.
  *
- *
+ * 
  *
  * @method     ChildInterestQuery orderByInterestId($order = Criteria::ASC) Order by the interest_id column
  * @method     ChildInterestQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -78,7 +78,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class InterestQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\InterestQuery object.
      *
@@ -166,7 +166,7 @@ abstract class InterestQuery extends ModelCriteria
     {
         $sql = 'SELECT interest_id, credit_card_id, payment_type_id, min_interest, max_interest, update_time, update_user, reference FROM interest WHERE interest_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -785,9 +785,9 @@ abstract class InterestQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             InterestTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             InterestTableMap::clearRelatedInstancePool();
 

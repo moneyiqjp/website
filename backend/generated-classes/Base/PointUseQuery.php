@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'point_use' table.
  *
- *
+ * 
  *
  * @method     ChildPointUseQuery orderByPointUseId($order = Criteria::ASC) Order by the point_use_id column
  * @method     ChildPointUseQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
@@ -74,7 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PointUseQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PointUseQuery object.
      *
@@ -162,7 +162,7 @@ abstract class PointUseQuery extends ModelCriteria
     {
         $sql = 'SELECT point_use_id, point_system_id, store_id, yen_per_point, update_time, update_user, reference FROM point_use WHERE point_use_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -740,9 +740,9 @@ abstract class PointUseQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PointUseTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PointUseTableMap::clearRelatedInstancePool();
 

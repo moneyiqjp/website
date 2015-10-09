@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'card_description_history' table.
  *
- *
+ * 
  *
  * @method     ChildCardDescriptionHistoryQuery orderByItemId($order = Criteria::ASC) Order by the item_id column
  * @method     ChildCardDescriptionHistoryQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -63,7 +63,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CardDescriptionHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\CardDescriptionHistoryQuery object.
      *
@@ -151,8 +151,8 @@ abstract class CardDescriptionHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT item_id, credit_card_id, item_name, item_description, time_beg, time_end, update_user FROM card_description_history WHERE item_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -575,9 +575,9 @@ abstract class CardDescriptionHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CardDescriptionHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CardDescriptionHistoryTableMap::clearRelatedInstancePool();
 

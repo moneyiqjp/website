@@ -2,10 +2,14 @@
 
 namespace Base;
 
+use \MapPersonaFeatureConstraint as ChildMapPersonaFeatureConstraint;
+use \MapPersonaFeatureConstraintQuery as ChildMapPersonaFeatureConstraintQuery;
 use \MapPersonaScene as ChildMapPersonaScene;
 use \MapPersonaSceneQuery as ChildMapPersonaSceneQuery;
 use \Persona as ChildPersona;
 use \PersonaQuery as ChildPersonaQuery;
+use \PersonaRestriction as ChildPersonaRestriction;
+use \PersonaRestrictionQuery as ChildPersonaRestrictionQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -27,11 +31,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'persona' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class Persona implements ActiveRecordInterface
+abstract class Persona implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -96,10 +100,22 @@ abstract class Persona implements ActiveRecordInterface
     protected $update_user;
 
     /**
+     * @var        ObjectCollection|ChildMapPersonaFeatureConstraint[] Collection to store aggregation of ChildMapPersonaFeatureConstraint objects.
+     */
+    protected $collMapPersonaFeatureConstraints;
+    protected $collMapPersonaFeatureConstraintsPartial;
+
+    /**
      * @var        ObjectCollection|ChildMapPersonaScene[] Collection to store aggregation of ChildMapPersonaScene objects.
      */
     protected $collMapPersonaScenes;
     protected $collMapPersonaScenesPartial;
+
+    /**
+     * @var        ObjectCollection|ChildPersonaRestriction[] Collection to store aggregation of ChildPersonaRestriction objects.
+     */
+    protected $collPersonaRestrictions;
+    protected $collPersonaRestrictionsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -111,9 +127,21 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMapPersonaFeatureConstraint[]
+     */
+    protected $mapPersonaFeatureConstraintsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildMapPersonaScene[]
      */
     protected $mapPersonaScenesScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildPersonaRestriction[]
+     */
+    protected $personaRestrictionsScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Base\Persona object.
@@ -334,7 +362,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [persona_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPersonaId()
@@ -344,7 +372,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -354,7 +382,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -364,7 +392,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -384,7 +412,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -394,7 +422,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [persona_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -414,7 +442,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -434,7 +462,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -454,7 +482,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Persona The current object (for fluent API support)
@@ -474,7 +502,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -614,7 +642,11 @@ abstract class Persona implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->collMapPersonaFeatureConstraints = null;
+
             $this->collMapPersonaScenes = null;
+
+            $this->collPersonaRestrictions = null;
 
         } // if (deep)
     }
@@ -726,6 +758,23 @@ abstract class Persona implements ActiveRecordInterface
                 $this->resetModified();
             }
 
+            if ($this->mapPersonaFeatureConstraintsScheduledForDeletion !== null) {
+                if (!$this->mapPersonaFeatureConstraintsScheduledForDeletion->isEmpty()) {
+                    \MapPersonaFeatureConstraintQuery::create()
+                        ->filterByPrimaryKeys($this->mapPersonaFeatureConstraintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mapPersonaFeatureConstraintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMapPersonaFeatureConstraints !== null) {
+                foreach ($this->collMapPersonaFeatureConstraints as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->mapPersonaScenesScheduledForDeletion !== null) {
                 if (!$this->mapPersonaScenesScheduledForDeletion->isEmpty()) {
                     \MapPersonaSceneQuery::create()
@@ -737,6 +786,23 @@ abstract class Persona implements ActiveRecordInterface
 
             if ($this->collMapPersonaScenes !== null) {
                 foreach ($this->collMapPersonaScenes as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->personaRestrictionsScheduledForDeletion !== null) {
+                if (!$this->personaRestrictionsScheduledForDeletion->isEmpty()) {
+                    \PersonaRestrictionQuery::create()
+                        ->filterByPrimaryKeys($this->personaRestrictionsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->personaRestrictionsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPersonaRestrictions !== null) {
+                foreach ($this->collPersonaRestrictions as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -795,19 +861,19 @@ abstract class Persona implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'persona_id':
+                    case 'persona_id':                        
                         $stmt->bindValue($identifier, $this->persona_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -927,10 +993,25 @@ abstract class Persona implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
+            if (null !== $this->collMapPersonaFeatureConstraints) {
+                
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mapPersonaFeatureConstraints';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'map_persona_feature_constraints';
+                        break;
+                    default:
+                        $key = 'MapPersonaFeatureConstraints';
+                }
+        
+                $result[$key] = $this->collMapPersonaFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collMapPersonaScenes) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'mapPersonaScenes';
@@ -941,8 +1022,23 @@ abstract class Persona implements ActiveRecordInterface
                     default:
                         $key = 'MapPersonaScenes';
                 }
-
+        
                 $result[$key] = $this->collMapPersonaScenes->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPersonaRestrictions) {
+                
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'personaRestrictions';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'persona_restrictions';
+                        break;
+                    default:
+                        $key = 'PersonaRestrictions';
+                }
+        
+                $result[$key] = $this->collPersonaRestrictions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1133,7 +1229,7 @@ abstract class Persona implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1186,9 +1282,21 @@ abstract class Persona implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
+            foreach ($this->getMapPersonaFeatureConstraints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMapPersonaFeatureConstraint($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getMapPersonaScenes() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addMapPersonaScene($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPersonaRestrictions() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPersonaRestriction($relObj->copy($deepCopy));
                 }
             }
 
@@ -1233,9 +1341,261 @@ abstract class Persona implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
+        if ('MapPersonaFeatureConstraint' == $relationName) {
+            return $this->initMapPersonaFeatureConstraints();
+        }
         if ('MapPersonaScene' == $relationName) {
             return $this->initMapPersonaScenes();
         }
+        if ('PersonaRestriction' == $relationName) {
+            return $this->initPersonaRestrictions();
+        }
+    }
+
+    /**
+     * Clears out the collMapPersonaFeatureConstraints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMapPersonaFeatureConstraints()
+     */
+    public function clearMapPersonaFeatureConstraints()
+    {
+        $this->collMapPersonaFeatureConstraints = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMapPersonaFeatureConstraints collection loaded partially.
+     */
+    public function resetPartialMapPersonaFeatureConstraints($v = true)
+    {
+        $this->collMapPersonaFeatureConstraintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collMapPersonaFeatureConstraints collection.
+     *
+     * By default this just sets the collMapPersonaFeatureConstraints collection to an empty array (like clearcollMapPersonaFeatureConstraints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMapPersonaFeatureConstraints($overrideExisting = true)
+    {
+        if (null !== $this->collMapPersonaFeatureConstraints && !$overrideExisting) {
+            return;
+        }
+        $this->collMapPersonaFeatureConstraints = new ObjectCollection();
+        $this->collMapPersonaFeatureConstraints->setModel('\MapPersonaFeatureConstraint');
+    }
+
+    /**
+     * Gets an array of ChildMapPersonaFeatureConstraint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPersona is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMapPersonaFeatureConstraint[] List of ChildMapPersonaFeatureConstraint objects
+     * @throws PropelException
+     */
+    public function getMapPersonaFeatureConstraints(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapPersonaFeatureConstraints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaFeatureConstraints) {
+                // return empty collection
+                $this->initMapPersonaFeatureConstraints();
+            } else {
+                $collMapPersonaFeatureConstraints = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria)
+                    ->filterByPersona($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMapPersonaFeatureConstraintsPartial && count($collMapPersonaFeatureConstraints)) {
+                        $this->initMapPersonaFeatureConstraints(false);
+
+                        foreach ($collMapPersonaFeatureConstraints as $obj) {
+                            if (false == $this->collMapPersonaFeatureConstraints->contains($obj)) {
+                                $this->collMapPersonaFeatureConstraints->append($obj);
+                            }
+                        }
+
+                        $this->collMapPersonaFeatureConstraintsPartial = true;
+                    }
+
+                    return $collMapPersonaFeatureConstraints;
+                }
+
+                if ($partial && $this->collMapPersonaFeatureConstraints) {
+                    foreach ($this->collMapPersonaFeatureConstraints as $obj) {
+                        if ($obj->isNew()) {
+                            $collMapPersonaFeatureConstraints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMapPersonaFeatureConstraints = $collMapPersonaFeatureConstraints;
+                $this->collMapPersonaFeatureConstraintsPartial = false;
+            }
+        }
+
+        return $this->collMapPersonaFeatureConstraints;
+    }
+
+    /**
+     * Sets a collection of ChildMapPersonaFeatureConstraint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mapPersonaFeatureConstraints A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function setMapPersonaFeatureConstraints(Collection $mapPersonaFeatureConstraints, ConnectionInterface $con = null)
+    {
+        /** @var ChildMapPersonaFeatureConstraint[] $mapPersonaFeatureConstraintsToDelete */
+        $mapPersonaFeatureConstraintsToDelete = $this->getMapPersonaFeatureConstraints(new Criteria(), $con)->diff($mapPersonaFeatureConstraints);
+
+        
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->mapPersonaFeatureConstraintsScheduledForDeletion = clone $mapPersonaFeatureConstraintsToDelete;
+
+        foreach ($mapPersonaFeatureConstraintsToDelete as $mapPersonaFeatureConstraintRemoved) {
+            $mapPersonaFeatureConstraintRemoved->setPersona(null);
+        }
+
+        $this->collMapPersonaFeatureConstraints = null;
+        foreach ($mapPersonaFeatureConstraints as $mapPersonaFeatureConstraint) {
+            $this->addMapPersonaFeatureConstraint($mapPersonaFeatureConstraint);
+        }
+
+        $this->collMapPersonaFeatureConstraints = $mapPersonaFeatureConstraints;
+        $this->collMapPersonaFeatureConstraintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MapPersonaFeatureConstraint objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MapPersonaFeatureConstraint objects.
+     * @throws PropelException
+     */
+    public function countMapPersonaFeatureConstraints(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapPersonaFeatureConstraints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaFeatureConstraints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMapPersonaFeatureConstraints());
+            }
+
+            $query = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPersona($this)
+                ->count($con);
+        }
+
+        return count($this->collMapPersonaFeatureConstraints);
+    }
+
+    /**
+     * Method called to associate a ChildMapPersonaFeatureConstraint object to this object
+     * through the ChildMapPersonaFeatureConstraint foreign key attribute.
+     *
+     * @param  ChildMapPersonaFeatureConstraint $l ChildMapPersonaFeatureConstraint
+     * @return $this|\Persona The current object (for fluent API support)
+     */
+    public function addMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $l)
+    {
+        if ($this->collMapPersonaFeatureConstraints === null) {
+            $this->initMapPersonaFeatureConstraints();
+            $this->collMapPersonaFeatureConstraintsPartial = true;
+        }
+
+        if (!$this->collMapPersonaFeatureConstraints->contains($l)) {
+            $this->doAddMapPersonaFeatureConstraint($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint The ChildMapPersonaFeatureConstraint object to add.
+     */
+    protected function doAddMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint)
+    {
+        $this->collMapPersonaFeatureConstraints[]= $mapPersonaFeatureConstraint;
+        $mapPersonaFeatureConstraint->setPersona($this);
+    }
+
+    /**
+     * @param  ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint The ChildMapPersonaFeatureConstraint object to remove.
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function removeMapPersonaFeatureConstraint(ChildMapPersonaFeatureConstraint $mapPersonaFeatureConstraint)
+    {
+        if ($this->getMapPersonaFeatureConstraints()->contains($mapPersonaFeatureConstraint)) {
+            $pos = $this->collMapPersonaFeatureConstraints->search($mapPersonaFeatureConstraint);
+            $this->collMapPersonaFeatureConstraints->remove($pos);
+            if (null === $this->mapPersonaFeatureConstraintsScheduledForDeletion) {
+                $this->mapPersonaFeatureConstraintsScheduledForDeletion = clone $this->collMapPersonaFeatureConstraints;
+                $this->mapPersonaFeatureConstraintsScheduledForDeletion->clear();
+            }
+            $this->mapPersonaFeatureConstraintsScheduledForDeletion[]= clone $mapPersonaFeatureConstraint;
+            $mapPersonaFeatureConstraint->setPersona(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Persona is new, it will return
+     * an empty collection; or if this Persona has previously
+     * been saved, it will retrieve related MapPersonaFeatureConstraints from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Persona.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMapPersonaFeatureConstraint[] List of ChildMapPersonaFeatureConstraint objects
+     */
+    public function getMapPersonaFeatureConstraintsJoinCardFeatureType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMapPersonaFeatureConstraintQuery::create(null, $criteria);
+        $query->joinWith('CardFeatureType', $joinBehavior);
+
+        return $this->getMapPersonaFeatureConstraints($query, $con);
     }
 
     /**
@@ -1354,7 +1714,7 @@ abstract class Persona implements ActiveRecordInterface
         /** @var ChildMapPersonaScene[] $mapPersonaScenesToDelete */
         $mapPersonaScenesToDelete = $this->getMapPersonaScenes(new Criteria(), $con)->diff($mapPersonaScenes);
 
-
+        
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1485,6 +1845,252 @@ abstract class Persona implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collPersonaRestrictions collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addPersonaRestrictions()
+     */
+    public function clearPersonaRestrictions()
+    {
+        $this->collPersonaRestrictions = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collPersonaRestrictions collection loaded partially.
+     */
+    public function resetPartialPersonaRestrictions($v = true)
+    {
+        $this->collPersonaRestrictionsPartial = $v;
+    }
+
+    /**
+     * Initializes the collPersonaRestrictions collection.
+     *
+     * By default this just sets the collPersonaRestrictions collection to an empty array (like clearcollPersonaRestrictions());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPersonaRestrictions($overrideExisting = true)
+    {
+        if (null !== $this->collPersonaRestrictions && !$overrideExisting) {
+            return;
+        }
+        $this->collPersonaRestrictions = new ObjectCollection();
+        $this->collPersonaRestrictions->setModel('\PersonaRestriction');
+    }
+
+    /**
+     * Gets an array of ChildPersonaRestriction objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPersona is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildPersonaRestriction[] List of ChildPersonaRestriction objects
+     * @throws PropelException
+     */
+    public function getPersonaRestrictions(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPersonaRestrictionsPartial && !$this->isNew();
+        if (null === $this->collPersonaRestrictions || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPersonaRestrictions) {
+                // return empty collection
+                $this->initPersonaRestrictions();
+            } else {
+                $collPersonaRestrictions = ChildPersonaRestrictionQuery::create(null, $criteria)
+                    ->filterByPersona($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collPersonaRestrictionsPartial && count($collPersonaRestrictions)) {
+                        $this->initPersonaRestrictions(false);
+
+                        foreach ($collPersonaRestrictions as $obj) {
+                            if (false == $this->collPersonaRestrictions->contains($obj)) {
+                                $this->collPersonaRestrictions->append($obj);
+                            }
+                        }
+
+                        $this->collPersonaRestrictionsPartial = true;
+                    }
+
+                    return $collPersonaRestrictions;
+                }
+
+                if ($partial && $this->collPersonaRestrictions) {
+                    foreach ($this->collPersonaRestrictions as $obj) {
+                        if ($obj->isNew()) {
+                            $collPersonaRestrictions[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPersonaRestrictions = $collPersonaRestrictions;
+                $this->collPersonaRestrictionsPartial = false;
+            }
+        }
+
+        return $this->collPersonaRestrictions;
+    }
+
+    /**
+     * Sets a collection of ChildPersonaRestriction objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $personaRestrictions A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function setPersonaRestrictions(Collection $personaRestrictions, ConnectionInterface $con = null)
+    {
+        /** @var ChildPersonaRestriction[] $personaRestrictionsToDelete */
+        $personaRestrictionsToDelete = $this->getPersonaRestrictions(new Criteria(), $con)->diff($personaRestrictions);
+
+        
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->personaRestrictionsScheduledForDeletion = clone $personaRestrictionsToDelete;
+
+        foreach ($personaRestrictionsToDelete as $personaRestrictionRemoved) {
+            $personaRestrictionRemoved->setPersona(null);
+        }
+
+        $this->collPersonaRestrictions = null;
+        foreach ($personaRestrictions as $personaRestriction) {
+            $this->addPersonaRestriction($personaRestriction);
+        }
+
+        $this->collPersonaRestrictions = $personaRestrictions;
+        $this->collPersonaRestrictionsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related PersonaRestriction objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related PersonaRestriction objects.
+     * @throws PropelException
+     */
+    public function countPersonaRestrictions(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPersonaRestrictionsPartial && !$this->isNew();
+        if (null === $this->collPersonaRestrictions || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPersonaRestrictions) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getPersonaRestrictions());
+            }
+
+            $query = ChildPersonaRestrictionQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPersona($this)
+                ->count($con);
+        }
+
+        return count($this->collPersonaRestrictions);
+    }
+
+    /**
+     * Method called to associate a ChildPersonaRestriction object to this object
+     * through the ChildPersonaRestriction foreign key attribute.
+     *
+     * @param  ChildPersonaRestriction $l ChildPersonaRestriction
+     * @return $this|\Persona The current object (for fluent API support)
+     */
+    public function addPersonaRestriction(ChildPersonaRestriction $l)
+    {
+        if ($this->collPersonaRestrictions === null) {
+            $this->initPersonaRestrictions();
+            $this->collPersonaRestrictionsPartial = true;
+        }
+
+        if (!$this->collPersonaRestrictions->contains($l)) {
+            $this->doAddPersonaRestriction($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildPersonaRestriction $personaRestriction The ChildPersonaRestriction object to add.
+     */
+    protected function doAddPersonaRestriction(ChildPersonaRestriction $personaRestriction)
+    {
+        $this->collPersonaRestrictions[]= $personaRestriction;
+        $personaRestriction->setPersona($this);
+    }
+
+    /**
+     * @param  ChildPersonaRestriction $personaRestriction The ChildPersonaRestriction object to remove.
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function removePersonaRestriction(ChildPersonaRestriction $personaRestriction)
+    {
+        if ($this->getPersonaRestrictions()->contains($personaRestriction)) {
+            $pos = $this->collPersonaRestrictions->search($personaRestriction);
+            $this->collPersonaRestrictions->remove($pos);
+            if (null === $this->personaRestrictionsScheduledForDeletion) {
+                $this->personaRestrictionsScheduledForDeletion = clone $this->collPersonaRestrictions;
+                $this->personaRestrictionsScheduledForDeletion->clear();
+            }
+            $this->personaRestrictionsScheduledForDeletion[]= clone $personaRestriction;
+            $personaRestriction->setPersona(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Persona is new, it will return
+     * an empty collection; or if this Persona has previously
+     * been saved, it will retrieve related PersonaRestrictions from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Persona.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildPersonaRestriction[] List of ChildPersonaRestriction objects
+     */
+    public function getPersonaRestrictionsJoinRestrictionType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildPersonaRestrictionQuery::create(null, $criteria);
+        $query->joinWith('RestrictionType', $joinBehavior);
+
+        return $this->getPersonaRestrictions($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1514,14 +2120,26 @@ abstract class Persona implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collMapPersonaFeatureConstraints) {
+                foreach ($this->collMapPersonaFeatureConstraints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collMapPersonaScenes) {
                 foreach ($this->collMapPersonaScenes as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collPersonaRestrictions) {
+                foreach ($this->collPersonaRestrictions as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collMapPersonaFeatureConstraints = null;
         $this->collMapPersonaScenes = null;
+        $this->collPersonaRestrictions = null;
     }
 
     /**

@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'credit_card_history' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class CreditCardHistory implements ActiveRecordInterface
+abstract class CreditCardHistory implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -400,7 +400,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCreditCardId()
@@ -410,7 +410,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -420,7 +420,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [issuer_id] column value.
-     *
+     * 
      * @return int
      */
     public function getIssuerId()
@@ -430,7 +430,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -440,7 +440,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [image_link] column value.
-     *
+     * 
      * @return string
      */
     public function getImageLink()
@@ -450,7 +450,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [visa] column value.
-     *
+     * 
      * @return boolean
      */
     public function getVisa()
@@ -460,7 +460,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [visa] column value.
-     *
+     * 
      * @return boolean
      */
     public function isVisa()
@@ -470,7 +470,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [master] column value.
-     *
+     * 
      * @return boolean
      */
     public function getMaster()
@@ -480,7 +480,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [master] column value.
-     *
+     * 
      * @return boolean
      */
     public function isMaster()
@@ -490,7 +490,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [jcb] column value.
-     *
+     * 
      * @return boolean
      */
     public function getJcb()
@@ -500,7 +500,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [jcb] column value.
-     *
+     * 
      * @return boolean
      */
     public function isJcb()
@@ -510,7 +510,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [amex] column value.
-     *
+     * 
      * @return boolean
      */
     public function getAmex()
@@ -520,7 +520,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [amex] column value.
-     *
+     * 
      * @return boolean
      */
     public function isAmex()
@@ -530,7 +530,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [diners] column value.
-     *
+     * 
      * @return boolean
      */
     public function getDiners()
@@ -540,7 +540,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [diners] column value.
-     *
+     * 
      * @return boolean
      */
     public function isDiners()
@@ -550,7 +550,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [afilliate_link] column value.
-     *
+     * 
      * @return string
      */
     public function getAfilliateLink()
@@ -560,7 +560,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [affiliate_id] column value.
-     *
+     * 
      * @return int
      */
     public function getAffiliateId()
@@ -570,7 +570,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -590,7 +590,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -610,7 +610,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -620,7 +620,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -640,7 +640,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -660,7 +660,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -680,7 +680,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -700,7 +700,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [image_link] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -724,7 +724,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -752,7 +752,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -780,7 +780,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -808,7 +808,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -836,7 +836,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -860,7 +860,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [afilliate_link] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -880,7 +880,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [affiliate_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -900,7 +900,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CreditCardHistory The current object (for fluent API support)
@@ -920,7 +920,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CreditCardHistory The current object (for fluent API support)
@@ -940,7 +940,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCardHistory The current object (for fluent API support)
      */
@@ -1321,19 +1321,19 @@ abstract class CreditCardHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'credit_card_id':
+                    case 'credit_card_id':                        
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'issuer_id':
+                    case 'issuer_id':                        
                         $stmt->bindValue($identifier, $this->issuer_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'image_link':
+                    case 'image_link':                        
                         $stmt->bindValue($identifier, $this->image_link, PDO::PARAM_STR);
                         break;
                     case 'visa':
@@ -1351,19 +1351,19 @@ abstract class CreditCardHistory implements ActiveRecordInterface
                     case 'diners':
                         $stmt->bindValue($identifier, (int) $this->diners, PDO::PARAM_INT);
                         break;
-                    case 'afilliate_link':
+                    case 'afilliate_link':                        
                         $stmt->bindValue($identifier, $this->afilliate_link, PDO::PARAM_STR);
                         break;
-                    case 'affiliate_id':
+                    case 'affiliate_id':                        
                         $stmt->bindValue($identifier, $this->affiliate_id, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':
+                    case 'time_beg':                        
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':
+                    case 'time_end':                        
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1515,7 +1515,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
 
         return $result;
     }
@@ -1796,7 +1796,7 @@ abstract class CreditCardHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

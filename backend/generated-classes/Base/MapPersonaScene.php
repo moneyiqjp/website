@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'map_persona_scene' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class MapPersonaScene implements ActiveRecordInterface
+abstract class MapPersonaScene implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -78,6 +78,13 @@ abstract class MapPersonaScene implements ActiveRecordInterface
     protected $scene_id;
 
     /**
+     * The value for the percentage field.
+     * Note: this column has a database default value of: 0.299999999999999988897769753748434595763683319091796875
+     * @var        double
+     */
+    protected $percentage;
+
+    /**
      * The value for the priority_id field.
      * Note: this column has a database default value of: 100
      * @var        int
@@ -122,6 +129,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
+        $this->percentage = 0.299999999999999988897769753748434595763683319091796875;
         $this->priority_id = 100;
     }
 
@@ -346,7 +354,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Get the [persona_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPersonaId()
@@ -356,7 +364,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Get the [scene_id] column value.
-     *
+     * 
      * @return int
      */
     public function getSceneId()
@@ -365,8 +373,18 @@ abstract class MapPersonaScene implements ActiveRecordInterface
     }
 
     /**
+     * Get the [percentage] column value.
+     * 
+     * @return double
+     */
+    public function getPercentage()
+    {
+        return $this->percentage;
+    }
+
+    /**
      * Get the [priority_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPriorityId()
@@ -376,7 +394,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -396,7 +414,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -406,7 +424,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Set the value of [persona_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\MapPersonaScene The current object (for fluent API support)
      */
@@ -430,7 +448,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Set the value of [scene_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\MapPersonaScene The current object (for fluent API support)
      */
@@ -453,8 +471,28 @@ abstract class MapPersonaScene implements ActiveRecordInterface
     } // setSceneId()
 
     /**
+     * Set the value of [percentage] column.
+     * 
+     * @param  double $v new value
+     * @return $this|\MapPersonaScene The current object (for fluent API support)
+     */
+    public function setPercentage($v)
+    {
+        if ($v !== null) {
+            $v = (double) $v;
+        }
+
+        if ($this->percentage !== $v) {
+            $this->percentage = $v;
+            $this->modifiedColumns[MapPersonaSceneTableMap::COL_PERCENTAGE] = true;
+        }
+
+        return $this;
+    } // setPercentage()
+
+    /**
      * Set the value of [priority_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\MapPersonaScene The current object (for fluent API support)
      */
@@ -474,7 +512,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\MapPersonaScene The current object (for fluent API support)
@@ -494,7 +532,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\MapPersonaScene The current object (for fluent API support)
      */
@@ -522,6 +560,10 @@ abstract class MapPersonaScene implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->percentage !== 0.299999999999999988897769753748434595763683319091796875) {
+                return false;
+            }
+
             if ($this->priority_id !== 100) {
                 return false;
             }
@@ -558,16 +600,19 @@ abstract class MapPersonaScene implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MapPersonaSceneTableMap::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->scene_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MapPersonaSceneTableMap::translateFieldName('PriorityId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MapPersonaSceneTableMap::translateFieldName('Percentage', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->percentage = (null !== $col) ? (double) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapPersonaSceneTableMap::translateFieldName('PriorityId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->priority_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapPersonaSceneTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapPersonaSceneTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapPersonaSceneTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MapPersonaSceneTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -577,7 +622,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = MapPersonaSceneTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = MapPersonaSceneTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\MapPersonaScene'), 0, $e);
@@ -803,6 +848,9 @@ abstract class MapPersonaScene implements ActiveRecordInterface
         if ($this->isColumnModified(MapPersonaSceneTableMap::COL_SCENE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'scene_id';
         }
+        if ($this->isColumnModified(MapPersonaSceneTableMap::COL_PERCENTAGE)) {
+            $modifiedColumns[':p' . $index++]  = 'percentage';
+        }
         if ($this->isColumnModified(MapPersonaSceneTableMap::COL_PRIORITY_ID)) {
             $modifiedColumns[':p' . $index++]  = 'priority_id';
         }
@@ -823,19 +871,22 @@ abstract class MapPersonaScene implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'persona_id':
+                    case 'persona_id':                        
                         $stmt->bindValue($identifier, $this->persona_id, PDO::PARAM_INT);
                         break;
-                    case 'scene_id':
+                    case 'scene_id':                        
                         $stmt->bindValue($identifier, $this->scene_id, PDO::PARAM_INT);
                         break;
-                    case 'priority_id':
+                    case 'percentage':                        
+                        $stmt->bindValue($identifier, $this->percentage, PDO::PARAM_STR);
+                        break;
+                    case 'priority_id':                        
                         $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -900,12 +951,15 @@ abstract class MapPersonaScene implements ActiveRecordInterface
                 return $this->getSceneId();
                 break;
             case 2:
-                return $this->getPriorityId();
+                return $this->getPercentage();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getPriorityId();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -940,18 +994,19 @@ abstract class MapPersonaScene implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getPersonaId(),
             $keys[1] => $this->getSceneId(),
-            $keys[2] => $this->getPriorityId(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[2] => $this->getPercentage(),
+            $keys[3] => $this->getPriorityId(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aPersona) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'persona';
@@ -962,11 +1017,11 @@ abstract class MapPersonaScene implements ActiveRecordInterface
                     default:
                         $key = 'Persona';
                 }
-
+        
                 $result[$key] = $this->aPersona->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aScene) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'scene';
@@ -977,7 +1032,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
                     default:
                         $key = 'Scene';
                 }
-
+        
                 $result[$key] = $this->aScene->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1021,12 +1076,15 @@ abstract class MapPersonaScene implements ActiveRecordInterface
                 $this->setSceneId($value);
                 break;
             case 2:
-                $this->setPriorityId($value);
+                $this->setPercentage($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setPriorityId($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1062,13 +1120,16 @@ abstract class MapPersonaScene implements ActiveRecordInterface
             $this->setSceneId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPriorityId($arr[$keys[2]]);
+            $this->setPercentage($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setPriorityId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1116,6 +1177,9 @@ abstract class MapPersonaScene implements ActiveRecordInterface
         }
         if ($this->isColumnModified(MapPersonaSceneTableMap::COL_SCENE_ID)) {
             $criteria->add(MapPersonaSceneTableMap::COL_SCENE_ID, $this->scene_id);
+        }
+        if ($this->isColumnModified(MapPersonaSceneTableMap::COL_PERCENTAGE)) {
+            $criteria->add(MapPersonaSceneTableMap::COL_PERCENTAGE, $this->percentage);
         }
         if ($this->isColumnModified(MapPersonaSceneTableMap::COL_PRIORITY_ID)) {
             $criteria->add(MapPersonaSceneTableMap::COL_PRIORITY_ID, $this->priority_id);
@@ -1185,7 +1249,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.
@@ -1236,6 +1300,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
     {
         $copyObj->setPersonaId($this->getPersonaId());
         $copyObj->setSceneId($this->getSceneId());
+        $copyObj->setPercentage($this->getPercentage());
         $copyObj->setPriorityId($this->getPriorityId());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
@@ -1383,6 +1448,7 @@ abstract class MapPersonaScene implements ActiveRecordInterface
         }
         $this->persona_id = null;
         $this->scene_id = null;
+        $this->percentage = null;
         $this->priority_id = null;
         $this->update_time = null;
         $this->update_user = null;

@@ -149,8 +149,8 @@ class MapSceneStoreCategoryTableMap extends TableMap
         $this->addForeignPrimaryKey('scene_id', 'SceneId', 'INTEGER' , 'scene', 'scene_id', true, null, null);
         $this->addForeignPrimaryKey('store_category_id', 'StoreCategoryId', 'INTEGER' , 'store_category', 'store_category_id', true, null, null);
         $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
-        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
+        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
 
     /**
@@ -253,7 +253,7 @@ class MapSceneStoreCategoryTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-
+            
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -267,7 +267,7 @@ class MapSceneStoreCategoryTableMap extends TableMap
 
         return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -328,7 +328,7 @@ class MapSceneStoreCategoryTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

@@ -17,12 +17,12 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'reward_history' table.
  *
- *
+ * 
  *
  * @method     ChildRewardHistoryQuery orderByRewardId($order = Criteria::ASC) Order by the reward_id column
  * @method     ChildRewardHistoryQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
- * @method     ChildRewardHistoryQuery orderByType($order = Criteria::ASC) Order by the type column
- * @method     ChildRewardHistoryQuery orderByCategory($order = Criteria::ASC) Order by the category column
+ * @method     ChildRewardHistoryQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
+ * @method     ChildRewardHistoryQuery orderByRewardTypeId($order = Criteria::ASC) Order by the reward_type_id column
  * @method     ChildRewardHistoryQuery orderByTitle($order = Criteria::ASC) Order by the title column
  * @method     ChildRewardHistoryQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildRewardHistoryQuery orderByIcon($order = Criteria::ASC) Order by the icon column
@@ -38,8 +38,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRewardHistoryQuery groupByRewardId() Group by the reward_id column
  * @method     ChildRewardHistoryQuery groupByPointSystemId() Group by the point_system_id column
- * @method     ChildRewardHistoryQuery groupByType() Group by the type column
- * @method     ChildRewardHistoryQuery groupByCategory() Group by the category column
+ * @method     ChildRewardHistoryQuery groupByRewardCategoryId() Group by the reward_category_id column
+ * @method     ChildRewardHistoryQuery groupByRewardTypeId() Group by the reward_type_id column
  * @method     ChildRewardHistoryQuery groupByTitle() Group by the title column
  * @method     ChildRewardHistoryQuery groupByDescription() Group by the description column
  * @method     ChildRewardHistoryQuery groupByIcon() Group by the icon column
@@ -62,8 +62,8 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRewardHistory findOneByRewardId(int $reward_id) Return the first ChildRewardHistory filtered by the reward_id column
  * @method     ChildRewardHistory findOneByPointSystemId(int $point_system_id) Return the first ChildRewardHistory filtered by the point_system_id column
- * @method     ChildRewardHistory findOneByType(string $type) Return the first ChildRewardHistory filtered by the type column
- * @method     ChildRewardHistory findOneByCategory(string $category) Return the first ChildRewardHistory filtered by the category column
+ * @method     ChildRewardHistory findOneByRewardCategoryId(int $reward_category_id) Return the first ChildRewardHistory filtered by the reward_category_id column
+ * @method     ChildRewardHistory findOneByRewardTypeId(int $reward_type_id) Return the first ChildRewardHistory filtered by the reward_type_id column
  * @method     ChildRewardHistory findOneByTitle(string $title) Return the first ChildRewardHistory filtered by the title column
  * @method     ChildRewardHistory findOneByDescription(string $description) Return the first ChildRewardHistory filtered by the description column
  * @method     ChildRewardHistory findOneByIcon(string $icon) Return the first ChildRewardHistory filtered by the icon column
@@ -80,8 +80,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardHistory[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildRewardHistory objects based on current ModelCriteria
  * @method     ChildRewardHistory[]|ObjectCollection findByRewardId(int $reward_id) Return ChildRewardHistory objects filtered by the reward_id column
  * @method     ChildRewardHistory[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildRewardHistory objects filtered by the point_system_id column
- * @method     ChildRewardHistory[]|ObjectCollection findByType(string $type) Return ChildRewardHistory objects filtered by the type column
- * @method     ChildRewardHistory[]|ObjectCollection findByCategory(string $category) Return ChildRewardHistory objects filtered by the category column
+ * @method     ChildRewardHistory[]|ObjectCollection findByRewardCategoryId(int $reward_category_id) Return ChildRewardHistory objects filtered by the reward_category_id column
+ * @method     ChildRewardHistory[]|ObjectCollection findByRewardTypeId(int $reward_type_id) Return ChildRewardHistory objects filtered by the reward_type_id column
  * @method     ChildRewardHistory[]|ObjectCollection findByTitle(string $title) Return ChildRewardHistory objects filtered by the title column
  * @method     ChildRewardHistory[]|ObjectCollection findByDescription(string $description) Return ChildRewardHistory objects filtered by the description column
  * @method     ChildRewardHistory[]|ObjectCollection findByIcon(string $icon) Return ChildRewardHistory objects filtered by the icon column
@@ -99,7 +99,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class RewardHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\RewardHistoryQuery object.
      *
@@ -185,10 +185,10 @@ abstract class RewardHistoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_id, point_system_id, type, category, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, time_beg, time_end, update_user FROM reward_history WHERE reward_id = :p0 AND time_beg = :p1';
+        $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, time_beg, time_end, update_user FROM reward_history WHERE reward_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -370,61 +370,85 @@ abstract class RewardHistoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the type column
+     * Filter the query on the reward_category_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByType('fooValue');   // WHERE type = 'fooValue'
-     * $query->filterByType('%fooValue%'); // WHERE type LIKE '%fooValue%'
+     * $query->filterByRewardCategoryId(1234); // WHERE reward_category_id = 1234
+     * $query->filterByRewardCategoryId(array(12, 34)); // WHERE reward_category_id IN (12, 34)
+     * $query->filterByRewardCategoryId(array('min' => 12)); // WHERE reward_category_id > 12
      * </code>
      *
-     * @param     string $type The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $rewardCategoryId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildRewardHistoryQuery The current query, for fluid interface
      */
-    public function filterByType($type = null, $comparison = null)
+    public function filterByRewardCategoryId($rewardCategoryId = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($type)) {
+        if (is_array($rewardCategoryId)) {
+            $useMinMax = false;
+            if (isset($rewardCategoryId['min'])) {
+                $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($rewardCategoryId['max'])) {
+                $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $type)) {
-                $type = str_replace('*', '%', $type);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(RewardHistoryTableMap::COL_TYPE, $type, $comparison);
+        return $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId, $comparison);
     }
 
     /**
-     * Filter the query on the category column
+     * Filter the query on the reward_type_id column
      *
      * Example usage:
      * <code>
-     * $query->filterByCategory('fooValue');   // WHERE category = 'fooValue'
-     * $query->filterByCategory('%fooValue%'); // WHERE category LIKE '%fooValue%'
+     * $query->filterByRewardTypeId(1234); // WHERE reward_type_id = 1234
+     * $query->filterByRewardTypeId(array(12, 34)); // WHERE reward_type_id IN (12, 34)
+     * $query->filterByRewardTypeId(array('min' => 12)); // WHERE reward_type_id > 12
      * </code>
      *
-     * @param     string $category The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $rewardTypeId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildRewardHistoryQuery The current query, for fluid interface
      */
-    public function filterByCategory($category = null, $comparison = null)
+    public function filterByRewardTypeId($rewardTypeId = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($category)) {
+        if (is_array($rewardTypeId)) {
+            $useMinMax = false;
+            if (isset($rewardTypeId['min'])) {
+                $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_TYPE_ID, $rewardTypeId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($rewardTypeId['max'])) {
+                $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_TYPE_ID, $rewardTypeId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $category)) {
-                $category = str_replace('*', '%', $category);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(RewardHistoryTableMap::COL_CATEGORY, $category, $comparison);
+        return $this->addUsingAlias(RewardHistoryTableMap::COL_REWARD_TYPE_ID, $rewardTypeId, $comparison);
     }
 
     /**
@@ -932,9 +956,9 @@ abstract class RewardHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             RewardHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             RewardHistoryTableMap::clearRelatedInstancePool();
 

@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'map_scene_store_category' table.
  *
- *
+ * 
  *
  * @method     ChildMapSceneStoreCategoryQuery orderBySceneId($order = Criteria::ASC) Order by the scene_id column
  * @method     ChildMapSceneStoreCategoryQuery orderByStoreCategoryId($order = Criteria::ASC) Order by the store_category_id column
@@ -66,7 +66,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class MapSceneStoreCategoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\MapSceneStoreCategoryQuery object.
      *
@@ -154,8 +154,8 @@ abstract class MapSceneStoreCategoryQuery extends ModelCriteria
     {
         $sql = 'SELECT scene_id, store_category_id, priority_id, update_time, update_user FROM map_scene_store_category WHERE scene_id = :p0 AND store_category_id = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -676,9 +676,9 @@ abstract class MapSceneStoreCategoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             MapSceneStoreCategoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             MapSceneStoreCategoryTableMap::clearRelatedInstancePool();
 

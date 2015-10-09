@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'persona' table.
  *
- *
+ * 
  *
  * @method     ChildPersonaQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildPersonaQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -36,11 +36,19 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildPersonaQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildPersonaQuery leftJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ * @method     ChildPersonaQuery rightJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ * @method     ChildPersonaQuery innerJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ *
  * @method     ChildPersonaQuery leftJoinMapPersonaScene($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaScene relation
  * @method     ChildPersonaQuery rightJoinMapPersonaScene($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaScene relation
  * @method     ChildPersonaQuery innerJoinMapPersonaScene($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaScene relation
  *
- * @method     \MapPersonaSceneQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildPersonaQuery leftJoinPersonaRestriction($relationAlias = null) Adds a LEFT JOIN clause to the query using the PersonaRestriction relation
+ * @method     ChildPersonaQuery rightJoinPersonaRestriction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PersonaRestriction relation
+ * @method     ChildPersonaQuery innerJoinPersonaRestriction($relationAlias = null) Adds a INNER JOIN clause to the query using the PersonaRestriction relation
+ *
+ * @method     \MapPersonaFeatureConstraintQuery|\MapPersonaSceneQuery|\PersonaRestrictionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPersona findOne(ConnectionInterface $con = null) Return the first ChildPersona matching the query
  * @method     ChildPersona findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPersona matching the query, or a new ChildPersona object populated from the query conditions when no match is found
@@ -62,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PersonaQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PersonaQuery object.
      *
@@ -150,7 +158,7 @@ abstract class PersonaQuery extends ModelCriteria
     {
         $sql = 'SELECT persona_id, name, description, update_time, update_user FROM persona WHERE persona_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -410,6 +418,79 @@ abstract class PersonaQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \MapPersonaFeatureConstraint object
+     *
+     * @param \MapPersonaFeatureConstraint|ObjectCollection $mapPersonaFeatureConstraint  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByMapPersonaFeatureConstraint($mapPersonaFeatureConstraint, $comparison = null)
+    {
+        if ($mapPersonaFeatureConstraint instanceof \MapPersonaFeatureConstraint) {
+            return $this
+                ->addUsingAlias(PersonaTableMap::COL_PERSONA_ID, $mapPersonaFeatureConstraint->getPersonaId(), $comparison);
+        } elseif ($mapPersonaFeatureConstraint instanceof ObjectCollection) {
+            return $this
+                ->useMapPersonaFeatureConstraintQuery()
+                ->filterByPrimaryKeys($mapPersonaFeatureConstraint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapPersonaFeatureConstraint() only accepts arguments of type \MapPersonaFeatureConstraint or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapPersonaFeatureConstraint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function joinMapPersonaFeatureConstraint($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapPersonaFeatureConstraint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapPersonaFeatureConstraint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapPersonaFeatureConstraint relation MapPersonaFeatureConstraint object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapPersonaFeatureConstraintQuery A secondary query class using the current class as primary query
+     */
+    public function useMapPersonaFeatureConstraintQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapPersonaFeatureConstraint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapPersonaFeatureConstraint', '\MapPersonaFeatureConstraintQuery');
+    }
+
+    /**
      * Filter the query by a related \MapPersonaScene object
      *
      * @param \MapPersonaScene|ObjectCollection $mapPersonaScene  the related object to use as filter
@@ -483,6 +564,79 @@ abstract class PersonaQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \PersonaRestriction object
+     *
+     * @param \PersonaRestriction|ObjectCollection $personaRestriction  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByPersonaRestriction($personaRestriction, $comparison = null)
+    {
+        if ($personaRestriction instanceof \PersonaRestriction) {
+            return $this
+                ->addUsingAlias(PersonaTableMap::COL_PERSONA_ID, $personaRestriction->getPersonaId(), $comparison);
+        } elseif ($personaRestriction instanceof ObjectCollection) {
+            return $this
+                ->usePersonaRestrictionQuery()
+                ->filterByPrimaryKeys($personaRestriction->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPersonaRestriction() only accepts arguments of type \PersonaRestriction or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the PersonaRestriction relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function joinPersonaRestriction($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('PersonaRestriction');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'PersonaRestriction');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the PersonaRestriction relation PersonaRestriction object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PersonaRestrictionQuery A secondary query class using the current class as primary query
+     */
+    public function usePersonaRestrictionQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPersonaRestriction($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'PersonaRestriction', '\PersonaRestrictionQuery');
+    }
+
+    /**
      * Exclude object from result
      *
      * @param   ChildPersona $persona Object to remove from the list of results
@@ -549,9 +703,9 @@ abstract class PersonaQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PersonaTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PersonaTableMap::clearRelatedInstancePool();
 

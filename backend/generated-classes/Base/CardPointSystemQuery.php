@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'card_point_system' table.
  *
- *
+ * 
  *
  * @method     ChildCardPointSystemQuery orderByCardPointSystemId($order = Criteria::ASC) Order by the card_point_system_id column
  * @method     ChildCardPointSystemQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -70,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CardPointSystemQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\CardPointSystemQuery object.
      *
@@ -158,7 +158,7 @@ abstract class CardPointSystemQuery extends ModelCriteria
     {
         $sql = 'SELECT card_point_system_id, credit_card_id, point_system_id, priority_id, update_time, update_user FROM card_point_system WHERE card_point_system_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -707,9 +707,9 @@ abstract class CardPointSystemQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CardPointSystemTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CardPointSystemTableMap::clearRelatedInstancePool();
 

@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'point_usage' table.
  *
- *
+ * 
  *
  * @method     ChildPointUsageQuery orderByPointUsageId($order = Criteria::ASC) Order by the point_usage_id column
  * @method     ChildPointUsageQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
@@ -26,7 +26,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUsageQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildPointUsageQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPointUsageQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
- * @method     ChildPointUsageQuery orderByReference($order = Criteria::ASC) Order by the reference column
  *
  * @method     ChildPointUsageQuery groupByPointUsageId() Group by the point_usage_id column
  * @method     ChildPointUsageQuery groupByStoreId() Group by the store_id column
@@ -34,7 +33,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointUsageQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildPointUsageQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPointUsageQuery groupByUpdateUser() Group by the update_user column
- * @method     ChildPointUsageQuery groupByReference() Group by the reference column
  *
  * @method     ChildPointUsageQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPointUsageQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -55,26 +53,24 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPointUsage findOneByPointUsageId(int $point_usage_id) Return the first ChildPointUsage filtered by the point_usage_id column
  * @method     ChildPointUsage findOneByStoreId(int $store_id) Return the first ChildPointUsage filtered by the store_id column
- * @method     ChildPointUsage findOneByYenPerPoint(string $yen_per_point) Return the first ChildPointUsage filtered by the yen_per_point column
+ * @method     ChildPointUsage findOneByYenPerPoint(double $yen_per_point) Return the first ChildPointUsage filtered by the yen_per_point column
  * @method     ChildPointUsage findOneByCreditCardId(int $credit_card_id) Return the first ChildPointUsage filtered by the credit_card_id column
  * @method     ChildPointUsage findOneByUpdateTime(string $update_time) Return the first ChildPointUsage filtered by the update_time column
  * @method     ChildPointUsage findOneByUpdateUser(string $update_user) Return the first ChildPointUsage filtered by the update_user column
- * @method     ChildPointUsage findOneByReference(string $reference) Return the first ChildPointUsage filtered by the reference column
  *
  * @method     ChildPointUsage[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPointUsage objects based on current ModelCriteria
  * @method     ChildPointUsage[]|ObjectCollection findByPointUsageId(int $point_usage_id) Return ChildPointUsage objects filtered by the point_usage_id column
  * @method     ChildPointUsage[]|ObjectCollection findByStoreId(int $store_id) Return ChildPointUsage objects filtered by the store_id column
- * @method     ChildPointUsage[]|ObjectCollection findByYenPerPoint(string $yen_per_point) Return ChildPointUsage objects filtered by the yen_per_point column
+ * @method     ChildPointUsage[]|ObjectCollection findByYenPerPoint(double $yen_per_point) Return ChildPointUsage objects filtered by the yen_per_point column
  * @method     ChildPointUsage[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildPointUsage objects filtered by the credit_card_id column
  * @method     ChildPointUsage[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPointUsage objects filtered by the update_time column
  * @method     ChildPointUsage[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPointUsage objects filtered by the update_user column
- * @method     ChildPointUsage[]|ObjectCollection findByReference(string $reference) Return ChildPointUsage objects filtered by the reference column
  * @method     ChildPointUsage[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class PointUsageQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PointUsageQuery object.
      *
@@ -160,9 +156,9 @@ abstract class PointUsageQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT point_usage_id, store_id, yen_per_point, credit_card_id, update_time, update_user, reference FROM point_usage WHERE point_usage_id = :p0';
+        $sql = 'SELECT point_usage_id, store_id, yen_per_point, credit_card_id, update_time, update_user FROM point_usage WHERE point_usage_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -491,35 +487,6 @@ abstract class PointUsageQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the reference column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
-     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $reference The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildPointUsageQuery The current query, for fluid interface
-     */
-    public function filterByReference($reference = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($reference)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $reference)) {
-                $reference = str_replace('*', '%', $reference);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(PointUsageTableMap::COL_REFERENCE, $reference, $comparison);
-    }
-
-    /**
      * Filter the query by a related \Store object
      *
      * @param \Store|ObjectCollection $store The related object(s) to use as filter
@@ -740,9 +707,9 @@ abstract class PointUsageQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PointUsageTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PointUsageTableMap::clearRelatedInstancePool();
 

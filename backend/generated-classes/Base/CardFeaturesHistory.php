@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'card_features_history' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class CardFeaturesHistory implements ActiveRecordInterface
+abstract class CardFeaturesHistory implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -336,7 +336,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [feature_id] column value.
-     *
+     * 
      * @return int
      */
     public function getFeatureId()
@@ -346,7 +346,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [feature_type_id] column value.
-     *
+     * 
      * @return int
      */
     public function getFeatureTypeId()
@@ -356,7 +356,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCreditCardId()
@@ -366,7 +366,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -376,7 +376,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [feature_cost] column value.
-     *
+     * 
      * @return int
      */
     public function getFeatureCost()
@@ -386,7 +386,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -406,7 +406,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -426,7 +426,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -436,7 +436,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [feature_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -456,7 +456,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [feature_type_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -476,7 +476,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -496,7 +496,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -516,7 +516,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [feature_cost] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -536,7 +536,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
@@ -556,7 +556,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
@@ -576,7 +576,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CardFeaturesHistory The current object (for fluent API support)
      */
@@ -895,28 +895,28 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'feature_id':
+                    case 'feature_id':                        
                         $stmt->bindValue($identifier, $this->feature_id, PDO::PARAM_INT);
                         break;
-                    case 'feature_type_id':
+                    case 'feature_type_id':                        
                         $stmt->bindValue($identifier, $this->feature_type_id, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':
+                    case 'credit_card_id':                        
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'feature_cost':
+                    case 'feature_cost':                        
                         $stmt->bindValue($identifier, $this->feature_cost, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':
+                    case 'time_beg':                        
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':
+                    case 'time_end':                        
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1040,7 +1040,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
 
         return $result;
     }
@@ -1258,7 +1258,7 @@ abstract class CardFeaturesHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

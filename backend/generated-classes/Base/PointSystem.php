@@ -4,8 +4,6 @@ namespace Base;
 
 use \CardPointSystem as ChildCardPointSystem;
 use \CardPointSystemQuery as ChildCardPointSystemQuery;
-use \Discount as ChildDiscount;
-use \DiscountQuery as ChildDiscountQuery;
 use \PointAcquisition as ChildPointAcquisition;
 use \PointAcquisitionQuery as ChildPointAcquisitionQuery;
 use \PointSystem as ChildPointSystem;
@@ -35,11 +33,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_system' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class PointSystem implements ActiveRecordInterface
+abstract class PointSystem implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -124,12 +122,6 @@ abstract class PointSystem implements ActiveRecordInterface
     protected $collCardPointSystemsPartial;
 
     /**
-     * @var        ObjectCollection|ChildDiscount[] Collection to store aggregation of ChildDiscount objects.
-     */
-    protected $collDiscounts;
-    protected $collDiscountsPartial;
-
-    /**
      * @var        ObjectCollection|ChildPointAcquisition[] Collection to store aggregation of ChildPointAcquisition objects.
      */
     protected $collPointAcquisitions;
@@ -160,12 +152,6 @@ abstract class PointSystem implements ActiveRecordInterface
      * @var ObjectCollection|ChildCardPointSystem[]
      */
     protected $cardPointSystemsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildDiscount[]
-     */
-    protected $discountsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -418,7 +404,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPointSystemId()
@@ -428,7 +414,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [point_system_name] column value.
-     *
+     * 
      * @return string
      */
     public function getPointSystemName()
@@ -438,7 +424,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [default_points_per_yen] column value.
-     *
+     * 
      * @return string
      */
     public function getDefaultPointsPerYen()
@@ -448,7 +434,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [default_yen_per_point] column value.
-     *
+     * 
      * @return string
      */
     public function getDefaultYenPerPoint()
@@ -458,7 +444,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -478,7 +464,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -488,7 +474,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     *
+     * 
      * @return string
      */
     public function getReference()
@@ -498,7 +484,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -518,7 +504,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -538,7 +524,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [default_points_per_yen] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -558,7 +544,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [default_yen_per_point] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -578,7 +564,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointSystem The current object (for fluent API support)
@@ -598,7 +584,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -618,7 +604,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -774,8 +760,6 @@ abstract class PointSystem implements ActiveRecordInterface
 
             $this->collCardPointSystems = null;
 
-            $this->collDiscounts = null;
-
             $this->collPointAcquisitions = null;
 
             $this->collPointUses = null;
@@ -909,23 +893,6 @@ abstract class PointSystem implements ActiveRecordInterface
                 }
             }
 
-            if ($this->discountsScheduledForDeletion !== null) {
-                if (!$this->discountsScheduledForDeletion->isEmpty()) {
-                    \DiscountQuery::create()
-                        ->filterByPrimaryKeys($this->discountsScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->discountsScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collDiscounts !== null) {
-                foreach ($this->collDiscounts as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->pointAcquisitionsScheduledForDeletion !== null) {
                 if (!$this->pointAcquisitionsScheduledForDeletion->isEmpty()) {
                     \PointAcquisitionQuery::create()
@@ -1035,25 +1002,25 @@ abstract class PointSystem implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_system_id':
+                    case 'point_system_id':                        
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'point_system_name':
+                    case 'point_system_name':                        
                         $stmt->bindValue($identifier, $this->point_system_name, PDO::PARAM_STR);
                         break;
-                    case 'default_points_per_yen':
+                    case 'default_points_per_yen':                        
                         $stmt->bindValue($identifier, $this->default_points_per_yen, PDO::PARAM_STR);
                         break;
-                    case 'default_yen_per_point':
+                    case 'default_yen_per_point':                        
                         $stmt->bindValue($identifier, $this->default_yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':
+                    case 'reference':                        
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1181,10 +1148,10 @@ abstract class PointSystem implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collCardPointSystems) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardPointSystems';
@@ -1195,26 +1162,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'CardPointSystems';
                 }
-
+        
                 $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collDiscounts) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'discounts';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'discounts';
-                        break;
-                    default:
-                        $key = 'Discounts';
-                }
-
-                $result[$key] = $this->collDiscounts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collPointAcquisitions) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointAcquisitions';
@@ -1225,11 +1177,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'PointAcquisitions';
                 }
-
+        
                 $result[$key] = $this->collPointAcquisitions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUses) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUses';
@@ -1240,11 +1192,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'PointUses';
                 }
-
+        
                 $result[$key] = $this->collPointUses->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collRewards) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -1255,7 +1207,7 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-
+        
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1465,7 +1417,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1523,12 +1475,6 @@ abstract class PointSystem implements ActiveRecordInterface
             foreach ($this->getCardPointSystems() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addCardPointSystem($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getDiscounts() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addDiscount($relObj->copy($deepCopy));
                 }
             }
 
@@ -1593,9 +1539,6 @@ abstract class PointSystem implements ActiveRecordInterface
     {
         if ('CardPointSystem' == $relationName) {
             return $this->initCardPointSystems();
-        }
-        if ('Discount' == $relationName) {
-            return $this->initDiscounts();
         }
         if ('PointAcquisition' == $relationName) {
             return $this->initPointAcquisitions();
@@ -1724,7 +1667,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildCardPointSystem[] $cardPointSystemsToDelete */
         $cardPointSystemsToDelete = $this->getCardPointSystems(new Criteria(), $con)->diff($cardPointSystems);
 
-
+        
         $this->cardPointSystemsScheduledForDeletion = $cardPointSystemsToDelete;
 
         foreach ($cardPointSystemsToDelete as $cardPointSystemRemoved) {
@@ -1852,249 +1795,6 @@ abstract class PointSystem implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collDiscounts collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addDiscounts()
-     */
-    public function clearDiscounts()
-    {
-        $this->collDiscounts = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collDiscounts collection loaded partially.
-     */
-    public function resetPartialDiscounts($v = true)
-    {
-        $this->collDiscountsPartial = $v;
-    }
-
-    /**
-     * Initializes the collDiscounts collection.
-     *
-     * By default this just sets the collDiscounts collection to an empty array (like clearcollDiscounts());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initDiscounts($overrideExisting = true)
-    {
-        if (null !== $this->collDiscounts && !$overrideExisting) {
-            return;
-        }
-        $this->collDiscounts = new ObjectCollection();
-        $this->collDiscounts->setModel('\Discount');
-    }
-
-    /**
-     * Gets an array of ChildDiscount objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildPointSystem is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildDiscount[] List of ChildDiscount objects
-     * @throws PropelException
-     */
-    public function getDiscounts(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collDiscountsPartial && !$this->isNew();
-        if (null === $this->collDiscounts || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collDiscounts) {
-                // return empty collection
-                $this->initDiscounts();
-            } else {
-                $collDiscounts = ChildDiscountQuery::create(null, $criteria)
-                    ->filterByPointSystem($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collDiscountsPartial && count($collDiscounts)) {
-                        $this->initDiscounts(false);
-
-                        foreach ($collDiscounts as $obj) {
-                            if (false == $this->collDiscounts->contains($obj)) {
-                                $this->collDiscounts->append($obj);
-                            }
-                        }
-
-                        $this->collDiscountsPartial = true;
-                    }
-
-                    return $collDiscounts;
-                }
-
-                if ($partial && $this->collDiscounts) {
-                    foreach ($this->collDiscounts as $obj) {
-                        if ($obj->isNew()) {
-                            $collDiscounts[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collDiscounts = $collDiscounts;
-                $this->collDiscountsPartial = false;
-            }
-        }
-
-        return $this->collDiscounts;
-    }
-
-    /**
-     * Sets a collection of ChildDiscount objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $discounts A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildPointSystem The current object (for fluent API support)
-     */
-    public function setDiscounts(Collection $discounts, ConnectionInterface $con = null)
-    {
-        /** @var ChildDiscount[] $discountsToDelete */
-        $discountsToDelete = $this->getDiscounts(new Criteria(), $con)->diff($discounts);
-
-
-        $this->discountsScheduledForDeletion = $discountsToDelete;
-
-        foreach ($discountsToDelete as $discountRemoved) {
-            $discountRemoved->setPointSystem(null);
-        }
-
-        $this->collDiscounts = null;
-        foreach ($discounts as $discount) {
-            $this->addDiscount($discount);
-        }
-
-        $this->collDiscounts = $discounts;
-        $this->collDiscountsPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Discount objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Discount objects.
-     * @throws PropelException
-     */
-    public function countDiscounts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collDiscountsPartial && !$this->isNew();
-        if (null === $this->collDiscounts || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collDiscounts) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getDiscounts());
-            }
-
-            $query = ChildDiscountQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByPointSystem($this)
-                ->count($con);
-        }
-
-        return count($this->collDiscounts);
-    }
-
-    /**
-     * Method called to associate a ChildDiscount object to this object
-     * through the ChildDiscount foreign key attribute.
-     *
-     * @param  ChildDiscount $l ChildDiscount
-     * @return $this|\PointSystem The current object (for fluent API support)
-     */
-    public function addDiscount(ChildDiscount $l)
-    {
-        if ($this->collDiscounts === null) {
-            $this->initDiscounts();
-            $this->collDiscountsPartial = true;
-        }
-
-        if (!$this->collDiscounts->contains($l)) {
-            $this->doAddDiscount($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildDiscount $discount The ChildDiscount object to add.
-     */
-    protected function doAddDiscount(ChildDiscount $discount)
-    {
-        $this->collDiscounts[]= $discount;
-        $discount->setPointSystem($this);
-    }
-
-    /**
-     * @param  ChildDiscount $discount The ChildDiscount object to remove.
-     * @return $this|ChildPointSystem The current object (for fluent API support)
-     */
-    public function removeDiscount(ChildDiscount $discount)
-    {
-        if ($this->getDiscounts()->contains($discount)) {
-            $pos = $this->collDiscounts->search($discount);
-            $this->collDiscounts->remove($pos);
-            if (null === $this->discountsScheduledForDeletion) {
-                $this->discountsScheduledForDeletion = clone $this->collDiscounts;
-                $this->discountsScheduledForDeletion->clear();
-            }
-            $this->discountsScheduledForDeletion[]= clone $discount;
-            $discount->setPointSystem(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this PointSystem is new, it will return
-     * an empty collection; or if this PointSystem has previously
-     * been saved, it will retrieve related Discounts from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in PointSystem.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildDiscount[] List of ChildDiscount objects
-     */
-    public function getDiscountsJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildDiscountQuery::create(null, $criteria);
-        $query->joinWith('Store', $joinBehavior);
-
-        return $this->getDiscounts($query, $con);
-    }
-
-    /**
      * Clears out the collPointAcquisitions collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -2210,7 +1910,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildPointAcquisition[] $pointAcquisitionsToDelete */
         $pointAcquisitionsToDelete = $this->getPointAcquisitions(new Criteria(), $con)->diff($pointAcquisitions);
 
-
+        
         $this->pointAcquisitionsScheduledForDeletion = $pointAcquisitionsToDelete;
 
         foreach ($pointAcquisitionsToDelete as $pointAcquisitionRemoved) {
@@ -2453,7 +2153,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildPointUse[] $pointUsesToDelete */
         $pointUsesToDelete = $this->getPointUses(new Criteria(), $con)->diff($pointUses);
 
-
+        
         $this->pointUsesScheduledForDeletion = $pointUsesToDelete;
 
         foreach ($pointUsesToDelete as $pointUseRemoved) {
@@ -2696,7 +2396,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-
+        
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {
@@ -2865,6 +2565,31 @@ abstract class PointSystem implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildReward[] List of ChildReward objects
      */
+    public function getRewardsJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('Store', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this PointSystem is new, it will return
+     * an empty collection; or if this PointSystem has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in PointSystem.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
     public function getRewardsJoinUnit(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildRewardQuery::create(null, $criteria);
@@ -2911,11 +2636,6 @@ abstract class PointSystem implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collDiscounts) {
-                foreach ($this->collDiscounts as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collPointAcquisitions) {
                 foreach ($this->collPointAcquisitions as $o) {
                     $o->clearAllReferences($deep);
@@ -2934,7 +2654,6 @@ abstract class PointSystem implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collCardPointSystems = null;
-        $this->collDiscounts = null;
         $this->collPointAcquisitions = null;
         $this->collPointUses = null;
         $this->collRewards = null;

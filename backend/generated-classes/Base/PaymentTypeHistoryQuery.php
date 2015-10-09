@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'payment_type_history' table.
  *
- *
+ * 
  *
  * @method     ChildPaymentTypeHistoryQuery orderByPaymentTypeId($order = Criteria::ASC) Order by the payment_type_id column
  * @method     ChildPaymentTypeHistoryQuery orderByPaymentType($order = Criteria::ASC) Order by the payment_type column
@@ -59,7 +59,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PaymentTypeHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PaymentTypeHistoryQuery object.
      *
@@ -147,8 +147,8 @@ abstract class PaymentTypeHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT payment_type_id, payment_type, payment_description, time_beg, time_end, update_user FROM payment_type_history WHERE payment_type_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -530,9 +530,9 @@ abstract class PaymentTypeHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PaymentTypeHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PaymentTypeHistoryTableMap::clearRelatedInstancePool();
 

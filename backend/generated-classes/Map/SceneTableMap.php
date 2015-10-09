@@ -149,8 +149,8 @@ class SceneTableMap extends TableMap
         $this->addPrimaryKey('scene_id', 'SceneId', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
-        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
+        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
 
     /**
@@ -159,6 +159,7 @@ class SceneTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('MapPersonaScene', '\\MapPersonaScene', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapPersonaScenes');
+        $this->addRelation('MapSceneRewardCategory', '\\MapSceneRewardCategory', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapSceneRewardCategories');
         $this->addRelation('MapSceneStoreCategory', '\\MapSceneStoreCategory', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapSceneStoreCategories');
     } // buildRelations()
 
@@ -205,7 +206,7 @@ class SceneTableMap extends TableMap
                 : self::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -266,7 +267,7 @@ class SceneTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

@@ -9,6 +9,7 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class JSceneCategoryMapping implements JSONInterface
 {
@@ -101,8 +102,7 @@ class JSceneCategoryMapping implements JSONInterface
         !is_null($this->StoreCategory->StoreCategoryId) && !is_null($this->Scene->SceneId);
     }
 
-    public function toDB()
-    {
+    public function toDB() {
         if(!$this->isValid()) throw new \Exception("Invalid JSceneToCategoryMappiong, can't save");
         $item = JSceneCategoryMapping::TRY_LOAD_FROM_DB($this->Scene->SceneId, $this->StoreCategory->StoreCategoryId);
         if(is_null($item)) $item = new \MapSceneStoreCategory();

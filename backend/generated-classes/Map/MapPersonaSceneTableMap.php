@@ -59,7 +59,7 @@ class MapPersonaSceneTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class MapPersonaSceneTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the persona_id field
@@ -80,6 +80,11 @@ class MapPersonaSceneTableMap extends TableMap
      * the column name for the scene_id field
      */
     const COL_SCENE_ID = 'map_persona_scene.scene_id';
+
+    /**
+     * the column name for the percentage field
+     */
+    const COL_PERCENTAGE = 'map_persona_scene.percentage';
 
     /**
      * the column name for the priority_id field
@@ -108,11 +113,11 @@ class MapPersonaSceneTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PersonaId', 'SceneId', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('personaId', 'sceneId', 'priorityId', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(MapPersonaSceneTableMap::COL_PERSONA_ID, MapPersonaSceneTableMap::COL_SCENE_ID, MapPersonaSceneTableMap::COL_PRIORITY_ID, MapPersonaSceneTableMap::COL_UPDATE_TIME, MapPersonaSceneTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('persona_id', 'scene_id', 'priority_id', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId', 'SceneId', 'Percentage', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('personaId', 'sceneId', 'percentage', 'priorityId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MapPersonaSceneTableMap::COL_PERSONA_ID, MapPersonaSceneTableMap::COL_SCENE_ID, MapPersonaSceneTableMap::COL_PERCENTAGE, MapPersonaSceneTableMap::COL_PRIORITY_ID, MapPersonaSceneTableMap::COL_UPDATE_TIME, MapPersonaSceneTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'scene_id', 'percentage', 'priority_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class MapPersonaSceneTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'SceneId' => 1, 'PriorityId' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('personaId' => 0, 'sceneId' => 1, 'priorityId' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(MapPersonaSceneTableMap::COL_PERSONA_ID => 0, MapPersonaSceneTableMap::COL_SCENE_ID => 1, MapPersonaSceneTableMap::COL_PRIORITY_ID => 2, MapPersonaSceneTableMap::COL_UPDATE_TIME => 3, MapPersonaSceneTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'scene_id' => 1, 'priority_id' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'SceneId' => 1, 'Percentage' => 2, 'PriorityId' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('personaId' => 0, 'sceneId' => 1, 'percentage' => 2, 'priorityId' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(MapPersonaSceneTableMap::COL_PERSONA_ID => 0, MapPersonaSceneTableMap::COL_SCENE_ID => 1, MapPersonaSceneTableMap::COL_PERCENTAGE => 2, MapPersonaSceneTableMap::COL_PRIORITY_ID => 3, MapPersonaSceneTableMap::COL_UPDATE_TIME => 4, MapPersonaSceneTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'scene_id' => 1, 'percentage' => 2, 'priority_id' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -148,6 +153,7 @@ class MapPersonaSceneTableMap extends TableMap
         // columns
         $this->addForeignPrimaryKey('persona_id', 'PersonaId', 'INTEGER' , 'persona', 'persona_id', true, null, null);
         $this->addForeignPrimaryKey('scene_id', 'SceneId', 'INTEGER' , 'scene', 'scene_id', true, null, null);
+        $this->addColumn('percentage', 'Percentage', 'DOUBLE', false, null, 0.3);
         $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
@@ -253,7 +259,7 @@ class MapPersonaSceneTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-
+            
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -267,7 +273,7 @@ class MapPersonaSceneTableMap extends TableMap
 
         return $pks;
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -328,7 +334,7 @@ class MapPersonaSceneTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -367,12 +373,14 @@ class MapPersonaSceneTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_PERSONA_ID);
             $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_SCENE_ID);
+            $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_PERCENTAGE);
             $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_PRIORITY_ID);
             $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(MapPersonaSceneTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.persona_id');
             $criteria->addSelectColumn($alias . '.scene_id');
+            $criteria->addSelectColumn($alias . '.percentage');
             $criteria->addSelectColumn($alias . '.priority_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');

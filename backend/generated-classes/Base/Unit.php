@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'unit' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class Unit implements ActiveRecordInterface
+abstract class Unit implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -334,7 +334,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Get the [unit_id] column value.
-     *
+     * 
      * @return int
      */
     public function getUnitId()
@@ -344,7 +344,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -354,7 +354,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -364,7 +364,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -384,7 +384,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -394,7 +394,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Set the value of [unit_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\Unit The current object (for fluent API support)
      */
@@ -414,7 +414,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Unit The current object (for fluent API support)
      */
@@ -434,7 +434,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Unit The current object (for fluent API support)
      */
@@ -454,7 +454,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Unit The current object (for fluent API support)
@@ -474,7 +474,7 @@ abstract class Unit implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\Unit The current object (for fluent API support)
      */
@@ -795,19 +795,19 @@ abstract class Unit implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'unit_id':
+                    case 'unit_id':                        
                         $stmt->bindValue($identifier, $this->unit_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -927,10 +927,10 @@ abstract class Unit implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->collRewards) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -941,7 +941,7 @@ abstract class Unit implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-
+        
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1133,7 +1133,7 @@ abstract class Unit implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1354,7 +1354,7 @@ abstract class Unit implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-
+        
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {
@@ -1527,6 +1527,31 @@ abstract class Unit implements ActiveRecordInterface
     {
         $query = ChildRewardQuery::create(null, $criteria);
         $query->joinWith('RewardType', $joinBehavior);
+
+        return $this->getRewards($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Unit is new, it will return
+     * an empty collection; or if this Unit has previously
+     * been saved, it will retrieve related Rewards from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Unit.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildReward[] List of ChildReward objects
+     */
+    public function getRewardsJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildRewardQuery::create(null, $criteria);
+        $query->joinWith('Store', $joinBehavior);
 
         return $this->getRewards($query, $con);
     }

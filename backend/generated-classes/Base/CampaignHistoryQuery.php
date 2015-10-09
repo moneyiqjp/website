@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'campaign_history' table.
  *
- *
+ * 
  *
  * @method     ChildCampaignHistoryQuery orderByCampaignId($order = Criteria::ASC) Order by the campaign_id column
  * @method     ChildCampaignHistoryQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -79,7 +79,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CampaignHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\CampaignHistoryQuery object.
      *
@@ -167,8 +167,8 @@ abstract class CampaignHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT campaign_id, credit_card_id, campaign_name, description, max_points, value_in_yen, start_date, end_date, time_beg, time_end, update_user FROM campaign_history WHERE campaign_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -759,9 +759,9 @@ abstract class CampaignHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CampaignHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CampaignHistoryTableMap::clearRelatedInstancePool();
 

@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.21, for Win32 (x86)
 --
--- Host: moneyiq.jp    Database: moneyiq
+-- Host: moneyiq.jp    Database: moneyiq_uat
 -- ------------------------------------------------------
 -- Server version	5.5.42-cll-lve
 
@@ -31,7 +31,7 @@ CREATE TABLE `affiliate_company` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`affiliate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -61,7 +61,7 @@ CREATE TABLE `affiliate_company_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`affiliate_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `campaign` (
   PRIMARY KEY (`campaign_id`),
   KEY `campaign_credit_card` (`credit_card_id`),
   CONSTRAINT `campaign_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `campaign_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`campaign_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `card_description` (
   PRIMARY KEY (`item_id`),
   KEY `creditcard_description` (`credit_card_id`),
   CONSTRAINT `creditcard_description` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,7 +186,7 @@ CREATE TABLE `card_description_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`item_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +215,7 @@ CREATE TABLE `card_feature_type` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`feature_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +245,7 @@ CREATE TABLE `card_feature_type_history` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`feature_type_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `card_features` (
   KEY `fk_card_feature_type` (`feature_type_id`),
   CONSTRAINT `card_features_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`),
   CONSTRAINT `fk_card_feature_type` FOREIGN KEY (`feature_type_id`) REFERENCES `card_feature_type` (`feature_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +309,7 @@ CREATE TABLE `card_features_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`feature_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +340,7 @@ CREATE TABLE `card_point_system` (
   KEY `fk_point_system` (`point_system_id`),
   CONSTRAINT `fk_credit_card_id` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`),
   CONSTRAINT `fk_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,7 +383,7 @@ CREATE TABLE `credit_card` (
   KEY `issuer_credit_card` (`issuer_id`),
   CONSTRAINT `affiliate_company_credit_card` FOREIGN KEY (`affiliate_id`) REFERENCES `affiliate_company` (`affiliate_id`),
   CONSTRAINT `issuer_credit_card` FOREIGN KEY (`issuer_id`) REFERENCES `issuer` (`issuer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,7 +420,7 @@ CREATE TABLE `credit_card_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`credit_card_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,7 +458,7 @@ CREATE TABLE `discounts` (
   KEY `fk_discounts_store` (`store_id`),
   CONSTRAINT `fk_discounts_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`),
   CONSTRAINT `fk_discounts_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,7 +492,7 @@ CREATE TABLE `discounts_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`discount_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -525,7 +525,7 @@ CREATE TABLE `fees` (
   PRIMARY KEY (`fee_id`),
   KEY `fees_credit_card` (`credit_card_id`),
   CONSTRAINT `fees_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -557,7 +557,7 @@ CREATE TABLE `fees_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`fee_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -590,7 +590,7 @@ CREATE TABLE `insurance` (
   KEY `insurance_insurance_type` (`insurance_type_id`),
   CONSTRAINT `insurance_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`),
   CONSTRAINT `insurance_insurance_type` FOREIGN KEY (`insurance_type_id`) REFERENCES `insurance_type` (`insurance_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -620,7 +620,7 @@ CREATE TABLE `insurance_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`insurance_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -648,7 +648,7 @@ CREATE TABLE `insurance_type` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`insurance_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -679,7 +679,7 @@ CREATE TABLE `insurance_type_history` (
   `time_beg` datetime NOT NULL,
   `time_end` datetime DEFAULT NULL,
   PRIMARY KEY (`insurance_type_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -712,7 +712,7 @@ CREATE TABLE `interest` (
   KEY `Interest_payment_type` (`payment_type_id`),
   CONSTRAINT `Interest_credit_card` FOREIGN KEY (`credit_card_id`) REFERENCES `credit_card` (`credit_card_id`),
   CONSTRAINT `Interest_payment_type` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_type` (`payment_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -743,7 +743,7 @@ CREATE TABLE `interest_history` (
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`credit_card_id`,`payment_type_id`,`time_beg`),
   KEY `interest_id` (`interest_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -768,7 +768,7 @@ CREATE TABLE `issuer` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`issuer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -777,7 +777,7 @@ CREATE TABLE `issuer` (
 
 LOCK TABLES `issuer` WRITE;
 /*!40000 ALTER TABLE `issuer` DISABLE KEYS */;
-INSERT INTO `issuer` VALUES (1,'株式会社リクルートライフスタイル','2015-04-04 19:55:13','benfries'),(3,'株式会社セブン・カードサービス','2015-04-04 19:55:13','benfries'),(4,'楽天カード株式会社','2015-04-04 19:55:13','benfries'),(5,'三井住友カード株式会社','2015-04-04 19:55:13','benfries'),(6,'ＪＸ日鉱日石エネルギー株式会社','2015-04-04 19:55:13','benfries'),(7,'TSUTAYA','2015-04-04 19:55:13','benfries'),(8,'NIHONDO','2015-04-04 19:55:13','benfries'),(9,'SMBC','2015-04-04 19:55:13','benfries'),(10,'Credit Saison','2015-04-04 19:55:13','benfries'),(11,'三井住友トラスト','2015-04-04 19:55:13','benfries'),(12,'ジャックス','2015-04-04 19:55:13','benfries'),(13,'株式会社ＪＡＬカード','2015-04-04 19:55:13','benfries'),(14,'Yahoo! Japan カード','2015-07-21 11:52:55','AB'),(15,'エポスカード株式会社','2015-07-22 10:52:30','ab');
+INSERT INTO `issuer` VALUES (1,'株式会社リクルートライフスタイル','2015-04-04 19:55:13','benfries'),(3,'株式会社セブン・カードサービス','2015-04-04 19:55:13','benfries'),(4,'楽天カード株式会社','2015-04-04 19:55:13','benfries'),(5,'三井住友カード株式会社','2015-04-04 19:55:13','benfries'),(6,'ＪＸ日鉱日石エネルギー株式会社','2015-04-04 19:55:13','benfries'),(7,'TSUTAYA','2015-04-04 19:55:13','benfries'),(8,'NIHONDO','2015-04-04 19:55:13','benfries'),(9,'SMBC','2015-04-04 19:55:13','benfries'),(10,'Credit Saison','2015-04-04 19:55:13','benfries'),(11,'三井住友トラスト','2015-04-04 19:55:13','benfries'),(12,'ジャックス','2015-04-04 19:55:13','benfries'),(13,'株式会社ＪＡＬカード','2015-04-04 19:55:13','benfries'),(14,'Yahoo! Japan カード','2015-07-21 11:52:55','AB'),(15,'エポスカード株式会社','2015-07-22 10:52:30','ab'),(16,'test','2015-08-08 04:13:50','');
 /*!40000 ALTER TABLE `issuer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -795,7 +795,7 @@ CREATE TABLE `issuer_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`issuer_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -834,6 +834,7 @@ CREATE TABLE `map_persona_scene` (
 
 LOCK TABLES `map_persona_scene` WRITE;
 /*!40000 ALTER TABLE `map_persona_scene` DISABLE KEYS */;
+INSERT INTO `map_persona_scene` VALUES (1,1,100,'2015-08-08 05:51:22','');
 /*!40000 ALTER TABLE `map_persona_scene` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -848,13 +849,13 @@ CREATE TABLE `map_scene_store_category` (
   `scene_id` int(11) NOT NULL,
   `store_category_id` int(11) NOT NULL,
   `priority_id` int(11) DEFAULT '100',
-  `update_time` datetime NOT NULL,
-  `update_user` varchar(100) NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`scene_id`,`store_category_id`),
   KEY `fk_scene_id_ind` (`scene_id`),
   KEY `fk_store_category_id_ind` (`store_category_id`),
-  CONSTRAINT `fk_scene_id` FOREIGN KEY (`scene_id`) REFERENCES `scene` (`scene_id`),
-  CONSTRAINT `fk_store_category_id` FOREIGN KEY (`store_category_id`) REFERENCES `store_category` (`store_category_id`)
+  CONSTRAINT `FK_map_scene_store_scene` FOREIGN KEY (`scene_id`) REFERENCES `scene` (`scene_id`),
+  CONSTRAINT `FK_map_scene_store_store` FOREIGN KEY (`store_category_id`) REFERENCES `store_category` (`store_category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -864,6 +865,7 @@ CREATE TABLE `map_scene_store_category` (
 
 LOCK TABLES `map_scene_store_category` WRITE;
 /*!40000 ALTER TABLE `map_scene_store_category` DISABLE KEYS */;
+INSERT INTO `map_scene_store_category` VALUES (1,2,100,'2015-08-08 06:13:34',NULL);
 /*!40000 ALTER TABLE `map_scene_store_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -881,7 +883,7 @@ CREATE TABLE `payment_type` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`payment_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -909,7 +911,7 @@ CREATE TABLE `payment_type_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`payment_type_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -935,7 +937,7 @@ CREATE TABLE `persona` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) NOT NULL,
   PRIMARY KEY (`persona_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -944,6 +946,7 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
+INSERT INTO `persona` VALUES (1,'test','','2015-08-08 05:51:09',''),(2,'若い家族','Family with young kids','2015-09-13 01:19:52','ab'),(3,'出張','Business traveller','2015-09-13 01:20:38','ab'),(4,'働く女性','Single working women','2015-09-13 01:29:45','ab');
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -968,7 +971,7 @@ CREATE TABLE `point_acquisition` (
   KEY `ps_point_acquisition` (`point_system_id`),
   CONSTRAINT `FK_point_acquisition_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
   CONSTRAINT `ps_point_acquisition` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=236 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -998,7 +1001,7 @@ CREATE TABLE `point_acquisition_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`point_acquisition_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1026,7 +1029,7 @@ CREATE TABLE `point_system` (
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   `reference` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`point_system_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1055,7 +1058,7 @@ CREATE TABLE `point_system_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`point_system_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1110,6 +1113,7 @@ DROP TABLE IF EXISTS `reward`;
 CREATE TABLE `reward` (
   `reward_id` int(11) NOT NULL AUTO_INCREMENT,
   `point_system_id` int(11) NOT NULL,
+  `store_id` int(11) DEFAULT NULL,
   `reward_category_id` int(11) DEFAULT NULL,
   `reward_type_id` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
@@ -1131,9 +1135,11 @@ CREATE TABLE `reward` (
   KEY `FK_reward_category_id` (`reward_category_id`),
   KEY `FK_reward_type` (`reward_type_id`),
   KEY `FK_unit` (`unit_id`),
+  KEY `FK_store_id` (`store_id`),
   CONSTRAINT `FK_reward_category_id` FOREIGN KEY (`reward_category_id`) REFERENCES `reward_category` (`reward_category_id`),
   CONSTRAINT `FK_reward_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`),
   CONSTRAINT `FK_reward_type` FOREIGN KEY (`reward_type_id`) REFERENCES `reward_type` (`reward_type_id`),
+  CONSTRAINT `FK_store_id` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
   CONSTRAINT `FK_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1144,7 +1150,7 @@ CREATE TABLE `reward` (
 
 LOCK TABLES `reward` WRITE;
 /*!40000 ALTER TABLE `reward` DISABLE KEYS */;
-INSERT INTO `reward` VALUES (1,2,7,1,'ホットペッパービューティーサロン割引','ホットペッパービューティーサロン割引。※1回あたり3,000円まで','http://www.moneyiq.jp/images/Cash_payment_32.png',1.000000,100,100,9999999,3000,'回',1.00000000,1,NULL,'2015-07-15 13:20:39',''),(2,2,2,1,'ホットペッパー食事割引券','1ポイント＝１円分',NULL,1.000000,100,100,NULL,0,'',1.00000000,1,NULL,'2015-07-13 23:39:25',''),(3,2,3,1,'じゃらん宿泊割引','１ポイント＝１円分',NULL,1.000000,100,100,NULL,50000,'',1.00000000,1,'https://point.recruit.co.jp/?tab=pointUseServise','2015-07-13 23:42:13',''),(5,3,7,1,'ファミリーマートでのお買い物に使う','１ポイント＝１円分',NULL,1.000000,1,1,NULL,1000,'',1.00000000,1,NULL,'2015-07-13 23:40:05',''),(6,3,7,1,'ENEOSでガソリンを','１ポイント＝１円分',NULL,1.000000,1,1,NULL,3000,'',1.00000000,1,NULL,'2015-07-13 23:40:31',''),(7,3,6,3,'ANA マイルレージに交換','ANA で東京→大阪 (片道）',NULL,2.031700,6000,6000,NULL,0,'',2.00000000,2,NULL,'2015-07-15 12:54:27',''),(8,4,7,1,'イトーヨーカドーでの買い物に使う','１ポイント＝１円分',NULL,1.000000,1,1,NULL,1000,'',1.00000000,1,NULL,'2015-07-13 23:40:45',''),(9,4,7,2,'nanaco電子マネーに交換','1セブン＆アイポイント＝1 nanaco ポイント',NULL,1.000000,100,500,NULL,500,'',1.00000000,1,NULL,'2015-07-13 23:41:02',''),(10,4,6,3,'ANA 国内航空券','東京⇄沖縄',NULL,2.476700,9000,9000,NULL,25000,'',0.50000000,2,NULL,'2015-07-15 12:53:35',''),(11,5,7,2,'Edy 電子マネーに交換','1楽天スーパーポイント→Edy で１円分',NULL,1.000000,1,10,NULL,1000,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(12,5,7,1,'楽天市場での買い物に使う','1楽天スーパーポイント→１円分',NULL,1.000000,1,50,NULL,10000,'',1.00000000,1,NULL,'2015-06-29 13:34:24',''),(13,5,3,1,'楽天トラベルでの旅を予約','１ポイント＝１円分',NULL,1.000000,1,50,NULL,0,'',1.00000000,1,NULL,'2015-07-13 23:42:22',''),(17,7,7,1,'ENEOSでガソリンを','１ポイント→１円割引',NULL,1.000000,1000,1000,NULL,1000,'',1.00000000,1,NULL,'2015-07-01 12:37:09',''),(18,7,7,2,'Tポイントへの交換','1ポイント→0.7 Tポイント',NULL,0.700000,1000,1000,NULL,10000,'',1.00000000,1,NULL,'2015-07-01 12:41:54',''),(19,7,9,3,'Dyson ハンディークリーナー','ポイントでDysonハンディークリーナーもらえる！',NULL,1.000000,NULL,50000,NULL,50000,'',1.00000000,1,NULL,'2015-07-01 12:42:16',''),(23,7,9,3,'スチームクリーナー','ポイントでスチームクリーナーがもらえる！',NULL,1.000000,NULL,10000,NULL,10000,'',1.00000000,1,NULL,'2015-07-01 12:42:35',''),(24,8,6,2,'ANA国内航空券','東京⇄福岡　1ポイント→3 ANA マイル',NULL,1.958700,7500,7500,NULL,10000,'',3.00000000,2,NULL,'2015-07-15 12:56:24',''),(27,9,9,2,'楽天スーパーポイント交換','1ポイント→５楽天スーパーポイント',NULL,5.000000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-13 23:18:12',''),(29,9,9,3,'BOSE サウンドドックシリーズIII','ミュージックサウンドシステムをポイントでもらえる',NULL,5.000000,NULL,5000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-06 12:54:39',''),(31,11,6,2,'ANA 国内航空券','東京⇄大阪 (往復）200永久不減ポイント→625 ANAマイル',NULL,2.031700,12000,12000,NULL,NULL,'',0.32000000,2,NULL,'2015-07-15 13:18:40','AB'),(32,11,9,2,'Amazon ギフト券','200永久不減ポイント→1000円分 Amazon ギフト券',NULL,5.000000,200,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:39:33',''),(33,12,2,3,'品川プリンスホテルディナー券','品川プリンスホテル　リュクス ダイニング ハプナ ディナー券(2時間飲み放題付き)　1名様',NULL,1.000000,NULL,5000,NULL,NULL,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(35,11,6,2,'JAL 国内航空券','東京⇄大阪（往復）200永久不減ポイント→500 JALマイル',NULL,1.948300,12000,12000,NULL,NULL,'',0.40000000,2,NULL,'2015-07-15 13:15:25','AB'),(36,13,7,1,'マツダ店でのお支払い時','1マツダm\'zポイント→1円',NULL,1.000000,1,1,300000,NULL,'回',1.00000000,1,NULL,'2015-07-01 12:41:14',''),(37,13,6,2,'JAL マイルレージに交換','4マツダm\'zポイント→1 JALマイル',NULL,0.250000,NULL,4000,60000,NULL,'年',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(38,14,7,2,'JR 九州SUGOCA電子マネーに交換','1ポイント→1円分',NULL,1.000000,1,100,NULL,NULL,'',1.00000000,1,NULL,'2015-07-11 21:51:14','ab'),(39,14,3,2,'JR 九州旅行券に交換','1ポイント＝1円分',NULL,1.000000,NULL,3000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-13 23:42:36',''),(40,14,7,2,'セゾン永久不減ポイントに交換','4JQポイント→1永久不減ポイント',NULL,0.250000,NULL,2000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-07 03:32:16',''),(41,9,7,2,'iD 電子マネーに交換','1ポイント→5円分',NULL,5.000000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(42,9,7,2,'Ponta ポイントに交換','1ポイント→4.5Ponta ポイント',NULL,4.500000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:38:21',''),(43,15,9,2,'カラマツトレインギフト券に交換','1ポイント→1円分',NULL,1.000000,500,500,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:37:28',''),(44,16,6,3,'東京→大阪片道飛行機券','ローシーズン限定',NULL,2.000000,NULL,7000,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:21',''),(45,16,6,3,'東京→福岡片道飛行機チケット','ローシーズン限定',NULL,2.000000,NULL,8500,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:30',''),(46,16,6,3,'東京→ハワイ片道飛行機チケット','ローシーズン限定',NULL,2.000000,NULL,17500,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:47',''),(47,17,3,1,'じゃらん宿泊割引','１ポイント＝１円分','http://www.moneyiq.jp/images/Hotel_building_32.png',1.000000,1,100,NULL,NULL,NULL,1.00000000,1,'http://recruit-card.jp/point/?campaignCd=crda0001','2015-07-13 23:42:47',''),(48,21,7,1,'ENEOSでキャッシュバック','１ポイント→１円割引','http://www.moneyiq.jp/images/Cash_payment_32.png',1.000000,1000,1000,NULL,NULL,NULL,1.00000000,1,'http://www.noe.jx-group.co.jp/carlife/card/card/kind/card_s.html','2015-07-13 13:31:27','AB'),(54,22,7,1,'１ポイント＝1.1円分','.',NULL,1.111111,1,9000,20000,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:41:49',''),(55,22,9,2,'ルミネ商品券','.１ポイント＝3.2円分',NULL,3.200000,1,1250,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:43:43',''),(56,20,6,2,'JAL','東京⇄大阪 (往復)',NULL,3.000000,9500,9500,9500,NULL,NULL,1.00000000,2,NULL,'2015-07-09 13:05:46','ab'),(57,20,6,2,'JAL','東京⇄沖縄 (往復）',NULL,3.000000,11500,11500,11500,NULL,NULL,1.00000000,2,NULL,'2015-07-08 14:58:34','ab'),(58,20,6,2,'JAL','東京⇄ソウル (往復）',NULL,3.000000,15000,15000,15000,NULL,NULL,1.00000000,2,NULL,'2015-07-12 00:55:13',''),(59,20,6,2,'JAL 国際線','日本⇄香港 (往復）',NULL,3.000000,20000,20000,20000,NULL,NULL,1.00000000,2,NULL,'2015-07-08 14:58:51','ab'),(60,9,6,2,'ANA 国内線','東京⇔大阪 (往復)  1ポイント→3 ANA マイル',NULL,2.031700,12000,12000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 13:53:35','ab'),(62,9,6,2,'ANA国際線航空券','日本⇔ソウル (往復) 1ポイント→3 ANAマイル',NULL,3.081300,15000,15000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokusai.html','2015-07-15 13:53:53','ab'),(63,9,6,2,'ANA国際線航空券','日本⇔香港 (往復) 1ポイント→3 ANAマイル',NULL,2.891000,20000,20000,NULL,NULL,NULL,0.33333300,2,'https://www.ana.co.jp/amc/reference/tukau/kokusai.html','2015-07-15 13:55:45','ab'),(64,9,6,2,'ANA国内航空券','東京⇄沖縄（往復）1ポイント→3 ANAマイル',NULL,2.415600,18000,18000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:42:41','AB'),(65,8,7,2,'Jデポに交換 (請求書キャッシュバック）','１ポイント＝５円で換算',NULL,5.000000,300,300,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-12 10:23:35','ab'),(66,23,7,2,'楽天ポイントに交換','１ポイント→５楽天スーパーポイント',NULL,5.000000,100,200,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-12 13:19:16','ab'),(67,23,6,2,'ANA国際線','東京⇄大阪（往復、ローシーズンン）',NULL,3.000000,10000,10000,NULL,NULL,NULL,1.00000000,2,NULL,'2015-07-12 13:20:36','ab'),(68,17,7,1,'ホットペッパービューティーサロン割引','１ポイント＝１円分。※1回あたり3,000円まで',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:42:04',''),(69,17,2,1,'ホットペッパー食事割引券','１ポイント＝１円分',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:39:41',''),(71,9,2,2,'スターバックスカード','1ポイント＝スターバックス カード 4円分',NULL,4.000000,100,200,7500,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:46:50','ab'),(72,9,2,2,'タリーズカード','ワールドプレゼント1ポイント＝タリーズ カード　4円分',NULL,4.000000,100,200,5000,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:15:45','ab'),(73,5,2,2,'楽天デリバリー','１楽天スーパーポイント＝１円分',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:28:32','ab'),(74,11,9,2,'ユニクロオンラインギフトカード','1,500ポイントで7,000円分',NULL,4.666660,1500,1500,2099,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:33:34','ab'),(75,11,9,2,'ユニクロオンラインギフトカード','2,100ポイントで10,000円分',NULL,4.761900,2100,2100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:35:09','ab'),(76,9,6,3,'ANA 国内航空券','東京→大阪（片道）1ポイント→3 ANAマイル',NULL,2.031700,6000,6000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:43:21','ab'),(77,9,6,3,'ANA 国内航空券','東京→福岡 (片道) 1ポイント→3 ANAマイル',NULL,1.958700,7500,7500,9999999,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:56:33','ab'),(78,9,6,3,'ANA 国内航空券','東京→沖縄 (片道) 1ポイント→3 ANAマイル',NULL,2.476700,9000,9000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:59:22','ab'),(79,24,7,2,'Suica カードチャージ','1ポイント→１円分',NULL,1.000000,1000,1000,10000,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/exchange/','2015-07-21 12:31:43','ab'),(80,24,7,2,'ジャパネット銀行口座入金','1ポイント→0.85円分',NULL,0.850000,100,1000,NULL,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/exchange/','2015-07-21 12:31:35','ab'),(81,24,3,2,'Yahoo! トラベル宿泊券','1ポイント→１円分',NULL,1.000000,1,1,NULL,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/save_use/','2015-07-21 12:35:06','ab'),(82,25,9,2,'マルイ商品券','1,000ポイント→1,000円分',NULL,1.000000,1000,1000,NULL,NULL,NULL,1.00000000,1,'https://www.eposcard.co.jp/epospoint/guide.html','2015-07-22 11:22:18','ab');
+INSERT INTO `reward` VALUES (1,2,NULL,7,1,'ホットペッパービューティーサロン割引','ホットペッパービューティーサロン割引。※1回あたり3,000円まで','http://www.moneyiq.jp/images/Cash_payment_32.png',1.000000,100,100,9999999,3000,'回',1.00000000,1,NULL,'2015-07-15 13:20:39',''),(2,2,NULL,2,1,'ホットペッパー食事割引券','1ポイント＝１円分',NULL,1.000000,100,100,NULL,0,'',1.00000000,1,NULL,'2015-07-13 23:39:25',''),(3,2,NULL,3,1,'じゃらん宿泊割引','１ポイント＝１円分',NULL,1.000000,100,100,NULL,50000,'',1.00000000,1,'https://point.recruit.co.jp/?tab=pointUseServise','2015-07-13 23:42:13',''),(5,3,NULL,7,1,'ファミリーマートでのお買い物に使う','１ポイント＝１円分',NULL,1.000000,1,1,NULL,1000,'',1.00000000,1,NULL,'2015-07-13 23:40:05',''),(6,3,NULL,7,1,'ENEOSでガソリンを','１ポイント＝１円分',NULL,1.000000,1,1,NULL,3000,'',1.00000000,1,NULL,'2015-07-13 23:40:31',''),(7,3,NULL,6,3,'ANA マイルレージに交換','ANA で東京→大阪 (片道）',NULL,2.031700,6000,6000,NULL,0,'',2.00000000,2,NULL,'2015-07-15 12:54:27',''),(8,4,NULL,7,1,'イトーヨーカドーでの買い物に使う','１ポイント＝１円分',NULL,1.000000,1,1,NULL,1000,'',1.00000000,1,NULL,'2015-07-13 23:40:45',''),(9,4,NULL,7,2,'nanaco電子マネーに交換','1セブン＆アイポイント＝1 nanaco ポイント',NULL,1.000000,100,500,NULL,500,'',1.00000000,1,NULL,'2015-07-13 23:41:02',''),(10,4,NULL,6,3,'ANA 国内航空券','東京⇄沖縄',NULL,2.476700,9000,9000,NULL,25000,'',0.50000000,2,NULL,'2015-07-15 12:53:35',''),(11,5,NULL,7,2,'Edy 電子マネーに交換','1楽天スーパーポイント→Edy で１円分',NULL,1.000000,1,10,NULL,1000,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(12,5,NULL,7,1,'楽天市場での買い物に使う','1楽天スーパーポイント→１円分',NULL,1.000000,1,50,NULL,10000,'',1.00000000,1,NULL,'2015-06-29 13:34:24',''),(13,5,NULL,3,1,'楽天トラベルでの旅を予約','１ポイント＝１円分',NULL,1.000000,1,50,NULL,0,'',1.00000000,1,NULL,'2015-07-13 23:42:22',''),(17,7,NULL,7,1,'ENEOSでガソリンを','１ポイント→１円割引',NULL,1.000000,1000,1000,NULL,1000,'',1.00000000,1,NULL,'2015-07-01 12:37:09',''),(18,7,NULL,7,2,'Tポイントへの交換','1ポイント→0.7 Tポイント',NULL,0.700000,1000,1000,NULL,10000,'',1.00000000,1,NULL,'2015-07-01 12:41:54',''),(19,7,NULL,9,3,'Dyson ハンディークリーナー','ポイントでDysonハンディークリーナーもらえる！',NULL,1.000000,NULL,50000,NULL,50000,'',1.00000000,1,NULL,'2015-07-01 12:42:16',''),(23,7,NULL,9,3,'スチームクリーナー','ポイントでスチームクリーナーがもらえる！',NULL,1.000000,NULL,10000,NULL,10000,'',1.00000000,1,NULL,'2015-07-01 12:42:35',''),(24,8,NULL,6,2,'ANA国内航空券','東京⇄福岡　1ポイント→3 ANA マイル',NULL,1.958700,7500,7500,NULL,10000,'',3.00000000,2,NULL,'2015-07-15 12:56:24',''),(27,9,NULL,9,2,'楽天スーパーポイント交換','1ポイント→５楽天スーパーポイント',NULL,5.000000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-13 23:18:12',''),(29,9,NULL,9,3,'BOSE サウンドドックシリーズIII','ミュージックサウンドシステムをポイントでもらえる',NULL,5.000000,NULL,5000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-06 12:54:39',''),(31,11,NULL,6,2,'ANA 国内航空券','東京⇄大阪 (往復）200永久不減ポイント→625 ANAマイル',NULL,2.031700,12000,12000,NULL,NULL,'',0.32000000,2,NULL,'2015-07-15 13:18:40','AB'),(32,11,NULL,9,2,'Amazon ギフト券','200永久不減ポイント→1000円分 Amazon ギフト券',NULL,5.000000,200,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:39:33',''),(33,12,NULL,2,3,'品川プリンスホテルディナー券','品川プリンスホテル　リュクス ダイニング ハプナ ディナー券(2時間飲み放題付き)　1名様',NULL,1.000000,NULL,5000,NULL,NULL,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(35,11,NULL,6,2,'JAL 国内航空券','東京⇄大阪（往復）200永久不減ポイント→500 JALマイル',NULL,1.948300,12000,12000,NULL,NULL,'',0.40000000,2,NULL,'2015-07-15 13:15:25','AB'),(36,13,NULL,7,1,'マツダ店でのお支払い時','1マツダm\'zポイント→1円',NULL,1.000000,1,1,300000,NULL,'回',1.00000000,1,NULL,'2015-07-01 12:41:14',''),(37,13,NULL,6,2,'JAL マイルレージに交換','4マツダm\'zポイント→1 JALマイル',NULL,0.250000,NULL,4000,60000,NULL,'年',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(38,14,NULL,7,2,'JR 九州SUGOCA電子マネーに交換','1ポイント→1円分',NULL,1.000000,1,100,NULL,NULL,'',1.00000000,1,NULL,'2015-07-11 21:51:14','ab'),(39,14,NULL,3,2,'JR 九州旅行券に交換','1ポイント＝1円分',NULL,1.000000,NULL,3000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-13 23:42:36',''),(40,14,NULL,7,2,'セゾン永久不減ポイントに交換','4JQポイント→1永久不減ポイント',NULL,0.250000,NULL,2000,NULL,NULL,'',1.00000000,1,NULL,'2015-07-07 03:32:16',''),(41,9,NULL,7,2,'iD 電子マネーに交換','1ポイント→5円分',NULL,5.000000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-06-05 23:17:26','Ben'),(42,9,NULL,7,2,'Ponta ポイントに交換','1ポイント→4.5Ponta ポイント',NULL,4.500000,100,200,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:38:21',''),(43,15,NULL,9,2,'カラマツトレインギフト券に交換','1ポイント→1円分',NULL,1.000000,500,500,NULL,NULL,'',1.00000000,1,NULL,'2015-07-01 12:37:28',''),(44,16,NULL,6,3,'東京→大阪片道飛行機券','ローシーズン限定',NULL,2.000000,NULL,7000,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:21',''),(45,16,NULL,6,3,'東京→福岡片道飛行機チケット','ローシーズン限定',NULL,2.000000,NULL,8500,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:30',''),(46,16,NULL,6,3,'東京→ハワイ片道飛行機チケット','ローシーズン限定',NULL,2.000000,NULL,17500,NULL,NULL,'',1.00000000,1,NULL,'2015-06-30 14:02:47',''),(47,17,NULL,3,1,'じゃらん宿泊割引','１ポイント＝１円分','http://www.moneyiq.jp/images/Hotel_building_32.png',1.000000,1,100,NULL,NULL,NULL,1.00000000,1,'http://recruit-card.jp/point/?campaignCd=crda0001','2015-07-13 23:42:47',''),(48,21,NULL,7,1,'ENEOSでキャッシュバック','１ポイント→１円割引','http://www.moneyiq.jp/images/Cash_payment_32.png',1.000000,1000,1000,NULL,NULL,NULL,1.00000000,1,'http://www.noe.jx-group.co.jp/carlife/card/card/kind/card_s.html','2015-07-13 13:31:27','AB'),(54,22,NULL,7,1,'１ポイント＝1.1円分','.',NULL,1.111111,1,9000,20000,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:41:49',''),(55,22,NULL,9,2,'ルミネ商品券','.１ポイント＝3.2円分',NULL,3.200000,1,1250,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:43:43',''),(56,20,NULL,6,2,'JAL','東京⇄大阪 (往復)',NULL,3.000000,9500,9500,9500,NULL,NULL,1.00000000,2,NULL,'2015-07-09 13:05:46','ab'),(57,20,NULL,6,2,'JAL','東京⇄沖縄 (往復）',NULL,3.000000,11500,11500,11500,NULL,NULL,1.00000000,2,NULL,'2015-07-08 14:58:34','ab'),(58,20,NULL,6,2,'JAL','東京⇄ソウル (往復）',NULL,3.000000,15000,15000,15000,NULL,NULL,1.00000000,2,NULL,'2015-07-12 00:55:13',''),(59,20,NULL,6,2,'JAL 国際線','日本⇄香港 (往復）',NULL,3.000000,20000,20000,20000,NULL,NULL,1.00000000,2,NULL,'2015-07-08 14:58:51','ab'),(60,9,NULL,6,2,'ANA 国内線','東京⇔大阪 (往復)  1ポイント→3 ANA マイル',NULL,2.031700,12000,12000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 13:53:35','ab'),(62,9,NULL,6,2,'ANA国際線航空券','日本⇔ソウル (往復) 1ポイント→3 ANAマイル',NULL,3.081300,15000,15000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokusai.html','2015-07-15 13:53:53','ab'),(63,9,NULL,6,2,'ANA国際線航空券','日本⇔香港 (往復) 1ポイント→3 ANAマイル',NULL,2.891000,20000,20000,NULL,NULL,NULL,0.33333300,2,'https://www.ana.co.jp/amc/reference/tukau/kokusai.html','2015-07-15 13:55:45','ab'),(64,9,NULL,6,2,'ANA国内航空券','東京⇄沖縄（往復）1ポイント→3 ANAマイル',NULL,2.415600,18000,18000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:42:41','AB'),(65,8,NULL,7,2,'Jデポに交換 (請求書キャッシュバック）','１ポイント＝５円で換算',NULL,5.000000,300,300,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-12 10:23:35','ab'),(66,23,NULL,7,2,'楽天ポイントに交換','１ポイント→５楽天スーパーポイント',NULL,5.000000,100,200,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-12 13:19:16','ab'),(67,23,NULL,6,2,'ANA国際線','東京⇄大阪（往復、ローシーズンン）',NULL,3.000000,10000,10000,NULL,NULL,NULL,1.00000000,2,NULL,'2015-07-12 13:20:36','ab'),(68,17,NULL,7,1,'ホットペッパービューティーサロン割引','１ポイント＝１円分。※1回あたり3,000円まで',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:42:04',''),(69,17,NULL,2,1,'ホットペッパー食事割引券','１ポイント＝１円分',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:39:41',''),(71,9,NULL,2,2,'スターバックスカード','1ポイント＝スターバックス カード 4円分',NULL,4.000000,100,200,7500,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:46:50','ab'),(72,9,NULL,2,2,'タリーズカード','ワールドプレゼント1ポイント＝タリーズ カード　4円分',NULL,4.000000,100,200,5000,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:15:45','ab'),(73,5,NULL,2,2,'楽天デリバリー','１楽天スーパーポイント＝１円分',NULL,1.000000,100,100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:28:32','ab'),(74,11,NULL,9,2,'ユニクロオンラインギフトカード','1,500ポイントで7,000円分',NULL,4.666660,1500,1500,2099,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:33:34','ab'),(75,11,NULL,9,2,'ユニクロオンラインギフトカード','2,100ポイントで10,000円分',NULL,4.761900,2100,2100,NULL,NULL,NULL,1.00000000,1,NULL,'2015-07-13 23:35:09','ab'),(76,9,NULL,6,3,'ANA 国内航空券','東京→大阪（片道）1ポイント→3 ANAマイル',NULL,2.031700,6000,6000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:43:21','ab'),(77,9,NULL,6,3,'ANA 国内航空券','東京→福岡 (片道) 1ポイント→3 ANAマイル',NULL,1.958700,7500,7500,9999999,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:56:33','ab'),(78,9,NULL,6,3,'ANA 国内航空券','東京→沖縄 (片道) 1ポイント→3 ANAマイル',NULL,2.476700,9000,9000,NULL,NULL,NULL,0.33333000,2,'https://www.ana.co.jp/amc/reference/tukau/kokunai_6.html','2015-07-15 20:59:22','ab'),(79,24,NULL,7,2,'Suica カードチャージ','1ポイント→１円分',NULL,1.000000,1000,1000,10000,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/exchange/','2015-07-21 12:31:43','ab'),(80,24,NULL,7,2,'ジャパネット銀行口座入金','1ポイント→0.85円分',NULL,0.850000,100,1000,NULL,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/exchange/','2015-07-21 12:31:35','ab'),(81,24,NULL,3,2,'Yahoo! トラベル宿泊券','1ポイント→１円分',NULL,1.000000,1,1,NULL,NULL,NULL,1.00000000,1,'http://points.yahoo.co.jp/save_use/','2015-07-21 12:35:06','ab'),(82,25,NULL,9,2,'マルイ商品券','1,000ポイント→1,000円分',NULL,1.000000,1000,1000,NULL,NULL,NULL,1.00000000,1,'https://www.eposcard.co.jp/epospoint/guide.html','2015-07-22 11:22:18','ab');
 /*!40000 ALTER TABLE `reward` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1162,7 +1168,7 @@ CREATE TABLE `reward_category` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`reward_category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1190,7 +1196,7 @@ CREATE TABLE `reward_category_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`reward_category_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1227,7 +1233,7 @@ CREATE TABLE `reward_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`reward_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1254,7 +1260,7 @@ CREATE TABLE `reward_type` (
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`reward_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1305,10 +1311,10 @@ CREATE TABLE `scene` (
   `scene_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text,
-  `update_time` datetime NOT NULL,
-  `update_user` varchar(100) NOT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`scene_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1317,6 +1323,7 @@ CREATE TABLE `scene` (
 
 LOCK TABLES `scene` WRITE;
 /*!40000 ALTER TABLE `scene` DISABLE KEYS */;
+INSERT INTO `scene` VALUES (1,'test','','2015-08-08 05:51:13',''),(2,'ネット通販','ネット通販','2015-09-12 23:06:42','ab'),(3,'日用品','日用品','2015-09-12 23:07:11','ab'),(4,'外食','外食','2015-09-12 23:07:32','ab1'),(5,'エンタメ','エンタメ','2015-09-12 23:08:02','ab'),(6,'家電・ホームセンター','家電・ホームセンター','2015-09-12 23:08:23','ab'),(7,'毎月の引き落とし','毎月の引き落とし','2015-09-12 23:08:40','ab'),(8,'カーライフ','カーライフ','2015-09-12 23:08:57','ab'),(9,'ショッピング','ショッピング','2015-09-12 23:09:13','ab'),(10,'トラベル・出張','トラベル・出張','2015-09-12 23:09:28','ab');
 /*!40000 ALTER TABLE `scene` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1330,12 +1337,15 @@ DROP TABLE IF EXISTS `store`;
 CREATE TABLE `store` (
   `store_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_name` text CHARACTER SET utf8 NOT NULL,
+  `store_category_id` int(11) NOT NULL DEFAULT '1',
   `description` text CHARACTER SET utf8,
+  `is_major` tinyint(4) NOT NULL DEFAULT '0',
   `update_time` datetime NOT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `category` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`store_id`),
+  KEY `FK_store_category` (`store_category_id`),
+  CONSTRAINT `FK_store_category` FOREIGN KEY (`store_category_id`) REFERENCES `store_category` (`store_category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1344,8 +1354,35 @@ CREATE TABLE `store` (
 
 LOCK TABLES `store` WRITE;
 /*!40000 ALTER TABLE `store` DISABLE KEYS */;
-INSERT INTO `store` VALUES (1,'ファミリーマート',NULL,'2015-04-04 19:56:15','ben','スーパー・コンビニ'),(2,'スリーエフ',NULL,'2015-04-04 19:56:15','ben','スーパー・コンビニ'),(3,'イトーヨーカドー',NULL,'2015-04-04 19:56:15','ben','スーパー・コンビニ'),(4,'7-11',NULL,'2015-04-04 19:56:15','ben','スーパー・コンビニ'),(5,'Oisix',NULL,'2015-04-04 19:56:15','ben','スーパー・コンビニ'),(6,'Yahoo!ショッピング',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(7,'SOGO',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(8,'Seibu',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(9,'ファミール',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(10,'Loft',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(12,'ヤマダモール',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(13,'ヤマダ電機',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(14,'MUJI',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(15,'Uniqlo',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(16,'Apple',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(17,'Tokyu Hands',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(18,'Joshin',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(19,'SEIYU',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(20,'LIVIN',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(21,'じゃらん',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(22,'TSUTAYA',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(23,'阪急第一ホテルグループ',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(24,'ニッポンレンタカー',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(25,'シダックス',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(26,'Knt!',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(27,'東京無線タクシー',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(28,'プリンスホテルズ',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(29,'JR 九州',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(30,'JTB',NULL,'2015-04-04 19:56:15','ben','エンタメ・旅行'),(31,'オートバックス',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(32,'ETC',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(33,'ENEOS/JOMO',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(34,'コスモ',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(35,'出光',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(36,'マツダ',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(37,'カーコンビニ倶楽部',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(38,'オリックスレンタカー',NULL,'2015-04-04 19:56:15','ben','カーライフ'),(39,'ドトール・エクセルシオールカフェ',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(40,'ガスト',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(41,'バーミヤン',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(42,'牛角',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(43,'Denny\'s',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(44,'ロッテリア',NULL,'2015-04-04 19:56:15','ben','レストラン・カフェ'),(45,'HOT PEPPER',NULL,'2015-04-04 19:56:15','AB','レストラン・カフェ'),(46,'モバイルSUICA',NULL,'2015-04-04 19:56:15','ben','Point System'),(47,'リボ利用',NULL,'2015-04-04 19:56:15','ben','Point System'),(48,'公共料金',NULL,'2015-04-04 19:56:15','ben','Point System'),(49,'楽天Edy',NULL,'2015-04-04 19:56:15','ben','Point System'),(50,'楽天市場',NULL,'2015-04-04 19:56:15','AB','ショッピング'),(51,'標準ポイント',NULL,'2015-04-04 19:56:15','ben','Point System'),(52,'海外一般店利用',NULL,'2015-04-04 19:56:15','ben','Point System'),(53,'牛角',NULL,'2015-04-04 19:56:15','ben','Point System'),(54,'阪急第一ホテルグループ',NULL,'2015-04-04 19:56:15','ben','Point System'),(55,'7-Net Shopping',NULL,'2015-04-04 19:56:15','ben','Point System'),(56,'ENEOS',NULL,'2015-04-04 19:56:15','ben','Point System'),(57,'iD2',NULL,'2015-04-04 19:56:15','ben','Point System'),(58,'JOMO',NULL,'2015-04-04 19:56:15','ben','Point System'),(59,'nanaco',NULL,'2015-04-04 19:56:15','ben','Point System'),(60,'QuicPay',NULL,'2015-04-04 19:56:15','ben','Point System'),(61,'SMART ICOCA',NULL,'2015-04-04 19:56:15','ben','Point System'),(62,'Waon',NULL,'2015-04-04 19:56:15','ben','Point System'),(63,'ヤマト',NULL,'2015-04-04 19:56:15','ben','Point System'),(64,'Amazon',NULL,'2015-04-04 19:56:15','ben','ショッピング'),(65,'東急ホテルズ',NULL,'0000-00-00 00:00:00','AB','エンタメ・旅行'),(66,'永久不減標準ポイント','永久不減プログラム','0000-00-00 00:00:00','AB','Point System'),(67,'ヨドバシカメラ',NULL,'0000-00-00 00:00:00','AB','ショッピング'),(68,'えきねっと',NULL,'0000-00-00 00:00:00','AB','エンタメ・旅行'),(69,'紀伊國屋書店',NULL,'0000-00-00 00:00:00','AB','ショッピング'),(70,'トヨタレンタカー','エンタメ・旅行','0000-00-00 00:00:00','ab','エンタメ・旅行'),(71,'DAIMARU',NULL,'0000-00-00 00:00:00','AB','ショッピング'),(72,'Matsuzakaya',NULL,'0000-00-00 00:00:00','AB','ショッピング'),(73,'Royal Host',NULL,'0000-00-00 00:00:00','ab','レストラン・カフェ'),(74,'ソフトバンク',NULL,'0000-00-00 00:00:00','ab','Point System'),(75,'Yahoo! トラベル',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行'),(76,'マルイ',NULL,'0000-00-00 00:00:00','ab','ショッピング'),(77,'APA ホテル',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行'),(78,'H.I.S.',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行'),(79,'タイムズ',NULL,'0000-00-00 00:00:00','ab','カーライフ'),(80,'Big Echo',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行'),(81,'KEYUCA',NULL,'0000-00-00 00:00:00','ab','ショッピング'),(82,'一休.com',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行'),(83,'Expedia',NULL,'0000-00-00 00:00:00','ab','エンタメ・旅行');
+INSERT INTO `store` VALUES (1,'ファミリーマート',2,NULL,0,'2015-04-04 19:56:15','ben'),(2,'スリーエフ',2,NULL,0,'2015-04-04 19:56:15','ben'),(3,'イトーヨーカドー',2,NULL,0,'2015-04-04 19:56:15','ben'),(4,'7-11',2,NULL,0,'2015-04-04 19:56:15','ben'),(5,'Oisix',2,NULL,0,'2015-04-04 19:56:15','ben'),(6,'Yahoo!ショッピング',3,NULL,0,'2015-04-04 19:56:15','ben'),(7,'SOGO',3,NULL,0,'2015-04-04 19:56:15','ben'),(8,'Seibu',3,NULL,0,'2015-04-04 19:56:15','ben'),(9,'ファミール',3,NULL,0,'2015-04-04 19:56:15','ben'),(10,'Loft',3,NULL,0,'2015-04-04 19:56:15','ben'),(12,'ヤマダモール',3,NULL,0,'2015-04-04 19:56:15','ben'),(13,'ヤマダ電機',3,NULL,0,'2015-04-04 19:56:15','ben'),(14,'MUJI',3,NULL,0,'2015-04-04 19:56:15','ben'),(15,'Uniqlo',3,NULL,0,'2015-04-04 19:56:15','ben'),(16,'Apple',3,NULL,0,'2015-04-04 19:56:15','ben'),(17,'Tokyu Hands',3,NULL,0,'2015-04-04 19:56:15','ben'),(18,'Joshin',3,NULL,0,'2015-04-04 19:56:15','ben'),(19,'SEIYU',3,NULL,0,'2015-04-04 19:56:15','ben'),(20,'LIVIN',3,NULL,0,'2015-04-04 19:56:15','ben'),(21,'じゃらん',4,NULL,0,'2015-04-04 19:56:15','ben'),(22,'TSUTAYA',4,NULL,0,'2015-04-04 19:56:15','ben'),(23,'阪急第一ホテルグループ',4,NULL,0,'2015-04-04 19:56:15','ben'),(24,'ニッポンレンタカー',4,NULL,0,'2015-04-04 19:56:15','ben'),(25,'シダックス',4,NULL,0,'2015-04-04 19:56:15','ben'),(26,'Knt!',4,NULL,0,'2015-04-04 19:56:15','ben'),(27,'東京無線タクシー',4,NULL,0,'2015-04-04 19:56:15','ben'),(28,'プリンスホテルズ',4,NULL,0,'2015-04-04 19:56:15','ben'),(29,'JR 九州',4,NULL,0,'2015-04-04 19:56:15','ben'),(30,'JTB',4,NULL,0,'2015-04-04 19:56:15','ben'),(31,'オートバックス',5,NULL,0,'2015-04-04 19:56:15','ben'),(32,'ETC',5,NULL,0,'2015-04-04 19:56:15','ben'),(33,'ENEOS/JOMO',5,NULL,0,'2015-04-04 19:56:15','ben'),(34,'コスモ',5,NULL,0,'2015-04-04 19:56:15','ben'),(35,'出光',5,NULL,0,'2015-04-04 19:56:15','ben'),(36,'マツダ',5,NULL,0,'2015-04-04 19:56:15','ben'),(37,'カーコンビニ倶楽部',5,NULL,0,'2015-04-04 19:56:15','ben'),(38,'オリックスレンタカー',5,NULL,0,'2015-04-04 19:56:15','ben'),(39,'ドトール・エクセルシオールカフェ',6,NULL,0,'2015-04-04 19:56:15','ben'),(40,'ガスト',6,NULL,0,'2015-04-04 19:56:15','ben'),(41,'バーミヤン',6,NULL,0,'2015-04-04 19:56:15','ben'),(42,'牛角',6,NULL,0,'2015-04-04 19:56:15','ben'),(43,'Denny\'s',6,NULL,0,'2015-04-04 19:56:15','ben'),(44,'ロッテリア',6,NULL,0,'2015-04-04 19:56:15','ben'),(45,'HOT PEPPER',6,NULL,0,'2015-04-04 19:56:15','AB'),(46,'モバイルSUICA',8,NULL,0,'2015-04-04 19:56:15','ben'),(47,'リボ利用',8,NULL,0,'2015-04-04 19:56:15','ben'),(48,'公共料金',8,NULL,0,'2015-04-04 19:56:15','ben'),(49,'楽天Edy',8,NULL,0,'2015-04-04 19:56:15','ben'),(50,'楽天市場',3,NULL,0,'2015-04-04 19:56:15','AB'),(51,'標準ポイント',8,NULL,0,'2015-04-04 19:56:15','ben'),(52,'海外一般店利用',8,NULL,0,'2015-04-04 19:56:15','ben'),(53,'牛角',8,NULL,0,'2015-04-04 19:56:15','ben'),(54,'阪急第一ホテルグループ',8,NULL,0,'2015-04-04 19:56:15','ben'),(55,'7-Net Shopping',8,NULL,0,'2015-04-04 19:56:15','ben'),(56,'ENEOS',8,NULL,0,'2015-04-04 19:56:15','ben'),(57,'iD2',8,NULL,0,'2015-04-04 19:56:15','ben'),(58,'JOMO',8,NULL,0,'2015-04-04 19:56:15','ben'),(59,'nanaco',8,NULL,0,'2015-04-04 19:56:15','ben'),(60,'QuicPay',8,NULL,0,'2015-04-04 19:56:15','ben'),(61,'SMART ICOCA',8,NULL,0,'2015-04-04 19:56:15','ben'),(62,'Waon',8,NULL,0,'2015-04-04 19:56:15','ben'),(63,'ヤマト',8,NULL,0,'2015-04-04 19:56:15','ben'),(64,'Amazon',3,NULL,0,'2015-04-04 19:56:15','ben'),(65,'東急ホテルズ',4,NULL,0,'0000-00-00 00:00:00','AB'),(66,'永久不減標準ポイント',8,'永久不減プログラム',0,'0000-00-00 00:00:00','AB'),(67,'ヨドバシカメラ',3,NULL,0,'0000-00-00 00:00:00','AB'),(68,'えきねっと',4,NULL,0,'0000-00-00 00:00:00','AB'),(69,'紀伊國屋書店',3,NULL,0,'0000-00-00 00:00:00','AB'),(70,'トヨタレンタカー',4,'エンタメ・旅行',0,'0000-00-00 00:00:00','ab'),(71,'DAIMARU',3,NULL,0,'0000-00-00 00:00:00','AB'),(72,'Matsuzakaya',3,NULL,0,'0000-00-00 00:00:00','AB'),(73,'Royal Host',6,NULL,0,'0000-00-00 00:00:00','ab'),(74,'ソフトバンク',8,NULL,0,'0000-00-00 00:00:00','ab'),(75,'Yahoo! トラベル',4,NULL,0,'0000-00-00 00:00:00','ab'),(76,'マルイ',3,NULL,0,'0000-00-00 00:00:00','ab'),(77,'APA ホテル',4,NULL,0,'0000-00-00 00:00:00','ab'),(78,'H.I.S.',4,NULL,0,'0000-00-00 00:00:00','ab'),(79,'タイムズ',5,NULL,0,'0000-00-00 00:00:00','ab'),(80,'Big Echo',4,NULL,0,'0000-00-00 00:00:00','ab'),(81,'KEYUCA',3,NULL,0,'0000-00-00 00:00:00','ab'),(82,'一休.com',4,NULL,0,'0000-00-00 00:00:00','ab'),(83,'Expedia',4,NULL,0,'0000-00-00 00:00:00','ab');
 /*!40000 ALTER TABLE `store` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_category`
+--
+
+DROP TABLE IF EXISTS `store_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_category` (
+  `store_category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `update_time` datetime NOT NULL,
+  `update_user` varchar(100) NOT NULL,
+  PRIMARY KEY (`store_category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_category`
+--
+
+LOCK TABLES `store_category` WRITE;
+/*!40000 ALTER TABLE `store_category` DISABLE KEYS */;
+INSERT INTO `store_category` VALUES (1,'None','None','2015-08-07 21:12:54','ben'),(2,'スーパー・コンビニ','スーパー・コンビニ','2015-08-07 21:12:54','ben'),(3,'ショッピング','ショッピング','2015-08-07 21:12:54','ben'),(4,'エンタメ・旅行','エンタメ・旅行','2015-08-07 21:12:54','ben'),(5,'カーライフ','カーライフ','2015-08-07 21:12:54','ben'),(6,'レストラン・カフェ','レストラン・カフェ','2015-08-07 21:12:54','ben'),(7,'Point System','Point System','2015-08-07 21:12:54','ben');
+/*!40000 ALTER TABLE `store_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1364,7 +1401,7 @@ CREATE TABLE `store_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`store_id`,`time_beg`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1418,7 +1455,7 @@ CREATE TABLE `unit_history` (
   `time_end` datetime DEFAULT NULL,
   `update_user` varchar(100) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`unit_id`,`time_beg`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1431,8 +1468,43 @@ LOCK TABLES `unit_history` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'moneyiq'
+-- Temporary view structure for view `vw_store`
 --
+
+DROP TABLE IF EXISTS `vw_store`;
+/*!50001 DROP VIEW IF EXISTS `vw_store`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_store` AS SELECT 
+ 1 AS `store_id`,
+ 1 AS `store_name`,
+ 1 AS `category_name`,
+ 1 AS `description`,
+ 1 AS `update_time`,
+ 1 AS `update_user`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'moneyiq_uat'
+--
+
+--
+-- Final view structure for view `vw_store`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_store`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`moneyiqadmin`@`153.207.39.161` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_store` AS select `s`.`store_id` AS `store_id`,`s`.`store_name` AS `store_name`,`sc`.`name` AS `category_name`,`s`.`description` AS `description`,`s`.`update_time` AS `update_time`,`s`.`update_user` AS `update_user` from (`store` `s` join `store_category` `sc` on((`s`.`store_category_id` = `sc`.`store_category_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1443,4 +1515,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-05  8:31:00
+-- Dump completed on 2015-09-15 10:04:26

@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_usage_history' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class PointUsageHistory implements ActiveRecordInterface
+abstract class PointUsageHistory implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -75,7 +75,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * The value for the yen_per_point field.
-     * @var        string
+     * @var        double
      */
     protected $yen_per_point;
 
@@ -330,7 +330,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_usage_id] column value.
-     *
+     * 
      * @return int
      */
     public function getPointUsageId()
@@ -340,7 +340,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     *
+     * 
      * @return int
      */
     public function getStoreId()
@@ -350,8 +350,8 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [yen_per_point] column value.
-     *
-     * @return string
+     * 
+     * @return double
      */
     public function getYenPerPoint()
     {
@@ -360,7 +360,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCreditCardId()
@@ -370,7 +370,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -390,7 +390,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -410,7 +410,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -420,7 +420,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_usage_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsageHistory The current object (for fluent API support)
      */
@@ -440,7 +440,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsageHistory The current object (for fluent API support)
      */
@@ -460,14 +460,14 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [yen_per_point] column.
-     *
-     * @param  string $v new value
+     * 
+     * @param  double $v new value
      * @return $this|\PointUsageHistory The current object (for fluent API support)
      */
     public function setYenPerPoint($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (double) $v;
         }
 
         if ($this->yen_per_point !== $v) {
@@ -480,7 +480,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\PointUsageHistory The current object (for fluent API support)
      */
@@ -500,7 +500,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointUsageHistory The current object (for fluent API support)
@@ -520,7 +520,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointUsageHistory The current object (for fluent API support)
@@ -540,7 +540,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\PointUsageHistory The current object (for fluent API support)
      */
@@ -601,7 +601,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
             $this->store_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PointUsageHistoryTableMap::translateFieldName('YenPerPoint', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->yen_per_point = (null !== $col) ? (string) $col : null;
+            $this->yen_per_point = (null !== $col) ? (double) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PointUsageHistoryTableMap::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->credit_card_id = (null !== $col) ? (int) $col : null;
@@ -853,25 +853,25 @@ abstract class PointUsageHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_usage_id':
+                    case 'point_usage_id':                        
                         $stmt->bindValue($identifier, $this->point_usage_id, PDO::PARAM_INT);
                         break;
-                    case 'store_id':
+                    case 'store_id':                        
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'yen_per_point':
+                    case 'yen_per_point':                        
                         $stmt->bindValue($identifier, $this->yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'credit_card_id':
+                    case 'credit_card_id':                        
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':
+                    case 'time_beg':                        
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':
+                    case 'time_end':                        
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -991,7 +991,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
 
         return $result;
     }
@@ -1200,7 +1200,7 @@ abstract class PointUsageHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

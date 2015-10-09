@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'card_features' table.
  *
- *
+ * 
  *
  * @method     ChildCardFeaturesQuery orderByFeatureId($order = Criteria::ASC) Order by the feature_id column
  * @method     ChildCardFeaturesQuery orderByFeatureTypeId($order = Criteria::ASC) Order by the feature_type_id column
@@ -82,7 +82,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CardFeaturesQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\CardFeaturesQuery object.
      *
@@ -170,7 +170,7 @@ abstract class CardFeaturesQuery extends ModelCriteria
     {
         $sql = 'SELECT feature_id, feature_type_id, credit_card_id, description, issuing_fee, ongoing_fee, update_time, update_user, reference FROM card_features WHERE feature_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -818,9 +818,9 @@ abstract class CardFeaturesQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CardFeaturesTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CardFeaturesTableMap::clearRelatedInstancePool();
 

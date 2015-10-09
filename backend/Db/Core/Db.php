@@ -9,7 +9,9 @@ namespace Db\Core;
 
 // setup the autoloading
 use Db\Json;
+use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 require_once(__DIR__.'/../../vendor/autoload.php');
 // setup Propel
@@ -64,6 +66,7 @@ class Db
 
         return $result;
     }
+    
     function GetAllFeatures()
     {
         $result = array();
@@ -275,7 +278,8 @@ class Db
     {
         $result = array();
         foreach ((new \StoreQuery())->orderByStoreCategoryId()->orderByStoreName()->find() as $af) {
-            array_push($result, Json\JStore::CREATE_FROM_DB($af));
+            if(!is_null($af))
+                array_push($result, Json\JStore::CREATE_FROM_DB($af));
         }
         return $result;
     }
@@ -1535,8 +1539,9 @@ class Db
     function GetPersonaById($id)
     {
         $result = array();
-        foreach ((new \PersonaQuery())->orderByName()->findPk($id) as $af) {
+        foreach ((new \PersonaQuery())->orderByName()->findByPersonaId($id) as $af) {
             array_push($result, Json\JPersona::CREATE_FROM_DB($af));
+
         }
         return $result;
     }
@@ -1652,6 +1657,8 @@ class Db
         }
         return array();
     }
+
+    /*
     function UpdateSceneToCategoryMap($data) {
         $complexId = $data["Id"];
         $parsed = Json\JSceneCategoryMapping::CREATE_FROM_ARRAY($data);
@@ -1670,6 +1677,8 @@ class Db
 
         return Json\JSceneCategoryMapping::CREATE_FROM_DB($items[0]);
     }
+    */
+
     function CreateSceneToCategoryMap($data)
     {
         $item = Json\JSceneCategoryMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
@@ -1680,11 +1689,76 @@ class Db
     }
 
 
+
+    /* GetSceneToRewardCategoryMap */
+    function GetSceneToRewardCategoryMap()
+    {
+        $result = array();
+        foreach ((new \MapSceneRewardCategoryQuery())->orderBySceneId()->find() as $af) {
+            array_push($result,  Json\JSceneRewardCategoryMapping::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function DeleteSceneToRewardCategoryMap($complexId)
+    {
+        $sceneId = Json\JSceneRewardCategoryMapping::GetSceneIdFromComplexId($complexId);
+        $categoryId = Json\JSceneRewardCategoryMapping::GetRewardCategoryIdFromComplexId($complexId);
+        $res = array();
+        foreach ((new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId) as $item) {
+            if(!is_null($item)) {
+                $item->delete();
+            } else {
+                throw new \Exception("Failed to find scene (" .  $sceneId .")to reward category (" . $categoryId .")mapping");
+            }
+        }
+        return array();
+    }
+    /*
+    function UpdateSceneToRewardCategoryMap($data) {
+        $complexId = $data["Id"];
+        $parsed = Json\JSceneRewardCategoryMapping::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse Scene to Category Mapping update request");
+        $items = (new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId,$categoryId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+        if(count($items)==0) throw new \Exception("Item not found for Mapping $complexId - Scene $sceneId, StoreCategory$categoryId");
+        if(!is_null($items[0])) {
+            $parsed->updateDB($items[0])->save();
+        }
+
+        //TODO implement cache, then refresh
+        $items = (new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId);
+        if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
+
+
+        return Json\JSceneRewardCategoryMapping::CREATE_FROM_DB($items[0]);
+    }
+    */
+
+    function CreateSceneToRewardCategoryMap($data)
+    {
+
+        $item = Json\JSceneRewardCategoryMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JSceneRewardCategoryMapping::CREATE_FROM_DB($item);
+    }
+
+
     /* GetPersonaToSceneMap */
     function GetPersonaToSceneMap()
     {
         $result = array();
         foreach ((new \MapPersonaSceneQuery())->orderByPersonaId()->find() as $af) {
+            array_push($result,  Json\JPersonaSceneMapping::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetPersonaToSceneMapByPersonaId($personaId)
+    {
+
+        $result = array();
+        foreach ((new \MapPersonaSceneQuery())->orderByPersonaId()->findByPersonaId($personaId) as $af) {
             array_push($result,  Json\JPersonaSceneMapping::CREATE_FROM_DB($af));
         }
         return $result;
@@ -1729,4 +1803,202 @@ class Db
         //TODO implement cache, add to cache
         return Json\JPersonaSceneMapping::CREATE_FROM_DB($item);
     }
+
+
+    /* RestrictionType */
+    function GetRestrictionTypeForCrud()
+    {
+        $result = array();
+        foreach ((new \RestrictionTypeQuery())->orderByName()->find() as $item) {
+            array_push($result, Json\JRestrictionType::CREATE_FROM_DB($item));
+        }
+        return $result;
+    }
+    function UpdateRestrictionTypeForCrud($data)
+    {
+        $parsed = Json\JRestrictionType::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+        $item = (new  \RestrictionTypeQuery())->findPk($parsed->RestrictionTypeId);
+        if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->RestrictionTypeId ." not found");
+
+        $item = $parsed->updateDB($item);
+        $item->save();
+
+        //TODO implement cache, then refresh
+        $item = (new  \RestrictionTypeQuery())->findPk($parsed->RestrictionTypeId);
+        return Json\JRestrictionType::CREATE_FROM_DB($item);
+    }
+    function CreateRestrictionTypeForCrud($data)
+    {
+        $item = Json\JRestrictionType::CREATE_FROM_ARRAY($data)->toDB();
+        $item->save();
+
+        //TODO implement cache, add to cache
+        return Json\JRestrictionType::CREATE_FROM_DB($item);
+    }
+    function DeleteRestrictionTypeForCrud($id)
+    {
+        $item = (new  \RestrictionTypeQuery())->findPk($id);
+        if(is_null($item)) {
+            throw new \Exception ("restriction type with id ". $id ." not found");
+        }
+        $item->delete();
+        return array();
+    }
+
+    /* GeneralRestriction */
+    function GetAllGeneralRestrictions()
+    {
+        $result = array();
+        foreach ((new \PersonaRestrictionQuery())->orderByRestrictionTypeId()->find() as $af) {
+            array_push($result, Json\JGeneralRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetGeneralRestrictionById($id)
+    {
+        $result = array();
+        foreach ((new \PersonaRestrictionQuery())->findPk($id) as $af) {
+            array_push($result, Json\JGeneralRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetGeneralRestrictionByPersonaId($id)
+    {
+        $result = array();
+        foreach ((new \PersonaRestrictionQuery())->orderByRestrictionTypeId()->findByPersonaId($id) as $af) {
+            array_push($result, Json\JGeneralRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+
+    function UpdateGeneralRestrictionForCrud($data)
+    {
+        $parsed = Json\JGeneralRestriction::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse GeneralRestriction update request");
+        if(!$parsed->saveToDb()) throw new \Exception("Error saving object to database");
+
+        //TODO implement cache, then refresh
+        return Json\JGeneralRestriction::CREATE_FROM_DB($parsed->tryLoadFromDB());
+    }
+
+    function CreateGeneralRestrictionForCrud($data)
+    {
+        $parsed = Json\JGeneralRestriction::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse GeneralRestriction update request");
+        if(!$parsed->saveToDb()) throw new \Exception("Error saving object to database");
+
+        //TODO implement cache, add to cache
+        return $parsed;
+    }
+    function DeleteGeneralRestrictionForCrud($id)
+    {
+        $item = Json\JGeneralRestriction::LOAD_FROM_ID($id);
+        $item->delete();
+        return array();
+    }
+
+    function GetAllFeatureRestrictions(){
+        $personaFeatures = array();
+
+        foreach ((new \MapPersonaFeatureConstraintQuery())->find() as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $stuff->Active = true;
+            array_push($personaFeatures, $stuff);
+        }
+
+
+        return $personaFeatures;
+    }
+
+
+    function GetFeatureRestrictionForPersona($id) {
+        $personaFeatures = array();
+        $existingIds = array();
+        foreach ((new \MapPersonaFeatureConstraintQuery())->findByPersonaId($id) as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $stuff->Active = 1;
+            $stuff->PersonaId = $id;
+            $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+            array_push($personaFeatures, $stuff);
+            array_push($existingIds, $stuff->FeatureTypeId);
+        }
+
+        $allFeatures = array();
+        foreach ((new \CardFeatureTypeQuery())->orderByFeatureTypeId()->find() as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item);
+            $stuff->Active = 0;
+            $stuff->PersonaId = $id;
+            $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+            array_push($allFeatures, $stuff);
+        }
+
+        $diff = array();
+        foreach($allFeatures as $type) {
+            if(!in_array($type->FeatureTypeId,$existingIds)) {
+                array_push($personaFeatures, $type);
+            }
+        }
+
+        return $personaFeatures;
+    }
+
+    function UpdateFeatureRestrictionForPersona($data) {
+        if(!array_key_exists('FeatureId',$data)) throw new \Exception('FeatureId not defined');
+        if(!array_key_exists('Active',$data)) throw new \Exception('Key Active not defined');
+
+        if(array_key_exists('Active',$data) && !is_null($data['Active'])){
+            $this->DeleteFeatureRestrictionForPersona($data['FeatureId']);
+            //throw new \Exception('DeleteFeatureRestrictionForPersona');
+        }
+
+        if($data['Active']) {
+            //throw new \Exception('CreateFeatureRestrictionForPersona');
+            return $this->CreateFeatureRestrictionForPersona($data);
+        }
+
+        throw new \Exception('UpdateFeatureRestrictionForPersona');
+        return $this->UpdateFeatureRestrictionForPersona($data);
+    }
+
+    function UpdateFeatureRestriction($data) {
+        $ids = FieldUtils::SPLIT_ID($data['FeatureId']);
+        if(is_null($ids)||count($ids)<=1) return array();
+        foreach( (new  \MapPersonaFeatureConstraintQuery())->findByPersonaId($ids[0]) as $item){
+            if($item->getFeatureTypeId() == $ids[1]) {
+               if(ArrayUtils::KEY_EXISTS($data,'PersonaId'))  $item->setPersonaId($data['PersonaId']);
+                return $item;
+            }
+        }
+        return array();
+    }
+
+    function CreateFeatureRestrictionForPersona($data) {
+        if(!array_key_exists('PersonaId',$data)) throw new \Exception("Required field PersonaId not found for deleting row");
+        if(!array_key_exists('FeatureTypeId',$data)) throw new \Exception("Required field FeatureTypeId not found for deleting row");
+
+        $item = new \MapPersonaFeatureConstraint();
+        $item->setPersonaId($data['PersonaId']);
+        $item->setFeatureTypeId($data['FeatureTypeId']);
+        //$item->setUpdateTime(new DateTime());
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $item->setUpdateUser($data['UpdateUser']);
+        $item->save();
+
+        $data['Active'] = 1;
+
+        return $data;
+    }
+
+    function DeleteFeatureRestrictionForPersona($id) {
+        $ids = FieldUtils::SPLIT_ID($id);
+        if(is_null($ids)||count($ids)<=1) return array();
+        foreach( (new  \MapPersonaFeatureConstraintQuery())->findByPersonaId($ids[0]) as $item){
+            if($item->getFeatureTypeId() == $ids[1]) {
+                $item->delete();
+            }
+        }
+        return array();
+    }
+
 }

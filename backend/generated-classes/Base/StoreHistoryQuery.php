@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'store_history' table.
  *
- *
+ * 
  *
  * @method     ChildStoreHistoryQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
  * @method     ChildStoreHistoryQuery orderByStoreName($order = Criteria::ASC) Order by the store_name column
@@ -63,7 +63,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class StoreHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\StoreHistoryQuery object.
      *
@@ -151,8 +151,8 @@ abstract class StoreHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT store_id, store_name, category, description, time_beg, time_end, update_user FROM store_history WHERE store_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -563,9 +563,9 @@ abstract class StoreHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             StoreHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             StoreHistoryTableMap::clearRelatedInstancePool();
 

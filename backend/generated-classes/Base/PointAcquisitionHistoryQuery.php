@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'point_acquisition_history' table.
  *
- *
+ * 
  *
  * @method     ChildPointAcquisitionHistoryQuery orderByPointAcquisitionId($order = Criteria::ASC) Order by the point_acquisition_id column
  * @method     ChildPointAcquisitionHistoryQuery orderByPointAcquisitionName($order = Criteria::ASC) Order by the point_acquisition_name column
@@ -67,7 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PointAcquisitionHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PointAcquisitionHistoryQuery object.
      *
@@ -155,8 +155,8 @@ abstract class PointAcquisitionHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT point_acquisition_id, point_acquisition_name, points_per_yen, point_system_id, store_id, time_beg, time_end, update_user FROM point_acquisition_history WHERE point_acquisition_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -632,9 +632,9 @@ abstract class PointAcquisitionHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PointAcquisitionHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PointAcquisitionHistoryTableMap::clearRelatedInstancePool();
 

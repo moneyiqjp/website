@@ -18,14 +18,14 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'card_feature_type' table.
  *
- *
+ * 
  *
  * @method     ChildCardFeatureTypeQuery orderByFeatureTypeId($order = Criteria::ASC) Order by the feature_type_id column
  * @method     ChildCardFeatureTypeQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildCardFeatureTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildCardFeatureTypeQuery orderByCategory($order = Criteria::ASC) Order by the category column
- * @method     ChildCardFeatureTypeQuery orderByForegroundColor($order = Criteria::ASC) Order by the foreground_color column
  * @method     ChildCardFeatureTypeQuery orderByBackgroundColor($order = Criteria::ASC) Order by the background_color column
+ * @method     ChildCardFeatureTypeQuery orderByForegroundColor($order = Criteria::ASC) Order by the foreground_color column
  * @method     ChildCardFeatureTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCardFeatureTypeQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -33,8 +33,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureTypeQuery groupByName() Group by the name column
  * @method     ChildCardFeatureTypeQuery groupByDescription() Group by the description column
  * @method     ChildCardFeatureTypeQuery groupByCategory() Group by the category column
- * @method     ChildCardFeatureTypeQuery groupByForegroundColor() Group by the foreground_color column
  * @method     ChildCardFeatureTypeQuery groupByBackgroundColor() Group by the background_color column
+ * @method     ChildCardFeatureTypeQuery groupByForegroundColor() Group by the foreground_color column
  * @method     ChildCardFeatureTypeQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCardFeatureTypeQuery groupByUpdateUser() Group by the update_user column
  *
@@ -46,7 +46,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureTypeQuery rightJoinCardFeatures($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardFeatures relation
  * @method     ChildCardFeatureTypeQuery innerJoinCardFeatures($relationAlias = null) Adds a INNER JOIN clause to the query using the CardFeatures relation
  *
- * @method     \CardFeaturesQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildCardFeatureTypeQuery leftJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ * @method     ChildCardFeatureTypeQuery rightJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ * @method     ChildCardFeatureTypeQuery innerJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaFeatureConstraint relation
+ *
+ * @method     \CardFeaturesQuery|\MapPersonaFeatureConstraintQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCardFeatureType findOne(ConnectionInterface $con = null) Return the first ChildCardFeatureType matching the query
  * @method     ChildCardFeatureType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCardFeatureType matching the query, or a new ChildCardFeatureType object populated from the query conditions when no match is found
@@ -55,8 +59,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureType findOneByName(string $name) Return the first ChildCardFeatureType filtered by the name column
  * @method     ChildCardFeatureType findOneByDescription(string $description) Return the first ChildCardFeatureType filtered by the description column
  * @method     ChildCardFeatureType findOneByCategory(string $category) Return the first ChildCardFeatureType filtered by the category column
- * @method     ChildCardFeatureType findOneByForegroundColor(string $foreground_color) Return the first ChildCardFeatureType filtered by the foreground_color column
  * @method     ChildCardFeatureType findOneByBackgroundColor(string $background_color) Return the first ChildCardFeatureType filtered by the background_color column
+ * @method     ChildCardFeatureType findOneByForegroundColor(string $foreground_color) Return the first ChildCardFeatureType filtered by the foreground_color column
  * @method     ChildCardFeatureType findOneByUpdateTime(string $update_time) Return the first ChildCardFeatureType filtered by the update_time column
  * @method     ChildCardFeatureType findOneByUpdateUser(string $update_user) Return the first ChildCardFeatureType filtered by the update_user column
  *
@@ -65,8 +69,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureType[]|ObjectCollection findByName(string $name) Return ChildCardFeatureType objects filtered by the name column
  * @method     ChildCardFeatureType[]|ObjectCollection findByDescription(string $description) Return ChildCardFeatureType objects filtered by the description column
  * @method     ChildCardFeatureType[]|ObjectCollection findByCategory(string $category) Return ChildCardFeatureType objects filtered by the category column
- * @method     ChildCardFeatureType[]|ObjectCollection findByForegroundColor(string $foreground_color) Return ChildCardFeatureType objects filtered by the foreground_color column
  * @method     ChildCardFeatureType[]|ObjectCollection findByBackgroundColor(string $background_color) Return ChildCardFeatureType objects filtered by the background_color column
+ * @method     ChildCardFeatureType[]|ObjectCollection findByForegroundColor(string $foreground_color) Return ChildCardFeatureType objects filtered by the foreground_color column
  * @method     ChildCardFeatureType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCardFeatureType objects filtered by the update_time column
  * @method     ChildCardFeatureType[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCardFeatureType objects filtered by the update_user column
  * @method     ChildCardFeatureType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -74,7 +78,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CardFeatureTypeQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\CardFeatureTypeQuery object.
      *
@@ -160,9 +164,9 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT feature_type_id, name, description, category, foreground_color, background_color, update_time, update_user FROM card_feature_type WHERE feature_type_id = :p0';
+        $sql = 'SELECT feature_type_id, name, description, category, background_color, foreground_color, update_time, update_user FROM card_feature_type WHERE feature_type_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -379,35 +383,6 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the foreground_color column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByForegroundColor('fooValue');   // WHERE foreground_color = 'fooValue'
-     * $query->filterByForegroundColor('%fooValue%'); // WHERE foreground_color LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $foregroundColor The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
-     */
-    public function filterByForegroundColor($foregroundColor = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($foregroundColor)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $foregroundColor)) {
-                $foregroundColor = str_replace('*', '%', $foregroundColor);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $foregroundColor, $comparison);
-    }
-
-    /**
      * Filter the query on the background_color column
      *
      * Example usage:
@@ -434,6 +409,35 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, $backgroundColor, $comparison);
+    }
+
+    /**
+     * Filter the query on the foreground_color column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByForegroundColor('fooValue');   // WHERE foreground_color = 'fooValue'
+     * $query->filterByForegroundColor('%fooValue%'); // WHERE foreground_color LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $foregroundColor The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function filterByForegroundColor($foregroundColor = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($foregroundColor)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $foregroundColor)) {
+                $foregroundColor = str_replace('*', '%', $foregroundColor);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, $foregroundColor, $comparison);
     }
 
     /**
@@ -582,6 +586,79 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \MapPersonaFeatureConstraint object
+     *
+     * @param \MapPersonaFeatureConstraint|ObjectCollection $mapPersonaFeatureConstraint  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function filterByMapPersonaFeatureConstraint($mapPersonaFeatureConstraint, $comparison = null)
+    {
+        if ($mapPersonaFeatureConstraint instanceof \MapPersonaFeatureConstraint) {
+            return $this
+                ->addUsingAlias(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, $mapPersonaFeatureConstraint->getFeatureTypeId(), $comparison);
+        } elseif ($mapPersonaFeatureConstraint instanceof ObjectCollection) {
+            return $this
+                ->useMapPersonaFeatureConstraintQuery()
+                ->filterByPrimaryKeys($mapPersonaFeatureConstraint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapPersonaFeatureConstraint() only accepts arguments of type \MapPersonaFeatureConstraint or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapPersonaFeatureConstraint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function joinMapPersonaFeatureConstraint($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapPersonaFeatureConstraint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapPersonaFeatureConstraint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapPersonaFeatureConstraint relation MapPersonaFeatureConstraint object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapPersonaFeatureConstraintQuery A secondary query class using the current class as primary query
+     */
+    public function useMapPersonaFeatureConstraintQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapPersonaFeatureConstraint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapPersonaFeatureConstraint', '\MapPersonaFeatureConstraintQuery');
+    }
+
+    /**
      * Exclude object from result
      *
      * @param   ChildCardFeatureType $cardFeatureType Object to remove from the list of results
@@ -648,9 +725,9 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             CardFeatureTypeTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             CardFeatureTypeTableMap::clearRelatedInstancePool();
 

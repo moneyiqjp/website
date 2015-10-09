@@ -83,6 +83,32 @@
             }
         }
 
+        var category = [];
+        var stores = [];
+        tmp = $.ajax({
+            url: '../backend/crud/store/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    category = tmpStore[index]["StoreCategory"];
+                    stores.push({
+                        value: tmpStore[index]["StoreId"],
+                        label: category["Name"] + " - " + tmpStore[index]["StoreName"]
+                    });
+                }
+            }
+        }
 
 
         var units = [];
@@ -292,6 +318,11 @@
                         type:  "select",
                         options: rewardCategories
                     },  {
+                        label: "Store:",
+                        name:  "Store.StoreId",
+                        type:  "select",
+                        options: stores
+                    },  {
                         label: "Title:",
                         name: "Title"
                     },  {
@@ -412,6 +443,7 @@
                     {"data": "PointSystem.PointSystemName",editField: "PointSystem.PointSystemId", width:"20px"},
                     {"data": "Type.Name", editField: "Type.RewardTypeId",width:"50px"},
                     {"data": "Category.Name", editField: "Category.RewardCategoryId",width:"50px"},
+                    {"data": "Store.StoreName", editField: "Store.StoreId",width:"50px"},
                     {"data": "Title",width:"150px"},
                     //{"data": "Description",width:"200px", visible:false},
                     {
@@ -578,6 +610,7 @@
                     <th>Point System</th>
                     <th>Type</th>
                     <th>Category</th>
+                    <th>Store</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Icon</th>
@@ -601,6 +634,7 @@
                     <th>PointSystemId</th>
                     <th>Type</th>
                     <th>Category</th>
+                    <th>Store</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Icon</th>
@@ -618,6 +652,7 @@
                 </tr>
                 </tfoot>
             </table>
+            <a href="http://localhost/backend/crud/reward/all" class="source">Source</a>
         </td>
     </tr>
 </table>

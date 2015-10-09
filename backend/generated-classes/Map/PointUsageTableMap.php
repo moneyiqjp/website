@@ -59,7 +59,7 @@ class PointUsageTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PointUsageTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the point_usage_id field
@@ -102,11 +102,6 @@ class PointUsageTableMap extends TableMap
     const COL_UPDATE_USER = 'point_usage.update_user';
 
     /**
-     * the column name for the reference field
-     */
-    const COL_REFERENCE = 'point_usage.reference';
-
-    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -118,11 +113,11 @@ class PointUsageTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PointUsageId', 'StoreId', 'YenPerPoint', 'CreditCardId', 'UpdateTime', 'UpdateUser', 'Reference', ),
-        self::TYPE_CAMELNAME     => array('pointUsageId', 'storeId', 'yenPerPoint', 'creditCardId', 'updateTime', 'updateUser', 'reference', ),
-        self::TYPE_COLNAME       => array(PointUsageTableMap::COL_POINT_USAGE_ID, PointUsageTableMap::COL_STORE_ID, PointUsageTableMap::COL_YEN_PER_POINT, PointUsageTableMap::COL_CREDIT_CARD_ID, PointUsageTableMap::COL_UPDATE_TIME, PointUsageTableMap::COL_UPDATE_USER, PointUsageTableMap::COL_REFERENCE, ),
-        self::TYPE_FIELDNAME     => array('point_usage_id', 'store_id', 'yen_per_point', 'credit_card_id', 'update_time', 'update_user', 'reference', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('PointUsageId', 'StoreId', 'YenPerPoint', 'CreditCardId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('pointUsageId', 'storeId', 'yenPerPoint', 'creditCardId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(PointUsageTableMap::COL_POINT_USAGE_ID, PointUsageTableMap::COL_STORE_ID, PointUsageTableMap::COL_YEN_PER_POINT, PointUsageTableMap::COL_CREDIT_CARD_ID, PointUsageTableMap::COL_UPDATE_TIME, PointUsageTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('point_usage_id', 'store_id', 'yen_per_point', 'credit_card_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -132,11 +127,11 @@ class PointUsageTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PointUsageId' => 0, 'StoreId' => 1, 'YenPerPoint' => 2, 'CreditCardId' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, 'Reference' => 6, ),
-        self::TYPE_CAMELNAME     => array('pointUsageId' => 0, 'storeId' => 1, 'yenPerPoint' => 2, 'creditCardId' => 3, 'updateTime' => 4, 'updateUser' => 5, 'reference' => 6, ),
-        self::TYPE_COLNAME       => array(PointUsageTableMap::COL_POINT_USAGE_ID => 0, PointUsageTableMap::COL_STORE_ID => 1, PointUsageTableMap::COL_YEN_PER_POINT => 2, PointUsageTableMap::COL_CREDIT_CARD_ID => 3, PointUsageTableMap::COL_UPDATE_TIME => 4, PointUsageTableMap::COL_UPDATE_USER => 5, PointUsageTableMap::COL_REFERENCE => 6, ),
-        self::TYPE_FIELDNAME     => array('point_usage_id' => 0, 'store_id' => 1, 'yen_per_point' => 2, 'credit_card_id' => 3, 'update_time' => 4, 'update_user' => 5, 'reference' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('PointUsageId' => 0, 'StoreId' => 1, 'YenPerPoint' => 2, 'CreditCardId' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('pointUsageId' => 0, 'storeId' => 1, 'yenPerPoint' => 2, 'creditCardId' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(PointUsageTableMap::COL_POINT_USAGE_ID => 0, PointUsageTableMap::COL_STORE_ID => 1, PointUsageTableMap::COL_YEN_PER_POINT => 2, PointUsageTableMap::COL_CREDIT_CARD_ID => 3, PointUsageTableMap::COL_UPDATE_TIME => 4, PointUsageTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('point_usage_id' => 0, 'store_id' => 1, 'yen_per_point' => 2, 'credit_card_id' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -158,11 +153,10 @@ class PointUsageTableMap extends TableMap
         // columns
         $this->addPrimaryKey('point_usage_id', 'PointUsageId', 'INTEGER', true, null, null);
         $this->addForeignKey('store_id', 'StoreId', 'INTEGER', 'store', 'store_id', true, null, null);
-        $this->addColumn('yen_per_point', 'YenPerPoint', 'DECIMAL', true, 8, null);
+        $this->addColumn('yen_per_point', 'YenPerPoint', 'DOUBLE', true, 16, null);
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -217,7 +211,7 @@ class PointUsageTableMap extends TableMap
                 : self::translateFieldName('PointUsageId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-
+    
     /**
      * The class that the tableMap will make instances of.
      *
@@ -278,7 +272,7 @@ class PointUsageTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-
+    
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -321,7 +315,6 @@ class PointUsageTableMap extends TableMap
             $criteria->addSelectColumn(PointUsageTableMap::COL_CREDIT_CARD_ID);
             $criteria->addSelectColumn(PointUsageTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(PointUsageTableMap::COL_UPDATE_USER);
-            $criteria->addSelectColumn(PointUsageTableMap::COL_REFERENCE);
         } else {
             $criteria->addSelectColumn($alias . '.point_usage_id');
             $criteria->addSelectColumn($alias . '.store_id');
@@ -329,7 +322,6 @@ class PointUsageTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
-            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 

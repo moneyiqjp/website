@@ -10,6 +10,6 @@
 
 <FRAMESET rows="40px, *">
   <frame src="header.php" frameborder="0" name="frame_top" />
-  <frame src="creditcard_overview.php" frameborder="0" name="frame_main" />
+  <frame src="analytics_overview.php" frameborder="0" name="frame_main" />
 </FRAMESET>
 </html>

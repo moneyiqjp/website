@@ -227,6 +227,7 @@
         </tr>
         </tfoot>
     </table>
+    <a href="http://localhost/backend/crud/store/all" class="source">Source</a>
 </div>
 
 <div style="width: 45%;margin: 25px 25px 25px 25px;float: left">

@@ -47,11 +47,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'credit_card' table.
  *
- *
+ * 
  *
 * @package    propel.generator..Base
 */
-abstract class CreditCard implements ActiveRecordInterface
+abstract class CreditCard implements ActiveRecordInterface 
 {
     /**
      * TableMap class name
@@ -550,7 +550,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     *
+     * 
      * @return int
      */
     public function getCreditCardId()
@@ -560,7 +560,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     *
+     * 
      * @return string
      */
     public function getName()
@@ -570,7 +570,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [issuer_id] column value.
-     *
+     * 
      * @return int
      */
     public function getIssuerId()
@@ -580,7 +580,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     *
+     * 
      * @return string
      */
     public function getDescription()
@@ -590,7 +590,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [image_link] column value.
-     *
+     * 
      * @return string
      */
     public function getImageLink()
@@ -600,7 +600,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [visa] column value.
-     *
+     * 
      * @return boolean
      */
     public function getVisa()
@@ -610,7 +610,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [visa] column value.
-     *
+     * 
      * @return boolean
      */
     public function isVisa()
@@ -620,7 +620,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [master] column value.
-     *
+     * 
      * @return boolean
      */
     public function getMaster()
@@ -630,7 +630,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [master] column value.
-     *
+     * 
      * @return boolean
      */
     public function isMaster()
@@ -640,7 +640,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [jcb] column value.
-     *
+     * 
      * @return boolean
      */
     public function getJcb()
@@ -650,7 +650,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [jcb] column value.
-     *
+     * 
      * @return boolean
      */
     public function isJcb()
@@ -660,7 +660,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [amex] column value.
-     *
+     * 
      * @return boolean
      */
     public function getAmex()
@@ -670,7 +670,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [amex] column value.
-     *
+     * 
      * @return boolean
      */
     public function isAmex()
@@ -680,7 +680,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [diners] column value.
-     *
+     * 
      * @return boolean
      */
     public function getDiners()
@@ -690,7 +690,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [diners] column value.
-     *
+     * 
      * @return boolean
      */
     public function isDiners()
@@ -700,7 +700,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [afilliate_link] column value.
-     *
+     * 
      * @return string
      */
     public function getAfilliateLink()
@@ -710,7 +710,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [affiliate_id] column value.
-     *
+     * 
      * @return int
      */
     public function getAffiliateId()
@@ -720,7 +720,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [pointexpirymonths] column value.
-     *
+     * 
      * @return int
      */
     public function getPointexpirymonths()
@@ -730,7 +730,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     *
+     * 
      * @return string
      */
     public function getReference()
@@ -740,7 +740,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     *
+     * 
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -760,7 +760,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     *
+     * 
      * @return string
      */
     public function getUpdateUser()
@@ -770,7 +770,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -790,7 +790,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -810,7 +810,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -834,7 +834,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -854,7 +854,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [image_link] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -878,7 +878,7 @@ abstract class CreditCard implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -906,7 +906,7 @@ abstract class CreditCard implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -934,7 +934,7 @@ abstract class CreditCard implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -962,7 +962,7 @@ abstract class CreditCard implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -990,7 +990,7 @@ abstract class CreditCard implements ActiveRecordInterface
      *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
      *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
+     * 
      * @param  boolean|integer|string $v The new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1014,7 +1014,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [afilliate_link] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1034,7 +1034,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [affiliate_id] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1058,7 +1058,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [pointexpirymonths] column.
-     *
+     * 
      * @param  int $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1078,7 +1078,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1098,7 +1098,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     *
+     * 
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CreditCard The current object (for fluent API support)
@@ -1118,7 +1118,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     *
+     * 
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
@@ -1708,19 +1708,19 @@ abstract class CreditCard implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'credit_card_id':
+                    case 'credit_card_id':                        
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'name':
+                    case 'name':                        
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'issuer_id':
+                    case 'issuer_id':                        
                         $stmt->bindValue($identifier, $this->issuer_id, PDO::PARAM_INT);
                         break;
-                    case 'description':
+                    case 'description':                        
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'image_link':
+                    case 'image_link':                        
                         $stmt->bindValue($identifier, $this->image_link, PDO::PARAM_STR);
                         break;
                     case 'visa':
@@ -1738,22 +1738,22 @@ abstract class CreditCard implements ActiveRecordInterface
                     case 'diners':
                         $stmt->bindValue($identifier, (int) $this->diners, PDO::PARAM_INT);
                         break;
-                    case 'afilliate_link':
+                    case 'afilliate_link':                        
                         $stmt->bindValue($identifier, $this->afilliate_link, PDO::PARAM_STR);
                         break;
-                    case 'affiliate_id':
+                    case 'affiliate_id':                        
                         $stmt->bindValue($identifier, $this->affiliate_id, PDO::PARAM_INT);
                         break;
-                    case 'pointExpiryMonths':
+                    case 'pointExpiryMonths':                        
                         $stmt->bindValue($identifier, $this->pointexpirymonths, PDO::PARAM_INT);
                         break;
-                    case 'reference':
+                    case 'reference':                        
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
-                    case 'update_time':
+                    case 'update_time':                        
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':
+                    case 'update_user':                        
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1917,10 +1917,10 @@ abstract class CreditCard implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-
+        
         if ($includeForeignObjects) {
             if (null !== $this->aAffiliateCompany) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'affiliateCompany';
@@ -1931,11 +1931,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'AffiliateCompany';
                 }
-
+        
                 $result[$key] = $this->aAffiliateCompany->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aIssuer) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'issuer';
@@ -1946,11 +1946,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Issuer';
                 }
-
+        
                 $result[$key] = $this->aIssuer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collCampaigns) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'campaigns';
@@ -1961,11 +1961,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Campaigns';
                 }
-
+        
                 $result[$key] = $this->collCampaigns->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collCardDescriptions) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardDescriptions';
@@ -1976,11 +1976,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'CardDescriptions';
                 }
-
+        
                 $result[$key] = $this->collCardDescriptions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collCardFeaturess) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardFeaturess';
@@ -1991,11 +1991,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'CardFeaturess';
                 }
-
+        
                 $result[$key] = $this->collCardFeaturess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collCardPointSystems) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardPointSystems';
@@ -2006,11 +2006,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'CardPointSystems';
                 }
-
+        
                 $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collDiscountss) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'discountss';
@@ -2021,11 +2021,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Discountss';
                 }
-
+        
                 $result[$key] = $this->collDiscountss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collFeess) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'feess';
@@ -2036,11 +2036,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Feess';
                 }
-
+        
                 $result[$key] = $this->collFeess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collInsurances) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'insurances';
@@ -2051,11 +2051,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Insurances';
                 }
-
+        
                 $result[$key] = $this->collInsurances->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collInterests) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'interests';
@@ -2066,11 +2066,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'Interests';
                 }
-
+        
                 $result[$key] = $this->collInterests->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUsages) {
-
+                
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUsages';
@@ -2081,7 +2081,7 @@ abstract class CreditCard implements ActiveRecordInterface
                     default:
                         $key = 'PointUsages';
                 }
-
+        
                 $result[$key] = $this->collPointUsages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -2372,7 +2372,7 @@ abstract class CreditCard implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-
+        
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -2778,7 +2778,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildCampaign[] $campaignsToDelete */
         $campaignsToDelete = $this->getCampaigns(new Criteria(), $con)->diff($campaigns);
 
-
+        
         $this->campaignsScheduledForDeletion = $campaignsToDelete;
 
         foreach ($campaignsToDelete as $campaignRemoved) {
@@ -2996,7 +2996,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildCardDescription[] $cardDescriptionsToDelete */
         $cardDescriptionsToDelete = $this->getCardDescriptions(new Criteria(), $con)->diff($cardDescriptions);
 
-
+        
         $this->cardDescriptionsScheduledForDeletion = $cardDescriptionsToDelete;
 
         foreach ($cardDescriptionsToDelete as $cardDescriptionRemoved) {
@@ -3214,7 +3214,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildCardFeatures[] $cardFeaturessToDelete */
         $cardFeaturessToDelete = $this->getCardFeaturess(new Criteria(), $con)->diff($cardFeaturess);
 
-
+        
         $this->cardFeaturessScheduledForDeletion = $cardFeaturessToDelete;
 
         foreach ($cardFeaturessToDelete as $cardFeaturesRemoved) {
@@ -3457,7 +3457,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildCardPointSystem[] $cardPointSystemsToDelete */
         $cardPointSystemsToDelete = $this->getCardPointSystems(new Criteria(), $con)->diff($cardPointSystems);
 
-
+        
         $this->cardPointSystemsScheduledForDeletion = $cardPointSystemsToDelete;
 
         foreach ($cardPointSystemsToDelete as $cardPointSystemRemoved) {
@@ -3700,7 +3700,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildDiscounts[] $discountssToDelete */
         $discountssToDelete = $this->getDiscountss(new Criteria(), $con)->diff($discountss);
 
-
+        
         $this->discountssScheduledForDeletion = $discountssToDelete;
 
         foreach ($discountssToDelete as $discountsRemoved) {
@@ -3943,7 +3943,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildFees[] $feessToDelete */
         $feessToDelete = $this->getFeess(new Criteria(), $con)->diff($feess);
 
-
+        
         $this->feessScheduledForDeletion = $feessToDelete;
 
         foreach ($feessToDelete as $feesRemoved) {
@@ -4161,7 +4161,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildInsurance[] $insurancesToDelete */
         $insurancesToDelete = $this->getInsurances(new Criteria(), $con)->diff($insurances);
 
-
+        
         $this->insurancesScheduledForDeletion = $insurancesToDelete;
 
         foreach ($insurancesToDelete as $insuranceRemoved) {
@@ -4404,7 +4404,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildInterest[] $interestsToDelete */
         $interestsToDelete = $this->getInterests(new Criteria(), $con)->diff($interests);
 
-
+        
         $this->interestsScheduledForDeletion = $interestsToDelete;
 
         foreach ($interestsToDelete as $interestRemoved) {
@@ -4647,7 +4647,7 @@ abstract class CreditCard implements ActiveRecordInterface
         /** @var ChildPointUsage[] $pointUsagesToDelete */
         $pointUsagesToDelete = $this->getPointUsages(new Criteria(), $con)->diff($pointUsages);
 
-
+        
         $this->pointUsagesScheduledForDeletion = $pointUsagesToDelete;
 
         foreach ($pointUsagesToDelete as $pointUsageRemoved) {

@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'point_system' table.
  *
- *
+ * 
  *
  * @method     ChildPointSystemQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
  * @method     ChildPointSystemQuery orderByPointSystemName($order = Criteria::ASC) Order by the point_system_name column
@@ -44,10 +44,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
  * @method     ChildPointSystemQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
- * @method     ChildPointSystemQuery leftJoinDiscount($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discount relation
- * @method     ChildPointSystemQuery rightJoinDiscount($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discount relation
- * @method     ChildPointSystemQuery innerJoinDiscount($relationAlias = null) Adds a INNER JOIN clause to the query using the Discount relation
- *
  * @method     ChildPointSystemQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildPointSystemQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildPointSystemQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
@@ -60,7 +56,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildPointSystemQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \CardPointSystemQuery|\DiscountQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \CardPointSystemQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPointSystem findOne(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query
  * @method     ChildPointSystem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query, or a new ChildPointSystem object populated from the query conditions when no match is found
@@ -86,7 +82,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PointSystemQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\PointSystemQuery object.
      *
@@ -174,7 +170,7 @@ abstract class PointSystemQuery extends ModelCriteria
     {
         $sql = 'SELECT point_system_id, point_system_name, default_points_per_yen, default_yen_per_point, update_time, update_user, reference FROM point_system WHERE point_system_id = :p0';
         try {
-            $stmt = $con->prepare($sql);
+            $stmt = $con->prepare($sql);            
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -589,79 +585,6 @@ abstract class PointSystemQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Discount object
-     *
-     * @param \Discount|ObjectCollection $discount  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildPointSystemQuery The current query, for fluid interface
-     */
-    public function filterByDiscount($discount, $comparison = null)
-    {
-        if ($discount instanceof \Discount) {
-            return $this
-                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $discount->getPointSystemId(), $comparison);
-        } elseif ($discount instanceof ObjectCollection) {
-            return $this
-                ->useDiscountQuery()
-                ->filterByPrimaryKeys($discount->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByDiscount() only accepts arguments of type \Discount or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Discount relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildPointSystemQuery The current query, for fluid interface
-     */
-    public function joinDiscount($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Discount');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Discount');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Discount relation Discount object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \DiscountQuery A secondary query class using the current class as primary query
-     */
-    public function useDiscountQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinDiscount($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Discount', '\DiscountQuery');
-    }
-
-    /**
      * Filter the query by a related \PointAcquisition object
      *
      * @param \PointAcquisition|ObjectCollection $pointAcquisition  the related object to use as filter
@@ -947,9 +870,9 @@ abstract class PointSystemQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             PointSystemTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             PointSystemTableMap::clearRelatedInstancePool();
 

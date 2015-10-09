@@ -9,12 +9,14 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 class JPersonaSceneMapping implements JSONInterface
 {
     public $Id;
     public $Persona;
     public $Scene;
+    public $Allocation;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -38,6 +40,7 @@ class JPersonaSceneMapping implements JSONInterface
         $mine->Id = $item->getPersona()->getPersonaId() . "_" . $item->getScene()->getSceneId();
         $mine->Persona = JPersona::CREATE_FROM_DB($item->getPersona());
         $mine->Scene = JScene::CREATE_FROM_DB($item->getScene());
+        $mine->Allocation = $item->getPercentage();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -53,6 +56,18 @@ class JPersonaSceneMapping implements JSONInterface
         if (!ArrayUtils::KEY_EXISTS($data, 'Scene')) throw new \Exception("JPersonaToSceneMapping: Mandatory field Scene missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'Persona')) throw new \Exception("JPersonaToSceneMapping: Mandatory field Persona missing");
         return JPersonaSceneMapping::CREATE_FROM_ARRAY_RELAXED($data);
+    }
+
+    public static function TRY_LOAD_DB($personaId, $sceneId)
+    {
+        foreach ( (new \MapPersonaSceneQuery())->findByPersonaId($personaId) as $item)
+        {
+            if($sceneId == $item->getSceneId())
+            {
+                return $item;
+            }
+        }
+        return null;
     }
 
     public static function TRY_LOAD_FROM_DB($personaId, $sceneId)
@@ -89,6 +104,8 @@ class JPersonaSceneMapping implements JSONInterface
             $mine->Scene = JScene::CREATE_FROM_ARRAY($data['Scene']);
         }
 
+        if (ArrayUtils::KEY_EXISTS($data, 'Allocation')) $mine->Allocation = $data['Allocation'];
+
         $mine->Id = $mine->Persona->PersonaId . "_" . $mine->Scene->SceneId;
         return $mine;
     }
@@ -102,7 +119,7 @@ class JPersonaSceneMapping implements JSONInterface
     public function toDB()
     {
         if(!$this->isValid()) throw new \Exception("Invalid JPersonaToSceneMappiong, can't save");
-        $item = JPersonaSceneMapping::TRY_LOAD_FROM_DB($this->Persona->PersonaId, $this->Scene->SceneId);
+        $item = JPersonaSceneMapping::TRY_LOAD_DB($this->Persona->PersonaId, $this->Scene->SceneId);
         if(is_null($item)) $item = new \MapPersonaScene();
 
         return $this->updateDB($item);
@@ -112,8 +129,9 @@ class JPersonaSceneMapping implements JSONInterface
     {
         $item->setSceneId($this->Scene->SceneId);
         $item->setPersonaId($this->Persona->PersonaId);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->Allocation)) $item->setPercentage($this->Allocation);
         $item->setUpdateTime(new \DateTime());
-        $item->setUpdateUser($this->UpdateUser);
+        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
 

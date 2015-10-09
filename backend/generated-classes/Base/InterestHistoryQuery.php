@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'interest_history' table.
  *
- *
+ * 
  *
  * @method     ChildInterestHistoryQuery orderByInterestId($order = Criteria::ASC) Order by the interest_id column
  * @method     ChildInterestHistoryQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -67,7 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class InterestHistoryQuery extends ModelCriteria
 {
-
+    
     /**
      * Initializes internal state of \Base\InterestHistoryQuery object.
      *
@@ -155,9 +155,9 @@ abstract class InterestHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT interest_id, credit_card_id, payment_type_id, min_interest, max_interest, time_beg, time_end, update_user FROM interest_history WHERE credit_card_id = :p0 AND payment_type_id = :p1 AND time_beg = :p2';
         try {
-            $stmt = $con->prepare($sql);
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
-            $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
+            $stmt = $con->prepare($sql);            
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);            
             $stmt->bindValue(':p2', $key[2] ? $key[2]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -649,9 +649,9 @@ abstract class InterestHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-
+            
             InterestHistoryTableMap::removeInstanceFromPool($criteria);
-
+        
             $affectedRows += ModelCriteria::delete($con);
             InterestHistoryTableMap::clearRelatedInstancePool();
 

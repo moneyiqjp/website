@@ -1917,15 +1917,35 @@ $app->post('/crud/scene/to/category/create', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
-$app->put('/crud/scene/to/category/update', function () use ($app) {
+
+
+/* SceneToRewardCategoryMap*/
+$app->get('/crud/scene/to/reward/category/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetSceneToRewardCategoryMap()));
+});
+$app->delete('/crud/scene/to/reward/category/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/Scene/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = $db->DeleteSceneToRewardCategoryMap($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/scene/to/reward/category/create', function () use ($app) {
     $db = new \Db\Core\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
-
     $jTableResult = array();
     try {
-        $jTableResult['row'] = $db->UpdateSceneToCategoryMap($request->put('data'));
+        $jTableResult['row'] = $db->CreateSceneToRewardCategoryMap($request->put('data'));
     } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
@@ -1933,12 +1953,44 @@ $app->put('/crud/scene/to/category/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
+/*
+$app->put('/crud/scene/to/reward/category/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateSceneToRewardCategoryMap($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+*/
 
 /* PersonaToSceneMap*/
 $app->get('/crud/persona/to/scene/all', function () use ($app) {
     $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetPersonaToSceneMap()));
+});
+$app->get('/crud/persona/to/scene/by/persona/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetPersonaToSceneMapByPersonaId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
 });
 $app->delete('/crud/persona/to/scene/delete', function () use ($app) {
     $db = new \Db\Core\Db();
@@ -1973,7 +2025,6 @@ $app->put('/crud/persona/to/scene/update', function () use ($app) {
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
-
     $jTableResult = array();
     try {
         $jTableResult['row'] = $db->UpdatePersonaToSceneMap($request->put('data'));
@@ -1986,9 +2037,198 @@ $app->put('/crud/persona/to/scene/update', function () use ($app) {
 });
 
 
+/*RestrictionType*/
+$app->get('/crud/restriction/type/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetRestrictionTypeForCrud()));
+});
+$app->delete('/crud/restriction/type/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = $db->DeleteRestrictionTypeForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/restriction/type/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateRestrictionTypeForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/restriction/type/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
 
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateRestrictionTypeForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
 
+    echo json_encode($jTableResult);
+});
+
+
+/*GeneralRestriction*/
+$app->get('/crud/restriction/general/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetAllGeneralRestrictions()));
+});
+$app->get('/crud/restriction/general/by/persona/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetGeneralRestrictionByPersonaId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->get('/crud/restriction/general/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetGeneralRestrictionById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->delete('/crud/restriction/general/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = $db->DeleteGeneralRestrictionForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/restriction/general/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateGeneralRestrictionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/restriction/general/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateGeneralRestrictionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+/*FeatureRestriction*/
+$app->get('/crud/restriction/feature/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetAllFeatureRestrictions()));
+});
+$app->get('/crud/restriction/feature/by/persona/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetFeatureRestrictionForPersona($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->delete('/crud/restriction/feature/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = $db->DeleteFeatureRestrictionForPersona($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/restriction/feature/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateFeatureRestrictionForPersona($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/restriction/feature/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateFeatureRestrictionForPersona($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
 
 //Run the Slim application:
 $app->run();
