@@ -33,19 +33,19 @@ BEGIN
 			`update_time` DATETIME NULL DEFAULT NULL,
 			`update_user` VARCHAR(100) NULL DEFAULT NULL,
 			PRIMARY KEY (`scene_id`, `reward_category_id`),
-			INDEX `fk_msrc_scene_id_ind` (`scene_id`),
-			INDEX `fk_msrc_reward_category_id_ind` (`reward_category_id`),
-			CONSTRAINT `FK_msrc_map_scene_reward_scene` FOREIGN KEY (`scene_id`) REFERENCES `scene` (`scene_id`),
-			CONSTRAINT `FK_msrc_map_scene_reward_reward_category` FOREIGN KEY (`reward_category_id`) REFERENCES `reward_category` (`reward_category_id`)
+			INDEX `fk_msrc_scene_id_index` (`scene_id`),
+			INDEX `fk_msrc_store_category_id_ind` (`reward_category_id`),
+			CONSTRAINT `FK_msrc_map_scene_rewardcategory_scene` FOREIGN KEY (`scene_id`) REFERENCES `scene` (`scene_id`),
+			CONSTRAINT `FK_msrc_map_scene_rewardcategory_rewardcategory` FOREIGN KEY (`reward_category_id`) REFERENCES `reward_category` (`reward_category_id`)
 		)
 		COLLATE='utf8_general_ci'
 		ENGINE=InnoDB
 		;
-
-		SELECT 'ADDED map_scene_reward_category';
+		Select 'ADDED map_scene_reward_category';
 	else
-			SELECT 'EXISTED map_scene_reward_category';
+		Select 'EXISTED map_scene_reward_category';
 	end if;
+	
 
 	
 	if not exists(select 1 from information_schema.`TABLES` a where a.TABLE_NAME='map_persona_feature_constraint' and TABLE_SCHEMA=varDatabase) THEN	
@@ -124,7 +124,7 @@ BEGIN
 	
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='persona_restriction' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='comparator') THEN
 		ALTER TABLE `persona_restriction`
-		CHANGE COLUMN `comparator` `comparator` VARCHAR(80) NULL DEFAULT '=' AFTER `restriction_type_id`,
+		ADD COLUMN `Comparator` VARCHAR(80) NULL DEFAULT '=' AFTER `restriction_type_id`,
 		CHANGE COLUMN `priority_id` `priority_id` INT(11) NULL DEFAULT '100' AFTER `value`;
 		SELECT 'ADDED persona_restriction.comparator';
 	else
@@ -132,6 +132,7 @@ BEGIN
 	end if;
 	
 	
+	ALTER TABLE unit_history Engine=InnoDB;
 
 END //
 DELIMITER ;

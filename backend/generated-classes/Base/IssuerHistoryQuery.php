@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'issuer_history' table.
  *
- * 
+ *
  *
  * @method     ChildIssuerHistoryQuery orderByIssuerId($order = Criteria::ASC) Order by the issuer_id column
  * @method     ChildIssuerHistoryQuery orderByIssuerName($order = Criteria::ASC) Order by the issuer_name column
@@ -55,7 +55,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class IssuerHistoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\IssuerHistoryQuery object.
      *
@@ -143,8 +143,8 @@ abstract class IssuerHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT issuer_id, issuer_name, time_beg, time_end, update_user FROM issuer_history WHERE issuer_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -497,9 +497,9 @@ abstract class IssuerHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             IssuerHistoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             IssuerHistoryTableMap::clearRelatedInstancePool();
 

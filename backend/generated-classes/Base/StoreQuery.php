@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'store' table.
  *
- * 
+ *
  *
  * @method     ChildStoreQuery orderByStoreId($order = Criteria::ASC) Order by the store_id column
  * @method     ChildStoreQuery orderByStoreName($order = Criteria::ASC) Order by the store_name column
@@ -52,10 +52,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildStoreQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
  *
- * @method     ChildStoreQuery leftJoinPointUsage($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUsage relation
- * @method     ChildStoreQuery rightJoinPointUsage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUsage relation
- * @method     ChildStoreQuery innerJoinPointUsage($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUsage relation
- *
  * @method     ChildStoreQuery leftJoinPointUse($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUse relation
  * @method     ChildStoreQuery rightJoinPointUse($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUse relation
  * @method     ChildStoreQuery innerJoinPointUse($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUse relation
@@ -64,7 +60,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildStoreQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \StoreCategoryQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUsageQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \StoreCategoryQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
@@ -90,7 +86,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class StoreQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\StoreQuery object.
      *
@@ -178,7 +174,7 @@ abstract class StoreQuery extends ModelCriteria
     {
         $sql = 'SELECT store_id, store_name, store_category_id, description, is_major, update_time, update_user FROM store WHERE store_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -745,79 +741,6 @@ abstract class StoreQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \PointUsage object
-     *
-     * @param \PointUsage|ObjectCollection $pointUsage  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildStoreQuery The current query, for fluid interface
-     */
-    public function filterByPointUsage($pointUsage, $comparison = null)
-    {
-        if ($pointUsage instanceof \PointUsage) {
-            return $this
-                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $pointUsage->getStoreId(), $comparison);
-        } elseif ($pointUsage instanceof ObjectCollection) {
-            return $this
-                ->usePointUsageQuery()
-                ->filterByPrimaryKeys($pointUsage->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByPointUsage() only accepts arguments of type \PointUsage or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the PointUsage relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildStoreQuery The current query, for fluid interface
-     */
-    public function joinPointUsage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PointUsage');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'PointUsage');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the PointUsage relation PointUsage object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \PointUsageQuery A secondary query class using the current class as primary query
-     */
-    public function usePointUsageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPointUsage($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PointUsage', '\PointUsageQuery');
-    }
-
-    /**
      * Filter the query by a related \PointUse object
      *
      * @param \PointUse|ObjectCollection $pointUse  the related object to use as filter
@@ -1030,9 +953,9 @@ abstract class StoreQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             StoreTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             StoreTableMap::clearRelatedInstancePool();
 

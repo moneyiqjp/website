@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'fees_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class FeesHistory implements ActiveRecordInterface 
+abstract class FeesHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -348,7 +348,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [fee_id] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeId()
@@ -358,7 +358,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [fee_type] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeType()
@@ -368,7 +368,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [fee_amount] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeAmount()
@@ -378,7 +378,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [yearly_occurrence] column value.
-     * 
+     *
      * @return int
      */
     public function getYearlyOccurrence()
@@ -388,7 +388,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [start_year] column value.
-     * 
+     *
      * @return int
      */
     public function getStartYear()
@@ -398,7 +398,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [end_year] column value.
-     * 
+     *
      * @return int
      */
     public function getEndYear()
@@ -408,7 +408,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -418,7 +418,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -438,7 +438,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -458,7 +458,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -468,7 +468,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -488,7 +488,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_type] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -508,7 +508,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_amount] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -528,7 +528,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [yearly_occurrence] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -548,7 +548,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [start_year] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -568,7 +568,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [end_year] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -588,7 +588,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -608,7 +608,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\FeesHistory The current object (for fluent API support)
@@ -628,7 +628,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\FeesHistory The current object (for fluent API support)
@@ -648,7 +648,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\FeesHistory The current object (for fluent API support)
      */
@@ -979,34 +979,34 @@ abstract class FeesHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'fee_id':                        
+                    case 'fee_id':
                         $stmt->bindValue($identifier, $this->fee_id, PDO::PARAM_INT);
                         break;
-                    case 'fee_type':                        
+                    case 'fee_type':
                         $stmt->bindValue($identifier, $this->fee_type, PDO::PARAM_INT);
                         break;
-                    case 'fee_amount':                        
+                    case 'fee_amount':
                         $stmt->bindValue($identifier, $this->fee_amount, PDO::PARAM_INT);
                         break;
-                    case 'yearly_occurrence':                        
+                    case 'yearly_occurrence':
                         $stmt->bindValue($identifier, $this->yearly_occurrence, PDO::PARAM_INT);
                         break;
-                    case 'start_year':                        
+                    case 'start_year':
                         $stmt->bindValue($identifier, $this->start_year, PDO::PARAM_INT);
                         break;
-                    case 'end_year':                        
+                    case 'end_year':
                         $stmt->bindValue($identifier, $this->end_year, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1138,7 +1138,7 @@ abstract class FeesHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1374,7 +1374,7 @@ abstract class FeesHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

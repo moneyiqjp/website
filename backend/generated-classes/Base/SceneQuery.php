@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'scene' table.
  *
- * 
+ *
  *
  * @method     ChildSceneQuery orderBySceneId($order = Criteria::ASC) Order by the scene_id column
  * @method     ChildSceneQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -40,15 +40,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSceneQuery rightJoinMapPersonaScene($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaScene relation
  * @method     ChildSceneQuery innerJoinMapPersonaScene($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaScene relation
  *
- * @method     ChildSceneQuery leftJoinMapSceneRewardCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapSceneRewardCategory relation
- * @method     ChildSceneQuery rightJoinMapSceneRewardCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapSceneRewardCategory relation
- * @method     ChildSceneQuery innerJoinMapSceneRewardCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the MapSceneRewardCategory relation
+ * @method     ChildSceneQuery leftJoinMapSceneRewcat($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapSceneRewcat relation
+ * @method     ChildSceneQuery rightJoinMapSceneRewcat($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapSceneRewcat relation
+ * @method     ChildSceneQuery innerJoinMapSceneRewcat($relationAlias = null) Adds a INNER JOIN clause to the query using the MapSceneRewcat relation
  *
  * @method     ChildSceneQuery leftJoinMapSceneStoreCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapSceneStoreCategory relation
  * @method     ChildSceneQuery rightJoinMapSceneStoreCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapSceneStoreCategory relation
  * @method     ChildSceneQuery innerJoinMapSceneStoreCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the MapSceneStoreCategory relation
  *
- * @method     \MapPersonaSceneQuery|\MapSceneRewardCategoryQuery|\MapSceneStoreCategoryQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \MapPersonaSceneQuery|\MapSceneRewcatQuery|\MapSceneStoreCategoryQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildScene findOne(ConnectionInterface $con = null) Return the first ChildScene matching the query
  * @method     ChildScene findOneOrCreate(ConnectionInterface $con = null) Return the first ChildScene matching the query, or a new ChildScene object populated from the query conditions when no match is found
@@ -70,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class SceneQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\SceneQuery object.
      *
@@ -158,7 +158,7 @@ abstract class SceneQuery extends ModelCriteria
     {
         $sql = 'SELECT scene_id, name, description, update_time, update_user FROM scene WHERE scene_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -491,40 +491,40 @@ abstract class SceneQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \MapSceneRewardCategory object
+     * Filter the query by a related \MapSceneRewcat object
      *
-     * @param \MapSceneRewardCategory|ObjectCollection $mapSceneRewardCategory  the related object to use as filter
+     * @param \MapSceneRewcat|ObjectCollection $mapSceneRewcat  the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildSceneQuery The current query, for fluid interface
      */
-    public function filterByMapSceneRewardCategory($mapSceneRewardCategory, $comparison = null)
+    public function filterByMapSceneRewcat($mapSceneRewcat, $comparison = null)
     {
-        if ($mapSceneRewardCategory instanceof \MapSceneRewardCategory) {
+        if ($mapSceneRewcat instanceof \MapSceneRewcat) {
             return $this
-                ->addUsingAlias(SceneTableMap::COL_SCENE_ID, $mapSceneRewardCategory->getSceneId(), $comparison);
-        } elseif ($mapSceneRewardCategory instanceof ObjectCollection) {
+                ->addUsingAlias(SceneTableMap::COL_SCENE_ID, $mapSceneRewcat->getSceneId(), $comparison);
+        } elseif ($mapSceneRewcat instanceof ObjectCollection) {
             return $this
-                ->useMapSceneRewardCategoryQuery()
-                ->filterByPrimaryKeys($mapSceneRewardCategory->getPrimaryKeys())
+                ->useMapSceneRewcatQuery()
+                ->filterByPrimaryKeys($mapSceneRewcat->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByMapSceneRewardCategory() only accepts arguments of type \MapSceneRewardCategory or Collection');
+            throw new PropelException('filterByMapSceneRewcat() only accepts arguments of type \MapSceneRewcat or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the MapSceneRewardCategory relation
+     * Adds a JOIN clause to the query using the MapSceneRewcat relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildSceneQuery The current query, for fluid interface
      */
-    public function joinMapSceneRewardCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinMapSceneRewcat($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('MapSceneRewardCategory');
+        $relationMap = $tableMap->getRelation('MapSceneRewcat');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -539,14 +539,14 @@ abstract class SceneQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'MapSceneRewardCategory');
+            $this->addJoinObject($join, 'MapSceneRewcat');
         }
 
         return $this;
     }
 
     /**
-     * Use the MapSceneRewardCategory relation MapSceneRewardCategory object
+     * Use the MapSceneRewcat relation MapSceneRewcat object
      *
      * @see useQuery()
      *
@@ -554,13 +554,13 @@ abstract class SceneQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \MapSceneRewardCategoryQuery A secondary query class using the current class as primary query
+     * @return \MapSceneRewcatQuery A secondary query class using the current class as primary query
      */
-    public function useMapSceneRewardCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useMapSceneRewcatQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinMapSceneRewardCategory($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'MapSceneRewardCategory', '\MapSceneRewardCategoryQuery');
+            ->joinMapSceneRewcat($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapSceneRewcat', '\MapSceneRewcatQuery');
     }
 
     /**
@@ -703,9 +703,9 @@ abstract class SceneQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             SceneTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             SceneTableMap::clearRelatedInstancePool();
 

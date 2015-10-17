@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'persona' table.
  *
- * 
+ *
  *
  * @method     ChildPersonaQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildPersonaQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -70,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PersonaQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\PersonaQuery object.
      *
@@ -158,7 +158,7 @@ abstract class PersonaQuery extends ModelCriteria
     {
         $sql = 'SELECT persona_id, name, description, update_time, update_user FROM persona WHERE persona_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -703,9 +703,9 @@ abstract class PersonaQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             PersonaTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             PersonaTableMap::clearRelatedInstancePool();
 

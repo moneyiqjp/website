@@ -180,16 +180,6 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="card_point_system_map" idMethod="native" phpName="CardPointSystemMap">
-    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
-    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
-    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
-  </table>
   <table name="credit_card" idMethod="native" phpName="CreditCard">
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -497,22 +487,22 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="map_scene_reward_category" idMethod="native" phpName="MapSceneRewardCategory">
+  <table name="map_scene_rewcat" idMethod="native" phpName="MapSceneRewcat">
     <column name="scene_id" phpName="SceneId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
-    <foreign-key foreignTable="reward_category" name="FK_msrc_map_scene_reward_reward_category">
+    <foreign-key foreignTable="reward_category" name="FK_msrc_map_scene_rewardcategory_rewardcategory">
       <reference local="reward_category_id" foreign="reward_category_id"/>
     </foreign-key>
-    <foreign-key foreignTable="scene" name="FK_msrc_map_scene_reward_scene">
+    <foreign-key foreignTable="scene" name="FK_msrc_map_scene_rewardcategory_scene">
       <reference local="scene_id" foreign="scene_id"/>
     </foreign-key>
-    <index name="fk_msrc_scene_id_ind">
+    <index name="fk_msrc_scene_id_index">
       <index-column name="scene_id"/>
     </index>
-    <index name="fk_msrc_reward_category_id_ind">
+    <index name="fk_msrc_store_category_id_ind">
       <index-column name="reward_category_id"/>
     </index>
     <vendor type="mysql">
@@ -575,7 +565,7 @@
   <table name="persona_restriction" idMethod="native" phpName="PersonaRestriction">
     <column name="persona_id" phpName="PersonaId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="restriction_type_id" phpName="RestrictionTypeId" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="comparator" phpName="Comparator" type="VARCHAR" size="80" defaultValue="="/>
+    <column name="Comparator" phpName="Comparator" type="VARCHAR" size="80" defaultValue="="/>
     <column name="value" phpName="Value" type="VARCHAR" size="255" required="true"/>
     <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
@@ -651,41 +641,6 @@
     <column name="point_system_name" phpName="PointSystemName" type="VARCHAR" size="255" required="true"/>
     <column name="default_points_per_yen" phpName="DefaultPointsPerYen" type="DECIMAL" required="true"/>
     <column name="default_yen_per_point" phpName="DefaultYenPerPoint" type="DECIMAL" required="true"/>
-    <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
-    <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
-    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
-  </table>
-  <table name="point_usage" idMethod="native" phpName="PointUsage">
-    <column name="point_usage_id" phpName="PointUsageId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
-    <column name="yen_per_point" phpName="YenPerPoint" type="DOUBLE" size="16" scale="16" required="true"/>
-    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
-    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
-    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="store" name="const_point_usage_store">
-      <reference local="store_id" foreign="store_id"/>
-    </foreign-key>
-    <foreign-key foreignTable="credit_card" name="point_usage_credit_card">
-      <reference local="credit_card_id" foreign="credit_card_id"/>
-    </foreign-key>
-    <index name="point_usage_credit_card">
-      <index-column name="credit_card_id"/>
-    </index>
-    <index name="const_point_usage_store">
-      <index-column name="store_id"/>
-    </index>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
-  </table>
-  <table name="point_usage_history" idMethod="native" phpName="PointUsageHistory">
-    <column name="point_usage_id" phpName="PointUsageId" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
-    <column name="yen_per_point" phpName="YenPerPoint" type="DOUBLE" size="16" scale="16" required="true"/>
-    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>

@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'credit_card' table.
  *
- * 
+ *
  *
  * @method     ChildCreditCardQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildCreditCardQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -98,11 +98,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery rightJoinInterest($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Interest relation
  * @method     ChildCreditCardQuery innerJoinInterest($relationAlias = null) Adds a INNER JOIN clause to the query using the Interest relation
  *
- * @method     ChildCreditCardQuery leftJoinPointUsage($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointUsage relation
- * @method     ChildCreditCardQuery rightJoinPointUsage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointUsage relation
- * @method     ChildCreditCardQuery innerJoinPointUsage($relationAlias = null) Adds a INNER JOIN clause to the query using the PointUsage relation
- *
- * @method     \AffiliateCompanyQuery|\IssuerQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\CardPointSystemQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery|\PointUsageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \AffiliateCompanyQuery|\IssuerQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\CardPointSystemQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCreditCard findOne(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query
  * @method     ChildCreditCard findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query, or a new ChildCreditCard object populated from the query conditions when no match is found
@@ -146,7 +142,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CreditCardQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\CreditCardQuery object.
      *
@@ -234,7 +230,7 @@ abstract class CreditCardQuery extends ModelCriteria
     {
         $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -1581,79 +1577,6 @@ abstract class CreditCardQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \PointUsage object
-     *
-     * @param \PointUsage|ObjectCollection $pointUsage  the related object to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function filterByPointUsage($pointUsage, $comparison = null)
-    {
-        if ($pointUsage instanceof \PointUsage) {
-            return $this
-                ->addUsingAlias(CreditCardTableMap::COL_CREDIT_CARD_ID, $pointUsage->getCreditCardId(), $comparison);
-        } elseif ($pointUsage instanceof ObjectCollection) {
-            return $this
-                ->usePointUsageQuery()
-                ->filterByPrimaryKeys($pointUsage->getPrimaryKeys())
-                ->endUse();
-        } else {
-            throw new PropelException('filterByPointUsage() only accepts arguments of type \PointUsage or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the PointUsage relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildCreditCardQuery The current query, for fluid interface
-     */
-    public function joinPointUsage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('PointUsage');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'PointUsage');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the PointUsage relation PointUsage object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \PointUsageQuery A secondary query class using the current class as primary query
-     */
-    public function usePointUsageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinPointUsage($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'PointUsage', '\PointUsageQuery');
-    }
-
-    /**
      * Exclude object from result
      *
      * @param   ChildCreditCard $creditCard Object to remove from the list of results
@@ -1720,9 +1643,9 @@ abstract class CreditCardQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             CreditCardTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             CreditCardTableMap::clearRelatedInstancePool();
 

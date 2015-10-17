@@ -34,7 +34,7 @@ class JSceneRewardCategoryMapping implements JSONInterface
     }
 
 
-    public static function CREATE_FROM_DB(\MapSceneRewardCategory $item)
+    public static function CREATE_FROM_DB(\MapSceneRewcat $item)
     {
         $mine = new JSceneRewardCategoryMapping();
         $mine->Id = $item->getScene()->getSceneId() . "_" . $item->getRewardCategory()->getRewardCategoryId();
@@ -61,7 +61,7 @@ class JSceneRewardCategoryMapping implements JSONInterface
     public static function TRY_LOAD_FROM_DB($sceneId, $categoryId)
     {
 
-        foreach ( (new \MapSceneRewardCategoryQuery())->findBySceneId($sceneId) as $item)
+        foreach ( (new \MapSceneRewcatQuery())->findBySceneId($sceneId) as $item)
         {
             if($categoryId == $item->getRewardCategoryId())
             {
@@ -117,12 +117,12 @@ class JSceneRewardCategoryMapping implements JSONInterface
             else throw new \Exception("Invalid JSceneToRewardCategoryMapping, can't save");
         }
         $item = JSceneRewardCategoryMapping::TRY_LOAD_FROM_DB($this->Scene->SceneId, $this->RewardCategory->RewardCategoryId);
-        if(is_null($item)) $item = new \MapSceneRewardCategory();
+        if(is_null($item)) $item = new \MapSceneRewcat();
 
         return $this->updateDB($item);
     }
 
-    public function updateDB(\MapSceneRewardCategory &$item)
+    public function updateDB(\MapSceneRewcat &$item)
     {
         $item->setRewardCategoryId($this->RewardCategory->RewardCategoryId);
         $item->setSceneId($this->Scene->SceneId);

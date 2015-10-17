@@ -6,8 +6,6 @@ use \Discounts as ChildDiscounts;
 use \DiscountsQuery as ChildDiscountsQuery;
 use \PointAcquisition as ChildPointAcquisition;
 use \PointAcquisitionQuery as ChildPointAcquisitionQuery;
-use \PointUsage as ChildPointUsage;
-use \PointUsageQuery as ChildPointUsageQuery;
 use \PointUse as ChildPointUse;
 use \PointUseQuery as ChildPointUseQuery;
 use \Reward as ChildReward;
@@ -37,11 +35,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'store' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Store implements ActiveRecordInterface 
+abstract class Store implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -137,12 +135,6 @@ abstract class Store implements ActiveRecordInterface
     protected $collPointAcquisitionsPartial;
 
     /**
-     * @var        ObjectCollection|ChildPointUsage[] Collection to store aggregation of ChildPointUsage objects.
-     */
-    protected $collPointUsages;
-    protected $collPointUsagesPartial;
-
-    /**
      * @var        ObjectCollection|ChildPointUse[] Collection to store aggregation of ChildPointUse objects.
      */
     protected $collPointUses;
@@ -173,12 +165,6 @@ abstract class Store implements ActiveRecordInterface
      * @var ObjectCollection|ChildPointAcquisition[]
      */
     protected $pointAcquisitionsScheduledForDeletion = null;
-
-    /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildPointUsage[]
-     */
-    protected $pointUsagesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -425,7 +411,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreId()
@@ -435,7 +421,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_name] column value.
-     * 
+     *
      * @return string
      */
     public function getStoreName()
@@ -445,7 +431,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [store_category_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreCategoryId()
@@ -455,7 +441,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -465,7 +451,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [is_major] column value.
-     * 
+     *
      * @return int
      */
     public function getIsMajor()
@@ -475,7 +461,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -495,7 +481,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -505,7 +491,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -525,7 +511,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -545,7 +531,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [store_category_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -569,7 +555,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -589,7 +575,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [is_major] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -609,7 +595,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Store The current object (for fluent API support)
@@ -629,7 +615,7 @@ abstract class Store implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Store The current object (for fluent API support)
      */
@@ -791,8 +777,6 @@ abstract class Store implements ActiveRecordInterface
 
             $this->collPointAcquisitions = null;
 
-            $this->collPointUsages = null;
-
             $this->collPointUses = null;
 
             $this->collRewards = null;
@@ -953,23 +937,6 @@ abstract class Store implements ActiveRecordInterface
                 }
             }
 
-            if ($this->pointUsagesScheduledForDeletion !== null) {
-                if (!$this->pointUsagesScheduledForDeletion->isEmpty()) {
-                    \PointUsageQuery::create()
-                        ->filterByPrimaryKeys($this->pointUsagesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->pointUsagesScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collPointUsages !== null) {
-                foreach ($this->collPointUsages as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             if ($this->pointUsesScheduledForDeletion !== null) {
                 if (!$this->pointUsesScheduledForDeletion->isEmpty()) {
                     \PointUseQuery::create()
@@ -1063,25 +1030,25 @@ abstract class Store implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'store_id':                        
+                    case 'store_id':
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'store_name':                        
+                    case 'store_name':
                         $stmt->bindValue($identifier, $this->store_name, PDO::PARAM_STR);
                         break;
-                    case 'store_category_id':                        
+                    case 'store_category_id':
                         $stmt->bindValue($identifier, $this->store_category_id, PDO::PARAM_INT);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'is_major':                        
+                    case 'is_major':
                         $stmt->bindValue($identifier, $this->is_major, PDO::PARAM_INT);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1209,10 +1176,10 @@ abstract class Store implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aStoreCategory) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'storeCategory';
@@ -1223,11 +1190,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'StoreCategory';
                 }
-        
+
                 $result[$key] = $this->aStoreCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collDiscountss) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'discountss';
@@ -1238,11 +1205,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'Discountss';
                 }
-        
+
                 $result[$key] = $this->collDiscountss->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointAcquisitions) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointAcquisitions';
@@ -1253,26 +1220,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'PointAcquisitions';
                 }
-        
+
                 $result[$key] = $this->collPointAcquisitions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collPointUsages) {
-                
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'pointUsages';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'point_usages';
-                        break;
-                    default:
-                        $key = 'PointUsages';
-                }
-        
-                $result[$key] = $this->collPointUsages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
             if (null !== $this->collPointUses) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUses';
@@ -1283,11 +1235,11 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'PointUses';
                 }
-        
+
                 $result[$key] = $this->collPointUses->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collRewards) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -1298,7 +1250,7 @@ abstract class Store implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-        
+
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1508,7 +1460,7 @@ abstract class Store implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1572,12 +1524,6 @@ abstract class Store implements ActiveRecordInterface
             foreach ($this->getPointAcquisitions() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPointAcquisition($relObj->copy($deepCopy));
-                }
-            }
-
-            foreach ($this->getPointUsages() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addPointUsage($relObj->copy($deepCopy));
                 }
             }
 
@@ -1690,9 +1636,6 @@ abstract class Store implements ActiveRecordInterface
         }
         if ('PointAcquisition' == $relationName) {
             return $this->initPointAcquisitions();
-        }
-        if ('PointUsage' == $relationName) {
-            return $this->initPointUsages();
         }
         if ('PointUse' == $relationName) {
             return $this->initPointUses();
@@ -1818,7 +1761,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildDiscounts[] $discountssToDelete */
         $discountssToDelete = $this->getDiscountss(new Criteria(), $con)->diff($discountss);
 
-        
+
         $this->discountssScheduledForDeletion = $discountssToDelete;
 
         foreach ($discountssToDelete as $discountsRemoved) {
@@ -2061,7 +2004,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildPointAcquisition[] $pointAcquisitionsToDelete */
         $pointAcquisitionsToDelete = $this->getPointAcquisitions(new Criteria(), $con)->diff($pointAcquisitions);
 
-        
+
         $this->pointAcquisitionsScheduledForDeletion = $pointAcquisitionsToDelete;
 
         foreach ($pointAcquisitionsToDelete as $pointAcquisitionRemoved) {
@@ -2189,249 +2132,6 @@ abstract class Store implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collPointUsages collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addPointUsages()
-     */
-    public function clearPointUsages()
-    {
-        $this->collPointUsages = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collPointUsages collection loaded partially.
-     */
-    public function resetPartialPointUsages($v = true)
-    {
-        $this->collPointUsagesPartial = $v;
-    }
-
-    /**
-     * Initializes the collPointUsages collection.
-     *
-     * By default this just sets the collPointUsages collection to an empty array (like clearcollPointUsages());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initPointUsages($overrideExisting = true)
-    {
-        if (null !== $this->collPointUsages && !$overrideExisting) {
-            return;
-        }
-        $this->collPointUsages = new ObjectCollection();
-        $this->collPointUsages->setModel('\PointUsage');
-    }
-
-    /**
-     * Gets an array of ChildPointUsage objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildStore is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildPointUsage[] List of ChildPointUsage objects
-     * @throws PropelException
-     */
-    public function getPointUsages(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPointUsagesPartial && !$this->isNew();
-        if (null === $this->collPointUsages || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collPointUsages) {
-                // return empty collection
-                $this->initPointUsages();
-            } else {
-                $collPointUsages = ChildPointUsageQuery::create(null, $criteria)
-                    ->filterByStore($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collPointUsagesPartial && count($collPointUsages)) {
-                        $this->initPointUsages(false);
-
-                        foreach ($collPointUsages as $obj) {
-                            if (false == $this->collPointUsages->contains($obj)) {
-                                $this->collPointUsages->append($obj);
-                            }
-                        }
-
-                        $this->collPointUsagesPartial = true;
-                    }
-
-                    return $collPointUsages;
-                }
-
-                if ($partial && $this->collPointUsages) {
-                    foreach ($this->collPointUsages as $obj) {
-                        if ($obj->isNew()) {
-                            $collPointUsages[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collPointUsages = $collPointUsages;
-                $this->collPointUsagesPartial = false;
-            }
-        }
-
-        return $this->collPointUsages;
-    }
-
-    /**
-     * Sets a collection of ChildPointUsage objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $pointUsages A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildStore The current object (for fluent API support)
-     */
-    public function setPointUsages(Collection $pointUsages, ConnectionInterface $con = null)
-    {
-        /** @var ChildPointUsage[] $pointUsagesToDelete */
-        $pointUsagesToDelete = $this->getPointUsages(new Criteria(), $con)->diff($pointUsages);
-
-        
-        $this->pointUsagesScheduledForDeletion = $pointUsagesToDelete;
-
-        foreach ($pointUsagesToDelete as $pointUsageRemoved) {
-            $pointUsageRemoved->setStore(null);
-        }
-
-        $this->collPointUsages = null;
-        foreach ($pointUsages as $pointUsage) {
-            $this->addPointUsage($pointUsage);
-        }
-
-        $this->collPointUsages = $pointUsages;
-        $this->collPointUsagesPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related PointUsage objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related PointUsage objects.
-     * @throws PropelException
-     */
-    public function countPointUsages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collPointUsagesPartial && !$this->isNew();
-        if (null === $this->collPointUsages || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collPointUsages) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getPointUsages());
-            }
-
-            $query = ChildPointUsageQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByStore($this)
-                ->count($con);
-        }
-
-        return count($this->collPointUsages);
-    }
-
-    /**
-     * Method called to associate a ChildPointUsage object to this object
-     * through the ChildPointUsage foreign key attribute.
-     *
-     * @param  ChildPointUsage $l ChildPointUsage
-     * @return $this|\Store The current object (for fluent API support)
-     */
-    public function addPointUsage(ChildPointUsage $l)
-    {
-        if ($this->collPointUsages === null) {
-            $this->initPointUsages();
-            $this->collPointUsagesPartial = true;
-        }
-
-        if (!$this->collPointUsages->contains($l)) {
-            $this->doAddPointUsage($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildPointUsage $pointUsage The ChildPointUsage object to add.
-     */
-    protected function doAddPointUsage(ChildPointUsage $pointUsage)
-    {
-        $this->collPointUsages[]= $pointUsage;
-        $pointUsage->setStore($this);
-    }
-
-    /**
-     * @param  ChildPointUsage $pointUsage The ChildPointUsage object to remove.
-     * @return $this|ChildStore The current object (for fluent API support)
-     */
-    public function removePointUsage(ChildPointUsage $pointUsage)
-    {
-        if ($this->getPointUsages()->contains($pointUsage)) {
-            $pos = $this->collPointUsages->search($pointUsage);
-            $this->collPointUsages->remove($pos);
-            if (null === $this->pointUsagesScheduledForDeletion) {
-                $this->pointUsagesScheduledForDeletion = clone $this->collPointUsages;
-                $this->pointUsagesScheduledForDeletion->clear();
-            }
-            $this->pointUsagesScheduledForDeletion[]= clone $pointUsage;
-            $pointUsage->setStore(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Store is new, it will return
-     * an empty collection; or if this Store has previously
-     * been saved, it will retrieve related PointUsages from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Store.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildPointUsage[] List of ChildPointUsage objects
-     */
-    public function getPointUsagesJoinCreditCard(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildPointUsageQuery::create(null, $criteria);
-        $query->joinWith('CreditCard', $joinBehavior);
-
-        return $this->getPointUsages($query, $con);
-    }
-
-    /**
      * Clears out the collPointUses collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -2547,7 +2247,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildPointUse[] $pointUsesToDelete */
         $pointUsesToDelete = $this->getPointUses(new Criteria(), $con)->diff($pointUses);
 
-        
+
         $this->pointUsesScheduledForDeletion = $pointUsesToDelete;
 
         foreach ($pointUsesToDelete as $pointUseRemoved) {
@@ -2790,7 +2490,7 @@ abstract class Store implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-        
+
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {
@@ -3038,11 +2738,6 @@ abstract class Store implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collPointUsages) {
-                foreach ($this->collPointUsages as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
             if ($this->collPointUses) {
                 foreach ($this->collPointUses as $o) {
                     $o->clearAllReferences($deep);
@@ -3057,7 +2752,6 @@ abstract class Store implements ActiveRecordInterface
 
         $this->collDiscountss = null;
         $this->collPointAcquisitions = null;
-        $this->collPointUsages = null;
         $this->collPointUses = null;
         $this->collRewards = null;
         $this->aStoreCategory = null;

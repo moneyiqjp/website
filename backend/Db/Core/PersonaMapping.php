@@ -47,7 +47,7 @@ class Category {
 class Scene {
     public $Id;
     public $Name;
-    public $Category = array();
+    public $Stores = array();
 
     public function Scene(){}
 
@@ -57,7 +57,7 @@ class Scene {
         $that->Name = $scene->getName();
         $that->Id = $scene->getSceneId();
         foreach($scene->getMapSceneStoreCategories() as $item) {
-            array_push($that->Category,  Category::CREATE($item->getStoreCategory()));
+            $that->Stores=array_merge($that->Stores,  Category::CREATE($item->getStoreCategory())->Store);
         }
         return $that;
     }

@@ -29,11 +29,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'store_category' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class StoreCategory implements ActiveRecordInterface 
+abstract class StoreCategory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -348,7 +348,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [store_category_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreCategoryId()
@@ -358,7 +358,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -368,7 +368,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -378,7 +378,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -398,7 +398,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -408,7 +408,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [store_category_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\StoreCategory The current object (for fluent API support)
      */
@@ -428,7 +428,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\StoreCategory The current object (for fluent API support)
      */
@@ -448,7 +448,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\StoreCategory The current object (for fluent API support)
      */
@@ -468,7 +468,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\StoreCategory The current object (for fluent API support)
@@ -488,7 +488,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\StoreCategory The current object (for fluent API support)
      */
@@ -828,19 +828,19 @@ abstract class StoreCategory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'store_category_id':                        
+                    case 'store_category_id':
                         $stmt->bindValue($identifier, $this->store_category_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -960,10 +960,10 @@ abstract class StoreCategory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collMapSceneStoreCategories) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'mapSceneStoreCategories';
@@ -974,11 +974,11 @@ abstract class StoreCategory implements ActiveRecordInterface
                     default:
                         $key = 'MapSceneStoreCategories';
                 }
-        
+
                 $result[$key] = $this->collMapSceneStoreCategories->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collStores) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'stores';
@@ -989,7 +989,7 @@ abstract class StoreCategory implements ActiveRecordInterface
                     default:
                         $key = 'Stores';
                 }
-        
+
                 $result[$key] = $this->collStores->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1181,7 +1181,7 @@ abstract class StoreCategory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1411,7 +1411,7 @@ abstract class StoreCategory implements ActiveRecordInterface
         /** @var ChildMapSceneStoreCategory[] $mapSceneStoreCategoriesToDelete */
         $mapSceneStoreCategoriesToDelete = $this->getMapSceneStoreCategories(new Criteria(), $con)->diff($mapSceneStoreCategories);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1657,7 +1657,7 @@ abstract class StoreCategory implements ActiveRecordInterface
         /** @var ChildStore[] $storesToDelete */
         $storesToDelete = $this->getStores(new Criteria(), $con)->diff($stores);
 
-        
+
         $this->storesScheduledForDeletion = $storesToDelete;
 
         foreach ($storesToDelete as $storeRemoved) {

@@ -2,8 +2,8 @@
 
 namespace Base;
 
-use \MapSceneRewardCategory as ChildMapSceneRewardCategory;
-use \MapSceneRewardCategoryQuery as ChildMapSceneRewardCategoryQuery;
+use \MapSceneRewcat as ChildMapSceneRewcat;
+use \MapSceneRewcatQuery as ChildMapSceneRewcatQuery;
 use \Reward as ChildReward;
 use \RewardCategory as ChildRewardCategory;
 use \RewardCategoryQuery as ChildRewardCategoryQuery;
@@ -29,11 +29,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'reward_category' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class RewardCategory implements ActiveRecordInterface 
+abstract class RewardCategory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -98,10 +98,10 @@ abstract class RewardCategory implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ObjectCollection|ChildMapSceneRewardCategory[] Collection to store aggregation of ChildMapSceneRewardCategory objects.
+     * @var        ObjectCollection|ChildMapSceneRewcat[] Collection to store aggregation of ChildMapSceneRewcat objects.
      */
-    protected $collMapSceneRewardCategories;
-    protected $collMapSceneRewardCategoriesPartial;
+    protected $collMapSceneRewcats;
+    protected $collMapSceneRewcatsPartial;
 
     /**
      * @var        ObjectCollection|ChildReward[] Collection to store aggregation of ChildReward objects.
@@ -119,9 +119,9 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildMapSceneRewardCategory[]
+     * @var ObjectCollection|ChildMapSceneRewcat[]
      */
-    protected $mapSceneRewardCategoriesScheduledForDeletion = null;
+    protected $mapSceneRewcatsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -348,7 +348,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Get the [reward_category_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRewardCategoryId()
@@ -358,7 +358,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -368,7 +368,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -378,7 +378,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -398,7 +398,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -408,7 +408,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [reward_category_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardCategory The current object (for fluent API support)
      */
@@ -428,7 +428,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardCategory The current object (for fluent API support)
      */
@@ -448,7 +448,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardCategory The current object (for fluent API support)
      */
@@ -468,7 +468,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\RewardCategory The current object (for fluent API support)
@@ -488,7 +488,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardCategory The current object (for fluent API support)
      */
@@ -628,7 +628,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collMapSceneRewardCategories = null;
+            $this->collMapSceneRewcats = null;
 
             $this->collRewards = null;
 
@@ -742,17 +742,17 @@ abstract class RewardCategory implements ActiveRecordInterface
                 $this->resetModified();
             }
 
-            if ($this->mapSceneRewardCategoriesScheduledForDeletion !== null) {
-                if (!$this->mapSceneRewardCategoriesScheduledForDeletion->isEmpty()) {
-                    \MapSceneRewardCategoryQuery::create()
-                        ->filterByPrimaryKeys($this->mapSceneRewardCategoriesScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->mapSceneRewcatsScheduledForDeletion !== null) {
+                if (!$this->mapSceneRewcatsScheduledForDeletion->isEmpty()) {
+                    \MapSceneRewcatQuery::create()
+                        ->filterByPrimaryKeys($this->mapSceneRewcatsScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->mapSceneRewardCategoriesScheduledForDeletion = null;
+                    $this->mapSceneRewcatsScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collMapSceneRewardCategories !== null) {
-                foreach ($this->collMapSceneRewardCategories as $referrerFK) {
+            if ($this->collMapSceneRewcats !== null) {
+                foreach ($this->collMapSceneRewcats as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -829,19 +829,19 @@ abstract class RewardCategory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'reward_category_id':                        
+                    case 'reward_category_id':
                         $stmt->bindValue($identifier, $this->reward_category_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -961,25 +961,25 @@ abstract class RewardCategory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
-            if (null !== $this->collMapSceneRewardCategories) {
-                
+            if (null !== $this->collMapSceneRewcats) {
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'mapSceneRewardCategories';
+                        $key = 'mapSceneRewcats';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'map_scene_reward_categories';
+                        $key = 'map_scene_rewcats';
                         break;
                     default:
-                        $key = 'MapSceneRewardCategories';
+                        $key = 'MapSceneRewcats';
                 }
-        
-                $result[$key] = $this->collMapSceneRewardCategories->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+
+                $result[$key] = $this->collMapSceneRewcats->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collRewards) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -990,7 +990,7 @@ abstract class RewardCategory implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-        
+
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1182,7 +1182,7 @@ abstract class RewardCategory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1235,9 +1235,9 @@ abstract class RewardCategory implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
-            foreach ($this->getMapSceneRewardCategories() as $relObj) {
+            foreach ($this->getMapSceneRewcats() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addMapSceneRewardCategory($relObj->copy($deepCopy));
+                    $copyObj->addMapSceneRewcat($relObj->copy($deepCopy));
                 }
             }
 
@@ -1288,8 +1288,8 @@ abstract class RewardCategory implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
-        if ('MapSceneRewardCategory' == $relationName) {
-            return $this->initMapSceneRewardCategories();
+        if ('MapSceneRewcat' == $relationName) {
+            return $this->initMapSceneRewcats();
         }
         if ('Reward' == $relationName) {
             return $this->initRewards();
@@ -1297,31 +1297,31 @@ abstract class RewardCategory implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collMapSceneRewardCategories collection
+     * Clears out the collMapSceneRewcats collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
      * @return void
-     * @see        addMapSceneRewardCategories()
+     * @see        addMapSceneRewcats()
      */
-    public function clearMapSceneRewardCategories()
+    public function clearMapSceneRewcats()
     {
-        $this->collMapSceneRewardCategories = null; // important to set this to NULL since that means it is uninitialized
+        $this->collMapSceneRewcats = null; // important to set this to NULL since that means it is uninitialized
     }
 
     /**
-     * Reset is the collMapSceneRewardCategories collection loaded partially.
+     * Reset is the collMapSceneRewcats collection loaded partially.
      */
-    public function resetPartialMapSceneRewardCategories($v = true)
+    public function resetPartialMapSceneRewcats($v = true)
     {
-        $this->collMapSceneRewardCategoriesPartial = $v;
+        $this->collMapSceneRewcatsPartial = $v;
     }
 
     /**
-     * Initializes the collMapSceneRewardCategories collection.
+     * Initializes the collMapSceneRewcats collection.
      *
-     * By default this just sets the collMapSceneRewardCategories collection to an empty array (like clearcollMapSceneRewardCategories());
+     * By default this just sets the collMapSceneRewcats collection to an empty array (like clearcollMapSceneRewcats());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1330,17 +1330,17 @@ abstract class RewardCategory implements ActiveRecordInterface
      *
      * @return void
      */
-    public function initMapSceneRewardCategories($overrideExisting = true)
+    public function initMapSceneRewcats($overrideExisting = true)
     {
-        if (null !== $this->collMapSceneRewardCategories && !$overrideExisting) {
+        if (null !== $this->collMapSceneRewcats && !$overrideExisting) {
             return;
         }
-        $this->collMapSceneRewardCategories = new ObjectCollection();
-        $this->collMapSceneRewardCategories->setModel('\MapSceneRewardCategory');
+        $this->collMapSceneRewcats = new ObjectCollection();
+        $this->collMapSceneRewcats->setModel('\MapSceneRewcat');
     }
 
     /**
-     * Gets an array of ChildMapSceneRewardCategory objects which contain a foreign key that references this object.
+     * Gets an array of ChildMapSceneRewcat objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
@@ -1350,111 +1350,111 @@ abstract class RewardCategory implements ActiveRecordInterface
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildMapSceneRewardCategory[] List of ChildMapSceneRewardCategory objects
+     * @return ObjectCollection|ChildMapSceneRewcat[] List of ChildMapSceneRewcat objects
      * @throws PropelException
      */
-    public function getMapSceneRewardCategories(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function getMapSceneRewcats(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        $partial = $this->collMapSceneRewardCategoriesPartial && !$this->isNew();
-        if (null === $this->collMapSceneRewardCategories || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMapSceneRewardCategories) {
+        $partial = $this->collMapSceneRewcatsPartial && !$this->isNew();
+        if (null === $this->collMapSceneRewcats || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapSceneRewcats) {
                 // return empty collection
-                $this->initMapSceneRewardCategories();
+                $this->initMapSceneRewcats();
             } else {
-                $collMapSceneRewardCategories = ChildMapSceneRewardCategoryQuery::create(null, $criteria)
+                $collMapSceneRewcats = ChildMapSceneRewcatQuery::create(null, $criteria)
                     ->filterByRewardCategory($this)
                     ->find($con);
 
                 if (null !== $criteria) {
-                    if (false !== $this->collMapSceneRewardCategoriesPartial && count($collMapSceneRewardCategories)) {
-                        $this->initMapSceneRewardCategories(false);
+                    if (false !== $this->collMapSceneRewcatsPartial && count($collMapSceneRewcats)) {
+                        $this->initMapSceneRewcats(false);
 
-                        foreach ($collMapSceneRewardCategories as $obj) {
-                            if (false == $this->collMapSceneRewardCategories->contains($obj)) {
-                                $this->collMapSceneRewardCategories->append($obj);
+                        foreach ($collMapSceneRewcats as $obj) {
+                            if (false == $this->collMapSceneRewcats->contains($obj)) {
+                                $this->collMapSceneRewcats->append($obj);
                             }
                         }
 
-                        $this->collMapSceneRewardCategoriesPartial = true;
+                        $this->collMapSceneRewcatsPartial = true;
                     }
 
-                    return $collMapSceneRewardCategories;
+                    return $collMapSceneRewcats;
                 }
 
-                if ($partial && $this->collMapSceneRewardCategories) {
-                    foreach ($this->collMapSceneRewardCategories as $obj) {
+                if ($partial && $this->collMapSceneRewcats) {
+                    foreach ($this->collMapSceneRewcats as $obj) {
                         if ($obj->isNew()) {
-                            $collMapSceneRewardCategories[] = $obj;
+                            $collMapSceneRewcats[] = $obj;
                         }
                     }
                 }
 
-                $this->collMapSceneRewardCategories = $collMapSceneRewardCategories;
-                $this->collMapSceneRewardCategoriesPartial = false;
+                $this->collMapSceneRewcats = $collMapSceneRewcats;
+                $this->collMapSceneRewcatsPartial = false;
             }
         }
 
-        return $this->collMapSceneRewardCategories;
+        return $this->collMapSceneRewcats;
     }
 
     /**
-     * Sets a collection of ChildMapSceneRewardCategory objects related by a one-to-many relationship
+     * Sets a collection of ChildMapSceneRewcat objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param      Collection $mapSceneRewardCategories A Propel collection.
+     * @param      Collection $mapSceneRewcats A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
      * @return $this|ChildRewardCategory The current object (for fluent API support)
      */
-    public function setMapSceneRewardCategories(Collection $mapSceneRewardCategories, ConnectionInterface $con = null)
+    public function setMapSceneRewcats(Collection $mapSceneRewcats, ConnectionInterface $con = null)
     {
-        /** @var ChildMapSceneRewardCategory[] $mapSceneRewardCategoriesToDelete */
-        $mapSceneRewardCategoriesToDelete = $this->getMapSceneRewardCategories(new Criteria(), $con)->diff($mapSceneRewardCategories);
+        /** @var ChildMapSceneRewcat[] $mapSceneRewcatsToDelete */
+        $mapSceneRewcatsToDelete = $this->getMapSceneRewcats(new Criteria(), $con)->diff($mapSceneRewcats);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        $this->mapSceneRewardCategoriesScheduledForDeletion = clone $mapSceneRewardCategoriesToDelete;
+        $this->mapSceneRewcatsScheduledForDeletion = clone $mapSceneRewcatsToDelete;
 
-        foreach ($mapSceneRewardCategoriesToDelete as $mapSceneRewardCategoryRemoved) {
-            $mapSceneRewardCategoryRemoved->setRewardCategory(null);
+        foreach ($mapSceneRewcatsToDelete as $mapSceneRewcatRemoved) {
+            $mapSceneRewcatRemoved->setRewardCategory(null);
         }
 
-        $this->collMapSceneRewardCategories = null;
-        foreach ($mapSceneRewardCategories as $mapSceneRewardCategory) {
-            $this->addMapSceneRewardCategory($mapSceneRewardCategory);
+        $this->collMapSceneRewcats = null;
+        foreach ($mapSceneRewcats as $mapSceneRewcat) {
+            $this->addMapSceneRewcat($mapSceneRewcat);
         }
 
-        $this->collMapSceneRewardCategories = $mapSceneRewardCategories;
-        $this->collMapSceneRewardCategoriesPartial = false;
+        $this->collMapSceneRewcats = $mapSceneRewcats;
+        $this->collMapSceneRewcatsPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related MapSceneRewardCategory objects.
+     * Returns the number of related MapSceneRewcat objects.
      *
      * @param      Criteria $criteria
      * @param      boolean $distinct
      * @param      ConnectionInterface $con
-     * @return int             Count of related MapSceneRewardCategory objects.
+     * @return int             Count of related MapSceneRewcat objects.
      * @throws PropelException
      */
-    public function countMapSceneRewardCategories(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function countMapSceneRewcats(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
     {
-        $partial = $this->collMapSceneRewardCategoriesPartial && !$this->isNew();
-        if (null === $this->collMapSceneRewardCategories || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collMapSceneRewardCategories) {
+        $partial = $this->collMapSceneRewcatsPartial && !$this->isNew();
+        if (null === $this->collMapSceneRewcats || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapSceneRewcats) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getMapSceneRewardCategories());
+                return count($this->getMapSceneRewcats());
             }
 
-            $query = ChildMapSceneRewardCategoryQuery::create(null, $criteria);
+            $query = ChildMapSceneRewcatQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
@@ -1464,54 +1464,54 @@ abstract class RewardCategory implements ActiveRecordInterface
                 ->count($con);
         }
 
-        return count($this->collMapSceneRewardCategories);
+        return count($this->collMapSceneRewcats);
     }
 
     /**
-     * Method called to associate a ChildMapSceneRewardCategory object to this object
-     * through the ChildMapSceneRewardCategory foreign key attribute.
+     * Method called to associate a ChildMapSceneRewcat object to this object
+     * through the ChildMapSceneRewcat foreign key attribute.
      *
-     * @param  ChildMapSceneRewardCategory $l ChildMapSceneRewardCategory
+     * @param  ChildMapSceneRewcat $l ChildMapSceneRewcat
      * @return $this|\RewardCategory The current object (for fluent API support)
      */
-    public function addMapSceneRewardCategory(ChildMapSceneRewardCategory $l)
+    public function addMapSceneRewcat(ChildMapSceneRewcat $l)
     {
-        if ($this->collMapSceneRewardCategories === null) {
-            $this->initMapSceneRewardCategories();
-            $this->collMapSceneRewardCategoriesPartial = true;
+        if ($this->collMapSceneRewcats === null) {
+            $this->initMapSceneRewcats();
+            $this->collMapSceneRewcatsPartial = true;
         }
 
-        if (!$this->collMapSceneRewardCategories->contains($l)) {
-            $this->doAddMapSceneRewardCategory($l);
+        if (!$this->collMapSceneRewcats->contains($l)) {
+            $this->doAddMapSceneRewcat($l);
         }
 
         return $this;
     }
 
     /**
-     * @param ChildMapSceneRewardCategory $mapSceneRewardCategory The ChildMapSceneRewardCategory object to add.
+     * @param ChildMapSceneRewcat $mapSceneRewcat The ChildMapSceneRewcat object to add.
      */
-    protected function doAddMapSceneRewardCategory(ChildMapSceneRewardCategory $mapSceneRewardCategory)
+    protected function doAddMapSceneRewcat(ChildMapSceneRewcat $mapSceneRewcat)
     {
-        $this->collMapSceneRewardCategories[]= $mapSceneRewardCategory;
-        $mapSceneRewardCategory->setRewardCategory($this);
+        $this->collMapSceneRewcats[]= $mapSceneRewcat;
+        $mapSceneRewcat->setRewardCategory($this);
     }
 
     /**
-     * @param  ChildMapSceneRewardCategory $mapSceneRewardCategory The ChildMapSceneRewardCategory object to remove.
+     * @param  ChildMapSceneRewcat $mapSceneRewcat The ChildMapSceneRewcat object to remove.
      * @return $this|ChildRewardCategory The current object (for fluent API support)
      */
-    public function removeMapSceneRewardCategory(ChildMapSceneRewardCategory $mapSceneRewardCategory)
+    public function removeMapSceneRewcat(ChildMapSceneRewcat $mapSceneRewcat)
     {
-        if ($this->getMapSceneRewardCategories()->contains($mapSceneRewardCategory)) {
-            $pos = $this->collMapSceneRewardCategories->search($mapSceneRewardCategory);
-            $this->collMapSceneRewardCategories->remove($pos);
-            if (null === $this->mapSceneRewardCategoriesScheduledForDeletion) {
-                $this->mapSceneRewardCategoriesScheduledForDeletion = clone $this->collMapSceneRewardCategories;
-                $this->mapSceneRewardCategoriesScheduledForDeletion->clear();
+        if ($this->getMapSceneRewcats()->contains($mapSceneRewcat)) {
+            $pos = $this->collMapSceneRewcats->search($mapSceneRewcat);
+            $this->collMapSceneRewcats->remove($pos);
+            if (null === $this->mapSceneRewcatsScheduledForDeletion) {
+                $this->mapSceneRewcatsScheduledForDeletion = clone $this->collMapSceneRewcats;
+                $this->mapSceneRewcatsScheduledForDeletion->clear();
             }
-            $this->mapSceneRewardCategoriesScheduledForDeletion[]= clone $mapSceneRewardCategory;
-            $mapSceneRewardCategory->setRewardCategory(null);
+            $this->mapSceneRewcatsScheduledForDeletion[]= clone $mapSceneRewcat;
+            $mapSceneRewcat->setRewardCategory(null);
         }
 
         return $this;
@@ -1523,7 +1523,7 @@ abstract class RewardCategory implements ActiveRecordInterface
      * an identical criteria, it returns the collection.
      * Otherwise if this RewardCategory is new, it will return
      * an empty collection; or if this RewardCategory has previously
-     * been saved, it will retrieve related MapSceneRewardCategories from storage.
+     * been saved, it will retrieve related MapSceneRewcats from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
@@ -1532,14 +1532,14 @@ abstract class RewardCategory implements ActiveRecordInterface
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildMapSceneRewardCategory[] List of ChildMapSceneRewardCategory objects
+     * @return ObjectCollection|ChildMapSceneRewcat[] List of ChildMapSceneRewcat objects
      */
-    public function getMapSceneRewardCategoriesJoinScene(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getMapSceneRewcatsJoinScene(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        $query = ChildMapSceneRewardCategoryQuery::create(null, $criteria);
+        $query = ChildMapSceneRewcatQuery::create(null, $criteria);
         $query->joinWith('Scene', $joinBehavior);
 
-        return $this->getMapSceneRewardCategories($query, $con);
+        return $this->getMapSceneRewcats($query, $con);
     }
 
     /**
@@ -1658,7 +1658,7 @@ abstract class RewardCategory implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-        
+
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {
@@ -1890,8 +1890,8 @@ abstract class RewardCategory implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collMapSceneRewardCategories) {
-                foreach ($this->collMapSceneRewardCategories as $o) {
+            if ($this->collMapSceneRewcats) {
+                foreach ($this->collMapSceneRewcats as $o) {
                     $o->clearAllReferences($deep);
                 }
             }
@@ -1902,7 +1902,7 @@ abstract class RewardCategory implements ActiveRecordInterface
             }
         } // if ($deep)
 
-        $this->collMapSceneRewardCategories = null;
+        $this->collMapSceneRewcats = null;
         $this->collRewards = null;
     }
 

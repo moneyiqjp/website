@@ -317,7 +317,7 @@ class RewardHistoryTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-            
+
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -331,7 +331,7 @@ class RewardHistoryTableMap extends TableMap
 
         return $pks;
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -392,7 +392,7 @@ class RewardHistoryTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

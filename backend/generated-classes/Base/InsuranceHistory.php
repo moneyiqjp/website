@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'insurance_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class InsuranceHistory implements ActiveRecordInterface 
+abstract class InsuranceHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -336,7 +336,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [insurance_id] column value.
-     * 
+     *
      * @return int
      */
     public function getInsuranceId()
@@ -346,7 +346,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -356,7 +356,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [insurance_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getInsuranceTypeId()
@@ -366,7 +366,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [max_insured_amount] column value.
-     * 
+     *
      * @return int
      */
     public function getMaxInsuredAmount()
@@ -376,7 +376,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [value] column value.
-     * 
+     *
      * @return int
      */
     public function getValue()
@@ -386,7 +386,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -406,7 +406,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -426,7 +426,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -436,7 +436,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [insurance_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -456,7 +456,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -476,7 +476,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [insurance_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -496,7 +496,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [max_insured_amount] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -516,7 +516,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [value] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -536,7 +536,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\InsuranceHistory The current object (for fluent API support)
@@ -556,7 +556,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\InsuranceHistory The current object (for fluent API support)
@@ -576,7 +576,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\InsuranceHistory The current object (for fluent API support)
      */
@@ -895,28 +895,28 @@ abstract class InsuranceHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'insurance_id':                        
+                    case 'insurance_id':
                         $stmt->bindValue($identifier, $this->insurance_id, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'insurance_type_id':                        
+                    case 'insurance_type_id':
                         $stmt->bindValue($identifier, $this->insurance_type_id, PDO::PARAM_INT);
                         break;
-                    case 'max_insured_amount':                        
+                    case 'max_insured_amount':
                         $stmt->bindValue($identifier, $this->max_insured_amount, PDO::PARAM_INT);
                         break;
-                    case 'value':                        
+                    case 'value':
                         $stmt->bindValue($identifier, $this->value, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1040,7 +1040,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1258,7 +1258,7 @@ abstract class InsuranceHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

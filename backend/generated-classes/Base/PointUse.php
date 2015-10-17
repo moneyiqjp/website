@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_use' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class PointUse implements ActiveRecordInterface 
+abstract class PointUse implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -344,7 +344,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [point_use_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointUseId()
@@ -354,7 +354,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointSystemId()
@@ -364,7 +364,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreId()
@@ -374,7 +374,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [yen_per_point] column value.
-     * 
+     *
      * @return string
      */
     public function getYenPerPoint()
@@ -384,7 +384,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -404,7 +404,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -414,7 +414,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     * 
+     *
      * @return string
      */
     public function getReference()
@@ -424,7 +424,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [point_use_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -444,7 +444,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -468,7 +468,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -492,7 +492,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [yen_per_point] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -512,7 +512,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointUse The current object (for fluent API support)
@@ -532,7 +532,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -552,7 +552,7 @@ abstract class PointUse implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointUse The current object (for fluent API support)
      */
@@ -893,25 +893,25 @@ abstract class PointUse implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_use_id':                        
+                    case 'point_use_id':
                         $stmt->bindValue($identifier, $this->point_use_id, PDO::PARAM_INT);
                         break;
-                    case 'point_system_id':                        
+                    case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'store_id':                        
+                    case 'store_id':
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'yen_per_point':                        
+                    case 'yen_per_point':
                         $stmt->bindValue($identifier, $this->yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':                        
+                    case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1039,10 +1039,10 @@ abstract class PointUse implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aPointSystem) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointSystem';
@@ -1053,11 +1053,11 @@ abstract class PointUse implements ActiveRecordInterface
                     default:
                         $key = 'PointSystem';
                 }
-        
+
                 $result[$key] = $this->aPointSystem->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aStore) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'store';
@@ -1068,7 +1068,7 @@ abstract class PointUse implements ActiveRecordInterface
                     default:
                         $key = 'Store';
                 }
-        
+
                 $result[$key] = $this->aStore->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1278,7 +1278,7 @@ abstract class PointUse implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int

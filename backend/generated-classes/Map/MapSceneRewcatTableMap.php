@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \CardFeatures;
-use \CardFeaturesQuery;
+use \MapSceneRewcat;
+use \MapSceneRewcatQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'card_features' table.
+ * This class defines the structure of the 'map_scene_rewcat' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class CardFeaturesTableMap extends TableMap
+class MapSceneRewcatTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class CardFeaturesTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.CardFeaturesTableMap';
+    const CLASS_NAME = '.Map.MapSceneRewcatTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class CardFeaturesTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'card_features';
+    const TABLE_NAME = 'map_scene_rewcat';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\CardFeatures';
+    const OM_CLASS = '\\MapSceneRewcat';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'CardFeatures';
+    const CLASS_DEFAULT = 'MapSceneRewcat';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,52 +69,32 @@ class CardFeaturesTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
-     * the column name for the feature_id field
+     * the column name for the scene_id field
      */
-    const COL_FEATURE_ID = 'card_features.feature_id';
+    const COL_SCENE_ID = 'map_scene_rewcat.scene_id';
 
     /**
-     * the column name for the feature_type_id field
+     * the column name for the reward_category_id field
      */
-    const COL_FEATURE_TYPE_ID = 'card_features.feature_type_id';
+    const COL_REWARD_CATEGORY_ID = 'map_scene_rewcat.reward_category_id';
 
     /**
-     * the column name for the credit_card_id field
+     * the column name for the priority_id field
      */
-    const COL_CREDIT_CARD_ID = 'card_features.credit_card_id';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'card_features.description';
-
-    /**
-     * the column name for the issuing_fee field
-     */
-    const COL_ISSUING_FEE = 'card_features.issuing_fee';
-
-    /**
-     * the column name for the ongoing_fee field
-     */
-    const COL_ONGOING_FEE = 'card_features.ongoing_fee';
+    const COL_PRIORITY_ID = 'map_scene_rewcat.priority_id';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'card_features.update_time';
+    const COL_UPDATE_TIME = 'map_scene_rewcat.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'card_features.update_user';
-
-    /**
-     * the column name for the reference field
-     */
-    const COL_REFERENCE = 'card_features.reference';
+    const COL_UPDATE_USER = 'map_scene_rewcat.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -128,11 +108,11 @@ class CardFeaturesTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeatureId', 'FeatureTypeId', 'CreditCardId', 'Description', 'IssuingFee', 'OngoingFee', 'UpdateTime', 'UpdateUser', 'Reference', ),
-        self::TYPE_CAMELNAME     => array('featureId', 'featureTypeId', 'creditCardId', 'description', 'issuingFee', 'ongoingFee', 'updateTime', 'updateUser', 'reference', ),
-        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID, CardFeaturesTableMap::COL_FEATURE_TYPE_ID, CardFeaturesTableMap::COL_CREDIT_CARD_ID, CardFeaturesTableMap::COL_DESCRIPTION, CardFeaturesTableMap::COL_ISSUING_FEE, CardFeaturesTableMap::COL_ONGOING_FEE, CardFeaturesTableMap::COL_UPDATE_TIME, CardFeaturesTableMap::COL_UPDATE_USER, CardFeaturesTableMap::COL_REFERENCE, ),
-        self::TYPE_FIELDNAME     => array('feature_id', 'feature_type_id', 'credit_card_id', 'description', 'issuing_fee', 'ongoing_fee', 'update_time', 'update_user', 'reference', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('SceneId', 'RewardCategoryId', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('sceneId', 'rewardCategoryId', 'priorityId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MapSceneRewcatTableMap::COL_SCENE_ID, MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID, MapSceneRewcatTableMap::COL_PRIORITY_ID, MapSceneRewcatTableMap::COL_UPDATE_TIME, MapSceneRewcatTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('scene_id', 'reward_category_id', 'priority_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -142,11 +122,11 @@ class CardFeaturesTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeatureId' => 0, 'FeatureTypeId' => 1, 'CreditCardId' => 2, 'Description' => 3, 'IssuingFee' => 4, 'OngoingFee' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, 'Reference' => 8, ),
-        self::TYPE_CAMELNAME     => array('featureId' => 0, 'featureTypeId' => 1, 'creditCardId' => 2, 'description' => 3, 'issuingFee' => 4, 'ongoingFee' => 5, 'updateTime' => 6, 'updateUser' => 7, 'reference' => 8, ),
-        self::TYPE_COLNAME       => array(CardFeaturesTableMap::COL_FEATURE_ID => 0, CardFeaturesTableMap::COL_FEATURE_TYPE_ID => 1, CardFeaturesTableMap::COL_CREDIT_CARD_ID => 2, CardFeaturesTableMap::COL_DESCRIPTION => 3, CardFeaturesTableMap::COL_ISSUING_FEE => 4, CardFeaturesTableMap::COL_ONGOING_FEE => 5, CardFeaturesTableMap::COL_UPDATE_TIME => 6, CardFeaturesTableMap::COL_UPDATE_USER => 7, CardFeaturesTableMap::COL_REFERENCE => 8, ),
-        self::TYPE_FIELDNAME     => array('feature_id' => 0, 'feature_type_id' => 1, 'credit_card_id' => 2, 'description' => 3, 'issuing_fee' => 4, 'ongoing_fee' => 5, 'update_time' => 6, 'update_user' => 7, 'reference' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('SceneId' => 0, 'RewardCategoryId' => 1, 'PriorityId' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
+        self::TYPE_CAMELNAME     => array('sceneId' => 0, 'rewardCategoryId' => 1, 'priorityId' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
+        self::TYPE_COLNAME       => array(MapSceneRewcatTableMap::COL_SCENE_ID => 0, MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID => 1, MapSceneRewcatTableMap::COL_PRIORITY_ID => 2, MapSceneRewcatTableMap::COL_UPDATE_TIME => 3, MapSceneRewcatTableMap::COL_UPDATE_USER => 4, ),
+        self::TYPE_FIELDNAME     => array('scene_id' => 0, 'reward_category_id' => 1, 'priority_id' => 2, 'update_time' => 3, 'update_user' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -159,22 +139,18 @@ class CardFeaturesTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('card_features');
-        $this->setPhpName('CardFeatures');
+        $this->setName('map_scene_rewcat');
+        $this->setPhpName('MapSceneRewcat');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\CardFeatures');
+        $this->setClassName('\\MapSceneRewcat');
         $this->setPackage('');
-        $this->setUseIdGenerator(true);
+        $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('feature_id', 'FeatureId', 'INTEGER', true, null, null);
-        $this->addForeignKey('feature_type_id', 'FeatureTypeId', 'INTEGER', 'card_feature_type', 'feature_type_id', true, null, null);
-        $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('issuing_fee', 'IssuingFee', 'INTEGER', false, null, null);
-        $this->addColumn('ongoing_fee', 'OngoingFee', 'INTEGER', false, null, null);
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
+        $this->addForeignPrimaryKey('scene_id', 'SceneId', 'INTEGER' , 'scene', 'scene_id', true, null, null);
+        $this->addForeignPrimaryKey('reward_category_id', 'RewardCategoryId', 'INTEGER' , 'reward_category', 'reward_category_id', true, null, null);
+        $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -182,9 +158,62 @@ class CardFeaturesTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('CreditCard', '\\CreditCard', RelationMap::MANY_TO_ONE, array('credit_card_id' => 'credit_card_id', ), null, null);
-        $this->addRelation('CardFeatureType', '\\CardFeatureType', RelationMap::MANY_TO_ONE, array('feature_type_id' => 'feature_type_id', ), null, null);
+        $this->addRelation('RewardCategory', '\\RewardCategory', RelationMap::MANY_TO_ONE, array('reward_category_id' => 'reward_category_id', ), null, null);
+        $this->addRelation('Scene', '\\Scene', RelationMap::MANY_TO_ONE, array('scene_id' => 'scene_id', ), null, null);
     } // buildRelations()
+
+    /**
+     * Adds an object to the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database. In some cases you may need to explicitly add objects
+     * to the cache in order to ensure that the same objects are always returned by find*()
+     * and findPk*() calls.
+     *
+     * @param \MapSceneRewcat $obj A \MapSceneRewcat object.
+     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
+     */
+    public static function addInstanceToPool($obj, $key = null)
+    {
+        if (Propel::isInstancePoolingEnabled()) {
+            if (null === $key) {
+                $key = serialize(array((string) $obj->getSceneId(), (string) $obj->getRewardCategoryId()));
+            } // if key === null
+            self::$instances[$key] = $obj;
+        }
+    }
+
+    /**
+     * Removes an object from the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database.  In some cases -- especially when you override doDelete
+     * methods in your stub classes -- you may need to explicitly remove objects
+     * from the cache in order to prevent returning objects that no longer exist.
+     *
+     * @param mixed $value A \MapSceneRewcat object or a primary key value.
+     */
+    public static function removeInstanceFromPool($value)
+    {
+        if (Propel::isInstancePoolingEnabled() && null !== $value) {
+            if (is_object($value) && $value instanceof \MapSceneRewcat) {
+                $key = serialize(array((string) $value->getSceneId(), (string) $value->getRewardCategoryId()));
+
+            } elseif (is_array($value) && count($value) === 2) {
+                // assume we've been passed a primary key";
+                $key = serialize(array((string) $value[0], (string) $value[1]));
+            } elseif ($value instanceof Criteria) {
+                self::$instances = [];
+
+                return;
+            } else {
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \MapSceneRewcat object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                throw $e;
+            }
+
+            unset(self::$instances[$key]);
+        }
+    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -202,11 +231,11 @@ class CardFeaturesTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('FeatureId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('FeatureId', TableMap::TYPE_PHPNAME, $indexType)];
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -223,11 +252,20 @@ class CardFeaturesTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+            $pks = [];
+
+        $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('FeatureId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)
         ];
+        $pks[] = (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 1 + $offset
+                : self::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)
+        ];
+
+        return $pks;
     }
 
     /**
@@ -243,7 +281,7 @@ class CardFeaturesTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? CardFeaturesTableMap::CLASS_DEFAULT : CardFeaturesTableMap::OM_CLASS;
+        return $withPrefix ? MapSceneRewcatTableMap::CLASS_DEFAULT : MapSceneRewcatTableMap::OM_CLASS;
     }
 
     /**
@@ -257,22 +295,22 @@ class CardFeaturesTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (CardFeatures object, last column rank)
+     * @return array           (MapSceneRewcat object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = CardFeaturesTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = CardFeaturesTableMap::getInstanceFromPool($key))) {
+        $key = MapSceneRewcatTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = MapSceneRewcatTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + CardFeaturesTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + MapSceneRewcatTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = CardFeaturesTableMap::OM_CLASS;
-            /** @var CardFeatures $obj */
+            $cls = MapSceneRewcatTableMap::OM_CLASS;
+            /** @var MapSceneRewcat $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            CardFeaturesTableMap::addInstanceToPool($obj, $key);
+            MapSceneRewcatTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -295,18 +333,18 @@ class CardFeaturesTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = CardFeaturesTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = CardFeaturesTableMap::getInstanceFromPool($key))) {
+            $key = MapSceneRewcatTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = MapSceneRewcatTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var CardFeatures $obj */
+                /** @var MapSceneRewcat $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                CardFeaturesTableMap::addInstanceToPool($obj, $key);
+                MapSceneRewcatTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -327,25 +365,17 @@ class CardFeaturesTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_FEATURE_ID);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_FEATURE_TYPE_ID);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_CREDIT_CARD_ID);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_ISSUING_FEE);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_ONGOING_FEE);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_UPDATE_USER);
-            $criteria->addSelectColumn(CardFeaturesTableMap::COL_REFERENCE);
+            $criteria->addSelectColumn(MapSceneRewcatTableMap::COL_SCENE_ID);
+            $criteria->addSelectColumn(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID);
+            $criteria->addSelectColumn(MapSceneRewcatTableMap::COL_PRIORITY_ID);
+            $criteria->addSelectColumn(MapSceneRewcatTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(MapSceneRewcatTableMap::COL_UPDATE_USER);
         } else {
-            $criteria->addSelectColumn($alias . '.feature_id');
-            $criteria->addSelectColumn($alias . '.feature_type_id');
-            $criteria->addSelectColumn($alias . '.credit_card_id');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.issuing_fee');
-            $criteria->addSelectColumn($alias . '.ongoing_fee');
+            $criteria->addSelectColumn($alias . '.scene_id');
+            $criteria->addSelectColumn($alias . '.reward_category_id');
+            $criteria->addSelectColumn($alias . '.priority_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
-            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 
@@ -358,7 +388,7 @@ class CardFeaturesTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(CardFeaturesTableMap::DATABASE_NAME)->getTable(CardFeaturesTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(MapSceneRewcatTableMap::DATABASE_NAME)->getTable(MapSceneRewcatTableMap::TABLE_NAME);
     }
 
     /**
@@ -366,16 +396,16 @@ class CardFeaturesTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CardFeaturesTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(CardFeaturesTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new CardFeaturesTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MapSceneRewcatTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(MapSceneRewcatTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new MapSceneRewcatTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a CardFeatures or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a MapSceneRewcat or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or CardFeatures object or primary key or array of primary keys
+     * @param mixed               $values Criteria or MapSceneRewcat object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -386,27 +416,37 @@ class CardFeaturesTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CardFeaturesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapSceneRewcatTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \CardFeatures) { // it's a model object
+        } elseif ($values instanceof \MapSceneRewcat) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(CardFeaturesTableMap::DATABASE_NAME);
-            $criteria->add(CardFeaturesTableMap::COL_FEATURE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(MapSceneRewcatTableMap::DATABASE_NAME);
+            // primary key is composite; we therefore, expect
+            // the primary key passed to be an array of pkey values
+            if (count($values) == count($values, COUNT_RECURSIVE)) {
+                // array is not multi-dimensional
+                $values = array($values);
+            }
+            foreach ($values as $value) {
+                $criterion = $criteria->getNewCriterion(MapSceneRewcatTableMap::COL_SCENE_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID, $value[1]));
+                $criteria->addOr($criterion);
+            }
         }
 
-        $query = CardFeaturesQuery::create()->mergeWith($criteria);
+        $query = MapSceneRewcatQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            CardFeaturesTableMap::clearInstancePool();
+            MapSceneRewcatTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                CardFeaturesTableMap::removeInstanceFromPool($singleval);
+                MapSceneRewcatTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -414,20 +454,20 @@ class CardFeaturesTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the card_features table.
+     * Deletes all rows from the map_scene_rewcat table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return CardFeaturesQuery::create()->doDeleteAll($con);
+        return MapSceneRewcatQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a CardFeatures or Criteria object.
+     * Performs an INSERT on the database, given a MapSceneRewcat or Criteria object.
      *
-     * @param mixed               $criteria Criteria or CardFeatures object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or MapSceneRewcat object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -436,22 +476,18 @@ class CardFeaturesTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CardFeaturesTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapSceneRewcatTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from CardFeatures object
-        }
-
-        if ($criteria->containsKey(CardFeaturesTableMap::COL_FEATURE_ID) && $criteria->keyContainsValue(CardFeaturesTableMap::COL_FEATURE_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CardFeaturesTableMap::COL_FEATURE_ID.')');
+            $criteria = $criteria->buildCriteria(); // build Criteria from MapSceneRewcat object
         }
 
 
         // Set the correct dbName
-        $query = CardFeaturesQuery::create()->mergeWith($criteria);
+        $query = MapSceneRewcatQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -460,7 +496,7 @@ class CardFeaturesTableMap extends TableMap
         });
     }
 
-} // CardFeaturesTableMap
+} // MapSceneRewcatTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-CardFeaturesTableMap::buildTableMap();
+MapSceneRewcatTableMap::buildTableMap();

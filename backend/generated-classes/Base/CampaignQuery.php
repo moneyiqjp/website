@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'campaign' table.
  *
- * 
+ *
  *
  * @method     ChildCampaignQuery orderByCampaignId($order = Criteria::ASC) Order by the campaign_id column
  * @method     ChildCampaignQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
@@ -86,7 +86,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class CampaignQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\CampaignQuery object.
      *
@@ -174,7 +174,7 @@ abstract class CampaignQuery extends ModelCriteria
     {
         $sql = 'SELECT campaign_id, credit_card_id, campaign_name, description, max_points, value_in_yen, start_date, end_date, update_time, update_user, reference FROM campaign WHERE campaign_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -817,9 +817,9 @@ abstract class CampaignQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             CampaignTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             CampaignTableMap::clearRelatedInstancePool();
 

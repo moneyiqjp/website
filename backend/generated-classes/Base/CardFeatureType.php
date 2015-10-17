@@ -29,11 +29,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'card_feature_type' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class CardFeatureType implements ActiveRecordInterface 
+abstract class CardFeatureType implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -380,7 +380,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [feature_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getFeatureTypeId()
@@ -390,7 +390,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -400,7 +400,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -410,7 +410,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [category] column value.
-     * 
+     *
      * @return string
      */
     public function getCategory()
@@ -420,7 +420,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [background_color] column value.
-     * 
+     *
      * @return string
      */
     public function getBackgroundColor()
@@ -430,7 +430,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [foreground_color] column value.
-     * 
+     *
      * @return string
      */
     public function getForegroundColor()
@@ -440,7 +440,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -460,7 +460,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -470,7 +470,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [feature_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -490,7 +490,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -510,7 +510,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -530,7 +530,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [category] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -550,7 +550,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [background_color] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -570,7 +570,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [foreground_color] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -590,7 +590,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\CardFeatureType The current object (for fluent API support)
@@ -610,7 +610,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\CardFeatureType The current object (for fluent API support)
      */
@@ -972,28 +972,28 @@ abstract class CardFeatureType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'feature_type_id':                        
+                    case 'feature_type_id':
                         $stmt->bindValue($identifier, $this->feature_type_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'category':                        
+                    case 'category':
                         $stmt->bindValue($identifier, $this->category, PDO::PARAM_STR);
                         break;
-                    case 'background_color':                        
+                    case 'background_color':
                         $stmt->bindValue($identifier, $this->background_color, PDO::PARAM_STR);
                         break;
-                    case 'foreground_color':                        
+                    case 'foreground_color':
                         $stmt->bindValue($identifier, $this->foreground_color, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1125,10 +1125,10 @@ abstract class CardFeatureType implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collCardFeaturess) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardFeaturess';
@@ -1139,11 +1139,11 @@ abstract class CardFeatureType implements ActiveRecordInterface
                     default:
                         $key = 'CardFeaturess';
                 }
-        
+
                 $result[$key] = $this->collCardFeaturess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collMapPersonaFeatureConstraints) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'mapPersonaFeatureConstraints';
@@ -1154,7 +1154,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
                     default:
                         $key = 'MapPersonaFeatureConstraints';
                 }
-        
+
                 $result[$key] = $this->collMapPersonaFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1373,7 +1373,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1606,7 +1606,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
         /** @var ChildCardFeatures[] $cardFeaturessToDelete */
         $cardFeaturessToDelete = $this->getCardFeaturess(new Criteria(), $con)->diff($cardFeaturess);
 
-        
+
         $this->cardFeaturessScheduledForDeletion = $cardFeaturessToDelete;
 
         foreach ($cardFeaturessToDelete as $cardFeaturesRemoved) {
@@ -1849,7 +1849,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
         /** @var ChildMapPersonaFeatureConstraint[] $mapPersonaFeatureConstraintsToDelete */
         $mapPersonaFeatureConstraintsToDelete = $this->getMapPersonaFeatureConstraints(new Criteria(), $con)->diff($mapPersonaFeatureConstraints);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.

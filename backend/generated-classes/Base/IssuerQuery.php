@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'issuer' table.
  *
- * 
+ *
  *
  * @method     ChildIssuerQuery orderByIssuerId($order = Criteria::ASC) Order by the issuer_id column
  * @method     ChildIssuerQuery orderByIssuerName($order = Criteria::ASC) Order by the issuer_name column
@@ -58,7 +58,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class IssuerQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\IssuerQuery object.
      *
@@ -146,7 +146,7 @@ abstract class IssuerQuery extends ModelCriteria
     {
         $sql = 'SELECT issuer_id, issuer_name, update_time, update_user FROM issuer WHERE issuer_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -516,9 +516,9 @@ abstract class IssuerQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             IssuerTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             IssuerTableMap::clearRelatedInstancePool();
 

@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'map_persona_scene' table.
  *
- * 
+ *
  *
  * @method     ChildMapPersonaSceneQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildMapPersonaSceneQuery orderBySceneId($order = Criteria::ASC) Order by the scene_id column
@@ -70,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class MapPersonaSceneQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\MapPersonaSceneQuery object.
      *
@@ -158,8 +158,8 @@ abstract class MapPersonaSceneQuery extends ModelCriteria
     {
         $sql = 'SELECT persona_id, scene_id, percentage, priority_id, update_time, update_user FROM map_persona_scene WHERE persona_id = :p0 AND scene_id = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -721,9 +721,9 @@ abstract class MapPersonaSceneQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             MapPersonaSceneTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             MapPersonaSceneTableMap::clearRelatedInstancePool();
 

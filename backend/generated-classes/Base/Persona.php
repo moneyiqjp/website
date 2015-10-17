@@ -31,11 +31,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'persona' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Persona implements ActiveRecordInterface 
+abstract class Persona implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -362,7 +362,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [persona_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPersonaId()
@@ -372,7 +372,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -382,7 +382,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -392,7 +392,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -412,7 +412,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -422,7 +422,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [persona_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -442,7 +442,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -462,7 +462,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -482,7 +482,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Persona The current object (for fluent API support)
@@ -502,7 +502,7 @@ abstract class Persona implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
@@ -861,19 +861,19 @@ abstract class Persona implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'persona_id':                        
+                    case 'persona_id':
                         $stmt->bindValue($identifier, $this->persona_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -993,10 +993,10 @@ abstract class Persona implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collMapPersonaFeatureConstraints) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'mapPersonaFeatureConstraints';
@@ -1007,11 +1007,11 @@ abstract class Persona implements ActiveRecordInterface
                     default:
                         $key = 'MapPersonaFeatureConstraints';
                 }
-        
+
                 $result[$key] = $this->collMapPersonaFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collMapPersonaScenes) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'mapPersonaScenes';
@@ -1022,11 +1022,11 @@ abstract class Persona implements ActiveRecordInterface
                     default:
                         $key = 'MapPersonaScenes';
                 }
-        
+
                 $result[$key] = $this->collMapPersonaScenes->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPersonaRestrictions) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'personaRestrictions';
@@ -1037,7 +1037,7 @@ abstract class Persona implements ActiveRecordInterface
                     default:
                         $key = 'PersonaRestrictions';
                 }
-        
+
                 $result[$key] = $this->collPersonaRestrictions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1229,7 +1229,7 @@ abstract class Persona implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1468,7 +1468,7 @@ abstract class Persona implements ActiveRecordInterface
         /** @var ChildMapPersonaFeatureConstraint[] $mapPersonaFeatureConstraintsToDelete */
         $mapPersonaFeatureConstraintsToDelete = $this->getMapPersonaFeatureConstraints(new Criteria(), $con)->diff($mapPersonaFeatureConstraints);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1714,7 +1714,7 @@ abstract class Persona implements ActiveRecordInterface
         /** @var ChildMapPersonaScene[] $mapPersonaScenesToDelete */
         $mapPersonaScenesToDelete = $this->getMapPersonaScenes(new Criteria(), $con)->diff($mapPersonaScenes);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
@@ -1960,7 +1960,7 @@ abstract class Persona implements ActiveRecordInterface
         /** @var ChildPersonaRestriction[] $personaRestrictionsToDelete */
         $personaRestrictionsToDelete = $this->getPersonaRestrictions(new Criteria(), $con)->diff($personaRestrictions);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.

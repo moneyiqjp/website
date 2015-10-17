@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'issuer' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Issuer implements ActiveRecordInterface 
+abstract class Issuer implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -328,7 +328,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Get the [issuer_id] column value.
-     * 
+     *
      * @return int
      */
     public function getIssuerId()
@@ -338,7 +338,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Get the [issuer_name] column value.
-     * 
+     *
      * @return string
      */
     public function getIssuerName()
@@ -348,7 +348,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -368,7 +368,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -378,7 +378,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Issuer The current object (for fluent API support)
      */
@@ -398,7 +398,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Issuer The current object (for fluent API support)
      */
@@ -418,7 +418,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Issuer The current object (for fluent API support)
@@ -438,7 +438,7 @@ abstract class Issuer implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Issuer The current object (for fluent API support)
      */
@@ -753,16 +753,16 @@ abstract class Issuer implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'issuer_id':                        
+                    case 'issuer_id':
                         $stmt->bindValue($identifier, $this->issuer_id, PDO::PARAM_INT);
                         break;
-                    case 'issuer_name':                        
+                    case 'issuer_name':
                         $stmt->bindValue($identifier, $this->issuer_name, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -878,10 +878,10 @@ abstract class Issuer implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collCreditCards) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCards';
@@ -892,7 +892,7 @@ abstract class Issuer implements ActiveRecordInterface
                     default:
                         $key = 'CreditCards';
                 }
-        
+
                 $result[$key] = $this->collCreditCards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1075,7 +1075,7 @@ abstract class Issuer implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1295,7 +1295,7 @@ abstract class Issuer implements ActiveRecordInterface
         /** @var ChildCreditCard[] $creditCardsToDelete */
         $creditCardsToDelete = $this->getCreditCards(new Criteria(), $con)->diff($creditCards);
 
-        
+
         $this->creditCardsScheduledForDeletion = $creditCardsToDelete;
 
         foreach ($creditCardsToDelete as $creditCardRemoved) {

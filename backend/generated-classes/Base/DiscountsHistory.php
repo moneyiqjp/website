@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'discounts_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class DiscountsHistory implements ActiveRecordInterface 
+abstract class DiscountsHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -360,7 +360,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [discount_id] column value.
-     * 
+     *
      * @return int
      */
     public function getDiscountId()
@@ -370,7 +370,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [percentage] column value.
-     * 
+     *
      * @return double
      */
     public function getPercentage()
@@ -380,7 +380,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [start_date] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -400,7 +400,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [end_date] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -420,7 +420,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -430,7 +430,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -440,7 +440,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreId()
@@ -450,7 +450,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [multiple] column value.
-     * 
+     *
      * @return double
      */
     public function getMultiple()
@@ -460,7 +460,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [conditions] column value.
-     * 
+     *
      * @return string
      */
     public function getConditions()
@@ -470,7 +470,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -490,7 +490,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -510,7 +510,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -520,7 +520,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [discount_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -540,7 +540,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [percentage] column.
-     * 
+     *
      * @param  double $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -560,7 +560,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [start_date] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\DiscountsHistory The current object (for fluent API support)
@@ -580,7 +580,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [end_date] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\DiscountsHistory The current object (for fluent API support)
@@ -600,7 +600,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -620,7 +620,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -640,7 +640,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -660,7 +660,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [multiple] column.
-     * 
+     *
      * @param  double $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -680,7 +680,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [conditions] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -700,7 +700,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\DiscountsHistory The current object (for fluent API support)
@@ -720,7 +720,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\DiscountsHistory The current object (for fluent API support)
@@ -740,7 +740,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\DiscountsHistory The current object (for fluent API support)
      */
@@ -1089,40 +1089,40 @@ abstract class DiscountsHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'discount_id':                        
+                    case 'discount_id':
                         $stmt->bindValue($identifier, $this->discount_id, PDO::PARAM_INT);
                         break;
-                    case 'percentage':                        
+                    case 'percentage':
                         $stmt->bindValue($identifier, $this->percentage, PDO::PARAM_STR);
                         break;
-                    case 'start_date':                        
+                    case 'start_date':
                         $stmt->bindValue($identifier, $this->start_date ? $this->start_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'end_date':                        
+                    case 'end_date':
                         $stmt->bindValue($identifier, $this->end_date ? $this->end_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'store_id':                        
+                    case 'store_id':
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'multiple':                        
+                    case 'multiple':
                         $stmt->bindValue($identifier, $this->multiple, PDO::PARAM_STR);
                         break;
-                    case 'conditions':                        
+                    case 'conditions':
                         $stmt->bindValue($identifier, $this->conditions, PDO::PARAM_STR);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1262,7 +1262,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1516,7 +1516,7 @@ abstract class DiscountsHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

@@ -159,7 +159,7 @@ class SceneTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('MapPersonaScene', '\\MapPersonaScene', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapPersonaScenes');
-        $this->addRelation('MapSceneRewardCategory', '\\MapSceneRewardCategory', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapSceneRewardCategories');
+        $this->addRelation('MapSceneRewcat', '\\MapSceneRewcat', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapSceneRewcats');
         $this->addRelation('MapSceneStoreCategory', '\\MapSceneStoreCategory', RelationMap::ONE_TO_MANY, array('scene_id' => 'scene_id', ), null, null, 'MapSceneStoreCategories');
     } // buildRelations()
 
@@ -206,7 +206,7 @@ class SceneTableMap extends TableMap
                 : self::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -267,7 +267,7 @@ class SceneTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

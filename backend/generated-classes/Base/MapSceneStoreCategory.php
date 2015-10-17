@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'map_scene_store_category' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class MapSceneStoreCategory implements ActiveRecordInterface 
+abstract class MapSceneStoreCategory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -346,7 +346,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [scene_id] column value.
-     * 
+     *
      * @return int
      */
     public function getSceneId()
@@ -356,7 +356,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [store_category_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreCategoryId()
@@ -366,7 +366,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [priority_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPriorityId()
@@ -376,7 +376,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -396,7 +396,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -406,7 +406,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [scene_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\MapSceneStoreCategory The current object (for fluent API support)
      */
@@ -430,7 +430,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [store_category_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\MapSceneStoreCategory The current object (for fluent API support)
      */
@@ -454,7 +454,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [priority_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\MapSceneStoreCategory The current object (for fluent API support)
      */
@@ -474,7 +474,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\MapSceneStoreCategory The current object (for fluent API support)
@@ -494,7 +494,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\MapSceneStoreCategory The current object (for fluent API support)
      */
@@ -823,19 +823,19 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'scene_id':                        
+                    case 'scene_id':
                         $stmt->bindValue($identifier, $this->scene_id, PDO::PARAM_INT);
                         break;
-                    case 'store_category_id':                        
+                    case 'store_category_id':
                         $stmt->bindValue($identifier, $this->store_category_id, PDO::PARAM_INT);
                         break;
-                    case 'priority_id':                        
+                    case 'priority_id':
                         $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -948,10 +948,10 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aScene) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'scene';
@@ -962,11 +962,11 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
                     default:
                         $key = 'Scene';
                 }
-        
+
                 $result[$key] = $this->aScene->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aStoreCategory) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'storeCategory';
@@ -977,7 +977,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
                     default:
                         $key = 'StoreCategory';
                 }
-        
+
                 $result[$key] = $this->aStoreCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1185,7 +1185,7 @@ abstract class MapSceneStoreCategory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

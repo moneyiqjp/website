@@ -234,7 +234,6 @@ class CreditCardTableMap extends TableMap
         $this->addRelation('Fees', '\\Fees', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Feess');
         $this->addRelation('Insurance', '\\Insurance', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Insurances');
         $this->addRelation('Interest', '\\Interest', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Interests');
-        $this->addRelation('PointUsage', '\\PointUsage', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'PointUsages');
     } // buildRelations()
 
     /**
@@ -280,7 +279,7 @@ class CreditCardTableMap extends TableMap
                 : self::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -341,7 +340,7 @@ class CreditCardTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

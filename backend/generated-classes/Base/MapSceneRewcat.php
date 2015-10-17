@@ -2,11 +2,15 @@
 
 namespace Base;
 
-use \PaymentTypeHistoryQuery as ChildPaymentTypeHistoryQuery;
+use \MapSceneRewcatQuery as ChildMapSceneRewcatQuery;
+use \RewardCategory as ChildRewardCategory;
+use \RewardCategoryQuery as ChildRewardCategoryQuery;
+use \Scene as ChildScene;
+use \SceneQuery as ChildSceneQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\PaymentTypeHistoryTableMap;
+use Map\MapSceneRewcatTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -21,18 +25,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'payment_type_history' table.
+ * Base class that represents a row from the 'map_scene_rewcat' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class PaymentTypeHistory implements ActiveRecordInterface
+abstract class MapSceneRewcat implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\PaymentTypeHistoryTableMap';
+    const TABLE_MAP = '\\Map\\MapSceneRewcatTableMap';
 
 
     /**
@@ -62,40 +66,45 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the payment_type_id field.
+     * The value for the scene_id field.
      * @var        int
      */
-    protected $payment_type_id;
+    protected $scene_id;
 
     /**
-     * The value for the payment_type field.
-     * @var        string
+     * The value for the reward_category_id field.
+     * @var        int
      */
-    protected $payment_type;
+    protected $reward_category_id;
 
     /**
-     * The value for the payment_description field.
-     * @var        string
+     * The value for the priority_id field.
+     * Note: this column has a database default value of: 100
+     * @var        int
      */
-    protected $payment_description;
+    protected $priority_id;
 
     /**
-     * The value for the time_beg field.
+     * The value for the update_time field.
      * @var        \DateTime
      */
-    protected $time_beg;
-
-    /**
-     * The value for the time_end field.
-     * @var        \DateTime
-     */
-    protected $time_end;
+    protected $update_time;
 
     /**
      * The value for the update_user field.
      * @var        string
      */
     protected $update_user;
+
+    /**
+     * @var        ChildRewardCategory
+     */
+    protected $aRewardCategory;
+
+    /**
+     * @var        ChildScene
+     */
+    protected $aScene;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -106,10 +115,23 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\PaymentTypeHistory object.
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->priority_id = 100;
+    }
+
+    /**
+     * Initializes internal state of Base\MapSceneRewcat object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -201,9 +223,9 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>PaymentTypeHistory</code> instance.  If
-     * <code>obj</code> is an instance of <code>PaymentTypeHistory</code>, delegates to
-     * <code>equals(PaymentTypeHistory)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>MapSceneRewcat</code> instance.  If
+     * <code>obj</code> is an instance of <code>MapSceneRewcat</code>, delegates to
+     * <code>equals(MapSceneRewcat)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -269,7 +291,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|PaymentTypeHistory The current object, for fluid interface
+     * @return $this|MapSceneRewcat The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -323,37 +345,37 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     }
 
     /**
-     * Get the [payment_type_id] column value.
+     * Get the [scene_id] column value.
      *
      * @return int
      */
-    public function getPaymentTypeId()
+    public function getSceneId()
     {
-        return $this->payment_type_id;
+        return $this->scene_id;
     }
 
     /**
-     * Get the [payment_type] column value.
+     * Get the [reward_category_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getPaymentType()
+    public function getRewardCategoryId()
     {
-        return $this->payment_type;
+        return $this->reward_category_id;
     }
 
     /**
-     * Get the [payment_description] column value.
+     * Get the [priority_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getPaymentDescription()
+    public function getPriorityId()
     {
-        return $this->payment_description;
+        return $this->priority_id;
     }
 
     /**
-     * Get the [optionally formatted] temporal [time_beg] column value.
+     * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -363,32 +385,12 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      *
      * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getTimeBeg($format = NULL)
+    public function getUpdateTime($format = NULL)
     {
         if ($format === null) {
-            return $this->time_beg;
+            return $this->update_time;
         } else {
-            return $this->time_beg instanceof \DateTime ? $this->time_beg->format($format) : null;
-        }
-    }
-
-    /**
-     * Get the [optionally formatted] temporal [time_end] column value.
-     *
-     *
-     * @param      string $format The date/time format string (either date()-style or strftime()-style).
-     *                            If format is NULL, then the raw DateTime object will be returned.
-     *
-     * @return string|DateTime Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-     *
-     * @throws PropelException - if unable to parse/validate the date/time value.
-     */
-    public function getTimeEnd($format = NULL)
-    {
-        if ($format === null) {
-            return $this->time_end;
-        } else {
-            return $this->time_end instanceof \DateTime ? $this->time_end->format($format) : null;
+            return $this->update_time instanceof \DateTime ? $this->update_time->format($format) : null;
         }
     }
 
@@ -403,110 +405,98 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [payment_type_id] column.
+     * Set the value of [scene_id] column.
      *
      * @param  int $v new value
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
      */
-    public function setPaymentTypeId($v)
+    public function setSceneId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->payment_type_id !== $v) {
-            $this->payment_type_id = $v;
-            $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE_ID] = true;
+        if ($this->scene_id !== $v) {
+            $this->scene_id = $v;
+            $this->modifiedColumns[MapSceneRewcatTableMap::COL_SCENE_ID] = true;
+        }
+
+        if ($this->aScene !== null && $this->aScene->getSceneId() !== $v) {
+            $this->aScene = null;
         }
 
         return $this;
-    } // setPaymentTypeId()
+    } // setSceneId()
 
     /**
-     * Set the value of [payment_type] column.
+     * Set the value of [reward_category_id] column.
      *
-     * @param  string $v new value
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
+     * @param  int $v new value
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
      */
-    public function setPaymentType($v)
+    public function setRewardCategoryId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->payment_type !== $v) {
-            $this->payment_type = $v;
-            $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE] = true;
+        if ($this->reward_category_id !== $v) {
+            $this->reward_category_id = $v;
+            $this->modifiedColumns[MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID] = true;
+        }
+
+        if ($this->aRewardCategory !== null && $this->aRewardCategory->getRewardCategoryId() !== $v) {
+            $this->aRewardCategory = null;
         }
 
         return $this;
-    } // setPaymentType()
+    } // setRewardCategoryId()
 
     /**
-     * Set the value of [payment_description] column.
+     * Set the value of [priority_id] column.
      *
-     * @param  string $v new value
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
+     * @param  int $v new value
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
      */
-    public function setPaymentDescription($v)
+    public function setPriorityId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->payment_description !== $v) {
-            $this->payment_description = $v;
-            $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_PAYMENT_DESCRIPTION] = true;
+        if ($this->priority_id !== $v) {
+            $this->priority_id = $v;
+            $this->modifiedColumns[MapSceneRewcatTableMap::COL_PRIORITY_ID] = true;
         }
 
         return $this;
-    } // setPaymentDescription()
+    } // setPriorityId()
 
     /**
-     * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
+     * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
      */
-    public function setTimeBeg($v)
+    public function setUpdateTime($v)
     {
         $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->time_beg !== null || $dt !== null) {
-            if ($dt !== $this->time_beg) {
-                $this->time_beg = $dt;
-                $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_TIME_BEG] = true;
+        if ($this->update_time !== null || $dt !== null) {
+            if ($dt !== $this->update_time) {
+                $this->update_time = $dt;
+                $this->modifiedColumns[MapSceneRewcatTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
         return $this;
-    } // setTimeBeg()
-
-    /**
-     * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     *
-     * @param  mixed $v string, integer (timestamp), or \DateTime value.
-     *               Empty strings are treated as NULL.
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
-     */
-    public function setTimeEnd($v)
-    {
-        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
-        if ($this->time_end !== null || $dt !== null) {
-            if ($dt !== $this->time_end) {
-                $this->time_end = $dt;
-                $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_TIME_END] = true;
-            }
-        } // if either are not null
-
-        return $this;
-    } // setTimeEnd()
+    } // setUpdateTime()
 
     /**
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\PaymentTypeHistory The current object (for fluent API support)
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -516,7 +506,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[PaymentTypeHistoryTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[MapSceneRewcatTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -532,6 +522,10 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->priority_id !== 100) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -558,28 +552,22 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('PaymentTypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_type_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MapSceneRewcatTableMap::translateFieldName('SceneId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->scene_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('PaymentType', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_type = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MapSceneRewcatTableMap::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->reward_category_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('PaymentDescription', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MapSceneRewcatTableMap::translateFieldName('PriorityId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->priority_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('TimeBeg', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapSceneRewcatTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
-            $this->time_beg = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
+            $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('TimeEnd', TableMap::TYPE_PHPNAME, $indexType)];
-            if ($col === '0000-00-00 00:00:00') {
-                $col = null;
-            }
-            $this->time_end = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PaymentTypeHistoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapSceneRewcatTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -589,10 +577,10 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = PaymentTypeHistoryTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = MapSceneRewcatTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\PaymentTypeHistory'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\MapSceneRewcat'), 0, $e);
         }
     }
 
@@ -611,6 +599,12 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aScene !== null && $this->scene_id !== $this->aScene->getSceneId()) {
+            $this->aScene = null;
+        }
+        if ($this->aRewardCategory !== null && $this->reward_category_id !== $this->aRewardCategory->getRewardCategoryId()) {
+            $this->aRewardCategory = null;
+        }
     } // ensureConsistency
 
     /**
@@ -634,13 +628,13 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(PaymentTypeHistoryTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(MapSceneRewcatTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildPaymentTypeHistoryQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildMapSceneRewcatQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -650,6 +644,8 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aRewardCategory = null;
+            $this->aScene = null;
         } // if (deep)
     }
 
@@ -659,8 +655,8 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see PaymentTypeHistory::setDeleted()
-     * @see PaymentTypeHistory::isDeleted()
+     * @see MapSceneRewcat::setDeleted()
+     * @see MapSceneRewcat::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -669,11 +665,11 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PaymentTypeHistoryTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapSceneRewcatTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildPaymentTypeHistoryQuery::create()
+            $deleteQuery = ChildMapSceneRewcatQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -704,7 +700,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PaymentTypeHistoryTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapSceneRewcatTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -723,7 +719,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                PaymentTypeHistoryTableMap::addInstanceToPool($this);
+                MapSceneRewcatTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -748,6 +744,25 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
+
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aRewardCategory !== null) {
+                if ($this->aRewardCategory->isModified() || $this->aRewardCategory->isNew()) {
+                    $affectedRows += $this->aRewardCategory->save($con);
+                }
+                $this->setRewardCategory($this->aRewardCategory);
+            }
+
+            if ($this->aScene !== null) {
+                if ($this->aScene->isModified() || $this->aScene->isNew()) {
+                    $affectedRows += $this->aScene->save($con);
+                }
+                $this->setScene($this->aScene);
+            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -782,27 +797,24 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_type_id';
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_SCENE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'scene_id';
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_type';
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'reward_category_id';
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_description';
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_PRIORITY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'priority_id';
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_TIME_BEG)) {
-            $modifiedColumns[':p' . $index++]  = 'time_beg';
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_UPDATE_TIME)) {
+            $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_TIME_END)) {
-            $modifiedColumns[':p' . $index++]  = 'time_end';
-        }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO payment_type_history (%s) VALUES (%s)',
+            'INSERT INTO map_scene_rewcat (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -811,20 +823,17 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'payment_type_id':
-                        $stmt->bindValue($identifier, $this->payment_type_id, PDO::PARAM_INT);
+                    case 'scene_id':
+                        $stmt->bindValue($identifier, $this->scene_id, PDO::PARAM_INT);
                         break;
-                    case 'payment_type':
-                        $stmt->bindValue($identifier, $this->payment_type, PDO::PARAM_STR);
+                    case 'reward_category_id':
+                        $stmt->bindValue($identifier, $this->reward_category_id, PDO::PARAM_INT);
                         break;
-                    case 'payment_description':
-                        $stmt->bindValue($identifier, $this->payment_description, PDO::PARAM_STR);
+                    case 'priority_id':
+                        $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':
-                        $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
-                        break;
-                    case 'time_end':
-                        $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                    case 'update_time':
+                        $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
                     case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
@@ -868,7 +877,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PaymentTypeHistoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MapSceneRewcatTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -885,21 +894,18 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getPaymentTypeId();
+                return $this->getSceneId();
                 break;
             case 1:
-                return $this->getPaymentType();
+                return $this->getRewardCategoryId();
                 break;
             case 2:
-                return $this->getPaymentDescription();
+                return $this->getPriorityId();
                 break;
             case 3:
-                return $this->getTimeBeg();
+                return $this->getUpdateTime();
                 break;
             case 4:
-                return $this->getTimeEnd();
-                break;
-            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -919,30 +925,62 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['PaymentTypeHistory'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['MapSceneRewcat'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['PaymentTypeHistory'][$this->hashCode()] = true;
-        $keys = PaymentTypeHistoryTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['MapSceneRewcat'][$this->hashCode()] = true;
+        $keys = MapSceneRewcatTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getPaymentTypeId(),
-            $keys[1] => $this->getPaymentType(),
-            $keys[2] => $this->getPaymentDescription(),
-            $keys[3] => $this->getTimeBeg(),
-            $keys[4] => $this->getTimeEnd(),
-            $keys[5] => $this->getUpdateUser(),
+            $keys[0] => $this->getSceneId(),
+            $keys[1] => $this->getRewardCategoryId(),
+            $keys[2] => $this->getPriorityId(),
+            $keys[3] => $this->getUpdateTime(),
+            $keys[4] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aRewardCategory) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'rewardCategory';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'reward_category';
+                        break;
+                    default:
+                        $key = 'RewardCategory';
+                }
+
+                $result[$key] = $this->aRewardCategory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aScene) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'scene';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'scene';
+                        break;
+                    default:
+                        $key = 'Scene';
+                }
+
+                $result[$key] = $this->aScene->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+        }
 
         return $result;
     }
@@ -956,11 +994,11 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\PaymentTypeHistory
+     * @return $this|\MapSceneRewcat
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = PaymentTypeHistoryTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MapSceneRewcatTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -971,27 +1009,24 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\PaymentTypeHistory
+     * @return $this|\MapSceneRewcat
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setPaymentTypeId($value);
+                $this->setSceneId($value);
                 break;
             case 1:
-                $this->setPaymentType($value);
+                $this->setRewardCategoryId($value);
                 break;
             case 2:
-                $this->setPaymentDescription($value);
+                $this->setPriorityId($value);
                 break;
             case 3:
-                $this->setTimeBeg($value);
+                $this->setUpdateTime($value);
                 break;
             case 4:
-                $this->setTimeEnd($value);
-                break;
-            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1018,25 +1053,22 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = PaymentTypeHistoryTableMap::getFieldNames($keyType);
+        $keys = MapSceneRewcatTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setPaymentTypeId($arr[$keys[0]]);
+            $this->setSceneId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setPaymentType($arr[$keys[1]]);
+            $this->setRewardCategoryId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPaymentDescription($arr[$keys[2]]);
+            $this->setPriorityId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setTimeBeg($arr[$keys[3]]);
+            $this->setUpdateTime($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setTimeEnd($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateUser($arr[$keys[5]]);
+            $this->setUpdateUser($arr[$keys[4]]);
         }
     }
 
@@ -1057,7 +1089,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\PaymentTypeHistory The current object, for fluid interface
+     * @return $this|\MapSceneRewcat The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1077,25 +1109,22 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(PaymentTypeHistoryTableMap::DATABASE_NAME);
+        $criteria = new Criteria(MapSceneRewcatTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE_ID)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE_ID, $this->payment_type_id);
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_SCENE_ID)) {
+            $criteria->add(MapSceneRewcatTableMap::COL_SCENE_ID, $this->scene_id);
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE, $this->payment_type);
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID)) {
+            $criteria->add(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID, $this->reward_category_id);
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_PAYMENT_DESCRIPTION)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_PAYMENT_DESCRIPTION, $this->payment_description);
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_PRIORITY_ID)) {
+            $criteria->add(MapSceneRewcatTableMap::COL_PRIORITY_ID, $this->priority_id);
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_TIME_BEG)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_TIME_BEG, $this->time_beg);
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(MapSceneRewcatTableMap::COL_UPDATE_TIME, $this->update_time);
         }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_TIME_END)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_TIME_END, $this->time_end);
-        }
-        if ($this->isColumnModified(PaymentTypeHistoryTableMap::COL_UPDATE_USER)) {
-            $criteria->add(PaymentTypeHistoryTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(MapSceneRewcatTableMap::COL_UPDATE_USER)) {
+            $criteria->add(MapSceneRewcatTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1113,9 +1142,9 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildPaymentTypeHistoryQuery::create();
-        $criteria->add(PaymentTypeHistoryTableMap::COL_PAYMENT_TYPE_ID, $this->payment_type_id);
-        $criteria->add(PaymentTypeHistoryTableMap::COL_TIME_BEG, $this->time_beg);
+        $criteria = ChildMapSceneRewcatQuery::create();
+        $criteria->add(MapSceneRewcatTableMap::COL_SCENE_ID, $this->scene_id);
+        $criteria->add(MapSceneRewcatTableMap::COL_REWARD_CATEGORY_ID, $this->reward_category_id);
 
         return $criteria;
     }
@@ -1128,11 +1157,25 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getPaymentTypeId() &&
-            null !== $this->getTimeBeg();
+        $validPk = null !== $this->getSceneId() &&
+            null !== $this->getRewardCategoryId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
+
+        //relation FK_msrc_map_scene_rewardcategory_rewardcategory to table reward_category
+        if ($this->aRewardCategory && $hash = spl_object_hash($this->aRewardCategory)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
+
+        //relation FK_msrc_map_scene_rewardcategory_scene to table scene
+        if ($this->aScene && $hash = spl_object_hash($this->aScene)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1151,8 +1194,8 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getPaymentTypeId();
-        $pks[1] = $this->getTimeBeg();
+        $pks[0] = $this->getSceneId();
+        $pks[1] = $this->getRewardCategoryId();
 
         return $pks;
     }
@@ -1165,8 +1208,8 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function setPrimaryKey($keys)
     {
-        $this->setPaymentTypeId($keys[0]);
-        $this->setTimeBeg($keys[1]);
+        $this->setSceneId($keys[0]);
+        $this->setRewardCategoryId($keys[1]);
     }
 
     /**
@@ -1175,7 +1218,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getPaymentTypeId()) && (null === $this->getTimeBeg());
+        return (null === $this->getSceneId()) && (null === $this->getRewardCategoryId());
     }
 
     /**
@@ -1184,18 +1227,17 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \PaymentTypeHistory (or compatible) type.
+     * @param      object $copyObj An object of \MapSceneRewcat (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setPaymentTypeId($this->getPaymentTypeId());
-        $copyObj->setPaymentType($this->getPaymentType());
-        $copyObj->setPaymentDescription($this->getPaymentDescription());
-        $copyObj->setTimeBeg($this->getTimeBeg());
-        $copyObj->setTimeEnd($this->getTimeEnd());
+        $copyObj->setSceneId($this->getSceneId());
+        $copyObj->setRewardCategoryId($this->getRewardCategoryId());
+        $copyObj->setPriorityId($this->getPriorityId());
+        $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
         if ($makeNew) {
             $copyObj->setNew(true);
@@ -1211,7 +1253,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \PaymentTypeHistory Clone of current object.
+     * @return \MapSceneRewcat Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1225,20 +1267,128 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildRewardCategory object.
+     *
+     * @param  ChildRewardCategory $v
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setRewardCategory(ChildRewardCategory $v = null)
+    {
+        if ($v === null) {
+            $this->setRewardCategoryId(NULL);
+        } else {
+            $this->setRewardCategoryId($v->getRewardCategoryId());
+        }
+
+        $this->aRewardCategory = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildRewardCategory object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMapSceneRewcat($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildRewardCategory object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildRewardCategory The associated ChildRewardCategory object.
+     * @throws PropelException
+     */
+    public function getRewardCategory(ConnectionInterface $con = null)
+    {
+        if ($this->aRewardCategory === null && ($this->reward_category_id !== null)) {
+            $this->aRewardCategory = ChildRewardCategoryQuery::create()->findPk($this->reward_category_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aRewardCategory->addMapSceneRewcats($this);
+             */
+        }
+
+        return $this->aRewardCategory;
+    }
+
+    /**
+     * Declares an association between this object and a ChildScene object.
+     *
+     * @param  ChildScene $v
+     * @return $this|\MapSceneRewcat The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setScene(ChildScene $v = null)
+    {
+        if ($v === null) {
+            $this->setSceneId(NULL);
+        } else {
+            $this->setSceneId($v->getSceneId());
+        }
+
+        $this->aScene = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildScene object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMapSceneRewcat($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildScene object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildScene The associated ChildScene object.
+     * @throws PropelException
+     */
+    public function getScene(ConnectionInterface $con = null)
+    {
+        if ($this->aScene === null && ($this->scene_id !== null)) {
+            $this->aScene = ChildSceneQuery::create()->findPk($this->scene_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aScene->addMapSceneRewcats($this);
+             */
+        }
+
+        return $this->aScene;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        $this->payment_type_id = null;
-        $this->payment_type = null;
-        $this->payment_description = null;
-        $this->time_beg = null;
-        $this->time_end = null;
+        if (null !== $this->aRewardCategory) {
+            $this->aRewardCategory->removeMapSceneRewcat($this);
+        }
+        if (null !== $this->aScene) {
+            $this->aScene->removeMapSceneRewcat($this);
+        }
+        $this->scene_id = null;
+        $this->reward_category_id = null;
+        $this->priority_id = null;
+        $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1257,6 +1407,8 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
+        $this->aRewardCategory = null;
+        $this->aScene = null;
     }
 
     /**
@@ -1266,7 +1418,7 @@ abstract class PaymentTypeHistory implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(PaymentTypeHistoryTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(MapSceneRewcatTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

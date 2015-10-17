@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'persona_restriction' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class PersonaRestriction implements ActiveRecordInterface 
+abstract class PersonaRestriction implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -360,7 +360,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [persona_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPersonaId()
@@ -370,7 +370,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [restriction_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRestrictionTypeId()
@@ -380,7 +380,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [comparator] column value.
-     * 
+     *
      * @return string
      */
     public function getComparator()
@@ -390,7 +390,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [value] column value.
-     * 
+     *
      * @return string
      */
     public function getValue()
@@ -400,7 +400,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [priority_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPriorityId()
@@ -410,7 +410,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -430,7 +430,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -440,7 +440,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [persona_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -464,7 +464,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [restriction_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -488,7 +488,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [comparator] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -508,7 +508,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [value] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -528,7 +528,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [priority_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -548,7 +548,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PersonaRestriction The current object (for fluent API support)
@@ -568,7 +568,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PersonaRestriction The current object (for fluent API support)
      */
@@ -888,7 +888,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
             $modifiedColumns[':p' . $index++]  = 'restriction_type_id';
         }
         if ($this->isColumnModified(PersonaRestrictionTableMap::COL_COMPARATOR)) {
-            $modifiedColumns[':p' . $index++]  = 'comparator';
+            $modifiedColumns[':p' . $index++]  = 'Comparator';
         }
         if ($this->isColumnModified(PersonaRestrictionTableMap::COL_VALUE)) {
             $modifiedColumns[':p' . $index++]  = 'value';
@@ -913,25 +913,25 @@ abstract class PersonaRestriction implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'persona_id':                        
+                    case 'persona_id':
                         $stmt->bindValue($identifier, $this->persona_id, PDO::PARAM_INT);
                         break;
-                    case 'restriction_type_id':                        
+                    case 'restriction_type_id':
                         $stmt->bindValue($identifier, $this->restriction_type_id, PDO::PARAM_INT);
                         break;
-                    case 'comparator':                        
+                    case 'Comparator':
                         $stmt->bindValue($identifier, $this->comparator, PDO::PARAM_STR);
                         break;
-                    case 'value':                        
+                    case 'value':
                         $stmt->bindValue($identifier, $this->value, PDO::PARAM_STR);
                         break;
-                    case 'priority_id':                        
+                    case 'priority_id':
                         $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1052,10 +1052,10 @@ abstract class PersonaRestriction implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aPersona) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'persona';
@@ -1066,11 +1066,11 @@ abstract class PersonaRestriction implements ActiveRecordInterface
                     default:
                         $key = 'Persona';
                 }
-        
+
                 $result[$key] = $this->aPersona->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aRestrictionType) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'restrictionType';
@@ -1081,7 +1081,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
                     default:
                         $key = 'RestrictionType';
                 }
-        
+
                 $result[$key] = $this->aRestrictionType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1307,7 +1307,7 @@ abstract class PersonaRestriction implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

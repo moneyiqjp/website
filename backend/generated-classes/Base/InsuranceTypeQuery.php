@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'insurance_type' table.
  *
- * 
+ *
  *
  * @method     ChildInsuranceTypeQuery orderByInsuranceTypeId($order = Criteria::ASC) Order by the insurance_type_id column
  * @method     ChildInsuranceTypeQuery orderByTypeName($order = Criteria::ASC) Order by the type_name column
@@ -70,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class InsuranceTypeQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\InsuranceTypeQuery object.
      *
@@ -158,7 +158,7 @@ abstract class InsuranceTypeQuery extends ModelCriteria
     {
         $sql = 'SELECT insurance_type_id, type_name, subtype_name, description, region, update_time, update_user FROM insurance_type WHERE insurance_type_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -615,9 +615,9 @@ abstract class InsuranceTypeQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             InsuranceTypeTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             InsuranceTypeTableMap::clearRelatedInstancePool();
 

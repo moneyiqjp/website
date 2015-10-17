@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'interest' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Interest implements ActiveRecordInterface 
+abstract class Interest implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -350,7 +350,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [interest_id] column value.
-     * 
+     *
      * @return int
      */
     public function getInterestId()
@@ -360,7 +360,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -370,7 +370,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [payment_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPaymentTypeId()
@@ -380,7 +380,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [min_interest] column value.
-     * 
+     *
      * @return double
      */
     public function getMinInterest()
@@ -390,7 +390,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [max_interest] column value.
-     * 
+     *
      * @return double
      */
     public function getMaxInterest()
@@ -400,7 +400,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -420,7 +420,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -430,7 +430,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     * 
+     *
      * @return string
      */
     public function getReference()
@@ -440,7 +440,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [interest_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -460,7 +460,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -484,7 +484,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [payment_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -508,7 +508,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [min_interest] column.
-     * 
+     *
      * @param  double $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -528,7 +528,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [max_interest] column.
-     * 
+     *
      * @param  double $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -548,7 +548,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Interest The current object (for fluent API support)
@@ -568,7 +568,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -588,7 +588,7 @@ abstract class Interest implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Interest The current object (for fluent API support)
      */
@@ -935,28 +935,28 @@ abstract class Interest implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'interest_id':                        
+                    case 'interest_id':
                         $stmt->bindValue($identifier, $this->interest_id, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'payment_type_id':                        
+                    case 'payment_type_id':
                         $stmt->bindValue($identifier, $this->payment_type_id, PDO::PARAM_INT);
                         break;
-                    case 'min_interest':                        
+                    case 'min_interest':
                         $stmt->bindValue($identifier, $this->min_interest, PDO::PARAM_STR);
                         break;
-                    case 'max_interest':                        
+                    case 'max_interest':
                         $stmt->bindValue($identifier, $this->max_interest, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':                        
+                    case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1088,10 +1088,10 @@ abstract class Interest implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aCreditCard) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCard';
@@ -1102,11 +1102,11 @@ abstract class Interest implements ActiveRecordInterface
                     default:
                         $key = 'CreditCard';
                 }
-        
+
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aPaymentType) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'paymentType';
@@ -1117,7 +1117,7 @@ abstract class Interest implements ActiveRecordInterface
                     default:
                         $key = 'PaymentType';
                 }
-        
+
                 $result[$key] = $this->aPaymentType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1336,7 +1336,7 @@ abstract class Interest implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int

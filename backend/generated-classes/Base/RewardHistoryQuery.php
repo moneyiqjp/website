@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'reward_history' table.
  *
- * 
+ *
  *
  * @method     ChildRewardHistoryQuery orderByRewardId($order = Criteria::ASC) Order by the reward_id column
  * @method     ChildRewardHistoryQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
@@ -99,7 +99,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class RewardHistoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\RewardHistoryQuery object.
      *
@@ -187,8 +187,8 @@ abstract class RewardHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT reward_id, point_system_id, reward_category_id, reward_type_id, title, description, icon, yen_per_point, price_per_unit, min_points, max_points, required_points, max_period, time_beg, time_end, update_user FROM reward_history WHERE reward_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -956,9 +956,9 @@ abstract class RewardHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             RewardHistoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             RewardHistoryTableMap::clearRelatedInstancePool();
 

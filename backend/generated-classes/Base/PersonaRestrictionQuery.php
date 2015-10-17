@@ -18,11 +18,11 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'persona_restriction' table.
  *
- * 
+ *
  *
  * @method     ChildPersonaRestrictionQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildPersonaRestrictionQuery orderByRestrictionTypeId($order = Criteria::ASC) Order by the restriction_type_id column
- * @method     ChildPersonaRestrictionQuery orderByComparator($order = Criteria::ASC) Order by the comparator column
+ * @method     ChildPersonaRestrictionQuery orderByComparator($order = Criteria::ASC) Order by the Comparator column
  * @method     ChildPersonaRestrictionQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method     ChildPersonaRestrictionQuery orderByPriorityId($order = Criteria::ASC) Order by the priority_id column
  * @method     ChildPersonaRestrictionQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
@@ -30,7 +30,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPersonaRestrictionQuery groupByPersonaId() Group by the persona_id column
  * @method     ChildPersonaRestrictionQuery groupByRestrictionTypeId() Group by the restriction_type_id column
- * @method     ChildPersonaRestrictionQuery groupByComparator() Group by the comparator column
+ * @method     ChildPersonaRestrictionQuery groupByComparator() Group by the Comparator column
  * @method     ChildPersonaRestrictionQuery groupByValue() Group by the value column
  * @method     ChildPersonaRestrictionQuery groupByPriorityId() Group by the priority_id column
  * @method     ChildPersonaRestrictionQuery groupByUpdateTime() Group by the update_time column
@@ -55,7 +55,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildPersonaRestriction findOneByPersonaId(int $persona_id) Return the first ChildPersonaRestriction filtered by the persona_id column
  * @method     ChildPersonaRestriction findOneByRestrictionTypeId(int $restriction_type_id) Return the first ChildPersonaRestriction filtered by the restriction_type_id column
- * @method     ChildPersonaRestriction findOneByComparator(string $comparator) Return the first ChildPersonaRestriction filtered by the comparator column
+ * @method     ChildPersonaRestriction findOneByComparator(string $Comparator) Return the first ChildPersonaRestriction filtered by the Comparator column
  * @method     ChildPersonaRestriction findOneByValue(string $value) Return the first ChildPersonaRestriction filtered by the value column
  * @method     ChildPersonaRestriction findOneByPriorityId(int $priority_id) Return the first ChildPersonaRestriction filtered by the priority_id column
  * @method     ChildPersonaRestriction findOneByUpdateTime(string $update_time) Return the first ChildPersonaRestriction filtered by the update_time column
@@ -64,7 +64,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonaRestriction[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPersonaRestriction objects based on current ModelCriteria
  * @method     ChildPersonaRestriction[]|ObjectCollection findByPersonaId(int $persona_id) Return ChildPersonaRestriction objects filtered by the persona_id column
  * @method     ChildPersonaRestriction[]|ObjectCollection findByRestrictionTypeId(int $restriction_type_id) Return ChildPersonaRestriction objects filtered by the restriction_type_id column
- * @method     ChildPersonaRestriction[]|ObjectCollection findByComparator(string $comparator) Return ChildPersonaRestriction objects filtered by the comparator column
+ * @method     ChildPersonaRestriction[]|ObjectCollection findByComparator(string $Comparator) Return ChildPersonaRestriction objects filtered by the Comparator column
  * @method     ChildPersonaRestriction[]|ObjectCollection findByValue(string $value) Return ChildPersonaRestriction objects filtered by the value column
  * @method     ChildPersonaRestriction[]|ObjectCollection findByPriorityId(int $priority_id) Return ChildPersonaRestriction objects filtered by the priority_id column
  * @method     ChildPersonaRestriction[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPersonaRestriction objects filtered by the update_time column
@@ -74,7 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class PersonaRestrictionQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\PersonaRestrictionQuery object.
      *
@@ -160,10 +160,10 @@ abstract class PersonaRestrictionQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT persona_id, restriction_type_id, comparator, value, priority_id, update_time, update_user FROM persona_restriction WHERE persona_id = :p0 AND restriction_type_id = :p1';
+        $sql = 'SELECT persona_id, restriction_type_id, Comparator, value, priority_id, update_time, update_user FROM persona_restriction WHERE persona_id = :p0 AND restriction_type_id = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1], PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -349,12 +349,12 @@ abstract class PersonaRestrictionQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the comparator column
+     * Filter the query on the Comparator column
      *
      * Example usage:
      * <code>
-     * $query->filterByComparator('fooValue');   // WHERE comparator = 'fooValue'
-     * $query->filterByComparator('%fooValue%'); // WHERE comparator LIKE '%fooValue%'
+     * $query->filterByComparator('fooValue');   // WHERE Comparator = 'fooValue'
+     * $query->filterByComparator('%fooValue%'); // WHERE Comparator LIKE '%fooValue%'
      * </code>
      *
      * @param     string $comparator The value to use as filter.
@@ -742,9 +742,9 @@ abstract class PersonaRestrictionQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             PersonaRestrictionTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             PersonaRestrictionTableMap::clearRelatedInstancePool();
 

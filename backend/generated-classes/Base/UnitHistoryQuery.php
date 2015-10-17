@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'unit_history' table.
  *
- * 
+ *
  *
  * @method     ChildUnitHistoryQuery orderByUnitId($order = Criteria::ASC) Order by the unit_id column
  * @method     ChildUnitHistoryQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -59,7 +59,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class UnitHistoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\UnitHistoryQuery object.
      *
@@ -147,8 +147,8 @@ abstract class UnitHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT unit_id, name, description, time_beg, time_end, update_user FROM unit_history WHERE unit_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -530,9 +530,9 @@ abstract class UnitHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             UnitHistoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             UnitHistoryTableMap::clearRelatedInstancePool();
 

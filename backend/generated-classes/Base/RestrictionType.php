@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'restriction_type' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class RestrictionType implements ActiveRecordInterface 
+abstract class RestrictionType implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -334,7 +334,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Get the [restriction_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRestrictionTypeId()
@@ -344,7 +344,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -354,7 +354,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -364,7 +364,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -384,7 +384,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -394,7 +394,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Set the value of [restriction_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RestrictionType The current object (for fluent API support)
      */
@@ -414,7 +414,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RestrictionType The current object (for fluent API support)
      */
@@ -434,7 +434,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RestrictionType The current object (for fluent API support)
      */
@@ -454,7 +454,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\RestrictionType The current object (for fluent API support)
@@ -474,7 +474,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RestrictionType The current object (for fluent API support)
      */
@@ -795,19 +795,19 @@ abstract class RestrictionType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'restriction_type_id':                        
+                    case 'restriction_type_id':
                         $stmt->bindValue($identifier, $this->restriction_type_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -927,10 +927,10 @@ abstract class RestrictionType implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collPersonaRestrictions) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'personaRestrictions';
@@ -941,7 +941,7 @@ abstract class RestrictionType implements ActiveRecordInterface
                     default:
                         $key = 'PersonaRestrictions';
                 }
-        
+
                 $result[$key] = $this->collPersonaRestrictions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1133,7 +1133,7 @@ abstract class RestrictionType implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1354,7 +1354,7 @@ abstract class RestrictionType implements ActiveRecordInterface
         /** @var ChildPersonaRestriction[] $personaRestrictionsToDelete */
         $personaRestrictionsToDelete = $this->getPersonaRestrictions(new Criteria(), $con)->diff($personaRestrictions);
 
-        
+
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.

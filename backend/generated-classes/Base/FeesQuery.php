@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'fees' table.
  *
- * 
+ *
  *
  * @method     ChildFeesQuery orderByFeeId($order = Criteria::ASC) Order by the fee_id column
  * @method     ChildFeesQuery orderByFeeType($order = Criteria::ASC) Order by the fee_type column
@@ -82,7 +82,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class FeesQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\FeesQuery object.
      *
@@ -170,7 +170,7 @@ abstract class FeesQuery extends ModelCriteria
     {
         $sql = 'SELECT fee_id, fee_type, fee_amount, yearly_occurrence, start_year, end_year, credit_card_id, update_time, update_user, reference FROM fees WHERE fee_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -792,9 +792,9 @@ abstract class FeesQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             FeesTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             FeesTableMap::clearRelatedInstancePool();
 

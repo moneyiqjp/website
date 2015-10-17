@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_acquisition_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class PointAcquisitionHistory implements ActiveRecordInterface 
+abstract class PointAcquisitionHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -336,7 +336,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_acquisition_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointAcquisitionId()
@@ -346,7 +346,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_acquisition_name] column value.
-     * 
+     *
      * @return string
      */
     public function getPointAcquisitionName()
@@ -356,7 +356,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [points_per_yen] column value.
-     * 
+     *
      * @return double
      */
     public function getPointsPerYen()
@@ -366,7 +366,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointSystemId()
@@ -376,7 +376,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [store_id] column value.
-     * 
+     *
      * @return int
      */
     public function getStoreId()
@@ -386,7 +386,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -406,7 +406,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -426,7 +426,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -436,7 +436,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_acquisition_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -456,7 +456,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_acquisition_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -476,7 +476,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [points_per_yen] column.
-     * 
+     *
      * @param  double $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -496,7 +496,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -516,7 +516,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [store_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -536,7 +536,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
@@ -556,7 +556,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
@@ -576,7 +576,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointAcquisitionHistory The current object (for fluent API support)
      */
@@ -895,28 +895,28 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_acquisition_id':                        
+                    case 'point_acquisition_id':
                         $stmt->bindValue($identifier, $this->point_acquisition_id, PDO::PARAM_INT);
                         break;
-                    case 'point_acquisition_name':                        
+                    case 'point_acquisition_name':
                         $stmt->bindValue($identifier, $this->point_acquisition_name, PDO::PARAM_STR);
                         break;
-                    case 'points_per_yen':                        
+                    case 'points_per_yen':
                         $stmt->bindValue($identifier, $this->points_per_yen, PDO::PARAM_STR);
                         break;
-                    case 'point_system_id':                        
+                    case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'store_id':                        
+                    case 'store_id':
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1040,7 +1040,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1258,7 +1258,7 @@ abstract class PointAcquisitionHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

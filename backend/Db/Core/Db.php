@@ -1694,7 +1694,7 @@ class Db
     function GetSceneToRewardCategoryMap()
     {
         $result = array();
-        foreach ((new \MapSceneRewardCategoryQuery())->orderBySceneId()->find() as $af) {
+        foreach ((new \MapSceneRewcatQuery())->orderBySceneId()->find() as $af) {
             array_push($result,  Json\JSceneRewardCategoryMapping::CREATE_FROM_DB($af));
         }
         return $result;
@@ -1704,7 +1704,7 @@ class Db
         $sceneId = Json\JSceneRewardCategoryMapping::GetSceneIdFromComplexId($complexId);
         $categoryId = Json\JSceneRewardCategoryMapping::GetRewardCategoryIdFromComplexId($complexId);
         $res = array();
-        foreach ((new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId) as $item) {
+        foreach ((new \MapSceneRewcatQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId) as $item) {
             if(!is_null($item)) {
                 $item->delete();
             } else {
@@ -1718,7 +1718,7 @@ class Db
         $complexId = $data["Id"];
         $parsed = Json\JSceneRewardCategoryMapping::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse Scene to Category Mapping update request");
-        $items = (new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId,$categoryId);
+        $items = (new \MapSceneRewcatQuery())->findBySceneIdRewardCategoryId($sceneId,$categoryId);
         if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
         if(count($items)==0) throw new \Exception("Item not found for Mapping $complexId - Scene $sceneId, StoreCategory$categoryId");
         if(!is_null($items[0])) {
@@ -1726,7 +1726,7 @@ class Db
         }
 
         //TODO implement cache, then refresh
-        $items = (new \MapSceneRewardCategoryQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId);
+        $items = (new \MapSceneRewcatQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId);
         if(count($items)>1) throw new \Exception("Multiple items found for given scene and category");
 
 

@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_system_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class PointSystemHistory implements ActiveRecordInterface 
+abstract class PointSystemHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -330,7 +330,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointSystemId()
@@ -340,7 +340,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_system_name] column value.
-     * 
+     *
      * @return string
      */
     public function getPointSystemName()
@@ -350,7 +350,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [default_points_per_yen] column value.
-     * 
+     *
      * @return string
      */
     public function getDefaultPointsPerYen()
@@ -360,7 +360,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [default_yen_per_point] column value.
-     * 
+     *
      * @return string
      */
     public function getDefaultYenPerPoint()
@@ -370,7 +370,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -390,7 +390,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -410,7 +410,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -420,7 +420,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
@@ -440,7 +440,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
@@ -460,7 +460,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [default_points_per_yen] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
@@ -480,7 +480,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [default_yen_per_point] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
@@ -500,7 +500,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointSystemHistory The current object (for fluent API support)
@@ -520,7 +520,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointSystemHistory The current object (for fluent API support)
@@ -540,7 +540,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystemHistory The current object (for fluent API support)
      */
@@ -853,25 +853,25 @@ abstract class PointSystemHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_system_id':                        
+                    case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'point_system_name':                        
+                    case 'point_system_name':
                         $stmt->bindValue($identifier, $this->point_system_name, PDO::PARAM_STR);
                         break;
-                    case 'default_points_per_yen':                        
+                    case 'default_points_per_yen':
                         $stmt->bindValue($identifier, $this->default_points_per_yen, PDO::PARAM_STR);
                         break;
-                    case 'default_yen_per_point':                        
+                    case 'default_yen_per_point':
                         $stmt->bindValue($identifier, $this->default_yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -991,7 +991,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1200,7 +1200,7 @@ abstract class PointSystemHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

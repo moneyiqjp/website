@@ -33,11 +33,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'point_system' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class PointSystem implements ActiveRecordInterface 
+abstract class PointSystem implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -404,7 +404,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointSystemId()
@@ -414,7 +414,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [point_system_name] column value.
-     * 
+     *
      * @return string
      */
     public function getPointSystemName()
@@ -424,7 +424,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [default_points_per_yen] column value.
-     * 
+     *
      * @return string
      */
     public function getDefaultPointsPerYen()
@@ -434,7 +434,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [default_yen_per_point] column value.
-     * 
+     *
      * @return string
      */
     public function getDefaultYenPerPoint()
@@ -444,7 +444,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -464,7 +464,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -474,7 +474,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     * 
+     *
      * @return string
      */
     public function getReference()
@@ -484,7 +484,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -504,7 +504,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -524,7 +524,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [default_points_per_yen] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -544,7 +544,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [default_yen_per_point] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -564,7 +564,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\PointSystem The current object (for fluent API support)
@@ -584,7 +584,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -604,7 +604,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\PointSystem The current object (for fluent API support)
      */
@@ -1002,25 +1002,25 @@ abstract class PointSystem implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'point_system_id':                        
+                    case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'point_system_name':                        
+                    case 'point_system_name':
                         $stmt->bindValue($identifier, $this->point_system_name, PDO::PARAM_STR);
                         break;
-                    case 'default_points_per_yen':                        
+                    case 'default_points_per_yen':
                         $stmt->bindValue($identifier, $this->default_points_per_yen, PDO::PARAM_STR);
                         break;
-                    case 'default_yen_per_point':                        
+                    case 'default_yen_per_point':
                         $stmt->bindValue($identifier, $this->default_yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':                        
+                    case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1148,10 +1148,10 @@ abstract class PointSystem implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collCardPointSystems) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'cardPointSystems';
@@ -1162,11 +1162,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'CardPointSystems';
                 }
-        
+
                 $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointAcquisitions) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointAcquisitions';
@@ -1177,11 +1177,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'PointAcquisitions';
                 }
-        
+
                 $result[$key] = $this->collPointAcquisitions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointUses) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'pointUses';
@@ -1192,11 +1192,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'PointUses';
                 }
-        
+
                 $result[$key] = $this->collPointUses->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collRewards) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -1207,7 +1207,7 @@ abstract class PointSystem implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-        
+
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1417,7 +1417,7 @@ abstract class PointSystem implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1667,7 +1667,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildCardPointSystem[] $cardPointSystemsToDelete */
         $cardPointSystemsToDelete = $this->getCardPointSystems(new Criteria(), $con)->diff($cardPointSystems);
 
-        
+
         $this->cardPointSystemsScheduledForDeletion = $cardPointSystemsToDelete;
 
         foreach ($cardPointSystemsToDelete as $cardPointSystemRemoved) {
@@ -1910,7 +1910,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildPointAcquisition[] $pointAcquisitionsToDelete */
         $pointAcquisitionsToDelete = $this->getPointAcquisitions(new Criteria(), $con)->diff($pointAcquisitions);
 
-        
+
         $this->pointAcquisitionsScheduledForDeletion = $pointAcquisitionsToDelete;
 
         foreach ($pointAcquisitionsToDelete as $pointAcquisitionRemoved) {
@@ -2153,7 +2153,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildPointUse[] $pointUsesToDelete */
         $pointUsesToDelete = $this->getPointUses(new Criteria(), $con)->diff($pointUses);
 
-        
+
         $this->pointUsesScheduledForDeletion = $pointUsesToDelete;
 
         foreach ($pointUsesToDelete as $pointUseRemoved) {
@@ -2396,7 +2396,7 @@ abstract class PointSystem implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-        
+
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {

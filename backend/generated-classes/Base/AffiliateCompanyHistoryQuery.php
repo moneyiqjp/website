@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'affiliate_company_history' table.
  *
- * 
+ *
  *
  * @method     ChildAffiliateCompanyHistoryQuery orderByAffiliateId($order = Criteria::ASC) Order by the affiliate_id column
  * @method     ChildAffiliateCompanyHistoryQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -67,7 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class AffiliateCompanyHistoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\AffiliateCompanyHistoryQuery object.
      *
@@ -155,8 +155,8 @@ abstract class AffiliateCompanyHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT affiliate_id, name, description, website, signed_up_date, time_beg, time_end, update_user FROM affiliate_company_history WHERE affiliate_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -610,9 +610,9 @@ abstract class AffiliateCompanyHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             AffiliateCompanyHistoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             AffiliateCompanyHistoryTableMap::clearRelatedInstancePool();
 

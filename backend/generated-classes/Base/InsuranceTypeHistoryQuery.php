@@ -17,7 +17,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'insurance_type_history' table.
  *
- * 
+ *
  *
  * @method     ChildInsuranceTypeHistoryQuery orderByInsuranceTypeId($order = Criteria::ASC) Order by the insurance_type_id column
  * @method     ChildInsuranceTypeHistoryQuery orderByTypeName($order = Criteria::ASC) Order by the type_name column
@@ -71,7 +71,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class InsuranceTypeHistoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\InsuranceTypeHistoryQuery object.
      *
@@ -159,8 +159,8 @@ abstract class InsuranceTypeHistoryQuery extends ModelCriteria
     {
         $sql = 'SELECT insurance_type_id, type_name, subtype_name, description, region, update_time, update_user, time_beg, time_end FROM insurance_type_history WHERE insurance_type_id = :p0 AND time_beg = :p1';
         try {
-            $stmt = $con->prepare($sql);            
-            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);            
+            $stmt = $con->prepare($sql);
+            $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
             $stmt->bindValue(':p1', $key[1] ? $key[1]->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
             $stmt->execute();
         } catch (Exception $e) {
@@ -643,9 +643,9 @@ abstract class InsuranceTypeHistoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             InsuranceTypeHistoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             InsuranceTypeHistoryTableMap::clearRelatedInstancePool();
 

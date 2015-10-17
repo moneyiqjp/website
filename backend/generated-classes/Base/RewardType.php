@@ -27,11 +27,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'reward_type' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class RewardType implements ActiveRecordInterface 
+abstract class RewardType implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -354,7 +354,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [reward_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRewardTypeId()
@@ -364,7 +364,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [name] column value.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -374,7 +374,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -384,7 +384,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [is_finite] column value.
-     * 
+     *
      * @return int
      */
     public function getIsFinite()
@@ -394,7 +394,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -414,7 +414,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -424,7 +424,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Set the value of [reward_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardType The current object (for fluent API support)
      */
@@ -444,7 +444,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Set the value of [name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardType The current object (for fluent API support)
      */
@@ -464,7 +464,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardType The current object (for fluent API support)
      */
@@ -484,7 +484,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Set the value of [is_finite] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardType The current object (for fluent API support)
      */
@@ -504,7 +504,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\RewardType The current object (for fluent API support)
@@ -524,7 +524,7 @@ abstract class RewardType implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardType The current object (for fluent API support)
      */
@@ -856,22 +856,22 @@ abstract class RewardType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'reward_type_id':                        
+                    case 'reward_type_id':
                         $stmt->bindValue($identifier, $this->reward_type_id, PDO::PARAM_INT);
                         break;
-                    case 'name':                        
+                    case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'is_finite':                        
+                    case 'is_finite':
                         $stmt->bindValue($identifier, $this->is_finite, PDO::PARAM_INT);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -995,10 +995,10 @@ abstract class RewardType implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->collRewards) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'rewards';
@@ -1009,7 +1009,7 @@ abstract class RewardType implements ActiveRecordInterface
                     default:
                         $key = 'Rewards';
                 }
-        
+
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
@@ -1210,7 +1210,7 @@ abstract class RewardType implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int
@@ -1432,7 +1432,7 @@ abstract class RewardType implements ActiveRecordInterface
         /** @var ChildReward[] $rewardsToDelete */
         $rewardsToDelete = $this->getRewards(new Criteria(), $con)->diff($rewards);
 
-        
+
         $this->rewardsScheduledForDeletion = $rewardsToDelete;
 
         foreach ($rewardsToDelete as $rewardRemoved) {

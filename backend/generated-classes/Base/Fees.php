@@ -25,11 +25,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'fees' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Fees implements ActiveRecordInterface 
+abstract class Fees implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -355,7 +355,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [fee_id] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeId()
@@ -365,7 +365,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [fee_type] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeType()
@@ -375,7 +375,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [fee_amount] column value.
-     * 
+     *
      * @return int
      */
     public function getFeeAmount()
@@ -385,7 +385,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [yearly_occurrence] column value.
-     * 
+     *
      * @return int
      */
     public function getYearlyOccurrence()
@@ -395,7 +395,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [start_year] column value.
-     * 
+     *
      * @return int
      */
     public function getStartYear()
@@ -405,7 +405,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [end_year] column value.
-     * 
+     *
      * @return int
      */
     public function getEndYear()
@@ -415,7 +415,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -425,7 +425,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -445,7 +445,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -455,7 +455,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     * 
+     *
      * @return string
      */
     public function getReference()
@@ -465,7 +465,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -485,7 +485,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_type] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -505,7 +505,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [fee_amount] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -525,7 +525,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [yearly_occurrence] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -545,7 +545,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [start_year] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -565,7 +565,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [end_year] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -585,7 +585,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -609,7 +609,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Fees The current object (for fluent API support)
@@ -629,7 +629,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -649,7 +649,7 @@ abstract class Fees implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Fees The current object (for fluent API support)
      */
@@ -997,34 +997,34 @@ abstract class Fees implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'fee_id':                        
+                    case 'fee_id':
                         $stmt->bindValue($identifier, $this->fee_id, PDO::PARAM_INT);
                         break;
-                    case 'fee_type':                        
+                    case 'fee_type':
                         $stmt->bindValue($identifier, $this->fee_type, PDO::PARAM_INT);
                         break;
-                    case 'fee_amount':                        
+                    case 'fee_amount':
                         $stmt->bindValue($identifier, $this->fee_amount, PDO::PARAM_INT);
                         break;
-                    case 'yearly_occurrence':                        
+                    case 'yearly_occurrence':
                         $stmt->bindValue($identifier, $this->yearly_occurrence, PDO::PARAM_INT);
                         break;
-                    case 'start_year':                        
+                    case 'start_year':
                         $stmt->bindValue($identifier, $this->start_year, PDO::PARAM_INT);
                         break;
-                    case 'end_year':                        
+                    case 'end_year':
                         $stmt->bindValue($identifier, $this->end_year, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':                        
+                    case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1164,10 +1164,10 @@ abstract class Fees implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aCreditCard) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCard';
@@ -1178,7 +1178,7 @@ abstract class Fees implements ActiveRecordInterface
                     default:
                         $key = 'CreditCard';
                 }
-        
+
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1415,7 +1415,7 @@ abstract class Fees implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int

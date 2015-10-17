@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'store_category' table.
  *
- * 
+ *
  *
  * @method     ChildStoreCategoryQuery orderByStoreCategoryId($order = Criteria::ASC) Order by the store_category_id column
  * @method     ChildStoreCategoryQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -66,7 +66,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class StoreCategoryQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\StoreCategoryQuery object.
      *
@@ -154,7 +154,7 @@ abstract class StoreCategoryQuery extends ModelCriteria
     {
         $sql = 'SELECT store_category_id, name, description, update_time, update_user FROM store_category WHERE store_category_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -626,9 +626,9 @@ abstract class StoreCategoryQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             StoreCategoryTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             StoreCategoryTableMap::clearRelatedInstancePool();
 

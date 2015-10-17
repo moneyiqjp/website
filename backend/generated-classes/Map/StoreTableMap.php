@@ -173,7 +173,6 @@ class StoreTableMap extends TableMap
         $this->addRelation('StoreCategory', '\\StoreCategory', RelationMap::MANY_TO_ONE, array('store_category_id' => 'store_category_id', ), null, null);
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
         $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
-        $this->addRelation('PointUsage', '\\PointUsage', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUsages');
         $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUses');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Rewards');
     } // buildRelations()
@@ -221,7 +220,7 @@ class StoreTableMap extends TableMap
                 : self::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -282,7 +281,7 @@ class StoreTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

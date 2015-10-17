@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'reward_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class RewardHistory implements ActiveRecordInterface 
+abstract class RewardHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -384,7 +384,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [reward_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRewardId()
@@ -394,7 +394,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [point_system_id] column value.
-     * 
+     *
      * @return int
      */
     public function getPointSystemId()
@@ -404,7 +404,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [reward_category_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRewardCategoryId()
@@ -414,7 +414,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [reward_type_id] column value.
-     * 
+     *
      * @return int
      */
     public function getRewardTypeId()
@@ -424,7 +424,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [title] column value.
-     * 
+     *
      * @return string
      */
     public function getTitle()
@@ -434,7 +434,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -444,7 +444,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [icon] column value.
-     * 
+     *
      * @return string
      */
     public function getIcon()
@@ -454,7 +454,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [yen_per_point] column value.
-     * 
+     *
      * @return string
      */
     public function getYenPerPoint()
@@ -464,7 +464,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [price_per_unit] column value.
-     * 
+     *
      * @return int
      */
     public function getPricePerUnit()
@@ -474,7 +474,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [min_points] column value.
-     * 
+     *
      * @return int
      */
     public function getMinPoints()
@@ -484,7 +484,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [max_points] column value.
-     * 
+     *
      * @return int
      */
     public function getMaxPoints()
@@ -494,7 +494,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [required_points] column value.
-     * 
+     *
      * @return int
      */
     public function getRequiredPoints()
@@ -504,7 +504,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [max_period] column value.
-     * 
+     *
      * @return string
      */
     public function getMaxPeriod()
@@ -514,7 +514,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -534,7 +534,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -554,7 +554,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -564,7 +564,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [reward_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -584,7 +584,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [point_system_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -604,7 +604,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [reward_category_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -624,7 +624,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [reward_type_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -644,7 +644,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [title] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -664,7 +664,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -684,7 +684,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [icon] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -704,7 +704,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [yen_per_point] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -724,7 +724,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [price_per_unit] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -744,7 +744,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [min_points] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -764,7 +764,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [max_points] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -784,7 +784,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [required_points] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -804,7 +804,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [max_period] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -824,7 +824,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\RewardHistory The current object (for fluent API support)
@@ -844,7 +844,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\RewardHistory The current object (for fluent API support)
@@ -864,7 +864,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\RewardHistory The current object (for fluent API support)
      */
@@ -1231,52 +1231,52 @@ abstract class RewardHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'reward_id':                        
+                    case 'reward_id':
                         $stmt->bindValue($identifier, $this->reward_id, PDO::PARAM_INT);
                         break;
-                    case 'point_system_id':                        
+                    case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
-                    case 'reward_category_id':                        
+                    case 'reward_category_id':
                         $stmt->bindValue($identifier, $this->reward_category_id, PDO::PARAM_INT);
                         break;
-                    case 'reward_type_id':                        
+                    case 'reward_type_id':
                         $stmt->bindValue($identifier, $this->reward_type_id, PDO::PARAM_INT);
                         break;
-                    case 'title':                        
+                    case 'title':
                         $stmt->bindValue($identifier, $this->title, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'icon':                        
+                    case 'icon':
                         $stmt->bindValue($identifier, $this->icon, PDO::PARAM_STR);
                         break;
-                    case 'yen_per_point':                        
+                    case 'yen_per_point':
                         $stmt->bindValue($identifier, $this->yen_per_point, PDO::PARAM_STR);
                         break;
-                    case 'price_per_unit':                        
+                    case 'price_per_unit':
                         $stmt->bindValue($identifier, $this->price_per_unit, PDO::PARAM_INT);
                         break;
-                    case 'min_points':                        
+                    case 'min_points':
                         $stmt->bindValue($identifier, $this->min_points, PDO::PARAM_INT);
                         break;
-                    case 'max_points':                        
+                    case 'max_points':
                         $stmt->bindValue($identifier, $this->max_points, PDO::PARAM_INT);
                         break;
-                    case 'required_points':                        
+                    case 'required_points':
                         $stmt->bindValue($identifier, $this->required_points, PDO::PARAM_INT);
                         break;
-                    case 'max_period':                        
+                    case 'max_period':
                         $stmt->bindValue($identifier, $this->max_period, PDO::PARAM_STR);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -1432,7 +1432,7 @@ abstract class RewardHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1722,7 +1722,7 @@ abstract class RewardHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

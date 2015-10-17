@@ -234,7 +234,7 @@ class FeesTableMap extends TableMap
                 : self::translateFieldName('FeeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -295,7 +295,7 @@ class FeesTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)

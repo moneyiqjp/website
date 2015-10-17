@@ -18,7 +18,7 @@ use Propel\Runtime\Exception\PropelException;
 /**
  * Base class that represents a query for the 'discounts' table.
  *
- * 
+ *
  *
  * @method     ChildDiscountsQuery orderByDiscountId($order = Criteria::ASC) Order by the discount_id column
  * @method     ChildDiscountsQuery orderByPercentage($order = Criteria::ASC) Order by the percentage column
@@ -94,7 +94,7 @@ use Propel\Runtime\Exception\PropelException;
  */
 abstract class DiscountsQuery extends ModelCriteria
 {
-    
+
     /**
      * Initializes internal state of \Base\DiscountsQuery object.
      *
@@ -182,7 +182,7 @@ abstract class DiscountsQuery extends ModelCriteria
     {
         $sql = 'SELECT discount_id, percentage, start_date, end_date, description, credit_card_id, store_id, multiple, conditions, update_time, update_user, reference FROM discounts WHERE discount_id = :p0';
         try {
-            $stmt = $con->prepare($sql);            
+            $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
             $stmt->execute();
         } catch (Exception $e) {
@@ -945,9 +945,9 @@ abstract class DiscountsQuery extends ModelCriteria
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
-            
+
             DiscountsTableMap::removeInstanceFromPool($criteria);
-        
+
             $affectedRows += ModelCriteria::delete($con);
             DiscountsTableMap::clearRelatedInstancePool();
 

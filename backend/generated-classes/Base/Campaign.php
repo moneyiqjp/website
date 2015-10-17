@@ -25,11 +25,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'campaign' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class Campaign implements ActiveRecordInterface 
+abstract class Campaign implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -377,7 +377,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [campaign_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCampaignId()
@@ -387,7 +387,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [credit_card_id] column value.
-     * 
+     *
      * @return int
      */
     public function getCreditCardId()
@@ -397,7 +397,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [campaign_name] column value.
-     * 
+     *
      * @return string
      */
     public function getCampaignName()
@@ -407,7 +407,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [description] column value.
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -417,7 +417,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [max_points] column value.
-     * 
+     *
      * @return int
      */
     public function getMaxPoints()
@@ -427,7 +427,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [value_in_yen] column value.
-     * 
+     *
      * @return int
      */
     public function getValueInYen()
@@ -437,7 +437,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [start_date] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -457,7 +457,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [end_date] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -477,7 +477,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [update_time] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -497,7 +497,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -507,7 +507,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Get the [reference] column value.
-     * 
+     *
      * @return string
      */
     public function getReference()
@@ -517,7 +517,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [campaign_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -537,7 +537,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [credit_card_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -561,7 +561,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [campaign_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -581,7 +581,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [description] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -601,7 +601,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [max_points] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -621,7 +621,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [value_in_yen] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -641,7 +641,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Sets the value of [start_date] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Campaign The current object (for fluent API support)
@@ -663,7 +663,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Sets the value of [end_date] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Campaign The current object (for fluent API support)
@@ -685,7 +685,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\Campaign The current object (for fluent API support)
@@ -705,7 +705,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -725,7 +725,7 @@ abstract class Campaign implements ActiveRecordInterface
 
     /**
      * Set the value of [reference] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\Campaign The current object (for fluent API support)
      */
@@ -1093,37 +1093,37 @@ abstract class Campaign implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'campaign_id':                        
+                    case 'campaign_id':
                         $stmt->bindValue($identifier, $this->campaign_id, PDO::PARAM_INT);
                         break;
-                    case 'credit_card_id':                        
+                    case 'credit_card_id':
                         $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'campaign_name':                        
+                    case 'campaign_name':
                         $stmt->bindValue($identifier, $this->campaign_name, PDO::PARAM_STR);
                         break;
-                    case 'description':                        
+                    case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
-                    case 'max_points':                        
+                    case 'max_points':
                         $stmt->bindValue($identifier, $this->max_points, PDO::PARAM_INT);
                         break;
-                    case 'value_in_yen':                        
+                    case 'value_in_yen':
                         $stmt->bindValue($identifier, $this->value_in_yen, PDO::PARAM_INT);
                         break;
-                    case 'start_date':                        
+                    case 'start_date':
                         $stmt->bindValue($identifier, $this->start_date ? $this->start_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'end_date':                        
+                    case 'end_date':
                         $stmt->bindValue($identifier, $this->end_date ? $this->end_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_time':                        
+                    case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
-                    case 'reference':                        
+                    case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                 }
@@ -1267,10 +1267,10 @@ abstract class Campaign implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
         if ($includeForeignObjects) {
             if (null !== $this->aCreditCard) {
-                
+
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
                         $key = 'creditCard';
@@ -1281,7 +1281,7 @@ abstract class Campaign implements ActiveRecordInterface
                     default:
                         $key = 'CreditCard';
                 }
-        
+
                 $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
@@ -1527,7 +1527,7 @@ abstract class Campaign implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the primary key for this object (row).
      * @return int

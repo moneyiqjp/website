@@ -23,11 +23,11 @@ use Propel\Runtime\Util\PropelDateTime;
 /**
  * Base class that represents a row from the 'issuer_history' table.
  *
- * 
+ *
  *
 * @package    propel.generator..Base
 */
-abstract class IssuerHistory implements ActiveRecordInterface 
+abstract class IssuerHistory implements ActiveRecordInterface
 {
     /**
      * TableMap class name
@@ -318,7 +318,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Get the [issuer_id] column value.
-     * 
+     *
      * @return int
      */
     public function getIssuerId()
@@ -328,7 +328,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Get the [issuer_name] column value.
-     * 
+     *
      * @return string
      */
     public function getIssuerName()
@@ -338,7 +338,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_beg] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -358,7 +358,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Get the [optionally formatted] temporal [time_end] column value.
-     * 
+     *
      *
      * @param      string $format The date/time format string (either date()-style or strftime()-style).
      *                            If format is NULL, then the raw DateTime object will be returned.
@@ -378,7 +378,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Get the [update_user] column value.
-     * 
+     *
      * @return string
      */
     public function getUpdateUser()
@@ -388,7 +388,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_id] column.
-     * 
+     *
      * @param  int $v new value
      * @return $this|\IssuerHistory The current object (for fluent API support)
      */
@@ -408,7 +408,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [issuer_name] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\IssuerHistory The current object (for fluent API support)
      */
@@ -428,7 +428,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_beg] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\IssuerHistory The current object (for fluent API support)
@@ -448,7 +448,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Sets the value of [time_end] column to a normalized version of the date/time value specified.
-     * 
+     *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
      * @return $this|\IssuerHistory The current object (for fluent API support)
@@ -468,7 +468,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
     /**
      * Set the value of [update_user] column.
-     * 
+     *
      * @param  string $v new value
      * @return $this|\IssuerHistory The current object (for fluent API support)
      */
@@ -769,19 +769,19 @@ abstract class IssuerHistory implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'issuer_id':                        
+                    case 'issuer_id':
                         $stmt->bindValue($identifier, $this->issuer_id, PDO::PARAM_INT);
                         break;
-                    case 'issuer_name':                        
+                    case 'issuer_name':
                         $stmt->bindValue($identifier, $this->issuer_name, PDO::PARAM_STR);
                         break;
-                    case 'time_beg':                        
+                    case 'time_beg':
                         $stmt->bindValue($identifier, $this->time_beg ? $this->time_beg->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'time_end':                        
+                    case 'time_end':
                         $stmt->bindValue($identifier, $this->time_end ? $this->time_end->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
                         break;
-                    case 'update_user':                        
+                    case 'update_user':
                         $stmt->bindValue($identifier, $this->update_user, PDO::PARAM_STR);
                         break;
                 }
@@ -893,7 +893,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
-        
+
 
         return $result;
     }
@@ -1084,7 +1084,7 @@ abstract class IssuerHistory implements ActiveRecordInterface
 
         return spl_object_hash($this);
     }
-        
+
     /**
      * Returns the composite primary key for this object.
      * The array elements will be in same order as specified in XML.

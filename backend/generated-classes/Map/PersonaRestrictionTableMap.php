@@ -82,9 +82,9 @@ class PersonaRestrictionTableMap extends TableMap
     const COL_RESTRICTION_TYPE_ID = 'persona_restriction.restriction_type_id';
 
     /**
-     * the column name for the comparator field
+     * the column name for the Comparator field
      */
-    const COL_COMPARATOR = 'persona_restriction.comparator';
+    const COL_COMPARATOR = 'persona_restriction.Comparator';
 
     /**
      * the column name for the value field
@@ -121,7 +121,7 @@ class PersonaRestrictionTableMap extends TableMap
         self::TYPE_PHPNAME       => array('PersonaId', 'RestrictionTypeId', 'Comparator', 'Value', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
         self::TYPE_CAMELNAME     => array('personaId', 'restrictionTypeId', 'comparator', 'value', 'priorityId', 'updateTime', 'updateUser', ),
         self::TYPE_COLNAME       => array(PersonaRestrictionTableMap::COL_PERSONA_ID, PersonaRestrictionTableMap::COL_RESTRICTION_TYPE_ID, PersonaRestrictionTableMap::COL_COMPARATOR, PersonaRestrictionTableMap::COL_VALUE, PersonaRestrictionTableMap::COL_PRIORITY_ID, PersonaRestrictionTableMap::COL_UPDATE_TIME, PersonaRestrictionTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('persona_id', 'restriction_type_id', 'comparator', 'value', 'priority_id', 'update_time', 'update_user', ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'restriction_type_id', 'Comparator', 'value', 'priority_id', 'update_time', 'update_user', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
@@ -135,7 +135,7 @@ class PersonaRestrictionTableMap extends TableMap
         self::TYPE_PHPNAME       => array('PersonaId' => 0, 'RestrictionTypeId' => 1, 'Comparator' => 2, 'Value' => 3, 'PriorityId' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
         self::TYPE_CAMELNAME     => array('personaId' => 0, 'restrictionTypeId' => 1, 'comparator' => 2, 'value' => 3, 'priorityId' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
         self::TYPE_COLNAME       => array(PersonaRestrictionTableMap::COL_PERSONA_ID => 0, PersonaRestrictionTableMap::COL_RESTRICTION_TYPE_ID => 1, PersonaRestrictionTableMap::COL_COMPARATOR => 2, PersonaRestrictionTableMap::COL_VALUE => 3, PersonaRestrictionTableMap::COL_PRIORITY_ID => 4, PersonaRestrictionTableMap::COL_UPDATE_TIME => 5, PersonaRestrictionTableMap::COL_UPDATE_USER => 6, ),
-        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'restriction_type_id' => 1, 'comparator' => 2, 'value' => 3, 'priority_id' => 4, 'update_time' => 5, 'update_user' => 6, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'restriction_type_id' => 1, 'Comparator' => 2, 'value' => 3, 'priority_id' => 4, 'update_time' => 5, 'update_user' => 6, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
@@ -158,7 +158,7 @@ class PersonaRestrictionTableMap extends TableMap
         // columns
         $this->addForeignPrimaryKey('persona_id', 'PersonaId', 'INTEGER' , 'persona', 'persona_id', true, null, null);
         $this->addForeignPrimaryKey('restriction_type_id', 'RestrictionTypeId', 'INTEGER' , 'restriction_type', 'restriction_type_id', true, null, null);
-        $this->addColumn('comparator', 'Comparator', 'VARCHAR', false, 80, '=');
+        $this->addColumn('Comparator', 'Comparator', 'VARCHAR', false, 80, '=');
         $this->addColumn('value', 'Value', 'VARCHAR', true, 255, null);
         $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
@@ -265,7 +265,7 @@ class PersonaRestrictionTableMap extends TableMap
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
             $pks = [];
-            
+
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
@@ -279,7 +279,7 @@ class PersonaRestrictionTableMap extends TableMap
 
         return $pks;
     }
-    
+
     /**
      * The class that the tableMap will make instances of.
      *
@@ -340,7 +340,7 @@ class PersonaRestrictionTableMap extends TableMap
     public static function populateObjects(DataFetcherInterface $dataFetcher)
     {
         $results = array();
-    
+
         // set the class once to avoid overhead in the loop
         $cls = static::getOMClass(false);
         // populate the object(s)
@@ -387,7 +387,7 @@ class PersonaRestrictionTableMap extends TableMap
         } else {
             $criteria->addSelectColumn($alias . '.persona_id');
             $criteria->addSelectColumn($alias . '.restriction_type_id');
-            $criteria->addSelectColumn($alias . '.comparator');
+            $criteria->addSelectColumn($alias . '.Comparator');
             $criteria->addSelectColumn($alias . '.value');
             $criteria->addSelectColumn($alias . '.priority_id');
             $criteria->addSelectColumn($alias . '.update_time');
