@@ -2,4 +2,5 @@ bin/FTPSync/*.res
 *.log
 /frontend/nbproject/private/
 frontend/css/jquery-ui-1.11.2.custom/images/Thumbs.db
+/frontend/*
 

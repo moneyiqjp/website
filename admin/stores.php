@@ -66,7 +66,7 @@
                         type:  "readonly"
                     },  {
                         label: "Category:",
-                        name: "StoreCategory.Id",
+                        name: "StoreCategory.StoreCategoryId",
                         type: "select",
                         options:categories
 

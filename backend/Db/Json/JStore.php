@@ -85,7 +85,7 @@ class JStore implements JSONInterface {
     public function updateDB(\Store &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->StoreId)) $item->setStoreId($this->StoreId);
         if(FieldUtils::STRING_IS_DEFINED($this->StoreName)) $item->setStoreName($this->StoreName);
-        if(FieldUtils::STRING_IS_DEFINED($this->StoreCategory)) {
+        if(!is_null($this->StoreCategory)) {
             $item->setStoreCategoryId($this->StoreCategory->StoreCategoryId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);

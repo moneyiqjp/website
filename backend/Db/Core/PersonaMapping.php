@@ -44,9 +44,27 @@ class Category {
     }
 }
 
+
+
+class RewardCategory {
+    public $Id;
+    public $Name;
+    public $Description;
+
+    public static function CREATE(\RewardCategory $cat) {
+        $mine = new RewardCategory();
+        $mine->Id =$cat->getRewardCategoryId();
+        $mine->Name = $cat->getName();
+        $mine->Description = $cat->getDescription();
+        return $mine;
+    }
+
+}
+
 class Scene {
     public $Id;
     public $Name;
+    public $RewardTypes = array();
     public $Stores = array();
 
     public function Scene(){}
@@ -59,6 +77,11 @@ class Scene {
         foreach($scene->getMapSceneStoreCategories() as $item) {
             $that->Stores=array_merge($that->Stores,  Category::CREATE($item->getStoreCategory())->Store);
         }
+
+        foreach($scene->getMapSceneRewcats() as $item) {
+            array_push($that->RewardTypes,  RewardCategory::CREATE($item->getRewardCategory()));
+        }
+
         return $that;
     }
 }
@@ -108,6 +131,23 @@ class Persona {
     }
 }
 
+
+class SceneMapping{
+    public $Scene = array();
+
+    public function SceneMapping(){}
+
+    public static function CREATE(){
+        $map = new SceneMapping();
+        foreach((new \SceneQuery())->find() as $scene)
+        {
+            array_push($map->Scene, Scene::CREATE($scene) );
+        }
+        return $map;
+    }
+}
+
+
 class PersonaMapping
 {
     public $Persona = array();
@@ -121,6 +161,10 @@ class PersonaMapping
             array_push($map->Persona, Persona::CREATE($pers) );
         }
         return $map;
+    }
+
+    public static function CREATESCENEMAPPING(){
+        return SceneMapping::CREATE();
     }
 
 

@@ -5,170 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
-      <change type="DELETED" beforePath="F:\Development\website\backend\generated-classes\MapSceneRewardCategory.php" afterPath="" />
-      <change type="DELETED" beforePath="F:\Development\website\backend\generated-classes\MapSceneRewardCategoryQuery.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../database/1.1/1.1.1/5 new mapppings.sql" afterPath="$PROJECT_DIR$/../database/1.1/1.1.1/5 new mapppings.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompany.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompany.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/AffiliateCompanyHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/AffiliateCompanyHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/AffiliateCompanyQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/AffiliateCompanyTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/AffiliateCompanyTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Campaign.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Campaign.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CampaignQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CampaignTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescription.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescription.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardDescriptionHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardDescriptionHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardDescriptionQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardDescriptionTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardDescriptionTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatureTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeatureTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatures.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeatures.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardFeaturesQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardFeaturesTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardPointSystem.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardPointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CardPointSystemQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CardPointSystemQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CardPointSystemTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CardPointSystemTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/ClassLoader.php" afterPath="$PROJECT_DIR$/../backend/vendor/composer/ClassLoader.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCard.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/CreditCardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/CreditCardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../bin/DBDump.bat" afterPath="$PROJECT_DIR$/../bin/DBDump.bat" />
+      <change type="DELETED" beforePath="F:\Development\website\frontend\public_html\index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../frontend/img/Thumbs.db" afterPath="$PROJECT_DIR$/../frontend/img/Thumbs.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Discounts.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Discounts.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/DiscountsQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/DiscountsTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Fees.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Fees.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/FeesQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/FeesTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Insurance.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Insurance.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTypeHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTypeHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InsuranceTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InsuranceTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Interest.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Interest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/InterestQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/InterestTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Issuer.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Issuer.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/IssuerHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/IssuerHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/IssuerQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/IssuerTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/IssuerTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JSceneRewardCategoryMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JSceneRewardCategoryMapping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/LICENSE" afterPath="$PROJECT_DIR$/../backend/vendor/composer/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaFeatureConstraint.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaFeatureConstraint.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaFeatureConstraintQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaFeatureConstraintQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/MapPersonaFeatureConstraintTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/MapPersonaFeatureConstraintTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaScene.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaScene.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaSceneQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapPersonaSceneQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/MapPersonaSceneTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/MapPersonaSceneTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapSceneStoreCategory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapSceneStoreCategory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/MapSceneStoreCategoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/MapSceneStoreCategoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/MapSceneStoreCategoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/MapSceneStoreCategoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PaymentTypeHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PaymentTypeHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PaymentTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PaymentTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PaymentTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Persona.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Persona.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/PersonaMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/PersonaMapping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaRestriction.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaRestriction.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaRestrictionQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PersonaRestrictionQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PersonaRestrictionTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PersonaRestrictionTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PersonaTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PersonaTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisition.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisition.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointAcquisitionQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointAcquisitionTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystem.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointSystemQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointSystemTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUse.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUse.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUseQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/PointUseQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUseTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/PointUseTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RestrictionType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RestrictionType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RestrictionTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RestrictionTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RestrictionTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RestrictionTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Reward.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardCategoryHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardCategoryHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardCategoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardCategoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardCategoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/RewardTypeQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/RewardTypeTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Scene.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Scene.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/SceneQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/SceneQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/SceneTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/SceneTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Store.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Store.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreCategory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreCategory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreCategoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreCategoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreCategoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreCategoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/StoreQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/StoreTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/Unit.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/Unit.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitHistory.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitHistory.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitHistoryQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitHistoryQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/UnitHistoryTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/UnitHistoryTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitQuery.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Base/UnitQuery.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-classes/Map/UnitTableMap.php" afterPath="$PROJECT_DIR$/../backend/generated-classes/Map/UnitTableMap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/../backend/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../bin/backend_db_refresh.bat" afterPath="$PROJECT_DIR$/../bin/backend_db_refresh.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/vendor/composer/installed.json" afterPath="$PROJECT_DIR$/../backend/vendor/composer/installed.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" afterPath="$PROJECT_DIR$/../backend/generated-reversed-database/schema.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../bin/uatdb.sql" afterPath="$PROJECT_DIR$/../bin/uatdb.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stores.php" afterPath="$PROJECT_DIR$/stores.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
     </list>
@@ -215,21 +58,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.027833">
-              <caret line="385" column="16" selection-start-line="385" selection-start-column="16" selection-end-line="385" selection-end-column="16" />
+            <state vertical-scroll-proportion="-1.25">
+              <caret line="415" column="35" selection-start-line="415" selection-start-column="35" selection-end-line="415" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stores.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="stores.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stores.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="188" selection-end-column="10" />
+            <state vertical-scroll-proportion="-0.8200795">
+              <caret line="68" column="60" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -297,8 +140,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="279" />
-    <option name="y" value="92" />
+    <option name="x" value="305" />
+    <option name="y" value="40" />
     <option name="width" value="1294" />
     <option name="height" value="1167" />
   </component>
@@ -348,7 +191,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -369,6 +211,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -377,7 +220,7 @@
     <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../frontend" />
     <property name="options.lastSelected" value="editor.preferences.appearance" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -458,7 +301,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="279" y="92" width="1294" height="1167" extended-state="1" />
+    <frame x="305" y="40" width="1294" height="1167" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -836,9 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.403481">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -873,18 +713,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/stores.php">
+    <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="188" selection-end-column="10" />
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="415" column="35" selection-start-line="415" selection-start-column="35" selection-end-line="415" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/creditcard_details.php">
+    <entry file="file://$PROJECT_DIR$/stores.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.027833">
-          <caret line="385" column="16" selection-start-line="385" selection-start-column="16" selection-end-line="385" selection-end-column="16" />
+        <state vertical-scroll-proportion="-0.8200795">
+          <caret line="68" column="60" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="60" />
           <folding />
         </state>
       </provider>

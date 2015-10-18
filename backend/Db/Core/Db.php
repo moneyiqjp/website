@@ -47,6 +47,11 @@ class Db
     function GetAllPersonas() {
         return PersonaMapping::CREATE()->Persona;
     }
+
+    function GetAllScenes() {
+        return PersonaMapping::CREATESCENEMAPPING()->Scene;
+    }
+
     function GetAllCards()
     {
         $result = array();
