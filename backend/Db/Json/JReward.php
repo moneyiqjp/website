@@ -88,9 +88,9 @@ class JReward  implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JRewardType::CREATE_FROM_ARRAY($data['Type']);
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = JRewardCategory::CREATE_FROM_ARRAY($data['Category']);
         if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {
-            $mine->Store = (new \StoreQuery())->findPK($data['StoreId']);
+            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPK($data['StoreId']));
         } else if( ArrayUtils::KEY_EXISTS($data,'Store') && ArrayUtils::KEY_EXISTS($data['Store'],'StoreId') ) {
-            $mine->Store = (new \StoreQuery())->findPK( $data['Store']['StoreId']);
+            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPK( $data['Store']['StoreId']));
         }
         if(ArrayUtils::KEY_EXISTS($data,'Title')) $mine->Title = $data['Title'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
