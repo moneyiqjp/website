@@ -505,7 +505,7 @@
                         {"data": "PointSystemId", visible: false,width:1},
                         {"data": "PointAcquisitionName",width:3},
                         {"data": "PointsPerYen",width:1},
-                        {"data": "Store.Category",width:2},
+                        {"data": "Store.StoreCategory.Name",width:2},
                         {"data": "Store.StoreName",width:3},
                         {"data": "Reference", visible:false},
                         {"data": "UpdateTime", visible:false},
