@@ -7,11 +7,7 @@
     <list default="true" id="a06ee013-dbc3-4623-8ca5-7286cf268bda" name="Default" comment="">
       <change type="DELETED" beforePath="F:\Development\website\frontend\public_html\index.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../frontend/img/Thumbs.db" afterPath="$PROJECT_DIR$/../frontend/img/Thumbs.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/Db.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/Db.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" afterPath="$PROJECT_DIR$/../backend/Db/Json/JStore.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/Db/Core/PersonaMapping.php" afterPath="$PROJECT_DIR$/../backend/Db/Core/PersonaMapping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/index.php" afterPath="$PROJECT_DIR$/../backend/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stores.php" afterPath="$PROJECT_DIR$/stores.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../backend/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../backend/.idea/workspace.xml" />
     </list>
@@ -61,7 +57,7 @@
       <file leaf-file-name="creditcard_details.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/creditcard_details.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.25">
+            <state vertical-scroll-proportion="0.0">
               <caret line="415" column="35" selection-start-line="415" selection-start-column="35" selection-end-line="415" selection-end-column="35" />
               <folding />
             </state>
@@ -71,7 +67,7 @@
       <file leaf-file-name="stores.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/stores.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.8200795">
+            <state vertical-scroll-proportion="0.0">
               <caret line="68" column="60" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="60" />
               <folding />
             </state>
@@ -140,8 +136,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="305" />
-    <option name="y" value="40" />
+    <option name="x" value="616" />
+    <option name="y" value="141" />
     <option name="width" value="1294" />
     <option name="height" value="1167" />
   </component>
@@ -190,6 +186,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -211,7 +208,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -301,11 +297,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="305" y="40" width="1294" height="1167" extended-state="0" />
-    <editor active="false" />
+    <frame x="616" y="141" width="1294" height="1167" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25273865" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25273865" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11732283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1407767" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -671,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-31.25">
           <caret line="50" column="9" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -715,7 +710,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/creditcard_details.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.25">
+        <state vertical-scroll-proportion="0.0">
           <caret line="415" column="35" selection-start-line="415" selection-start-column="35" selection-end-line="415" selection-end-column="35" />
           <folding />
         </state>
@@ -723,7 +718,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/stores.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8200795">
+        <state vertical-scroll-proportion="0.0">
           <caret line="68" column="60" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="60" />
           <folding />
         </state>

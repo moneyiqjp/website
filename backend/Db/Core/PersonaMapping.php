@@ -84,6 +84,18 @@ class Scene {
 
         return $that;
     }
+
+    public static function CREATE_INCLUDING_PERSONA(\Scene $scene)
+    {
+        $that = Scene::CREATE($scene);
+        $that->Persona = array();
+
+        foreach($scene->getMapPersonaScenes() as $map) {
+            array_push($that->Persona, Persona::CREATE($map->getPersona()));
+        }
+
+        return $that;
+    }
 }
 
 class Restriction {
@@ -111,7 +123,6 @@ class Restriction {
 class Persona {
     public $Id;
     public $Name;
-    public $Scene = array();
     public $Restriction;
 
     public function Persona(){}
@@ -121,12 +132,18 @@ class Persona {
         $that = new Persona();
         $that->Id = $pers->getPersonaId();
         $that->Name= $pers->getName();
-        foreach($pers->getMapPersonaScenes() as $pms) {
-            array_push($that->Scene, Scene::CREATE($pms->getScene()));
-        }
-
         $that->Restriction = Restriction::CREATE($pers);
 
+        return $that;
+    }
+
+    public static function CREATE_INCLUDING_SCENES(\Persona $pers)
+    {
+        $that = Persona::CREATE($pers);
+        $that->Scene = array();
+        foreach ($pers->getMapPersonaScenes() as $pms) {
+            array_push($that->Scene, Scene::CREATE($pms->getScene()));
+        }
         return $that;
     }
 }
@@ -141,7 +158,7 @@ class SceneMapping{
         $map = new SceneMapping();
         foreach((new \SceneQuery())->find() as $scene)
         {
-            array_push($map->Scene, Scene::CREATE($scene) );
+            array_push($map->Scene, Scene::CREATE_INCLUDING_PERSONA($scene) );
         }
         return $map;
     }
@@ -158,7 +175,7 @@ class PersonaMapping
         $map = new PersonaMapping();
         foreach((new \PersonaQuery())->find() as $pers)
         {
-            array_push($map->Persona, Persona::CREATE($pers) );
+            array_push($map->Persona, Persona::CREATE_INCLUDING_SCENES($pers) );
         }
         return $map;
     }
