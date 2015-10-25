@@ -1,0 +1,160 @@
+/*
+Theme Name: WP Bootstrap
+Theme URI: http://teamtreehouse.com/wordpress-bootstrap-theme-tutorial
+Description: A demo theme built to accompany the Treehouse blog post <a href="http://teamtreehouse.com/wordpress-bootstrap-theme-tutorial">How to Build a WordPress Theme with Bootstrap</a>.
+Author: Zac Gordon
+Author URI: http://teamtreehouse.com/
+Version: 1.0
+Tags: responsive, white, bootstrap
+
+License: Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+License URI: http://creativecommons.org/licenses/by-sa/3.0/
+
+This simple theme was built using the example Bootstrap theme "Basic marketing site" found on the Bootstrap web site http://twitter.github.com/bootstrap/examples/hero.html
+
+@import url('bootstrap/css/bootstrap.css');
+@import url('bootstrap/css/bootstrap-responsive.css');
+*/
+@import url('css/main.css');
+body {
+
+    font-size: 16px;
+    font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+.header-container {
+    margin-top: -60px;
+    margin-bottom: 25px;
+    padding-top: 100px;
+    padding-bottom: 0px;
+    height:375px;
+    background: url("img/hero.png") no-repeat top;
+    background-size: 100% 100%;
+    background-position-y: 0px;
+}
+.blog-pane-title {
+    clear:both;
+    width:100%;
+    font-weight:bold;
+    font-size:1.25rem;
+}
+
+.blog-pane-preview {
+    margin: 20px 40px 0 0;
+    border:thin solid #d3d0a5;
+    border-radius:5px;
+    color: #4b4b4b;
+    background-color:#f8f8f0;
+    overflow:hidden;
+    text-align:left;
+    float: left;
+    padding-left: 10px;
+    max-width: 350px;
+    min-width: 250px;
+    max-height: 500px;
+    min-height: 450px;
+    font-size: 1.0rem;
+}
+
+.blog-data-container {
+    max-height: 250px;
+    min-height: 200px;
+    overflow:hidden;
+}
+
+.blog-read-more {
+    border:thin solid #e9913d;
+    border-radius:5px;
+    background-color:#f8f8f0;
+    height:30px;
+    width: 150px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+
+}
+
+.blog-read-more a {
+    text-decoration: none;
+    color: #e9913d;
+    font-weight: bold;
+    text-align: center;
+    align-self: center;
+}
+.blog-read-more a:hover {
+    text-decoration: none;
+    text-align: center;
+    color: #E9B03D;
+    font-weight: bolder;
+    align-self: center;
+}
+
+/*
+orange
+    background-color: #e9913d;
+*/
+div#primary-sidebar{
+    width: 250px;
+    float:right;
+    vertical-align: top;
+    color: rgb(75, 75, 75);
+}
+
+div#main-content{
+    margin-right: 250px;
+}
+
+div#main-container{
+    width: 100%;
+    float:left;
+    margin-right: -250px;
+}
+
+div.primary-sidebar div{
+    vertical-align: top;
+    float:left;
+    width: 245px;
+}
+
+div.moneybutton{
+    border:thin solid #e9913d;
+    border-radius:5px;
+    background-color:#e9913d;
+    color: white;
+    height: 85px;
+    width: 250px;
+}
+
+div.moneybutton div.mb-image{
+    margin: 4px 7px 0px 0px;
+    width: 81px;
+    float:left;
+}
+
+div.moneybutton div.mb-text{
+    text-align: left;
+    vertical-align: middle;
+    float:left;
+    font-weight: bold;
+    font-size: 1.1em;
+    width:150px;
+    height: 85px;
+    margin: 0 0 0 0;
+}
+
+div.moneybutton a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+div.moneybutton a:hover{
+    text-decoration: overline underline;
+    color: white;
+}
+
+
+
+
+
+
