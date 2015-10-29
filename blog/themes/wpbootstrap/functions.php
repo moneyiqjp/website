@@ -39,5 +39,8 @@ add_action( 'widgets_init', 'arphabet_widgets_init' );
 add_action( 'init', 'register_menus' );
 
 add_theme_support( 'post-thumbnails' );
+add_image_size( 'post-preview', 350, 250 );
+add_image_size( 'post-feature-small', 800, 570 );
+add_image_size( 'post-feature', 1200, 855 );
 
 ?>

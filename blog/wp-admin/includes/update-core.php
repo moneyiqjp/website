@@ -240,7 +240,7 @@ $_old_files = array(
 'wp-admin/js/wp-gears.js',
 'wp-admin/options-misc.php',
 'wp-admin/page-new.php',
-'wp-admin/page.php',
+'wp-admin/single.php',
 'wp-admin/rtl.css',
 'wp-admin/rtl.dev.css',
 'wp-admin/update-links.php',

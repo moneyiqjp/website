@@ -426,7 +426,7 @@ function twentytwelve_body_class( $classes ) {
 	if ( ! is_active_sidebar( 'sidebar-1' ) || is_page_template( 'page-templates/full-width.php' ) )
 		$classes[] = 'full-width';
 
-	if ( is_page_template( 'page-templates/front-page.php' ) ) {
+	if ( is_page_template( 'page-templates/front-single.php' ) ) {
 		$classes[] = 'template-front-page';
 		if ( has_post_thumbnail() )
 			$classes[] = 'has-post-thumbnail';

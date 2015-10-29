@@ -6,16 +6,16 @@
         <?php
         // check if the post has a Post Thumbnail assigned to it.
         if ( has_post_thumbnail() ) {
-            the_post_thumbnail();
+            echo "<a href='" . get_permalink() ."'>";
+            the_post_thumbnail('post-preview');
+            echo "</a>";
         }
         ?>
-        <div class="blog-pane-title"><?php the_title(); ?></div>
-        <div class="blog-data-container">
-            <?php //the_content();
-            the_excerpt();
-            ?>
+        <div class="blog-pane-preview-title"><?php the_title(); ?></div>
+        <div class="blog-pane-preview-data-container">
+            <?php the_excerpt(); ?>
         </div>
-        <div class="blog-read-more">
+        <div class="blog-pane-preview-read-more">
             <a href="<?php echo get_permalink(); ?>"> Read More</a>
         </div>
     </div>
@@ -29,7 +29,7 @@
 		<?php dynamic_sidebar( 'home_right_1' ); ?>
         <div class="moneybutton">
             <a href="http://www.moneyiq.jp/v2/index.html">
-                <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel.png"></div>
+                <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
                 <div class="mb-text">MoneyIQに<br>アクセス</div>
             </a>
         </div>
