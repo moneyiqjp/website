@@ -195,6 +195,7 @@
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="pointExpiryMonths" phpName="Pointexpirymonths" type="INTEGER" defaultValue="12"/>
     <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
+    <column name="isActive" phpName="Isactive" type="TINYINT" defaultValue="1"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <foreign-key foreignTable="affiliate_company" name="affiliate_company_credit_card">
@@ -438,6 +439,13 @@
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="mailinglist" idMethod="native" phpName="Mailinglist">
+    <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

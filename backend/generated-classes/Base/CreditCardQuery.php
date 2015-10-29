@@ -34,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery orderByAffiliateId($order = Criteria::ASC) Order by the affiliate_id column
  * @method     ChildCreditCardQuery orderByPointexpirymonths($order = Criteria::ASC) Order by the pointExpiryMonths column
  * @method     ChildCreditCardQuery orderByReference($order = Criteria::ASC) Order by the reference column
+ * @method     ChildCreditCardQuery orderByIsactive($order = Criteria::ASC) Order by the isActive column
  * @method     ChildCreditCardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCreditCardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -51,6 +52,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery groupByAffiliateId() Group by the affiliate_id column
  * @method     ChildCreditCardQuery groupByPointexpirymonths() Group by the pointExpiryMonths column
  * @method     ChildCreditCardQuery groupByReference() Group by the reference column
+ * @method     ChildCreditCardQuery groupByIsactive() Group by the isActive column
  * @method     ChildCreditCardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCreditCardQuery groupByUpdateUser() Group by the update_user column
  *
@@ -117,6 +119,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard findOneByAffiliateId(int $affiliate_id) Return the first ChildCreditCard filtered by the affiliate_id column
  * @method     ChildCreditCard findOneByPointexpirymonths(int $pointExpiryMonths) Return the first ChildCreditCard filtered by the pointExpiryMonths column
  * @method     ChildCreditCard findOneByReference(string $reference) Return the first ChildCreditCard filtered by the reference column
+ * @method     ChildCreditCard findOneByIsactive(int $isActive) Return the first ChildCreditCard filtered by the isActive column
  * @method     ChildCreditCard findOneByUpdateTime(string $update_time) Return the first ChildCreditCard filtered by the update_time column
  * @method     ChildCreditCard findOneByUpdateUser(string $update_user) Return the first ChildCreditCard filtered by the update_user column
  *
@@ -135,6 +138,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard[]|ObjectCollection findByAffiliateId(int $affiliate_id) Return ChildCreditCard objects filtered by the affiliate_id column
  * @method     ChildCreditCard[]|ObjectCollection findByPointexpirymonths(int $pointExpiryMonths) Return ChildCreditCard objects filtered by the pointExpiryMonths column
  * @method     ChildCreditCard[]|ObjectCollection findByReference(string $reference) Return ChildCreditCard objects filtered by the reference column
+ * @method     ChildCreditCard[]|ObjectCollection findByIsactive(int $isActive) Return ChildCreditCard objects filtered by the isActive column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCreditCard objects filtered by the update_time column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCreditCard objects filtered by the update_user column
  * @method     ChildCreditCard[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -228,7 +232,7 @@ abstract class CreditCardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
+        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, reference, isActive, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -764,6 +768,47 @@ abstract class CreditCardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CreditCardTableMap::COL_REFERENCE, $reference, $comparison);
+    }
+
+    /**
+     * Filter the query on the isActive column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByIsactive(1234); // WHERE isActive = 1234
+     * $query->filterByIsactive(array(12, 34)); // WHERE isActive IN (12, 34)
+     * $query->filterByIsactive(array('min' => 12)); // WHERE isActive > 12
+     * </code>
+     *
+     * @param     mixed $isactive The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByIsactive($isactive = null, $comparison = null)
+    {
+        if (is_array($isactive)) {
+            $useMinMax = false;
+            if (isset($isactive['min'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_ISACTIVE, $isactive['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($isactive['max'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_ISACTIVE, $isactive['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_ISACTIVE, $isactive, $comparison);
     }
 
     /**

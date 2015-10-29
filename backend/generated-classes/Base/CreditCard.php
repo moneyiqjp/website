@@ -174,6 +174,13 @@ abstract class CreditCard implements ActiveRecordInterface
     protected $reference;
 
     /**
+     * The value for the isactive field.
+     * Note: this column has a database default value of: 1
+     * @var        int
+     */
+    protected $isactive;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -313,6 +320,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->amex = false;
         $this->diners = false;
         $this->pointexpirymonths = 12;
+        $this->isactive = 1;
     }
 
     /**
@@ -725,6 +733,16 @@ abstract class CreditCard implements ActiveRecordInterface
     }
 
     /**
+     * Get the [isactive] column value.
+     *
+     * @return int
+     */
+    public function getIsactive()
+    {
+        return $this->isactive;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -1083,6 +1101,26 @@ abstract class CreditCard implements ActiveRecordInterface
     } // setReference()
 
     /**
+     * Set the value of [isactive] column.
+     *
+     * @param  int $v new value
+     * @return $this|\CreditCard The current object (for fluent API support)
+     */
+    public function setIsactive($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->isactive !== $v) {
+            $this->isactive = $v;
+            $this->modifiedColumns[CreditCardTableMap::COL_ISACTIVE] = true;
+        }
+
+        return $this;
+    } // setIsactive()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -1156,6 +1194,10 @@ abstract class CreditCard implements ActiveRecordInterface
                 return false;
             }
 
+            if ($this->isactive !== 1) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -1224,13 +1266,16 @@ abstract class CreditCard implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : CreditCardTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reference = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : CreditCardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : CreditCardTableMap::translateFieldName('Isactive', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->isactive = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : CreditCardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 15 + $startcol : CreditCardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 16 + $startcol : CreditCardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -1240,7 +1285,7 @@ abstract class CreditCard implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 16; // 16 = CreditCardTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 17; // 17 = CreditCardTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\CreditCard'), 0, $e);
@@ -1658,6 +1703,9 @@ abstract class CreditCard implements ActiveRecordInterface
         if ($this->isColumnModified(CreditCardTableMap::COL_REFERENCE)) {
             $modifiedColumns[':p' . $index++]  = 'reference';
         }
+        if ($this->isColumnModified(CreditCardTableMap::COL_ISACTIVE)) {
+            $modifiedColumns[':p' . $index++]  = 'isActive';
+        }
         if ($this->isColumnModified(CreditCardTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -1716,6 +1764,9 @@ abstract class CreditCard implements ActiveRecordInterface
                         break;
                     case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
+                        break;
+                    case 'isActive':
+                        $stmt->bindValue($identifier, $this->isactive, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1828,9 +1879,12 @@ abstract class CreditCard implements ActiveRecordInterface
                 return $this->getReference();
                 break;
             case 14:
-                return $this->getUpdateTime();
+                return $this->getIsactive();
                 break;
             case 15:
+                return $this->getUpdateTime();
+                break;
+            case 16:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1877,8 +1931,9 @@ abstract class CreditCard implements ActiveRecordInterface
             $keys[11] => $this->getAffiliateId(),
             $keys[12] => $this->getPointexpirymonths(),
             $keys[13] => $this->getReference(),
-            $keys[14] => $this->getUpdateTime(),
-            $keys[15] => $this->getUpdateUser(),
+            $keys[14] => $this->getIsactive(),
+            $keys[15] => $this->getUpdateTime(),
+            $keys[16] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -2113,9 +2168,12 @@ abstract class CreditCard implements ActiveRecordInterface
                 $this->setReference($value);
                 break;
             case 14:
-                $this->setUpdateTime($value);
+                $this->setIsactive($value);
                 break;
             case 15:
+                $this->setUpdateTime($value);
+                break;
+            case 16:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -2187,10 +2245,13 @@ abstract class CreditCard implements ActiveRecordInterface
             $this->setReference($arr[$keys[13]]);
         }
         if (array_key_exists($keys[14], $arr)) {
-            $this->setUpdateTime($arr[$keys[14]]);
+            $this->setIsactive($arr[$keys[14]]);
         }
         if (array_key_exists($keys[15], $arr)) {
-            $this->setUpdateUser($arr[$keys[15]]);
+            $this->setUpdateTime($arr[$keys[15]]);
+        }
+        if (array_key_exists($keys[16], $arr)) {
+            $this->setUpdateUser($arr[$keys[16]]);
         }
     }
 
@@ -2274,6 +2335,9 @@ abstract class CreditCard implements ActiveRecordInterface
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_REFERENCE)) {
             $criteria->add(CreditCardTableMap::COL_REFERENCE, $this->reference);
+        }
+        if ($this->isColumnModified(CreditCardTableMap::COL_ISACTIVE)) {
+            $criteria->add(CreditCardTableMap::COL_ISACTIVE, $this->isactive);
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_UPDATE_TIME)) {
             $criteria->add(CreditCardTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -2380,6 +2444,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $copyObj->setAffiliateId($this->getAffiliateId());
         $copyObj->setPointexpirymonths($this->getPointexpirymonths());
         $copyObj->setReference($this->getReference());
+        $copyObj->setIsactive($this->getIsactive());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -4501,6 +4566,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->affiliate_id = null;
         $this->pointexpirymonths = null;
         $this->reference = null;
+        $this->isactive = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;

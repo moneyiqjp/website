@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nategood/httpful" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/propel/propel" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/slim/slim" />
@@ -20,30 +21,32 @@
     <orderEntry type="module-library">
       <library name="PHP">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/vendor/psr/log" />
-          <root url="file://$MODULE_DIR$/vendor/propel/propel" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/finder" />
-          <root url="file://$MODULE_DIR$/vendor/slim/slim" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/console" />
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/nategood/httpful" />
+          <root url="file://$MODULE_DIR$/vendor/propel/propel" />
+          <root url="file://$MODULE_DIR$/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/vendor/slim/slim" />
           <root url="file://$MODULE_DIR$/vendor/symfony/config" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/console" />
           <root url="file://$MODULE_DIR$/vendor/symfony/filesystem" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/finder" />
           <root url="file://$MODULE_DIR$/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/vendor/symfony/validator" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/vendor/psr/log" />
-          <root url="file://$MODULE_DIR$/vendor/propel/propel" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/finder" />
-          <root url="file://$MODULE_DIR$/vendor/slim/slim" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/console" />
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/nategood/httpful" />
+          <root url="file://$MODULE_DIR$/vendor/propel/propel" />
+          <root url="file://$MODULE_DIR$/vendor/psr/log" />
+          <root url="file://$MODULE_DIR$/vendor/slim/slim" />
           <root url="file://$MODULE_DIR$/vendor/symfony/config" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/console" />
           <root url="file://$MODULE_DIR$/vendor/symfony/filesystem" />
-          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/finder" />
           <root url="file://$MODULE_DIR$/vendor/symfony/translation" />
           <root url="file://$MODULE_DIR$/vendor/symfony/validator" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/yaml" />
         </SOURCES>
       </library>
     </orderEntry>

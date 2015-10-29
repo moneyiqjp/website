@@ -11,7 +11,9 @@ namespace Db\Core;
 use Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\Length;
 
 require_once(__DIR__.'/../../vendor/autoload.php');
 // setup Propel
@@ -82,6 +84,38 @@ class Db
 
         return $result;
     }
+
+
+
+    function AddEmailToMailingList($email) {
+
+        if(is_null($email) || !FieldUtils::STRING_IS_DEFINED($email)) throw new \Exception("No email specified");
+
+        $mailObjects = (new \MailinglistQuery())->findByEmail($email);
+        if(isset($mailObjects)||count($mailObjects)>0)
+                return array(
+                    "status" => "OK",
+                    "error" => "Email address " . $email . " already exists"
+                );
+
+        $mail = new \Mailinglist();
+        $mail->setEmail($email);
+        $mail->setUpdateTime(new Date());
+        if($mail->save()<=0) throw new \Exception("Failed to save email (" . $email . ")");
+
+
+        return array(
+            "status" => "OK",
+            "error" => ""
+        );
+    }
+
+
+
+
+
+
+
     function GetIssuersForDisplay()
     {
         $result = array();

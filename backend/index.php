@@ -59,6 +59,31 @@ $app->get('/allfeatures', function () use ($app) {
     echo json_encode($cards);
 });
 
+
+$app->get('/mailchimp', function () use ($app) {
+    // query database for all cards
+
+    echo  \Db\Utility\MailChimp::subscribe("benfries@gmail.com");
+});
+
+
+$app->post('/mailinglist/add', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->AddEmailToMailingList($request->put('email'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
 $app->get('/display/issuers', function () use ($app) {
     // query database for all cards
 
