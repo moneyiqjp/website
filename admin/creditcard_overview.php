@@ -144,6 +144,14 @@
                         label:  "Points expiry (months)",
                         name:   "points_expiry_months"
                     }, {
+                        label: "IsActive:",
+                        name: "is_active",
+                        type: "select",
+                        options:[
+                            { label: 'Yes', value: 1 },
+                            { label: 'No', value: 0 }
+                        ]
+                    }, {
                         label: "Update date:",
                         name: "update_time",
                         type: "readonly"
@@ -271,6 +279,7 @@
                     { "data": "affiliate.name", editField: "affiliate.id" },
                     { "data": "points_expiry_months" },
                     { "data": "reference", editField: "reference" },
+                    { "data": "is_active", editField: "is_active" },
                     {
                         "data": "credit_card_id",
                         render: function ( data, type, row ) {

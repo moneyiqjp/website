@@ -61,4 +61,78 @@ class CreditCard extends BaseCreditCard
 
         return $base;
     }
+
+
+    function UpdateValue($data, $key,$value)
+    {
+        if(!array_key_exists($key,$data)) throw new \Exception("Failed to find key: " . $key);
+        switch(strtolower($key))
+        {
+            case "name":
+                $this->setName($value);
+                break;
+            case "issuer":
+                $this->setIssuerId($value['id']);
+                break;
+            case "issuer_id":
+                $this->setIssuerId($value);
+                break;
+            case "description":
+                $this->setDescription($value);
+                break;
+            case "image_link":
+                $this->setImageLink($value);
+                break;
+            case "visa":
+                $this->setVisa($value>0);
+                break;
+            case "master":
+                $this->setMaster($value>0);
+                break;
+            case "jcb":
+                $this->setJcb($value>0);
+                break;
+            case "amex":
+                $this->setAmex($value>0);
+                break;
+            case "diners":
+                $this->setDiners($value>0);
+                break;
+            case "affiliate_link":
+                $this->setAfilliateLink($value);
+                break;
+            case "reference":
+                $this->setReference($value);
+                break;
+            case "affiliate_id":
+                $this->setAffiliateId($value);
+                break;
+            case "is_active":
+                $this->setIsactive($value);
+                break;
+            case "points_expiry_months":
+                $this->setPointexpirymonths($value);
+                break;
+            case "update_user":
+                $this->setUpdateUser($value);
+                break;
+        }
+
+        $this->setUpdateTime((new \DateTime()));
+
+        return $this;
+    }
+
+    function UpdateFromArray($data)
+    {
+        while (list($key, $value) = each($data)) {
+            //echo $key . "-" .  var_export($value,true) . "\n";
+            $this->UpdateValue($data,$key,$value);
+        }
+
+        $this->save();
+
+        return $this;
+    }
+
 }

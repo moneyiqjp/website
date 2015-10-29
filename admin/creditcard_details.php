@@ -247,15 +247,6 @@
                 type: "readonly"
             }]
         });
-/*
- {"data": "InterestId", edit: false, width: 5},
- {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
- {"data": "PaymentType.Name", editField: "PaymentType.Id"},
- {"data": "MinInterest", width: 20},
- {"data": "MaxInterest", width: 10},
- {"data": "UpdateTime", visible: false},
- {"data": "UpdateUser", visible: false}
- */
 
         interestEditor = new $.fn.dataTable.Editor({
             ajax: {

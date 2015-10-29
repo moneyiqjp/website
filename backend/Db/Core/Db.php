@@ -60,7 +60,8 @@ class Db
         $q = new  \CreditCardQuery();
         foreach($q->orderByCreditCardId()->find() as $ccs)
         {
-            array_push($result,CreditCard::fromCreditCardObject($ccs));
+            if($ccs->getIsactive())
+                array_push($result,CreditCard::fromCreditCardObject($ccs));
         }
         return $result;
     }
@@ -110,12 +111,6 @@ class Db
         );
     }
 
-
-
-
-
-
-
     function GetIssuersForDisplay()
     {
         $result = array();
@@ -158,73 +153,7 @@ class Db
         }
         return $result;
     }
-    function UpdateCreditCardItem(\CreditCard &$ccs, $data, $key,$value)
-    {
-        if(!array_key_exists($key,$data)) throw new \Exception("Failed to find key: " . $key);
-        switch(strtolower($key))
-        {
-            case "name":
-                $ccs->setName($value);
-                break;
-            case "issuer":
-                $ccs->setIssuerId($value['id']);
-                break;
-            case "issuer_id":
-                $ccs->setIssuerId($value);
-                break;
-            case "description":
-                $ccs->setDescription($value);
-                break;
-            case "image_link":
-                $ccs->setImageLink($value);
-                break;
-            case "visa":
-                $ccs->setVisa($value>0);
-                break;
-            case "master":
-                $ccs->setMaster($value>0);
-                break;
-            case "jcb":
-                $ccs->setJcb($value>0);
-                break;
-            case "amex":
-                $ccs->setAmex($value>0);
-                break;
-            case "diners":
-                $ccs->setDiners($value>0);
-                break;
-            case "affiliate_link":
-                $ccs->setAfilliateLink($value);
-                break;
-            case "reference":
-                $ccs->setReference($value);
-                break;
-            case "affiliate_id":
-                $ccs->setAffiliateId($value);
-                break;
-            case "points_expiry_months":
-                $ccs->setPointexpirymonths($value);
-                break;
-            case "update_user":
-                $ccs->setUpdateUser($value);
-                break;
-        }
 
-        $ccs->setUpdateTime((new \DateTime()));
-
-        return $ccs;
-    }
-    function _UpdateCreditCard(\CreditCard &$ccs, $data)
-    {
-        while (list($key, $value) = each($data)) {
-            //echo $key . "-" .  var_export($value,true) . "\n";
-            $this->UpdateCreditCardItem($ccs,$data,$key,$value);
-        }
-
-        $ccs->save();
-
-        return $ccs;
-    }
     function UpdateCreditCard($data)
     {
         $q = new  \CreditCardQuery();
@@ -232,7 +161,7 @@ class Db
 
         if(is_null($ccs)) throw new \Exception ("Credit card with id ". $data['credit_card_id'] ." not found");
 
-        $this->_UpdateCreditCard($ccs, $data);
+        $ccs->UpdateFromArray($data);
 
         //TODO implement cache, then refresh
         $q = new  \CreditCardQuery();
@@ -244,19 +173,7 @@ class Db
     function CreateCreditCard($data)
     {
         $ccs = new \CreditCard();
-        /*
-        while (list($key, $value) = each($data)) {
-            $this->UpdateCreditCardItem($ccs,$data,$key,$value);
-        }
-
-
-        $ccs->save();
-        //TODO implement cache, add to cache
-        #$q = new  \CreditCardQuery();
-        #$ccs = $q->findPk($data['credit_card_id']);
-        return Json\JCreditCard::CREATE_DB($ccs);
-        */
-        $this->_UpdateCreditCard($ccs, $data);
+        $ccs->UpdateFromArray($data);
         if(is_null($ccs)) throw new \Exception ("Credit card with id ". $data['credit_card_id'] ." not found");
         return Json\JCreditCard::CREATE_DB($ccs);
     }
