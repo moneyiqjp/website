@@ -68,6 +68,35 @@
             }
         }
 
+        var creditCards = [];
+        tmp = $.ajax({
+            url: '../backend/display/creditcards',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            var $mtmp = "";
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    if(tmpStore[index]["issuer"]!=null) {
+                        $mtmp = "(" + tmpStore[index]["issuer"]["name"] +  ")";
+                    }
+                    creditCards.push({
+                        value: tmpStore[index]["credit_card_id"],
+                        label: tmpStore[index]["name"] + $mtmp
+                    })
+                }
+            }
+        }
+
 
 
         restrictionTypeEditor = new $.fn.dataTable.Editor(
@@ -103,6 +132,58 @@
                     }, {
                         label: "Update user:",
                         name: "UpdateUser"
+                    }
+                ]
+            });
+
+        creditCardRestrictionEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/restriction/credit/card/general/create', // default method is POST
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/restriction/credit/card/general/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/restriction/credit/card/general/delete'
+                    }
+                },
+                table: "#creditCardRestrictionTable",
+                idSrc: "CreditCardRestrictionId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "CreditCardRestrictionId",
+                        type:  "readonly"
+                    },{
+                        label: "CreditCard:",
+                        name: "CreditCard.credit_card_id",
+                        type:  "select",
+                        options: creditCards
+                    },{
+                        label: "RestrictionType:",
+                        name: "RestrictionType.RestrictionTypeId",
+                        type: "select",
+                        options:restrictionTypes
+                    }, {
+                        label: "Comparator",
+                        name: "Comparator",
+                        type: "select",
+                        options: ['=', '!=', '>', '<', 'in', 'not in']
+                    },  {
+                        label: "Value:",
+                        name:  "Value"
+                    },  {
+                        label: "Priority",
+                        name: "Priority"
+                    },  {
+                        label: "Update date:",
+                        name: "update_time",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "update_user"
                     }
                 ]
             });
@@ -187,6 +268,36 @@
                 }
             });
 
+            $('#creditCardRestrictionTable').dataTable({
+                dom: "lfrtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/restriction/credit/card/general/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "CreditCardRestrictionId",width:"125px"},
+                    {"data": "CreditCard.name",editField: "CreditCard.credit_card_id", width:"150px"},
+                    {"data": "RestrictionType.Name", editField: "RestrictionType.RestrictionTypeId",width:"150px"},
+                    {"data": "Comparator",width:"100px"},
+                    {"data": "Value",width:"100px"},
+                    {"data": "Priority",width:"50px", visible:false},
+                    {"data": "UpdateTime", visible:false,width:"20px"},
+                    {"data": "UpdateUser",  visible:false,width:"20px"}
+                ],
+                tableTools: {
+                    sRowSelect: "os",
+                    aButtons:  [
+                        {sExtends: "editor_create", editor: creditCardRestrictionEditor},
+                        {sExtends: "editor_edit", editor: creditCardRestrictionEditor},
+                        {sExtends: "editor_remove", editor: creditCardRestrictionEditor}
+                    ]
+                }
+
+            } );
+
             $('#restrictionTable').dataTable({
                 dom: "lfrtTip",
                 "pageLength": 25,
@@ -250,12 +361,12 @@
 
 <body class="dt-other">
 <div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="restrictiontype">Restriction Types</a></div>
+    <div class="table-headline"><a name="restrictiontype">Restriction Attributes</a></div>
     <table id="restrictionType" class="display" cellspacing="0" width="98%">
         <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Attribute</th>
             <th>Description</th>
             <th>Updated</th>
             <th>User</th>
@@ -265,24 +376,24 @@
         <tfoot>
         <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Attribute</th>
             <th>Description</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
         </tfoot>
     </table>
-    <a href="http://localhost/backend/crud/restriction/type/all" class="source">Source</a>
+    <a href="../backend/crud/restriction/type/all" class="source">Source</a>
 </div>
 <br>
 <div style="width: 98%;float:left;">
-    <div class="table-headline"><a name="restrictions">Restrictions</a></div>
+    <div class="table-headline"><a name="restrictions">Persona Restrictions</a></div>
     <table id="restrictionTable" class="display" cellspacing="0" width="98%">
         <thead>
         <tr>
             <th>Id</th>
             <th>Persona</th>
-            <th>RestrictionType</th>
+            <th>Attribute</th>
             <th>Comparator</th>
             <th>Value</th>
             <th>Priority</th>
@@ -295,7 +406,7 @@
         <tr>
             <th>Id</th>
             <th>Persona</th>
-            <th>RestrictionType</th>
+            <th>Attribute</th>
             <th>Comparator</th>
             <th>Value</th>
             <th>Priority</th>
@@ -304,13 +415,49 @@
         </tr>
         </tfoot>
     </table>
-    <a href="http://localhost/backend/crud/restriction/general/all" class="source">Source</a>
+    <a href="../backend/crud/restriction/general/all" class="source">Source</a>
 </div>
 
+<br>
+<div style="width: 98%;float:left;">
+    <div class="table-headline"><a name="restrictions">CreditCard Restrictions</a></div>
+    <table id="creditCardRestrictionTable" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>CreditCard</th>
+            <th>Attribute</th>
+            <th>Comparator</th>
+            <th>Value</th>
+            <th>Priority</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>CreditCard</th>
+            <th>Attribute</th>
+            <th>Comparator</th>
+            <th>Value</th>
+            <th>Priority</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+    <a href="../backend/crud/restriction/general/all" class="source">Source</a>
+</div>
 
 <br>
 <br>
 <br>
+Requests for menus<br>
+<a href="../backend/display/creditcards">CreditCard</a>
+<a href='../backend/crud/persona/all'>Personas</a>
+<a href='../backend/crud/restriction/type/all'>Restrictions</a>
 
 </body>
 </html>

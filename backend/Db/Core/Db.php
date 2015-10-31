@@ -54,8 +54,7 @@ class Db
         return PersonaMapping::CREATESCENEMAPPING()->Scene;
     }
 
-    function GetAllCards()
-    {
+    function GetAllCards() {
         $result = array();
         $q = new  \CreditCardQuery();
         foreach($q->orderByCreditCardId()->find() as $ccs)
@@ -74,8 +73,7 @@ class Db
         return $result;
     }
     
-    function GetAllFeatures()
-    {
+    function GetAllFeatures() {
         $result = array();
         foreach( (new \CardFeatureTypeQuery())->orderByCategory()->find() as $ft)
         {
@@ -85,10 +83,7 @@ class Db
         return $result;
     }
 
-
-
     function AddEmailToMailingList($email) {
-
         if(is_null($email) || !FieldUtils::STRING_IS_DEFINED($email)) throw new \Exception("No email specified");
 
         $mailObjects = (new \MailinglistQuery())->findByEmail($email);
@@ -109,9 +104,6 @@ class Db
             "error" => ""
         );
     }
-
-
-
 
 
 
@@ -1886,6 +1878,7 @@ class Db
         return array();
     }
 
+
     /* GeneralRestriction */
     function GetAllGeneralRestrictions()
     {
@@ -1938,6 +1931,8 @@ class Db
         return array();
     }
 
+
+    /* FeatureRestriction */
     function GetAllFeatureRestrictions(){
         $personaFeatures = array();
 
@@ -1950,7 +1945,6 @@ class Db
 
         return $personaFeatures;
     }
-
 
     function GetFeatureRestrictionForPersona($id) {
         $personaFeatures = array();
@@ -2033,6 +2027,164 @@ class Db
         $ids = FieldUtils::SPLIT_ID($id);
         if(is_null($ids)||count($ids)<=1) return array();
         foreach( (new  \MapPersonaFeatureConstraintQuery())->findByPersonaId($ids[0]) as $item){
+            if($item->getFeatureTypeId() == $ids[1]) {
+                $item->delete();
+            }
+        }
+        return array();
+    }
+
+
+    /* CreditCardRestriction */
+    function GetAllCreditCardRestrictions()
+    {
+        $result = array();
+        foreach ((new \CardRestrictionQuery())->orderByRestrictionTypeId()->find() as $af) {
+            array_push($result, Json\JCreditCardRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetCreditCardRestrictionById($id)
+    {
+        $result = array();
+        foreach ((new \CardRestrictionQuery())->findPk($id) as $af) {
+            array_push($result, Json\JCreditCardRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+    function GetCreditCardRestrictionByCreditCardId($id)
+    {
+        $result = array();
+        foreach ((new \CardRestrictionQuery())->orderByRestrictionTypeId()->findByCreditCardId($id) as $af) {
+            array_push($result, Json\JCreditCardRestriction::CREATE_FROM_DB($af));
+        }
+        return $result;
+    }
+
+    function UpdateCreditCardRestrictionForCrud($data)
+    {
+        $parsed = Json\JCreditCardRestriction::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse GeneralRestriction update request");
+        if(!$parsed->saveToDb()) throw new \Exception("Error saving object to database");
+
+        //TODO implement cache, then refresh
+        return Json\JCreditCardRestriction::CREATE_FROM_DB($parsed->tryLoadFromDB());
+    }
+
+    function CreateCreditCardRestrictionForCrud($data)
+    {
+        $parsed = Json\JCreditCardRestriction::CREATE_FROM_ARRAY($data);
+        if(is_null($parsed)) throw new \Exception ("Failed to parse GeneralRestriction update request");
+        if(!$parsed->saveToDb()) throw new \Exception("Error saving object to database");
+
+        //TODO implement cache, add to cache
+        return $parsed;
+    }
+    function DeleteCreditCardRestrictionForCrud($id)
+    {
+        $item = Json\JCreditCardRestriction::LOAD_FROM_ID($id);
+        $item->delete();
+        return array();
+    }
+
+
+
+
+    /* CardFeatureRestriction */
+    function GetAllCardFeatureRestrictions(){
+        $personaFeatures = array();
+
+        foreach ((new \MapCardFeatureConstraintQuery())->find() as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $stuff->Active = 1;
+            array_push($personaFeatures, $stuff);
+        }
+
+
+        return $personaFeatures;
+    }
+
+    function GetCardFeatureRestrictionForPersona($id) {
+        $personaFeatures = array();
+        $existingIds = array();
+        foreach ((new \MapCardFeatureConstraintQuery())->findByCreditCardId($id) as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $stuff->Active = 1;
+            $stuff->CreditCardId = $id;
+            $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+            array_push($personaFeatures, $stuff);
+            array_push($existingIds, $stuff->FeatureTypeId);
+        }
+
+        $allFeatures = array();
+        foreach ((new \CardFeatureTypeQuery())->orderByFeatureTypeId()->find() as $item) {
+            $stuff =Json\JFeatureType::CREATE_FROM_DB($item);
+            $stuff->Active = 0;
+            $stuff->CreditCardId = $id;
+            $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+            array_push($allFeatures, $stuff);
+        }
+
+        $diff = array();
+        foreach($allFeatures as $type) {
+            if(!in_array($type->FeatureTypeId,$existingIds)) {
+                array_push($personaFeatures, $type);
+            }
+        }
+
+        return $personaFeatures;
+    }
+
+    function UpdateCardFeatureRestrictionForPersona($data) {
+        if(!array_key_exists('FeatureId',$data)) throw new \Exception('FeatureId not defined');
+        if(!array_key_exists('Active',$data)) throw new \Exception('Key Active not defined');
+
+        if(array_key_exists('Active',$data) && !is_null($data['Active'])){
+            $this->DeleteCardFeatureRestrictionForPersona($data['FeatureId']);
+            //throw new \Exception('DeleteCardFeatureRestrictionForPersona');
+        }
+
+        if($data['Active']) {
+            //throw new \Exception('CreateCardFeatureRestrictionForPersona');
+            return $this->CreateCardFeatureRestrictionForPersona($data);
+        }
+
+        throw new \Exception('UpdateCardFeatureRestrictionForPersona');
+        return $this->UpdateCardFeatureRestrictionForPersona($data);
+    }
+
+    function UpdateCardFeatureRestriction($data) {
+        $ids = FieldUtils::SPLIT_ID($data['FeatureId']);
+        if(is_null($ids)||count($ids)<=1) return array();
+        foreach( (new  \MapCardFeatureConstraintQuery())->findByCreditCardId($ids[0]) as $item){
+            if($item->getFeatureTypeId() == $ids[1]) {
+                if(ArrayUtils::KEY_EXISTS($data,'CreditCardId'))  $item->setCreditCardId($data['CreditCardId']);
+                return $item;
+            }
+        }
+        return array();
+    }
+
+    function CreateCardFeatureRestrictionForPersona($data) {
+        if(!array_key_exists('PersonaId',$data)) throw new \Exception("Required field PersonaId not found for deleting row");
+        if(!array_key_exists('FeatureTypeId',$data)) throw new \Exception("Required field FeatureTypeId not found for deleting row");
+
+        $item = new \MapCardFeatureConstraint();
+        $item->setCreditCardId($data['CreditCardId']);
+        $item->setFeatureTypeId($data['FeatureTypeId']);
+        //$item->setUpdateTime(new DateTime());
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $item->setUpdateUser($data['UpdateUser']);
+        $item->save();
+
+        $data['Active'] = 1;
+
+        return $data;
+    }
+
+    function DeleteCardFeatureRestrictionForPersona($id) {
+        $ids = FieldUtils::SPLIT_ID($id);
+        if(is_null($ids)||count($ids)<=1) return array();
+        foreach( (new  \MapCardFeatureConstraintQuery())->findByCreditCardId($ids[0]) as $item){
             if($item->getFeatureTypeId() == $ids[1]) {
                 $item->delete();
             }

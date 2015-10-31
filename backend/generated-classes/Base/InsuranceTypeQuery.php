@@ -22,7 +22,9 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildInsuranceTypeQuery orderByInsuranceTypeId($order = Criteria::ASC) Order by the insurance_type_id column
  * @method     ChildInsuranceTypeQuery orderByTypeName($order = Criteria::ASC) Order by the type_name column
+ * @method     ChildInsuranceTypeQuery orderByTypeDisplay($order = Criteria::ASC) Order by the type_display column
  * @method     ChildInsuranceTypeQuery orderBySubtypeName($order = Criteria::ASC) Order by the subtype_name column
+ * @method     ChildInsuranceTypeQuery orderBySubtypeDisplay($order = Criteria::ASC) Order by the subtype_display column
  * @method     ChildInsuranceTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildInsuranceTypeQuery orderByRegion($order = Criteria::ASC) Order by the region column
  * @method     ChildInsuranceTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
@@ -30,7 +32,9 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildInsuranceTypeQuery groupByInsuranceTypeId() Group by the insurance_type_id column
  * @method     ChildInsuranceTypeQuery groupByTypeName() Group by the type_name column
+ * @method     ChildInsuranceTypeQuery groupByTypeDisplay() Group by the type_display column
  * @method     ChildInsuranceTypeQuery groupBySubtypeName() Group by the subtype_name column
+ * @method     ChildInsuranceTypeQuery groupBySubtypeDisplay() Group by the subtype_display column
  * @method     ChildInsuranceTypeQuery groupByDescription() Group by the description column
  * @method     ChildInsuranceTypeQuery groupByRegion() Group by the region column
  * @method     ChildInsuranceTypeQuery groupByUpdateTime() Group by the update_time column
@@ -51,7 +55,9 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildInsuranceType findOneByInsuranceTypeId(int $insurance_type_id) Return the first ChildInsuranceType filtered by the insurance_type_id column
  * @method     ChildInsuranceType findOneByTypeName(string $type_name) Return the first ChildInsuranceType filtered by the type_name column
+ * @method     ChildInsuranceType findOneByTypeDisplay(string $type_display) Return the first ChildInsuranceType filtered by the type_display column
  * @method     ChildInsuranceType findOneBySubtypeName(string $subtype_name) Return the first ChildInsuranceType filtered by the subtype_name column
+ * @method     ChildInsuranceType findOneBySubtypeDisplay(string $subtype_display) Return the first ChildInsuranceType filtered by the subtype_display column
  * @method     ChildInsuranceType findOneByDescription(string $description) Return the first ChildInsuranceType filtered by the description column
  * @method     ChildInsuranceType findOneByRegion(string $region) Return the first ChildInsuranceType filtered by the region column
  * @method     ChildInsuranceType findOneByUpdateTime(string $update_time) Return the first ChildInsuranceType filtered by the update_time column
@@ -60,7 +66,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsuranceType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildInsuranceType objects based on current ModelCriteria
  * @method     ChildInsuranceType[]|ObjectCollection findByInsuranceTypeId(int $insurance_type_id) Return ChildInsuranceType objects filtered by the insurance_type_id column
  * @method     ChildInsuranceType[]|ObjectCollection findByTypeName(string $type_name) Return ChildInsuranceType objects filtered by the type_name column
+ * @method     ChildInsuranceType[]|ObjectCollection findByTypeDisplay(string $type_display) Return ChildInsuranceType objects filtered by the type_display column
  * @method     ChildInsuranceType[]|ObjectCollection findBySubtypeName(string $subtype_name) Return ChildInsuranceType objects filtered by the subtype_name column
+ * @method     ChildInsuranceType[]|ObjectCollection findBySubtypeDisplay(string $subtype_display) Return ChildInsuranceType objects filtered by the subtype_display column
  * @method     ChildInsuranceType[]|ObjectCollection findByDescription(string $description) Return ChildInsuranceType objects filtered by the description column
  * @method     ChildInsuranceType[]|ObjectCollection findByRegion(string $region) Return ChildInsuranceType objects filtered by the region column
  * @method     ChildInsuranceType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildInsuranceType objects filtered by the update_time column
@@ -156,7 +164,7 @@ abstract class InsuranceTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT insurance_type_id, type_name, subtype_name, description, region, update_time, update_user FROM insurance_type WHERE insurance_type_id = :p0';
+        $sql = 'SELECT insurance_type_id, type_name, type_display, subtype_name, subtype_display, description, region, update_time, update_user FROM insurance_type WHERE insurance_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -317,6 +325,35 @@ abstract class InsuranceTypeQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the type_display column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTypeDisplay('fooValue');   // WHERE type_display = 'fooValue'
+     * $query->filterByTypeDisplay('%fooValue%'); // WHERE type_display LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $typeDisplay The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildInsuranceTypeQuery The current query, for fluid interface
+     */
+    public function filterByTypeDisplay($typeDisplay = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($typeDisplay)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $typeDisplay)) {
+                $typeDisplay = str_replace('*', '%', $typeDisplay);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(InsuranceTypeTableMap::COL_TYPE_DISPLAY, $typeDisplay, $comparison);
+    }
+
+    /**
      * Filter the query on the subtype_name column
      *
      * Example usage:
@@ -343,6 +380,35 @@ abstract class InsuranceTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(InsuranceTypeTableMap::COL_SUBTYPE_NAME, $subtypeName, $comparison);
+    }
+
+    /**
+     * Filter the query on the subtype_display column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySubtypeDisplay('fooValue');   // WHERE subtype_display = 'fooValue'
+     * $query->filterBySubtypeDisplay('%fooValue%'); // WHERE subtype_display LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $subtypeDisplay The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildInsuranceTypeQuery The current query, for fluid interface
+     */
+    public function filterBySubtypeDisplay($subtypeDisplay = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($subtypeDisplay)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $subtypeDisplay)) {
+                $subtypeDisplay = str_replace('*', '%', $subtypeDisplay);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY, $subtypeDisplay, $comparison);
     }
 
     /**

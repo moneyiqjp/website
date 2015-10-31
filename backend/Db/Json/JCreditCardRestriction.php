@@ -10,9 +10,10 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JGeneralRestriction  implements JSONInterface {
-    public $GeneralRestrictionId;
-    public $Persona;
+
+class JCreditCardRestriction  implements JSONInterface {
+    public $CreditCardRestrictionId;
+    public $CreditCard;
     public $RestrictionType;
     public $Comparator;
     public $Value;
@@ -21,48 +22,48 @@ class JGeneralRestriction  implements JSONInterface {
     public $UpdateUser;
 
 
-    public function JGeneralRestriction() {
+    public function JCreditCardRestriction() {
         return $this;
     }
 
     public function GenerateKey() {
-        if(!$this->isValid() && !is_null($this->Persona)) {
-            return $this->Persona->PersonaId . "_";
+        if(!$this->isValid() && !is_null($this->CreditCard)) {
+            return $this->CreditCard->credit_card_id . "_";
         }
-        return $this->Persona->PersonaId . "_" . $this->RestrictionType->RestrictionTypeId;
+        return $this->CreditCard->credit_card_id . "_" . $this->RestrictionType->RestrictionTypeId;
     }
 
     private static function SPLIT_ID($id) {
         $ids = explode("_",$id);
         if(!is_array($ids) || count($ids) <> 2) throw new \Exception("invalid id returned, require #_# got " . $id);
-        if(strlen($ids[0])<=0) throw new \Exception("No persona id specified (" . $id . ")");
+        if(strlen($ids[0])<=0) throw new \Exception("No CreditCard id specified (" . $id . ")");
         if(strlen($ids[1])<=0) throw new \Exception("No RestrictionType id specified (" . $id . ")");
 
         return $ids;
     }
 
     public static function LOAD_FROM_ID($id) {
-        $ids = JGeneralRestriction::SPLIT_ID($id);
-        foreach( (new \PersonaRestrictionQuery())->findByPrimaryKeys($ids[0],$ids[1]) as $restriction)
+        $ids = JCreditCardRestriction::SPLIT_ID($id);
+        foreach( (new \CardRestrictionQuery())->findByPrimaryKeys($ids[0],$ids[1]) as $restriction)
         {
             return $restriction;
         }
 
-        throw new \Exception ("No existing Restriction found for Persona " . $ids[0] . ", RestrictionType " . $ids[1]);
+        throw new \Exception ("No existing Restriction found for CreditCard " . $ids[0] . ", RestrictionType " . $ids[1]);
     }
 
-    public static function CREATE_FROM_DB(\PersonaRestriction $item)
+    public static function CREATE_FROM_DB(\CardRestriction $item)
     {
-        $mine = new JGeneralRestriction();
-        if(!FieldUtils::ID_IS_DEFINED($item->getPersonaId())) throw new \Exception("JGeneralRestriction: No PersonaId defined");
-        $mine->Persona = JPersona::CREATE_FROM_DB($item->getPersona());
+        $mine = new JCreditCardRestriction();
+        if(!FieldUtils::ID_IS_DEFINED($item->getCreditCardId())) throw new \Exception("JCreditCardRestriction: No CreditCardId defined");
+        $mine->CreditCard = JCreditCard::CREATE_DB($item->getCreditCard());
         $mine->Priority = $item->getPriorityId();
-        if(!FieldUtils::ID_IS_DEFINED($item->getRestrictionTypeId())) throw new \Exception("JGeneralRestriction: No PersonaId defined");
+        if(!FieldUtils::ID_IS_DEFINED($item->getRestrictionTypeId())) throw new \Exception("JCreditCardRestriction: No CreditCardId defined");
         $mine->RestrictionType = JRestrictionType::CREATE_FROM_DB($item->getRestrictionType());
         $mine->Comparator = $item->getComparator();
 
 
-        $mine->GeneralRestrictionId = $mine->GenerateKey();
+        $mine->CreditCardRestrictionId = $mine->GenerateKey();
         if(!is_null($item->getValue())) $mine->Value = $item->getValue();
 
         if(!is_null($item->getUpdateTime())) $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
@@ -73,13 +74,13 @@ class JGeneralRestriction  implements JSONInterface {
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        $mine = new JGeneralRestriction();
+        $mine = new JCreditCardRestriction();
 
-        if(!ArrayUtils::KEY_EXISTS($data,'Persona') && !ArrayUtils::KEY_EXISTS($data,'PersonaId')) throw new \Exception("Failed to find mandatory field Persona");
-        if(ArrayUtils::KEY_EXISTS($data,'PersonaId')){
-            $mine->Persona = JPersona::CREATE_FROM_DB( (new \PersonaQuery())->findPk($data["PersonaId"]));
+        if(!ArrayUtils::KEY_EXISTS($data,'CreditCard') && !ArrayUtils::KEY_EXISTS($data,'CreditCardId')) throw new \Exception("Failed to find mandatory field CreditCard");
+        if(ArrayUtils::KEY_EXISTS($data,'CreditCardId')){
+            $mine->CreditCard = JCreditCard::CREATE_DB( (new \CreditCardQuery())->findPk($data["CreditCardId"]));
         } else {
-            $mine->Persona = JPersona::CREATE_FROM_ARRAY($data['Persona']);
+            $mine->CreditCard = JCreditCard::CREATE_FROM_ARRAY($data['CreditCard']);
         }
         if(!ArrayUtils::KEY_EXISTS($data,'RestrictionType') && !ArrayUtils::KEY_EXISTS($data,'RestrictionTypeId') ) throw new \Exception("Failed to find mandatory field RestrictionType");
         if(ArrayUtils::KEY_EXISTS($data,'RestrictionType')) {
@@ -104,30 +105,30 @@ class JGeneralRestriction  implements JSONInterface {
     }
 
     public function isValid() {
-        return !is_null($this->Persona) && FieldUtils::ID_IS_DEFINED($this->Persona->PersonaId) &&
+        return !is_null($this->CreditCard) && FieldUtils::ID_IS_DEFINED($this->CreditCard->credit_card_id) &&
             !is_null($this->RestrictionType) && FieldUtils::ID_IS_DEFINED($this->RestrictionType->RestrictionTypeId);
     }
 
     public function tryLoadFromDB() {
-        if(!$this->isValid()) return new \PersonaRestriction();
-        $this->GeneralRestrictionId = $this->GenerateKey();
+        if(!$this->isValid()) return new \CardRestriction();
+        $this->CreditCardRestrictionId = $this->GenerateKey();
 
-        foreach( (new \PersonaRestrictionQuery())->findByPrimaryKeys($this->Persona->PersonaId,
+        foreach( (new \CardRestrictionQuery())->findByPrimaryKeys($this->CreditCard->credit_card_id,
             $this->RestrictionType->RestrictionTypeId) as $restriction)
         {
             return $restriction;
         }
 
-        return new \PersonaRestriction();
+        return new \CardRestriction();
     }
 
     public function toDB() {
         return $this->updateDB($this->tryLoadFromDB());
     }
 
-    public function updateDB(\PersonaRestriction &$item) {
-        if(!is_null($this->Persona)) {
-            if (FieldUtils::ID_IS_DEFINED($this->Persona->PersonaId)) $item->setPersonaId($this->Persona->PersonaId);
+    public function updateDB(\CardRestriction &$item) {
+        if(!is_null($this->CreditCard)) {
+            if (FieldUtils::ID_IS_DEFINED($this->CreditCard->credit_card_id)) $item->setCreditCardId($this->CreditCard->credit_card_id);
         }
 
         if(!is_null($this->RestrictionType)) {
@@ -146,8 +147,10 @@ class JGeneralRestriction  implements JSONInterface {
         return $item;
     }
 
+
+
     public function getRestriction() {
-        return JRestriction::CREATE_PERSONA($this);
+        return JRestriction::CREATE_CREDITCARD($this);
     }
 
 

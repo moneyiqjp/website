@@ -2,6 +2,8 @@
 
 namespace Base;
 
+use \CardRestriction as ChildCardRestriction;
+use \CardRestrictionQuery as ChildCardRestrictionQuery;
 use \PersonaRestriction as ChildPersonaRestriction;
 use \PersonaRestrictionQuery as ChildPersonaRestrictionQuery;
 use \RestrictionType as ChildRestrictionType;
@@ -84,6 +86,12 @@ abstract class RestrictionType implements ActiveRecordInterface
     protected $description;
 
     /**
+     * The value for the display field.
+     * @var        string
+     */
+    protected $display;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -94,6 +102,12 @@ abstract class RestrictionType implements ActiveRecordInterface
      * @var        string
      */
     protected $update_user;
+
+    /**
+     * @var        ObjectCollection|ChildCardRestriction[] Collection to store aggregation of ChildCardRestriction objects.
+     */
+    protected $collCardRestrictions;
+    protected $collCardRestrictionsPartial;
 
     /**
      * @var        ObjectCollection|ChildPersonaRestriction[] Collection to store aggregation of ChildPersonaRestriction objects.
@@ -108,6 +122,12 @@ abstract class RestrictionType implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildCardRestriction[]
+     */
+    protected $cardRestrictionsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -363,6 +383,16 @@ abstract class RestrictionType implements ActiveRecordInterface
     }
 
     /**
+     * Get the [display] column value.
+     *
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -453,6 +483,26 @@ abstract class RestrictionType implements ActiveRecordInterface
     } // setDescription()
 
     /**
+     * Set the value of [display] column.
+     *
+     * @param  string $v new value
+     * @return $this|\RestrictionType The current object (for fluent API support)
+     */
+    public function setDisplay($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->display !== $v) {
+            $this->display = $v;
+            $this->modifiedColumns[RestrictionTypeTableMap::COL_DISPLAY] = true;
+        }
+
+        return $this;
+    } // setDisplay()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -537,13 +587,16 @@ abstract class RestrictionType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RestrictionTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RestrictionTypeTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->display = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -553,7 +606,7 @@ abstract class RestrictionType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = RestrictionTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = RestrictionTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\RestrictionType'), 0, $e);
@@ -613,6 +666,8 @@ abstract class RestrictionType implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
+
+            $this->collCardRestrictions = null;
 
             $this->collPersonaRestrictions = null;
 
@@ -726,6 +781,23 @@ abstract class RestrictionType implements ActiveRecordInterface
                 $this->resetModified();
             }
 
+            if ($this->cardRestrictionsScheduledForDeletion !== null) {
+                if (!$this->cardRestrictionsScheduledForDeletion->isEmpty()) {
+                    \CardRestrictionQuery::create()
+                        ->filterByPrimaryKeys($this->cardRestrictionsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->cardRestrictionsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collCardRestrictions !== null) {
+                foreach ($this->collCardRestrictions as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->personaRestrictionsScheduledForDeletion !== null) {
                 if (!$this->personaRestrictionsScheduledForDeletion->isEmpty()) {
                     \PersonaRestrictionQuery::create()
@@ -778,6 +850,9 @@ abstract class RestrictionType implements ActiveRecordInterface
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
+        if ($this->isColumnModified(RestrictionTypeTableMap::COL_DISPLAY)) {
+            $modifiedColumns[':p' . $index++]  = 'display';
+        }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -803,6 +878,9 @@ abstract class RestrictionType implements ActiveRecordInterface
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                        break;
+                    case 'display':
+                        $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -882,9 +960,12 @@ abstract class RestrictionType implements ActiveRecordInterface
                 return $this->getDescription();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -920,8 +1001,9 @@ abstract class RestrictionType implements ActiveRecordInterface
             $keys[0] => $this->getRestrictionTypeId(),
             $keys[1] => $this->getName(),
             $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[3] => $this->getDisplay(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -929,6 +1011,21 @@ abstract class RestrictionType implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->collCardRestrictions) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'cardRestrictions';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'card_restrictions';
+                        break;
+                    default:
+                        $key = 'CardRestrictions';
+                }
+
+                $result[$key] = $this->collCardRestrictions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collPersonaRestrictions) {
 
                 switch ($keyType) {
@@ -988,9 +1085,12 @@ abstract class RestrictionType implements ActiveRecordInterface
                 $this->setDescription($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1029,10 +1129,13 @@ abstract class RestrictionType implements ActiveRecordInterface
             $this->setDescription($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setDisplay($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1083,6 +1186,9 @@ abstract class RestrictionType implements ActiveRecordInterface
         }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_DESCRIPTION)) {
             $criteria->add(RestrictionTypeTableMap::COL_DESCRIPTION, $this->description);
+        }
+        if ($this->isColumnModified(RestrictionTypeTableMap::COL_DISPLAY)) {
+            $criteria->add(RestrictionTypeTableMap::COL_DISPLAY, $this->display);
         }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_UPDATE_TIME)) {
             $criteria->add(RestrictionTypeTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1178,6 +1284,7 @@ abstract class RestrictionType implements ActiveRecordInterface
     {
         $copyObj->setName($this->getName());
         $copyObj->setDescription($this->getDescription());
+        $copyObj->setDisplay($this->getDisplay());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1185,6 +1292,12 @@ abstract class RestrictionType implements ActiveRecordInterface
             // important: temporarily setNew(false) because this affects the behavior of
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
+
+            foreach ($this->getCardRestrictions() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addCardRestriction($relObj->copy($deepCopy));
+                }
+            }
 
             foreach ($this->getPersonaRestrictions() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
@@ -1233,9 +1346,258 @@ abstract class RestrictionType implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
+        if ('CardRestriction' == $relationName) {
+            return $this->initCardRestrictions();
+        }
         if ('PersonaRestriction' == $relationName) {
             return $this->initPersonaRestrictions();
         }
+    }
+
+    /**
+     * Clears out the collCardRestrictions collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addCardRestrictions()
+     */
+    public function clearCardRestrictions()
+    {
+        $this->collCardRestrictions = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collCardRestrictions collection loaded partially.
+     */
+    public function resetPartialCardRestrictions($v = true)
+    {
+        $this->collCardRestrictionsPartial = $v;
+    }
+
+    /**
+     * Initializes the collCardRestrictions collection.
+     *
+     * By default this just sets the collCardRestrictions collection to an empty array (like clearcollCardRestrictions());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initCardRestrictions($overrideExisting = true)
+    {
+        if (null !== $this->collCardRestrictions && !$overrideExisting) {
+            return;
+        }
+        $this->collCardRestrictions = new ObjectCollection();
+        $this->collCardRestrictions->setModel('\CardRestriction');
+    }
+
+    /**
+     * Gets an array of ChildCardRestriction objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildRestrictionType is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildCardRestriction[] List of ChildCardRestriction objects
+     * @throws PropelException
+     */
+    public function getCardRestrictions(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardRestrictionsPartial && !$this->isNew();
+        if (null === $this->collCardRestrictions || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collCardRestrictions) {
+                // return empty collection
+                $this->initCardRestrictions();
+            } else {
+                $collCardRestrictions = ChildCardRestrictionQuery::create(null, $criteria)
+                    ->filterByRestrictionType($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collCardRestrictionsPartial && count($collCardRestrictions)) {
+                        $this->initCardRestrictions(false);
+
+                        foreach ($collCardRestrictions as $obj) {
+                            if (false == $this->collCardRestrictions->contains($obj)) {
+                                $this->collCardRestrictions->append($obj);
+                            }
+                        }
+
+                        $this->collCardRestrictionsPartial = true;
+                    }
+
+                    return $collCardRestrictions;
+                }
+
+                if ($partial && $this->collCardRestrictions) {
+                    foreach ($this->collCardRestrictions as $obj) {
+                        if ($obj->isNew()) {
+                            $collCardRestrictions[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collCardRestrictions = $collCardRestrictions;
+                $this->collCardRestrictionsPartial = false;
+            }
+        }
+
+        return $this->collCardRestrictions;
+    }
+
+    /**
+     * Sets a collection of ChildCardRestriction objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $cardRestrictions A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildRestrictionType The current object (for fluent API support)
+     */
+    public function setCardRestrictions(Collection $cardRestrictions, ConnectionInterface $con = null)
+    {
+        /** @var ChildCardRestriction[] $cardRestrictionsToDelete */
+        $cardRestrictionsToDelete = $this->getCardRestrictions(new Criteria(), $con)->diff($cardRestrictions);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->cardRestrictionsScheduledForDeletion = clone $cardRestrictionsToDelete;
+
+        foreach ($cardRestrictionsToDelete as $cardRestrictionRemoved) {
+            $cardRestrictionRemoved->setRestrictionType(null);
+        }
+
+        $this->collCardRestrictions = null;
+        foreach ($cardRestrictions as $cardRestriction) {
+            $this->addCardRestriction($cardRestriction);
+        }
+
+        $this->collCardRestrictions = $cardRestrictions;
+        $this->collCardRestrictionsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related CardRestriction objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related CardRestriction objects.
+     * @throws PropelException
+     */
+    public function countCardRestrictions(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardRestrictionsPartial && !$this->isNew();
+        if (null === $this->collCardRestrictions || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collCardRestrictions) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getCardRestrictions());
+            }
+
+            $query = ChildCardRestrictionQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByRestrictionType($this)
+                ->count($con);
+        }
+
+        return count($this->collCardRestrictions);
+    }
+
+    /**
+     * Method called to associate a ChildCardRestriction object to this object
+     * through the ChildCardRestriction foreign key attribute.
+     *
+     * @param  ChildCardRestriction $l ChildCardRestriction
+     * @return $this|\RestrictionType The current object (for fluent API support)
+     */
+    public function addCardRestriction(ChildCardRestriction $l)
+    {
+        if ($this->collCardRestrictions === null) {
+            $this->initCardRestrictions();
+            $this->collCardRestrictionsPartial = true;
+        }
+
+        if (!$this->collCardRestrictions->contains($l)) {
+            $this->doAddCardRestriction($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildCardRestriction $cardRestriction The ChildCardRestriction object to add.
+     */
+    protected function doAddCardRestriction(ChildCardRestriction $cardRestriction)
+    {
+        $this->collCardRestrictions[]= $cardRestriction;
+        $cardRestriction->setRestrictionType($this);
+    }
+
+    /**
+     * @param  ChildCardRestriction $cardRestriction The ChildCardRestriction object to remove.
+     * @return $this|ChildRestrictionType The current object (for fluent API support)
+     */
+    public function removeCardRestriction(ChildCardRestriction $cardRestriction)
+    {
+        if ($this->getCardRestrictions()->contains($cardRestriction)) {
+            $pos = $this->collCardRestrictions->search($cardRestriction);
+            $this->collCardRestrictions->remove($pos);
+            if (null === $this->cardRestrictionsScheduledForDeletion) {
+                $this->cardRestrictionsScheduledForDeletion = clone $this->collCardRestrictions;
+                $this->cardRestrictionsScheduledForDeletion->clear();
+            }
+            $this->cardRestrictionsScheduledForDeletion[]= clone $cardRestriction;
+            $cardRestriction->setRestrictionType(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this RestrictionType is new, it will return
+     * an empty collection; or if this RestrictionType has previously
+     * been saved, it will retrieve related CardRestrictions from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in RestrictionType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildCardRestriction[] List of ChildCardRestriction objects
+     */
+    public function getCardRestrictionsJoinCreditCard(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildCardRestrictionQuery::create(null, $criteria);
+        $query->joinWith('CreditCard', $joinBehavior);
+
+        return $this->getCardRestrictions($query, $con);
     }
 
     /**
@@ -1494,6 +1856,7 @@ abstract class RestrictionType implements ActiveRecordInterface
         $this->restriction_type_id = null;
         $this->name = null;
         $this->description = null;
+        $this->display = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
@@ -1514,6 +1877,11 @@ abstract class RestrictionType implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collCardRestrictions) {
+                foreach ($this->collCardRestrictions as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collPersonaRestrictions) {
                 foreach ($this->collPersonaRestrictions as $o) {
                     $o->clearAllReferences($deep);
@@ -1521,6 +1889,7 @@ abstract class RestrictionType implements ActiveRecordInterface
             }
         } // if ($deep)
 
+        $this->collCardRestrictions = null;
         $this->collPersonaRestrictions = null;
     }
 

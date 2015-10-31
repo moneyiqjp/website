@@ -181,9 +181,15 @@
                     }, {
                         label: "Type:",
                         name: "TypeName"
-                    },   {
+                    },  {
+                        label: "Type (Japanese):",
+                        name: "TypeDisplay"
+                    },  {
                         label: "Subtype:",
                         name: "SubtypeName"
+                    },  {
+                        label: "Subtype (Japanese):",
+                        name: "SubtypeDisplay"
                     },  {
                         label: "Description:",
                         name: "Description"
@@ -215,7 +221,9 @@
                 "columns": [
                     { "data": "InsuranceTypeId",edit: false },
                     { "data": "TypeName" },
+                    { "data": "TypeDisplay" },
                     { "data": "SubtypeName" },
+                    { "data": "SubtypeDisplay" },
                     { "data": "Description" },
                     { "data": "Region" },
                     { "data": "UpdateTime",visible: false  },
@@ -430,7 +438,9 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Japanese</th>
                     <th>Subtype</th>
+                    <th>Japanese</th>
                     <th>Description</th>
                     <th>Region</th>
                     <th>Updated</th>

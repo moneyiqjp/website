@@ -84,6 +84,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
  * @method     ChildCreditCardQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
+ * @method     ChildCreditCardQuery leftJoinCardRestriction($relationAlias = null) Adds a LEFT JOIN clause to the query using the CardRestriction relation
+ * @method     ChildCreditCardQuery rightJoinCardRestriction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardRestriction relation
+ * @method     ChildCreditCardQuery innerJoinCardRestriction($relationAlias = null) Adds a INNER JOIN clause to the query using the CardRestriction relation
+ *
  * @method     ChildCreditCardQuery leftJoinDiscounts($relationAlias = null) Adds a LEFT JOIN clause to the query using the Discounts relation
  * @method     ChildCreditCardQuery rightJoinDiscounts($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discounts relation
  * @method     ChildCreditCardQuery innerJoinDiscounts($relationAlias = null) Adds a INNER JOIN clause to the query using the Discounts relation
@@ -100,7 +104,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery rightJoinInterest($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Interest relation
  * @method     ChildCreditCardQuery innerJoinInterest($relationAlias = null) Adds a INNER JOIN clause to the query using the Interest relation
  *
- * @method     \AffiliateCompanyQuery|\IssuerQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\CardPointSystemQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildCreditCardQuery leftJoinMapCardFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapCardFeatureConstraint relation
+ * @method     ChildCreditCardQuery rightJoinMapCardFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapCardFeatureConstraint relation
+ * @method     ChildCreditCardQuery innerJoinMapCardFeatureConstraint($relationAlias = null) Adds a INNER JOIN clause to the query using the MapCardFeatureConstraint relation
+ *
+ * @method     \AffiliateCompanyQuery|\IssuerQuery|\CampaignQuery|\CardDescriptionQuery|\CardFeaturesQuery|\CardPointSystemQuery|\CardRestrictionQuery|\DiscountsQuery|\FeesQuery|\InsuranceQuery|\InterestQuery|\MapCardFeatureConstraintQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCreditCard findOne(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query
  * @method     ChildCreditCard findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCreditCard matching the query, or a new ChildCreditCard object populated from the query conditions when no match is found
@@ -1330,6 +1338,79 @@ abstract class CreditCardQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \CardRestriction object
+     *
+     * @param \CardRestriction|ObjectCollection $cardRestriction  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByCardRestriction($cardRestriction, $comparison = null)
+    {
+        if ($cardRestriction instanceof \CardRestriction) {
+            return $this
+                ->addUsingAlias(CreditCardTableMap::COL_CREDIT_CARD_ID, $cardRestriction->getCreditCardId(), $comparison);
+        } elseif ($cardRestriction instanceof ObjectCollection) {
+            return $this
+                ->useCardRestrictionQuery()
+                ->filterByPrimaryKeys($cardRestriction->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByCardRestriction() only accepts arguments of type \CardRestriction or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the CardRestriction relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function joinCardRestriction($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('CardRestriction');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'CardRestriction');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the CardRestriction relation CardRestriction object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \CardRestrictionQuery A secondary query class using the current class as primary query
+     */
+    public function useCardRestrictionQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinCardRestriction($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'CardRestriction', '\CardRestrictionQuery');
+    }
+
+    /**
      * Filter the query by a related \Discounts object
      *
      * @param \Discounts|ObjectCollection $discounts  the related object to use as filter
@@ -1619,6 +1700,79 @@ abstract class CreditCardQuery extends ModelCriteria
         return $this
             ->joinInterest($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Interest', '\InterestQuery');
+    }
+
+    /**
+     * Filter the query by a related \MapCardFeatureConstraint object
+     *
+     * @param \MapCardFeatureConstraint|ObjectCollection $mapCardFeatureConstraint  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByMapCardFeatureConstraint($mapCardFeatureConstraint, $comparison = null)
+    {
+        if ($mapCardFeatureConstraint instanceof \MapCardFeatureConstraint) {
+            return $this
+                ->addUsingAlias(CreditCardTableMap::COL_CREDIT_CARD_ID, $mapCardFeatureConstraint->getCreditCardId(), $comparison);
+        } elseif ($mapCardFeatureConstraint instanceof ObjectCollection) {
+            return $this
+                ->useMapCardFeatureConstraintQuery()
+                ->filterByPrimaryKeys($mapCardFeatureConstraint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapCardFeatureConstraint() only accepts arguments of type \MapCardFeatureConstraint or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapCardFeatureConstraint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function joinMapCardFeatureConstraint($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapCardFeatureConstraint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapCardFeatureConstraint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapCardFeatureConstraint relation MapCardFeatureConstraint object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapCardFeatureConstraintQuery A secondary query class using the current class as primary query
+     */
+    public function useMapCardFeatureConstraintQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapCardFeatureConstraint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapCardFeatureConstraint', '\MapCardFeatureConstraintQuery');
     }
 
     /**

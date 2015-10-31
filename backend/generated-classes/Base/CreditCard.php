@@ -12,6 +12,8 @@ use \CardFeatures as ChildCardFeatures;
 use \CardFeaturesQuery as ChildCardFeaturesQuery;
 use \CardPointSystem as ChildCardPointSystem;
 use \CardPointSystemQuery as ChildCardPointSystemQuery;
+use \CardRestriction as ChildCardRestriction;
+use \CardRestrictionQuery as ChildCardRestrictionQuery;
 use \CreditCard as ChildCreditCard;
 use \CreditCardQuery as ChildCreditCardQuery;
 use \Discounts as ChildDiscounts;
@@ -24,6 +26,8 @@ use \Interest as ChildInterest;
 use \InterestQuery as ChildInterestQuery;
 use \Issuer as ChildIssuer;
 use \IssuerQuery as ChildIssuerQuery;
+use \MapCardFeatureConstraint as ChildMapCardFeatureConstraint;
+use \MapCardFeatureConstraintQuery as ChildMapCardFeatureConstraintQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -227,6 +231,12 @@ abstract class CreditCard implements ActiveRecordInterface
     protected $collCardPointSystemsPartial;
 
     /**
+     * @var        ObjectCollection|ChildCardRestriction[] Collection to store aggregation of ChildCardRestriction objects.
+     */
+    protected $collCardRestrictions;
+    protected $collCardRestrictionsPartial;
+
+    /**
      * @var        ObjectCollection|ChildDiscounts[] Collection to store aggregation of ChildDiscounts objects.
      */
     protected $collDiscountss;
@@ -249,6 +259,12 @@ abstract class CreditCard implements ActiveRecordInterface
      */
     protected $collInterests;
     protected $collInterestsPartial;
+
+    /**
+     * @var        ObjectCollection|ChildMapCardFeatureConstraint[] Collection to store aggregation of ChildMapCardFeatureConstraint objects.
+     */
+    protected $collMapCardFeatureConstraints;
+    protected $collMapCardFeatureConstraintsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -284,6 +300,12 @@ abstract class CreditCard implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildCardRestriction[]
+     */
+    protected $cardRestrictionsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildDiscounts[]
      */
     protected $discountssScheduledForDeletion = null;
@@ -305,6 +327,12 @@ abstract class CreditCard implements ActiveRecordInterface
      * @var ObjectCollection|ChildInterest[]
      */
     protected $interestsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMapCardFeatureConstraint[]
+     */
+    protected $mapCardFeatureConstraintsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -1362,6 +1390,8 @@ abstract class CreditCard implements ActiveRecordInterface
 
             $this->collCardPointSystems = null;
 
+            $this->collCardRestrictions = null;
+
             $this->collDiscountss = null;
 
             $this->collFeess = null;
@@ -1369,6 +1399,8 @@ abstract class CreditCard implements ActiveRecordInterface
             $this->collInsurances = null;
 
             $this->collInterests = null;
+
+            $this->collMapCardFeatureConstraints = null;
 
         } // if (deep)
     }
@@ -1567,6 +1599,23 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
             }
 
+            if ($this->cardRestrictionsScheduledForDeletion !== null) {
+                if (!$this->cardRestrictionsScheduledForDeletion->isEmpty()) {
+                    \CardRestrictionQuery::create()
+                        ->filterByPrimaryKeys($this->cardRestrictionsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->cardRestrictionsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collCardRestrictions !== null) {
+                foreach ($this->collCardRestrictions as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->discountssScheduledForDeletion !== null) {
                 if (!$this->discountssScheduledForDeletion->isEmpty()) {
                     \DiscountsQuery::create()
@@ -1629,6 +1678,23 @@ abstract class CreditCard implements ActiveRecordInterface
 
             if ($this->collInterests !== null) {
                 foreach ($this->collInterests as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->mapCardFeatureConstraintsScheduledForDeletion !== null) {
+                if (!$this->mapCardFeatureConstraintsScheduledForDeletion->isEmpty()) {
+                    \MapCardFeatureConstraintQuery::create()
+                        ->filterByPrimaryKeys($this->mapCardFeatureConstraintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mapCardFeatureConstraintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMapCardFeatureConstraints !== null) {
+                foreach ($this->collMapCardFeatureConstraints as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -2031,6 +2097,21 @@ abstract class CreditCard implements ActiveRecordInterface
 
                 $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collCardRestrictions) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'cardRestrictions';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'card_restrictions';
+                        break;
+                    default:
+                        $key = 'CardRestrictions';
+                }
+
+                $result[$key] = $this->collCardRestrictions->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collDiscountss) {
 
                 switch ($keyType) {
@@ -2090,6 +2171,21 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collInterests->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMapCardFeatureConstraints) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mapCardFeatureConstraints';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'map_card_feature_constraints';
+                        break;
+                    default:
+                        $key = 'MapCardFeatureConstraints';
+                }
+
+                $result[$key] = $this->collMapCardFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -2477,6 +2573,12 @@ abstract class CreditCard implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getCardRestrictions() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addCardRestriction($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getDiscountss() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addDiscounts($relObj->copy($deepCopy));
@@ -2498,6 +2600,12 @@ abstract class CreditCard implements ActiveRecordInterface
             foreach ($this->getInterests() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addInterest($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getMapCardFeatureConstraints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMapCardFeatureConstraint($relObj->copy($deepCopy));
                 }
             }
 
@@ -2656,6 +2764,9 @@ abstract class CreditCard implements ActiveRecordInterface
         if ('CardPointSystem' == $relationName) {
             return $this->initCardPointSystems();
         }
+        if ('CardRestriction' == $relationName) {
+            return $this->initCardRestrictions();
+        }
         if ('Discounts' == $relationName) {
             return $this->initDiscountss();
         }
@@ -2667,6 +2778,9 @@ abstract class CreditCard implements ActiveRecordInterface
         }
         if ('Interest' == $relationName) {
             return $this->initInterests();
+        }
+        if ('MapCardFeatureConstraint' == $relationName) {
+            return $this->initMapCardFeatureConstraints();
         }
     }
 
@@ -3590,6 +3704,252 @@ abstract class CreditCard implements ActiveRecordInterface
         $query->joinWith('PointSystem', $joinBehavior);
 
         return $this->getCardPointSystems($query, $con);
+    }
+
+    /**
+     * Clears out the collCardRestrictions collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addCardRestrictions()
+     */
+    public function clearCardRestrictions()
+    {
+        $this->collCardRestrictions = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collCardRestrictions collection loaded partially.
+     */
+    public function resetPartialCardRestrictions($v = true)
+    {
+        $this->collCardRestrictionsPartial = $v;
+    }
+
+    /**
+     * Initializes the collCardRestrictions collection.
+     *
+     * By default this just sets the collCardRestrictions collection to an empty array (like clearcollCardRestrictions());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initCardRestrictions($overrideExisting = true)
+    {
+        if (null !== $this->collCardRestrictions && !$overrideExisting) {
+            return;
+        }
+        $this->collCardRestrictions = new ObjectCollection();
+        $this->collCardRestrictions->setModel('\CardRestriction');
+    }
+
+    /**
+     * Gets an array of ChildCardRestriction objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildCreditCard is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildCardRestriction[] List of ChildCardRestriction objects
+     * @throws PropelException
+     */
+    public function getCardRestrictions(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardRestrictionsPartial && !$this->isNew();
+        if (null === $this->collCardRestrictions || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collCardRestrictions) {
+                // return empty collection
+                $this->initCardRestrictions();
+            } else {
+                $collCardRestrictions = ChildCardRestrictionQuery::create(null, $criteria)
+                    ->filterByCreditCard($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collCardRestrictionsPartial && count($collCardRestrictions)) {
+                        $this->initCardRestrictions(false);
+
+                        foreach ($collCardRestrictions as $obj) {
+                            if (false == $this->collCardRestrictions->contains($obj)) {
+                                $this->collCardRestrictions->append($obj);
+                            }
+                        }
+
+                        $this->collCardRestrictionsPartial = true;
+                    }
+
+                    return $collCardRestrictions;
+                }
+
+                if ($partial && $this->collCardRestrictions) {
+                    foreach ($this->collCardRestrictions as $obj) {
+                        if ($obj->isNew()) {
+                            $collCardRestrictions[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collCardRestrictions = $collCardRestrictions;
+                $this->collCardRestrictionsPartial = false;
+            }
+        }
+
+        return $this->collCardRestrictions;
+    }
+
+    /**
+     * Sets a collection of ChildCardRestriction objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $cardRestrictions A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function setCardRestrictions(Collection $cardRestrictions, ConnectionInterface $con = null)
+    {
+        /** @var ChildCardRestriction[] $cardRestrictionsToDelete */
+        $cardRestrictionsToDelete = $this->getCardRestrictions(new Criteria(), $con)->diff($cardRestrictions);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->cardRestrictionsScheduledForDeletion = clone $cardRestrictionsToDelete;
+
+        foreach ($cardRestrictionsToDelete as $cardRestrictionRemoved) {
+            $cardRestrictionRemoved->setCreditCard(null);
+        }
+
+        $this->collCardRestrictions = null;
+        foreach ($cardRestrictions as $cardRestriction) {
+            $this->addCardRestriction($cardRestriction);
+        }
+
+        $this->collCardRestrictions = $cardRestrictions;
+        $this->collCardRestrictionsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related CardRestriction objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related CardRestriction objects.
+     * @throws PropelException
+     */
+    public function countCardRestrictions(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collCardRestrictionsPartial && !$this->isNew();
+        if (null === $this->collCardRestrictions || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collCardRestrictions) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getCardRestrictions());
+            }
+
+            $query = ChildCardRestrictionQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCreditCard($this)
+                ->count($con);
+        }
+
+        return count($this->collCardRestrictions);
+    }
+
+    /**
+     * Method called to associate a ChildCardRestriction object to this object
+     * through the ChildCardRestriction foreign key attribute.
+     *
+     * @param  ChildCardRestriction $l ChildCardRestriction
+     * @return $this|\CreditCard The current object (for fluent API support)
+     */
+    public function addCardRestriction(ChildCardRestriction $l)
+    {
+        if ($this->collCardRestrictions === null) {
+            $this->initCardRestrictions();
+            $this->collCardRestrictionsPartial = true;
+        }
+
+        if (!$this->collCardRestrictions->contains($l)) {
+            $this->doAddCardRestriction($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildCardRestriction $cardRestriction The ChildCardRestriction object to add.
+     */
+    protected function doAddCardRestriction(ChildCardRestriction $cardRestriction)
+    {
+        $this->collCardRestrictions[]= $cardRestriction;
+        $cardRestriction->setCreditCard($this);
+    }
+
+    /**
+     * @param  ChildCardRestriction $cardRestriction The ChildCardRestriction object to remove.
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function removeCardRestriction(ChildCardRestriction $cardRestriction)
+    {
+        if ($this->getCardRestrictions()->contains($cardRestriction)) {
+            $pos = $this->collCardRestrictions->search($cardRestriction);
+            $this->collCardRestrictions->remove($pos);
+            if (null === $this->cardRestrictionsScheduledForDeletion) {
+                $this->cardRestrictionsScheduledForDeletion = clone $this->collCardRestrictions;
+                $this->cardRestrictionsScheduledForDeletion->clear();
+            }
+            $this->cardRestrictionsScheduledForDeletion[]= clone $cardRestriction;
+            $cardRestriction->setCreditCard(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this CreditCard is new, it will return
+     * an empty collection; or if this CreditCard has previously
+     * been saved, it will retrieve related CardRestrictions from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in CreditCard.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildCardRestriction[] List of ChildCardRestriction objects
+     */
+    public function getCardRestrictionsJoinRestrictionType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildCardRestrictionQuery::create(null, $criteria);
+        $query->joinWith('RestrictionType', $joinBehavior);
+
+        return $this->getCardRestrictions($query, $con);
     }
 
     /**
@@ -4540,6 +4900,252 @@ abstract class CreditCard implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collMapCardFeatureConstraints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMapCardFeatureConstraints()
+     */
+    public function clearMapCardFeatureConstraints()
+    {
+        $this->collMapCardFeatureConstraints = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMapCardFeatureConstraints collection loaded partially.
+     */
+    public function resetPartialMapCardFeatureConstraints($v = true)
+    {
+        $this->collMapCardFeatureConstraintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collMapCardFeatureConstraints collection.
+     *
+     * By default this just sets the collMapCardFeatureConstraints collection to an empty array (like clearcollMapCardFeatureConstraints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMapCardFeatureConstraints($overrideExisting = true)
+    {
+        if (null !== $this->collMapCardFeatureConstraints && !$overrideExisting) {
+            return;
+        }
+        $this->collMapCardFeatureConstraints = new ObjectCollection();
+        $this->collMapCardFeatureConstraints->setModel('\MapCardFeatureConstraint');
+    }
+
+    /**
+     * Gets an array of ChildMapCardFeatureConstraint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildCreditCard is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMapCardFeatureConstraint[] List of ChildMapCardFeatureConstraint objects
+     * @throws PropelException
+     */
+    public function getMapCardFeatureConstraints(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapCardFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapCardFeatureConstraints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapCardFeatureConstraints) {
+                // return empty collection
+                $this->initMapCardFeatureConstraints();
+            } else {
+                $collMapCardFeatureConstraints = ChildMapCardFeatureConstraintQuery::create(null, $criteria)
+                    ->filterByCreditCard($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMapCardFeatureConstraintsPartial && count($collMapCardFeatureConstraints)) {
+                        $this->initMapCardFeatureConstraints(false);
+
+                        foreach ($collMapCardFeatureConstraints as $obj) {
+                            if (false == $this->collMapCardFeatureConstraints->contains($obj)) {
+                                $this->collMapCardFeatureConstraints->append($obj);
+                            }
+                        }
+
+                        $this->collMapCardFeatureConstraintsPartial = true;
+                    }
+
+                    return $collMapCardFeatureConstraints;
+                }
+
+                if ($partial && $this->collMapCardFeatureConstraints) {
+                    foreach ($this->collMapCardFeatureConstraints as $obj) {
+                        if ($obj->isNew()) {
+                            $collMapCardFeatureConstraints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMapCardFeatureConstraints = $collMapCardFeatureConstraints;
+                $this->collMapCardFeatureConstraintsPartial = false;
+            }
+        }
+
+        return $this->collMapCardFeatureConstraints;
+    }
+
+    /**
+     * Sets a collection of ChildMapCardFeatureConstraint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mapCardFeatureConstraints A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function setMapCardFeatureConstraints(Collection $mapCardFeatureConstraints, ConnectionInterface $con = null)
+    {
+        /** @var ChildMapCardFeatureConstraint[] $mapCardFeatureConstraintsToDelete */
+        $mapCardFeatureConstraintsToDelete = $this->getMapCardFeatureConstraints(new Criteria(), $con)->diff($mapCardFeatureConstraints);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->mapCardFeatureConstraintsScheduledForDeletion = clone $mapCardFeatureConstraintsToDelete;
+
+        foreach ($mapCardFeatureConstraintsToDelete as $mapCardFeatureConstraintRemoved) {
+            $mapCardFeatureConstraintRemoved->setCreditCard(null);
+        }
+
+        $this->collMapCardFeatureConstraints = null;
+        foreach ($mapCardFeatureConstraints as $mapCardFeatureConstraint) {
+            $this->addMapCardFeatureConstraint($mapCardFeatureConstraint);
+        }
+
+        $this->collMapCardFeatureConstraints = $mapCardFeatureConstraints;
+        $this->collMapCardFeatureConstraintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MapCardFeatureConstraint objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MapCardFeatureConstraint objects.
+     * @throws PropelException
+     */
+    public function countMapCardFeatureConstraints(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapCardFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapCardFeatureConstraints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapCardFeatureConstraints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMapCardFeatureConstraints());
+            }
+
+            $query = ChildMapCardFeatureConstraintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCreditCard($this)
+                ->count($con);
+        }
+
+        return count($this->collMapCardFeatureConstraints);
+    }
+
+    /**
+     * Method called to associate a ChildMapCardFeatureConstraint object to this object
+     * through the ChildMapCardFeatureConstraint foreign key attribute.
+     *
+     * @param  ChildMapCardFeatureConstraint $l ChildMapCardFeatureConstraint
+     * @return $this|\CreditCard The current object (for fluent API support)
+     */
+    public function addMapCardFeatureConstraint(ChildMapCardFeatureConstraint $l)
+    {
+        if ($this->collMapCardFeatureConstraints === null) {
+            $this->initMapCardFeatureConstraints();
+            $this->collMapCardFeatureConstraintsPartial = true;
+        }
+
+        if (!$this->collMapCardFeatureConstraints->contains($l)) {
+            $this->doAddMapCardFeatureConstraint($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMapCardFeatureConstraint $mapCardFeatureConstraint The ChildMapCardFeatureConstraint object to add.
+     */
+    protected function doAddMapCardFeatureConstraint(ChildMapCardFeatureConstraint $mapCardFeatureConstraint)
+    {
+        $this->collMapCardFeatureConstraints[]= $mapCardFeatureConstraint;
+        $mapCardFeatureConstraint->setCreditCard($this);
+    }
+
+    /**
+     * @param  ChildMapCardFeatureConstraint $mapCardFeatureConstraint The ChildMapCardFeatureConstraint object to remove.
+     * @return $this|ChildCreditCard The current object (for fluent API support)
+     */
+    public function removeMapCardFeatureConstraint(ChildMapCardFeatureConstraint $mapCardFeatureConstraint)
+    {
+        if ($this->getMapCardFeatureConstraints()->contains($mapCardFeatureConstraint)) {
+            $pos = $this->collMapCardFeatureConstraints->search($mapCardFeatureConstraint);
+            $this->collMapCardFeatureConstraints->remove($pos);
+            if (null === $this->mapCardFeatureConstraintsScheduledForDeletion) {
+                $this->mapCardFeatureConstraintsScheduledForDeletion = clone $this->collMapCardFeatureConstraints;
+                $this->mapCardFeatureConstraintsScheduledForDeletion->clear();
+            }
+            $this->mapCardFeatureConstraintsScheduledForDeletion[]= clone $mapCardFeatureConstraint;
+            $mapCardFeatureConstraint->setCreditCard(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this CreditCard is new, it will return
+     * an empty collection; or if this CreditCard has previously
+     * been saved, it will retrieve related MapCardFeatureConstraints from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in CreditCard.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMapCardFeatureConstraint[] List of ChildMapCardFeatureConstraint objects
+     */
+    public function getMapCardFeatureConstraintsJoinCardFeatureType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMapCardFeatureConstraintQuery::create(null, $criteria);
+        $query->joinWith('CardFeatureType', $joinBehavior);
+
+        return $this->getMapCardFeatureConstraints($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -4608,6 +5214,11 @@ abstract class CreditCard implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collCardRestrictions) {
+                foreach ($this->collCardRestrictions as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collDiscountss) {
                 foreach ($this->collDiscountss as $o) {
                     $o->clearAllReferences($deep);
@@ -4628,16 +5239,23 @@ abstract class CreditCard implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMapCardFeatureConstraints) {
+                foreach ($this->collMapCardFeatureConstraints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collCampaigns = null;
         $this->collCardDescriptions = null;
         $this->collCardFeaturess = null;
         $this->collCardPointSystems = null;
+        $this->collCardRestrictions = null;
         $this->collDiscountss = null;
         $this->collFeess = null;
         $this->collInsurances = null;
         $this->collInterests = null;
+        $this->collMapCardFeatureConstraints = null;
         $this->aAffiliateCompany = null;
         $this->aIssuer = null;
     }

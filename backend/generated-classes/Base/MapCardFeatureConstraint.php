@@ -2,20 +2,20 @@
 
 namespace Base;
 
-use \Insurance as ChildInsurance;
-use \InsuranceQuery as ChildInsuranceQuery;
-use \InsuranceType as ChildInsuranceType;
-use \InsuranceTypeQuery as ChildInsuranceTypeQuery;
+use \CardFeatureType as ChildCardFeatureType;
+use \CardFeatureTypeQuery as ChildCardFeatureTypeQuery;
+use \CreditCard as ChildCreditCard;
+use \CreditCardQuery as ChildCreditCardQuery;
+use \MapCardFeatureConstraintQuery as ChildMapCardFeatureConstraintQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\InsuranceTypeTableMap;
+use Map\MapCardFeatureConstraintTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -25,18 +25,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'insurance_type' table.
+ * Base class that represents a row from the 'map_card_feature_constraint' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class InsuranceType implements ActiveRecordInterface
+abstract class MapCardFeatureConstraint implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\InsuranceTypeTableMap';
+    const TABLE_MAP = '\\Map\\MapCardFeatureConstraintTableMap';
 
 
     /**
@@ -66,47 +66,23 @@ abstract class InsuranceType implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the insurance_type_id field.
+     * The value for the credit_card_id field.
      * @var        int
      */
-    protected $insurance_type_id;
+    protected $credit_card_id;
 
     /**
-     * The value for the type_name field.
-     * @var        string
+     * The value for the feature_type_id field.
+     * @var        int
      */
-    protected $type_name;
+    protected $feature_type_id;
 
     /**
-     * The value for the type_display field.
-     * @var        string
+     * The value for the priority_id field.
+     * Note: this column has a database default value of: 100
+     * @var        int
      */
-    protected $type_display;
-
-    /**
-     * The value for the subtype_name field.
-     * @var        string
-     */
-    protected $subtype_name;
-
-    /**
-     * The value for the subtype_display field.
-     * @var        string
-     */
-    protected $subtype_display;
-
-    /**
-     * The value for the description field.
-     * @var        string
-     */
-    protected $description;
-
-    /**
-     * The value for the region field.
-     * Note: this column has a database default value of: 'Global'
-     * @var        string
-     */
-    protected $region;
+    protected $priority_id;
 
     /**
      * The value for the update_time field.
@@ -121,10 +97,14 @@ abstract class InsuranceType implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ObjectCollection|ChildInsurance[] Collection to store aggregation of ChildInsurance objects.
+     * @var        ChildCreditCard
      */
-    protected $collInsurances;
-    protected $collInsurancesPartial;
+    protected $aCreditCard;
+
+    /**
+     * @var        ChildCardFeatureType
+     */
+    protected $aCardFeatureType;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -135,12 +115,6 @@ abstract class InsuranceType implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildInsurance[]
-     */
-    protected $insurancesScheduledForDeletion = null;
-
-    /**
      * Applies default values to this object.
      * This method should be called from the object's constructor (or
      * equivalent initialization method).
@@ -148,11 +122,11 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function applyDefaultValues()
     {
-        $this->region = 'Global';
+        $this->priority_id = 100;
     }
 
     /**
-     * Initializes internal state of Base\InsuranceType object.
+     * Initializes internal state of Base\MapCardFeatureConstraint object.
      * @see applyDefaults()
      */
     public function __construct()
@@ -249,9 +223,9 @@ abstract class InsuranceType implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>InsuranceType</code> instance.  If
-     * <code>obj</code> is an instance of <code>InsuranceType</code>, delegates to
-     * <code>equals(InsuranceType)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>MapCardFeatureConstraint</code> instance.  If
+     * <code>obj</code> is an instance of <code>MapCardFeatureConstraint</code>, delegates to
+     * <code>equals(MapCardFeatureConstraint)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -317,7 +291,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|InsuranceType The current object, for fluid interface
+     * @return $this|MapCardFeatureConstraint The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -371,73 +345,33 @@ abstract class InsuranceType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [insurance_type_id] column value.
+     * Get the [credit_card_id] column value.
      *
      * @return int
      */
-    public function getInsuranceTypeId()
+    public function getCreditCardId()
     {
-        return $this->insurance_type_id;
+        return $this->credit_card_id;
     }
 
     /**
-     * Get the [type_name] column value.
+     * Get the [feature_type_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getTypeName()
+    public function getFeatureTypeId()
     {
-        return $this->type_name;
+        return $this->feature_type_id;
     }
 
     /**
-     * Get the [type_display] column value.
+     * Get the [priority_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getTypeDisplay()
+    public function getPriorityId()
     {
-        return $this->type_display;
-    }
-
-    /**
-     * Get the [subtype_name] column value.
-     *
-     * @return string
-     */
-    public function getSubtypeName()
-    {
-        return $this->subtype_name;
-    }
-
-    /**
-     * Get the [subtype_display] column value.
-     *
-     * @return string
-     */
-    public function getSubtypeDisplay()
-    {
-        return $this->subtype_display;
-    }
-
-    /**
-     * Get the [description] column value.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Get the [region] column value.
-     *
-     * @return string
-     */
-    public function getRegion()
-    {
-        return $this->region;
+        return $this->priority_id;
     }
 
     /**
@@ -471,151 +405,79 @@ abstract class InsuranceType implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [insurance_type_id] column.
+     * Set the value of [credit_card_id] column.
      *
      * @param  int $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      */
-    public function setInsuranceTypeId($v)
+    public function setCreditCardId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->insurance_type_id !== $v) {
-            $this->insurance_type_id = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID] = true;
+        if ($this->credit_card_id !== $v) {
+            $this->credit_card_id = $v;
+            $this->modifiedColumns[MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID] = true;
+        }
+
+        if ($this->aCreditCard !== null && $this->aCreditCard->getCreditCardId() !== $v) {
+            $this->aCreditCard = null;
         }
 
         return $this;
-    } // setInsuranceTypeId()
+    } // setCreditCardId()
 
     /**
-     * Set the value of [type_name] column.
+     * Set the value of [feature_type_id] column.
      *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @param  int $v new value
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      */
-    public function setTypeName($v)
+    public function setFeatureTypeId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->type_name !== $v) {
-            $this->type_name = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_TYPE_NAME] = true;
+        if ($this->feature_type_id !== $v) {
+            $this->feature_type_id = $v;
+            $this->modifiedColumns[MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID] = true;
+        }
+
+        if ($this->aCardFeatureType !== null && $this->aCardFeatureType->getFeatureTypeId() !== $v) {
+            $this->aCardFeatureType = null;
         }
 
         return $this;
-    } // setTypeName()
+    } // setFeatureTypeId()
 
     /**
-     * Set the value of [type_display] column.
+     * Set the value of [priority_id] column.
      *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @param  int $v new value
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      */
-    public function setTypeDisplay($v)
+    public function setPriorityId($v)
     {
         if ($v !== null) {
-            $v = (string) $v;
+            $v = (int) $v;
         }
 
-        if ($this->type_display !== $v) {
-            $this->type_display = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_TYPE_DISPLAY] = true;
+        if ($this->priority_id !== $v) {
+            $this->priority_id = $v;
+            $this->modifiedColumns[MapCardFeatureConstraintTableMap::COL_PRIORITY_ID] = true;
         }
 
         return $this;
-    } // setTypeDisplay()
-
-    /**
-     * Set the value of [subtype_name] column.
-     *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
-     */
-    public function setSubtypeName($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->subtype_name !== $v) {
-            $this->subtype_name = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_SUBTYPE_NAME] = true;
-        }
-
-        return $this;
-    } // setSubtypeName()
-
-    /**
-     * Set the value of [subtype_display] column.
-     *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
-     */
-    public function setSubtypeDisplay($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->subtype_display !== $v) {
-            $this->subtype_display = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY] = true;
-        }
-
-        return $this;
-    } // setSubtypeDisplay()
-
-    /**
-     * Set the value of [description] column.
-     *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
-     */
-    public function setDescription($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_DESCRIPTION] = true;
-        }
-
-        return $this;
-    } // setDescription()
-
-    /**
-     * Set the value of [region] column.
-     *
-     * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
-     */
-    public function setRegion($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->region !== $v) {
-            $this->region = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_REGION] = true;
-        }
-
-        return $this;
-    } // setRegion()
+    } // setPriorityId()
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      */
     public function setUpdateTime($v)
     {
@@ -623,7 +485,7 @@ abstract class InsuranceType implements ActiveRecordInterface
         if ($this->update_time !== null || $dt !== null) {
             if ($dt !== $this->update_time) {
                 $this->update_time = $dt;
-                $this->modifiedColumns[InsuranceTypeTableMap::COL_UPDATE_TIME] = true;
+                $this->modifiedColumns[MapCardFeatureConstraintTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
@@ -634,7 +496,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -644,7 +506,7 @@ abstract class InsuranceType implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[InsuranceTypeTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[MapCardFeatureConstraintTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -660,7 +522,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->region !== 'Global') {
+            if ($this->priority_id !== 100) {
                 return false;
             }
 
@@ -690,34 +552,22 @@ abstract class InsuranceType implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : InsuranceTypeTableMap::translateFieldName('InsuranceTypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->insurance_type_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MapCardFeatureConstraintTableMap::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->credit_card_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : InsuranceTypeTableMap::translateFieldName('TypeName', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->type_name = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MapCardFeatureConstraintTableMap::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->feature_type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : InsuranceTypeTableMap::translateFieldName('TypeDisplay', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->type_display = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MapCardFeatureConstraintTableMap::translateFieldName('PriorityId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->priority_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : InsuranceTypeTableMap::translateFieldName('SubtypeName', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->subtype_name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : InsuranceTypeTableMap::translateFieldName('SubtypeDisplay', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->subtype_display = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : InsuranceTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : InsuranceTypeTableMap::translateFieldName('Region', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->region = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : InsuranceTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapCardFeatureConstraintTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : InsuranceTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapCardFeatureConstraintTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -727,10 +577,10 @@ abstract class InsuranceType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = InsuranceTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = MapCardFeatureConstraintTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\InsuranceType'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\MapCardFeatureConstraint'), 0, $e);
         }
     }
 
@@ -749,6 +599,12 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aCreditCard !== null && $this->credit_card_id !== $this->aCreditCard->getCreditCardId()) {
+            $this->aCreditCard = null;
+        }
+        if ($this->aCardFeatureType !== null && $this->feature_type_id !== $this->aCardFeatureType->getFeatureTypeId()) {
+            $this->aCardFeatureType = null;
+        }
     } // ensureConsistency
 
     /**
@@ -772,13 +628,13 @@ abstract class InsuranceType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(InsuranceTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(MapCardFeatureConstraintTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildInsuranceTypeQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildMapCardFeatureConstraintQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -788,8 +644,8 @@ abstract class InsuranceType implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collInsurances = null;
-
+            $this->aCreditCard = null;
+            $this->aCardFeatureType = null;
         } // if (deep)
     }
 
@@ -799,8 +655,8 @@ abstract class InsuranceType implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see InsuranceType::setDeleted()
-     * @see InsuranceType::isDeleted()
+     * @see MapCardFeatureConstraint::setDeleted()
+     * @see MapCardFeatureConstraint::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -809,11 +665,11 @@ abstract class InsuranceType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(InsuranceTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapCardFeatureConstraintTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildInsuranceTypeQuery::create()
+            $deleteQuery = ChildMapCardFeatureConstraintQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -844,7 +700,7 @@ abstract class InsuranceType implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(InsuranceTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapCardFeatureConstraintTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -863,7 +719,7 @@ abstract class InsuranceType implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                InsuranceTypeTableMap::addInstanceToPool($this);
+                MapCardFeatureConstraintTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -889,6 +745,25 @@ abstract class InsuranceType implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aCreditCard !== null) {
+                if ($this->aCreditCard->isModified() || $this->aCreditCard->isNew()) {
+                    $affectedRows += $this->aCreditCard->save($con);
+                }
+                $this->setCreditCard($this->aCreditCard);
+            }
+
+            if ($this->aCardFeatureType !== null) {
+                if ($this->aCardFeatureType->isModified() || $this->aCardFeatureType->isNew()) {
+                    $affectedRows += $this->aCardFeatureType->save($con);
+                }
+                $this->setCardFeatureType($this->aCardFeatureType);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -898,23 +773,6 @@ abstract class InsuranceType implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
-            }
-
-            if ($this->insurancesScheduledForDeletion !== null) {
-                if (!$this->insurancesScheduledForDeletion->isEmpty()) {
-                    \InsuranceQuery::create()
-                        ->filterByPrimaryKeys($this->insurancesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->insurancesScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collInsurances !== null) {
-                foreach ($this->collInsurances as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
             }
 
             $this->alreadyInSave = false;
@@ -937,42 +795,26 @@ abstract class InsuranceType implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID] = true;
-        if (null !== $this->insurance_type_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID . ')');
-        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'insurance_type_id';
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'credit_card_id';
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_TYPE_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'type_name';
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'feature_type_id';
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_TYPE_DISPLAY)) {
-            $modifiedColumns[':p' . $index++]  = 'type_display';
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_PRIORITY_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'priority_id';
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_SUBTYPE_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'subtype_name';
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY)) {
-            $modifiedColumns[':p' . $index++]  = 'subtype_display';
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_REGION)) {
-            $modifiedColumns[':p' . $index++]  = 'region';
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_UPDATE_TIME)) {
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO insurance_type (%s) VALUES (%s)',
+            'INSERT INTO map_card_feature_constraint (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -981,26 +823,14 @@ abstract class InsuranceType implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'insurance_type_id':
-                        $stmt->bindValue($identifier, $this->insurance_type_id, PDO::PARAM_INT);
+                    case 'credit_card_id':
+                        $stmt->bindValue($identifier, $this->credit_card_id, PDO::PARAM_INT);
                         break;
-                    case 'type_name':
-                        $stmt->bindValue($identifier, $this->type_name, PDO::PARAM_STR);
+                    case 'feature_type_id':
+                        $stmt->bindValue($identifier, $this->feature_type_id, PDO::PARAM_INT);
                         break;
-                    case 'type_display':
-                        $stmt->bindValue($identifier, $this->type_display, PDO::PARAM_STR);
-                        break;
-                    case 'subtype_name':
-                        $stmt->bindValue($identifier, $this->subtype_name, PDO::PARAM_STR);
-                        break;
-                    case 'subtype_display':
-                        $stmt->bindValue($identifier, $this->subtype_display, PDO::PARAM_STR);
-                        break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
-                    case 'region':
-                        $stmt->bindValue($identifier, $this->region, PDO::PARAM_STR);
+                    case 'priority_id':
+                        $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1015,13 +845,6 @@ abstract class InsuranceType implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
-
-        try {
-            $pk = $con->lastInsertId();
-        } catch (Exception $e) {
-            throw new PropelException('Unable to get autoincrement id.', 0, $e);
-        }
-        $this->setInsuranceTypeId($pk);
 
         $this->setNew(false);
     }
@@ -1054,7 +877,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = InsuranceTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MapCardFeatureConstraintTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1071,30 +894,18 @@ abstract class InsuranceType implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getInsuranceTypeId();
+                return $this->getCreditCardId();
                 break;
             case 1:
-                return $this->getTypeName();
+                return $this->getFeatureTypeId();
                 break;
             case 2:
-                return $this->getTypeDisplay();
+                return $this->getPriorityId();
                 break;
             case 3:
-                return $this->getSubtypeName();
-                break;
-            case 4:
-                return $this->getSubtypeDisplay();
-                break;
-            case 5:
-                return $this->getDescription();
-                break;
-            case 6:
-                return $this->getRegion();
-                break;
-            case 7:
                 return $this->getUpdateTime();
                 break;
-            case 8:
+            case 4:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1121,21 +932,17 @@ abstract class InsuranceType implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['InsuranceType'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['MapCardFeatureConstraint'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['InsuranceType'][$this->hashCode()] = true;
-        $keys = InsuranceTypeTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['MapCardFeatureConstraint'][$this->hashCode()] = true;
+        $keys = MapCardFeatureConstraintTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getInsuranceTypeId(),
-            $keys[1] => $this->getTypeName(),
-            $keys[2] => $this->getTypeDisplay(),
-            $keys[3] => $this->getSubtypeName(),
-            $keys[4] => $this->getSubtypeDisplay(),
-            $keys[5] => $this->getDescription(),
-            $keys[6] => $this->getRegion(),
-            $keys[7] => $this->getUpdateTime(),
-            $keys[8] => $this->getUpdateUser(),
+            $keys[0] => $this->getCreditCardId(),
+            $keys[1] => $this->getFeatureTypeId(),
+            $keys[2] => $this->getPriorityId(),
+            $keys[3] => $this->getUpdateTime(),
+            $keys[4] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1143,20 +950,35 @@ abstract class InsuranceType implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collInsurances) {
+            if (null !== $this->aCreditCard) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'insurances';
+                        $key = 'creditCard';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'insurances';
+                        $key = 'credit_card';
                         break;
                     default:
-                        $key = 'Insurances';
+                        $key = 'CreditCard';
                 }
 
-                $result[$key] = $this->collInsurances->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+                $result[$key] = $this->aCreditCard->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aCardFeatureType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'cardFeatureType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'card_feature_type';
+                        break;
+                    default:
+                        $key = 'CardFeatureType';
+                }
+
+                $result[$key] = $this->aCardFeatureType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1172,11 +994,11 @@ abstract class InsuranceType implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\InsuranceType
+     * @return $this|\MapCardFeatureConstraint
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = InsuranceTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MapCardFeatureConstraintTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1187,36 +1009,24 @@ abstract class InsuranceType implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\InsuranceType
+     * @return $this|\MapCardFeatureConstraint
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setInsuranceTypeId($value);
+                $this->setCreditCardId($value);
                 break;
             case 1:
-                $this->setTypeName($value);
+                $this->setFeatureTypeId($value);
                 break;
             case 2:
-                $this->setTypeDisplay($value);
+                $this->setPriorityId($value);
                 break;
             case 3:
-                $this->setSubtypeName($value);
-                break;
-            case 4:
-                $this->setSubtypeDisplay($value);
-                break;
-            case 5:
-                $this->setDescription($value);
-                break;
-            case 6:
-                $this->setRegion($value);
-                break;
-            case 7:
                 $this->setUpdateTime($value);
                 break;
-            case 8:
+            case 4:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1243,34 +1053,22 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = InsuranceTypeTableMap::getFieldNames($keyType);
+        $keys = MapCardFeatureConstraintTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setInsuranceTypeId($arr[$keys[0]]);
+            $this->setCreditCardId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setTypeName($arr[$keys[1]]);
+            $this->setFeatureTypeId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setTypeDisplay($arr[$keys[2]]);
+            $this->setPriorityId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSubtypeName($arr[$keys[3]]);
+            $this->setUpdateTime($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setSubtypeDisplay($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setDescription($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setRegion($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateTime($arr[$keys[7]]);
-        }
-        if (array_key_exists($keys[8], $arr)) {
-            $this->setUpdateUser($arr[$keys[8]]);
+            $this->setUpdateUser($arr[$keys[4]]);
         }
     }
 
@@ -1291,7 +1089,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\InsuranceType The current object, for fluid interface
+     * @return $this|\MapCardFeatureConstraint The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1311,34 +1109,22 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(InsuranceTypeTableMap::DATABASE_NAME);
+        $criteria = new Criteria(MapCardFeatureConstraintTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID)) {
-            $criteria->add(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID, $this->insurance_type_id);
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID)) {
+            $criteria->add(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID, $this->credit_card_id);
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_TYPE_NAME)) {
-            $criteria->add(InsuranceTypeTableMap::COL_TYPE_NAME, $this->type_name);
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID)) {
+            $criteria->add(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, $this->feature_type_id);
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_TYPE_DISPLAY)) {
-            $criteria->add(InsuranceTypeTableMap::COL_TYPE_DISPLAY, $this->type_display);
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_PRIORITY_ID)) {
+            $criteria->add(MapCardFeatureConstraintTableMap::COL_PRIORITY_ID, $this->priority_id);
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_SUBTYPE_NAME)) {
-            $criteria->add(InsuranceTypeTableMap::COL_SUBTYPE_NAME, $this->subtype_name);
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(MapCardFeatureConstraintTableMap::COL_UPDATE_TIME, $this->update_time);
         }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY)) {
-            $criteria->add(InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY, $this->subtype_display);
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_DESCRIPTION)) {
-            $criteria->add(InsuranceTypeTableMap::COL_DESCRIPTION, $this->description);
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_REGION)) {
-            $criteria->add(InsuranceTypeTableMap::COL_REGION, $this->region);
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(InsuranceTypeTableMap::COL_UPDATE_TIME, $this->update_time);
-        }
-        if ($this->isColumnModified(InsuranceTypeTableMap::COL_UPDATE_USER)) {
-            $criteria->add(InsuranceTypeTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(MapCardFeatureConstraintTableMap::COL_UPDATE_USER)) {
+            $criteria->add(MapCardFeatureConstraintTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1356,8 +1142,9 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildInsuranceTypeQuery::create();
-        $criteria->add(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID, $this->insurance_type_id);
+        $criteria = ChildMapCardFeatureConstraintQuery::create();
+        $criteria->add(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID, $this->credit_card_id);
+        $criteria->add(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, $this->feature_type_id);
 
         return $criteria;
     }
@@ -1370,10 +1157,25 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getInsuranceTypeId();
+        $validPk = null !== $this->getCreditCardId() &&
+            null !== $this->getFeatureTypeId();
 
-        $validPrimaryKeyFKs = 0;
+        $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
+
+        //relation fk_mccfc_creditcard_id to table credit_card
+        if ($this->aCreditCard && $hash = spl_object_hash($this->aCreditCard)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
+
+        //relation fk_mccfc_feature_type_id to table card_feature_type
+        if ($this->aCardFeatureType && $hash = spl_object_hash($this->aCardFeatureType)) {
+            $primaryKeyFKs[] = $hash;
+        } else {
+            $validPrimaryKeyFKs = false;
+        }
 
         if ($validPk) {
             return crc32(json_encode($this->getPrimaryKey(), JSON_UNESCAPED_UNICODE));
@@ -1385,23 +1187,29 @@ abstract class InsuranceType implements ActiveRecordInterface
     }
 
     /**
-     * Returns the primary key for this object (row).
-     * @return int
+     * Returns the composite primary key for this object.
+     * The array elements will be in same order as specified in XML.
+     * @return array
      */
     public function getPrimaryKey()
     {
-        return $this->getInsuranceTypeId();
+        $pks = array();
+        $pks[0] = $this->getCreditCardId();
+        $pks[1] = $this->getFeatureTypeId();
+
+        return $pks;
     }
 
     /**
-     * Generic method to set the primary key (insurance_type_id column).
+     * Set the [composite] primary key.
      *
-     * @param       int $key Primary key.
+     * @param      array $keys The elements of the composite key (order must match the order in XML file).
      * @return void
      */
-    public function setPrimaryKey($key)
+    public function setPrimaryKey($keys)
     {
-        $this->setInsuranceTypeId($key);
+        $this->setCreditCardId($keys[0]);
+        $this->setFeatureTypeId($keys[1]);
     }
 
     /**
@@ -1410,7 +1218,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getInsuranceTypeId();
+        return (null === $this->getCreditCardId()) && (null === $this->getFeatureTypeId());
     }
 
     /**
@@ -1419,38 +1227,20 @@ abstract class InsuranceType implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \InsuranceType (or compatible) type.
+     * @param      object $copyObj An object of \MapCardFeatureConstraint (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setTypeName($this->getTypeName());
-        $copyObj->setTypeDisplay($this->getTypeDisplay());
-        $copyObj->setSubtypeName($this->getSubtypeName());
-        $copyObj->setSubtypeDisplay($this->getSubtypeDisplay());
-        $copyObj->setDescription($this->getDescription());
-        $copyObj->setRegion($this->getRegion());
+        $copyObj->setCreditCardId($this->getCreditCardId());
+        $copyObj->setFeatureTypeId($this->getFeatureTypeId());
+        $copyObj->setPriorityId($this->getPriorityId());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
-
-        if ($deepCopy) {
-            // important: temporarily setNew(false) because this affects the behavior of
-            // the getter/setter methods for fkey referrer objects.
-            $copyObj->setNew(false);
-
-            foreach ($this->getInsurances() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addInsurance($relObj->copy($deepCopy));
-                }
-            }
-
-        } // if ($deepCopy)
-
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setInsuranceTypeId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1463,7 +1253,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \InsuranceType Clone of current object.
+     * @return \MapCardFeatureConstraint Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1476,263 +1266,106 @@ abstract class InsuranceType implements ActiveRecordInterface
         return $copyObj;
     }
 
-
     /**
-     * Initializes a collection based on the name of a relation.
-     * Avoids crafting an 'init[$relationName]s' method name
-     * that wouldn't work when StandardEnglishPluralizer is used.
+     * Declares an association between this object and a ChildCreditCard object.
      *
-     * @param      string $relationName The name of the relation to initialize
-     * @return void
-     */
-    public function initRelation($relationName)
-    {
-        if ('Insurance' == $relationName) {
-            return $this->initInsurances();
-        }
-    }
-
-    /**
-     * Clears out the collInsurances collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addInsurances()
-     */
-    public function clearInsurances()
-    {
-        $this->collInsurances = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collInsurances collection loaded partially.
-     */
-    public function resetPartialInsurances($v = true)
-    {
-        $this->collInsurancesPartial = $v;
-    }
-
-    /**
-     * Initializes the collInsurances collection.
-     *
-     * By default this just sets the collInsurances collection to an empty array (like clearcollInsurances());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initInsurances($overrideExisting = true)
-    {
-        if (null !== $this->collInsurances && !$overrideExisting) {
-            return;
-        }
-        $this->collInsurances = new ObjectCollection();
-        $this->collInsurances->setModel('\Insurance');
-    }
-
-    /**
-     * Gets an array of ChildInsurance objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildInsuranceType is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildInsurance[] List of ChildInsurance objects
+     * @param  ChildCreditCard $v
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
      * @throws PropelException
      */
-    public function getInsurances(Criteria $criteria = null, ConnectionInterface $con = null)
+    public function setCreditCard(ChildCreditCard $v = null)
     {
-        $partial = $this->collInsurancesPartial && !$this->isNew();
-        if (null === $this->collInsurances || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collInsurances) {
-                // return empty collection
-                $this->initInsurances();
-            } else {
-                $collInsurances = ChildInsuranceQuery::create(null, $criteria)
-                    ->filterByInsuranceType($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collInsurancesPartial && count($collInsurances)) {
-                        $this->initInsurances(false);
-
-                        foreach ($collInsurances as $obj) {
-                            if (false == $this->collInsurances->contains($obj)) {
-                                $this->collInsurances->append($obj);
-                            }
-                        }
-
-                        $this->collInsurancesPartial = true;
-                    }
-
-                    return $collInsurances;
-                }
-
-                if ($partial && $this->collInsurances) {
-                    foreach ($this->collInsurances as $obj) {
-                        if ($obj->isNew()) {
-                            $collInsurances[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collInsurances = $collInsurances;
-                $this->collInsurancesPartial = false;
-            }
+        if ($v === null) {
+            $this->setCreditCardId(NULL);
+        } else {
+            $this->setCreditCardId($v->getCreditCardId());
         }
 
-        return $this->collInsurances;
-    }
+        $this->aCreditCard = $v;
 
-    /**
-     * Sets a collection of ChildInsurance objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $insurances A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildInsuranceType The current object (for fluent API support)
-     */
-    public function setInsurances(Collection $insurances, ConnectionInterface $con = null)
-    {
-        /** @var ChildInsurance[] $insurancesToDelete */
-        $insurancesToDelete = $this->getInsurances(new Criteria(), $con)->diff($insurances);
-
-
-        $this->insurancesScheduledForDeletion = $insurancesToDelete;
-
-        foreach ($insurancesToDelete as $insuranceRemoved) {
-            $insuranceRemoved->setInsuranceType(null);
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCreditCard object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMapCardFeatureConstraint($this);
         }
 
-        $this->collInsurances = null;
-        foreach ($insurances as $insurance) {
-            $this->addInsurance($insurance);
-        }
-
-        $this->collInsurances = $insurances;
-        $this->collInsurancesPartial = false;
 
         return $this;
     }
 
+
     /**
-     * Returns the number of related Insurance objects.
+     * Get the associated ChildCreditCard object
      *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Insurance objects.
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCreditCard The associated ChildCreditCard object.
      * @throws PropelException
      */
-    public function countInsurances(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    public function getCreditCard(ConnectionInterface $con = null)
     {
-        $partial = $this->collInsurancesPartial && !$this->isNew();
-        if (null === $this->collInsurances || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collInsurances) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getInsurances());
-            }
-
-            $query = ChildInsuranceQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByInsuranceType($this)
-                ->count($con);
+        if ($this->aCreditCard === null && ($this->credit_card_id !== null)) {
+            $this->aCreditCard = ChildCreditCardQuery::create()->findPk($this->credit_card_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCreditCard->addMapCardFeatureConstraints($this);
+             */
         }
 
-        return count($this->collInsurances);
+        return $this->aCreditCard;
     }
 
     /**
-     * Method called to associate a ChildInsurance object to this object
-     * through the ChildInsurance foreign key attribute.
+     * Declares an association between this object and a ChildCardFeatureType object.
      *
-     * @param  ChildInsurance $l ChildInsurance
-     * @return $this|\InsuranceType The current object (for fluent API support)
+     * @param  ChildCardFeatureType $v
+     * @return $this|\MapCardFeatureConstraint The current object (for fluent API support)
+     * @throws PropelException
      */
-    public function addInsurance(ChildInsurance $l)
+    public function setCardFeatureType(ChildCardFeatureType $v = null)
     {
-        if ($this->collInsurances === null) {
-            $this->initInsurances();
-            $this->collInsurancesPartial = true;
+        if ($v === null) {
+            $this->setFeatureTypeId(NULL);
+        } else {
+            $this->setFeatureTypeId($v->getFeatureTypeId());
         }
 
-        if (!$this->collInsurances->contains($l)) {
-            $this->doAddInsurance($l);
+        $this->aCardFeatureType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildCardFeatureType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMapCardFeatureConstraint($this);
         }
 
-        return $this;
-    }
-
-    /**
-     * @param ChildInsurance $insurance The ChildInsurance object to add.
-     */
-    protected function doAddInsurance(ChildInsurance $insurance)
-    {
-        $this->collInsurances[]= $insurance;
-        $insurance->setInsuranceType($this);
-    }
-
-    /**
-     * @param  ChildInsurance $insurance The ChildInsurance object to remove.
-     * @return $this|ChildInsuranceType The current object (for fluent API support)
-     */
-    public function removeInsurance(ChildInsurance $insurance)
-    {
-        if ($this->getInsurances()->contains($insurance)) {
-            $pos = $this->collInsurances->search($insurance);
-            $this->collInsurances->remove($pos);
-            if (null === $this->insurancesScheduledForDeletion) {
-                $this->insurancesScheduledForDeletion = clone $this->collInsurances;
-                $this->insurancesScheduledForDeletion->clear();
-            }
-            $this->insurancesScheduledForDeletion[]= clone $insurance;
-            $insurance->setInsuranceType(null);
-        }
 
         return $this;
     }
 
 
     /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this InsuranceType is new, it will return
-     * an empty collection; or if this InsuranceType has previously
-     * been saved, it will retrieve related Insurances from storage.
+     * Get the associated ChildCardFeatureType object
      *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in InsuranceType.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildInsurance[] List of ChildInsurance objects
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildCardFeatureType The associated ChildCardFeatureType object.
+     * @throws PropelException
      */
-    public function getInsurancesJoinCreditCard(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getCardFeatureType(ConnectionInterface $con = null)
     {
-        $query = ChildInsuranceQuery::create(null, $criteria);
-        $query->joinWith('CreditCard', $joinBehavior);
+        if ($this->aCardFeatureType === null && ($this->feature_type_id !== null)) {
+            $this->aCardFeatureType = ChildCardFeatureTypeQuery::create()->findPk($this->feature_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aCardFeatureType->addMapCardFeatureConstraints($this);
+             */
+        }
 
-        return $this->getInsurances($query, $con);
+        return $this->aCardFeatureType;
     }
 
     /**
@@ -1742,13 +1375,15 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function clear()
     {
-        $this->insurance_type_id = null;
-        $this->type_name = null;
-        $this->type_display = null;
-        $this->subtype_name = null;
-        $this->subtype_display = null;
-        $this->description = null;
-        $this->region = null;
+        if (null !== $this->aCreditCard) {
+            $this->aCreditCard->removeMapCardFeatureConstraint($this);
+        }
+        if (null !== $this->aCardFeatureType) {
+            $this->aCardFeatureType->removeMapCardFeatureConstraint($this);
+        }
+        $this->credit_card_id = null;
+        $this->feature_type_id = null;
+        $this->priority_id = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
@@ -1770,14 +1405,10 @@ abstract class InsuranceType implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
-            if ($this->collInsurances) {
-                foreach ($this->collInsurances as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
-        $this->collInsurances = null;
+        $this->aCreditCard = null;
+        $this->aCardFeatureType = null;
     }
 
     /**
@@ -1787,7 +1418,7 @@ abstract class InsuranceType implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(InsuranceTypeTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(MapCardFeatureConstraintTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

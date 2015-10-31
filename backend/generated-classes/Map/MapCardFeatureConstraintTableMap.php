@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \CardFeatureType;
-use \CardFeatureTypeQuery;
+use \MapCardFeatureConstraint;
+use \MapCardFeatureConstraintQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'card_feature_type' table.
+ * This class defines the structure of the 'map_card_feature_constraint' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class CardFeatureTypeTableMap extends TableMap
+class MapCardFeatureConstraintTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class CardFeatureTypeTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.CardFeatureTypeTableMap';
+    const CLASS_NAME = '.Map.MapCardFeatureConstraintTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class CardFeatureTypeTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'card_feature_type';
+    const TABLE_NAME = 'map_card_feature_constraint';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\CardFeatureType';
+    const OM_CLASS = '\\MapCardFeatureConstraint';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'CardFeatureType';
+    const CLASS_DEFAULT = 'MapCardFeatureConstraint';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,47 +69,32 @@ class CardFeatureTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 5;
+
+    /**
+     * the column name for the credit_card_id field
+     */
+    const COL_CREDIT_CARD_ID = 'map_card_feature_constraint.credit_card_id';
 
     /**
      * the column name for the feature_type_id field
      */
-    const COL_FEATURE_TYPE_ID = 'card_feature_type.feature_type_id';
+    const COL_FEATURE_TYPE_ID = 'map_card_feature_constraint.feature_type_id';
 
     /**
-     * the column name for the name field
+     * the column name for the priority_id field
      */
-    const COL_NAME = 'card_feature_type.name';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'card_feature_type.description';
-
-    /**
-     * the column name for the category field
-     */
-    const COL_CATEGORY = 'card_feature_type.category';
-
-    /**
-     * the column name for the background_color field
-     */
-    const COL_BACKGROUND_COLOR = 'card_feature_type.background_color';
-
-    /**
-     * the column name for the foreground_color field
-     */
-    const COL_FOREGROUND_COLOR = 'card_feature_type.foreground_color';
+    const COL_PRIORITY_ID = 'map_card_feature_constraint.priority_id';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'card_feature_type.update_time';
+    const COL_UPDATE_TIME = 'map_card_feature_constraint.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'card_feature_type.update_user';
+    const COL_UPDATE_USER = 'map_card_feature_constraint.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -123,11 +108,11 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId', 'Name', 'Description', 'Category', 'BackgroundColor', 'ForegroundColor', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('featureTypeId', 'name', 'description', 'category', 'backgroundColor', 'foregroundColor', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, CardFeatureTypeTableMap::COL_NAME, CardFeatureTypeTableMap::COL_DESCRIPTION, CardFeatureTypeTableMap::COL_CATEGORY, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR, CardFeatureTypeTableMap::COL_UPDATE_TIME, CardFeatureTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id', 'name', 'description', 'category', 'background_color', 'foreground_color', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('CreditCardId', 'FeatureTypeId', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('creditCardId', 'featureTypeId', 'priorityId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID, MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, MapCardFeatureConstraintTableMap::COL_PRIORITY_ID, MapCardFeatureConstraintTableMap::COL_UPDATE_TIME, MapCardFeatureConstraintTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id', 'feature_type_id', 'priority_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -137,11 +122,11 @@ class CardFeatureTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('FeatureTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Category' => 3, 'BackgroundColor' => 4, 'ForegroundColor' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('featureTypeId' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'backgroundColor' => 4, 'foregroundColor' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID => 0, CardFeatureTypeTableMap::COL_NAME => 1, CardFeatureTypeTableMap::COL_DESCRIPTION => 2, CardFeatureTypeTableMap::COL_CATEGORY => 3, CardFeatureTypeTableMap::COL_BACKGROUND_COLOR => 4, CardFeatureTypeTableMap::COL_FOREGROUND_COLOR => 5, CardFeatureTypeTableMap::COL_UPDATE_TIME => 6, CardFeatureTypeTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('feature_type_id' => 0, 'name' => 1, 'description' => 2, 'category' => 3, 'background_color' => 4, 'foreground_color' => 5, 'update_time' => 6, 'update_user' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('CreditCardId' => 0, 'FeatureTypeId' => 1, 'PriorityId' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
+        self::TYPE_CAMELNAME     => array('creditCardId' => 0, 'featureTypeId' => 1, 'priorityId' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
+        self::TYPE_COLNAME       => array(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID => 0, MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID => 1, MapCardFeatureConstraintTableMap::COL_PRIORITY_ID => 2, MapCardFeatureConstraintTableMap::COL_UPDATE_TIME => 3, MapCardFeatureConstraintTableMap::COL_UPDATE_USER => 4, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id' => 0, 'feature_type_id' => 1, 'priority_id' => 2, 'update_time' => 3, 'update_user' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -154,20 +139,17 @@ class CardFeatureTypeTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('card_feature_type');
-        $this->setPhpName('CardFeatureType');
+        $this->setName('map_card_feature_constraint');
+        $this->setPhpName('MapCardFeatureConstraint');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\CardFeatureType');
+        $this->setClassName('\\MapCardFeatureConstraint');
         $this->setPackage('');
-        $this->setUseIdGenerator(true);
+        $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('feature_type_id', 'FeatureTypeId', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', true, 250, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('category', 'Category', 'VARCHAR', true, 250, null);
-        $this->addColumn('background_color', 'BackgroundColor', 'VARCHAR', false, 250, null);
-        $this->addColumn('foreground_color', 'ForegroundColor', 'VARCHAR', false, 250, '0');
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
+        $this->addForeignPrimaryKey('credit_card_id', 'CreditCardId', 'INTEGER' , 'credit_card', 'credit_card_id', true, null, null);
+        $this->addForeignPrimaryKey('feature_type_id', 'FeatureTypeId', 'INTEGER' , 'card_feature_type', 'feature_type_id', true, null, null);
+        $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
 
@@ -176,10 +158,62 @@ class CardFeatureTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('CardFeatures', '\\CardFeatures', RelationMap::ONE_TO_MANY, array('feature_type_id' => 'feature_type_id', ), null, null, 'CardFeaturess');
-        $this->addRelation('MapCardFeatureConstraint', '\\MapCardFeatureConstraint', RelationMap::ONE_TO_MANY, array('feature_type_id' => 'feature_type_id', ), null, null, 'MapCardFeatureConstraints');
-        $this->addRelation('MapPersonaFeatureConstraint', '\\MapPersonaFeatureConstraint', RelationMap::ONE_TO_MANY, array('feature_type_id' => 'feature_type_id', ), null, null, 'MapPersonaFeatureConstraints');
+        $this->addRelation('CreditCard', '\\CreditCard', RelationMap::MANY_TO_ONE, array('credit_card_id' => 'credit_card_id', ), null, null);
+        $this->addRelation('CardFeatureType', '\\CardFeatureType', RelationMap::MANY_TO_ONE, array('feature_type_id' => 'feature_type_id', ), null, null);
     } // buildRelations()
+
+    /**
+     * Adds an object to the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database. In some cases you may need to explicitly add objects
+     * to the cache in order to ensure that the same objects are always returned by find*()
+     * and findPk*() calls.
+     *
+     * @param \MapCardFeatureConstraint $obj A \MapCardFeatureConstraint object.
+     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
+     */
+    public static function addInstanceToPool($obj, $key = null)
+    {
+        if (Propel::isInstancePoolingEnabled()) {
+            if (null === $key) {
+                $key = serialize(array((string) $obj->getCreditCardId(), (string) $obj->getFeatureTypeId()));
+            } // if key === null
+            self::$instances[$key] = $obj;
+        }
+    }
+
+    /**
+     * Removes an object from the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database.  In some cases -- especially when you override doDelete
+     * methods in your stub classes -- you may need to explicitly remove objects
+     * from the cache in order to prevent returning objects that no longer exist.
+     *
+     * @param mixed $value A \MapCardFeatureConstraint object or a primary key value.
+     */
+    public static function removeInstanceFromPool($value)
+    {
+        if (Propel::isInstancePoolingEnabled() && null !== $value) {
+            if (is_object($value) && $value instanceof \MapCardFeatureConstraint) {
+                $key = serialize(array((string) $value->getCreditCardId(), (string) $value->getFeatureTypeId()));
+
+            } elseif (is_array($value) && count($value) === 2) {
+                // assume we've been passed a primary key";
+                $key = serialize(array((string) $value[0], (string) $value[1]));
+            } elseif ($value instanceof Criteria) {
+                self::$instances = [];
+
+                return;
+            } else {
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \MapCardFeatureConstraint object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                throw $e;
+            }
+
+            unset(self::$instances[$key]);
+        }
+    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -197,11 +231,11 @@ class CardFeatureTypeTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -218,11 +252,20 @@ class CardFeatureTypeTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+            $pks = [];
+
+        $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
+                : self::translateFieldName('CreditCardId', TableMap::TYPE_PHPNAME, $indexType)
+        ];
+        $pks[] = (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 1 + $offset
                 : self::translateFieldName('FeatureTypeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
+
+        return $pks;
     }
 
     /**
@@ -238,7 +281,7 @@ class CardFeatureTypeTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? CardFeatureTypeTableMap::CLASS_DEFAULT : CardFeatureTypeTableMap::OM_CLASS;
+        return $withPrefix ? MapCardFeatureConstraintTableMap::CLASS_DEFAULT : MapCardFeatureConstraintTableMap::OM_CLASS;
     }
 
     /**
@@ -252,22 +295,22 @@ class CardFeatureTypeTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (CardFeatureType object, last column rank)
+     * @return array           (MapCardFeatureConstraint object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = CardFeatureTypeTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = CardFeatureTypeTableMap::getInstanceFromPool($key))) {
+        $key = MapCardFeatureConstraintTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = MapCardFeatureConstraintTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + CardFeatureTypeTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + MapCardFeatureConstraintTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = CardFeatureTypeTableMap::OM_CLASS;
-            /** @var CardFeatureType $obj */
+            $cls = MapCardFeatureConstraintTableMap::OM_CLASS;
+            /** @var MapCardFeatureConstraint $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            CardFeatureTypeTableMap::addInstanceToPool($obj, $key);
+            MapCardFeatureConstraintTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -290,18 +333,18 @@ class CardFeatureTypeTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = CardFeatureTypeTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = CardFeatureTypeTableMap::getInstanceFromPool($key))) {
+            $key = MapCardFeatureConstraintTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = MapCardFeatureConstraintTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var CardFeatureType $obj */
+                /** @var MapCardFeatureConstraint $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                CardFeatureTypeTableMap::addInstanceToPool($obj, $key);
+                MapCardFeatureConstraintTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -322,21 +365,15 @@ class CardFeatureTypeTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_NAME);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_CATEGORY);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_BACKGROUND_COLOR);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_FOREGROUND_COLOR);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(CardFeatureTypeTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID);
+            $criteria->addSelectColumn(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID);
+            $criteria->addSelectColumn(MapCardFeatureConstraintTableMap::COL_PRIORITY_ID);
+            $criteria->addSelectColumn(MapCardFeatureConstraintTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(MapCardFeatureConstraintTableMap::COL_UPDATE_USER);
         } else {
+            $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.feature_type_id');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.category');
-            $criteria->addSelectColumn($alias . '.background_color');
-            $criteria->addSelectColumn($alias . '.foreground_color');
+            $criteria->addSelectColumn($alias . '.priority_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }
@@ -351,7 +388,7 @@ class CardFeatureTypeTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(CardFeatureTypeTableMap::DATABASE_NAME)->getTable(CardFeatureTypeTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(MapCardFeatureConstraintTableMap::DATABASE_NAME)->getTable(MapCardFeatureConstraintTableMap::TABLE_NAME);
     }
 
     /**
@@ -359,16 +396,16 @@ class CardFeatureTypeTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CardFeatureTypeTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(CardFeatureTypeTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new CardFeatureTypeTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MapCardFeatureConstraintTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(MapCardFeatureConstraintTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new MapCardFeatureConstraintTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a CardFeatureType or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a MapCardFeatureConstraint or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or CardFeatureType object or primary key or array of primary keys
+     * @param mixed               $values Criteria or MapCardFeatureConstraint object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -379,27 +416,37 @@ class CardFeatureTypeTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CardFeatureTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapCardFeatureConstraintTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \CardFeatureType) { // it's a model object
+        } elseif ($values instanceof \MapCardFeatureConstraint) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(CardFeatureTypeTableMap::DATABASE_NAME);
-            $criteria->add(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(MapCardFeatureConstraintTableMap::DATABASE_NAME);
+            // primary key is composite; we therefore, expect
+            // the primary key passed to be an array of pkey values
+            if (count($values) == count($values, COUNT_RECURSIVE)) {
+                // array is not multi-dimensional
+                $values = array($values);
+            }
+            foreach ($values as $value) {
+                $criterion = $criteria->getNewCriterion(MapCardFeatureConstraintTableMap::COL_CREDIT_CARD_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(MapCardFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, $value[1]));
+                $criteria->addOr($criterion);
+            }
         }
 
-        $query = CardFeatureTypeQuery::create()->mergeWith($criteria);
+        $query = MapCardFeatureConstraintQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            CardFeatureTypeTableMap::clearInstancePool();
+            MapCardFeatureConstraintTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                CardFeatureTypeTableMap::removeInstanceFromPool($singleval);
+                MapCardFeatureConstraintTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -407,20 +454,20 @@ class CardFeatureTypeTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the card_feature_type table.
+     * Deletes all rows from the map_card_feature_constraint table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return CardFeatureTypeQuery::create()->doDeleteAll($con);
+        return MapCardFeatureConstraintQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a CardFeatureType or Criteria object.
+     * Performs an INSERT on the database, given a MapCardFeatureConstraint or Criteria object.
      *
-     * @param mixed               $criteria Criteria or CardFeatureType object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or MapCardFeatureConstraint object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -429,22 +476,18 @@ class CardFeatureTypeTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CardFeatureTypeTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapCardFeatureConstraintTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from CardFeatureType object
-        }
-
-        if ($criteria->containsKey(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID) && $criteria->keyContainsValue(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID.')');
+            $criteria = $criteria->buildCriteria(); // build Criteria from MapCardFeatureConstraint object
         }
 
 
         // Set the correct dbName
-        $query = CardFeatureTypeQuery::create()->mergeWith($criteria);
+        $query = MapCardFeatureConstraintQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -453,7 +496,7 @@ class CardFeatureTypeTableMap extends TableMap
         });
     }
 
-} // CardFeatureTypeTableMap
+} // MapCardFeatureConstraintTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-CardFeatureTypeTableMap::buildTableMap();
+MapCardFeatureConstraintTableMap::buildTableMap();

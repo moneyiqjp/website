@@ -9,10 +9,8 @@
 namespace Db\Core;
 
 
-use Base\PersonaQuery;
 use Db\Json\JFeatureType;
 use Db\Json\JGeneralRestriction;
-use Db\Json\JStore;
 
 class Store {
     public $Id;
@@ -112,7 +110,7 @@ class Restriction {
         }
 
         foreach($persona->getPersonaRestrictions() as $item) {
-            array_push($that->GeneralRestriction,  JGeneralRestriction::CREATE_FROM_DB($item)->toKeyValueType());
+            array_push($that->GeneralRestriction,  JGeneralRestriction::CREATE_FROM_DB($item)->getRestriction());
         }
 
         return $that;

@@ -59,7 +59,7 @@ class InsuranceTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class InsuranceTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the insurance_type_id field
@@ -82,9 +82,19 @@ class InsuranceTypeTableMap extends TableMap
     const COL_TYPE_NAME = 'insurance_type.type_name';
 
     /**
+     * the column name for the type_display field
+     */
+    const COL_TYPE_DISPLAY = 'insurance_type.type_display';
+
+    /**
      * the column name for the subtype_name field
      */
     const COL_SUBTYPE_NAME = 'insurance_type.subtype_name';
+
+    /**
+     * the column name for the subtype_display field
+     */
+    const COL_SUBTYPE_DISPLAY = 'insurance_type.subtype_display';
 
     /**
      * the column name for the description field
@@ -118,11 +128,11 @@ class InsuranceTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('InsuranceTypeId', 'TypeName', 'SubtypeName', 'Description', 'Region', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('insuranceTypeId', 'typeName', 'subtypeName', 'description', 'region', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID, InsuranceTypeTableMap::COL_TYPE_NAME, InsuranceTypeTableMap::COL_SUBTYPE_NAME, InsuranceTypeTableMap::COL_DESCRIPTION, InsuranceTypeTableMap::COL_REGION, InsuranceTypeTableMap::COL_UPDATE_TIME, InsuranceTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('insurance_type_id', 'type_name', 'subtype_name', 'description', 'region', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('InsuranceTypeId', 'TypeName', 'TypeDisplay', 'SubtypeName', 'SubtypeDisplay', 'Description', 'Region', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('insuranceTypeId', 'typeName', 'typeDisplay', 'subtypeName', 'subtypeDisplay', 'description', 'region', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID, InsuranceTypeTableMap::COL_TYPE_NAME, InsuranceTypeTableMap::COL_TYPE_DISPLAY, InsuranceTypeTableMap::COL_SUBTYPE_NAME, InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY, InsuranceTypeTableMap::COL_DESCRIPTION, InsuranceTypeTableMap::COL_REGION, InsuranceTypeTableMap::COL_UPDATE_TIME, InsuranceTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('insurance_type_id', 'type_name', 'type_display', 'subtype_name', 'subtype_display', 'description', 'region', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -132,11 +142,11 @@ class InsuranceTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('InsuranceTypeId' => 0, 'TypeName' => 1, 'SubtypeName' => 2, 'Description' => 3, 'Region' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
-        self::TYPE_CAMELNAME     => array('insuranceTypeId' => 0, 'typeName' => 1, 'subtypeName' => 2, 'description' => 3, 'region' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
-        self::TYPE_COLNAME       => array(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID => 0, InsuranceTypeTableMap::COL_TYPE_NAME => 1, InsuranceTypeTableMap::COL_SUBTYPE_NAME => 2, InsuranceTypeTableMap::COL_DESCRIPTION => 3, InsuranceTypeTableMap::COL_REGION => 4, InsuranceTypeTableMap::COL_UPDATE_TIME => 5, InsuranceTypeTableMap::COL_UPDATE_USER => 6, ),
-        self::TYPE_FIELDNAME     => array('insurance_type_id' => 0, 'type_name' => 1, 'subtype_name' => 2, 'description' => 3, 'region' => 4, 'update_time' => 5, 'update_user' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('InsuranceTypeId' => 0, 'TypeName' => 1, 'TypeDisplay' => 2, 'SubtypeName' => 3, 'SubtypeDisplay' => 4, 'Description' => 5, 'Region' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
+        self::TYPE_CAMELNAME     => array('insuranceTypeId' => 0, 'typeName' => 1, 'typeDisplay' => 2, 'subtypeName' => 3, 'subtypeDisplay' => 4, 'description' => 5, 'region' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
+        self::TYPE_COLNAME       => array(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID => 0, InsuranceTypeTableMap::COL_TYPE_NAME => 1, InsuranceTypeTableMap::COL_TYPE_DISPLAY => 2, InsuranceTypeTableMap::COL_SUBTYPE_NAME => 3, InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY => 4, InsuranceTypeTableMap::COL_DESCRIPTION => 5, InsuranceTypeTableMap::COL_REGION => 6, InsuranceTypeTableMap::COL_UPDATE_TIME => 7, InsuranceTypeTableMap::COL_UPDATE_USER => 8, ),
+        self::TYPE_FIELDNAME     => array('insurance_type_id' => 0, 'type_name' => 1, 'type_display' => 2, 'subtype_name' => 3, 'subtype_display' => 4, 'description' => 5, 'region' => 6, 'update_time' => 7, 'update_user' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -158,7 +168,9 @@ class InsuranceTypeTableMap extends TableMap
         // columns
         $this->addPrimaryKey('insurance_type_id', 'InsuranceTypeId', 'INTEGER', true, null, null);
         $this->addColumn('type_name', 'TypeName', 'VARCHAR', true, 255, null);
+        $this->addColumn('type_display', 'TypeDisplay', 'VARCHAR', false, 255, null);
         $this->addColumn('subtype_name', 'SubtypeName', 'VARCHAR', true, 255, null);
+        $this->addColumn('subtype_display', 'SubtypeDisplay', 'VARCHAR', false, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('region', 'Region', 'VARCHAR', false, 255, 'Global');
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
@@ -316,7 +328,9 @@ class InsuranceTypeTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_INSURANCE_TYPE_ID);
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_TYPE_NAME);
+            $criteria->addSelectColumn(InsuranceTypeTableMap::COL_TYPE_DISPLAY);
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_SUBTYPE_NAME);
+            $criteria->addSelectColumn(InsuranceTypeTableMap::COL_SUBTYPE_DISPLAY);
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_REGION);
             $criteria->addSelectColumn(InsuranceTypeTableMap::COL_UPDATE_TIME);
@@ -324,7 +338,9 @@ class InsuranceTypeTableMap extends TableMap
         } else {
             $criteria->addSelectColumn($alias . '.insurance_type_id');
             $criteria->addSelectColumn($alias . '.type_name');
+            $criteria->addSelectColumn($alias . '.type_display');
             $criteria->addSelectColumn($alias . '.subtype_name');
+            $criteria->addSelectColumn($alias . '.subtype_display');
             $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.region');
             $criteria->addSelectColumn($alias . '.update_time');

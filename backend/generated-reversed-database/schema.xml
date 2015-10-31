@@ -180,6 +180,30 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="card_restriction" idMethod="native" phpName="CardRestriction">
+    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="restriction_type_id" phpName="RestrictionTypeId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="Comparator" phpName="Comparator" type="VARCHAR" size="80" defaultValue="="/>
+    <column name="value" phpName="Value" type="VARCHAR" size="255" required="true"/>
+    <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <foreign-key foreignTable="credit_card" name="FK_cr_credit_card_id">
+      <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="restriction_type" name="FK_cr_restriction_type_id">
+      <reference local="restriction_type_id" foreign="restriction_type_id"/>
+    </foreign-key>
+    <index name="PK_cr_credit_card_id_ind">
+      <index-column name="credit_card_id"/>
+    </index>
+    <index name="PK_cr_feature_type_id_ind">
+      <index-column name="restriction_type_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="credit_card" idMethod="native" phpName="CreditCard">
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -360,7 +384,9 @@
   <table name="insurance_type" idMethod="native" phpName="InsuranceType">
     <column name="insurance_type_id" phpName="InsuranceTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type_name" phpName="TypeName" type="VARCHAR" size="255" required="true"/>
+    <column name="type_display" phpName="TypeDisplay" type="VARCHAR" size="255"/>
     <column name="subtype_name" phpName="SubtypeName" type="VARCHAR" size="255" required="true"/>
+    <column name="subtype_display" phpName="SubtypeDisplay" type="VARCHAR" size="255"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="region" phpName="Region" type="VARCHAR" size="255" defaultValue="Global"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
@@ -446,6 +472,28 @@
   <table name="mailinglist" idMethod="native" phpName="Mailinglist">
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="map_card_feature_constraint" idMethod="native" phpName="MapCardFeatureConstraint">
+    <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="feature_type_id" phpName="FeatureTypeId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <foreign-key foreignTable="credit_card" name="fk_mccfc_creditcard_id">
+      <reference local="credit_card_id" foreign="credit_card_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="card_feature_type" name="fk_mccfc_feature_type_id">
+      <reference local="feature_type_id" foreign="feature_type_id"/>
+    </foreign-key>
+    <index name="pk_mccfc_creditcard_id_ind">
+      <index-column name="credit_card_id"/>
+    </index>
+    <index name="pk_mccfc_feature_type_id_ind">
+      <index-column name="feature_type_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -684,6 +732,7 @@
     <column name="restriction_type_id" phpName="RestrictionTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="display" phpName="Display" type="LONGVARCHAR" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">

@@ -23,12 +23,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRestrictionTypeQuery orderByRestrictionTypeId($order = Criteria::ASC) Order by the restriction_type_id column
  * @method     ChildRestrictionTypeQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildRestrictionTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildRestrictionTypeQuery orderByDisplay($order = Criteria::ASC) Order by the display column
  * @method     ChildRestrictionTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildRestrictionTypeQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildRestrictionTypeQuery groupByRestrictionTypeId() Group by the restriction_type_id column
  * @method     ChildRestrictionTypeQuery groupByName() Group by the name column
  * @method     ChildRestrictionTypeQuery groupByDescription() Group by the description column
+ * @method     ChildRestrictionTypeQuery groupByDisplay() Group by the display column
  * @method     ChildRestrictionTypeQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildRestrictionTypeQuery groupByUpdateUser() Group by the update_user column
  *
@@ -36,11 +38,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRestrictionTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildRestrictionTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildRestrictionTypeQuery leftJoinCardRestriction($relationAlias = null) Adds a LEFT JOIN clause to the query using the CardRestriction relation
+ * @method     ChildRestrictionTypeQuery rightJoinCardRestriction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardRestriction relation
+ * @method     ChildRestrictionTypeQuery innerJoinCardRestriction($relationAlias = null) Adds a INNER JOIN clause to the query using the CardRestriction relation
+ *
  * @method     ChildRestrictionTypeQuery leftJoinPersonaRestriction($relationAlias = null) Adds a LEFT JOIN clause to the query using the PersonaRestriction relation
  * @method     ChildRestrictionTypeQuery rightJoinPersonaRestriction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PersonaRestriction relation
  * @method     ChildRestrictionTypeQuery innerJoinPersonaRestriction($relationAlias = null) Adds a INNER JOIN clause to the query using the PersonaRestriction relation
  *
- * @method     \PersonaRestrictionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \CardRestrictionQuery|\PersonaRestrictionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildRestrictionType findOne(ConnectionInterface $con = null) Return the first ChildRestrictionType matching the query
  * @method     ChildRestrictionType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildRestrictionType matching the query, or a new ChildRestrictionType object populated from the query conditions when no match is found
@@ -48,6 +54,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRestrictionType findOneByRestrictionTypeId(int $restriction_type_id) Return the first ChildRestrictionType filtered by the restriction_type_id column
  * @method     ChildRestrictionType findOneByName(string $name) Return the first ChildRestrictionType filtered by the name column
  * @method     ChildRestrictionType findOneByDescription(string $description) Return the first ChildRestrictionType filtered by the description column
+ * @method     ChildRestrictionType findOneByDisplay(string $display) Return the first ChildRestrictionType filtered by the display column
  * @method     ChildRestrictionType findOneByUpdateTime(string $update_time) Return the first ChildRestrictionType filtered by the update_time column
  * @method     ChildRestrictionType findOneByUpdateUser(string $update_user) Return the first ChildRestrictionType filtered by the update_user column
  *
@@ -55,6 +62,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRestrictionType[]|ObjectCollection findByRestrictionTypeId(int $restriction_type_id) Return ChildRestrictionType objects filtered by the restriction_type_id column
  * @method     ChildRestrictionType[]|ObjectCollection findByName(string $name) Return ChildRestrictionType objects filtered by the name column
  * @method     ChildRestrictionType[]|ObjectCollection findByDescription(string $description) Return ChildRestrictionType objects filtered by the description column
+ * @method     ChildRestrictionType[]|ObjectCollection findByDisplay(string $display) Return ChildRestrictionType objects filtered by the display column
  * @method     ChildRestrictionType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildRestrictionType objects filtered by the update_time column
  * @method     ChildRestrictionType[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildRestrictionType objects filtered by the update_user column
  * @method     ChildRestrictionType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -148,7 +156,7 @@ abstract class RestrictionTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT restriction_type_id, name, description, update_time, update_user FROM restriction_type WHERE restriction_type_id = :p0';
+        $sql = 'SELECT restriction_type_id, name, description, display, update_time, update_user FROM restriction_type WHERE restriction_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -338,6 +346,35 @@ abstract class RestrictionTypeQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the display column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDisplay('fooValue');   // WHERE display = 'fooValue'
+     * $query->filterByDisplay('%fooValue%'); // WHERE display LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $display The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRestrictionTypeQuery The current query, for fluid interface
+     */
+    public function filterByDisplay($display = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($display)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $display)) {
+                $display = str_replace('*', '%', $display);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(RestrictionTypeTableMap::COL_DISPLAY, $display, $comparison);
+    }
+
+    /**
      * Filter the query on the update_time column
      *
      * Example usage:
@@ -407,6 +444,79 @@ abstract class RestrictionTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RestrictionTypeTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \CardRestriction object
+     *
+     * @param \CardRestriction|ObjectCollection $cardRestriction  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildRestrictionTypeQuery The current query, for fluid interface
+     */
+    public function filterByCardRestriction($cardRestriction, $comparison = null)
+    {
+        if ($cardRestriction instanceof \CardRestriction) {
+            return $this
+                ->addUsingAlias(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID, $cardRestriction->getRestrictionTypeId(), $comparison);
+        } elseif ($cardRestriction instanceof ObjectCollection) {
+            return $this
+                ->useCardRestrictionQuery()
+                ->filterByPrimaryKeys($cardRestriction->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByCardRestriction() only accepts arguments of type \CardRestriction or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the CardRestriction relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRestrictionTypeQuery The current query, for fluid interface
+     */
+    public function joinCardRestriction($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('CardRestriction');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'CardRestriction');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the CardRestriction relation CardRestriction object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \CardRestrictionQuery A secondary query class using the current class as primary query
+     */
+    public function useCardRestrictionQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinCardRestriction($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'CardRestriction', '\CardRestrictionQuery');
     }
 
     /**

@@ -2274,6 +2274,158 @@ $app->put('/crud/restriction/feature/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 
+
+
+/*Credit Card Restriction*/
+$app->get('/crud/restriction/credit/card/general/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetAllCreditCardRestrictions()));
+});
+
+$app->get('/crud/restriction/credit/card/general/by/credit/card/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetCreditCardRestrictionByPersonaId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+$app->get('/crud/restriction/credit/card/general/by/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetCreditCardRestrictionById($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+
+$app->delete('/crud/restriction/credit/card/general/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = $db->DeleteCreditCardRestrictionForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+
+$app->post('/crud/restriction/credit/card/general/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateCreditCardRestrictionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+$app->put('/crud/restriction/credit/card/general/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateCreditCardRestrictionForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
+
+/*FeatureRestriction*/
+$app->get('/crud/restriction/credit/card/feature/all', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> $db->GetAllCardFeatureRestrictions()));
+});
+$app->get('/crud/restriction/credit/card/feature/by/persona/id', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = $db->GetCardFeatureRestrictionForPersona($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->delete('/crud/restriction/credit/card/feature/delete', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = $db->DeleteCardFeatureRestrictionForPersona($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/restriction/credit/card/feature/create', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->CreateCardFeatureRestrictionForPersona($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/restriction/credit/card/feature/update', function () use ($app) {
+    $db = new \Db\Core\Db();
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = $db->UpdateCardFeatureRestrictionForPersona($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
 //Run the Slim application:
 $app->run();
 

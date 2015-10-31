@@ -6,6 +6,8 @@ use \CardFeatureType as ChildCardFeatureType;
 use \CardFeatureTypeQuery as ChildCardFeatureTypeQuery;
 use \CardFeatures as ChildCardFeatures;
 use \CardFeaturesQuery as ChildCardFeaturesQuery;
+use \MapCardFeatureConstraint as ChildMapCardFeatureConstraint;
+use \MapCardFeatureConstraintQuery as ChildMapCardFeatureConstraintQuery;
 use \MapPersonaFeatureConstraint as ChildMapPersonaFeatureConstraint;
 use \MapPersonaFeatureConstraintQuery as ChildMapPersonaFeatureConstraintQuery;
 use \DateTime;
@@ -123,6 +125,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
     protected $collCardFeaturessPartial;
 
     /**
+     * @var        ObjectCollection|ChildMapCardFeatureConstraint[] Collection to store aggregation of ChildMapCardFeatureConstraint objects.
+     */
+    protected $collMapCardFeatureConstraints;
+    protected $collMapCardFeatureConstraintsPartial;
+
+    /**
      * @var        ObjectCollection|ChildMapPersonaFeatureConstraint[] Collection to store aggregation of ChildMapPersonaFeatureConstraint objects.
      */
     protected $collMapPersonaFeatureConstraints;
@@ -141,6 +149,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
      * @var ObjectCollection|ChildCardFeatures[]
      */
     protected $cardFeaturessScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMapCardFeatureConstraint[]
+     */
+    protected $mapCardFeatureConstraintsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -765,6 +779,8 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
             $this->collCardFeaturess = null;
 
+            $this->collMapCardFeatureConstraints = null;
+
             $this->collMapPersonaFeatureConstraints = null;
 
         } // if (deep)
@@ -888,6 +904,23 @@ abstract class CardFeatureType implements ActiveRecordInterface
 
             if ($this->collCardFeaturess !== null) {
                 foreach ($this->collCardFeaturess as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->mapCardFeatureConstraintsScheduledForDeletion !== null) {
+                if (!$this->mapCardFeatureConstraintsScheduledForDeletion->isEmpty()) {
+                    \MapCardFeatureConstraintQuery::create()
+                        ->filterByPrimaryKeys($this->mapCardFeatureConstraintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mapCardFeatureConstraintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMapCardFeatureConstraints !== null) {
+                foreach ($this->collMapCardFeatureConstraints as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1141,6 +1174,21 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collCardFeaturess->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMapCardFeatureConstraints) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mapCardFeatureConstraints';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'map_card_feature_constraints';
+                        break;
+                    default:
+                        $key = 'MapCardFeatureConstraints';
+                }
+
+                $result[$key] = $this->collMapCardFeatureConstraints->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collMapPersonaFeatureConstraints) {
 
@@ -1435,6 +1483,12 @@ abstract class CardFeatureType implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getMapCardFeatureConstraints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMapCardFeatureConstraint($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getMapPersonaFeatureConstraints() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addMapPersonaFeatureConstraint($relObj->copy($deepCopy));
@@ -1484,6 +1538,9 @@ abstract class CardFeatureType implements ActiveRecordInterface
     {
         if ('CardFeatures' == $relationName) {
             return $this->initCardFeaturess();
+        }
+        if ('MapCardFeatureConstraint' == $relationName) {
+            return $this->initMapCardFeatureConstraints();
         }
         if ('MapPersonaFeatureConstraint' == $relationName) {
             return $this->initMapPersonaFeatureConstraints();
@@ -1731,6 +1788,252 @@ abstract class CardFeatureType implements ActiveRecordInterface
         $query->joinWith('CreditCard', $joinBehavior);
 
         return $this->getCardFeaturess($query, $con);
+    }
+
+    /**
+     * Clears out the collMapCardFeatureConstraints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMapCardFeatureConstraints()
+     */
+    public function clearMapCardFeatureConstraints()
+    {
+        $this->collMapCardFeatureConstraints = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMapCardFeatureConstraints collection loaded partially.
+     */
+    public function resetPartialMapCardFeatureConstraints($v = true)
+    {
+        $this->collMapCardFeatureConstraintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collMapCardFeatureConstraints collection.
+     *
+     * By default this just sets the collMapCardFeatureConstraints collection to an empty array (like clearcollMapCardFeatureConstraints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMapCardFeatureConstraints($overrideExisting = true)
+    {
+        if (null !== $this->collMapCardFeatureConstraints && !$overrideExisting) {
+            return;
+        }
+        $this->collMapCardFeatureConstraints = new ObjectCollection();
+        $this->collMapCardFeatureConstraints->setModel('\MapCardFeatureConstraint');
+    }
+
+    /**
+     * Gets an array of ChildMapCardFeatureConstraint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildCardFeatureType is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMapCardFeatureConstraint[] List of ChildMapCardFeatureConstraint objects
+     * @throws PropelException
+     */
+    public function getMapCardFeatureConstraints(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapCardFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapCardFeatureConstraints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapCardFeatureConstraints) {
+                // return empty collection
+                $this->initMapCardFeatureConstraints();
+            } else {
+                $collMapCardFeatureConstraints = ChildMapCardFeatureConstraintQuery::create(null, $criteria)
+                    ->filterByCardFeatureType($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMapCardFeatureConstraintsPartial && count($collMapCardFeatureConstraints)) {
+                        $this->initMapCardFeatureConstraints(false);
+
+                        foreach ($collMapCardFeatureConstraints as $obj) {
+                            if (false == $this->collMapCardFeatureConstraints->contains($obj)) {
+                                $this->collMapCardFeatureConstraints->append($obj);
+                            }
+                        }
+
+                        $this->collMapCardFeatureConstraintsPartial = true;
+                    }
+
+                    return $collMapCardFeatureConstraints;
+                }
+
+                if ($partial && $this->collMapCardFeatureConstraints) {
+                    foreach ($this->collMapCardFeatureConstraints as $obj) {
+                        if ($obj->isNew()) {
+                            $collMapCardFeatureConstraints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMapCardFeatureConstraints = $collMapCardFeatureConstraints;
+                $this->collMapCardFeatureConstraintsPartial = false;
+            }
+        }
+
+        return $this->collMapCardFeatureConstraints;
+    }
+
+    /**
+     * Sets a collection of ChildMapCardFeatureConstraint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mapCardFeatureConstraints A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildCardFeatureType The current object (for fluent API support)
+     */
+    public function setMapCardFeatureConstraints(Collection $mapCardFeatureConstraints, ConnectionInterface $con = null)
+    {
+        /** @var ChildMapCardFeatureConstraint[] $mapCardFeatureConstraintsToDelete */
+        $mapCardFeatureConstraintsToDelete = $this->getMapCardFeatureConstraints(new Criteria(), $con)->diff($mapCardFeatureConstraints);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->mapCardFeatureConstraintsScheduledForDeletion = clone $mapCardFeatureConstraintsToDelete;
+
+        foreach ($mapCardFeatureConstraintsToDelete as $mapCardFeatureConstraintRemoved) {
+            $mapCardFeatureConstraintRemoved->setCardFeatureType(null);
+        }
+
+        $this->collMapCardFeatureConstraints = null;
+        foreach ($mapCardFeatureConstraints as $mapCardFeatureConstraint) {
+            $this->addMapCardFeatureConstraint($mapCardFeatureConstraint);
+        }
+
+        $this->collMapCardFeatureConstraints = $mapCardFeatureConstraints;
+        $this->collMapCardFeatureConstraintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MapCardFeatureConstraint objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MapCardFeatureConstraint objects.
+     * @throws PropelException
+     */
+    public function countMapCardFeatureConstraints(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapCardFeatureConstraintsPartial && !$this->isNew();
+        if (null === $this->collMapCardFeatureConstraints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapCardFeatureConstraints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMapCardFeatureConstraints());
+            }
+
+            $query = ChildMapCardFeatureConstraintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByCardFeatureType($this)
+                ->count($con);
+        }
+
+        return count($this->collMapCardFeatureConstraints);
+    }
+
+    /**
+     * Method called to associate a ChildMapCardFeatureConstraint object to this object
+     * through the ChildMapCardFeatureConstraint foreign key attribute.
+     *
+     * @param  ChildMapCardFeatureConstraint $l ChildMapCardFeatureConstraint
+     * @return $this|\CardFeatureType The current object (for fluent API support)
+     */
+    public function addMapCardFeatureConstraint(ChildMapCardFeatureConstraint $l)
+    {
+        if ($this->collMapCardFeatureConstraints === null) {
+            $this->initMapCardFeatureConstraints();
+            $this->collMapCardFeatureConstraintsPartial = true;
+        }
+
+        if (!$this->collMapCardFeatureConstraints->contains($l)) {
+            $this->doAddMapCardFeatureConstraint($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMapCardFeatureConstraint $mapCardFeatureConstraint The ChildMapCardFeatureConstraint object to add.
+     */
+    protected function doAddMapCardFeatureConstraint(ChildMapCardFeatureConstraint $mapCardFeatureConstraint)
+    {
+        $this->collMapCardFeatureConstraints[]= $mapCardFeatureConstraint;
+        $mapCardFeatureConstraint->setCardFeatureType($this);
+    }
+
+    /**
+     * @param  ChildMapCardFeatureConstraint $mapCardFeatureConstraint The ChildMapCardFeatureConstraint object to remove.
+     * @return $this|ChildCardFeatureType The current object (for fluent API support)
+     */
+    public function removeMapCardFeatureConstraint(ChildMapCardFeatureConstraint $mapCardFeatureConstraint)
+    {
+        if ($this->getMapCardFeatureConstraints()->contains($mapCardFeatureConstraint)) {
+            $pos = $this->collMapCardFeatureConstraints->search($mapCardFeatureConstraint);
+            $this->collMapCardFeatureConstraints->remove($pos);
+            if (null === $this->mapCardFeatureConstraintsScheduledForDeletion) {
+                $this->mapCardFeatureConstraintsScheduledForDeletion = clone $this->collMapCardFeatureConstraints;
+                $this->mapCardFeatureConstraintsScheduledForDeletion->clear();
+            }
+            $this->mapCardFeatureConstraintsScheduledForDeletion[]= clone $mapCardFeatureConstraint;
+            $mapCardFeatureConstraint->setCardFeatureType(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this CardFeatureType is new, it will return
+     * an empty collection; or if this CardFeatureType has previously
+     * been saved, it will retrieve related MapCardFeatureConstraints from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in CardFeatureType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMapCardFeatureConstraint[] List of ChildMapCardFeatureConstraint objects
+     */
+    public function getMapCardFeatureConstraintsJoinCreditCard(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMapCardFeatureConstraintQuery::create(null, $criteria);
+        $query->joinWith('CreditCard', $joinBehavior);
+
+        return $this->getMapCardFeatureConstraints($query, $con);
     }
 
     /**
@@ -2018,6 +2321,11 @@ abstract class CardFeatureType implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMapCardFeatureConstraints) {
+                foreach ($this->collMapCardFeatureConstraints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collMapPersonaFeatureConstraints) {
                 foreach ($this->collMapPersonaFeatureConstraints as $o) {
                     $o->clearAllReferences($deep);
@@ -2026,6 +2334,7 @@ abstract class CardFeatureType implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collCardFeaturess = null;
+        $this->collMapCardFeatureConstraints = null;
         $this->collMapPersonaFeatureConstraints = null;
     }
 

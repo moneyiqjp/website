@@ -59,7 +59,7 @@ class RestrictionTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class RestrictionTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the restriction_type_id field
@@ -85,6 +85,11 @@ class RestrictionTypeTableMap extends TableMap
      * the column name for the description field
      */
     const COL_DESCRIPTION = 'restriction_type.description';
+
+    /**
+     * the column name for the display field
+     */
+    const COL_DISPLAY = 'restriction_type.display';
 
     /**
      * the column name for the update_time field
@@ -108,11 +113,11 @@ class RestrictionTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RestrictionTypeId', 'Name', 'Description', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('restrictionTypeId', 'name', 'description', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID, RestrictionTypeTableMap::COL_NAME, RestrictionTypeTableMap::COL_DESCRIPTION, RestrictionTypeTableMap::COL_UPDATE_TIME, RestrictionTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('restriction_type_id', 'name', 'description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RestrictionTypeId', 'Name', 'Description', 'Display', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('restrictionTypeId', 'name', 'description', 'display', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID, RestrictionTypeTableMap::COL_NAME, RestrictionTypeTableMap::COL_DESCRIPTION, RestrictionTypeTableMap::COL_DISPLAY, RestrictionTypeTableMap::COL_UPDATE_TIME, RestrictionTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('restriction_type_id', 'name', 'description', 'display', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class RestrictionTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RestrictionTypeId' => 0, 'Name' => 1, 'Description' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('restrictionTypeId' => 0, 'name' => 1, 'description' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID => 0, RestrictionTypeTableMap::COL_NAME => 1, RestrictionTypeTableMap::COL_DESCRIPTION => 2, RestrictionTypeTableMap::COL_UPDATE_TIME => 3, RestrictionTypeTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('restriction_type_id' => 0, 'name' => 1, 'description' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RestrictionTypeId' => 0, 'Name' => 1, 'Description' => 2, 'Display' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('restrictionTypeId' => 0, 'name' => 1, 'description' => 2, 'display' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID => 0, RestrictionTypeTableMap::COL_NAME => 1, RestrictionTypeTableMap::COL_DESCRIPTION => 2, RestrictionTypeTableMap::COL_DISPLAY => 3, RestrictionTypeTableMap::COL_UPDATE_TIME => 4, RestrictionTypeTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('restriction_type_id' => 0, 'name' => 1, 'description' => 2, 'display' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -149,6 +154,7 @@ class RestrictionTypeTableMap extends TableMap
         $this->addPrimaryKey('restriction_type_id', 'RestrictionTypeId', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('display', 'Display', 'LONGVARCHAR', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -158,6 +164,7 @@ class RestrictionTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('CardRestriction', '\\CardRestriction', RelationMap::ONE_TO_MANY, array('restriction_type_id' => 'restriction_type_id', ), null, null, 'CardRestrictions');
         $this->addRelation('PersonaRestriction', '\\PersonaRestriction', RelationMap::ONE_TO_MANY, array('restriction_type_id' => 'restriction_type_id', ), null, null, 'PersonaRestrictions');
     } // buildRelations()
 
@@ -305,12 +312,14 @@ class RestrictionTypeTableMap extends TableMap
             $criteria->addSelectColumn(RestrictionTypeTableMap::COL_RESTRICTION_TYPE_ID);
             $criteria->addSelectColumn(RestrictionTypeTableMap::COL_NAME);
             $criteria->addSelectColumn(RestrictionTypeTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(RestrictionTypeTableMap::COL_DISPLAY);
             $criteria->addSelectColumn(RestrictionTypeTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(RestrictionTypeTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.restriction_type_id');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.display');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

@@ -14,6 +14,7 @@ use Db\Utility\ArrayUtils;
 class JRestrictionType implements JSONInterface {
     public $RestrictionTypeId;
     public $Name;
+    public $Display;
     public $Description;
     public $UpdateTime;
     public $UpdateUser;
@@ -27,6 +28,7 @@ class JRestrictionType implements JSONInterface {
         $mine = new JRestrictionType();
         $mine->RestrictionTypeId = $item->getRestrictionTypeId();
         $mine->Name = $item->getName();
+        $mine->Display = $item->getDisplay();
         $mine->Description = $item->getDescription();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
@@ -36,9 +38,17 @@ class JRestrictionType implements JSONInterface {
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JRestrictionType();
-        if(ArrayUtils::KEY_EXISTS($data,'RestrictionTypeId'))  $mine->RestrictionTypeId = $data['RestrictionTypeId'];
+        if(ArrayUtils::KEY_EXISTS($data,'RestrictionTypeId'))  {
+            $db = (new \RestrictionTypeQuery())->findPk($data["RestrictionTypeId"]);
+            if(!is_null($db)) {
+                    $mine = JRestrictionType::CREATE_FROM_DB( $db );
+            } else {
+                $mine->RestrictionTypeId = $data['RestrictionTypeId'];
+            }
+        }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Description = $data['Display'];
         $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -61,6 +71,7 @@ class JRestrictionType implements JSONInterface {
         if(FieldUtils::ID_IS_DEFINED($this->RestrictionTypeId)) $item->setRestrictionTypeId($this->RestrictionTypeId);
 
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDisplay($this->Display);
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);

@@ -46,11 +46,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardFeatureTypeQuery rightJoinCardFeatures($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardFeatures relation
  * @method     ChildCardFeatureTypeQuery innerJoinCardFeatures($relationAlias = null) Adds a INNER JOIN clause to the query using the CardFeatures relation
  *
+ * @method     ChildCardFeatureTypeQuery leftJoinMapCardFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapCardFeatureConstraint relation
+ * @method     ChildCardFeatureTypeQuery rightJoinMapCardFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapCardFeatureConstraint relation
+ * @method     ChildCardFeatureTypeQuery innerJoinMapCardFeatureConstraint($relationAlias = null) Adds a INNER JOIN clause to the query using the MapCardFeatureConstraint relation
+ *
  * @method     ChildCardFeatureTypeQuery leftJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaFeatureConstraint relation
  * @method     ChildCardFeatureTypeQuery rightJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaFeatureConstraint relation
  * @method     ChildCardFeatureTypeQuery innerJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaFeatureConstraint relation
  *
- * @method     \CardFeaturesQuery|\MapPersonaFeatureConstraintQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \CardFeaturesQuery|\MapCardFeatureConstraintQuery|\MapPersonaFeatureConstraintQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildCardFeatureType findOne(ConnectionInterface $con = null) Return the first ChildCardFeatureType matching the query
  * @method     ChildCardFeatureType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCardFeatureType matching the query, or a new ChildCardFeatureType object populated from the query conditions when no match is found
@@ -583,6 +587,79 @@ abstract class CardFeatureTypeQuery extends ModelCriteria
         return $this
             ->joinCardFeatures($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CardFeatures', '\CardFeaturesQuery');
+    }
+
+    /**
+     * Filter the query by a related \MapCardFeatureConstraint object
+     *
+     * @param \MapCardFeatureConstraint|ObjectCollection $mapCardFeatureConstraint  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function filterByMapCardFeatureConstraint($mapCardFeatureConstraint, $comparison = null)
+    {
+        if ($mapCardFeatureConstraint instanceof \MapCardFeatureConstraint) {
+            return $this
+                ->addUsingAlias(CardFeatureTypeTableMap::COL_FEATURE_TYPE_ID, $mapCardFeatureConstraint->getFeatureTypeId(), $comparison);
+        } elseif ($mapCardFeatureConstraint instanceof ObjectCollection) {
+            return $this
+                ->useMapCardFeatureConstraintQuery()
+                ->filterByPrimaryKeys($mapCardFeatureConstraint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapCardFeatureConstraint() only accepts arguments of type \MapCardFeatureConstraint or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapCardFeatureConstraint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildCardFeatureTypeQuery The current query, for fluid interface
+     */
+    public function joinMapCardFeatureConstraint($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapCardFeatureConstraint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapCardFeatureConstraint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapCardFeatureConstraint relation MapCardFeatureConstraint object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapCardFeatureConstraintQuery A secondary query class using the current class as primary query
+     */
+    public function useMapCardFeatureConstraintQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapCardFeatureConstraint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapCardFeatureConstraint', '\MapCardFeatureConstraintQuery');
     }
 
     /**

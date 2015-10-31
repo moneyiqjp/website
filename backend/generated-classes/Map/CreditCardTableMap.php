@@ -236,10 +236,12 @@ class CreditCardTableMap extends TableMap
         $this->addRelation('CardDescription', '\\CardDescription', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardDescriptions');
         $this->addRelation('CardFeatures', '\\CardFeatures', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardFeaturess');
         $this->addRelation('CardPointSystem', '\\CardPointSystem', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardPointSystems');
+        $this->addRelation('CardRestriction', '\\CardRestriction', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'CardRestrictions');
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Discountss');
         $this->addRelation('Fees', '\\Fees', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Feess');
         $this->addRelation('Insurance', '\\Insurance', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Insurances');
         $this->addRelation('Interest', '\\Interest', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'Interests');
+        $this->addRelation('MapCardFeatureConstraint', '\\MapCardFeatureConstraint', RelationMap::ONE_TO_MANY, array('credit_card_id' => 'credit_card_id', ), null, null, 'MapCardFeatureConstraints');
     } // buildRelations()
 
     /**

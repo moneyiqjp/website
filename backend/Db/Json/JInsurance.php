@@ -126,6 +126,10 @@ class JInsurance  implements JSONInterface {
         if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
         $it = $this->InsuranceType;
 
+        if(is_null($it->TypeDisplay)) return $it->TypeName;
+        return $it->TypeDisplay;
+
+        /*
         switch(strtoupper($it->TypeName)) {
             case "TRAVEL":
                 return "travel_insurance";
@@ -134,13 +138,15 @@ class JInsurance  implements JSONInterface {
             default:
                 return "";
         }
+        */
     }
 
     public function getFeature() {
         if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
         $it = $this->InsuranceType;
 
-        return $it->Description;
+        if(is_null($it->SubtypeDisplay)) return $it->SubtypeName;
+        return $it->SubtypeDisplay;
     }
 
 

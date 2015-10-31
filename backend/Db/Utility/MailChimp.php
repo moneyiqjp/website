@@ -43,6 +43,7 @@ class MailChimp
         $result = file_get_contents($url, false, $context);
         */
         echo $response->body;
+        return $response->body;
     }
 
 

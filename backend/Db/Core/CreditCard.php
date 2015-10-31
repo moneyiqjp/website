@@ -10,6 +10,32 @@ namespace Db\Core;
 
 include_once(__DIR__ . "/../Json/JInsurance.php");
 use Db\Json\JInsurance;
+use Db\Json\JFeatureType;
+use Db\Json\JCreditCardRestriction;
+
+
+class CardRestriction { //TODO merge with PersonaMapping
+    public $FeatureRestriction = array();
+    public $GeneralRestriction = array();
+
+    public function Restriction(){}
+
+    public static function CREATE(\CreditCard $card)
+    {
+        $that = new CardRestriction();
+
+        foreach($card->getMapCardFeatureConstraints() as $item) {
+            array_push($that->FeatureRestriction,  JFeatureType::CREATE_FROM_DB($item->getCardFeatureType()));
+        }
+
+
+        foreach($card->getCardRestrictions() as $item) {
+            array_push($that->GeneralRestriction,  JCreditCardRestriction::CREATE_FROM_DB($item)->getRestriction());
+        }
+
+        return $that;
+    }
+}
 
 class Reward{
     public $category;
@@ -138,6 +164,7 @@ class CreditCard {
     public $discountData = array();
     public $supportedBrands = array();
     public $rewards = array();
+    public $restriction;
 
     function CreditCard()
     {
@@ -312,7 +339,7 @@ class CreditCard {
             }
         }
 
-
+        $mine->restriction = CardRestriction::CREATE($cc);
 
         return $mine;
     }
