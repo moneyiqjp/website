@@ -339,7 +339,7 @@ if ( isset($plugin_page) ) {
 		if ( $pagenow == 'post-new.php' )
 			do_action( 'load-page-new.php' );
 		elseif ( $pagenow == 'post.php' )
-			do_action( 'load-page.php' );
+			do_action( 'load-single.php' );
 	}  elseif ( $pagenow == 'edit-tags.php' ) {
 		if ( $taxnow == 'category' )
 			do_action( 'load-categories.php' );

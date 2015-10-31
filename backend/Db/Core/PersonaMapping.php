@@ -125,8 +125,7 @@ class Persona {
 
     public function Persona(){}
 
-    public static function CREATE(\Persona $pers)
-    {
+    public static function CREATE(\Persona $pers) {
         $that = new Persona();
         $that->Id = $pers->getPersonaId();
         $that->Name= $pers->getName();
@@ -135,8 +134,7 @@ class Persona {
         return $that;
     }
 
-    public static function CREATE_INCLUDING_SCENES(\Persona $pers)
-    {
+    public static function CREATE_INCLUDING_SCENES(\Persona $pers) {
         $that = Persona::CREATE($pers);
         $that->Scene = array();
         foreach ($pers->getMapPersonaScenes() as $pms) {
@@ -147,7 +145,7 @@ class Persona {
 }
 
 
-class SceneMapping{
+class SceneMapping {
     public $Scene = array();
 
     public function SceneMapping(){}
@@ -163,8 +161,7 @@ class SceneMapping{
 }
 
 
-class PersonaMapping
-{
+class PersonaMapping {
     public $Persona = array();
 
     public function PersonaMapping(){}
@@ -181,7 +178,4 @@ class PersonaMapping
     public static function CREATESCENEMAPPING(){
         return SceneMapping::CREATE();
     }
-
-
-
 }

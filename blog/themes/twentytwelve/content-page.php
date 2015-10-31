@@ -1,6 +1,6 @@
 <?php
 /**
- * The template used for displaying page content in page.php
+ * The template used for displaying page content in single.php
  *
  * @package WordPress
  * @subpackage Twenty_Twelve
@@ -10,7 +10,7 @@
 
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<header class="entry-header">
-			<?php if ( ! is_page_template( 'page-templates/front-page.php' ) ) : ?>
+			<?php if ( ! is_page_template( 'page-templates/front-single.php' ) ) : ?>
 			<?php the_post_thumbnail(); ?>
 			<?php endif; ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>

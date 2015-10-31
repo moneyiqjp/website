@@ -32,11 +32,51 @@ body {
     background-size: 100% 100%;
     background-position-y: 0px;
 }
-.blog-pane-title {
+
+.blog-pane{
+    text-align: justify;
+    width: 1200px;
+    vertical-align: top;
+    align-self: center;
+    color: rgb(75, 75, 75);
+    font-size:1.1rem;
+}
+
+.blog-pane-title{
+    font-weight:bold;
+    font-size:1.3rem;
+}
+
+.blog-pane-feature-image {
+    margin:  0 0 0 0;
+    margin-bottom: 10px;
+}
+
+.blog-pane-category-links {
+    color: #d3d0a5;
+}
+.blog-pane-category-links a {
+    color: #d3d0a5;
+    text-decoration: none;
+}
+.blog-pane-category-links a:hover {
+    color: #d3d0a5;
+    text-decoration: underline;
+}
+
+.blog-pane-preview-title {
     clear:both;
     width:100%;
     font-weight:bold;
     font-size:1.25rem;
+    vertical-align: bottom;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .blog-pane-preview {
@@ -48,21 +88,24 @@ body {
     overflow:hidden;
     text-align:left;
     float: left;
-    padding-left: 10px;
-    max-width: 350px;
-    min-width: 250px;
-    max-height: 500px;
-    min-height: 450px;
+    padding-left: 0;
+    width: 350px;
+    height: 490px;
     font-size: 1.0rem;
 }
 
-.blog-data-container {
-    max-height: 250px;
-    min-height: 200px;
+.blog-pane-preview-data-container {
+    height: 150px;
     overflow:hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    vert-align: top;
+    margin: 0 0 0 0;
 }
 
-.blog-read-more {
+.blog-pane-preview-read-more {
     border:thin solid #e9913d;
     border-radius:5px;
     background-color:#f8f8f0;
@@ -70,18 +113,19 @@ body {
     width: 150px;
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 5px;
-
+    margin-bottom: 10px;
+    margin-left: 10px;
+    vertical-align: middle;
 }
 
-.blog-read-more a {
+.blog-pane-preview-read-more a {
     text-decoration: none;
     color: #e9913d;
     font-weight: bold;
     text-align: center;
     align-self: center;
 }
-.blog-read-more a:hover {
+.blog-pane-preview-read-more a:hover {
     text-decoration: none;
     text-align: center;
     color: #E9B03D;
@@ -102,6 +146,11 @@ div#primary-sidebar{
 
 div#main-content{
     margin-right: 250px;
+    align-content: center;
+    horiz-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
 }
 
 div#main-container{
@@ -113,7 +162,6 @@ div#main-container{
 div.primary-sidebar div{
     vertical-align: top;
     float:left;
-    width: 245px;
 }
 
 div.moneybutton{
@@ -121,13 +169,19 @@ div.moneybutton{
     border-radius:5px;
     background-color:#e9913d;
     color: white;
-    height: 85px;
-    width: 250px;
+    height: 45px;
+    width: 150px;
+}
+
+div.blog-pane-preview  img.wp-post-image{
+    height: 250px;
+    width: 350px;
+    margin: 0px 0px 0px 0px;
 }
 
 div.moneybutton div.mb-image{
-    margin: 4px 7px 0px 0px;
-    width: 81px;
+    margin: 4px 4px 0px 0px;
+    width: 41px;
     float:left;
 }
 
@@ -135,25 +189,25 @@ div.moneybutton div.mb-text{
     text-align: left;
     vertical-align: middle;
     float:left;
-    font-weight: bold;
-    font-size: 1.1em;
-    width:150px;
-    height: 85px;
+    width:100px;
+    height: 45px;
     margin: 0 0 0 0;
 }
 
 div.moneybutton a{
     text-decoration: none;
     color: white;
-    font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 div.moneybutton a:hover{
     text-decoration: overline underline;
     color: white;
 }
 
-
+div#primary-sidebar div ul{
+    list-style-type: none;
+    margin-top: -5px;
+}
 
 
 
