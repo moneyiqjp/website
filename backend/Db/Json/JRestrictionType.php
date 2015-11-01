@@ -48,7 +48,7 @@ class JRestrictionType implements JSONInterface {
         }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
-        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Description = $data['Display'];
+        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
         $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 

@@ -122,10 +122,13 @@
                     }, {
                         label: "Name:",
                         name: "Name"
-                    },   {
+                    }, {
                         label: "Description:",
                         name: "Description"
-                    },{
+                    }, {
+                        label: "Display:",
+                        name: "Display"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -253,8 +256,9 @@
                 },
                 "columns": [
                     {"data": "RestrictionTypeId", edit: false},
-                    {"data": "Name"},
-                    {"data": "Description"},
+                    {"data": "Name", width: "15%"},
+                    {"data": "Description", width:"25%"},
+                    {"data": "Display", width: "40%"},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -360,14 +364,15 @@
 </head>
 
 <body class="dt-other">
-<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+<div  class="admin_datatable_medium">
     <div class="table-headline"><a name="restrictiontype">Restriction Attributes</a></div>
-    <table id="restrictionType" class="display" cellspacing="0" width="98%">
+    <table id="restrictionType" class="display" cellspacing="0">
         <thead>
         <tr>
             <th>Id</th>
             <th>Attribute</th>
             <th>Description</th>
+            <th>Display</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -378,6 +383,7 @@
             <th>Id</th>
             <th>Attribute</th>
             <th>Description</th>
+            <th>Display</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -385,10 +391,10 @@
     </table>
     <a href="../backend/crud/restriction/type/all" class="source">Source</a>
 </div>
-<br>
-<div style="width: 98%;float:left;">
+
+<div  class="admin_datatable_medium">
     <div class="table-headline"><a name="restrictions">Persona Restrictions</a></div>
-    <table id="restrictionTable" class="display" cellspacing="0" width="98%">
+    <table id="restrictionTable" class="display" cellspacing="0">
         <thead>
         <tr>
             <th>Id</th>
@@ -418,10 +424,9 @@
     <a href="../backend/crud/restriction/general/all" class="source">Source</a>
 </div>
 
-<br>
-<div style="width: 98%;float:left;">
+<div class="admin_datatable_medium">
     <div class="table-headline"><a name="restrictions">CreditCard Restrictions</a></div>
-    <table id="creditCardRestrictionTable" class="display" cellspacing="0" width="98%">
+    <table id="creditCardRestrictionTable" class="display" cellspacing="0">
         <thead>
         <tr>
             <th>Id</th>
@@ -454,10 +459,11 @@
 <br>
 <br>
 <br>
-Requests for menus<br>
-<a href="../backend/display/creditcards">CreditCard</a>
-<a href='../backend/crud/persona/all'>Personas</a>
-<a href='../backend/crud/restriction/type/all'>Restrictions</a>
-
+<div class="clear">
+    <div class="source">Requests for menus</div>
+    <a href="../backend/display/creditcards"  class="source">CreditCard</a>
+    <a href='../backend/crud/persona/all' class="source">Personas</a>
+    <a href='../backend/crud/restriction/type/all' class="source">Restrictions</a>
+</div>
 </body>
 </html>

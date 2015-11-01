@@ -126,3 +126,28 @@ a.source:hover{
     color: #000000;
     font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 }
+
+div.admin_datatable_medium {
+    min-width: 500px;
+    max-width: 600px;
+    float: left;
+    margin-right: 25px;
+    margin-bottom: 15px;
+}
+
+div.clear {
+    clear: both;
+}
+
+a.cleanlink{
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    text-decoration: none;
+}
+a.cleanlink:link{
+    text-decoration: none;
+}
+
+
+a.cleanlink:hover{
+    text-decoration: underline overline;
+}

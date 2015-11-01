@@ -617,7 +617,9 @@
                         .submit();
                 })
                 .on('click', 'tbody td:not(:first-child)', function (e) {
-                    featureEditor.inline(this);
+                    if(e.target.className!= "editor-afield") {
+                        featureEditor.inline(this);
+                    }
                 });
 
 
@@ -872,6 +874,18 @@
     <tr>
         <td colspan="2">
             <div class="table-headline"><a name="issuers">Card details</a></div>
+            <div style="width: 100%;height: 35px">
+                <div style="width: 50%;height:30px;background-color:black;color: white;float: left;align-content: center;text-align: center;vertical-align: middle;padding-top: 5px">
+                    <a href="creditcard_details.php?Id=<?php echo htmlspecialchars($_GET["Id"]); ?>" class="cleanlink" style="color: white">
+                        Core details
+                    </a>
+                </div>
+                <div style="width: 50%;height:30px;background-color:lightgrey;color:black;float: left;align-content: center;text-align: center;vertical-align: middle;padding-top: 5px">
+                    <a href="creditcard_restrictions.php?Id=<?php echo htmlspecialchars($_GET["Id"]); ?>" class="cleanlink" style="color: black">
+                        Restrictions
+                    </a>
+                </div>
+            </div>
             <div>
                 <div style="position: relative;float: left;">
                     <!--

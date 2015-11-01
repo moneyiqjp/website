@@ -1914,7 +1914,6 @@ class Db
             return $this->CreateFeatureRestrictionForPersona($data);
         }
 
-        throw new \Exception('UpdateFeatureRestrictionForPersona');
         return $this->UpdateFeatureRestrictionForPersona($data);
     }
 
@@ -1927,7 +1926,7 @@ class Db
                 return $item;
             }
         }
-        return array();
+        return $dat;
     }
 
     function CreateFeatureRestrictionForPersona($data) {
@@ -2027,7 +2026,7 @@ class Db
         return $personaFeatures;
     }
 
-    function GetCardFeatureRestrictionForPersona($id) {
+    function GetCardFeatureRestrictionForCreditCard($id) {
         $personaFeatures = array();
         $existingIds = array();
         foreach ((new \MapCardFeatureConstraintQuery())->findByCreditCardId($id) as $item) {
@@ -2048,7 +2047,6 @@ class Db
             array_push($allFeatures, $stuff);
         }
 
-        $diff = array();
         foreach($allFeatures as $type) {
             if(!in_array($type->FeatureTypeId,$existingIds)) {
                 array_push($personaFeatures, $type);
@@ -2058,22 +2056,22 @@ class Db
         return $personaFeatures;
     }
 
-    function UpdateCardFeatureRestrictionForPersona($data) {
+    function UpdateCardFeatureRestrictionForCreditCard($data) {
         if(!array_key_exists('FeatureId',$data)) throw new \Exception('FeatureId not defined');
         if(!array_key_exists('Active',$data)) throw new \Exception('Key Active not defined');
 
         if(array_key_exists('Active',$data) && !is_null($data['Active'])){
-            $this->DeleteCardFeatureRestrictionForPersona($data['FeatureId']);
+            $this->DeleteCardFeatureRestrictionForCreditCard($data['FeatureId']);
             //throw new \Exception('DeleteCardFeatureRestrictionForPersona');
         }
 
         if($data['Active']) {
             //throw new \Exception('CreateCardFeatureRestrictionForPersona');
-            return $this->CreateCardFeatureRestrictionForPersona($data);
+            return $this->CreateCardFeatureRestrictionForCreditCard($data);
         }
 
-        throw new \Exception('UpdateCardFeatureRestrictionForPersona');
-        return $this->UpdateCardFeatureRestrictionForPersona($data);
+        //throw new \Exception('UpdateCardFeatureRestrictionForPersona');
+        return $this->UpdateCardFeatureRestriction($data);
     }
 
     function UpdateCardFeatureRestriction($data) {
@@ -2085,11 +2083,11 @@ class Db
                 return $item;
             }
         }
-        return array();
+        return $data;
     }
 
-    function CreateCardFeatureRestrictionForPersona($data) {
-        if(!array_key_exists('PersonaId',$data)) throw new \Exception("Required field PersonaId not found for deleting row");
+    function CreateCardFeatureRestrictionForCreditCard($data) {
+        if(!array_key_exists('CreditCardId',$data)) throw new \Exception("Required field CreditCardId not found for deleting row");
         if(!array_key_exists('FeatureTypeId',$data)) throw new \Exception("Required field FeatureTypeId not found for deleting row");
 
         $item = new \MapCardFeatureConstraint();
@@ -2104,7 +2102,7 @@ class Db
         return $data;
     }
 
-    function DeleteCardFeatureRestrictionForPersona($id) {
+    function DeleteCardFeatureRestrictionForCreditCard($id) {
         $ids = FieldUtils::SPLIT_ID($id);
         if(is_null($ids)||count($ids)<=1) return array();
         foreach( (new  \MapCardFeatureConstraintQuery())->findByCreditCardId($ids[0]) as $item){

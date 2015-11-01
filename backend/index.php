@@ -2289,7 +2289,7 @@ $app->get('/crud/restriction/credit/card/general/by/credit/card/id', function ()
 
     $result = array();
     try {
-        $result['data'] = $db->GetCreditCardRestrictionByPersonaId($app->request()->get('Id'));
+        $result['data'] = $db->GetCreditCardRestrictionByCreditCardId($app->request()->get('Id'));
     } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
@@ -2367,13 +2367,13 @@ $app->get('/crud/restriction/credit/card/feature/all', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetAllCardFeatureRestrictions()));
 });
-$app->get('/crud/restriction/credit/card/feature/by/persona/id', function () use ($app) {
+$app->get('/crud/restriction/credit/card/feature/by/credit/card/id', function () use ($app) {
     $db = new \Db\Core\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
     try {
-        $result['data'] = $db->GetCardFeatureRestrictionForPersona($app->request()->get('Id'));
+        $result['data'] = $db->GetCardFeatureRestrictionForCreditCard($app->request()->get('Id'));
     } catch (\Exception $ex) {
         $result['error'] = $ex->getMessage();
         $app->getLog()->error($ex);
@@ -2389,7 +2389,7 @@ $app->delete('/crud/restriction/credit/card/feature/delete', function () use ($a
     //TODO handle errors
     foreach($ids as $id) {
         $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteCardFeatureRestrictionForPersona($id);
+        $jTableResult['row'] = $db->DeleteCardFeatureRestrictionForCreditCard($id);
     }
     echo json_encode($jTableResult);
 });
@@ -2400,7 +2400,7 @@ $app->post('/crud/restriction/credit/card/feature/create', function () use ($app
 
     $jTableResult = array();
     try {
-        $jTableResult['row'] = $db->CreateCardFeatureRestrictionForPersona($request->put('data'));
+        $jTableResult['row'] = $db->CreateCardFeatureRestrictionForCreditCard($request->put('data'));
     } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);
@@ -2416,7 +2416,7 @@ $app->put('/crud/restriction/credit/card/feature/update', function () use ($app)
 
     $jTableResult = array();
     try {
-        $jTableResult['row'] = $db->UpdateCardFeatureRestrictionForPersona($request->put('data'));
+        $jTableResult['row'] = $db->UpdateCardFeatureRestrictionForCreditCard($request->put('data'));
     } catch(\Exception $e) {
         $jTableResult['error'] = $e->getMessage();
         $app->getLog()->error($e);

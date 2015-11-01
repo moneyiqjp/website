@@ -462,7 +462,10 @@
                         .submit();
                 })
                 .on('click', 'tbody td:not(:first-child)', function (e) {
-                    featureEditor.inline(this);
+                    if(e.target.className!= "editor-afield")
+                    {
+                        featureEditor.inline(this);
+                    }
                 });
 
 

@@ -363,6 +363,7 @@
             <th>affiliate</th>
             <th>expiry<br>(months)</th>
             <th>reference</th>
+            <th>active</th>
             <th>update</th>
         </tr>
     </thead>
@@ -383,6 +384,7 @@
             <th>affiliate</th>
             <th>expiry<br>(months)</th>
             <th>reference</th>
+            <th>active</th>
             <th>update</th>
         </tr>
     </tfoot>
