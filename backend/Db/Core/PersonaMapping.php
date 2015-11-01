@@ -16,11 +16,18 @@ class Store {
     public $Id;
     public $Name;
     public $IsMajor;
+    public $Allocation;
+
     public static function CREATE(\Store $store) {
         $that = new Store();
         $that->Id = $store->getStoreId();
         $that->Name = $store->getStoreName();
         $that->IsMajor = $store->getIsMajor();
+        if(!is_null($store->getAllocation())) {
+            $that->Allocation = $store->getAllocation() * 0.01;
+        } else {
+            $that->Allocation = 10 * 0.01;
+        }
         return $that;
     }
 }
