@@ -28,6 +28,7 @@ class JCreditCard {
     public $points_expiry_months;
     public $reference;
     public $point_systems;
+    public $commission;
     public $is_active;
     public $update_time;
     public $update_user;
@@ -63,7 +64,6 @@ class JCreditCard {
             $myself->affiliate = array("id" => $ccs->getAffiliateId(), "name" => $ccs->getAffiliateCompany()->getName());
         }
 
-        $myself->is_active = $ccs->getIsactive();
 
         $myself->point_systems =array();
         $cpss = $ccs->getCardPointSystems();
@@ -78,6 +78,8 @@ class JCreditCard {
             }
         }
         $myself->reference = $ccs->getReference();
+        $myself->is_active = $ccs->getIsactive();
+        $myself->commission = $ccs->getCommission();
 
         $myself->update_time = $ccs->getUpdateTime()->format("Y-m-d");
         $myself->update_user = $ccs->getUpdateUser();

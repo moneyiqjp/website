@@ -107,6 +107,9 @@ class CreditCard extends BaseCreditCard
             case "affiliate_id":
                 $this->setAffiliateId($value);
                 break;
+            case "commission":
+                $this->setCommission($value);
+                break;
             case "is_active":
                 $this->setIsactive($value);
                 break;

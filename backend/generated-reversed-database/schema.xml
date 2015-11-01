@@ -219,6 +219,7 @@
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="pointExpiryMonths" phpName="Pointexpirymonths" type="INTEGER" defaultValue="12"/>
     <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
+    <column name="commission" phpName="Commission" type="INTEGER"/>
     <column name="isActive" phpName="Isactive" type="TINYINT" defaultValue="1"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
@@ -873,6 +874,7 @@
     <column name="store_category_id" phpName="StoreCategoryId" type="INTEGER" required="true" defaultValue="1"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="is_major" phpName="IsMajor" type="TINYINT" required="true" defaultValue="0"/>
+    <column name="allocation" phpName="Allocation" type="INTEGER" defaultValue="10"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <foreign-key foreignTable="store_category" name="FK_store_category">

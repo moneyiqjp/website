@@ -106,6 +106,13 @@ abstract class Store implements ActiveRecordInterface
     protected $is_major;
 
     /**
+     * The value for the allocation field.
+     * Note: this column has a database default value of: 10
+     * @var        int
+     */
+    protected $allocation;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -188,6 +195,7 @@ abstract class Store implements ActiveRecordInterface
     {
         $this->store_category_id = 1;
         $this->is_major = 0;
+        $this->allocation = 10;
     }
 
     /**
@@ -460,6 +468,16 @@ abstract class Store implements ActiveRecordInterface
     }
 
     /**
+     * Get the [allocation] column value.
+     *
+     * @return int
+     */
+    public function getAllocation()
+    {
+        return $this->allocation;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -594,6 +612,26 @@ abstract class Store implements ActiveRecordInterface
     } // setIsMajor()
 
     /**
+     * Set the value of [allocation] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Store The current object (for fluent API support)
+     */
+    public function setAllocation($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->allocation !== $v) {
+            $this->allocation = $v;
+            $this->modifiedColumns[StoreTableMap::COL_ALLOCATION] = true;
+        }
+
+        return $this;
+    } // setAllocation()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -651,6 +689,10 @@ abstract class Store implements ActiveRecordInterface
                 return false;
             }
 
+            if ($this->allocation !== 10) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -692,13 +734,16 @@ abstract class Store implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : StoreTableMap::translateFieldName('IsMajor', TableMap::TYPE_PHPNAME, $indexType)];
             $this->is_major = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : StoreTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : StoreTableMap::translateFieldName('Allocation', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->allocation = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : StoreTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : StoreTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : StoreTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -708,7 +753,7 @@ abstract class Store implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = StoreTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = StoreTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Store'), 0, $e);
@@ -1013,6 +1058,9 @@ abstract class Store implements ActiveRecordInterface
         if ($this->isColumnModified(StoreTableMap::COL_IS_MAJOR)) {
             $modifiedColumns[':p' . $index++]  = 'is_major';
         }
+        if ($this->isColumnModified(StoreTableMap::COL_ALLOCATION)) {
+            $modifiedColumns[':p' . $index++]  = 'allocation';
+        }
         if ($this->isColumnModified(StoreTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -1044,6 +1092,9 @@ abstract class Store implements ActiveRecordInterface
                         break;
                     case 'is_major':
                         $stmt->bindValue($identifier, $this->is_major, PDO::PARAM_INT);
+                        break;
+                    case 'allocation':
+                        $stmt->bindValue($identifier, $this->allocation, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1129,9 +1180,12 @@ abstract class Store implements ActiveRecordInterface
                 return $this->getIsMajor();
                 break;
             case 5:
-                return $this->getUpdateTime();
+                return $this->getAllocation();
                 break;
             case 6:
+                return $this->getUpdateTime();
+                break;
+            case 7:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1169,8 +1223,9 @@ abstract class Store implements ActiveRecordInterface
             $keys[2] => $this->getStoreCategoryId(),
             $keys[3] => $this->getDescription(),
             $keys[4] => $this->getIsMajor(),
-            $keys[5] => $this->getUpdateTime(),
-            $keys[6] => $this->getUpdateUser(),
+            $keys[5] => $this->getAllocation(),
+            $keys[6] => $this->getUpdateTime(),
+            $keys[7] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1303,9 +1358,12 @@ abstract class Store implements ActiveRecordInterface
                 $this->setIsMajor($value);
                 break;
             case 5:
-                $this->setUpdateTime($value);
+                $this->setAllocation($value);
                 break;
             case 6:
+                $this->setUpdateTime($value);
+                break;
+            case 7:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1350,10 +1408,13 @@ abstract class Store implements ActiveRecordInterface
             $this->setIsMajor($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateTime($arr[$keys[5]]);
+            $this->setAllocation($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateUser($arr[$keys[6]]);
+            $this->setUpdateTime($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setUpdateUser($arr[$keys[7]]);
         }
     }
 
@@ -1410,6 +1471,9 @@ abstract class Store implements ActiveRecordInterface
         }
         if ($this->isColumnModified(StoreTableMap::COL_IS_MAJOR)) {
             $criteria->add(StoreTableMap::COL_IS_MAJOR, $this->is_major);
+        }
+        if ($this->isColumnModified(StoreTableMap::COL_ALLOCATION)) {
+            $criteria->add(StoreTableMap::COL_ALLOCATION, $this->allocation);
         }
         if ($this->isColumnModified(StoreTableMap::COL_UPDATE_TIME)) {
             $criteria->add(StoreTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1507,6 +1571,7 @@ abstract class Store implements ActiveRecordInterface
         $copyObj->setStoreCategoryId($this->getStoreCategoryId());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setIsMajor($this->getIsMajor());
+        $copyObj->setAllocation($this->getAllocation());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -2707,6 +2772,7 @@ abstract class Store implements ActiveRecordInterface
         $this->store_category_id = null;
         $this->description = null;
         $this->is_major = null;
+        $this->allocation = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;

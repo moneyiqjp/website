@@ -84,7 +84,10 @@
                             { label: "Yes", value: 1 },
                             { label: "No", value: 0 }
                         ]
-                    },{
+                    }, {
+                        label: "Allocation (%):",
+                        name: "Allocation"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -147,7 +150,17 @@
                     { "data": "StoreName" },
                     { "data": "StoreCategory.Name", editField:"StoreCategory.StoreCategoryId" },
                     { "data": "Description" },
-                    { "data": "IsMajor" },
+                    {
+                        "data": "IsMajor",
+                        render: function ( data, type, row ) {
+                            if ( type === 'display' ) {
+                                if(data>0) return "true";
+                                return "false";
+                            }
+                            return data;
+                        }
+                    },
+                    { "data": "Allocation" },
                     { "data": "UpdateTime", visible: false},
                     { "data": "UpdateUser", visible: false }
                 ]
@@ -210,6 +223,7 @@
             <th>Category</th>
             <th>Description</th>
             <th>Major</th>
+            <th>Allocation (%)</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -222,6 +236,7 @@
             <th>Category</th>
             <th>Description</th>
             <th>Major</th>
+            <th>Allocation (%)</th>
             <th>Updated</th>
             <th>User</th>
         </tr>

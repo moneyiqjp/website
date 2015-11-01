@@ -144,6 +144,9 @@
                         label:  "Points expiry (months)",
                         name:   "points_expiry_months"
                     }, {
+                        label:  "Commission",
+                        name:   "commission"
+                    }, {
                         label: "IsActive:",
                         name: "is_active",
                         type: "select",
@@ -279,7 +282,18 @@
                     { "data": "affiliate.name", editField: "affiliate.id" },
                     { "data": "points_expiry_months" },
                     { "data": "reference", editField: "reference" },
-                    { "data": "is_active", editField: "is_active" },
+                    { "data": "commission", editField: "commission" },
+                    {
+                        "data": "is_active",
+                        editField: "is_active",
+                        render: function ( data, type, row ) {
+                            if ( type === 'display' ) {
+                                if(data>0) return "true";
+                                return "false";
+                            }
+                            return data;
+                        }
+                    },
                     {
                         "data": "credit_card_id",
                         render: function ( data, type, row ) {
@@ -363,6 +377,7 @@
             <th>affiliate</th>
             <th>expiry<br>(months)</th>
             <th>reference</th>
+            <th>commission</th>
             <th>active</th>
             <th>update</th>
         </tr>
@@ -384,6 +399,7 @@
             <th>affiliate</th>
             <th>expiry<br>(months)</th>
             <th>reference</th>
+            <th>commission</th>
             <th>active</th>
             <th>update</th>
         </tr>

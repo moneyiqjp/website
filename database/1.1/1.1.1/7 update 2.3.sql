@@ -1,6 +1,6 @@
-/*
+
 DROP PROCEDURE IF EXISTS UpgradeMoneyIQ2_3;
-*/
+
 DELIMITER //
 CREATE PROCEDURE UpgradeMoneyIQ2_3(IN varDatabase varchar(20)) 
 BEGIN
@@ -86,7 +86,23 @@ BEGIN
 		SELECT 'EXISTED map_card_feature_constraint';
 	end if;	
 
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='store' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='allocation') THEN
+		ALTER TABLE `store`
+			ADD COLUMN `allocation` INT(11) NULL DEFAULT '10' AFTER `is_major`;			
+		SELECT 'ADDED store.allocation';
+	else
+			SELECT 'EXISTED store.allocation';
+	end if;
 
+
+
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='credit_card' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='commission') THEN
+		ALTER TABLE `credit_card`
+			ADD COLUMN `commission` INT NULL AFTER `reference`;
+		SELECT 'ADDED credit_card.commission';
+	else
+			SELECT 'EXISTED credit_card.commission';
+	end if;
 	
 	
 END //

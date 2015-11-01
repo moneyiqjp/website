@@ -17,6 +17,7 @@ class JStore implements JSONInterface {
     public $StoreCategory;
     public $Description;
     public $IsMajor;
+    public $Allocation;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -32,6 +33,7 @@ class JStore implements JSONInterface {
         if(FieldUtils::ID_IS_DEFINED($item->getStoreCategoryId())) $mine->StoreCategory = JStoreCategory::CREATE_FROM_DB($item->getStoreCategory());
         if(FieldUtils::STRING_IS_DEFINED($item->getDescription())) $mine->Description = $item->getDescription();
         if(FieldUtils::NUMBER_IS_DEFINED($item->getIsMajor())) $mine->IsMajor = $item->getIsMajor();
+        if(FieldUtils::NUMBER_IS_DEFINED($item->getAllocation())) $mine->Allocation = $item->getAllocation();
         if(!is_null($item->getUpdateTime())) $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         if(FieldUtils::STRING_IS_DEFINED($item->getUpdateUser())) $mine->UpdateUser = $item->getUpdateUser();
 
@@ -57,6 +59,7 @@ class JStore implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($data,'StoreCategory')) $mine->StoreCategory = JStoreCategory::CREATE_FROM_ARRAY($data['StoreCategory']);
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
         if(ArrayUtils::KEY_EXISTS($data,'IsMajor')) $mine->IsMajor = $data['IsMajor'];
+        if(ArrayUtils::KEY_EXISTS($data,'Allocation')) $mine->Allocation = $data['Allocation'];
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
@@ -90,6 +93,7 @@ class JStore implements JSONInterface {
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
         if(FieldUtils::NUMBER_IS_DEFINED($this->IsMajor)) $item->setIsMajor($this->IsMajor);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->Allocation)) $item->setAllocation($this->Allocation);
 
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);

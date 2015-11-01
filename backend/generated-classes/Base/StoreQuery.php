@@ -25,6 +25,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery orderByStoreCategoryId($order = Criteria::ASC) Order by the store_category_id column
  * @method     ChildStoreQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildStoreQuery orderByIsMajor($order = Criteria::ASC) Order by the is_major column
+ * @method     ChildStoreQuery orderByAllocation($order = Criteria::ASC) Order by the allocation column
  * @method     ChildStoreQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildStoreQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -33,6 +34,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery groupByStoreCategoryId() Group by the store_category_id column
  * @method     ChildStoreQuery groupByDescription() Group by the description column
  * @method     ChildStoreQuery groupByIsMajor() Group by the is_major column
+ * @method     ChildStoreQuery groupByAllocation() Group by the allocation column
  * @method     ChildStoreQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildStoreQuery groupByUpdateUser() Group by the update_user column
  *
@@ -70,6 +72,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStore findOneByStoreCategoryId(int $store_category_id) Return the first ChildStore filtered by the store_category_id column
  * @method     ChildStore findOneByDescription(string $description) Return the first ChildStore filtered by the description column
  * @method     ChildStore findOneByIsMajor(int $is_major) Return the first ChildStore filtered by the is_major column
+ * @method     ChildStore findOneByAllocation(int $allocation) Return the first ChildStore filtered by the allocation column
  * @method     ChildStore findOneByUpdateTime(string $update_time) Return the first ChildStore filtered by the update_time column
  * @method     ChildStore findOneByUpdateUser(string $update_user) Return the first ChildStore filtered by the update_user column
  *
@@ -79,6 +82,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStore[]|ObjectCollection findByStoreCategoryId(int $store_category_id) Return ChildStore objects filtered by the store_category_id column
  * @method     ChildStore[]|ObjectCollection findByDescription(string $description) Return ChildStore objects filtered by the description column
  * @method     ChildStore[]|ObjectCollection findByIsMajor(int $is_major) Return ChildStore objects filtered by the is_major column
+ * @method     ChildStore[]|ObjectCollection findByAllocation(int $allocation) Return ChildStore objects filtered by the allocation column
  * @method     ChildStore[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildStore objects filtered by the update_time column
  * @method     ChildStore[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildStore objects filtered by the update_user column
  * @method     ChildStore[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -172,7 +176,7 @@ abstract class StoreQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT store_id, store_name, store_category_id, description, is_major, update_time, update_user FROM store WHERE store_id = :p0';
+        $sql = 'SELECT store_id, store_name, store_category_id, description, is_major, allocation, update_time, update_user FROM store WHERE store_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -443,6 +447,47 @@ abstract class StoreQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(StoreTableMap::COL_IS_MAJOR, $isMajor, $comparison);
+    }
+
+    /**
+     * Filter the query on the allocation column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByAllocation(1234); // WHERE allocation = 1234
+     * $query->filterByAllocation(array(12, 34)); // WHERE allocation IN (12, 34)
+     * $query->filterByAllocation(array('min' => 12)); // WHERE allocation > 12
+     * </code>
+     *
+     * @param     mixed $allocation The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByAllocation($allocation = null, $comparison = null)
+    {
+        if (is_array($allocation)) {
+            $useMinMax = false;
+            if (isset($allocation['min'])) {
+                $this->addUsingAlias(StoreTableMap::COL_ALLOCATION, $allocation['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($allocation['max'])) {
+                $this->addUsingAlias(StoreTableMap::COL_ALLOCATION, $allocation['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(StoreTableMap::COL_ALLOCATION, $allocation, $comparison);
     }
 
     /**
