@@ -59,7 +59,7 @@ class InsuranceTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class InsuranceTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the insurance_id field
@@ -85,6 +85,11 @@ class InsuranceTableMap extends TableMap
      * the column name for the insurance_type_id field
      */
     const COL_INSURANCE_TYPE_ID = 'insurance.insurance_type_id';
+
+    /**
+     * the column name for the guaranteed_period field
+     */
+    const COL_GUARANTEED_PERIOD = 'insurance.guaranteed_period';
 
     /**
      * the column name for the max_insured_amount field
@@ -123,11 +128,11 @@ class InsuranceTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('InsuranceId', 'CreditCardId', 'InsuranceTypeId', 'MaxInsuredAmount', 'Value', 'UpdateTime', 'UpdateUser', 'Reference', ),
-        self::TYPE_CAMELNAME     => array('insuranceId', 'creditCardId', 'insuranceTypeId', 'maxInsuredAmount', 'value', 'updateTime', 'updateUser', 'reference', ),
-        self::TYPE_COLNAME       => array(InsuranceTableMap::COL_INSURANCE_ID, InsuranceTableMap::COL_CREDIT_CARD_ID, InsuranceTableMap::COL_INSURANCE_TYPE_ID, InsuranceTableMap::COL_MAX_INSURED_AMOUNT, InsuranceTableMap::COL_VALUE, InsuranceTableMap::COL_UPDATE_TIME, InsuranceTableMap::COL_UPDATE_USER, InsuranceTableMap::COL_REFERENCE, ),
-        self::TYPE_FIELDNAME     => array('insurance_id', 'credit_card_id', 'insurance_type_id', 'max_insured_amount', 'value', 'update_time', 'update_user', 'reference', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('InsuranceId', 'CreditCardId', 'InsuranceTypeId', 'GuaranteedPeriod', 'MaxInsuredAmount', 'Value', 'UpdateTime', 'UpdateUser', 'Reference', ),
+        self::TYPE_CAMELNAME     => array('insuranceId', 'creditCardId', 'insuranceTypeId', 'guaranteedPeriod', 'maxInsuredAmount', 'value', 'updateTime', 'updateUser', 'reference', ),
+        self::TYPE_COLNAME       => array(InsuranceTableMap::COL_INSURANCE_ID, InsuranceTableMap::COL_CREDIT_CARD_ID, InsuranceTableMap::COL_INSURANCE_TYPE_ID, InsuranceTableMap::COL_GUARANTEED_PERIOD, InsuranceTableMap::COL_MAX_INSURED_AMOUNT, InsuranceTableMap::COL_VALUE, InsuranceTableMap::COL_UPDATE_TIME, InsuranceTableMap::COL_UPDATE_USER, InsuranceTableMap::COL_REFERENCE, ),
+        self::TYPE_FIELDNAME     => array('insurance_id', 'credit_card_id', 'insurance_type_id', 'guaranteed_period', 'max_insured_amount', 'value', 'update_time', 'update_user', 'reference', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -137,11 +142,11 @@ class InsuranceTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('InsuranceId' => 0, 'CreditCardId' => 1, 'InsuranceTypeId' => 2, 'MaxInsuredAmount' => 3, 'Value' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, 'Reference' => 7, ),
-        self::TYPE_CAMELNAME     => array('insuranceId' => 0, 'creditCardId' => 1, 'insuranceTypeId' => 2, 'maxInsuredAmount' => 3, 'value' => 4, 'updateTime' => 5, 'updateUser' => 6, 'reference' => 7, ),
-        self::TYPE_COLNAME       => array(InsuranceTableMap::COL_INSURANCE_ID => 0, InsuranceTableMap::COL_CREDIT_CARD_ID => 1, InsuranceTableMap::COL_INSURANCE_TYPE_ID => 2, InsuranceTableMap::COL_MAX_INSURED_AMOUNT => 3, InsuranceTableMap::COL_VALUE => 4, InsuranceTableMap::COL_UPDATE_TIME => 5, InsuranceTableMap::COL_UPDATE_USER => 6, InsuranceTableMap::COL_REFERENCE => 7, ),
-        self::TYPE_FIELDNAME     => array('insurance_id' => 0, 'credit_card_id' => 1, 'insurance_type_id' => 2, 'max_insured_amount' => 3, 'value' => 4, 'update_time' => 5, 'update_user' => 6, 'reference' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('InsuranceId' => 0, 'CreditCardId' => 1, 'InsuranceTypeId' => 2, 'GuaranteedPeriod' => 3, 'MaxInsuredAmount' => 4, 'Value' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, 'Reference' => 8, ),
+        self::TYPE_CAMELNAME     => array('insuranceId' => 0, 'creditCardId' => 1, 'insuranceTypeId' => 2, 'guaranteedPeriod' => 3, 'maxInsuredAmount' => 4, 'value' => 5, 'updateTime' => 6, 'updateUser' => 7, 'reference' => 8, ),
+        self::TYPE_COLNAME       => array(InsuranceTableMap::COL_INSURANCE_ID => 0, InsuranceTableMap::COL_CREDIT_CARD_ID => 1, InsuranceTableMap::COL_INSURANCE_TYPE_ID => 2, InsuranceTableMap::COL_GUARANTEED_PERIOD => 3, InsuranceTableMap::COL_MAX_INSURED_AMOUNT => 4, InsuranceTableMap::COL_VALUE => 5, InsuranceTableMap::COL_UPDATE_TIME => 6, InsuranceTableMap::COL_UPDATE_USER => 7, InsuranceTableMap::COL_REFERENCE => 8, ),
+        self::TYPE_FIELDNAME     => array('insurance_id' => 0, 'credit_card_id' => 1, 'insurance_type_id' => 2, 'guaranteed_period' => 3, 'max_insured_amount' => 4, 'value' => 5, 'update_time' => 6, 'update_user' => 7, 'reference' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -164,6 +169,7 @@ class InsuranceTableMap extends TableMap
         $this->addPrimaryKey('insurance_id', 'InsuranceId', 'INTEGER', true, null, null);
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addForeignKey('insurance_type_id', 'InsuranceTypeId', 'INTEGER', 'insurance_type', 'insurance_type_id', true, null, null);
+        $this->addColumn('guaranteed_period', 'GuaranteedPeriod', 'INTEGER', false, null, null);
         $this->addColumn('max_insured_amount', 'MaxInsuredAmount', 'INTEGER', false, null, null);
         $this->addColumn('value', 'Value', 'INTEGER', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
@@ -324,6 +330,7 @@ class InsuranceTableMap extends TableMap
             $criteria->addSelectColumn(InsuranceTableMap::COL_INSURANCE_ID);
             $criteria->addSelectColumn(InsuranceTableMap::COL_CREDIT_CARD_ID);
             $criteria->addSelectColumn(InsuranceTableMap::COL_INSURANCE_TYPE_ID);
+            $criteria->addSelectColumn(InsuranceTableMap::COL_GUARANTEED_PERIOD);
             $criteria->addSelectColumn(InsuranceTableMap::COL_MAX_INSURED_AMOUNT);
             $criteria->addSelectColumn(InsuranceTableMap::COL_VALUE);
             $criteria->addSelectColumn(InsuranceTableMap::COL_UPDATE_TIME);
@@ -333,6 +340,7 @@ class InsuranceTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.insurance_id');
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.insurance_type_id');
+            $criteria->addSelectColumn($alias . '.guaranteed_period');
             $criteria->addSelectColumn($alias . '.max_insured_amount');
             $criteria->addSelectColumn($alias . '.value');
             $criteria->addSelectColumn($alias . '.update_time');

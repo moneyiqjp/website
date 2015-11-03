@@ -59,7 +59,7 @@ class PaymentTypeTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PaymentTypeTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the payment_type_id field
@@ -77,14 +77,19 @@ class PaymentTypeTableMap extends TableMap
     const COL_PAYMENT_TYPE_ID = 'payment_type.payment_type_id';
 
     /**
-     * the column name for the payment_type field
+     * the column name for the type field
      */
-    const COL_PAYMENT_TYPE = 'payment_type.payment_type';
+    const COL_TYPE = 'payment_type.type';
 
     /**
-     * the column name for the payment_description field
+     * the column name for the display field
      */
-    const COL_PAYMENT_DESCRIPTION = 'payment_type.payment_description';
+    const COL_DISPLAY = 'payment_type.display';
+
+    /**
+     * the column name for the description field
+     */
+    const COL_DESCRIPTION = 'payment_type.description';
 
     /**
      * the column name for the update_time field
@@ -108,11 +113,11 @@ class PaymentTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PaymentTypeId', 'PaymentType', 'PaymentDescription', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('paymentTypeId', 'paymentType', 'paymentDescription', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID, PaymentTypeTableMap::COL_PAYMENT_TYPE, PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION, PaymentTypeTableMap::COL_UPDATE_TIME, PaymentTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('payment_type_id', 'payment_type', 'payment_description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PaymentTypeId', 'Type', 'Display', 'Description', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('paymentTypeId', 'type', 'display', 'description', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID, PaymentTypeTableMap::COL_TYPE, PaymentTypeTableMap::COL_DISPLAY, PaymentTypeTableMap::COL_DESCRIPTION, PaymentTypeTableMap::COL_UPDATE_TIME, PaymentTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('payment_type_id', 'type', 'display', 'description', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class PaymentTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PaymentTypeId' => 0, 'PaymentType' => 1, 'PaymentDescription' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('paymentTypeId' => 0, 'paymentType' => 1, 'paymentDescription' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID => 0, PaymentTypeTableMap::COL_PAYMENT_TYPE => 1, PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION => 2, PaymentTypeTableMap::COL_UPDATE_TIME => 3, PaymentTypeTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('payment_type_id' => 0, 'payment_type' => 1, 'payment_description' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PaymentTypeId' => 0, 'Type' => 1, 'Display' => 2, 'Description' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('paymentTypeId' => 0, 'type' => 1, 'display' => 2, 'description' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID => 0, PaymentTypeTableMap::COL_TYPE => 1, PaymentTypeTableMap::COL_DISPLAY => 2, PaymentTypeTableMap::COL_DESCRIPTION => 3, PaymentTypeTableMap::COL_UPDATE_TIME => 4, PaymentTypeTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('payment_type_id' => 0, 'type' => 1, 'display' => 2, 'description' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -147,8 +152,9 @@ class PaymentTypeTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('payment_type_id', 'PaymentTypeId', 'INTEGER', true, null, null);
-        $this->addColumn('payment_type', 'PaymentType', 'VARCHAR', true, 255, null);
-        $this->addColumn('payment_description', 'PaymentDescription', 'LONGVARCHAR', true, null, null);
+        $this->addColumn('type', 'Type', 'VARCHAR', true, 255, null);
+        $this->addColumn('display', 'Display', 'LONGVARCHAR', true, null, null);
+        $this->addColumn('description', 'Description', 'LONGVARCHAR', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -303,14 +309,16 @@ class PaymentTypeTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID);
-            $criteria->addSelectColumn(PaymentTypeTableMap::COL_PAYMENT_TYPE);
-            $criteria->addSelectColumn(PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION);
+            $criteria->addSelectColumn(PaymentTypeTableMap::COL_TYPE);
+            $criteria->addSelectColumn(PaymentTypeTableMap::COL_DISPLAY);
+            $criteria->addSelectColumn(PaymentTypeTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(PaymentTypeTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(PaymentTypeTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.payment_type_id');
-            $criteria->addSelectColumn($alias . '.payment_type');
-            $criteria->addSelectColumn($alias . '.payment_description');
+            $criteria->addSelectColumn($alias . '.type');
+            $criteria->addSelectColumn($alias . '.display');
+            $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

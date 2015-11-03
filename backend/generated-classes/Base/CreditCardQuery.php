@@ -33,9 +33,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery orderByAfilliateLink($order = Criteria::ASC) Order by the afilliate_link column
  * @method     ChildCreditCardQuery orderByAffiliateId($order = Criteria::ASC) Order by the affiliate_id column
  * @method     ChildCreditCardQuery orderByPointexpirymonths($order = Criteria::ASC) Order by the pointExpiryMonths column
- * @method     ChildCreditCardQuery orderByReference($order = Criteria::ASC) Order by the reference column
+ * @method     ChildCreditCardQuery orderByIssuePeriod($order = Criteria::ASC) Order by the issue_period column
+ * @method     ChildCreditCardQuery orderByCreditLimitBottom($order = Criteria::ASC) Order by the credit_limit_bottom column
+ * @method     ChildCreditCardQuery orderByCreditLimitUpper($order = Criteria::ASC) Order by the credit_limit_upper column
  * @method     ChildCreditCardQuery orderByCommission($order = Criteria::ASC) Order by the commission column
+ * @method     ChildCreditCardQuery orderByDebitDate($order = Criteria::ASC) Order by the debit_date column
+ * @method     ChildCreditCardQuery orderByCutoffDate($order = Criteria::ASC) Order by the cutoff_date column
  * @method     ChildCreditCardQuery orderByIsactive($order = Criteria::ASC) Order by the isActive column
+ * @method     ChildCreditCardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  * @method     ChildCreditCardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCreditCardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -52,9 +57,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery groupByAfilliateLink() Group by the afilliate_link column
  * @method     ChildCreditCardQuery groupByAffiliateId() Group by the affiliate_id column
  * @method     ChildCreditCardQuery groupByPointexpirymonths() Group by the pointExpiryMonths column
- * @method     ChildCreditCardQuery groupByReference() Group by the reference column
+ * @method     ChildCreditCardQuery groupByIssuePeriod() Group by the issue_period column
+ * @method     ChildCreditCardQuery groupByCreditLimitBottom() Group by the credit_limit_bottom column
+ * @method     ChildCreditCardQuery groupByCreditLimitUpper() Group by the credit_limit_upper column
  * @method     ChildCreditCardQuery groupByCommission() Group by the commission column
+ * @method     ChildCreditCardQuery groupByDebitDate() Group by the debit_date column
+ * @method     ChildCreditCardQuery groupByCutoffDate() Group by the cutoff_date column
  * @method     ChildCreditCardQuery groupByIsactive() Group by the isActive column
+ * @method     ChildCreditCardQuery groupByReference() Group by the reference column
  * @method     ChildCreditCardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCreditCardQuery groupByUpdateUser() Group by the update_user column
  *
@@ -128,9 +138,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard findOneByAfilliateLink(string $afilliate_link) Return the first ChildCreditCard filtered by the afilliate_link column
  * @method     ChildCreditCard findOneByAffiliateId(int $affiliate_id) Return the first ChildCreditCard filtered by the affiliate_id column
  * @method     ChildCreditCard findOneByPointexpirymonths(int $pointExpiryMonths) Return the first ChildCreditCard filtered by the pointExpiryMonths column
- * @method     ChildCreditCard findOneByReference(string $reference) Return the first ChildCreditCard filtered by the reference column
+ * @method     ChildCreditCard findOneByIssuePeriod(int $issue_period) Return the first ChildCreditCard filtered by the issue_period column
+ * @method     ChildCreditCard findOneByCreditLimitBottom(int $credit_limit_bottom) Return the first ChildCreditCard filtered by the credit_limit_bottom column
+ * @method     ChildCreditCard findOneByCreditLimitUpper(int $credit_limit_upper) Return the first ChildCreditCard filtered by the credit_limit_upper column
  * @method     ChildCreditCard findOneByCommission(int $commission) Return the first ChildCreditCard filtered by the commission column
+ * @method     ChildCreditCard findOneByDebitDate(string $debit_date) Return the first ChildCreditCard filtered by the debit_date column
+ * @method     ChildCreditCard findOneByCutoffDate(string $cutoff_date) Return the first ChildCreditCard filtered by the cutoff_date column
  * @method     ChildCreditCard findOneByIsactive(int $isActive) Return the first ChildCreditCard filtered by the isActive column
+ * @method     ChildCreditCard findOneByReference(string $reference) Return the first ChildCreditCard filtered by the reference column
  * @method     ChildCreditCard findOneByUpdateTime(string $update_time) Return the first ChildCreditCard filtered by the update_time column
  * @method     ChildCreditCard findOneByUpdateUser(string $update_user) Return the first ChildCreditCard filtered by the update_user column
  *
@@ -148,9 +163,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard[]|ObjectCollection findByAfilliateLink(string $afilliate_link) Return ChildCreditCard objects filtered by the afilliate_link column
  * @method     ChildCreditCard[]|ObjectCollection findByAffiliateId(int $affiliate_id) Return ChildCreditCard objects filtered by the affiliate_id column
  * @method     ChildCreditCard[]|ObjectCollection findByPointexpirymonths(int $pointExpiryMonths) Return ChildCreditCard objects filtered by the pointExpiryMonths column
- * @method     ChildCreditCard[]|ObjectCollection findByReference(string $reference) Return ChildCreditCard objects filtered by the reference column
+ * @method     ChildCreditCard[]|ObjectCollection findByIssuePeriod(int $issue_period) Return ChildCreditCard objects filtered by the issue_period column
+ * @method     ChildCreditCard[]|ObjectCollection findByCreditLimitBottom(int $credit_limit_bottom) Return ChildCreditCard objects filtered by the credit_limit_bottom column
+ * @method     ChildCreditCard[]|ObjectCollection findByCreditLimitUpper(int $credit_limit_upper) Return ChildCreditCard objects filtered by the credit_limit_upper column
  * @method     ChildCreditCard[]|ObjectCollection findByCommission(int $commission) Return ChildCreditCard objects filtered by the commission column
+ * @method     ChildCreditCard[]|ObjectCollection findByDebitDate(string $debit_date) Return ChildCreditCard objects filtered by the debit_date column
+ * @method     ChildCreditCard[]|ObjectCollection findByCutoffDate(string $cutoff_date) Return ChildCreditCard objects filtered by the cutoff_date column
  * @method     ChildCreditCard[]|ObjectCollection findByIsactive(int $isActive) Return ChildCreditCard objects filtered by the isActive column
+ * @method     ChildCreditCard[]|ObjectCollection findByReference(string $reference) Return ChildCreditCard objects filtered by the reference column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCreditCard objects filtered by the update_time column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCreditCard objects filtered by the update_user column
  * @method     ChildCreditCard[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -244,7 +264,7 @@ abstract class CreditCardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, reference, commission, isActive, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
+        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, issue_period, credit_limit_bottom, credit_limit_upper, commission, debit_date, cutoff_date, isActive, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -754,32 +774,126 @@ abstract class CreditCardQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the reference column
+     * Filter the query on the issue_period column
      *
      * Example usage:
      * <code>
-     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
-     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * $query->filterByIssuePeriod(1234); // WHERE issue_period = 1234
+     * $query->filterByIssuePeriod(array(12, 34)); // WHERE issue_period IN (12, 34)
+     * $query->filterByIssuePeriod(array('min' => 12)); // WHERE issue_period > 12
      * </code>
      *
-     * @param     string $reference The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $issuePeriod The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildCreditCardQuery The current query, for fluid interface
      */
-    public function filterByReference($reference = null, $comparison = null)
+    public function filterByIssuePeriod($issuePeriod = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($reference)) {
+        if (is_array($issuePeriod)) {
+            $useMinMax = false;
+            if (isset($issuePeriod['min'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_ISSUE_PERIOD, $issuePeriod['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($issuePeriod['max'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_ISSUE_PERIOD, $issuePeriod['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $reference)) {
-                $reference = str_replace('*', '%', $reference);
-                $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(CreditCardTableMap::COL_REFERENCE, $reference, $comparison);
+        return $this->addUsingAlias(CreditCardTableMap::COL_ISSUE_PERIOD, $issuePeriod, $comparison);
+    }
+
+    /**
+     * Filter the query on the credit_limit_bottom column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCreditLimitBottom(1234); // WHERE credit_limit_bottom = 1234
+     * $query->filterByCreditLimitBottom(array(12, 34)); // WHERE credit_limit_bottom IN (12, 34)
+     * $query->filterByCreditLimitBottom(array('min' => 12)); // WHERE credit_limit_bottom > 12
+     * </code>
+     *
+     * @param     mixed $creditLimitBottom The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByCreditLimitBottom($creditLimitBottom = null, $comparison = null)
+    {
+        if (is_array($creditLimitBottom)) {
+            $useMinMax = false;
+            if (isset($creditLimitBottom['min'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM, $creditLimitBottom['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($creditLimitBottom['max'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM, $creditLimitBottom['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM, $creditLimitBottom, $comparison);
+    }
+
+    /**
+     * Filter the query on the credit_limit_upper column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCreditLimitUpper(1234); // WHERE credit_limit_upper = 1234
+     * $query->filterByCreditLimitUpper(array(12, 34)); // WHERE credit_limit_upper IN (12, 34)
+     * $query->filterByCreditLimitUpper(array('min' => 12)); // WHERE credit_limit_upper > 12
+     * </code>
+     *
+     * @param     mixed $creditLimitUpper The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByCreditLimitUpper($creditLimitUpper = null, $comparison = null)
+    {
+        if (is_array($creditLimitUpper)) {
+            $useMinMax = false;
+            if (isset($creditLimitUpper['min'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_UPPER, $creditLimitUpper['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($creditLimitUpper['max'])) {
+                $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_UPPER, $creditLimitUpper['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_CREDIT_LIMIT_UPPER, $creditLimitUpper, $comparison);
     }
 
     /**
@@ -824,6 +938,64 @@ abstract class CreditCardQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the debit_date column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDebitDate('fooValue');   // WHERE debit_date = 'fooValue'
+     * $query->filterByDebitDate('%fooValue%'); // WHERE debit_date LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $debitDate The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByDebitDate($debitDate = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($debitDate)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $debitDate)) {
+                $debitDate = str_replace('*', '%', $debitDate);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_DEBIT_DATE, $debitDate, $comparison);
+    }
+
+    /**
+     * Filter the query on the cutoff_date column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByCutoffDate('fooValue');   // WHERE cutoff_date = 'fooValue'
+     * $query->filterByCutoffDate('%fooValue%'); // WHERE cutoff_date LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $cutoffDate The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByCutoffDate($cutoffDate = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($cutoffDate)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $cutoffDate)) {
+                $cutoffDate = str_replace('*', '%', $cutoffDate);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_CUTOFF_DATE, $cutoffDate, $comparison);
+    }
+
+    /**
      * Filter the query on the isActive column
      *
      * Example usage:
@@ -862,6 +1034,35 @@ abstract class CreditCardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CreditCardTableMap::COL_ISACTIVE, $isactive, $comparison);
+    }
+
+    /**
+     * Filter the query on the reference column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReference('fooValue');   // WHERE reference = 'fooValue'
+     * $query->filterByReference('%fooValue%'); // WHERE reference LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reference The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByReference($reference = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reference)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reference)) {
+                $reference = str_replace('*', '%', $reference);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_REFERENCE, $reference, $comparison);
     }
 
     /**

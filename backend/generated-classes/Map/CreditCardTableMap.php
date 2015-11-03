@@ -59,7 +59,7 @@ class CreditCardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 18;
+    const NUM_COLUMNS = 23;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CreditCardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 18;
+    const NUM_HYDRATE_COLUMNS = 23;
 
     /**
      * the column name for the credit_card_id field
@@ -137,9 +137,19 @@ class CreditCardTableMap extends TableMap
     const COL_POINTEXPIRYMONTHS = 'credit_card.pointExpiryMonths';
 
     /**
-     * the column name for the reference field
+     * the column name for the issue_period field
      */
-    const COL_REFERENCE = 'credit_card.reference';
+    const COL_ISSUE_PERIOD = 'credit_card.issue_period';
+
+    /**
+     * the column name for the credit_limit_bottom field
+     */
+    const COL_CREDIT_LIMIT_BOTTOM = 'credit_card.credit_limit_bottom';
+
+    /**
+     * the column name for the credit_limit_upper field
+     */
+    const COL_CREDIT_LIMIT_UPPER = 'credit_card.credit_limit_upper';
 
     /**
      * the column name for the commission field
@@ -147,9 +157,24 @@ class CreditCardTableMap extends TableMap
     const COL_COMMISSION = 'credit_card.commission';
 
     /**
+     * the column name for the debit_date field
+     */
+    const COL_DEBIT_DATE = 'credit_card.debit_date';
+
+    /**
+     * the column name for the cutoff_date field
+     */
+    const COL_CUTOFF_DATE = 'credit_card.cutoff_date';
+
+    /**
      * the column name for the isActive field
      */
     const COL_ISACTIVE = 'credit_card.isActive';
+
+    /**
+     * the column name for the reference field
+     */
+    const COL_REFERENCE = 'credit_card.reference';
 
     /**
      * the column name for the update_time field
@@ -173,11 +198,11 @@ class CreditCardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('CreditCardId', 'Name', 'IssuerId', 'Description', 'ImageLink', 'Visa', 'Master', 'Jcb', 'Amex', 'Diners', 'AfilliateLink', 'AffiliateId', 'Pointexpirymonths', 'Reference', 'Commission', 'Isactive', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('creditCardId', 'name', 'issuerId', 'description', 'imageLink', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliateLink', 'affiliateId', 'pointexpirymonths', 'reference', 'commission', 'isactive', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID, CreditCardTableMap::COL_NAME, CreditCardTableMap::COL_ISSUER_ID, CreditCardTableMap::COL_DESCRIPTION, CreditCardTableMap::COL_IMAGE_LINK, CreditCardTableMap::COL_VISA, CreditCardTableMap::COL_MASTER, CreditCardTableMap::COL_JCB, CreditCardTableMap::COL_AMEX, CreditCardTableMap::COL_DINERS, CreditCardTableMap::COL_AFILLIATE_LINK, CreditCardTableMap::COL_AFFILIATE_ID, CreditCardTableMap::COL_POINTEXPIRYMONTHS, CreditCardTableMap::COL_REFERENCE, CreditCardTableMap::COL_COMMISSION, CreditCardTableMap::COL_ISACTIVE, CreditCardTableMap::COL_UPDATE_TIME, CreditCardTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('credit_card_id', 'name', 'issuer_id', 'description', 'image_link', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliate_link', 'affiliate_id', 'pointExpiryMonths', 'reference', 'commission', 'isActive', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+        self::TYPE_PHPNAME       => array('CreditCardId', 'Name', 'IssuerId', 'Description', 'ImageLink', 'Visa', 'Master', 'Jcb', 'Amex', 'Diners', 'AfilliateLink', 'AffiliateId', 'Pointexpirymonths', 'IssuePeriod', 'CreditLimitBottom', 'CreditLimitUpper', 'Commission', 'DebitDate', 'CutoffDate', 'Isactive', 'Reference', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('creditCardId', 'name', 'issuerId', 'description', 'imageLink', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliateLink', 'affiliateId', 'pointexpirymonths', 'issuePeriod', 'creditLimitBottom', 'creditLimitUpper', 'commission', 'debitDate', 'cutoffDate', 'isactive', 'reference', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID, CreditCardTableMap::COL_NAME, CreditCardTableMap::COL_ISSUER_ID, CreditCardTableMap::COL_DESCRIPTION, CreditCardTableMap::COL_IMAGE_LINK, CreditCardTableMap::COL_VISA, CreditCardTableMap::COL_MASTER, CreditCardTableMap::COL_JCB, CreditCardTableMap::COL_AMEX, CreditCardTableMap::COL_DINERS, CreditCardTableMap::COL_AFILLIATE_LINK, CreditCardTableMap::COL_AFFILIATE_ID, CreditCardTableMap::COL_POINTEXPIRYMONTHS, CreditCardTableMap::COL_ISSUE_PERIOD, CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM, CreditCardTableMap::COL_CREDIT_LIMIT_UPPER, CreditCardTableMap::COL_COMMISSION, CreditCardTableMap::COL_DEBIT_DATE, CreditCardTableMap::COL_CUTOFF_DATE, CreditCardTableMap::COL_ISACTIVE, CreditCardTableMap::COL_REFERENCE, CreditCardTableMap::COL_UPDATE_TIME, CreditCardTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id', 'name', 'issuer_id', 'description', 'image_link', 'visa', 'master', 'jcb', 'amex', 'diners', 'afilliate_link', 'affiliate_id', 'pointExpiryMonths', 'issue_period', 'credit_limit_bottom', 'credit_limit_upper', 'commission', 'debit_date', 'cutoff_date', 'isActive', 'reference', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
     );
 
     /**
@@ -187,11 +212,11 @@ class CreditCardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('CreditCardId' => 0, 'Name' => 1, 'IssuerId' => 2, 'Description' => 3, 'ImageLink' => 4, 'Visa' => 5, 'Master' => 6, 'Jcb' => 7, 'Amex' => 8, 'Diners' => 9, 'AfilliateLink' => 10, 'AffiliateId' => 11, 'Pointexpirymonths' => 12, 'Reference' => 13, 'Commission' => 14, 'Isactive' => 15, 'UpdateTime' => 16, 'UpdateUser' => 17, ),
-        self::TYPE_CAMELNAME     => array('creditCardId' => 0, 'name' => 1, 'issuerId' => 2, 'description' => 3, 'imageLink' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliateLink' => 10, 'affiliateId' => 11, 'pointexpirymonths' => 12, 'reference' => 13, 'commission' => 14, 'isactive' => 15, 'updateTime' => 16, 'updateUser' => 17, ),
-        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID => 0, CreditCardTableMap::COL_NAME => 1, CreditCardTableMap::COL_ISSUER_ID => 2, CreditCardTableMap::COL_DESCRIPTION => 3, CreditCardTableMap::COL_IMAGE_LINK => 4, CreditCardTableMap::COL_VISA => 5, CreditCardTableMap::COL_MASTER => 6, CreditCardTableMap::COL_JCB => 7, CreditCardTableMap::COL_AMEX => 8, CreditCardTableMap::COL_DINERS => 9, CreditCardTableMap::COL_AFILLIATE_LINK => 10, CreditCardTableMap::COL_AFFILIATE_ID => 11, CreditCardTableMap::COL_POINTEXPIRYMONTHS => 12, CreditCardTableMap::COL_REFERENCE => 13, CreditCardTableMap::COL_COMMISSION => 14, CreditCardTableMap::COL_ISACTIVE => 15, CreditCardTableMap::COL_UPDATE_TIME => 16, CreditCardTableMap::COL_UPDATE_USER => 17, ),
-        self::TYPE_FIELDNAME     => array('credit_card_id' => 0, 'name' => 1, 'issuer_id' => 2, 'description' => 3, 'image_link' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliate_link' => 10, 'affiliate_id' => 11, 'pointExpiryMonths' => 12, 'reference' => 13, 'commission' => 14, 'isActive' => 15, 'update_time' => 16, 'update_user' => 17, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+        self::TYPE_PHPNAME       => array('CreditCardId' => 0, 'Name' => 1, 'IssuerId' => 2, 'Description' => 3, 'ImageLink' => 4, 'Visa' => 5, 'Master' => 6, 'Jcb' => 7, 'Amex' => 8, 'Diners' => 9, 'AfilliateLink' => 10, 'AffiliateId' => 11, 'Pointexpirymonths' => 12, 'IssuePeriod' => 13, 'CreditLimitBottom' => 14, 'CreditLimitUpper' => 15, 'Commission' => 16, 'DebitDate' => 17, 'CutoffDate' => 18, 'Isactive' => 19, 'Reference' => 20, 'UpdateTime' => 21, 'UpdateUser' => 22, ),
+        self::TYPE_CAMELNAME     => array('creditCardId' => 0, 'name' => 1, 'issuerId' => 2, 'description' => 3, 'imageLink' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliateLink' => 10, 'affiliateId' => 11, 'pointexpirymonths' => 12, 'issuePeriod' => 13, 'creditLimitBottom' => 14, 'creditLimitUpper' => 15, 'commission' => 16, 'debitDate' => 17, 'cutoffDate' => 18, 'isactive' => 19, 'reference' => 20, 'updateTime' => 21, 'updateUser' => 22, ),
+        self::TYPE_COLNAME       => array(CreditCardTableMap::COL_CREDIT_CARD_ID => 0, CreditCardTableMap::COL_NAME => 1, CreditCardTableMap::COL_ISSUER_ID => 2, CreditCardTableMap::COL_DESCRIPTION => 3, CreditCardTableMap::COL_IMAGE_LINK => 4, CreditCardTableMap::COL_VISA => 5, CreditCardTableMap::COL_MASTER => 6, CreditCardTableMap::COL_JCB => 7, CreditCardTableMap::COL_AMEX => 8, CreditCardTableMap::COL_DINERS => 9, CreditCardTableMap::COL_AFILLIATE_LINK => 10, CreditCardTableMap::COL_AFFILIATE_ID => 11, CreditCardTableMap::COL_POINTEXPIRYMONTHS => 12, CreditCardTableMap::COL_ISSUE_PERIOD => 13, CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM => 14, CreditCardTableMap::COL_CREDIT_LIMIT_UPPER => 15, CreditCardTableMap::COL_COMMISSION => 16, CreditCardTableMap::COL_DEBIT_DATE => 17, CreditCardTableMap::COL_CUTOFF_DATE => 18, CreditCardTableMap::COL_ISACTIVE => 19, CreditCardTableMap::COL_REFERENCE => 20, CreditCardTableMap::COL_UPDATE_TIME => 21, CreditCardTableMap::COL_UPDATE_USER => 22, ),
+        self::TYPE_FIELDNAME     => array('credit_card_id' => 0, 'name' => 1, 'issuer_id' => 2, 'description' => 3, 'image_link' => 4, 'visa' => 5, 'master' => 6, 'jcb' => 7, 'amex' => 8, 'diners' => 9, 'afilliate_link' => 10, 'affiliate_id' => 11, 'pointExpiryMonths' => 12, 'issue_period' => 13, 'credit_limit_bottom' => 14, 'credit_limit_upper' => 15, 'commission' => 16, 'debit_date' => 17, 'cutoff_date' => 18, 'isActive' => 19, 'reference' => 20, 'update_time' => 21, 'update_user' => 22, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
     );
 
     /**
@@ -224,9 +249,14 @@ class CreditCardTableMap extends TableMap
         $this->addColumn('afilliate_link', 'AfilliateLink', 'LONGVARCHAR', false, null, null);
         $this->addForeignKey('affiliate_id', 'AffiliateId', 'INTEGER', 'affiliate_company', 'affiliate_id', true, null, null);
         $this->addColumn('pointExpiryMonths', 'Pointexpirymonths', 'INTEGER', false, null, 12);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
+        $this->addColumn('issue_period', 'IssuePeriod', 'INTEGER', false, null, null);
+        $this->addColumn('credit_limit_bottom', 'CreditLimitBottom', 'INTEGER', false, null, null);
+        $this->addColumn('credit_limit_upper', 'CreditLimitUpper', 'INTEGER', false, null, null);
         $this->addColumn('commission', 'Commission', 'INTEGER', false, null, null);
+        $this->addColumn('debit_date', 'DebitDate', 'VARCHAR', false, 250, null);
+        $this->addColumn('cutoff_date', 'CutoffDate', 'VARCHAR', false, 250, null);
         $this->addColumn('isActive', 'Isactive', 'TINYINT', false, null, 1);
+        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
@@ -404,9 +434,14 @@ class CreditCardTableMap extends TableMap
             $criteria->addSelectColumn(CreditCardTableMap::COL_AFILLIATE_LINK);
             $criteria->addSelectColumn(CreditCardTableMap::COL_AFFILIATE_ID);
             $criteria->addSelectColumn(CreditCardTableMap::COL_POINTEXPIRYMONTHS);
-            $criteria->addSelectColumn(CreditCardTableMap::COL_REFERENCE);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_ISSUE_PERIOD);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_CREDIT_LIMIT_BOTTOM);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_CREDIT_LIMIT_UPPER);
             $criteria->addSelectColumn(CreditCardTableMap::COL_COMMISSION);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_DEBIT_DATE);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_CUTOFF_DATE);
             $criteria->addSelectColumn(CreditCardTableMap::COL_ISACTIVE);
+            $criteria->addSelectColumn(CreditCardTableMap::COL_REFERENCE);
             $criteria->addSelectColumn(CreditCardTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CreditCardTableMap::COL_UPDATE_USER);
         } else {
@@ -423,9 +458,14 @@ class CreditCardTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.afilliate_link');
             $criteria->addSelectColumn($alias . '.affiliate_id');
             $criteria->addSelectColumn($alias . '.pointExpiryMonths');
-            $criteria->addSelectColumn($alias . '.reference');
+            $criteria->addSelectColumn($alias . '.issue_period');
+            $criteria->addSelectColumn($alias . '.credit_limit_bottom');
+            $criteria->addSelectColumn($alias . '.credit_limit_upper');
             $criteria->addSelectColumn($alias . '.commission');
+            $criteria->addSelectColumn($alias . '.debit_date');
+            $criteria->addSelectColumn($alias . '.cutoff_date');
             $criteria->addSelectColumn($alias . '.isActive');
+            $criteria->addSelectColumn($alias . '.reference');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

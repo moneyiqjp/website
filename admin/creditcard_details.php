@@ -547,6 +547,9 @@
                 label: "MaxInsuredAmount:",
                 name: "MaxInsuredAmount"
             }, {
+                label: "GuaranteedPeriod:",
+                name: "GuaranteedPeriod"
+            },  {
                 label: "Value:",
                 name: "Value"
             },  {
@@ -802,6 +805,7 @@
                     {"data": "InsuranceType.SubtypeName", editField: "InsuranceType.SubtypeName"},
                     {"data": "InsuranceType.Region", editField: "InsuranceType.Region"},
                     {"data": "MaxInsuredAmount", editField: "MaxInsuredAmount"},
+                    {"data": "GuaranteedPeriod", editField: "GuaranteedPeriod"},
                     {"data": "Value", editField: "Value"},
                     {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", visible:false},
@@ -1181,7 +1185,8 @@
                     <th>Type</th>
                     <th>Subtype</th>
                     <th>Region</th>
-                    <th>Amount</th>
+                    <th>Insured Amount</th>
+                    <th>Guaranteed Period (months)</th>
                     <th>Value</th>
                     <th>Reference</th>
                     <th>Update</th>
@@ -1196,7 +1201,8 @@
                     <th>Type</th>
                     <th>Subtype</th>
                     <th>Region</th>
-                    <th>Amount</th>
+                    <th>Insured Amount</th>
+                    <th>Guaranteed Period (months)</th>
                     <th>Value</th>
                     <th>Reference</th>
                     <th>Update</th>

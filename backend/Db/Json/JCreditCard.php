@@ -29,6 +29,11 @@ class JCreditCard {
     public $reference;
     public $point_systems;
     public $commission;
+    public $issue_period;
+    public $credit_limit_bottom;
+    public $credit_limit_upper;
+    public $debit_date;
+    public $cutoff_date;
     public $is_active;
     public $update_time;
     public $update_user;
@@ -59,7 +64,11 @@ class JCreditCard {
         $myself->affiliate_link = $ccs->getAfilliateLink();
         $myself->affiliate_id = $ccs->getAffiliateId();
         $myself->points_expiry_months = $ccs->getPointexpirymonths();
-
+        $myself->issue_period = $ccs->getIssuePeriod();
+        $myself->credit_limit_bottom = $ccs->getCreditLimitBottom();
+        $myself->credit_limit_upper = $ccs->getCreditLimitUpper();
+        $myself->debit_date = $ccs->getDebitDate();
+        $myself->cutoff_date = $ccs->getCutoffDate();
         if(!is_null($ccs->getAffiliateCompany())) {
             $myself->affiliate = array("id" => $ccs->getAffiliateId(), "name" => $ccs->getAffiliateCompany()->getName());
         }

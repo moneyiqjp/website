@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>DataTables example - Ajax data source (objects)</title>
+    <title>Credit Card Overview</title>
     <link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
     <script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="media/js/jquery.dataTables.js"></script>
@@ -147,6 +147,21 @@
                         label:  "Commission",
                         name:   "commission"
                     }, {
+                        label:  "Issue Period",
+                        name:   "issue_period"
+                    }, {
+                        label:  "Credit Limit (Bottom)",
+                        name:   "credit_limit_bottom"
+                    }, {
+                        label:  "Credit Limit (upper)",
+                        name:   "credit_limit_upper"
+                    }, {
+                        label:  "Debit Date",
+                        name:   "debit_date"
+                    }, {
+                        label:  "Cutoff Date",
+                        name:   "cutoff_date"
+                    }, {
                         label: "IsActive:",
                         name: "is_active",
                         type: "select",
@@ -209,12 +224,16 @@
                     { "data": "credit_card_id",visible: false, edit: false },
                     { "data": "name" },
                     { "data": "issuer.name", editField: "issuer.id" },
-                    { "data": "description" },
+                    { "data": "description", visible:false },
                     {
                         "data": "image_link",
                         render: function ( data, type, full, meta ) {
                             if ( type === 'display' ) {
-                                return data.substring(0, 20).concat("...");
+                                //return data.substring(0, 20).concat("...");
+                                if(data.length>0)
+                                    return "<img src='" + data + "' width='40' height='20'>";
+                                else
+                                    return "<img src='../admin/images/error.png'>"
                             }
                             return data;
                         }
@@ -269,36 +288,58 @@
                         },
                         className: "dt-body-center"
                     },
+                    { "data": "affiliate.name", editField: "affiliate.id" },
                     {
                         "data": "affiliate_link",
                         "render": function ( data, type, full, meta ) {
                             if ( type === 'display' ) {
-                                return decodeURIComponent(data).substring(0, 20).concat("...");
+                                if(data.length>0)
+                                    return "<a href='" + decodeURIComponent(data) + "' target='_blank'>link</a>";
+                                else
+                                    return "<img src='../admin/images/error.png'>"
                             }
                             return decodeURIComponent(data);
                         },
                         visible: true
                     },
-                    { "data": "affiliate.name", editField: "affiliate.id" },
                     { "data": "points_expiry_months" },
-                    { "data": "reference", editField: "reference" },
                     { "data": "commission", editField: "commission" },
+                    { "data": "issue_period" },
+                    { "data": "credit_limit_bottom" },
+                    { "data": "credit_limit_upper" },
+                    { "data": "debit_date" },
+                    { "data": "cutoff_date" },
                     {
                         "data": "is_active",
                         editField: "is_active",
                         render: function ( data, type, row ) {
                             if ( type === 'display' ) {
-                                if(data>0) return "true";
-                                return "false";
+                                if(data>0) return "<img src='../admin/images/power_on.png'>";
+                                return "<img src='../admin/images/power_off.png'>"
                             }
                             return data;
                         }
+                        // , visible:false
+                    },
+                    {
+                        "data": "reference",
+                        editField: "reference",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' ) {
+                                if(data.length>0)
+                                    return "<a href='" + data + "' target='_blank'>reference</a>";
+                                else
+                                    return "<img src='../admin/images/error.png'>"
+                            }
+                            return data;
+                        },
+                        visible: true
                     },
                     {
                         "data": "credit_card_id",
                         render: function ( data, type, row ) {
                             if ( type === 'display' ) {
-                                return "<a href='creditcard_details.php?Id=" + data + "'>Details</a>";
+                                return "<a href='creditcard_details.php?Id=" + data + "' >Details</a>";
                             }
                             return data;
                         }
@@ -319,6 +360,12 @@
                     $('input.editor-jcb', row).prop( 'checked', data.jcb == 1 );
                     $('input.editor-master', row).prop( 'checked', data.master == 1 );
                     $('input.editor-visa', row).prop( 'checked', data.visa == 1 );
+                },
+                "createdRow": function( row, data) {
+                    if($.isNumeric(data["is_active"]) && data["is_active"]=="0")
+                    {
+                        $(row).addClass( 'showAsInactive' );
+                    }
                 }
             } )
             .on( 'change', 'input.editor-visa', function () {
@@ -373,12 +420,17 @@
             <th>jcb</th>
             <th>amex</th>
             <th>diners</th>
-            <th>affiliate_link</th>
             <th>affiliate</th>
-            <th>expiry<br>(months)</th>
-            <th>reference</th>
+            <th>link</th>
+            <th>point<br>expiry<br>(months)</th>
             <th>commission</th>
+            <th>issue<br>period<br>(months)</th>
+            <th>credit<br>limit<br>bottom</th>
+            <th>credit<br>limit<br>upper</th>
+            <th>debit date</th>
+            <th>cutoff date</th>
             <th>active</th>
+            <th>reference</th>
             <th>update</th>
         </tr>
     </thead>
@@ -395,12 +447,17 @@
             <th>jcb</th>
             <th>amex</th>
             <th>diners</th>
-            <th>affiliate_link</th>
             <th>affiliate</th>
+            <th>link</th>
             <th>expiry<br>(months)</th>
-            <th>reference</th>
             <th>commission</th>
+            <th>issue<br>period<br>(months)</th>
+            <th>credit<br>limit<br>bottom</th>
+            <th>credit<br>limit<br>upper</th>
+            <th>debit date</th>
+            <th>cutoff date</th>
             <th>active</th>
+            <th>reference</th>
             <th>update</th>
         </tr>
     </tfoot>

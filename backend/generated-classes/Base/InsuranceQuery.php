@@ -23,6 +23,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsuranceQuery orderByInsuranceId($order = Criteria::ASC) Order by the insurance_id column
  * @method     ChildInsuranceQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildInsuranceQuery orderByInsuranceTypeId($order = Criteria::ASC) Order by the insurance_type_id column
+ * @method     ChildInsuranceQuery orderByGuaranteedPeriod($order = Criteria::ASC) Order by the guaranteed_period column
  * @method     ChildInsuranceQuery orderByMaxInsuredAmount($order = Criteria::ASC) Order by the max_insured_amount column
  * @method     ChildInsuranceQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method     ChildInsuranceQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
@@ -32,6 +33,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsuranceQuery groupByInsuranceId() Group by the insurance_id column
  * @method     ChildInsuranceQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildInsuranceQuery groupByInsuranceTypeId() Group by the insurance_type_id column
+ * @method     ChildInsuranceQuery groupByGuaranteedPeriod() Group by the guaranteed_period column
  * @method     ChildInsuranceQuery groupByMaxInsuredAmount() Group by the max_insured_amount column
  * @method     ChildInsuranceQuery groupByValue() Group by the value column
  * @method     ChildInsuranceQuery groupByUpdateTime() Group by the update_time column
@@ -58,6 +60,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsurance findOneByInsuranceId(int $insurance_id) Return the first ChildInsurance filtered by the insurance_id column
  * @method     ChildInsurance findOneByCreditCardId(int $credit_card_id) Return the first ChildInsurance filtered by the credit_card_id column
  * @method     ChildInsurance findOneByInsuranceTypeId(int $insurance_type_id) Return the first ChildInsurance filtered by the insurance_type_id column
+ * @method     ChildInsurance findOneByGuaranteedPeriod(int $guaranteed_period) Return the first ChildInsurance filtered by the guaranteed_period column
  * @method     ChildInsurance findOneByMaxInsuredAmount(int $max_insured_amount) Return the first ChildInsurance filtered by the max_insured_amount column
  * @method     ChildInsurance findOneByValue(int $value) Return the first ChildInsurance filtered by the value column
  * @method     ChildInsurance findOneByUpdateTime(string $update_time) Return the first ChildInsurance filtered by the update_time column
@@ -68,6 +71,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildInsurance[]|ObjectCollection findByInsuranceId(int $insurance_id) Return ChildInsurance objects filtered by the insurance_id column
  * @method     ChildInsurance[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildInsurance objects filtered by the credit_card_id column
  * @method     ChildInsurance[]|ObjectCollection findByInsuranceTypeId(int $insurance_type_id) Return ChildInsurance objects filtered by the insurance_type_id column
+ * @method     ChildInsurance[]|ObjectCollection findByGuaranteedPeriod(int $guaranteed_period) Return ChildInsurance objects filtered by the guaranteed_period column
  * @method     ChildInsurance[]|ObjectCollection findByMaxInsuredAmount(int $max_insured_amount) Return ChildInsurance objects filtered by the max_insured_amount column
  * @method     ChildInsurance[]|ObjectCollection findByValue(int $value) Return ChildInsurance objects filtered by the value column
  * @method     ChildInsurance[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildInsurance objects filtered by the update_time column
@@ -164,7 +168,7 @@ abstract class InsuranceQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT insurance_id, credit_card_id, insurance_type_id, max_insured_amount, value, update_time, update_user, reference FROM insurance WHERE insurance_id = :p0';
+        $sql = 'SELECT insurance_id, credit_card_id, insurance_type_id, guaranteed_period, max_insured_amount, value, update_time, update_user, reference FROM insurance WHERE insurance_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -379,6 +383,47 @@ abstract class InsuranceQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $insuranceTypeId, $comparison);
+    }
+
+    /**
+     * Filter the query on the guaranteed_period column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByGuaranteedPeriod(1234); // WHERE guaranteed_period = 1234
+     * $query->filterByGuaranteedPeriod(array(12, 34)); // WHERE guaranteed_period IN (12, 34)
+     * $query->filterByGuaranteedPeriod(array('min' => 12)); // WHERE guaranteed_period > 12
+     * </code>
+     *
+     * @param     mixed $guaranteedPeriod The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildInsuranceQuery The current query, for fluid interface
+     */
+    public function filterByGuaranteedPeriod($guaranteedPeriod = null, $comparison = null)
+    {
+        if (is_array($guaranteedPeriod)) {
+            $useMinMax = false;
+            if (isset($guaranteedPeriod['min'])) {
+                $this->addUsingAlias(InsuranceTableMap::COL_GUARANTEED_PERIOD, $guaranteedPeriod['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($guaranteedPeriod['max'])) {
+                $this->addUsingAlias(InsuranceTableMap::COL_GUARANTEED_PERIOD, $guaranteedPeriod['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(InsuranceTableMap::COL_GUARANTEED_PERIOD, $guaranteedPeriod, $comparison);
     }
 
     /**

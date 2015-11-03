@@ -12,6 +12,7 @@ include_once(__DIR__ . "/../Json/JInsurance.php");
 use Db\Json\JInsurance;
 use Db\Json\JFeatureType;
 use Db\Json\JCreditCardRestriction;
+use Db\Utility\FieldUtils;
 
 
 class CardRestriction { //TODO merge with PersonaMapping
@@ -36,6 +37,101 @@ class CardRestriction { //TODO merge with PersonaMapping
         return $that;
     }
 }
+
+class Interest{
+    public $Type;
+    public $Display;
+    public $Description;
+    public $MinInterest;
+    public $MaxInterest;
+
+    function Interest()
+    {
+
+    }
+
+    function UpdateFromDB(\Interest $ins)
+    {
+        $type = $ins->getPaymentType();
+        if(!is_null($type)) {
+            $this->Display     = $type->getDisplay();
+            $this->Type  = $type->getType();
+            $this->Description = $type->getDescription();
+        }
+        $this->MinInterest = $ins->getMinInterest();
+        $this->MaxInterest = $ins->getMaxInterest();
+        return $this;
+    }
+
+    static function CREATE_FROM_DB(\Interest $rew)
+    {
+        $mine = new Interest();
+        $mine->UpdateFromDB($rew);
+        return $mine;
+    }
+
+    static function CREATE_FROM_CREDIT_CARD(\CreditCard $cc) {
+        $items = array();
+
+        foreach($cc->getInterests() as $ins) {
+            array_push($items,Interest::CREATE_FROM_DB($ins));
+        }
+
+        return $items;
+    }
+
+}
+
+
+class Insurance{
+    public $Type;
+    public $TypeDisplay;
+    public $SubType;
+    public $SubTypeDisplay;
+    public $Region;
+    public $Description;
+    public $MaxInsuredAmount;
+    public $GuaranteedPeriod;
+
+    function Insurance()
+    {
+
+    }
+
+    function UpdateFromDB(\Insurance $ins)
+    {
+        $type = $ins->getInsuranceType();
+        if(!is_null($type)) {
+            $this->Type     = $type->getTypeName();
+            $this->SubType  = $type->getSubtypeName();
+            $this->TypeDisplay     = FieldUtils::STRING_IS_DEFINED($type->getTypeDisplay())? $type->getTypeDisplay():$type->getTypeName();
+            $this->SubTypeDisplay  = FieldUtils::STRING_IS_DEFINED($type->getSubtypeDisplay())? $type->getSubtypeDisplay():$type->getSubtypeName();
+            $this->Region   = $type->getRegion();
+            $this->Description = $type->getDescription();
+        }
+        $this->MaxInsuredAmount = $ins->getMaxInsuredAmount();
+        $this->GuaranteedPeriod = $ins->getGuaranteedPeriod();
+        return $this;
+    }
+
+    static function CREATE_FROM_DB(\Insurance $rew)
+    {
+        $mine = new Insurance();
+        $mine->UpdateFromDB($rew);
+        return $mine;
+    }
+
+    static function CREATE_FROM_CREDIT_CARD(\CreditCard $cc) {
+        $items = array();
+
+        foreach($cc->getInsurances() as $ins) {
+            array_push($items,Insurance::CREATE_FROM_DB($ins));
+        }
+
+        return $items;
+    }
+}
+
 
 class Reward{
     public $category;
@@ -116,7 +212,7 @@ class Feature {
 
     public function __toString()
     {
-        return $this->category;
+        return $this->category . "-" . $this->feature;
     }
 
 }
@@ -155,6 +251,7 @@ class CreditCard {
     public $annualFeeFirstYear;
     public $annualFeeSubseqYear;
     public $interestShopping;
+    public $interest;
     public $pointsToMoneyConversionRate;
     public $affiliateUrl;
     public $shortDescription;
@@ -199,10 +296,11 @@ class CreditCard {
         return "http://moneyiq.jp/link.php?Link1=" . $link . "&Link2=https%3A%2F%2Fjp.surveymonkey.com%2Fs%2FQJKXMHC";
     }
 
-    function AddInsurance(\Insurance $type)
+    function AddInsuranceAsFeature(\Insurance $type)
     {
         $feat = new Feature();
         $feat->SetInsurance($type);
+        if(!FieldUtils::STRING_IS_DEFINED($feat->category)) return $this; //only add if we actually created a feature
 
         if(!is_array($this->insurances) || empty($this->insurances))
         {
@@ -210,9 +308,9 @@ class CreditCard {
             return $this;
         }
 
-        array_push($this->insurances, $feat);
+        array_push($this->features, $feat);
 
-        $this->insurances = array_unique($this->insurances);
+        $this->features = array_unique($this->features);  //easier to avoid duplicates instead of checking each time
         return $this;
     }
 
@@ -301,13 +399,10 @@ class CreditCard {
 
 
         foreach($cc->getInsurances() as $insurance ) {
-            $mine->AddInsurance($insurance);
+            $mine->AddInsuranceAsFeature($insurance);
         }
 
-        //add insurances to features
-        foreach($mine->insurances as $insurance) {
-            array_push($mine->features,$insurance);
-        }
+        $mine->insurances = Insurance::CREATE_FROM_CREDIT_CARD($cc);
 
         $now = new \DateTime('NOW');
         foreach($cc->getCampaigns() as $camp) {
@@ -320,6 +415,7 @@ class CreditCard {
 
         $mine->pointsToMoneyConversionRate = $cc->getPointsToMoneyConversionRate();
         $mine->interestShopping = $cc->getShoppingInterestRate();
+        $mine->interest = Interest::CREATE_FROM_CREDIT_CARD($cc);
         $mine->shortDescription = $cc->getShortDescription();
         if(!is_null($cc->getPointexpirymonths())) {
             $mine->pointsExpiryPeriod=$cc->getPointexpirymonths()/12;

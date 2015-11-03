@@ -35,7 +35,7 @@ class Jinterest implements JSONInterface{
         );
         $mine->PaymentType=  array(
             'Id' => $item->getPaymentTypeId(),
-            'Name' => $item->getPaymentType()->getPaymentType()
+            'Name' => $item->getPaymentType()->getType()
         );
         $mine->MinInterest = $item->getMinInterest();
         $mine->MaxInterest = $item->getMaxInterest();

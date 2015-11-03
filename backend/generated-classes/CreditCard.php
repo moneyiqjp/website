@@ -9,7 +9,7 @@ class CreditCard extends BaseCreditCard
     public function getShoppingInterestRate() {
         foreach ($this->getInterests() as $int)
         {
-            if ($int->getPaymentType()->getPaymentType()=="ikkai")
+            if ($int->getPaymentType()->getType()=="ikkai")
             {
                 return  $int->getMinInterest();
             }
@@ -115,6 +115,21 @@ class CreditCard extends BaseCreditCard
                 break;
             case "points_expiry_months":
                 $this->setPointexpirymonths($value);
+                break;
+            case "issue_period":
+                $this->setIssuePeriod($value);
+                break;
+            case "credit_limit_bottom":
+                $this->setCreditLimitBottom($value);
+                break;
+            case "credit_limit_upper":
+                $this->setCreditLimitUpper($value);
+                break;
+            case "debit_date":
+                $this->setDebitDate($value);
+                break;
+            case "cutoff_date":
+                $this->setCutoffDate($value);
                 break;
             case "update_user":
                 $this->setUpdateUser($value);

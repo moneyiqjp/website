@@ -151,3 +151,46 @@ a.cleanlink:link{
 a.cleanlink:hover{
     text-decoration: underline overline;
 }
+
+table.dataTable tr.showAsInactive.odd{
+    color: rgba(5, 0, 3, 0.7);
+    font-style: italic;
+}
+
+
+table.dataTable tr.showAsInactive.even {
+    color: #fff2a9 ;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.odd {
+    background-color: #9FAFD1;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.odd td.sorting_1 {
+    background-color: #9FAFD1;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.odd td.sorting_2 {
+    background-color: #9FAFD1;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.odd td.sorting_3 {
+    background-color: #9FAFD1;
+}
+
+
+table.dataTable tr.DTTT_selected.showAsInactive.even {
+    background-color: #B0BED9;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.even td.sorting_1 {
+    background-color: #B0BED9;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.even td.sorting_2 {
+    background-color: #B0BED9;
+}
+
+table.dataTable tr.DTTT_selected.showAsInactive.even td.sorting_3 {
+    background-color: #B0BED9;
+}

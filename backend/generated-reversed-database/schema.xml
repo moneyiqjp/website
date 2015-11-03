@@ -218,9 +218,14 @@
     <column name="afilliate_link" phpName="AfilliateLink" type="LONGVARCHAR"/>
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="pointExpiryMonths" phpName="Pointexpirymonths" type="INTEGER" defaultValue="12"/>
-    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
+    <column name="issue_period" phpName="IssuePeriod" type="INTEGER"/>
+    <column name="credit_limit_bottom" phpName="CreditLimitBottom" type="INTEGER"/>
+    <column name="credit_limit_upper" phpName="CreditLimitUpper" type="INTEGER"/>
     <column name="commission" phpName="Commission" type="INTEGER"/>
+    <column name="debit_date" phpName="DebitDate" type="VARCHAR" size="250"/>
+    <column name="cutoff_date" phpName="CutoffDate" type="VARCHAR" size="250"/>
     <column name="isActive" phpName="Isactive" type="TINYINT" defaultValue="1"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <foreign-key foreignTable="affiliate_company" name="affiliate_company_credit_card">
@@ -348,6 +353,7 @@
     <column name="insurance_id" phpName="InsuranceId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="insurance_type_id" phpName="InsuranceTypeId" type="INTEGER" required="true"/>
+    <column name="guaranteed_period" phpName="GuaranteedPeriod" type="INTEGER"/>
     <column name="max_insured_amount" phpName="MaxInsuredAmount" type="INTEGER"/>
     <column name="value" phpName="Value" type="INTEGER"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
@@ -590,8 +596,9 @@
   </table>
   <table name="payment_type" idMethod="native" phpName="PaymentType">
     <column name="payment_type_id" phpName="PaymentTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="payment_type" phpName="PaymentType" type="VARCHAR" size="255" required="true"/>
-    <column name="payment_description" phpName="PaymentDescription" type="LONGVARCHAR" required="true"/>
+    <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
+    <column name="display" phpName="Display" type="LONGVARCHAR" required="true"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">

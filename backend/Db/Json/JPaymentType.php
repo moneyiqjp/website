@@ -9,9 +9,12 @@
 namespace Db\Json;
 
 
+use Db\Utility\ArrayUtils;
+
 class JPaymentType implements JSONInterface{
     public $PaymentTypeId;
     public $PaymentType;
+    public $Display;
     public $PaymentDescription;
     public $UpdateTime;
     public $UpdateUser;
@@ -24,8 +27,9 @@ class JPaymentType implements JSONInterface{
     {
         $mine = new JPaymentType();
         $mine->PaymentTypeId = $item->getPaymentTypeId();
-        $mine->PaymentType = $item->getPaymentType();
-        $mine->PaymentDescription = $item->getPaymentDescription();
+        $mine->PaymentType = $item->getType();
+        $mine->Display = $item->getDisplay();
+        $mine->PaymentDescription = $item->getDescription();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -36,8 +40,12 @@ class JPaymentType implements JSONInterface{
     {
         $mine = new JPaymentType();
         $mine->PaymentTypeId = $data['PaymentTypeId'];
-        $mine->PaymentType = $data['PaymentType'];
-        $mine->PaymentDescription = $data['PaymentDescription'];
+        if(ArrayUtils::KEY_EXISTS($data,'PaymentType')) $mine->PaymentType = $data['PaymentType'];
+        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->PaymentType = $data['Type'];
+        if(ArrayUtils::KEY_EXISTS($data,'PaymentDescription')) $mine->PaymentDescription = $data['PaymentDescription'];
+        if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->PaymentDescription = $data['Description'];
+
+
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
 
@@ -59,8 +67,8 @@ class JPaymentType implements JSONInterface{
         if(!is_null($this->PaymentTypeId) && $this->PaymentTypeId>0) {
             $item->setPaymentTypeId($this->PaymentTypeId);
         }
-        $item->setPaymentType($this->PaymentType);
-        $item->setPaymentDescription($this->PaymentDescription);
+        $item->setType($this->PaymentType);
+        $item->setDescription($this->PaymentDescription);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

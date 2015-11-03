@@ -84,6 +84,12 @@ abstract class Insurance implements ActiveRecordInterface
     protected $insurance_type_id;
 
     /**
+     * The value for the guaranteed_period field.
+     * @var        int
+     */
+    protected $guaranteed_period;
+
+    /**
      * The value for the max_insured_amount field.
      * @var        int
      */
@@ -379,6 +385,16 @@ abstract class Insurance implements ActiveRecordInterface
     }
 
     /**
+     * Get the [guaranteed_period] column value.
+     *
+     * @return int
+     */
+    public function getGuaranteedPeriod()
+    {
+        return $this->guaranteed_period;
+    }
+
+    /**
      * Get the [max_insured_amount] column value.
      *
      * @return int
@@ -505,6 +521,26 @@ abstract class Insurance implements ActiveRecordInterface
 
         return $this;
     } // setInsuranceTypeId()
+
+    /**
+     * Set the value of [guaranteed_period] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Insurance The current object (for fluent API support)
+     */
+    public function setGuaranteedPeriod($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->guaranteed_period !== $v) {
+            $this->guaranteed_period = $v;
+            $this->modifiedColumns[InsuranceTableMap::COL_GUARANTEED_PERIOD] = true;
+        }
+
+        return $this;
+    } // setGuaranteedPeriod()
 
     /**
      * Set the value of [max_insured_amount] column.
@@ -651,22 +687,25 @@ abstract class Insurance implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : InsuranceTableMap::translateFieldName('InsuranceTypeId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->insurance_type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : InsuranceTableMap::translateFieldName('MaxInsuredAmount', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : InsuranceTableMap::translateFieldName('GuaranteedPeriod', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->guaranteed_period = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : InsuranceTableMap::translateFieldName('MaxInsuredAmount', TableMap::TYPE_PHPNAME, $indexType)];
             $this->max_insured_amount = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : InsuranceTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : InsuranceTableMap::translateFieldName('Value', TableMap::TYPE_PHPNAME, $indexType)];
             $this->value = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : InsuranceTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : InsuranceTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : InsuranceTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : InsuranceTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : InsuranceTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : InsuranceTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reference = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -676,7 +715,7 @@ abstract class Insurance implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = InsuranceTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = InsuranceTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Insurance'), 0, $e);
@@ -909,6 +948,9 @@ abstract class Insurance implements ActiveRecordInterface
         if ($this->isColumnModified(InsuranceTableMap::COL_INSURANCE_TYPE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'insurance_type_id';
         }
+        if ($this->isColumnModified(InsuranceTableMap::COL_GUARANTEED_PERIOD)) {
+            $modifiedColumns[':p' . $index++]  = 'guaranteed_period';
+        }
         if ($this->isColumnModified(InsuranceTableMap::COL_MAX_INSURED_AMOUNT)) {
             $modifiedColumns[':p' . $index++]  = 'max_insured_amount';
         }
@@ -943,6 +985,9 @@ abstract class Insurance implements ActiveRecordInterface
                         break;
                     case 'insurance_type_id':
                         $stmt->bindValue($identifier, $this->insurance_type_id, PDO::PARAM_INT);
+                        break;
+                    case 'guaranteed_period':
+                        $stmt->bindValue($identifier, $this->guaranteed_period, PDO::PARAM_INT);
                         break;
                     case 'max_insured_amount':
                         $stmt->bindValue($identifier, $this->max_insured_amount, PDO::PARAM_INT);
@@ -1031,18 +1076,21 @@ abstract class Insurance implements ActiveRecordInterface
                 return $this->getInsuranceTypeId();
                 break;
             case 3:
-                return $this->getMaxInsuredAmount();
+                return $this->getGuaranteedPeriod();
                 break;
             case 4:
-                return $this->getValue();
+                return $this->getMaxInsuredAmount();
                 break;
             case 5:
-                return $this->getUpdateTime();
+                return $this->getValue();
                 break;
             case 6:
-                return $this->getUpdateUser();
+                return $this->getUpdateTime();
                 break;
             case 7:
+                return $this->getUpdateUser();
+                break;
+            case 8:
                 return $this->getReference();
                 break;
             default:
@@ -1078,11 +1126,12 @@ abstract class Insurance implements ActiveRecordInterface
             $keys[0] => $this->getInsuranceId(),
             $keys[1] => $this->getCreditCardId(),
             $keys[2] => $this->getInsuranceTypeId(),
-            $keys[3] => $this->getMaxInsuredAmount(),
-            $keys[4] => $this->getValue(),
-            $keys[5] => $this->getUpdateTime(),
-            $keys[6] => $this->getUpdateUser(),
-            $keys[7] => $this->getReference(),
+            $keys[3] => $this->getGuaranteedPeriod(),
+            $keys[4] => $this->getMaxInsuredAmount(),
+            $keys[5] => $this->getValue(),
+            $keys[6] => $this->getUpdateTime(),
+            $keys[7] => $this->getUpdateUser(),
+            $keys[8] => $this->getReference(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1164,18 +1213,21 @@ abstract class Insurance implements ActiveRecordInterface
                 $this->setInsuranceTypeId($value);
                 break;
             case 3:
-                $this->setMaxInsuredAmount($value);
+                $this->setGuaranteedPeriod($value);
                 break;
             case 4:
-                $this->setValue($value);
+                $this->setMaxInsuredAmount($value);
                 break;
             case 5:
-                $this->setUpdateTime($value);
+                $this->setValue($value);
                 break;
             case 6:
-                $this->setUpdateUser($value);
+                $this->setUpdateTime($value);
                 break;
             case 7:
+                $this->setUpdateUser($value);
+                break;
+            case 8:
                 $this->setReference($value);
                 break;
         } // switch()
@@ -1214,19 +1266,22 @@ abstract class Insurance implements ActiveRecordInterface
             $this->setInsuranceTypeId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setMaxInsuredAmount($arr[$keys[3]]);
+            $this->setGuaranteedPeriod($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setValue($arr[$keys[4]]);
+            $this->setMaxInsuredAmount($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateTime($arr[$keys[5]]);
+            $this->setValue($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateUser($arr[$keys[6]]);
+            $this->setUpdateTime($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setReference($arr[$keys[7]]);
+            $this->setUpdateUser($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setReference($arr[$keys[8]]);
         }
     }
 
@@ -1277,6 +1332,9 @@ abstract class Insurance implements ActiveRecordInterface
         }
         if ($this->isColumnModified(InsuranceTableMap::COL_INSURANCE_TYPE_ID)) {
             $criteria->add(InsuranceTableMap::COL_INSURANCE_TYPE_ID, $this->insurance_type_id);
+        }
+        if ($this->isColumnModified(InsuranceTableMap::COL_GUARANTEED_PERIOD)) {
+            $criteria->add(InsuranceTableMap::COL_GUARANTEED_PERIOD, $this->guaranteed_period);
         }
         if ($this->isColumnModified(InsuranceTableMap::COL_MAX_INSURED_AMOUNT)) {
             $criteria->add(InsuranceTableMap::COL_MAX_INSURED_AMOUNT, $this->max_insured_amount);
@@ -1381,6 +1439,7 @@ abstract class Insurance implements ActiveRecordInterface
     {
         $copyObj->setCreditCardId($this->getCreditCardId());
         $copyObj->setInsuranceTypeId($this->getInsuranceTypeId());
+        $copyObj->setGuaranteedPeriod($this->getGuaranteedPeriod());
         $copyObj->setMaxInsuredAmount($this->getMaxInsuredAmount());
         $copyObj->setValue($this->getValue());
         $copyObj->setUpdateTime($this->getUpdateTime());
@@ -1532,6 +1591,7 @@ abstract class Insurance implements ActiveRecordInterface
         $this->insurance_id = null;
         $this->credit_card_id = null;
         $this->insurance_type_id = null;
+        $this->guaranteed_period = null;
         $this->max_insured_amount = null;
         $this->value = null;
         $this->update_time = null;

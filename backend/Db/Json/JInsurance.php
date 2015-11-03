@@ -16,6 +16,7 @@ class JInsurance  implements JSONInterface {
     public $CreditCard;
     public $InsuranceType;
     public $MaxInsuredAmount;
+    public $GuaranteedPeriod;
     public $Value;
     public $Reference;
     public $UpdateTime;
@@ -43,6 +44,7 @@ class JInsurance  implements JSONInterface {
         }
 
         if(!is_null($item->getMaxInsuredAmount())) $mine->MaxInsuredAmount = $item->getMaxInsuredAmount();
+        if(!is_null($item->getGuaranteedPeriod())) $mine->GuaranteedPeriod = $item->getGuaranteedPeriod();
         if(!is_null($item->getValue())) $mine->Value = $item->getValue();
         $mine->Reference = $item->getReference();
 
@@ -69,6 +71,7 @@ class JInsurance  implements JSONInterface {
         $mine->InsuranceType = JInsuranceType::CREATE_FROM_ARRAY($data["InsuranceType"]);
 
         if(ArrayUtils::KEY_EXISTS($data,'MaxInsuredAmount')) $mine->MaxInsuredAmount = $data['MaxInsuredAmount'];
+        if(ArrayUtils::KEY_EXISTS($data,'GuaranteedPeriod')) $mine->GuaranteedPeriod = $data['GuaranteedPeriod'];
         if(ArrayUtils::KEY_EXISTS($data,'Value')) $mine->Value = $data['Value'];
         if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
 
@@ -107,6 +110,7 @@ class JInsurance  implements JSONInterface {
         }
 
         if(FieldUtils::NUMBER_IS_DEFINED($this->MaxInsuredAmount)) $item->setMaxInsuredAmount($this->MaxInsuredAmount);
+        if(FieldUtils::NUMBER_IS_DEFINED($this->GuaranteedPeriod)) $item->setGuaranteedPeriod($this->GuaranteedPeriod);
         if(FieldUtils::NUMBER_IS_DEFINED($this->Value)) $item->setValue($this->Value);
         if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
 
@@ -115,21 +119,32 @@ class JInsurance  implements JSONInterface {
         return $item;
     }
 
-/*
- *     public $TypeName;
-    public $SubtypeName;
-    public $Description;
-    public $Region;
- */
 
     public function getCategory() {
+
         if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
         $it = $this->InsuranceType;
-
-        if(is_null($it->TypeDisplay)) return $it->TypeName;
-        return $it->TypeDisplay;
-
         /*
+                if(is_null($it->TypeDisplay)) return $it->TypeName;
+                return $it->TypeDisplay;
+        */
+          switch(strtoupper($it->TypeName)) {
+            case "TRAVEL":
+                return "travel_insurance";
+            case "SHOPPING":
+                return "shopping_insurance";
+            default:
+                return "";
+        }
+      }
+
+    public function getFeature() {
+        if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
+        $it = $this->InsuranceType;
+        /*
+        if(is_null($it->SubtypeDisplay)) return $it->SubtypeName;
+        return $it->SubtypeDisplay;
+        */
         switch(strtoupper($it->TypeName)) {
             case "TRAVEL":
                 return "travel_insurance";
@@ -138,15 +153,6 @@ class JInsurance  implements JSONInterface {
             default:
                 return "";
         }
-        */
-    }
-
-    public function getFeature() {
-        if(is_null($this->InsuranceType)) throw new \Exception("No Insurance Type");
-        $it = $this->InsuranceType;
-
-        if(is_null($it->SubtypeDisplay)) return $it->SubtypeName;
-        return $it->SubtypeDisplay;
     }
 
 

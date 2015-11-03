@@ -1300,7 +1300,7 @@ class Db
     function GetPaymentTypeForDisplay()
     {
         $result = array();
-        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->find() as $af) {
+        foreach ((new \PaymentTypeQuery())->orderByType()->find() as $af) {
             array_push($result,  Json\JObject::CREATE($af->getName(),$af->getPaymentTypeId()));
         }
         return $result;
@@ -1308,7 +1308,7 @@ class Db
     function GetPaymentTypeForCrud()
     {
         $result = array();
-        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->find() as $af) {
+        foreach ((new \PaymentTypeQuery())->orderByType()->find() as $af) {
             array_push($result, Json\JPaymentType::CREATE_FROM_DB($af));
         }
         return $result;
@@ -1316,7 +1316,7 @@ class Db
     function GetPaymentTypeById($id)
     {
         $result = array();
-        foreach ((new \PaymentTypeQuery())->orderByPaymentType()->findPk($id) as $af) {
+        foreach ((new \PaymentTypeQuery())->orderByType()->findPk($id) as $af) {
             array_push($result, Json\JPaymentType::CREATE_FROM_DB($af));
         }
         return $result;

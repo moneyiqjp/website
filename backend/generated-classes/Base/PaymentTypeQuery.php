@@ -21,14 +21,16 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildPaymentTypeQuery orderByPaymentTypeId($order = Criteria::ASC) Order by the payment_type_id column
- * @method     ChildPaymentTypeQuery orderByPaymentType($order = Criteria::ASC) Order by the payment_type column
- * @method     ChildPaymentTypeQuery orderByPaymentDescription($order = Criteria::ASC) Order by the payment_description column
+ * @method     ChildPaymentTypeQuery orderByType($order = Criteria::ASC) Order by the type column
+ * @method     ChildPaymentTypeQuery orderByDisplay($order = Criteria::ASC) Order by the display column
+ * @method     ChildPaymentTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildPaymentTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPaymentTypeQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildPaymentTypeQuery groupByPaymentTypeId() Group by the payment_type_id column
- * @method     ChildPaymentTypeQuery groupByPaymentType() Group by the payment_type column
- * @method     ChildPaymentTypeQuery groupByPaymentDescription() Group by the payment_description column
+ * @method     ChildPaymentTypeQuery groupByType() Group by the type column
+ * @method     ChildPaymentTypeQuery groupByDisplay() Group by the display column
+ * @method     ChildPaymentTypeQuery groupByDescription() Group by the description column
  * @method     ChildPaymentTypeQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPaymentTypeQuery groupByUpdateUser() Group by the update_user column
  *
@@ -46,15 +48,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPaymentType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPaymentType matching the query, or a new ChildPaymentType object populated from the query conditions when no match is found
  *
  * @method     ChildPaymentType findOneByPaymentTypeId(int $payment_type_id) Return the first ChildPaymentType filtered by the payment_type_id column
- * @method     ChildPaymentType findOneByPaymentType(string $payment_type) Return the first ChildPaymentType filtered by the payment_type column
- * @method     ChildPaymentType findOneByPaymentDescription(string $payment_description) Return the first ChildPaymentType filtered by the payment_description column
+ * @method     ChildPaymentType findOneByType(string $type) Return the first ChildPaymentType filtered by the type column
+ * @method     ChildPaymentType findOneByDisplay(string $display) Return the first ChildPaymentType filtered by the display column
+ * @method     ChildPaymentType findOneByDescription(string $description) Return the first ChildPaymentType filtered by the description column
  * @method     ChildPaymentType findOneByUpdateTime(string $update_time) Return the first ChildPaymentType filtered by the update_time column
  * @method     ChildPaymentType findOneByUpdateUser(string $update_user) Return the first ChildPaymentType filtered by the update_user column
  *
  * @method     ChildPaymentType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPaymentType objects based on current ModelCriteria
  * @method     ChildPaymentType[]|ObjectCollection findByPaymentTypeId(int $payment_type_id) Return ChildPaymentType objects filtered by the payment_type_id column
- * @method     ChildPaymentType[]|ObjectCollection findByPaymentType(string $payment_type) Return ChildPaymentType objects filtered by the payment_type column
- * @method     ChildPaymentType[]|ObjectCollection findByPaymentDescription(string $payment_description) Return ChildPaymentType objects filtered by the payment_description column
+ * @method     ChildPaymentType[]|ObjectCollection findByType(string $type) Return ChildPaymentType objects filtered by the type column
+ * @method     ChildPaymentType[]|ObjectCollection findByDisplay(string $display) Return ChildPaymentType objects filtered by the display column
+ * @method     ChildPaymentType[]|ObjectCollection findByDescription(string $description) Return ChildPaymentType objects filtered by the description column
  * @method     ChildPaymentType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPaymentType objects filtered by the update_time column
  * @method     ChildPaymentType[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPaymentType objects filtered by the update_user column
  * @method     ChildPaymentType[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -148,7 +152,7 @@ abstract class PaymentTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT payment_type_id, payment_type, payment_description, update_time, update_user FROM payment_type WHERE payment_type_id = :p0';
+        $sql = 'SELECT payment_type_id, type, display, description, update_time, update_user FROM payment_type WHERE payment_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -280,61 +284,90 @@ abstract class PaymentTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the payment_type column
+     * Filter the query on the type column
      *
      * Example usage:
      * <code>
-     * $query->filterByPaymentType('fooValue');   // WHERE payment_type = 'fooValue'
-     * $query->filterByPaymentType('%fooValue%'); // WHERE payment_type LIKE '%fooValue%'
+     * $query->filterByType('fooValue');   // WHERE type = 'fooValue'
+     * $query->filterByType('%fooValue%'); // WHERE type LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $paymentType The value to use as filter.
+     * @param     string $type The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPaymentTypeQuery The current query, for fluid interface
      */
-    public function filterByPaymentType($paymentType = null, $comparison = null)
+    public function filterByType($type = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($paymentType)) {
+            if (is_array($type)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $paymentType)) {
-                $paymentType = str_replace('*', '%', $paymentType);
+            } elseif (preg_match('/[\%\*]/', $type)) {
+                $type = str_replace('*', '%', $type);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(PaymentTypeTableMap::COL_PAYMENT_TYPE, $paymentType, $comparison);
+        return $this->addUsingAlias(PaymentTypeTableMap::COL_TYPE, $type, $comparison);
     }
 
     /**
-     * Filter the query on the payment_description column
+     * Filter the query on the display column
      *
      * Example usage:
      * <code>
-     * $query->filterByPaymentDescription('fooValue');   // WHERE payment_description = 'fooValue'
-     * $query->filterByPaymentDescription('%fooValue%'); // WHERE payment_description LIKE '%fooValue%'
+     * $query->filterByDisplay('fooValue');   // WHERE display = 'fooValue'
+     * $query->filterByDisplay('%fooValue%'); // WHERE display LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $paymentDescription The value to use as filter.
+     * @param     string $display The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPaymentTypeQuery The current query, for fluid interface
      */
-    public function filterByPaymentDescription($paymentDescription = null, $comparison = null)
+    public function filterByDisplay($display = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($paymentDescription)) {
+            if (is_array($display)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $paymentDescription)) {
-                $paymentDescription = str_replace('*', '%', $paymentDescription);
+            } elseif (preg_match('/[\%\*]/', $display)) {
+                $display = str_replace('*', '%', $display);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION, $paymentDescription, $comparison);
+        return $this->addUsingAlias(PaymentTypeTableMap::COL_DISPLAY, $display, $comparison);
+    }
+
+    /**
+     * Filter the query on the description column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDescription('fooValue');   // WHERE description = 'fooValue'
+     * $query->filterByDescription('%fooValue%'); // WHERE description LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $description The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPaymentTypeQuery The current query, for fluid interface
+     */
+    public function filterByDescription($description = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($description)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $description)) {
+                $description = str_replace('*', '%', $description);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PaymentTypeTableMap::COL_DESCRIPTION, $description, $comparison);
     }
 
     /**

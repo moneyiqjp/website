@@ -72,16 +72,22 @@ abstract class PaymentType implements ActiveRecordInterface
     protected $payment_type_id;
 
     /**
-     * The value for the payment_type field.
+     * The value for the type field.
      * @var        string
      */
-    protected $payment_type;
+    protected $type;
 
     /**
-     * The value for the payment_description field.
+     * The value for the display field.
      * @var        string
      */
-    protected $payment_description;
+    protected $display;
+
+    /**
+     * The value for the description field.
+     * @var        string
+     */
+    protected $description;
 
     /**
      * The value for the update_time field.
@@ -343,23 +349,33 @@ abstract class PaymentType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [payment_type] column value.
+     * Get the [type] column value.
      *
      * @return string
      */
-    public function getPaymentType()
+    public function getType()
     {
-        return $this->payment_type;
+        return $this->type;
     }
 
     /**
-     * Get the [payment_description] column value.
+     * Get the [display] column value.
      *
      * @return string
      */
-    public function getPaymentDescription()
+    public function getDisplay()
     {
-        return $this->payment_description;
+        return $this->display;
+    }
+
+    /**
+     * Get the [description] column value.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -413,44 +429,64 @@ abstract class PaymentType implements ActiveRecordInterface
     } // setPaymentTypeId()
 
     /**
-     * Set the value of [payment_type] column.
+     * Set the value of [type] column.
      *
      * @param  string $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
-    public function setPaymentType($v)
+    public function setType($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->payment_type !== $v) {
-            $this->payment_type = $v;
-            $this->modifiedColumns[PaymentTypeTableMap::COL_PAYMENT_TYPE] = true;
+        if ($this->type !== $v) {
+            $this->type = $v;
+            $this->modifiedColumns[PaymentTypeTableMap::COL_TYPE] = true;
         }
 
         return $this;
-    } // setPaymentType()
+    } // setType()
 
     /**
-     * Set the value of [payment_description] column.
+     * Set the value of [display] column.
      *
      * @param  string $v new value
      * @return $this|\PaymentType The current object (for fluent API support)
      */
-    public function setPaymentDescription($v)
+    public function setDisplay($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->payment_description !== $v) {
-            $this->payment_description = $v;
-            $this->modifiedColumns[PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION] = true;
+        if ($this->display !== $v) {
+            $this->display = $v;
+            $this->modifiedColumns[PaymentTypeTableMap::COL_DISPLAY] = true;
         }
 
         return $this;
-    } // setPaymentDescription()
+    } // setDisplay()
+
+    /**
+     * Set the value of [description] column.
+     *
+     * @param  string $v new value
+     * @return $this|\PaymentType The current object (for fluent API support)
+     */
+    public function setDescription($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->description !== $v) {
+            $this->description = $v;
+            $this->modifiedColumns[PaymentTypeTableMap::COL_DESCRIPTION] = true;
+        }
+
+        return $this;
+    } // setDescription()
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
@@ -531,19 +567,22 @@ abstract class PaymentType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PaymentTypeTableMap::translateFieldName('PaymentTypeId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->payment_type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PaymentTypeTableMap::translateFieldName('PaymentType', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_type = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PaymentTypeTableMap::translateFieldName('Type', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->type = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PaymentTypeTableMap::translateFieldName('PaymentDescription', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->payment_description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PaymentTypeTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PaymentTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PaymentTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->description = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PaymentTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PaymentTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PaymentTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -553,7 +592,7 @@ abstract class PaymentType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = PaymentTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = PaymentTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\PaymentType'), 0, $e);
@@ -772,11 +811,14 @@ abstract class PaymentType implements ActiveRecordInterface
         if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'payment_type_id';
         }
-        if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_TYPE)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_type';
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_TYPE)) {
+            $modifiedColumns[':p' . $index++]  = 'type';
         }
-        if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'payment_description';
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_DISPLAY)) {
+            $modifiedColumns[':p' . $index++]  = 'display';
+        }
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_DESCRIPTION)) {
+            $modifiedColumns[':p' . $index++]  = 'description';
         }
         if ($this->isColumnModified(PaymentTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
@@ -798,11 +840,14 @@ abstract class PaymentType implements ActiveRecordInterface
                     case 'payment_type_id':
                         $stmt->bindValue($identifier, $this->payment_type_id, PDO::PARAM_INT);
                         break;
-                    case 'payment_type':
-                        $stmt->bindValue($identifier, $this->payment_type, PDO::PARAM_STR);
+                    case 'type':
+                        $stmt->bindValue($identifier, $this->type, PDO::PARAM_STR);
                         break;
-                    case 'payment_description':
-                        $stmt->bindValue($identifier, $this->payment_description, PDO::PARAM_STR);
+                    case 'display':
+                        $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
+                        break;
+                    case 'description':
+                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -876,15 +921,18 @@ abstract class PaymentType implements ActiveRecordInterface
                 return $this->getPaymentTypeId();
                 break;
             case 1:
-                return $this->getPaymentType();
+                return $this->getType();
                 break;
             case 2:
-                return $this->getPaymentDescription();
+                return $this->getDisplay();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getDescription();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -918,10 +966,11 @@ abstract class PaymentType implements ActiveRecordInterface
         $keys = PaymentTypeTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getPaymentTypeId(),
-            $keys[1] => $this->getPaymentType(),
-            $keys[2] => $this->getPaymentDescription(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[1] => $this->getType(),
+            $keys[2] => $this->getDisplay(),
+            $keys[3] => $this->getDescription(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -982,15 +1031,18 @@ abstract class PaymentType implements ActiveRecordInterface
                 $this->setPaymentTypeId($value);
                 break;
             case 1:
-                $this->setPaymentType($value);
+                $this->setType($value);
                 break;
             case 2:
-                $this->setPaymentDescription($value);
+                $this->setDisplay($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setDescription($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1023,16 +1075,19 @@ abstract class PaymentType implements ActiveRecordInterface
             $this->setPaymentTypeId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setPaymentType($arr[$keys[1]]);
+            $this->setType($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPaymentDescription($arr[$keys[2]]);
+            $this->setDisplay($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setDescription($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1078,11 +1133,14 @@ abstract class PaymentType implements ActiveRecordInterface
         if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID)) {
             $criteria->add(PaymentTypeTableMap::COL_PAYMENT_TYPE_ID, $this->payment_type_id);
         }
-        if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_TYPE)) {
-            $criteria->add(PaymentTypeTableMap::COL_PAYMENT_TYPE, $this->payment_type);
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_TYPE)) {
+            $criteria->add(PaymentTypeTableMap::COL_TYPE, $this->type);
         }
-        if ($this->isColumnModified(PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION)) {
-            $criteria->add(PaymentTypeTableMap::COL_PAYMENT_DESCRIPTION, $this->payment_description);
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_DISPLAY)) {
+            $criteria->add(PaymentTypeTableMap::COL_DISPLAY, $this->display);
+        }
+        if ($this->isColumnModified(PaymentTypeTableMap::COL_DESCRIPTION)) {
+            $criteria->add(PaymentTypeTableMap::COL_DESCRIPTION, $this->description);
         }
         if ($this->isColumnModified(PaymentTypeTableMap::COL_UPDATE_TIME)) {
             $criteria->add(PaymentTypeTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1176,8 +1234,9 @@ abstract class PaymentType implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setPaymentType($this->getPaymentType());
-        $copyObj->setPaymentDescription($this->getPaymentDescription());
+        $copyObj->setType($this->getType());
+        $copyObj->setDisplay($this->getDisplay());
+        $copyObj->setDescription($this->getDescription());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1489,8 +1548,9 @@ abstract class PaymentType implements ActiveRecordInterface
     public function clear()
     {
         $this->payment_type_id = null;
-        $this->payment_type = null;
-        $this->payment_description = null;
+        $this->type = null;
+        $this->display = null;
+        $this->description = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
