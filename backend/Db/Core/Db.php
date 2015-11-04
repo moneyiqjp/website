@@ -88,21 +88,23 @@ class Db
         if(is_null($email) || !FieldUtils::STRING_IS_DEFINED($email)) throw new \Exception("No email specified");
 
         $mailObjects = (new \MailinglistQuery())->findByEmail($email);
-        if(isset($mailObjects)||count($mailObjects)>0)
+        if(isset($mailObjects)&&count($mailObjects)>0)
                 return array(
                     "status" => "OK",
-                    "error" => "Email address " . $email . " already exists"
+                    "message" => "Email address " . $email . " already exists (" . count($mailObjects) . ")"
                 );
 
         $mail = new \Mailinglist();
         $mail->setEmail($email);
-        $mail->setUpdateTime(new Date());
+        $mail->setUpdateTime(new \DateTime());
         if($mail->save()<=0) throw new \Exception("Failed to save email (" . $email . ")");
+
+        //return \Db\Utility\MailChimp::subscribe("benfries@gmail.com");
 
 
         return array(
             "status" => "OK",
-            "error" => ""
+            "message" => "Added email $email to mailinglist"
         );
     }
 

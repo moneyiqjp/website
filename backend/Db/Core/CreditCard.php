@@ -255,6 +255,11 @@ class CreditCard {
     public $pointsToMoneyConversionRate;
     public $affiliateUrl;
     public $shortDescription;
+    public $issue_period;
+    public $credit_limit_bottom;
+    public $credit_limit_upper;
+    public $debit_date;
+    public $cutoff_date;
     public $features = array();
     public $insurances = array();
     public $pointsData = array();
@@ -436,6 +441,11 @@ class CreditCard {
         }
 
         $mine->restriction = CardRestriction::CREATE($cc);
+        $mine->issue_period = $cc->getIssuePeriod();
+        $mine->credit_limit_bottom = $cc->getCreditLimitBottom();
+        $mine->credit_limit_upper = $cc->getCreditLimitUpper();
+        $mine->debit_date = $cc->getDebitDate();
+        $mine->cutoff_date = $cc->getCutoffDate();
 
         return $mine;
     }

@@ -61,9 +61,10 @@ $app->get('/allfeatures', function () use ($app) {
 
 
 $app->get('/mailchimp', function () use ($app) {
+    $db = new \Db\Core\Db();
     // query database for all cards
-
-    echo  \Db\Utility\MailChimp::subscribe("benfries@gmail.com");
+    echo json_encode($db->AddEmailToMailingList("benfries@gmail.com"));
+    //echo  \Db\Utility\MailChimp::subscribe("benfries@gmail.com");
 });
 
 
@@ -74,9 +75,10 @@ $app->post('/mailinglist/add', function () use ($app) {
 
     $jTableResult = array();
     try {
-        $jTableResult['row'] = $db->AddEmailToMailingList($request->put('email'));
+        $jTableResult = $db->AddEmailToMailingList($request->put('email'));
     } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
+        $jTableResult['status'] = "ERROR";
+        $jTableResult['message'] = $e->getMessage();
         $app->getLog()->error($e);
     }
 
