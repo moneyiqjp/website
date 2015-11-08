@@ -11,7 +11,7 @@
             echo "</a>";
         }
         ?>
-        <div class="blog-pane-preview-title"><?php the_title(); ?></div>
+        <div class="blog-pane-preview-title"><span class="bottom"><?php the_title(); ?></span></div>
         <div class="blog-pane-preview-data-container">
             <?php the_excerpt(); ?>
         </div>

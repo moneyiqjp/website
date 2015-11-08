@@ -99,12 +99,10 @@ body {
 
 .blog-pane-preview-title {
     clear:both;
-    width:100%;
     font-weight:bold;
-    font-size:1.25rem;
-    vertical-align: bottom;
-    height: 30px;
-    margin-top: 10px;
+    font-size:1.15rem;
+    height: 50px;
+    margin-top: 0;
     margin-bottom: 0;
     padding-left: 10px;
     padding-right: 10px;
@@ -112,6 +110,16 @@ body {
     padding-bottom: 0;
 }
 
+.bottom{
+    height: 50px;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+div.blog-pane-preview-data-container p {
+    vertical-align: top;
+    display: table-cell;
+}
 .blog-pane-preview {
     margin: 20px 40px 0 0;
     border:thin solid #d3d0a5;
@@ -142,7 +150,7 @@ body {
     border:thin solid #e9913d;
     border-radius:5px;
     background-color:#f8f8f0;
-    height:30px;
+    height:25px;
     width: 150px;
     text-align: center;
     margin-top: 10px;
@@ -252,8 +260,9 @@ div#primary-sidebar div ul{
     margin-left: 0;
     list-style: none;
 }
-div#primary-sidebar div li{
-    margin-left: 0;
+div#primary-sidebar div ul li{
+    margin-left:  -30px;
+    padding-left: 0;
     list-style: none;
 }
 
@@ -279,9 +288,12 @@ div#primary-sidebar li a:hover {
 }
 
 .search-box input {
-    color: white;
+    color: #d3d0a5;
+    font-weight: bold;
     border-style: none;
     border-color: transparent;
+    background-color: transparent;
+    margin: 0 0 0 0;
 }
 
 .search-box {
@@ -313,7 +325,7 @@ h2.sidebar-title {
     padding: 0 0 0 0;
 }
 
-div.side-bar-item.last-item {
+div#sidebar-block-last {
     margin-top: 50px;
     margin-left: 0px;
     margin-right: auto;

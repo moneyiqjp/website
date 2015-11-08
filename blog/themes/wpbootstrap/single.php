@@ -35,26 +35,12 @@
         <?php
             echo get_the_tag_list('<p class="blog-pane-tags">',', ','</p>');
         ?>
-        <div class="blog-pane-adv" style="float:left">
-            <div style="vertical-align: middle; height:100%">
-                <img src='http://moake.creditcardinfo.info/wp-content/uploads/2013/06/rakuten-premium.jpg' width="280px" height="200px">
-            </div>
-            <div style="float:left; height:100%">
-                <div style="width:100%; font-size: large;">�?��好き�?方にぴったりのカード�?</div>
-                <div style="width:100%;font-weight: bold;font-size: large;">楽天カー�? </div>
-                <div style="width:100%;text-align: right">今すぐ申し込みできる</div>
-            </div>
-            <div style="float: right; width: 40px">
-                <div class="moneybutton">
-                    <a href="http://www.moneyiq.jp/v2/index.html">
-                        <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
-                        <div class="mb-text">サイトに アクセス</div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <?php
+            include 'advertisement.php'
+        ?>
         <a href ="index.php" class="blog-pane-back-link">
-            <img src="<?php bloginfo('template_directory'); ?>/img/single-page-back.png" width="40" height="40"> ブログのホ�?�?ペ�?ジに戻�?
+            <img src="<?php bloginfo('template_directory'); ?>/img/single-page-back.png" width="40" height="40">
+                ブログのホームページに戻る
         </a>
         <br>
         <br>
