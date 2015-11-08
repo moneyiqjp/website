@@ -161,7 +161,8 @@
                 }, {
                     label: "CardId:",
                     name: "CreditCard.Id",
-                    type: "readonly"
+                    type: "readonly",
+                    def: creditCardId
                 }, {
                     label: "Card:",
                     name: "CreditCard.Name",

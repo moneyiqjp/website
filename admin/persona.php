@@ -523,6 +523,7 @@
                 <th>Id</th>
                 <th>Persona</th>
                 <th>Scene</th>
+                <th>Allocation</th>
                 <th>Updated</th>
                 <th>User</th>
             </thead>
@@ -532,6 +533,7 @@
                 <th>Id</th>
                 <th>Persona</th>
                 <th>Scene</th>
+                <th>Allocation</th>
                 <th>Updated</th>
                 <th>User</th>
             </tfoot>

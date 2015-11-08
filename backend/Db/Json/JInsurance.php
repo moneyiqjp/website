@@ -57,8 +57,11 @@ class JInsurance  implements JSONInterface {
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JInsurance();
-        if(!ArrayUtils::KEY_EXISTS($data,'InsuranceId')) throw new \Exception("Required key InsuranceId not found");
-        $mine->InsuranceId = $data['InsuranceId'];
+        if(!ArrayUtils::KEY_EXISTS($data,'InsuranceId') && !FieldUtils::ID_IS_DEFINED($data['InsuranceId'])) {
+                //throw new \Exception("Required key InsuranceId not found");
+            $mine->InsuranceId = $data['InsuranceId'];
+        }
+
 
         //Credit card name is optional when saving to db
         if(!ArrayUtils::KEY_EXISTS($data,'CreditCard')) throw new \Exception("Failed to find mandatory field CreditCard");
@@ -75,7 +78,8 @@ class JInsurance  implements JSONInterface {
         if(ArrayUtils::KEY_EXISTS($data,'Value')) $mine->Value = $data['Value'];
         if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
 
-        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        //if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $data['InsuranceId']
+        $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;

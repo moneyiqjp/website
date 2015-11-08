@@ -100,7 +100,9 @@ class JFeature implements JSONInterface{
 
     public static function CREATE_FROM_ARRAY($data) {
         $mine = new JFeature();
-        $mine->FeatureId = $data['FeatureId'];
+        if(ArrayUtils::KEY_EXISTS($data,'FeatureId') && ($data['FeatureId']>0) ) {
+            $mine->FeatureId = $data['FeatureId'];
+        }
 
         if(!array_key_exists('FeatureType',$data)) throw new \Exception("Required key FeatureType not found in request");
         $tmp = $data['FeatureType'];

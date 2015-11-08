@@ -66,7 +66,7 @@
                         url: '../backend/crud/creditcards/delete'
                     }
             },
-                table: "#example",
+                table: "#creditcards",
                 idSrc: "credit_card_id",
                 fields: [
                     {
@@ -211,7 +211,7 @@
             });
 */
 
-            $('#example').dataTable( {
+            $('#creditcards').dataTable( {
                 dom: "Tfrtip",
                 "pageLength": 25,
                 "ajax": {
@@ -407,7 +407,7 @@
     <div class="table-headline"><a name="creditcards">
             Credit Cards
     </a></div>
-    <table id="example" class="display" cellspacing="0" width="98%">
+    <table id="creditcards" class="display" cellspacing="0" width="98%">
     <thead>
         <tr>
             <th>id</th>

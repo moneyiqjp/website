@@ -298,7 +298,7 @@ class CreditCard {
     }
 
     function getAffiliateLink($link) {
-        return "http://moneyiq.jp/link.php?Link1=" . $link . "&Link2=https%3A%2F%2Fjp.surveymonkey.com%2Fs%2FQJKXMHC";
+        return urldecode($link);
     }
 
     function AddInsuranceAsFeature(\Insurance $type)

@@ -127,7 +127,7 @@ class Db
         {
             array_push($result, Json\JObject::CREATE($issuer->getName(), $issuer->getAffiliateId()));
         }
-        array_push($result,Json\JObject::CREATE("None",-1));
+        //array_push($result,Json\JObject::CREATE("None",-1));
         return $result;
     }
 
@@ -875,12 +875,19 @@ class Db
     /* added functionality for per credit card details */
     function GetFeaturesForCard($id) {
         $cardFeatures = array();
-        $creditCard = new \CreditCard();
+        $creditCard = null;
         foreach ((new \CardFeaturesQuery())->findByCreditCardId($id) as $item) {
             $creditCard = $item->getCreditCard();
             $stuff =Json\JFeature::CREATE_FROM_DB($item);
             $stuff->Active = true;
             array_push($cardFeatures, $stuff);
+        }
+
+        if(is_null($creditCard)) {
+            $creditCard = (new \CreditCardQuery())->findPk($id);
+            if(is_null($creditCard)) {
+                throw new \Exception("Failed to find CreditCard with Id " . $id);
+            }
         }
 
         $allFeatures = array(); $ids = -1;
@@ -1565,8 +1572,8 @@ class Db
         $parsed = Json\JScene::CREATE_FROM_ARRAY($data);
         if(is_null($parsed)) throw new \Exception ("Failed to parse Scene update request");
 
-        $item = (new  \MapSceneStoreCategoryQuery())->findPk($parsed->SceneId);
-        if(is_null($item)) throw new \Exception ("Scene with id ". $parsed->SceneId ." not found");
+        $item = (new  \SceneQuery)->findPk($parsed->SceneId);
+        if(is_null($item)) throw new \Exception ("Scene with id (". $parsed->SceneId .") not found");
 
         $item = $parsed->updateDB($item);
         $item->save();
