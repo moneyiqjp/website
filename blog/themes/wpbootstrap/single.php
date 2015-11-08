@@ -35,16 +35,16 @@
         <?php
             echo get_the_tag_list('<p class="blog-pane-tags">',', ','</p>');
         ?>
-        <div class="blog-pane-adv">
-            <div class="card-image-placeholder card-image-rotate"
-                 style="background: url('http://moake.creditcardinfo.info/wp-content/uploads/2013/06/rakuten-premium.jpg')
-                        no-repeat center;background-size:254px 154px;"></div>
-            <div style="float:left">
-                <div style="width:100%; large;">旅行好きの方にぴったりのカードは</div>
+        <div class="blog-pane-adv" style="float:left">
+            <div style="vertical-align: middle; height:100%">
+                <img src='http://moake.creditcardinfo.info/wp-content/uploads/2013/06/rakuten-premium.jpg' width="280px" height="200px">
+            </div>
+            <div style="float:left; height:100%">
+                <div style="width:100%; font-size: large;">旅行好きの方にぴったりのカードは</div>
                 <div style="width:100%;font-weight: bold;font-size: large;">楽天カード </div>
                 <div style="width:100%;text-align: right">今すぐ申し込みできる</div>
             </div>
-            <div style="float: right">
+            <div style="float: right; width: 40px">
                 <div class="moneybutton">
                     <a href="http://www.moneyiq.jp/v2/index.html">
                         <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
@@ -67,11 +67,13 @@
 <?php if ( is_active_sidebar( 'home_right_1' ) ) : ?>
 	<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
 		<?php dynamic_sidebar( 'home_right_1' ); ?>
-        <div class="moneybutton">
-            <a href="http://www.moneyiq.jp/v2/index.html">
-                <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
-                <div class="mb-text">MoneyIQに アクセス</div>
-            </a>
+        <div class="side-bar-item last-item">
+            <div class="moneybutton">
+                <a href="http://www.moneyiq.jp/v2/index.html">
+                    <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
+                    <div class="mb-text">MoneyIQに アクセス</div>
+                </a>
+            </div>
         </div>
 	</div><!-- #primary-sidebar -->
 <?php endif; ?>

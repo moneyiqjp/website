@@ -28,8 +28,8 @@ function arphabet_widgets_init() {
         'id'            => 'home_right_1',
         'before_widget' => '<div>',
         'after_widget'  => '</div>',
-        'before_title'  => '<h2 class="rounded">',
-        'after_title'   => '</h2>',
+        'before_title'  => '<h2 class="sidebar-title">',
+        'after_title'   => '</h2><hr>',
     ) );
 
 }
@@ -41,7 +41,7 @@ add_action( 'init', 'register_menus' );
 add_theme_support( 'post-thumbnails' );
 add_image_size( 'post-preview', 350, 210 );
 add_image_size( 'post-feature-small', 800, 480 );
-add_image_size( 'post-feature', 1000, 600 );
-add_image_size( 'post-feature-large', 1200, 720 );
+add_image_size( 'post-feature', 1000, 600, true );
+add_image_size( 'post-feature-large', 1200, 720, true );
 
 ?>
