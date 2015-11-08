@@ -25,14 +25,6 @@
     </div>
 </div>
 <?php if ( is_active_sidebar( 'home_right_1' ) ) : ?>
-	<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-		<?php dynamic_sidebar( 'home_right_1' ); ?>
-        <div class="moneybutton">
-            <a href="http://www.moneyiq.jp/v2/index.html">
-                <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
-                <div class="mb-text">MoneyIQに<br>アクセス</div>
-            </a>
-        </div>
-	</div><!-- #primary-sidebar -->
+    <?php get_sidebar('home_right_1') ?>
 <?php endif; ?>
 <?php get_footer(); ?>

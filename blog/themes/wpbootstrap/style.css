@@ -191,6 +191,14 @@ div.primary-sidebar div{
     float:left;
 }
 
+/*
+div.blog-pane-preview  img.wp-post-image{
+    height: 250px;
+    width: 350px;
+    margin: 0px 0px 0px 0px;
+}
+*/
+
 div.moneybutton{
     border:thin solid #e9913d;
     border-radius:5px;
@@ -198,12 +206,6 @@ div.moneybutton{
     color: white;
     height: 45px;
     width: 150px;
-}
-
-div.blog-pane-preview  img.wp-post-image{
-    height: 250px;
-    width: 350px;
-    margin: 0px 0px 0px 0px;
 }
 
 div.moneybutton div.mb-image{
@@ -237,5 +239,12 @@ div#primary-sidebar div ul{
 }
 
 
+div#sidebar-blog-last {
+    margin-top:25px;
+    margin-left: 0px;
+    margin-right: auto;
+    margin-bottom: auto;
+
+}
 
 
