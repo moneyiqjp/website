@@ -39,6 +39,16 @@ BEGIN
 			SELECT 'EXISTED insurance.guaranteed_period';
 	end if;
 	
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='insurance' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='update_user') THEN		
+		ALTER TABLE `insurance`
+			ALTER `update_user` DROP DEFAULT;
+		ALTER TABLE `insurance`
+			CHANGE COLUMN `update_user` `update_user` VARCHAR(100) NULL COLLATE 'utf8_general_ci' AFTER `update_time`;
+		SELECT 'DELETED RESTRICTION insurance.update_user';
+	else
+		SELECT 'ALREADY DELETED RESTRICTION insurance.update_user';
+	end if;
+	
 	
 END //
 DELIMITER ;
