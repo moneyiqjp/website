@@ -78,7 +78,9 @@ class Db
         $result = array();
         foreach( (new \CardFeatureTypeQuery())->orderByCategory()->find() as $ft)
         {
-            array_push($result, SimpleCardFeatureType::fromCardFeatureTypeObject($ft));
+            if(strtolower($ft->getCategory())!="network") {
+                array_push($result, SimpleCardFeatureType::fromCardFeatureTypeObject($ft));
+            }
         }
 
         return $result;
