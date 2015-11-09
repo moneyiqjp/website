@@ -68,11 +68,12 @@ body {
 }
 
 .blog-pane-back-link{
+    clear: both;
     color: black;
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 400;
-    margin-top: 25px;
+    margin-top: 50px;
 }
 
 .blog-pane-adv{
@@ -93,7 +94,6 @@ body {
 @media only screen and (max-width : 800px) {
     .header-container {
         width:500px;
-        margin-left: 50px;
         margin-right: auto;
     }
     .blog-pane {
@@ -103,7 +103,6 @@ body {
         align-self: center;
         color: rgb(75, 75, 75);
         font-size: 1.1rem;
-        margin: 50px auto 100px auto;
     }
 
     .blog-pane-adv{
@@ -113,6 +112,12 @@ body {
     }
 
     div.blog-pane-feature-image img.attachment-post-feature.wp-post-image {
+        width:500px;
+        height: 300px;
+    }
+
+
+    div.blog-pane-feature-image img.attachment-post-feature-small.wp-post-image {
         width:500px;
         height: 300px;
     }
@@ -132,7 +137,6 @@ body {
         position: relative;
         margin-bottom: 150px;
         padding-top: 50px;
-        margin-left: 50px;
     }
 }
 
@@ -162,7 +166,7 @@ body {
 .blog-pane-preview-title {
     clear:both;
     font-weight:bold;
-    font-size:1.15rem;
+    font-size:1.1rem;
     height: 50px;
     margin-top: 0;
     margin-bottom: 0;
@@ -170,6 +174,10 @@ body {
     padding-right: 10px;
     padding-top: 0;
     padding-bottom: 0;
+}
+a.brand {
+    color:white;
+    text-decoration: none;
 }
 
 .bottom{
@@ -183,7 +191,7 @@ div.blog-pane-preview-data-container p {
     display: table-cell;
 }
 .blog-pane-preview {
-    margin: 20px 40px 0 0;
+    margin: 20px 20px 0 0;
     border:thin solid #d3d0a5;
     border-radius:5px;
     color: #4b4b4b;
@@ -252,9 +260,9 @@ div#main-content{
     margin-right: 250px;
     align-content: center;
     horiz-align: center;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 5%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 50px;
 }
 
 div#main-container{
@@ -384,7 +392,7 @@ div#primary-sidebar hr {
 h2.sidebar-title {
     height: 30px;
     vertical-align: bottom;
-    margin-bottom: 0px;
+    margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
 

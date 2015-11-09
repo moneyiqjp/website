@@ -40,8 +40,11 @@
 <div class="header-container">
     <div class="title-menu">
         <header class="wrapper clearfix">
-            <div class="title"><div class="headline"><?php bloginfo('name'); ?></div>
-                <span><?php bloginfo('description'); ?></span>
+            <div class="title">
+                <a class="brand" href="<?php echo site_url(); ?>">
+                    <div class="headline"><?php bloginfo('name'); ?></div>
+                    <span><?php bloginfo('description'); ?></span>
+                </a>
             </div>
             <nav>
                 <ul>

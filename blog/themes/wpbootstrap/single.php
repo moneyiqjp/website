@@ -5,7 +5,7 @@
     <div class="blog-pane">
         <?php if ( has_post_thumbnail() ): // check if the post has a Post Thumbnail assigned to it. ?>
             <div class="blog-pane-feature-image">
-                <?php the_post_thumbnail('post-feature'); ?>
+                <?php the_post_thumbnail('post-feature-small'); ?>
             </div>
         <?php endif; ?>
         <div class="blog-pane-category-links">
