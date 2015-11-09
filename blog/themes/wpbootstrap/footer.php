@@ -1,5 +1,5 @@
 </div> <!-- /container -->
-<footer style="clear: both; float: none; display: block; position: relative; margin-bottom: 150px;padding-top: 50px"">
+<footer class="blog-footer">
     <div class="footer footer-top">
         <div class="wrapper">
             <div class="footer-half">お金の管理をもっと賢く。MoneyIQスママネーメールマガジン。</div><div class="footer-half">

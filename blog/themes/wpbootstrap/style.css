@@ -40,10 +40,7 @@ body {
     align-self: center;
     color: rgb(75, 75, 75);
     font-size:1.1rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
-    margin-bottom: 100px;
+    margin: 50px auto 100px auto;
 }
 
 .blog-pane-title{
@@ -75,14 +72,79 @@ body {
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 400;
+    margin-top: 25px;
 }
 
 .blog-pane-adv{
-    width: 100%;
-    height: 250px;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    float:left;
+    width:800px;
     background-color:#f8f8f0;
+}
+.blog-footer {
+    clear: both;
+    float: none;
+    display: block;
+    position: relative;
+    margin-bottom: 150px;
+    padding-top: 50px;
+}
+
+/* Mobiles in landscape mode */
+@media only screen and (max-width : 800px) {
+    .header-container {
+        width:500px;
+        margin-left: 50px;
+        margin-right: auto;
+    }
+    .blog-pane {
+        text-align: justify;
+        width: 500px;
+        vertical-align: top;
+        align-self: center;
+        color: rgb(75, 75, 75);
+        font-size: 1.1rem;
+        margin: 50px auto 100px auto;
+    }
+
+    .blog-pane-adv{
+        float:left;
+        width:500px;
+        background-color:#f8f8f0;
+    }
+
+    div.blog-pane-feature-image img.attachment-post-feature.wp-post-image {
+        width:500px;
+        height: 300px;
+    }
+
+    div#primary-sidebar {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+    .blog-footer {
+        width:500px;
+        clear: both;
+        float: none;
+        display: block;
+        position: relative;
+        margin-bottom: 150px;
+        padding-top: 50px;
+        margin-left: 50px;
+    }
+}
+
+/* Mobiles in landscape mode */
+@media only screen and (max-width : 1100px) {
+    div#primary-sidebar {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
 }
 
 .blog-pane-category-links {
@@ -184,6 +246,7 @@ div#primary-sidebar{
     vertical-align: top;
     color: rgb(75, 75, 75);
 }
+
 
 div#main-content{
     margin-right: 250px;
