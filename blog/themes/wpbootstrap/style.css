@@ -16,85 +16,15 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
 @import url('bootstrap/css/bootstrap-responsive.css');
 */
 @import url('css/main.css');
-body {
 
-    font-size: 16px;
-    font-family: 'Noto Sans Japanese', sans-serif;
-}
 
-.header-container {
-    margin-top: -60px;
-    margin-bottom: 25px;
-    padding-top: 100px;
-    padding-bottom: 0px;
-    height:375px;
-    background: url("img/hero.png") no-repeat top;
-    background-size: 100% 100%;
-    background-position-y: 0px;
-}
-
-.blog-pane{
-    text-align: justify;
-    width: 800px;
-    vertical-align: top;
-    align-self: center;
-    color: rgb(75, 75, 75);
-    font-size:1.1rem;
-    margin: 50px auto 100px auto;
-}
-
-.blog-pane-title{
-    font-weight:bold;
-    font-size:1.3rem;
-}
-
-.blog-pane-feature-image {
-    margin-top: 0px;
-    margin-bottom: 50px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.blog-pane-tags a {
-    text-decoration: none;
-    font-size: 1.2rem;
-    color: #d3d0a5;
-}
-
-.blog-pane-tags a:hover {
-    text-decoration: underline;
-    font-size: 1.2rem;
-    color: #d3d0a5;
-}
-
-.blog-pane-back-link{
-    color: black;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: 400;
-    margin-top: 25px;
-}
-
-.blog-pane-adv{
-    float:left;
-    width:800px;
-    background-color:#f8f8f0;
-}
-.blog-footer {
-    clear: both;
-    float: none;
-    display: block;
-    position: relative;
-    margin-bottom: 150px;
-    padding-top: 50px;
-}
 
 /* Mobiles in landscape mode */
 @media only screen and (max-width : 800px) {
     .header-container {
         width:500px;
-        margin-left: 50px;
-        margin-right: auto;
+        margin-left: 0;
+        margin-right: 0;
     }
     .blog-pane {
         text-align: justify;
@@ -134,6 +64,45 @@ body {
         padding-top: 50px;
         margin-left: 50px;
     }
+
+    div#main-content{
+        width:550px;
+        align-content: center;
+        horiz-align: center;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5%;
+        font-size: 3em;
+    }
+
+    .blog-pane-preview {
+        margin: 20px 0 0 0;
+        border:thin solid #d3d0a5;
+        border-radius:5px;
+        color: #4b4b4b;
+        background-color:#f8f8f0;
+        overflow:hidden;
+        text-align:left;
+        float: left;
+        padding-left: 0;
+        width: 500px;
+        height: 662px;
+        font-size: 1.0rem;
+    }
+
+    div.blog-pane-preview  img.wp-post-image{
+        height: 300px;
+        width: 500px;
+        margin: 0 0 0 0;
+    }
+
+    .blog-pane-preview-data-container {
+        height: 320px;
+        overflow:hidden;
+        padding: 0 10px 0 10px;
+        vert-align: top;
+        margin: 0 0 0 0;
+    }
 }
 
 /* Mobiles in landscape mode */
@@ -145,6 +114,128 @@ body {
     nav {
         display: none;
     }
+}
+
+
+
+@media only screen and (min-width : 800px) {
+
+    .blog-pane{
+        text-align: justify;
+        width: 800px;
+        vertical-align: top;
+        align-self: center;
+        color: rgb(75, 75, 75);
+        font-size:1.1rem;
+        margin: 50px auto 100px auto;
+    }
+
+    .header-container {
+        margin: -60px 5% 25px 5%;
+        padding-top: 100px;
+        padding-bottom: 0px;
+        height:375px;
+        background: url("img/hero.png") no-repeat top;
+        background-size: 100% 100%;
+        background-position-y: 0px;
+    }
+
+    div.blog-pane-preview  img.wp-post-image{
+        height: 222px;
+        width: 370px;
+        margin: 0 0 0 0;
+    }
+
+    .blog-pane-preview {
+        margin: 20px 40px 0 0;
+        border:thin solid #d3d0a5;
+        border-radius:5px;
+        color: #4b4b4b;
+        background-color:#f8f8f0;
+        overflow:hidden;
+        text-align:left;
+        float: left;
+        padding-left: 0;
+        width: 370px;
+        height: 490px;
+        font-size: 1.0rem;
+    }
+
+    .blog-pane-preview-data-container {
+        height: 150px;
+        overflow:hidden;
+        padding: 0 10px 0 10px;
+        vert-align: top;
+        margin: 0 0 0 0;
+    }
+
+}
+
+@media only screen and (min-width : 1100px) {
+    div#primary-sidebar hr {
+        width: auto;
+        color: #d3d0a5;
+    }
+}
+
+
+
+body {
+
+    font-size: 16px;
+    font-family: 'Noto Sans Japanese', sans-serif;
+}
+
+.blog-pane-title{
+    font-weight:bold;
+    font-size:1.3rem;
+}
+
+.blog-pane-feature-image {
+    margin: 0 auto 50px auto;
+}
+
+.blog-pane-tags a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #d3d0a5;
+}
+
+.blog-pane-tags a:hover {
+    text-decoration: underline;
+    font-size: 1.2rem;
+    color: #d3d0a5;
+}
+
+.blog-pane-back-link{
+    color: black;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 25px;
+}
+
+.blog-pane-adv{
+    float:left;
+    width:800px;
+    background-color:#f8f8f0;
+}
+.blog-footer {
+    clear: both;
+    float: none;
+    display: block;
+    position: relative;
+    margin-bottom: 150px;
+    padding-top: 50px;
+}
+
+div.blog-pane-preview  img.wp-post-image:before {
+    background: rgba(0,255,255, 0.5);
+}
+
+a.brand {
+    text-decoration: none;
+    color: white;
 }
 
 .blog-pane-category-links {
@@ -166,10 +257,7 @@ body {
     height: 50px;
     margin-top: 0;
     margin-bottom: 0;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 10px 0 10px;
 }
 
 .bottom{
@@ -181,31 +269,6 @@ body {
 div.blog-pane-preview-data-container p {
     vertical-align: top;
     display: table-cell;
-}
-.blog-pane-preview {
-    margin: 20px 40px 0 0;
-    border:thin solid #d3d0a5;
-    border-radius:5px;
-    color: #4b4b4b;
-    background-color:#f8f8f0;
-    overflow:hidden;
-    text-align:left;
-    float: left;
-    padding-left: 0;
-    width: 350px;
-    height: 490px;
-    font-size: 1.0rem;
-}
-
-.blog-pane-preview-data-container {
-    height: 150px;
-    overflow:hidden;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 0;
-    padding-bottom: 0;
-    vert-align: top;
-    margin: 0 0 0 0;
 }
 
 .blog-pane-preview-read-more {
@@ -268,14 +331,6 @@ div.primary-sidebar div{
     float:left;
 }
 
-/*
-div.blog-pane-preview  img.wp-post-image{
-    height: 250px;
-    width: 350px;
-    margin: 0px 0px 0px 0px;
-}
-*/
-
 div.moneybutton{
     border:thin solid #e9913d;
     border-radius:5px;
@@ -285,14 +340,6 @@ div.moneybutton{
     width: 150px;
 }
 
-div.blog-pane-preview  img.wp-post-image{
-    height: 250px;
-    width: 350px;
-    margin: 0px 0px 0px 0px;
-}
-div.blog-pane-preview  img.wp-post-image:before {
-    background: rgba(0,255,255, 0.5);
-}
 
 div.moneybutton div.mb-image{
     margin: 4px 4px 0px 0px;
@@ -376,10 +423,6 @@ div#sidebar-blog-last {
 
 }
 
-div#primary-sidebar hr {
-    width: auto;
-    color: #d3d0a5;
-}
 
 h2.sidebar-title {
     height: 30px;
