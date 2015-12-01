@@ -10,7 +10,7 @@
 		<?php dynamic_sidebar( 'home_right_1' ); ?>
     <div id="sidebar-block-last">
         <div class="moneybutton">
-            <a href="http://www.moneyiq.jp/v2/index.html">
+            <a href="http://www.moneyiq.jp/index.html">
                 <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
                 <div class="mb-text">MoneyIQに アクセス</div>
             </a>

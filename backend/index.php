@@ -4,7 +4,7 @@ require_once 'vendor/autoload.php';
 require_once  'generated-classes\CardPointSystem.php';
 require_once 'generated-classes\CardPointSystemQuery.php';
 */
-require_once 'Db/Core/Db.php';
+require_once 'Db/Db.php';
 /**
  * Created by PhpStorm.
  * User: Ben
@@ -19,77 +19,15 @@ $app = new \Slim\Slim(array(
 ));
 $app->getLog()->setEnabled(true);
 $app->getLog()->setLevel(\Slim\Log::DEBUG);
-
-//Define a HTTP GET route:
-// handle GET requests for /articles
-$app->get('/allcards', function () use ($app) {
-    // query database for all cards
-
-    $db = new \Db\Core\Db();
-    $cards = $db->GetAllCards();
-    // send response header for JSON content type
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    // return JSON-encoded response body with query results
-    echo json_encode($cards);
-});
-
-$app->get('/allstores', function () use ($app) {
-    // query database for all cards
-
-    $db = new \Db\Core\Db();
-    $cards = $db->GetAllStores();
-    // send response header for JSON content type
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    // return JSON-encoded response body with query results
-    echo json_encode($cards);
-});
+$GLOBALS['LOG'] = $app->getLog();
 
 
-$app->get('/allfeatures', function () use ($app) {
-    // query database for all cards
-
-    $db = new \Db\Core\Db();
-    $cards = $db->GetAllFeatures();
-    // send response header for JSON content type
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    // return JSON-encoded response body with query results
-    echo json_encode($cards);
-});
-
-
-$app->get('/mailchimp', function () use ($app) {
-    $db = new \Db\Core\Db();
-    // query database for all cards
-    echo json_encode($db->AddEmailToMailingList("benfries@gmail.com"));
-    //echo  \Db\Utility\MailChimp::subscribe("benfries@gmail.com");
-});
-
-
-$app->post('/mailinglist/add', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult = $db->AddEmailToMailingList($request->put('email'));
-    } catch(\Exception $e) {
-        $jTableResult['status'] = "ERROR";
-        $jTableResult['message'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
+require_once 'requests/crud/frontend.php';
 
 $app->get('/display/issuers', function () use ($app) {
     // query database for all cards
 
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $cards = $db->GetIssuersForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -100,7 +38,7 @@ $app->get('/display/issuers', function () use ($app) {
 $app->get('/display/affiliates', function () use ($app) {
     // query database for all cards
 
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $cards = $db->GetAffiliatesForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -109,7 +47,7 @@ $app->get('/display/affiliates', function () use ($app) {
     echo json_encode($cards);
 });
 $app->get('/display/stores', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $jTableResult = array();
 
@@ -124,58 +62,23 @@ $app->get('/display/stores', function () use ($app) {
 });
 /*RewardTypes*/
 $app->get('/display/reward/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetRewardTypeForDisplay()));
 });
 /*RewardCategories*/
 $app->get('/display/reward/category/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetRewardCategoryForDisplay()));
 });
 
 
-$app->get('/allpersonas', function () use ($app) {
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $db = new \Db\Core\Db();
-    $jTableResult = array();
-    try {
-        $jTableResult['data'] = $db->GetAllPersonas();
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-
-    echo json_encode($jTableResult);
-
-});
-
-
-
-$app->get('/allscenes', function () use ($app) {
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $db = new \Db\Core\Db();
-    $jTableResult = array();
-    try {
-        $jTableResult['data'] = $db->GetAllScenes();
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-
-    echo json_encode($jTableResult);
-
-});
 
 $app->get('/display/creditcards', function () use ($app) {
     // query database for all cards
 
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $cards = $db->GetCreditCardForDisplay();
     // send response header for JSON content type
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
@@ -190,7 +93,7 @@ $app->get('/display/creditcards', function () use ($app) {
 $app->get('/crud/creditcards/by/id', function () use ($app) {
     // query database for all cards
 
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $jTableResult = array();
 
@@ -204,7 +107,7 @@ $app->get('/crud/creditcards/by/id', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/creditcards/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -219,7 +122,7 @@ $app->post('/crud/creditcards/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/creditcards/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -235,7 +138,7 @@ $app->put('/crud/creditcards/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->delete('/crud/creditcards/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $request->delete('id');
@@ -254,12 +157,12 @@ $app->delete('/crud/creditcards/delete', function () use ($app) {
 
 /*Reward types*/
 $app->get('/crud/reward/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetRewardTypeForCrud()));
 });
 $app->delete('/crud/reward/type/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -272,7 +175,7 @@ $app->delete('/crud/reward/type/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/reward/type/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -287,7 +190,7 @@ $app->post('/crud/reward/type/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/reward/type/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -303,7 +206,7 @@ $app->put('/crud/reward/type/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/reward/type/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -319,12 +222,12 @@ $app->get('/crud/reward/type/by/id', function () use ($app) {
 
 /*Reward categories*/
 $app->get('/crud/reward/category/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Category', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetRewardCategoryForCrud()));
 });
 $app->delete('/crud/reward/category/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Category', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -337,7 +240,7 @@ $app->delete('/crud/reward/category/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/reward/category/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Category', 'application/json;charset=utf-8');
 
@@ -352,7 +255,7 @@ $app->post('/crud/reward/category/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/reward/category/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Category', 'application/json;charset=utf-8');
 
@@ -368,7 +271,7 @@ $app->put('/crud/reward/category/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/reward/category/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Category', 'application/json;charset=utf-8');
 
     $result = array();
@@ -385,12 +288,12 @@ $app->get('/crud/reward/category/by/id', function () use ($app) {
 
 /*PointSystems*/
 $app->get('/crud/pointsystem/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetPointSystemForCrud()));
 });
 $app->delete('/crud/pointsystem/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -403,7 +306,7 @@ $app->delete('/crud/pointsystem/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/pointsystem/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -418,7 +321,7 @@ $app->post('/crud/pointsystem/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/pointsystem/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -434,7 +337,7 @@ $app->put('/crud/pointsystem/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/pointsystem/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -448,7 +351,7 @@ $app->get('/crud/pointsystem/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->get('/crud/pointsystem/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -465,12 +368,12 @@ $app->get('/crud/pointsystem/by/id', function () use ($app) {
 
 /*PointAcquisitions*/
 $app->get('/crud/pointacquisition/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetPointAcquisitionForCrud()));
 });
 $app->delete('/crud/pointacquisition/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -483,7 +386,7 @@ $app->delete('/crud/pointacquisition/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/pointacquisition/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -498,7 +401,7 @@ $app->post('/crud/pointacquisition/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/pointacquisition/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -514,7 +417,7 @@ $app->put('/crud/pointacquisition/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/pointacquisition/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -528,7 +431,7 @@ $app->get('/crud/pointacquisition/by/id', function () use ($app) {
     echo json_encode($result);
 });
 $app->get('/crud/pointacquisition/by/pointsystem', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -546,12 +449,12 @@ $app->get('/crud/pointacquisition/by/pointsystem', function () use ($app) {
 
 /*PointUsages*/
 $app->get('/crud/pointusage/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetPointUsageForCrud()));
 });
 $app->delete('/crud/pointusage/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -564,7 +467,7 @@ $app->delete('/crud/pointusage/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/pointusage/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -579,7 +482,7 @@ $app->post('/crud/pointusage/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/pointusage/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -595,7 +498,7 @@ $app->put('/crud/pointusage/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/pointusage/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -609,7 +512,7 @@ $app->get('/crud/pointusage/by/id', function () use ($app) {
     echo json_encode($result);
 });
 $app->get('/crud/pointusage/by/pointsystem', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -626,12 +529,12 @@ $app->get('/crud/pointusage/by/pointsystem', function () use ($app) {
 
 /*Rewards*/
 $app->get('/crud/reward/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetRewardForCrud()));
 });
 $app->delete('/crud/reward/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -644,7 +547,7 @@ $app->delete('/crud/reward/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/reward/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -659,7 +562,7 @@ $app->post('/crud/reward/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/reward/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -675,7 +578,7 @@ $app->put('/crud/reward/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/reward/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -689,7 +592,7 @@ $app->get('/crud/reward/by/id', function () use ($app) {
     echo json_encode($result);
 });
 $app->get('/crud/reward/by/pointsystem', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -706,12 +609,12 @@ $app->get('/crud/reward/by/pointsystem', function () use ($app) {
 
 /*PointSystemMapping*/
 $app->get('/crud/creditcard/pointsystem/mapping/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetCardPointSystemMappingForCrud()));
 });
 $app->delete('/crud/creditcard/pointsystem/mapping/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -724,7 +627,7 @@ $app->delete('/crud/creditcard/pointsystem/mapping/delete', function () use ($ap
     echo json_encode($jTableResult);
 });
 $app->post('/crud/creditcard/pointsystem/mapping/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -739,7 +642,7 @@ $app->post('/crud/creditcard/pointsystem/mapping/create', function () use ($app)
     echo json_encode($jTableResult);
 });
 $app->put('/crud/creditcard/pointsystem/mapping/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -755,7 +658,7 @@ $app->put('/crud/creditcard/pointsystem/mapping/update', function () use ($app) 
     echo json_encode($jTableResult);
 });
 $app->get('/crud/creditcard/pointsystem/mapping/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -769,7 +672,7 @@ $app->get('/crud/creditcard/pointsystem/mapping/by/creditcard', function () use 
     echo json_encode($result);
 });
 $app->get('/crud/creditcard/pointsystem/mapping/by/pointsystem', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -787,12 +690,12 @@ $app->get('/crud/creditcard/pointsystem/mapping/by/pointsystem', function () use
 
 /*Issuers*/
 $app->get('/crud/issuer/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetIssuerForCrud()));
 });
 $app->delete('/crud/issuer/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -804,7 +707,7 @@ $app->delete('/crud/issuer/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/issuer/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -819,7 +722,7 @@ $app->post('/crud/issuer/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/issuer/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -837,12 +740,12 @@ $app->put('/crud/issuer/update', function () use ($app) {
 
 /*Affiliates*/
 $app->get('/crud/affiliate/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetAffiliatesForCrud()));
 });
 $app->delete('/crud/affiliate/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -856,7 +759,7 @@ $app->delete('/crud/affiliate/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/affiliate/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -871,7 +774,7 @@ $app->post('/crud/affiliate/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/affiliate/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -889,12 +792,12 @@ $app->put('/crud/affiliate/update', function () use ($app) {
 
 /*InsuranceType*/
 $app->get('/crud/insurance/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetInsuranceTypeForCrud()));
 });
 $app->delete('/crud/insurance/type/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -906,7 +809,7 @@ $app->delete('/crud/insurance/type/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/insurance/type/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -921,7 +824,7 @@ $app->post('/crud/insurance/type/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/insurance/type/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -939,12 +842,12 @@ $app->put('/crud/insurance/type/update', function () use ($app) {
 
 /*FeatureType*/
 $app->get('/crud/feature/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetFeatureTypeForCrud()));
 });
 $app->delete('/crud/feature/type/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -956,7 +859,7 @@ $app->delete('/crud/feature/type/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/feature/type/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -971,7 +874,7 @@ $app->post('/crud/feature/type/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/feature/type/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -989,12 +892,12 @@ $app->put('/crud/feature/type/update', function () use ($app) {
 
 /*Feature*/
 $app->get('/crud/feature/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetFeatureForCrud()));
 });
 $app->delete('/crud/feature/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1006,7 +909,7 @@ $app->delete('/crud/feature/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/feature/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1021,7 +924,7 @@ $app->post('/crud/feature/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/feature/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1039,7 +942,7 @@ $app->put('/crud/feature/update', function () use ($app) {
 
 /*Feature*/
 $app->get('/crud/feature/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1053,7 +956,7 @@ $app->get('/crud/feature/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/feature/by/creditcard/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1066,7 +969,7 @@ $app->delete('/crud/feature/by/creditcard/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/feature/by/creditcard/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1082,7 +985,7 @@ $app->post('/crud/feature/by/creditcard/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/feature/by/creditcard/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1099,7 +1002,7 @@ $app->put('/crud/feature/by/creditcard/update', function () use ($app) {
 
 /*description */
 $app->get('/crud/description/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1113,7 +1016,7 @@ $app->get('/crud/description/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/description/by/creditcard/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1126,7 +1029,7 @@ $app->delete('/crud/description/by/creditcard/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/description/by/creditcard/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1142,7 +1045,7 @@ $app->post('/crud/description/by/creditcard/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/description/by/creditcard/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1159,12 +1062,12 @@ $app->put('/crud/description/by/creditcard/update', function () use ($app) {
 
 /*Campaign*/
 $app->get('/crud/campaign/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetCampaignForCrud()));
 });
 $app->get('/crud/campaign/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1178,7 +1081,7 @@ $app->get('/crud/campaign/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/campaign/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1190,7 +1093,7 @@ $app->delete('/crud/campaign/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/campaign/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1205,7 +1108,7 @@ $app->post('/crud/campaign/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/campaign/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1223,12 +1126,12 @@ $app->put('/crud/campaign/update', function () use ($app) {
 
 /*Discount*/
 $app->get('/crud/discount/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetDiscountForCrud()));
 });
 $app->get('/crud/discount/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1242,7 +1145,7 @@ $app->get('/crud/discount/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/discount/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1254,7 +1157,7 @@ $app->delete('/crud/discount/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/discount/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1269,7 +1172,7 @@ $app->post('/crud/discount/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/discount/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1288,7 +1191,7 @@ $app->put('/crud/discount/update', function () use ($app) {
 /*Point Mapping*/
 /*
 $app->get('/crud/pointmapping/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1302,7 +1205,7 @@ $app->get('/crud/pointmapping/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/pointmapping/by/creditcard/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1319,7 +1222,7 @@ $app->delete('/crud/pointmapping/by/creditcard/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/pointmapping/by/creditcard/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1334,7 +1237,7 @@ $app->post('/crud/pointmapping/by/creditcard/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1355,12 +1258,12 @@ $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
 
 /*Store*/
 $app->get('/crud/store/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetStoresForCrud()));
 });
 $app->delete('/crud/store/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1372,7 +1275,7 @@ $app->delete('/crud/store/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/store/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1387,7 +1290,7 @@ $app->post('/crud/store/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/store/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $id = $app->request()->put('id');
@@ -1406,12 +1309,12 @@ $app->put('/crud/store/update', function () use ($app) {
 
 /*Insurance*/
 $app->get('/crud/insurance/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetInsuranceForCrud()));
 });
 $app->get('/crud/insurance/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1425,7 +1328,7 @@ $app->get('/crud/insurance/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/insurance/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1437,7 +1340,7 @@ $app->delete('/crud/insurance/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/insurance/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1452,7 +1355,7 @@ $app->post('/crud/insurance/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/insurance/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $id = $app->request()->put('id');
@@ -1471,12 +1374,12 @@ $app->put('/crud/insurance/update', function () use ($app) {
 
 /*Interest*/
 $app->get('/crud/interest/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetInterestForCrud()));
 });
 $app->get('/crud/interest/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1490,7 +1393,7 @@ $app->get('/crud/interest/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/interest/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1502,7 +1405,7 @@ $app->delete('/crud/interest/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/interest/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1517,7 +1420,7 @@ $app->post('/crud/interest/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/interest/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $id = $app->request()->put('id');
@@ -1536,12 +1439,12 @@ $app->put('/crud/interest/update', function () use ($app) {
 
 /*Fee*/
 $app->get('/crud/fee/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetFeeForCrud()));
 });
 $app->get('/crud/fee/by/creditcard', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1555,7 +1458,7 @@ $app->get('/crud/fee/by/creditcard', function () use ($app) {
     echo json_encode($result);
 });
 $app->delete('/crud/fee/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1567,7 +1470,7 @@ $app->delete('/crud/fee/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/fee/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1582,7 +1485,7 @@ $app->post('/crud/fee/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/fee/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $id = $app->request()->put('id');
@@ -1599,80 +1502,14 @@ $app->put('/crud/fee/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 
-/*Paymenttypes*/
-$app->get('/crud/payment/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetPaymenttypeForCrud()));
-});
-$app->delete('/crud/payment/type/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/payment/type/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeletePaymenttypeForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/payment/type/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreatePaymenttypeForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/payment/type/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdatePaymenttypeForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->get('/crud/payment/type/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetPaymenttypeById($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-
-
 /*Unit*/
 $app->get('/crud/unit/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetUnitForCrud()));
 });
 $app->delete('/crud/unit/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1685,7 +1522,7 @@ $app->delete('/crud/unit/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/unit/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1700,7 +1537,7 @@ $app->post('/crud/unit/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/unit/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1716,7 +1553,7 @@ $app->put('/crud/unit/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/unit/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1733,12 +1570,12 @@ $app->get('/crud/unit/by/id', function () use ($app) {
 
 /* StoreCategory */
 $app->get('/crud/storecategory/all', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> $db->GetStoreCategoryForCrud()));
 });
 $app->delete('/crud/storecategory/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -1751,7 +1588,7 @@ $app->delete('/crud/storecategory/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/storecategory/create', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1766,7 +1603,7 @@ $app->post('/crud/storecategory/create', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->put('/crud/storecategory/update', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -1782,7 +1619,7 @@ $app->put('/crud/storecategory/update', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->get('/crud/storecategory/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
+    $db = new \Db\Db();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -1796,637 +1633,9 @@ $app->get('/crud/storecategory/by/id', function () use ($app) {
     echo json_encode($result);
 });
 
-
-/* Persona */
-$app->get('/crud/persona/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetPersonaForCrud()));
-});
-$app->delete('/crud/persona/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/Persona/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeletePersonaForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/persona/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreatePersonaForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/persona/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdatePersonaForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->get('/crud/persona/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetPersonaById($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-
-
-/* Scene */
-$app->get('/crud/scene/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetSceneForCrud()));
-});
-$app->delete('/crud/scene/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/Scene/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeleteSceneForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/scene/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateSceneForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/scene/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateSceneForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->get('/crud/scene/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetSceneById($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-
-
-/* SceneToCategoryMap*/
-$app->get('/crud/scene/to/category/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetSceneToCategoryMap()));
-});
-$app->delete('/crud/scene/to/category/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/Scene/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeleteSceneToCategoryMap($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/scene/to/category/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateSceneToCategoryMap($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-
-/* SceneToRewardCategoryMap*/
-$app->get('/crud/scene/to/reward/category/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetSceneToRewardCategoryMap()));
-});
-$app->delete('/crud/scene/to/reward/category/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/Scene/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeleteSceneToRewardCategoryMap($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/scene/to/reward/category/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateSceneToRewardCategoryMap($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-/*
-$app->put('/crud/scene/to/reward/category/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateSceneToRewardCategoryMap($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-*/
-
-/* PersonaToSceneMap*/
-$app->get('/crud/persona/to/scene/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetPersonaToSceneMap()));
-});
-$app->get('/crud/persona/to/scene/by/persona/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetPersonaToSceneMapByPersonaId($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-$app->delete('/crud/persona/to/scene/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("/crud/Scene/delete: Deleting point system " . $id);
-        //TODO delete should handle also all dependent data
-        $jTableResult['row'] = $db->DeletePersonaToSceneMap($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/persona/to/scene/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreatePersonaToSceneMap($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/persona/to/scene/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdatePersonaToSceneMap($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-
-/*RestrictionType*/
-$app->get('/crud/restriction/type/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetRestrictionTypeForCrud()));
-});
-$app->delete('/crud/restriction/type/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteRestrictionTypeForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/restriction/type/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateRestrictionTypeForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/restriction/type/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateRestrictionTypeForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-
-/*GeneralRestriction*/
-$app->get('/crud/restriction/general/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetAllGeneralRestrictions()));
-});
-$app->get('/crud/restriction/general/by/persona/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetGeneralRestrictionByPersonaId($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-$app->get('/crud/restriction/general/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetGeneralRestrictionById($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-$app->delete('/crud/restriction/general/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteGeneralRestrictionForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/restriction/general/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateGeneralRestrictionForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/restriction/general/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateGeneralRestrictionForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-/*FeatureRestriction*/
-$app->get('/crud/restriction/feature/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetAllFeatureRestrictions()));
-});
-$app->get('/crud/restriction/feature/by/persona/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetFeatureRestrictionForPersona($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-$app->delete('/crud/restriction/feature/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteFeatureRestrictionForPersona($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/restriction/feature/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateFeatureRestrictionForPersona($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/restriction/feature/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateFeatureRestrictionForPersona($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-
-
-/*Credit Card Restriction*/
-$app->get('/crud/restriction/credit/card/general/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetAllCreditCardRestrictions()));
-});
-
-$app->get('/crud/restriction/credit/card/general/by/credit/card/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetCreditCardRestrictionByCreditCardId($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-
-$app->get('/crud/restriction/credit/card/general/by/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetCreditCardRestrictionById($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-
-$app->delete('/crud/restriction/credit/card/general/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteCreditCardRestrictionForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-
-$app->post('/crud/restriction/credit/card/general/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateCreditCardRestrictionForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-$app->put('/crud/restriction/credit/card/general/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateCreditCardRestrictionForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
-
-
-/*FeatureRestriction*/
-$app->get('/crud/restriction/credit/card/feature/all', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetAllCardFeatureRestrictions()));
-});
-$app->get('/crud/restriction/credit/card/feature/by/credit/card/id', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $result = array();
-    try {
-        $result['data'] = $db->GetCardFeatureRestrictionForCreditCard($app->request()->get('Id'));
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-    echo json_encode($result);
-});
-$app->delete('/crud/restriction/credit/card/feature/delete', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting restriction type card " . $id);
-        $jTableResult['row'] = $db->DeleteCardFeatureRestrictionForCreditCard($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/restriction/credit/card/feature/create', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateCardFeatureRestrictionForCreditCard($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/restriction/credit/card/feature/update', function () use ($app) {
-    $db = new \Db\Core\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateCardFeatureRestrictionForCreditCard($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
+require_once 'requests/crud/persona.php';
+require_once 'requests/crud/restrictions.php';
+require_once 'requests/crud/payment_type.php';
 
 //Run the Slim application:
 $app->run();

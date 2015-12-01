@@ -92,7 +92,7 @@ body {
 .header-container {
     padding-top:100px;
     height:375px;
-    background-image: url("/v2/img/hero.png");
+    background-image: url("img/hero.png");
     background-size: 100% auto;
 }
 
@@ -267,163 +267,163 @@ div.pane input[type=checkbox] {
 
 
 .scene-button-ecom{
-    background: url("/v2/img/icon_1light.jpg") no-repeat bottom left;
+    background: url("img/icon_1light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-ecom {
-    background: url("/v2/img/icon_1dark.jpg") no-repeat bottom left;
+    background: url("img/icon_1dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-ecom-small{
-    background: url("/v2/img/icons-small/icon_1light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_1light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-ecom-small {
-    background: url("/v2/img/icons-small/icon_1dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_1dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-grocery{
-    background: url("/v2/img/icon_2light.jpg") no-repeat bottom left;
+    background: url("img/icon_2light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-grocery {
-    background: url("/v2/img/icon_2dark.jpg") no-repeat bottom left;
+    background: url("img/icon_2dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-grocery-small{
-    background: url("/v2/img/icons-small/icon_2light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_2light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-grocery-small {
-    background: url("/v2/img/icons-small/icon_2dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_2dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-restaurants{
-    background: url("/v2/img/icon_3light.jpg") no-repeat bottom left;
+    background: url("img/icon_3light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-restaurants {
-    background: url("/v2/img/icon_3dark.jpg") no-repeat bottom left;
+    background: url("img/icon_3dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-restaurants-small{
-    background: url("/v2/img/icons-small/icon_3light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_3light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-restaurants-small {
-    background: url("/v2/img/icons-small/icon_3dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_3dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-entame{
-    background: url("/v2/img/icon_4light.jpg") no-repeat bottom right;
+    background: url("img/icon_4light.jpg") no-repeat bottom right;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-entame {
-    background: url("/v2/img/icon_4dark.jpg") no-repeat bottom right;
+    background: url("img/icon_4dark.jpg") no-repeat bottom right;
 }
 
 .scene-button-entame-small{
-    background: url("/v2/img/icons-small/icon_4light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_4light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-entame-small {
-    background: url("/v2/img/icons-small/icon_4dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_4dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-home{
-    background: url("/v2/img/icon_5light.jpg") no-repeat bottom right;
+    background: url("img/icon_5light.jpg") no-repeat bottom right;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-home {
-    background: url("/v2/img/icon_5dark.jpg") no-repeat bottom right;
+    background: url("img/icon_5dark.jpg") no-repeat bottom right;
 }
 
 .scene-button-home-small {
-    background: url("/v2/img/icons-small/icon_5light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_5light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-home-small {
-    background: url("/v2/img/icons-small/icon_5dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_5dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-bills{
-    background: url("/v2/img/icon_6light.jpg") no-repeat bottom right;
+    background: url("img/icon_6light.jpg") no-repeat bottom right;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-bills {
-    background: url("/v2/img/icon_6dark.jpg") no-repeat bottom right;
+    background: url("img/icon_6dark.jpg") no-repeat bottom right;
 }
 
 .scene-button-bills-small{
-    background: url("/v2/img/icons-small/icon_6light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_6light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-bills-small {
-    background: url("/v2/img/icons-small/icon_6dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_6dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-carlife{
-    background: url("/v2/img/icon_7light.jpg") no-repeat bottom left;
+    background: url("img/icon_7light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-carlife {
-    background: url("/v2/img/icon_7dark.jpg") no-repeat bottom left;
+    background: url("img/icon_7dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-carlife-small{
-    background: url("/v2/img/icons-small/icon_7light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_7light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-carlife-small {
-    background: url("/v2/img/icons-small/icon_7dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_7dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-fashion{
-    background: url("/v2/img/icon_8light.jpg") no-repeat bottom left;
+    background: url("img/icon_8light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-fashion {
-    background: url("/v2/img/icon_8dark.jpg") no-repeat bottom left;
+    background: url("img/icon_8dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-fashion-small{
-    background: url("/v2/img/icons-small/icon_8light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_8light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-fashion-small {
-    background: url("/v2/img/icons-small/icon_8dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_8dark.jpg") no-repeat center;
 }
 
 
 
 .scene-button-travel{
-    background: url("/v2/img/icon_9light.jpg") no-repeat bottom left;
+    background: url("img/icon_9light.jpg") no-repeat bottom left;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-travel {
-    background: url("/v2/img/icon_9dark.jpg") no-repeat bottom left;
+    background: url("img/icon_9dark.jpg") no-repeat bottom left;
 }
 
 .scene-button-travel-small{
-    background: url("/v2/img/icons-small/icon_9light.jpg") no-repeat center;
+    background: url("img/icons-small/icon_9light.jpg") no-repeat center;
 }
 
 div.scene-pane input[type=checkbox]:checked + .scene-button-travel-small {
-    background: url("/v2/img/icons-small/icon_9dark.jpg") no-repeat center;
+    background: url("img/icons-small/icon_9dark.jpg") no-repeat center;
 }
 
 
@@ -470,7 +470,7 @@ div.scene-pane input[type=checkbox]:checked + .scene-button {
 /* OFFERS BY PERSONAS */
 .persona-pane {
     margin: 10px 0 10px 0;
-    background: url("/v2/img/squirrel.png") no-repeat bottom left;
+    background: url("img/squirrel.png") no-repeat bottom left;
     background-size: 10% auto;
     background-color: #a0bc76;
     min-height:200px;
@@ -516,17 +516,17 @@ div.scene-pane input[type=checkbox]:checked + .scene-button {
 
 .persona1
 {
-    background: url("/v2/img/ntt_group.png") no-repeat center;
+    background: url("img/ntt_group.png") no-repeat center;
 }
 
 .persona2
 {
-    background: url("/v2/img/rakuten_card.png") no-repeat center;
+    background: url("img/rakuten_card.png") no-repeat center;
 }
 
 .persona3
 {
-    background: url("/v2/img/smbc_classic.png") no-repeat center;
+    background: url("img/smbc_classic.png") no-repeat center;
 }
 
 /* BLOGS */
@@ -547,17 +547,17 @@ div.scene-pane input[type=checkbox]:checked + .scene-button {
 }
 
 .blog{
-    background-image: url("/v2/img/blog.png");
+    background-image: url("img/blog.png");
     background-size: 100% auto;
 }
 
 .blog2{
-    background-image: url("/v2/img/blog2.png");
+    background-image: url("img/blog2.png");
     background-size: 100% auto;
 }
 
 .blog3{
-    background-image: url("/v2/img/blog3.png");
+    background-image: url("img/blog3.png");
     background-size: 100% auto;
 }
 
@@ -956,7 +956,7 @@ div.filter-container input:checked + label::before {
 }
 
 .email-conf {
-    background: url("/v2/img/squirrel-enewsletter.jpg") no-repeat bottom left;
+    background: url("img/squirrel-enewsletter.jpg") no-repeat bottom left;
     text-align: center;
     background-color: #ebe9dc;
     color:#4b4b4b;
@@ -964,7 +964,7 @@ div.filter-container input:checked + label::before {
 }
 
 .email-conf .ui-dialog-titlebar-close {
-    background: url("/v2/img/close.png") no-repeat center;
+    background: url("img/close.png") no-repeat center;
     border:none;
 
 }
@@ -1037,7 +1037,7 @@ div.filter-container input:checked + label::before {
     }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 800px) {
 
     /* ============
         WIDE: Menu
