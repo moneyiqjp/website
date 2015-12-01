@@ -18,7 +18,7 @@
         <div style="float: left;width: 455px;vertical-align: bottom;text-align: right">
             <div style="float: right;width:155px;display:inline-block">
                 <div class="moneybutton">
-                    <a href="http://www.moneyiq.jp/v2/index.html">
+                    <a href="http://www.moneyiq.jp/index.html">
                         <div class="mb-image"><img src="<?php bloginfo('template_directory'); ?>/img/squirrel_40.png"></div>
                         <div class="mb-text">サイトに アクセス</div>
                     </a>

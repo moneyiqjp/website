@@ -16,7 +16,9 @@
             <?php the_excerpt(); ?>
         </div>
         <div class="blog-pane-preview-read-more">
-            <a href="<?php echo get_permalink(); ?>"> Read More</a>
+            <div class="blog-pane-preview-read-more-button">
+                <a href="<?php echo get_permalink(); ?>"> Read More</a>
+            </div>
         </div>
     </div>
 <?php endwhile; else: ?>

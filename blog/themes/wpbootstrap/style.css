@@ -1,11 +1,11 @@
 /*
-Theme Name: WP Bootstrap
+Theme Name: SmartMoney
 Theme URI: http://teamtreehouse.com/wordpress-bootstrap-theme-tutorial
-Description: A demo theme built to accompany the Treehouse blog post <a href="http://teamtreehouse.com/wordpress-bootstrap-theme-tutorial">How to Build a WordPress Theme with Bootstrap</a>.
-Author: Zac Gordon
-Author URI: http://teamtreehouse.com/
+Description: A theme based on the bootstrep demo built to accompany the Treehouse blog post
+Author: Ben Fries
+Author URI: http://moneyiq.jp/
 Version: 1.0
-Tags: responsive, white, bootstrap
+Tags: responsive, light, bootstrap
 
 License: Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 License URI: http://creativecommons.org/licenses/by-sa/3.0/
@@ -21,10 +21,54 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
 
 /* Mobiles in landscape mode */
 @media only screen and (max-width : 800px) {
+    .clearfix {
+
+    }
+    .container{
+        margin: 0 5% 0 5%;
+    }
+    .body {
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+        font-size: 16px;
+        font-family: 'Noto Sans Japanese', sans-serif;
+    }
+
+    .headline{
+        text-align: center;
+    }
+    .headline {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .logo {
+        width: 550px;
+        text-align: center;
+        position: relative;
+        top: auto;
+        margin-top: 25px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        color: white;
+        text-align: center;
+    }
+
     .header-container {
-        width:500px;
+        width: 550px;
+        /*
         margin-left: 0;
         margin-right: 0;
+        */
+        margin: -60px 0 0 0;
+
+        padding-top: 50px;
+        padding-bottom: 0px;
+        height: 250px;
+        background: url("img/hero.png") no-repeat top;
+        background-position-y: 0px;
     }
     .blog-pane {
         text-align: justify;
@@ -33,7 +77,7 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
         align-self: center;
         color: rgb(75, 75, 75);
         font-size: 1.1rem;
-        margin: 50px auto 100px auto;
+        margin: 50px 25px 100px 25px;
     }
 
     .blog-pane-adv{
@@ -66,17 +110,17 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
     }
 
     div#main-content{
-        width:550px;
+        width:500px;
         align-content: center;
         horiz-align: center;
         padding-left: 0;
         padding-right: 0;
         padding-bottom: 5%;
-        font-size: 3em;
+        font-size: 1.2em;
     }
 
     .blog-pane-preview {
-        margin: 20px 0 0 0;
+        margin: 20px 25px 0 25px;
         border:thin solid #d3d0a5;
         border-radius:5px;
         color: #4b4b4b;
@@ -86,8 +130,8 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
         float: left;
         padding-left: 0;
         width: 500px;
-        height: 662px;
-        font-size: 1.0rem;
+        height: 600px;
+        display: table-cell;
     }
 
     div.blog-pane-preview  img.wp-post-image{
@@ -96,13 +140,78 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
         margin: 0 0 0 0;
     }
 
-    .blog-pane-preview-data-container {
-        height: 320px;
-        overflow:hidden;
+    .blog-pane-preview-title {
+        clear:both;
+        font-weight:bold;
+        font-size:1.5rem;
+        height: 80px;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 0 10px 0 10px;
+    }
+
+    .bottom{
+        height: 80px;
+        display: table-cell;
+        vertical-align: bottom;
+    }
+
+    .blog-pane-preview-data-container {
+        height: 140px;
+        overflow:hidden;
+        padding: 0 10px 10px 10px;
         vert-align: top;
         margin: 0 0 0 0;
     }
+    .blog-pane-title{
+        font-weight:bold;
+
+    }
+
+    .blog-pane-preview-read-more {
+        height:50px;
+        width:500px;
+        padding: 0 125px 0 125px;
+    }
+
+    .blog-pane-preview-read-more-button {
+        border:thin solid #e9913d;
+        border-radius:5px;
+        background-color:#e9913d;
+        height:50px;
+        width: 250px;
+        text-align: center;
+        vertical-align: middle;
+        display: table-cell;
+        margin: 0 125px 0 125px;
+        align-self: center;
+    }
+
+    .blog-pane-preview-read-more-button a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        align-self: center;
+        vert-align: middle;
+    }
+
+    .blog-pane-preview-read-more-button a:hover {
+        text-decoration: none;
+        text-align: center;
+        color: #E9B03D;
+        font-weight: bolder;
+        align-self: center;
+    }
+
+    div#main-container{
+        float:left;
+    }
+
+    div.container{
+        margin: 0 0 0 0;
+    }
+
 }
 
 /* Mobiles in landscape mode */
@@ -131,7 +240,7 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
     }
 
     .header-container {
-        margin: -60px 5% 25px 5%;
+        margin: -60px 0 25px 0;
         padding-top: 100px;
         padding-bottom: 0px;
         height:375px;
@@ -169,6 +278,66 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
         margin: 0 0 0 0;
     }
 
+    .blog-pane-title{
+        font-weight:bold;
+        font-size:1.3rem;
+    }
+
+    .blog-pane-preview-title {
+        clear:both;
+        font-weight:bold;
+        font-size:1.15rem;
+        height: 50px;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0 10px 0 10px;
+    }
+
+    .bottom{
+        height: 50px;
+        display: table-cell;
+        vertical-align: bottom;
+    }
+
+    .blog-pane-preview-read-more-button {
+        border:thin solid #e9913d;
+        border-radius:5px;
+        background-color:#f8f8f0;
+        height:35px;
+        width: 150px;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        display: table-cell;
+    }
+
+    .blog-pane-preview-read-more-button a {
+        text-decoration: none;
+        color: #e9913d;
+        font-weight: bold;
+        text-align: center;
+        display: table-cell;
+    }
+    .blog-pane-preview-read-more-button a:hover {
+        text-decoration: none;
+        color: #E9B03D;
+        font-weight: bolder;
+        text-align: center;
+        display: table-cell;
+    }
+
+    div#main-container{
+        width: 100%;
+        float:left;
+        margin-right: -250px;
+    }
+
+    .blog-pane-adv{
+        float:left;
+        width:800px;
+        background-color:#f8f8f0;
+    }
 }
 
 @media only screen and (min-width : 1100px) {
@@ -180,16 +349,13 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
 
 
 
-body {
-
+.body {
+    padding: 0 5% 0 5%;
     font-size: 16px;
     font-family: 'Noto Sans Japanese', sans-serif;
 }
 
-.blog-pane-title{
-    font-weight:bold;
-    font-size:1.3rem;
-}
+
 
 .blog-pane-feature-image {
     margin: 0 auto 50px auto;
@@ -215,11 +381,6 @@ body {
     margin-top: 25px;
 }
 
-.blog-pane-adv{
-    float:left;
-    width:800px;
-    background-color:#f8f8f0;
-}
 .blog-footer {
     clear: both;
     float: none;
@@ -250,54 +411,12 @@ a.brand {
     text-decoration: underline;
 }
 
-.blog-pane-preview-title {
-    clear:both;
-    font-weight:bold;
-    font-size:1.15rem;
-    height: 50px;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0 10px 0 10px;
-}
-
-.bottom{
-    height: 50px;
-    display: table-cell;
-    vertical-align: bottom;
-}
 
 div.blog-pane-preview-data-container p {
     vertical-align: top;
     display: table-cell;
 }
 
-.blog-pane-preview-read-more {
-    border:thin solid #e9913d;
-    border-radius:5px;
-    background-color:#f8f8f0;
-    height:25px;
-    width: 150px;
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    vertical-align: middle;
-}
-
-.blog-pane-preview-read-more a {
-    text-decoration: none;
-    color: #e9913d;
-    font-weight: bold;
-    text-align: center;
-    align-self: center;
-}
-.blog-pane-preview-read-more a:hover {
-    text-decoration: none;
-    text-align: center;
-    color: #E9B03D;
-    font-weight: bolder;
-    align-self: center;
-}
 
 /*
 orange
@@ -315,15 +434,9 @@ div#main-content{
     margin-right: 250px;
     align-content: center;
     horiz-align: center;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 0;
+    padding-right: 0;
     padding-bottom: 5%;
-}
-
-div#main-container{
-    width: 100%;
-    float:left;
-    margin-right: -250px;
 }
 
 div.primary-sidebar div{
@@ -401,7 +514,6 @@ div#primary-sidebar li a:hover {
     color: #d3d0a5;
     font-weight: bold;
     border-style: none;
-    border-color: transparent;
     background-color: transparent;
     margin: 0 0 0 0;
 }
@@ -416,26 +528,19 @@ div#primary-sidebar li a:hover {
 }
 
 div#sidebar-blog-last {
-    margin-top:25px;
-    margin-left: 0px;
-    margin-right: auto;
-    margin-bottom: auto;
-
+    margin:25px auto auto 0;
 }
 
 
 h2.sidebar-title {
     height: 30px;
     vertical-align: bottom;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding: 0 0 0 0;
 }
 
 div#sidebar-block-last {
-    margin-top: 50px;
-    margin-left: 0px;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin-top: 50px auto auto 0;
     width: 100%;
     height: auto;
 }

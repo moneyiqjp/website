@@ -11,12 +11,16 @@ use Httpful\Request;
 
 class MailChimp
 {
-    private static $ListId  = "d99b6ea994";
-    private static $URL = "https://us12.api.mailchimp.com/3.0/";
-    private static $APIKeySignup = "9a14ac5c8601b8317214ba29f3439fce-us12";
+    static $ListId  = "d99b6ea994";
+    static $URL = "https://us12.api.mailchimp.com/3.0/";
+    static $APIKeySignup = "9a14ac5c8601b8317214ba29f3439fce-us12";
+    private $LOG;
 
+    function MailChimp() {
+        $LOG = $GLOBALS['LOG'];
+    }
 
-    public static function subscribe($email){
+    public function subscribe($email){
 
         $url = MailChimp::$URL . "lists/" . MailChimp::$ListId . "/members";
         $data = array('email_address' => $email, 'status' => 'subscribed',
@@ -24,11 +28,13 @@ class MailChimp
                                         "LNAME"=> "McVankab")
         );
         echo json_encode($data);
-        $response = Request::put($url)                  // Build a PUT request...
+
+        $request = Request::put($url)                  // Build a PUT request...
         ->contentType("JSON")                              // tell it we're sending (Content-Type) JSON...
         ->authenticateWith('anystring', MailChimp::$APIKeySignup)  // authenticate with basic auth...
-        ->body(json_encode($data))             // attach a body/payload...
-        ->send();                                   // and finally, fire that thing off!
+        ->body(json_encode($data));             // attach a body/payload...
+        $GLOBALS['LOG'] ->debug(print_r($request,true));
+        $response = $request->send();                                   // and finally, fire that thing off!
 
         /*
         // use key 'http' even if you send the request to https://...
