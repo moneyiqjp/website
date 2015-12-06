@@ -194,3 +194,52 @@ table.dataTable tr.DTTT_selected.showAsInactive.even td.sorting_2 {
 table.dataTable tr.DTTT_selected.showAsInactive.even td.sorting_3 {
     background-color: #B0BED9;
 }
+
+body.testing {
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+}
+
+.testing h1{
+    text-align: center;
+}
+
+table.testresult {
+    
+}
+
+table.testresult a{
+    text-decoration: none;
+}
+
+
+table.testresult a:hover    {
+    text-decoration: underline overline;
+}
+
+table.testresult th {
+    background-color: #121e32;
+    color: white;
+    font-weight: bold;
+}
+
+table.testresult tr.even {
+    background-color: whitesmoke;
+}
+
+table.testresult tr.even {
+    background-color: #8ea0a4;
+}
+
+
+table.testresult tr.error {
+    background-color: maroon;
+    color: white;
+}
+
+table.testresult tr.error a {
+    color: white;
+}
+
+
+
+
