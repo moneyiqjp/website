@@ -133,7 +133,7 @@ class MailinglistTableMap extends TableMap
         $this->setUseIdGenerator(false);
         // columns
         $this->addColumn('email', 'Email', 'VARCHAR', true, 255, null);
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
     } // initialize()
 
     /**

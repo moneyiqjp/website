@@ -1,7 +1,10 @@
 bin/FTPSync/*.res
+deployment.xml
+encodings.xml
+misc.xml
 *.log
-/frontend/nbproject/private/
+admin/.idea/deployment.xml
+frontend/nbproject/private/
 frontend/css/jquery-ui-1.11.2.custom/images/Thumbs.db
-/frontend/*
-admin/.idea/workspace.xml
-backend/.idea/workspace.xml
+frontend/*
+

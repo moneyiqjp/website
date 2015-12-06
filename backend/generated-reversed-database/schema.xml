@@ -218,6 +218,7 @@
     <column name="afilliate_link" phpName="AfilliateLink" type="LONGVARCHAR"/>
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="pointExpiryMonths" phpName="Pointexpirymonths" type="INTEGER" defaultValue="12"/>
+    <column name="poinyExpiryDisplay" phpName="Poinyexpirydisplay" type="VARCHAR" size="250"/>
     <column name="issue_period" phpName="IssuePeriod" type="INTEGER"/>
     <column name="credit_limit_bottom" phpName="CreditLimitBottom" type="INTEGER"/>
     <column name="credit_limit_upper" phpName="CreditLimitUpper" type="INTEGER"/>
@@ -422,6 +423,7 @@
     <column name="payment_type_id" phpName="PaymentTypeId" type="INTEGER" required="true"/>
     <column name="min_interest" phpName="MinInterest" type="DOUBLE" size="15" scale="15"/>
     <column name="max_interest" phpName="MaxInterest" type="DOUBLE" size="15" scale="15"/>
+    <column name="Display" phpName="Display" type="VARCHAR" size="250"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <column name="reference" phpName="Reference" type="VARCHAR" size="255"/>
@@ -478,7 +480,7 @@
   </table>
   <table name="mailinglist" idMethod="native" phpName="Mailinglist">
     <column name="email" phpName="Email" type="VARCHAR" size="255" required="true"/>
-    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

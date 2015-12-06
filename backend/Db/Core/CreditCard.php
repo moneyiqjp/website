@@ -53,6 +53,7 @@ class Interest{
     function UpdateFromDB(\Interest $ins)
     {
         $type = $ins->getPaymentType();
+
         if(!is_null($type)) {
             $this->Display     = $type->getDisplay();
             $this->Type  = $type->getType();

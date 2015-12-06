@@ -33,6 +33,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery orderByAfilliateLink($order = Criteria::ASC) Order by the afilliate_link column
  * @method     ChildCreditCardQuery orderByAffiliateId($order = Criteria::ASC) Order by the affiliate_id column
  * @method     ChildCreditCardQuery orderByPointexpirymonths($order = Criteria::ASC) Order by the pointExpiryMonths column
+ * @method     ChildCreditCardQuery orderByPoinyexpirydisplay($order = Criteria::ASC) Order by the poinyExpiryDisplay column
  * @method     ChildCreditCardQuery orderByIssuePeriod($order = Criteria::ASC) Order by the issue_period column
  * @method     ChildCreditCardQuery orderByCreditLimitBottom($order = Criteria::ASC) Order by the credit_limit_bottom column
  * @method     ChildCreditCardQuery orderByCreditLimitUpper($order = Criteria::ASC) Order by the credit_limit_upper column
@@ -57,6 +58,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery groupByAfilliateLink() Group by the afilliate_link column
  * @method     ChildCreditCardQuery groupByAffiliateId() Group by the affiliate_id column
  * @method     ChildCreditCardQuery groupByPointexpirymonths() Group by the pointExpiryMonths column
+ * @method     ChildCreditCardQuery groupByPoinyexpirydisplay() Group by the poinyExpiryDisplay column
  * @method     ChildCreditCardQuery groupByIssuePeriod() Group by the issue_period column
  * @method     ChildCreditCardQuery groupByCreditLimitBottom() Group by the credit_limit_bottom column
  * @method     ChildCreditCardQuery groupByCreditLimitUpper() Group by the credit_limit_upper column
@@ -138,6 +140,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard findOneByAfilliateLink(string $afilliate_link) Return the first ChildCreditCard filtered by the afilliate_link column
  * @method     ChildCreditCard findOneByAffiliateId(int $affiliate_id) Return the first ChildCreditCard filtered by the affiliate_id column
  * @method     ChildCreditCard findOneByPointexpirymonths(int $pointExpiryMonths) Return the first ChildCreditCard filtered by the pointExpiryMonths column
+ * @method     ChildCreditCard findOneByPoinyexpirydisplay(string $poinyExpiryDisplay) Return the first ChildCreditCard filtered by the poinyExpiryDisplay column
  * @method     ChildCreditCard findOneByIssuePeriod(int $issue_period) Return the first ChildCreditCard filtered by the issue_period column
  * @method     ChildCreditCard findOneByCreditLimitBottom(int $credit_limit_bottom) Return the first ChildCreditCard filtered by the credit_limit_bottom column
  * @method     ChildCreditCard findOneByCreditLimitUpper(int $credit_limit_upper) Return the first ChildCreditCard filtered by the credit_limit_upper column
@@ -163,6 +166,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard[]|ObjectCollection findByAfilliateLink(string $afilliate_link) Return ChildCreditCard objects filtered by the afilliate_link column
  * @method     ChildCreditCard[]|ObjectCollection findByAffiliateId(int $affiliate_id) Return ChildCreditCard objects filtered by the affiliate_id column
  * @method     ChildCreditCard[]|ObjectCollection findByPointexpirymonths(int $pointExpiryMonths) Return ChildCreditCard objects filtered by the pointExpiryMonths column
+ * @method     ChildCreditCard[]|ObjectCollection findByPoinyexpirydisplay(string $poinyExpiryDisplay) Return ChildCreditCard objects filtered by the poinyExpiryDisplay column
  * @method     ChildCreditCard[]|ObjectCollection findByIssuePeriod(int $issue_period) Return ChildCreditCard objects filtered by the issue_period column
  * @method     ChildCreditCard[]|ObjectCollection findByCreditLimitBottom(int $credit_limit_bottom) Return ChildCreditCard objects filtered by the credit_limit_bottom column
  * @method     ChildCreditCard[]|ObjectCollection findByCreditLimitUpper(int $credit_limit_upper) Return ChildCreditCard objects filtered by the credit_limit_upper column
@@ -264,7 +268,7 @@ abstract class CreditCardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, issue_period, credit_limit_bottom, credit_limit_upper, commission, debit_date, cutoff_date, isActive, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
+        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, poinyExpiryDisplay, issue_period, credit_limit_bottom, credit_limit_upper, commission, debit_date, cutoff_date, isActive, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -771,6 +775,35 @@ abstract class CreditCardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CreditCardTableMap::COL_POINTEXPIRYMONTHS, $pointexpirymonths, $comparison);
+    }
+
+    /**
+     * Filter the query on the poinyExpiryDisplay column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPoinyexpirydisplay('fooValue');   // WHERE poinyExpiryDisplay = 'fooValue'
+     * $query->filterByPoinyexpirydisplay('%fooValue%'); // WHERE poinyExpiryDisplay LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $poinyexpirydisplay The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByPoinyexpirydisplay($poinyexpirydisplay = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($poinyexpirydisplay)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $poinyexpirydisplay)) {
+                $poinyexpirydisplay = str_replace('*', '%', $poinyexpirydisplay);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_POINYEXPIRYDISPLAY, $poinyexpirydisplay, $comparison);
     }
 
     /**

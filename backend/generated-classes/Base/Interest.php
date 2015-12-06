@@ -96,6 +96,12 @@ abstract class Interest implements ActiveRecordInterface
     protected $max_interest;
 
     /**
+     * The value for the display field.
+     * @var        string
+     */
+    protected $display;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -399,6 +405,16 @@ abstract class Interest implements ActiveRecordInterface
     }
 
     /**
+     * Get the [display] column value.
+     *
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -547,6 +563,26 @@ abstract class Interest implements ActiveRecordInterface
     } // setMaxInterest()
 
     /**
+     * Set the value of [display] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Interest The current object (for fluent API support)
+     */
+    public function setDisplay($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->display !== $v) {
+            $this->display = $v;
+            $this->modifiedColumns[InterestTableMap::COL_DISPLAY] = true;
+        }
+
+        return $this;
+    } // setDisplay()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -657,16 +693,19 @@ abstract class Interest implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : InterestTableMap::translateFieldName('MaxInterest', TableMap::TYPE_PHPNAME, $indexType)];
             $this->max_interest = (null !== $col) ? (double) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : InterestTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : InterestTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->display = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : InterestTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : InterestTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : InterestTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : InterestTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : InterestTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reference = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -676,7 +715,7 @@ abstract class Interest implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = InterestTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = InterestTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Interest'), 0, $e);
@@ -915,6 +954,9 @@ abstract class Interest implements ActiveRecordInterface
         if ($this->isColumnModified(InterestTableMap::COL_MAX_INTEREST)) {
             $modifiedColumns[':p' . $index++]  = 'max_interest';
         }
+        if ($this->isColumnModified(InterestTableMap::COL_DISPLAY)) {
+            $modifiedColumns[':p' . $index++]  = 'Display';
+        }
         if ($this->isColumnModified(InterestTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -949,6 +991,9 @@ abstract class Interest implements ActiveRecordInterface
                         break;
                     case 'max_interest':
                         $stmt->bindValue($identifier, $this->max_interest, PDO::PARAM_STR);
+                        break;
+                    case 'Display':
+                        $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1037,12 +1082,15 @@ abstract class Interest implements ActiveRecordInterface
                 return $this->getMaxInterest();
                 break;
             case 5:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 6:
-                return $this->getUpdateUser();
+                return $this->getUpdateTime();
                 break;
             case 7:
+                return $this->getUpdateUser();
+                break;
+            case 8:
                 return $this->getReference();
                 break;
             default:
@@ -1080,9 +1128,10 @@ abstract class Interest implements ActiveRecordInterface
             $keys[2] => $this->getPaymentTypeId(),
             $keys[3] => $this->getMinInterest(),
             $keys[4] => $this->getMaxInterest(),
-            $keys[5] => $this->getUpdateTime(),
-            $keys[6] => $this->getUpdateUser(),
-            $keys[7] => $this->getReference(),
+            $keys[5] => $this->getDisplay(),
+            $keys[6] => $this->getUpdateTime(),
+            $keys[7] => $this->getUpdateUser(),
+            $keys[8] => $this->getReference(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1170,12 +1219,15 @@ abstract class Interest implements ActiveRecordInterface
                 $this->setMaxInterest($value);
                 break;
             case 5:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 6:
-                $this->setUpdateUser($value);
+                $this->setUpdateTime($value);
                 break;
             case 7:
+                $this->setUpdateUser($value);
+                break;
+            case 8:
                 $this->setReference($value);
                 break;
         } // switch()
@@ -1220,13 +1272,16 @@ abstract class Interest implements ActiveRecordInterface
             $this->setMaxInterest($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateTime($arr[$keys[5]]);
+            $this->setDisplay($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateUser($arr[$keys[6]]);
+            $this->setUpdateTime($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setReference($arr[$keys[7]]);
+            $this->setUpdateUser($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setReference($arr[$keys[8]]);
         }
     }
 
@@ -1283,6 +1338,9 @@ abstract class Interest implements ActiveRecordInterface
         }
         if ($this->isColumnModified(InterestTableMap::COL_MAX_INTEREST)) {
             $criteria->add(InterestTableMap::COL_MAX_INTEREST, $this->max_interest);
+        }
+        if ($this->isColumnModified(InterestTableMap::COL_DISPLAY)) {
+            $criteria->add(InterestTableMap::COL_DISPLAY, $this->display);
         }
         if ($this->isColumnModified(InterestTableMap::COL_UPDATE_TIME)) {
             $criteria->add(InterestTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1383,6 +1441,7 @@ abstract class Interest implements ActiveRecordInterface
         $copyObj->setPaymentTypeId($this->getPaymentTypeId());
         $copyObj->setMinInterest($this->getMinInterest());
         $copyObj->setMaxInterest($this->getMaxInterest());
+        $copyObj->setDisplay($this->getDisplay());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
         $copyObj->setReference($this->getReference());
@@ -1534,6 +1593,7 @@ abstract class Interest implements ActiveRecordInterface
         $this->payment_type_id = null;
         $this->min_interest = null;
         $this->max_interest = null;
+        $this->display = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->reference = null;

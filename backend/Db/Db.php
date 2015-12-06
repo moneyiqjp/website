@@ -29,7 +29,7 @@ spl_autoload_register(function($className)
     $className=str_replace("\\","/",$className);
 
     $class=__DIR__ . '/../'.(empty($namespace)?"":$namespace."/")."{$className}.php";
-    echo $class;
+
     include_once($class);
 
     return true;
@@ -43,10 +43,6 @@ class Db
     {
         return $this;
     }
-
-
-
-
 
     function GetIssuersForDisplay()
     {
