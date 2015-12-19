@@ -54,13 +54,16 @@ class Category {
 class RewardCategory {
     public $Id;
     public $Name;
+    public $SubCategory;
     public $Description;
 
     public static function CREATE(\RewardCategory $cat) {
+        if(strtolower($cat->getName()) == "none") return null;
         $mine = new RewardCategory();
         $mine->Id =$cat->getRewardCategoryId();
         $mine->Name = $cat->getName();
         $mine->Description = $cat->getDescription();
+        $mine->SubCategory = $cat->getSubcategory();
         return $mine;
     }
 
@@ -113,7 +116,9 @@ class Restriction {
     {
         $that = new Restriction();
         foreach($persona->getMapPersonaFeatureConstraints() as $item) {
-            array_push($that->FeatureRestriction,  JFeatureType::CREATE_FROM_DB($item->getCardFeatureType()));
+            $feat = JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $feat->Negative = $item->getNegative();
+            array_push($that->FeatureRestriction,  $feat);
         }
 
         foreach($persona->getPersonaRestrictions() as $item) {
@@ -125,19 +130,27 @@ class Restriction {
 }
 
 
+
 class Persona {
     public $Id;
+    public $Identifier;
     public $Name;
     public $Restriction;
+    public $DefaultSpend;
+    public $Sorting;
+    public $RewardCategory;
 
     public function Persona(){}
 
     public static function CREATE(\Persona $pers) {
         $that = new Persona();
         $that->Id = $pers->getPersonaId();
+        $that->Identifier = $pers->getIdentifier();
         $that->Name= $pers->getName();
         $that->Restriction = Restriction::CREATE($pers);
-
+        $that->DefaultSpend = $pers->getDefaultSpend();
+        $that->Sorting = $pers->getSorting();
+        $that->RewardCategory = RewardCategory::CREATE($pers->getRewardCategory());
         return $that;
     }
 

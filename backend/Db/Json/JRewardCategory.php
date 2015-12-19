@@ -15,6 +15,7 @@ use Db\Utility\FieldUtils;
 class JRewardCategory  implements JSONInterface {
     public $RewardCategoryId;
     public $Name;
+    public $SubCategory;
     public $Description;
     public $UpdateTime;
     public $UpdateUser;
@@ -26,6 +27,7 @@ class JRewardCategory  implements JSONInterface {
         $mine->RewardCategoryId = $item->getRewardCategoryId();
         $mine->Name = $item->getName();
         $mine->Description = $item->getDescription();
+        $mine->SubCategory = $item->getSubcategory();
         $time = new \DateTime();
         if(!is_null($item->getUpdateTime())) {
             $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
@@ -44,6 +46,7 @@ class JRewardCategory  implements JSONInterface {
         }
 
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
+        if(ArrayUtils::KEY_EXISTS($data,'SubCategory')) $mine->SubCategory = $data['SubCategory'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
@@ -68,6 +71,7 @@ class JRewardCategory  implements JSONInterface {
     public function updateDB(\RewardCategory &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->RewardCategoryId)) $item->setRewardCategoryId($this->RewardCategoryId);
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
+        if(FieldUtils::STRING_IS_DEFINED($this->SubCategory)) $item->setSubcategory($this->SubCategory);
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);

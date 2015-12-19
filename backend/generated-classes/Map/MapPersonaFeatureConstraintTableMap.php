@@ -59,7 +59,7 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the persona_id field
@@ -85,6 +85,11 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
      * the column name for the priority_id field
      */
     const COL_PRIORITY_ID = 'map_persona_feature_constraint.priority_id';
+
+    /**
+     * the column name for the negative field
+     */
+    const COL_NEGATIVE = 'map_persona_feature_constraint.negative';
 
     /**
      * the column name for the update_time field
@@ -108,11 +113,11 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PersonaId', 'FeatureTypeId', 'PriorityId', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('personaId', 'featureTypeId', 'priorityId', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(MapPersonaFeatureConstraintTableMap::COL_PERSONA_ID, MapPersonaFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID, MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME, MapPersonaFeatureConstraintTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('persona_id', 'feature_type_id', 'priority_id', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId', 'FeatureTypeId', 'PriorityId', 'Negative', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('personaId', 'featureTypeId', 'priorityId', 'negative', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MapPersonaFeatureConstraintTableMap::COL_PERSONA_ID, MapPersonaFeatureConstraintTableMap::COL_FEATURE_TYPE_ID, MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID, MapPersonaFeatureConstraintTableMap::COL_NEGATIVE, MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME, MapPersonaFeatureConstraintTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'feature_type_id', 'priority_id', 'negative', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'FeatureTypeId' => 1, 'PriorityId' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('personaId' => 0, 'featureTypeId' => 1, 'priorityId' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(MapPersonaFeatureConstraintTableMap::COL_PERSONA_ID => 0, MapPersonaFeatureConstraintTableMap::COL_FEATURE_TYPE_ID => 1, MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID => 2, MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME => 3, MapPersonaFeatureConstraintTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'feature_type_id' => 1, 'priority_id' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'FeatureTypeId' => 1, 'PriorityId' => 2, 'Negative' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('personaId' => 0, 'featureTypeId' => 1, 'priorityId' => 2, 'negative' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(MapPersonaFeatureConstraintTableMap::COL_PERSONA_ID => 0, MapPersonaFeatureConstraintTableMap::COL_FEATURE_TYPE_ID => 1, MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID => 2, MapPersonaFeatureConstraintTableMap::COL_NEGATIVE => 3, MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME => 4, MapPersonaFeatureConstraintTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'feature_type_id' => 1, 'priority_id' => 2, 'negative' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -149,6 +154,7 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
         $this->addForeignPrimaryKey('persona_id', 'PersonaId', 'INTEGER' , 'persona', 'persona_id', true, null, null);
         $this->addForeignPrimaryKey('feature_type_id', 'FeatureTypeId', 'INTEGER' , 'card_feature_type', 'feature_type_id', true, null, null);
         $this->addColumn('priority_id', 'PriorityId', 'INTEGER', false, null, 100);
+        $this->addColumn('negative', 'Negative', 'TINYINT', false, null, 0);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
@@ -368,12 +374,14 @@ class MapPersonaFeatureConstraintTableMap extends TableMap
             $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_PERSONA_ID);
             $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_FEATURE_TYPE_ID);
             $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID);
+            $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE);
             $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(MapPersonaFeatureConstraintTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.persona_id');
             $criteria->addSelectColumn($alias . '.feature_type_id');
             $criteria->addSelectColumn($alias . '.priority_id');
+            $criteria->addSelectColumn($alias . '.negative');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

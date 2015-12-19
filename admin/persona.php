@@ -121,6 +121,31 @@
             }
         }
 
+        var  rewardCategory = [];
+        tmp = $.ajax({
+            url: '../backend/crud/reward/category/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    rewardCategory.push({
+                        value: tmpStore[index]["RewardCategoryId"],
+                        label: tmpStore[index]["Name"]+ " - " + tmpStore[index]["SubCategory"]
+                    })
+                }
+            }
+        }
+
 
         personaEditor = new $.fn.dataTable.Editor(
             {
@@ -143,12 +168,28 @@
                         name: "PersonaId",
                         type:  "readonly"
                     }, {
+                        label: "Identifier:",
+                        name: "Identity"
+                    }, {
                         label: "Name:",
                         name: "Name"
-                    },   {
+                    }, {
                         label: "Description:",
                         name: "Description"
-                    },{
+                    }, {
+                        label: "Default spend:",
+                        name: "DefaultSpend"
+                    }, {
+                        label: "Sorting:",
+                        name: "Sorting",
+                        type: "select",
+                        options: ['reward', 'points', 'rate', 'campaign-points']
+                    }, {
+                        label: "RewardCategoryId:",
+                        name: "RewardCategory.RewardCategoryId",
+                        type: "select",
+                        options: rewardCategory
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -335,8 +376,15 @@
                 },
                 "columns": [
                     {"data": "PersonaId", edit: false},
+                    {"data": "Identity"},
                     {"data": "Name"},
                     {"data": "Description"},
+                    {"data": "DefaultSpend", visible: false},
+                    {"data": "Sorting", visible: false},
+                    {"data": "RewardCategory.Name", editField: "RewardCategory.RestrictionTypeId", visible: false},
+                    {"data": "UpdateTime", edit: false, visible: false},
+                    {"data": "UpdateUser", visible: false},
+                    {"data": "RewardCategory.SubCategory", edit: false, visible: false},
                     {
                         "data": "PersonaId",
                         render: function ( data, type, row ) {
@@ -345,9 +393,7 @@
                             }
                             return data;
                         }
-                    },
-                    {"data": "UpdateTime", edit: false, visible: false},
-                    {"data": "UpdateUser", visible: false}
+                    }
                 ]
                 , tableTools: {
                     sRowSelect: "os",
@@ -473,21 +519,31 @@
             <thead>
             <tr>
                 <th>Id</th>
+                <th>Identifier</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Details</th>
+                <th>DefaultSpend</th>
+                <th>Sorting</th>
+                <th>Reward</th>
+                <th>SubCategory</th>
                 <th>Updated</th>
                 <th>User</th>
+                <th></th>
             </thead>
 
             <tfoot>
             <tr>
                 <th>Id</th>
+                <th>Identifier</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Details</th>
+                <th>DefaultSpend</th>
+                <th>Sorting</th>
+                <th>Reward</th>
+                <th>SubCategory</th>
                 <th>Updated</th>
                 <th>User</th>
+                <th></th>
             </tfoot>
         </table>
     </div>

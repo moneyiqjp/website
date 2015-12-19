@@ -13,6 +13,7 @@ class JDescription implements JSONInterface {
     public $ItemId;
     public $CreditCard;
     public $Name;
+    public $Type;
     public $Description;
     public $UpdateTime;
     public $UpdateUser;
@@ -30,6 +31,7 @@ class JDescription implements JSONInterface {
             'Name' => $item->getCreditCard()->getName()
         );
         $mine->Name = $item->getItemName();
+        $mine->Type = $item->getItemType();
         $mine->Description = $item->getItemDescription();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
@@ -48,6 +50,7 @@ class JDescription implements JSONInterface {
         );
 
         $mine->Name = $data['Name'];
+        $mine->Type = $data['Type'];
         $mine->Description = $data['Description'];
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
@@ -73,8 +76,9 @@ class JDescription implements JSONInterface {
         }
         $it = $this->CreditCard;
         $item->setCreditCard((new \CreditCardQuery())->findPk( $it['Id']));
-        $item->setItemDescription($this->Description);
         $item->setItemName($this->Name);
+        $item->setItemType($this->Type);
+        $item->setItemDescription($this->Description);
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;

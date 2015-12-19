@@ -59,7 +59,7 @@ class PersonaTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class PersonaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the persona_id field
      */
     const COL_PERSONA_ID = 'persona.persona_id';
+
+    /**
+     * the column name for the identifier field
+     */
+    const COL_IDENTIFIER = 'persona.identifier';
 
     /**
      * the column name for the name field
@@ -85,6 +90,21 @@ class PersonaTableMap extends TableMap
      * the column name for the description field
      */
     const COL_DESCRIPTION = 'persona.description';
+
+    /**
+     * the column name for the default_spend field
+     */
+    const COL_DEFAULT_SPEND = 'persona.default_spend';
+
+    /**
+     * the column name for the sorting field
+     */
+    const COL_SORTING = 'persona.sorting';
+
+    /**
+     * the column name for the reward_category_id field
+     */
+    const COL_REWARD_CATEGORY_ID = 'persona.reward_category_id';
 
     /**
      * the column name for the update_time field
@@ -108,11 +128,11 @@ class PersonaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PersonaId', 'Name', 'Description', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('personaId', 'name', 'description', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID, PersonaTableMap::COL_NAME, PersonaTableMap::COL_DESCRIPTION, PersonaTableMap::COL_UPDATE_TIME, PersonaTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('persona_id', 'name', 'description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId', 'Identifier', 'Name', 'Description', 'DefaultSpend', 'Sorting', 'RewardCategoryId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('personaId', 'identifier', 'name', 'description', 'defaultSpend', 'sorting', 'rewardCategoryId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID, PersonaTableMap::COL_IDENTIFIER, PersonaTableMap::COL_NAME, PersonaTableMap::COL_DESCRIPTION, PersonaTableMap::COL_DEFAULT_SPEND, PersonaTableMap::COL_SORTING, PersonaTableMap::COL_REWARD_CATEGORY_ID, PersonaTableMap::COL_UPDATE_TIME, PersonaTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'identifier', 'name', 'description', 'default_spend', 'sorting', 'reward_category_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -122,11 +142,11 @@ class PersonaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'Name' => 1, 'Description' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('personaId' => 0, 'name' => 1, 'description' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID => 0, PersonaTableMap::COL_NAME => 1, PersonaTableMap::COL_DESCRIPTION => 2, PersonaTableMap::COL_UPDATE_TIME => 3, PersonaTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'name' => 1, 'description' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'Identifier' => 1, 'Name' => 2, 'Description' => 3, 'DefaultSpend' => 4, 'Sorting' => 5, 'RewardCategoryId' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
+        self::TYPE_CAMELNAME     => array('personaId' => 0, 'identifier' => 1, 'name' => 2, 'description' => 3, 'defaultSpend' => 4, 'sorting' => 5, 'rewardCategoryId' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
+        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID => 0, PersonaTableMap::COL_IDENTIFIER => 1, PersonaTableMap::COL_NAME => 2, PersonaTableMap::COL_DESCRIPTION => 3, PersonaTableMap::COL_DEFAULT_SPEND => 4, PersonaTableMap::COL_SORTING => 5, PersonaTableMap::COL_REWARD_CATEGORY_ID => 6, PersonaTableMap::COL_UPDATE_TIME => 7, PersonaTableMap::COL_UPDATE_USER => 8, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'identifier' => 1, 'name' => 2, 'description' => 3, 'default_spend' => 4, 'sorting' => 5, 'reward_category_id' => 6, 'update_time' => 7, 'update_user' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -147,8 +167,12 @@ class PersonaTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('persona_id', 'PersonaId', 'INTEGER', true, null, null);
+        $this->addColumn('identifier', 'Identifier', 'VARCHAR', true, 250, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('default_spend', 'DefaultSpend', 'INTEGER', true, null, 100000);
+        $this->addColumn('sorting', 'Sorting', 'VARCHAR', true, 250, null);
+        $this->addForeignKey('reward_category_id', 'RewardCategoryId', 'INTEGER', 'reward_category', 'reward_category_id', true, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -158,6 +182,7 @@ class PersonaTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('RewardCategory', '\\RewardCategory', RelationMap::MANY_TO_ONE, array('reward_category_id' => 'reward_category_id', ), null, null);
         $this->addRelation('MapPersonaFeatureConstraint', '\\MapPersonaFeatureConstraint', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaFeatureConstraints');
         $this->addRelation('MapPersonaScene', '\\MapPersonaScene', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaScenes');
         $this->addRelation('PersonaRestriction', '\\PersonaRestriction', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'PersonaRestrictions');
@@ -305,14 +330,22 @@ class PersonaTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(PersonaTableMap::COL_PERSONA_ID);
+            $criteria->addSelectColumn(PersonaTableMap::COL_IDENTIFIER);
             $criteria->addSelectColumn(PersonaTableMap::COL_NAME);
             $criteria->addSelectColumn(PersonaTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(PersonaTableMap::COL_DEFAULT_SPEND);
+            $criteria->addSelectColumn(PersonaTableMap::COL_SORTING);
+            $criteria->addSelectColumn(PersonaTableMap::COL_REWARD_CATEGORY_ID);
             $criteria->addSelectColumn(PersonaTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(PersonaTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.persona_id');
+            $criteria->addSelectColumn($alias . '.identifier');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.default_spend');
+            $criteria->addSelectColumn($alias . '.sorting');
+            $criteria->addSelectColumn($alias . '.reward_category_id');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

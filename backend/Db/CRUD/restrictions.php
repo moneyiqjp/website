@@ -130,6 +130,7 @@ function GetFeatureRestrictionForPersona($id) {
         $stuff->Active = 1;
         $stuff->PersonaId = $id;
         $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+        $stuff->Negative = $item->getNegative();
         array_push($personaFeatures, $stuff);
         array_push($existingIds, $stuff->FeatureTypeId);
     }
@@ -140,6 +141,7 @@ function GetFeatureRestrictionForPersona($id) {
         $stuff->Active = 0;
         $stuff->PersonaId = $id;
         $stuff->FeatureId = $id . "_" . $stuff->FeatureTypeId;
+        $stuff->Negative = 0;
         array_push($allFeatures, $stuff);
     }
 
@@ -158,16 +160,16 @@ function UpdateFeatureRestrictionForPersona($data) {
     if(!array_key_exists('Active',$data)) throw new \Exception('Key Active not defined');
 
     if(array_key_exists('Active',$data) && !is_null($data['Active'])){
-        $this->DeleteFeatureRestrictionForPersona($data['FeatureId']);
+        DeleteFeatureRestrictionForPersona($data['FeatureId']);
         //throw new \Exception('DeleteFeatureRestrictionForPersona');
     }
 
     if($data['Active']) {
         //throw new \Exception('CreateFeatureRestrictionForPersona');
-        return $this->CreateFeatureRestrictionForPersona($data);
+        return CreateFeatureRestrictionForPersona($data);
     }
 
-    return $this->UpdateFeatureRestrictionForPersona($data);
+    return UpdateFeatureRestrictionForPersona($data);
 }
 
 function UpdateFeatureRestriction($data) {
@@ -176,6 +178,7 @@ function UpdateFeatureRestriction($data) {
     foreach( (new  \MapPersonaFeatureConstraintQuery())->findByPersonaId($ids[0]) as $item){
         if($item->getFeatureTypeId() == $ids[1]) {
             if(ArrayUtils::KEY_EXISTS($data,'PersonaId'))  $item->setPersonaId($data['PersonaId']);
+            if(ArrayUtils::KEY_EXISTS($data, 'Negative'))$item->setNegative($data['Negative']);
             return $item;
         }
     }
@@ -189,6 +192,7 @@ function CreateFeatureRestrictionForPersona($data) {
     $item = new \MapPersonaFeatureConstraint();
     $item->setPersonaId($data['PersonaId']);
     $item->setFeatureTypeId($data['FeatureTypeId']);
+    if(ArrayUtils::KEY_EXISTS($data, 'Negative'))$item->setNegative($data['Negative']);
     //$item->setUpdateTime(new DateTime());
     if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $item->setUpdateUser($data['UpdateUser']);
     $item->save();
@@ -314,17 +318,17 @@ function UpdateCardFeatureRestrictionForCreditCard($data) {
     if(!array_key_exists('Active',$data)) throw new \Exception('Key Active not defined');
 
     if(array_key_exists('Active',$data) && !is_null($data['Active'])){
-        $this->DeleteCardFeatureRestrictionForCreditCard($data['FeatureId']);
+        DeleteCardFeatureRestrictionForCreditCard($data['FeatureId']);
         //throw new \Exception('DeleteCardFeatureRestrictionForPersona');
     }
 
     if($data['Active']) {
         //throw new \Exception('CreateCardFeatureRestrictionForPersona');
-        return $this->CreateCardFeatureRestrictionForCreditCard($data);
+        return CreateCardFeatureRestrictionForCreditCard($data);
     }
 
     //throw new \Exception('UpdateCardFeatureRestrictionForPersona');
-    return $this->UpdateCardFeatureRestriction($data);
+    return UpdateCardFeatureRestriction($data);
 }
 
 function UpdateCardFeatureRestriction($data) {

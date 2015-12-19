@@ -82,6 +82,12 @@ abstract class CardDescription implements ActiveRecordInterface
     protected $item_name;
 
     /**
+     * The value for the item_type field.
+     * @var        string
+     */
+    protected $item_type;
+
+    /**
      * The value for the item_description field.
      * @var        string
      */
@@ -360,6 +366,16 @@ abstract class CardDescription implements ActiveRecordInterface
     }
 
     /**
+     * Get the [item_type] column value.
+     *
+     * @return string
+     */
+    public function getItemType()
+    {
+        return $this->item_type;
+    }
+
+    /**
      * Get the [item_description] column value.
      *
      * @return string
@@ -462,6 +478,26 @@ abstract class CardDescription implements ActiveRecordInterface
 
         return $this;
     } // setItemName()
+
+    /**
+     * Set the value of [item_type] column.
+     *
+     * @param  string $v new value
+     * @return $this|\CardDescription The current object (for fluent API support)
+     */
+    public function setItemType($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->item_type !== $v) {
+            $this->item_type = $v;
+            $this->modifiedColumns[CardDescriptionTableMap::COL_ITEM_TYPE] = true;
+        }
+
+        return $this;
+    } // setItemType()
 
     /**
      * Set the value of [item_description] column.
@@ -568,16 +604,19 @@ abstract class CardDescription implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CardDescriptionTableMap::translateFieldName('ItemName', TableMap::TYPE_PHPNAME, $indexType)];
             $this->item_name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CardDescriptionTableMap::translateFieldName('ItemDescription', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CardDescriptionTableMap::translateFieldName('ItemType', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->item_type = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardDescriptionTableMap::translateFieldName('ItemDescription', TableMap::TYPE_PHPNAME, $indexType)];
             $this->item_description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CardDescriptionTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardDescriptionTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CardDescriptionTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : CardDescriptionTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -587,7 +626,7 @@ abstract class CardDescription implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = CardDescriptionTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = CardDescriptionTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\CardDescription'), 0, $e);
@@ -809,6 +848,9 @@ abstract class CardDescription implements ActiveRecordInterface
         if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'item_name';
         }
+        if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_TYPE)) {
+            $modifiedColumns[':p' . $index++]  = 'item_type';
+        }
         if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'item_description';
         }
@@ -837,6 +879,9 @@ abstract class CardDescription implements ActiveRecordInterface
                         break;
                     case 'item_name':
                         $stmt->bindValue($identifier, $this->item_name, PDO::PARAM_STR);
+                        break;
+                    case 'item_type':
+                        $stmt->bindValue($identifier, $this->item_type, PDO::PARAM_STR);
                         break;
                     case 'item_description':
                         $stmt->bindValue($identifier, $this->item_description, PDO::PARAM_STR);
@@ -919,12 +964,15 @@ abstract class CardDescription implements ActiveRecordInterface
                 return $this->getItemName();
                 break;
             case 3:
-                return $this->getItemDescription();
+                return $this->getItemType();
                 break;
             case 4:
-                return $this->getUpdateTime();
+                return $this->getItemDescription();
                 break;
             case 5:
+                return $this->getUpdateTime();
+                break;
+            case 6:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -960,9 +1008,10 @@ abstract class CardDescription implements ActiveRecordInterface
             $keys[0] => $this->getItemId(),
             $keys[1] => $this->getCreditCardId(),
             $keys[2] => $this->getItemName(),
-            $keys[3] => $this->getItemDescription(),
-            $keys[4] => $this->getUpdateTime(),
-            $keys[5] => $this->getUpdateUser(),
+            $keys[3] => $this->getItemType(),
+            $keys[4] => $this->getItemDescription(),
+            $keys[5] => $this->getUpdateTime(),
+            $keys[6] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1029,12 +1078,15 @@ abstract class CardDescription implements ActiveRecordInterface
                 $this->setItemName($value);
                 break;
             case 3:
-                $this->setItemDescription($value);
+                $this->setItemType($value);
                 break;
             case 4:
-                $this->setUpdateTime($value);
+                $this->setItemDescription($value);
                 break;
             case 5:
+                $this->setUpdateTime($value);
+                break;
+            case 6:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1073,13 +1125,16 @@ abstract class CardDescription implements ActiveRecordInterface
             $this->setItemName($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setItemDescription($arr[$keys[3]]);
+            $this->setItemType($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateTime($arr[$keys[4]]);
+            $this->setItemDescription($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateUser($arr[$keys[5]]);
+            $this->setUpdateTime($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setUpdateUser($arr[$keys[6]]);
         }
     }
 
@@ -1130,6 +1185,9 @@ abstract class CardDescription implements ActiveRecordInterface
         }
         if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_NAME)) {
             $criteria->add(CardDescriptionTableMap::COL_ITEM_NAME, $this->item_name);
+        }
+        if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_TYPE)) {
+            $criteria->add(CardDescriptionTableMap::COL_ITEM_TYPE, $this->item_type);
         }
         if ($this->isColumnModified(CardDescriptionTableMap::COL_ITEM_DESCRIPTION)) {
             $criteria->add(CardDescriptionTableMap::COL_ITEM_DESCRIPTION, $this->item_description);
@@ -1228,6 +1286,7 @@ abstract class CardDescription implements ActiveRecordInterface
     {
         $copyObj->setCreditCardId($this->getCreditCardId());
         $copyObj->setItemName($this->getItemName());
+        $copyObj->setItemType($this->getItemType());
         $copyObj->setItemDescription($this->getItemDescription());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
@@ -1323,6 +1382,7 @@ abstract class CardDescription implements ActiveRecordInterface
         $this->item_id = null;
         $this->credit_card_id = null;
         $this->item_name = null;
+        $this->item_type = null;
         $this->item_description = null;
         $this->update_time = null;
         $this->update_user = null;

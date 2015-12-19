@@ -67,6 +67,7 @@
     <column name="item_id" phpName="ItemId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
     <column name="item_name" phpName="ItemName" type="VARCHAR" size="255" required="true"/>
+    <column name="item_type" phpName="ItemType" type="VARCHAR" size="255"/>
     <column name="item_description" phpName="ItemDescription" type="LONGVARCHAR"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
@@ -511,6 +512,7 @@
     <column name="persona_id" phpName="PersonaId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="feature_type_id" phpName="FeatureTypeId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="priority_id" phpName="PriorityId" type="INTEGER" defaultValue="100"/>
+    <column name="negative" phpName="Negative" type="TINYINT" defaultValue="0"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <foreign-key foreignTable="card_feature_type" name="FK_mpfc_feature_type_id">
@@ -620,10 +622,20 @@
   </table>
   <table name="persona" idMethod="native" phpName="Persona">
     <column name="persona_id" phpName="PersonaId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="identifier" phpName="Identifier" type="VARCHAR" size="250" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="default_spend" phpName="DefaultSpend" type="INTEGER" required="true" defaultValue="100000"/>
+    <column name="sorting" phpName="Sorting" type="VARCHAR" size="250" required="true"/>
+    <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="reward_category" name="FK_persona_reward_category">
+      <reference local="reward_category_id" foreign="reward_category_id"/>
+    </foreign-key>
+    <index name="FK_persona_reward_category">
+      <index-column name="reward_category_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
@@ -806,6 +818,7 @@
   <table name="reward_category" idMethod="native" phpName="RewardCategory">
     <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="subcategory" phpName="Subcategory" type="VARCHAR" size="50"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>

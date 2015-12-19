@@ -60,7 +60,7 @@
 
         var rewardCategories = [];
         tmp = $.ajax({
-            url: '../backend/display/reward/category/all',
+            url: '../backend/crud/reward/category/all',
             data: {
                 format: 'json',
                 "contentType": "application/json; charset=utf-8",
@@ -76,8 +76,8 @@
                 tmpStore = jason["data"];
                 for (index = 0; index < tmpStore.length; ++index) {
                     rewardCategories.push({
-                        value: tmpStore[index]["value"],
-                        label: tmpStore[index]["label"]
+                        value: tmpStore[index]["RewardCategoryId"],
+                        label: tmpStore[index]["Name"] + "-" + tmpStore[index]["SubCategory"]
                     })
                 }
             }
@@ -159,7 +159,10 @@
                     }, {
                         label: "Name:",
                         name: "Name"
-                    },   {
+                    }, {
+                        label: "SubCategory:",
+                        name: "SubCategory"
+                    }, {
                         label: "Description:",
                         name: "Description"
                     },{
@@ -188,6 +191,7 @@
                 "columns": [
                     { "data": "RewardCategoryId",edit: false },
                     { "data": "Name" },
+                    { "data": "SubCategory" },
                     { "data": "Description" },
                     { "data": "UpdateTime",edit: false, visible: false  },
                     { "data": "UpdateUser", visible: false }
@@ -227,7 +231,7 @@
                     }, {
                         label: "Name:",
                         name: "Name"
-                    },   {
+                    }, {
                         label: "Description:",
                         name: "Description"
                     }, {
@@ -533,6 +537,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>SubCategory</th>
                     <th>Description</th>
                     <th>Updated</th>
                     <th>User</th>
@@ -543,6 +548,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>SubCategory</th>
                     <th>Description</th>
                     <th>Updated</th>
                     <th>User</th>

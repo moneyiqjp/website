@@ -85,6 +85,13 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
     protected $priority_id;
 
     /**
+     * The value for the negative field.
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $negative;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -123,6 +130,7 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->priority_id = 100;
+        $this->negative = 0;
     }
 
     /**
@@ -375,6 +383,16 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
     }
 
     /**
+     * Get the [negative] column value.
+     *
+     * @return int
+     */
+    public function getNegative()
+    {
+        return $this->negative;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -473,6 +491,26 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
     } // setPriorityId()
 
     /**
+     * Set the value of [negative] column.
+     *
+     * @param  int $v new value
+     * @return $this|\MapPersonaFeatureConstraint The current object (for fluent API support)
+     */
+    public function setNegative($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->negative !== $v) {
+            $this->negative = $v;
+            $this->modifiedColumns[MapPersonaFeatureConstraintTableMap::COL_NEGATIVE] = true;
+        }
+
+        return $this;
+    } // setNegative()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -526,6 +564,10 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
                 return false;
             }
 
+            if ($this->negative !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -561,13 +603,16 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('PriorityId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->priority_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('Negative', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->negative = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MapPersonaFeatureConstraintTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -577,7 +622,7 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = MapPersonaFeatureConstraintTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = MapPersonaFeatureConstraintTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\MapPersonaFeatureConstraint'), 0, $e);
@@ -806,6 +851,9 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
         if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID)) {
             $modifiedColumns[':p' . $index++]  = 'priority_id';
         }
+        if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE)) {
+            $modifiedColumns[':p' . $index++]  = 'negative';
+        }
         if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -831,6 +879,9 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
                         break;
                     case 'priority_id':
                         $stmt->bindValue($identifier, $this->priority_id, PDO::PARAM_INT);
+                        break;
+                    case 'negative':
+                        $stmt->bindValue($identifier, $this->negative, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -903,9 +954,12 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
                 return $this->getPriorityId();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getNegative();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -941,8 +995,9 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
             $keys[0] => $this->getPersonaId(),
             $keys[1] => $this->getFeatureTypeId(),
             $keys[2] => $this->getPriorityId(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[3] => $this->getNegative(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1024,9 +1079,12 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
                 $this->setPriorityId($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setNegative($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1065,10 +1123,13 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
             $this->setPriorityId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setNegative($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1119,6 +1180,9 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
         }
         if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID)) {
             $criteria->add(MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID, $this->priority_id);
+        }
+        if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE)) {
+            $criteria->add(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE, $this->negative);
         }
         if ($this->isColumnModified(MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME)) {
             $criteria->add(MapPersonaFeatureConstraintTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1237,6 +1301,7 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
         $copyObj->setPersonaId($this->getPersonaId());
         $copyObj->setFeatureTypeId($this->getFeatureTypeId());
         $copyObj->setPriorityId($this->getPriorityId());
+        $copyObj->setNegative($this->getNegative());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
         if ($makeNew) {
@@ -1384,6 +1449,7 @@ abstract class MapPersonaFeatureConstraint implements ActiveRecordInterface
         $this->persona_id = null;
         $this->feature_type_id = null;
         $this->priority_id = null;
+        $this->negative = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;

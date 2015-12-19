@@ -213,6 +213,31 @@
             }
         }
 
+        var  rewardCategory = [];
+        tmp = $.ajax({
+            url: '../backend/crud/reward/category/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    rewardCategory.push({
+                        value: tmpStore[index]["RewardCategoryId"],
+                        label: tmpStore[index]["Name"]+ " - " + tmpStore[index]["SubCategory"]
+                    })
+                }
+            }
+        }
+
 
         if(personaId>0) {
             personaToSceneEditor = new $.fn.dataTable.Editor(
@@ -290,11 +315,15 @@
                     label: "Name:",
                     name: "Name",
                     type: "readonly"
-                },  {
+                }, {
+                    label: "Negative:",
+                    name: "Negative",
+                    type: "readonly"
+                }, {
                     label: "Category:",
                     name: "Category",
                     type: "readonly"
-                },{
+                }, {
                     label: "Description:",
                     name: "Description",
                     type: "readonly"
@@ -389,12 +418,28 @@
                             name: "PersonaId",
                             type:  "readonly"
                         }, {
+                            label: "Identifier:",
+                            name: "Identity"
+                        }, {
                             label: "Name:",
                             name: "Name"
-                        },   {
+                        }, {
                             label: "Description:",
                             name: "Description"
-                        },{
+                        },  {
+                            label: "Default spend:",
+                            name: "DefaultSpend"
+                        }, {
+                            label: "Sorting:",
+                            name: "Sorting",
+                            type: "select",
+                            options: ['reward', 'points', 'rate', 'campaign-points']
+                        }, {
+                            label: "RewardCategoryId:",
+                            name: "RewardCategory.RewardCategoryId",
+                            type: "select",
+                            options: rewardCategory
+                        }, {
                             label: "Update date:",
                             name: "UpdateTime",
                             type: "readonly"
@@ -428,6 +473,21 @@
                     {"data": "Name", edit: false},
                     {"data": "Description", edit: false, visible: false, width: "80"},
                     {
+                        "data": "Negative",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                if(data==0) {
+                                    return '<input type="checkbox" class="editor-negative">';
+                                } else {
+                                    return '<input type="checkbox" class="editor-negative" checked>';
+                                }
+                            }
+                            return data;
+                        },
+                        className: "dt-body-center",
+                        width: "5"
+                    },
+                    {
                         "data": "Active",
                         render: function (data, type, row) {
                             if (type === 'display') {
@@ -447,6 +507,7 @@
                 ],
                 rowCallback: function (row, data) {
                     $('input.editor-afield', row).prop('checked', data['Active'] == 1);
+                    $('input.editor-negative', row).prop('checked', data['Negative'] == 1);
                 }
                 , tableTools: {
                     sRowSelect: "os",
@@ -461,10 +522,17 @@
                         .set('Active', $(this).prop('checked') ? 1 : 0)
                         .submit();
                 })
+                .on('change', 'input.editor-negative', function () {
+                    featureEditor
+                        .edit($(this).closest('tr'), false)
+                        .set('Negative', $(this).prop('checked') ? 1 : 0)
+                        .submit();
+                })
                 .on('click', 'tbody td:not(:first-child)', function (e) {
-                    if(e.target.className!= "editor-afield")
+
+                    if( $.inArray(e.target.className, new Array("editor-afield","editor-negative") ) == -1 )
                     {
-                        featureEditor.inline(this);
+                       // featureEditor.inline(this);
                     }
                 });
 
@@ -539,9 +607,14 @@
                     "dataType": "json"
                 },
                 "columns": [
-                    {"data": "PersonaId", edit: false},
+                    {"data": "PersonaId", edit: false, visible: false},
+                    {"data": "Identity"},
                     {"data": "Name"},
                     {"data": "Description"},
+                    {"data": "DefaultSpend"},
+                    {"data": "Sorting"},
+                    {"data": "RewardCategory.Name", editField: "RewardCategory.RestrictionTypeId"},
+                    {"data": "RewardCategory.SubCategory", edit: false},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -604,7 +677,8 @@
                     <th>Category</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th></th>
+                    <th>Not</th>
+                    <th>Active</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
@@ -618,13 +692,14 @@
                     <th>Category</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th></th>
+                    <th>Not</th>
+                    <th>Active</th>
                     <th>Update</th>
                     <th>User</th>
                 </tr>
                 </tfoot>
             </table>
-
+            <a href="../backend/crud/restriction/feature/by/persona/id?Id=<?php if(array_key_exists('Id',$_GET)) { echo htmlspecialchars($_GET["Id"]); } ?>",">Source</a>
         </td>
         <td valign="top">
             <div style="width: 98%; margin: 25px 25px 25px 25px;float: left">
@@ -633,8 +708,13 @@
                     <thead>
                     <tr>
                         <th>Id</th>
+                        <th>Identifier</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Spend</th>
+                        <th>Sorting</th>
+                        <th>Reward</th>
+                        <th>SubCategory</th>
                         <th>Updated</th>
                         <th>User</th>
                     </thead>
@@ -642,8 +722,13 @@
                     <tfoot>
                     <tr>
                         <th>Id</th>
+                        <th>Identifier</th>
                         <th>Name</th>
                         <th>Description</th>
+                        <th>Spend</th>
+                        <th>Sorting</th>
+                        <th>Reward</th>
+                        <th>SubCategory</th>
                         <th>Updated</th>
                         <th>User</th>
                     </tfoot>

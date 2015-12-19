@@ -23,12 +23,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapPersonaFeatureConstraintQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildMapPersonaFeatureConstraintQuery orderByFeatureTypeId($order = Criteria::ASC) Order by the feature_type_id column
  * @method     ChildMapPersonaFeatureConstraintQuery orderByPriorityId($order = Criteria::ASC) Order by the priority_id column
+ * @method     ChildMapPersonaFeatureConstraintQuery orderByNegative($order = Criteria::ASC) Order by the negative column
  * @method     ChildMapPersonaFeatureConstraintQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildMapPersonaFeatureConstraintQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildMapPersonaFeatureConstraintQuery groupByPersonaId() Group by the persona_id column
  * @method     ChildMapPersonaFeatureConstraintQuery groupByFeatureTypeId() Group by the feature_type_id column
  * @method     ChildMapPersonaFeatureConstraintQuery groupByPriorityId() Group by the priority_id column
+ * @method     ChildMapPersonaFeatureConstraintQuery groupByNegative() Group by the negative column
  * @method     ChildMapPersonaFeatureConstraintQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildMapPersonaFeatureConstraintQuery groupByUpdateUser() Group by the update_user column
  *
@@ -52,6 +54,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapPersonaFeatureConstraint findOneByPersonaId(int $persona_id) Return the first ChildMapPersonaFeatureConstraint filtered by the persona_id column
  * @method     ChildMapPersonaFeatureConstraint findOneByFeatureTypeId(int $feature_type_id) Return the first ChildMapPersonaFeatureConstraint filtered by the feature_type_id column
  * @method     ChildMapPersonaFeatureConstraint findOneByPriorityId(int $priority_id) Return the first ChildMapPersonaFeatureConstraint filtered by the priority_id column
+ * @method     ChildMapPersonaFeatureConstraint findOneByNegative(int $negative) Return the first ChildMapPersonaFeatureConstraint filtered by the negative column
  * @method     ChildMapPersonaFeatureConstraint findOneByUpdateTime(string $update_time) Return the first ChildMapPersonaFeatureConstraint filtered by the update_time column
  * @method     ChildMapPersonaFeatureConstraint findOneByUpdateUser(string $update_user) Return the first ChildMapPersonaFeatureConstraint filtered by the update_user column
  *
@@ -59,6 +62,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByPersonaId(int $persona_id) Return ChildMapPersonaFeatureConstraint objects filtered by the persona_id column
  * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByFeatureTypeId(int $feature_type_id) Return ChildMapPersonaFeatureConstraint objects filtered by the feature_type_id column
  * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByPriorityId(int $priority_id) Return ChildMapPersonaFeatureConstraint objects filtered by the priority_id column
+ * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByNegative(int $negative) Return ChildMapPersonaFeatureConstraint objects filtered by the negative column
  * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildMapPersonaFeatureConstraint objects filtered by the update_time column
  * @method     ChildMapPersonaFeatureConstraint[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildMapPersonaFeatureConstraint objects filtered by the update_user column
  * @method     ChildMapPersonaFeatureConstraint[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -152,7 +156,7 @@ abstract class MapPersonaFeatureConstraintQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT persona_id, feature_type_id, priority_id, update_time, update_user FROM map_persona_feature_constraint WHERE persona_id = :p0 AND feature_type_id = :p1';
+        $sql = 'SELECT persona_id, feature_type_id, priority_id, negative, update_time, update_user FROM map_persona_feature_constraint WHERE persona_id = :p0 AND feature_type_id = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -379,6 +383,47 @@ abstract class MapPersonaFeatureConstraintQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MapPersonaFeatureConstraintTableMap::COL_PRIORITY_ID, $priorityId, $comparison);
+    }
+
+    /**
+     * Filter the query on the negative column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByNegative(1234); // WHERE negative = 1234
+     * $query->filterByNegative(array(12, 34)); // WHERE negative IN (12, 34)
+     * $query->filterByNegative(array('min' => 12)); // WHERE negative > 12
+     * </code>
+     *
+     * @param     mixed $negative The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMapPersonaFeatureConstraintQuery The current query, for fluid interface
+     */
+    public function filterByNegative($negative = null, $comparison = null)
+    {
+        if (is_array($negative)) {
+            $useMinMax = false;
+            if (isset($negative['min'])) {
+                $this->addUsingAlias(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE, $negative['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($negative['max'])) {
+                $this->addUsingAlias(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE, $negative['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MapPersonaFeatureConstraintTableMap::COL_NEGATIVE, $negative, $comparison);
     }
 
     /**

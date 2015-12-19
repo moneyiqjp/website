@@ -23,6 +23,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardDescriptionQuery orderByItemId($order = Criteria::ASC) Order by the item_id column
  * @method     ChildCardDescriptionQuery orderByCreditCardId($order = Criteria::ASC) Order by the credit_card_id column
  * @method     ChildCardDescriptionQuery orderByItemName($order = Criteria::ASC) Order by the item_name column
+ * @method     ChildCardDescriptionQuery orderByItemType($order = Criteria::ASC) Order by the item_type column
  * @method     ChildCardDescriptionQuery orderByItemDescription($order = Criteria::ASC) Order by the item_description column
  * @method     ChildCardDescriptionQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCardDescriptionQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
@@ -30,6 +31,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardDescriptionQuery groupByItemId() Group by the item_id column
  * @method     ChildCardDescriptionQuery groupByCreditCardId() Group by the credit_card_id column
  * @method     ChildCardDescriptionQuery groupByItemName() Group by the item_name column
+ * @method     ChildCardDescriptionQuery groupByItemType() Group by the item_type column
  * @method     ChildCardDescriptionQuery groupByItemDescription() Group by the item_description column
  * @method     ChildCardDescriptionQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCardDescriptionQuery groupByUpdateUser() Group by the update_user column
@@ -50,6 +52,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardDescription findOneByItemId(int $item_id) Return the first ChildCardDescription filtered by the item_id column
  * @method     ChildCardDescription findOneByCreditCardId(int $credit_card_id) Return the first ChildCardDescription filtered by the credit_card_id column
  * @method     ChildCardDescription findOneByItemName(string $item_name) Return the first ChildCardDescription filtered by the item_name column
+ * @method     ChildCardDescription findOneByItemType(string $item_type) Return the first ChildCardDescription filtered by the item_type column
  * @method     ChildCardDescription findOneByItemDescription(string $item_description) Return the first ChildCardDescription filtered by the item_description column
  * @method     ChildCardDescription findOneByUpdateTime(string $update_time) Return the first ChildCardDescription filtered by the update_time column
  * @method     ChildCardDescription findOneByUpdateUser(string $update_user) Return the first ChildCardDescription filtered by the update_user column
@@ -58,6 +61,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCardDescription[]|ObjectCollection findByItemId(int $item_id) Return ChildCardDescription objects filtered by the item_id column
  * @method     ChildCardDescription[]|ObjectCollection findByCreditCardId(int $credit_card_id) Return ChildCardDescription objects filtered by the credit_card_id column
  * @method     ChildCardDescription[]|ObjectCollection findByItemName(string $item_name) Return ChildCardDescription objects filtered by the item_name column
+ * @method     ChildCardDescription[]|ObjectCollection findByItemType(string $item_type) Return ChildCardDescription objects filtered by the item_type column
  * @method     ChildCardDescription[]|ObjectCollection findByItemDescription(string $item_description) Return ChildCardDescription objects filtered by the item_description column
  * @method     ChildCardDescription[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCardDescription objects filtered by the update_time column
  * @method     ChildCardDescription[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCardDescription objects filtered by the update_user column
@@ -152,7 +156,7 @@ abstract class CardDescriptionQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT item_id, credit_card_id, item_name, item_description, update_time, update_user FROM card_description WHERE item_id = :p0';
+        $sql = 'SELECT item_id, credit_card_id, item_name, item_type, item_description, update_time, update_user FROM card_description WHERE item_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -353,6 +357,35 @@ abstract class CardDescriptionQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CardDescriptionTableMap::COL_ITEM_NAME, $itemName, $comparison);
+    }
+
+    /**
+     * Filter the query on the item_type column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByItemType('fooValue');   // WHERE item_type = 'fooValue'
+     * $query->filterByItemType('%fooValue%'); // WHERE item_type LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $itemType The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCardDescriptionQuery The current query, for fluid interface
+     */
+    public function filterByItemType($itemType = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($itemType)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $itemType)) {
+                $itemType = str_replace('*', '%', $itemType);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CardDescriptionTableMap::COL_ITEM_TYPE, $itemType, $comparison);
     }
 
     /**

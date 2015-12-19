@@ -4,6 +4,8 @@ namespace Base;
 
 use \MapSceneRewcat as ChildMapSceneRewcat;
 use \MapSceneRewcatQuery as ChildMapSceneRewcatQuery;
+use \Persona as ChildPersona;
+use \PersonaQuery as ChildPersonaQuery;
 use \Reward as ChildReward;
 use \RewardCategory as ChildRewardCategory;
 use \RewardCategoryQuery as ChildRewardCategoryQuery;
@@ -80,6 +82,12 @@ abstract class RewardCategory implements ActiveRecordInterface
     protected $name;
 
     /**
+     * The value for the subcategory field.
+     * @var        string
+     */
+    protected $subcategory;
+
+    /**
      * The value for the description field.
      * @var        string
      */
@@ -104,6 +112,12 @@ abstract class RewardCategory implements ActiveRecordInterface
     protected $collMapSceneRewcatsPartial;
 
     /**
+     * @var        ObjectCollection|ChildPersona[] Collection to store aggregation of ChildPersona objects.
+     */
+    protected $collPersonas;
+    protected $collPersonasPartial;
+
+    /**
      * @var        ObjectCollection|ChildReward[] Collection to store aggregation of ChildReward objects.
      */
     protected $collRewards;
@@ -122,6 +136,12 @@ abstract class RewardCategory implements ActiveRecordInterface
      * @var ObjectCollection|ChildMapSceneRewcat[]
      */
     protected $mapSceneRewcatsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildPersona[]
+     */
+    protected $personasScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -367,6 +387,16 @@ abstract class RewardCategory implements ActiveRecordInterface
     }
 
     /**
+     * Get the [subcategory] column value.
+     *
+     * @return string
+     */
+    public function getSubcategory()
+    {
+        return $this->subcategory;
+    }
+
+    /**
      * Get the [description] column value.
      *
      * @return string
@@ -445,6 +475,26 @@ abstract class RewardCategory implements ActiveRecordInterface
 
         return $this;
     } // setName()
+
+    /**
+     * Set the value of [subcategory] column.
+     *
+     * @param  string $v new value
+     * @return $this|\RewardCategory The current object (for fluent API support)
+     */
+    public function setSubcategory($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->subcategory !== $v) {
+            $this->subcategory = $v;
+            $this->modifiedColumns[RewardCategoryTableMap::COL_SUBCATEGORY] = true;
+        }
+
+        return $this;
+    } // setSubcategory()
 
     /**
      * Set the value of [description] column.
@@ -548,16 +598,19 @@ abstract class RewardCategory implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RewardCategoryTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardCategoryTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RewardCategoryTableMap::translateFieldName('Subcategory', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->subcategory = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardCategoryTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RewardCategoryTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -567,7 +620,7 @@ abstract class RewardCategory implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = RewardCategoryTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = RewardCategoryTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\RewardCategory'), 0, $e);
@@ -629,6 +682,8 @@ abstract class RewardCategory implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->collMapSceneRewcats = null;
+
+            $this->collPersonas = null;
 
             $this->collRewards = null;
 
@@ -759,6 +814,23 @@ abstract class RewardCategory implements ActiveRecordInterface
                 }
             }
 
+            if ($this->personasScheduledForDeletion !== null) {
+                if (!$this->personasScheduledForDeletion->isEmpty()) {
+                    \PersonaQuery::create()
+                        ->filterByPrimaryKeys($this->personasScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->personasScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collPersonas !== null) {
+                foreach ($this->collPersonas as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->rewardsScheduledForDeletion !== null) {
                 if (!$this->rewardsScheduledForDeletion->isEmpty()) {
                     foreach ($this->rewardsScheduledForDeletion as $reward) {
@@ -809,6 +881,9 @@ abstract class RewardCategory implements ActiveRecordInterface
         if ($this->isColumnModified(RewardCategoryTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_SUBCATEGORY)) {
+            $modifiedColumns[':p' . $index++]  = 'subcategory';
+        }
         if ($this->isColumnModified(RewardCategoryTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
@@ -834,6 +909,9 @@ abstract class RewardCategory implements ActiveRecordInterface
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case 'subcategory':
+                        $stmt->bindValue($identifier, $this->subcategory, PDO::PARAM_STR);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -913,12 +991,15 @@ abstract class RewardCategory implements ActiveRecordInterface
                 return $this->getName();
                 break;
             case 2:
-                return $this->getDescription();
+                return $this->getSubcategory();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getDescription();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -953,9 +1034,10 @@ abstract class RewardCategory implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getRewardCategoryId(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[2] => $this->getSubcategory(),
+            $keys[3] => $this->getDescription(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -977,6 +1059,21 @@ abstract class RewardCategory implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collMapSceneRewcats->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collPersonas) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'personas';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'personas';
+                        break;
+                    default:
+                        $key = 'Personas';
+                }
+
+                $result[$key] = $this->collPersonas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collRewards) {
 
@@ -1034,12 +1131,15 @@ abstract class RewardCategory implements ActiveRecordInterface
                 $this->setName($value);
                 break;
             case 2:
-                $this->setDescription($value);
+                $this->setSubcategory($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setDescription($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1075,13 +1175,16 @@ abstract class RewardCategory implements ActiveRecordInterface
             $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setSubcategory($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setDescription($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1129,6 +1232,9 @@ abstract class RewardCategory implements ActiveRecordInterface
         }
         if ($this->isColumnModified(RewardCategoryTableMap::COL_NAME)) {
             $criteria->add(RewardCategoryTableMap::COL_NAME, $this->name);
+        }
+        if ($this->isColumnModified(RewardCategoryTableMap::COL_SUBCATEGORY)) {
+            $criteria->add(RewardCategoryTableMap::COL_SUBCATEGORY, $this->subcategory);
         }
         if ($this->isColumnModified(RewardCategoryTableMap::COL_DESCRIPTION)) {
             $criteria->add(RewardCategoryTableMap::COL_DESCRIPTION, $this->description);
@@ -1226,6 +1332,7 @@ abstract class RewardCategory implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
+        $copyObj->setSubcategory($this->getSubcategory());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
@@ -1238,6 +1345,12 @@ abstract class RewardCategory implements ActiveRecordInterface
             foreach ($this->getMapSceneRewcats() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addMapSceneRewcat($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getPersonas() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addPersona($relObj->copy($deepCopy));
                 }
             }
 
@@ -1290,6 +1403,9 @@ abstract class RewardCategory implements ActiveRecordInterface
     {
         if ('MapSceneRewcat' == $relationName) {
             return $this->initMapSceneRewcats();
+        }
+        if ('Persona' == $relationName) {
+            return $this->initPersonas();
         }
         if ('Reward' == $relationName) {
             return $this->initRewards();
@@ -1540,6 +1656,224 @@ abstract class RewardCategory implements ActiveRecordInterface
         $query->joinWith('Scene', $joinBehavior);
 
         return $this->getMapSceneRewcats($query, $con);
+    }
+
+    /**
+     * Clears out the collPersonas collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addPersonas()
+     */
+    public function clearPersonas()
+    {
+        $this->collPersonas = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collPersonas collection loaded partially.
+     */
+    public function resetPartialPersonas($v = true)
+    {
+        $this->collPersonasPartial = $v;
+    }
+
+    /**
+     * Initializes the collPersonas collection.
+     *
+     * By default this just sets the collPersonas collection to an empty array (like clearcollPersonas());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initPersonas($overrideExisting = true)
+    {
+        if (null !== $this->collPersonas && !$overrideExisting) {
+            return;
+        }
+        $this->collPersonas = new ObjectCollection();
+        $this->collPersonas->setModel('\Persona');
+    }
+
+    /**
+     * Gets an array of ChildPersona objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildRewardCategory is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildPersona[] List of ChildPersona objects
+     * @throws PropelException
+     */
+    public function getPersonas(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPersonasPartial && !$this->isNew();
+        if (null === $this->collPersonas || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collPersonas) {
+                // return empty collection
+                $this->initPersonas();
+            } else {
+                $collPersonas = ChildPersonaQuery::create(null, $criteria)
+                    ->filterByRewardCategory($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collPersonasPartial && count($collPersonas)) {
+                        $this->initPersonas(false);
+
+                        foreach ($collPersonas as $obj) {
+                            if (false == $this->collPersonas->contains($obj)) {
+                                $this->collPersonas->append($obj);
+                            }
+                        }
+
+                        $this->collPersonasPartial = true;
+                    }
+
+                    return $collPersonas;
+                }
+
+                if ($partial && $this->collPersonas) {
+                    foreach ($this->collPersonas as $obj) {
+                        if ($obj->isNew()) {
+                            $collPersonas[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collPersonas = $collPersonas;
+                $this->collPersonasPartial = false;
+            }
+        }
+
+        return $this->collPersonas;
+    }
+
+    /**
+     * Sets a collection of ChildPersona objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $personas A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildRewardCategory The current object (for fluent API support)
+     */
+    public function setPersonas(Collection $personas, ConnectionInterface $con = null)
+    {
+        /** @var ChildPersona[] $personasToDelete */
+        $personasToDelete = $this->getPersonas(new Criteria(), $con)->diff($personas);
+
+
+        $this->personasScheduledForDeletion = $personasToDelete;
+
+        foreach ($personasToDelete as $personaRemoved) {
+            $personaRemoved->setRewardCategory(null);
+        }
+
+        $this->collPersonas = null;
+        foreach ($personas as $persona) {
+            $this->addPersona($persona);
+        }
+
+        $this->collPersonas = $personas;
+        $this->collPersonasPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Persona objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Persona objects.
+     * @throws PropelException
+     */
+    public function countPersonas(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collPersonasPartial && !$this->isNew();
+        if (null === $this->collPersonas || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collPersonas) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getPersonas());
+            }
+
+            $query = ChildPersonaQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByRewardCategory($this)
+                ->count($con);
+        }
+
+        return count($this->collPersonas);
+    }
+
+    /**
+     * Method called to associate a ChildPersona object to this object
+     * through the ChildPersona foreign key attribute.
+     *
+     * @param  ChildPersona $l ChildPersona
+     * @return $this|\RewardCategory The current object (for fluent API support)
+     */
+    public function addPersona(ChildPersona $l)
+    {
+        if ($this->collPersonas === null) {
+            $this->initPersonas();
+            $this->collPersonasPartial = true;
+        }
+
+        if (!$this->collPersonas->contains($l)) {
+            $this->doAddPersona($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildPersona $persona The ChildPersona object to add.
+     */
+    protected function doAddPersona(ChildPersona $persona)
+    {
+        $this->collPersonas[]= $persona;
+        $persona->setRewardCategory($this);
+    }
+
+    /**
+     * @param  ChildPersona $persona The ChildPersona object to remove.
+     * @return $this|ChildRewardCategory The current object (for fluent API support)
+     */
+    public function removePersona(ChildPersona $persona)
+    {
+        if ($this->getPersonas()->contains($persona)) {
+            $pos = $this->collPersonas->search($persona);
+            $this->collPersonas->remove($pos);
+            if (null === $this->personasScheduledForDeletion) {
+                $this->personasScheduledForDeletion = clone $this->collPersonas;
+                $this->personasScheduledForDeletion->clear();
+            }
+            $this->personasScheduledForDeletion[]= clone $persona;
+            $persona->setRewardCategory(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -1869,6 +2203,7 @@ abstract class RewardCategory implements ActiveRecordInterface
     {
         $this->reward_category_id = null;
         $this->name = null;
+        $this->subcategory = null;
         $this->description = null;
         $this->update_time = null;
         $this->update_user = null;
@@ -1895,6 +2230,11 @@ abstract class RewardCategory implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collPersonas) {
+                foreach ($this->collPersonas as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collRewards) {
                 foreach ($this->collRewards as $o) {
                     $o->clearAllReferences($deep);
@@ -1903,6 +2243,7 @@ abstract class RewardCategory implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collMapSceneRewcats = null;
+        $this->collPersonas = null;
         $this->collRewards = null;
     }
 

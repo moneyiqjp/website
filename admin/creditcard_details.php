@@ -236,6 +236,9 @@
                 label: "Name:",
                 name: "Name"
             }, {
+                label: "Type:",
+                name: "Type"
+            }, {
                 label: "Description:",
                 name: "Description"
             }, {
@@ -624,7 +627,8 @@
                         .submit();
                 })
                 .on('click', 'tbody td:not(:first-child)', function (e) {
-                    if(e.target.className!= "editor-afield") {
+                    if( $.inArray(e.target.className, new Array("editor-afield") ) == -1 )
+                    {
                         featureEditor.inline(this);
                     }
                 });
@@ -643,6 +647,7 @@
                     {"data": "ItemId", edit: false, width: 5},
                     {"data": "CreditCard.Name", editField: "CreditCard.Id", visible: false},
                     {"data": "Name", width: 15},
+                    {"data": "Type", width: 15},
                     {"data": "Description", width: 100},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
@@ -992,6 +997,7 @@
                     <th>Id</th>
                     <th>Card</th>
                     <th>Type</th>
+                    <th>SubType</th>
                     <th>Description</th>
                     <th>Update</th>
                     <th>User</th>
@@ -1003,6 +1009,7 @@
                     <th>Id</th>
                     <th>Card</th>
                     <th>Type</th>
+                    <th>SubType</th>
                     <th>Description</th>
                     <th>Update</th>
                     <th>User</th>

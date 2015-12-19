@@ -27,7 +27,9 @@ class CardRestriction { //TODO merge with PersonaMapping
         $that = new CardRestriction();
 
         foreach($card->getMapCardFeatureConstraints() as $item) {
-            array_push($that->FeatureRestriction,  JFeatureType::CREATE_FROM_DB($item->getCardFeatureType()));
+            $feat = JFeatureType::CREATE_FROM_DB($item->getCardFeatureType());
+            $feat->Negative = $item->getNegative();
+            array_push($that->FeatureRestriction,  $feat);
         }
 
 
@@ -153,9 +155,9 @@ class Insurance{
     }
 }
 
-
 class Reward{
     public $category;
+    public $subcategory;
     public $type;
     public $title;
     public $description;
@@ -179,6 +181,7 @@ class Reward{
     {
         if(!is_null($rew->getPointMultiplier())) $this->pointMultiplier = $rew->getPointMultiplier();
         $this->category = $rew->getRewardCategory()->getName();
+        $this->subcategory = $rew->getRewardCategory()->getSubcategory();
         $this->type    = $rew->getRewardType()->getName();
         $this->title = $rew->getTitle();
         $this->description = $rew->getDescription();
@@ -289,6 +292,7 @@ class CreditCard {
     public $supportedBrands = array();
     public $rewards = array();
     public $restriction;
+    public $pitch = array();
 
     function CreditCard()
     {
@@ -377,6 +381,36 @@ class CreditCard {
         array_push($this->rewards[$key],Reward::CREATE_FROM_DB($rew));
     }
 
+    function AddDefaultPitch($text){
+        foreach((new \PersonaQuery())->orderByIdentifier()->find() as $persona) {
+            if(!array_key_exists($persona->getIdentifier(), $this->pitch)){
+                $this->pitch[$persona->getIdentifier()] = $text;
+            }
+        }
+    }
+
+    function AddDescription(\CardDescription $desc) {
+        if(is_null($desc->getItemName())) return;
+
+        switch(trim(strtolower($desc->getItemName()))) {
+            case "pitch": {
+                if(is_null($desc->getItemType()) || strlen(trim($desc->getItemType()))<=0 ||
+                        strtolower(trim($desc->getItemType()))=="default"  ) {
+                    $this->AddDefaultPitch($desc->getItemDescription());
+                    break;
+                }
+                $this->pitch[$desc->getItemType()] = $desc->getItemDescription();
+                break;
+            }
+            default:{
+                //TODO handle normal descriptions
+                break;
+            }
+        }
+
+
+    }
+
 
     public static function fromCreditCardObject(\CreditCard $cc)
     {
@@ -444,6 +478,10 @@ class CreditCard {
         $mine->interest = Interest::CREATE_FROM_CREDIT_CARD($cc);
 
         $mine->shortDescription = $cc->getShortDescription();
+
+        foreach($cc->getCardDescriptions() as $desc) {
+            $mine->AddDescription($desc);
+        }
 
         if(!is_null($cc->getPointexpirymonths())) {
             $mine->pointsExpiryPeriod=$cc->getPointexpirymonths()/12;

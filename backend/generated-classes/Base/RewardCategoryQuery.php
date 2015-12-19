@@ -22,12 +22,14 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRewardCategoryQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
  * @method     ChildRewardCategoryQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildRewardCategoryQuery orderBySubcategory($order = Criteria::ASC) Order by the subcategory column
  * @method     ChildRewardCategoryQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildRewardCategoryQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildRewardCategoryQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildRewardCategoryQuery groupByRewardCategoryId() Group by the reward_category_id column
  * @method     ChildRewardCategoryQuery groupByName() Group by the name column
+ * @method     ChildRewardCategoryQuery groupBySubcategory() Group by the subcategory column
  * @method     ChildRewardCategoryQuery groupByDescription() Group by the description column
  * @method     ChildRewardCategoryQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildRewardCategoryQuery groupByUpdateUser() Group by the update_user column
@@ -40,17 +42,22 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardCategoryQuery rightJoinMapSceneRewcat($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapSceneRewcat relation
  * @method     ChildRewardCategoryQuery innerJoinMapSceneRewcat($relationAlias = null) Adds a INNER JOIN clause to the query using the MapSceneRewcat relation
  *
+ * @method     ChildRewardCategoryQuery leftJoinPersona($relationAlias = null) Adds a LEFT JOIN clause to the query using the Persona relation
+ * @method     ChildRewardCategoryQuery rightJoinPersona($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Persona relation
+ * @method     ChildRewardCategoryQuery innerJoinPersona($relationAlias = null) Adds a INNER JOIN clause to the query using the Persona relation
+ *
  * @method     ChildRewardCategoryQuery leftJoinReward($relationAlias = null) Adds a LEFT JOIN clause to the query using the Reward relation
  * @method     ChildRewardCategoryQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildRewardCategoryQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \MapSceneRewcatQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \MapSceneRewcatQuery|\PersonaQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildRewardCategory findOne(ConnectionInterface $con = null) Return the first ChildRewardCategory matching the query
  * @method     ChildRewardCategory findOneOrCreate(ConnectionInterface $con = null) Return the first ChildRewardCategory matching the query, or a new ChildRewardCategory object populated from the query conditions when no match is found
  *
  * @method     ChildRewardCategory findOneByRewardCategoryId(int $reward_category_id) Return the first ChildRewardCategory filtered by the reward_category_id column
  * @method     ChildRewardCategory findOneByName(string $name) Return the first ChildRewardCategory filtered by the name column
+ * @method     ChildRewardCategory findOneBySubcategory(string $subcategory) Return the first ChildRewardCategory filtered by the subcategory column
  * @method     ChildRewardCategory findOneByDescription(string $description) Return the first ChildRewardCategory filtered by the description column
  * @method     ChildRewardCategory findOneByUpdateTime(string $update_time) Return the first ChildRewardCategory filtered by the update_time column
  * @method     ChildRewardCategory findOneByUpdateUser(string $update_user) Return the first ChildRewardCategory filtered by the update_user column
@@ -58,6 +65,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRewardCategory[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildRewardCategory objects based on current ModelCriteria
  * @method     ChildRewardCategory[]|ObjectCollection findByRewardCategoryId(int $reward_category_id) Return ChildRewardCategory objects filtered by the reward_category_id column
  * @method     ChildRewardCategory[]|ObjectCollection findByName(string $name) Return ChildRewardCategory objects filtered by the name column
+ * @method     ChildRewardCategory[]|ObjectCollection findBySubcategory(string $subcategory) Return ChildRewardCategory objects filtered by the subcategory column
  * @method     ChildRewardCategory[]|ObjectCollection findByDescription(string $description) Return ChildRewardCategory objects filtered by the description column
  * @method     ChildRewardCategory[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildRewardCategory objects filtered by the update_time column
  * @method     ChildRewardCategory[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildRewardCategory objects filtered by the update_user column
@@ -152,7 +160,7 @@ abstract class RewardCategoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT reward_category_id, name, description, update_time, update_user FROM reward_category WHERE reward_category_id = :p0';
+        $sql = 'SELECT reward_category_id, name, subcategory, description, update_time, update_user FROM reward_category WHERE reward_category_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -310,6 +318,35 @@ abstract class RewardCategoryQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RewardCategoryTableMap::COL_NAME, $name, $comparison);
+    }
+
+    /**
+     * Filter the query on the subcategory column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySubcategory('fooValue');   // WHERE subcategory = 'fooValue'
+     * $query->filterBySubcategory('%fooValue%'); // WHERE subcategory LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $subcategory The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRewardCategoryQuery The current query, for fluid interface
+     */
+    public function filterBySubcategory($subcategory = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($subcategory)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $subcategory)) {
+                $subcategory = str_replace('*', '%', $subcategory);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(RewardCategoryTableMap::COL_SUBCATEGORY, $subcategory, $comparison);
     }
 
     /**
@@ -484,6 +521,79 @@ abstract class RewardCategoryQuery extends ModelCriteria
         return $this
             ->joinMapSceneRewcat($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'MapSceneRewcat', '\MapSceneRewcatQuery');
+    }
+
+    /**
+     * Filter the query by a related \Persona object
+     *
+     * @param \Persona|ObjectCollection $persona  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildRewardCategoryQuery The current query, for fluid interface
+     */
+    public function filterByPersona($persona, $comparison = null)
+    {
+        if ($persona instanceof \Persona) {
+            return $this
+                ->addUsingAlias(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, $persona->getRewardCategoryId(), $comparison);
+        } elseif ($persona instanceof ObjectCollection) {
+            return $this
+                ->usePersonaQuery()
+                ->filterByPrimaryKeys($persona->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByPersona() only accepts arguments of type \Persona or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Persona relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildRewardCategoryQuery The current query, for fluid interface
+     */
+    public function joinPersona($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Persona');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Persona');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Persona relation Persona object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PersonaQuery A secondary query class using the current class as primary query
+     */
+    public function usePersonaQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPersona($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Persona', '\PersonaQuery');
     }
 
     /**

@@ -21,20 +21,32 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildPersonaQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
+ * @method     ChildPersonaQuery orderByIdentifier($order = Criteria::ASC) Order by the identifier column
  * @method     ChildPersonaQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildPersonaQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildPersonaQuery orderByDefaultSpend($order = Criteria::ASC) Order by the default_spend column
+ * @method     ChildPersonaQuery orderBySorting($order = Criteria::ASC) Order by the sorting column
+ * @method     ChildPersonaQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
  * @method     ChildPersonaQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildPersonaQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildPersonaQuery groupByPersonaId() Group by the persona_id column
+ * @method     ChildPersonaQuery groupByIdentifier() Group by the identifier column
  * @method     ChildPersonaQuery groupByName() Group by the name column
  * @method     ChildPersonaQuery groupByDescription() Group by the description column
+ * @method     ChildPersonaQuery groupByDefaultSpend() Group by the default_spend column
+ * @method     ChildPersonaQuery groupBySorting() Group by the sorting column
+ * @method     ChildPersonaQuery groupByRewardCategoryId() Group by the reward_category_id column
  * @method     ChildPersonaQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildPersonaQuery groupByUpdateUser() Group by the update_user column
  *
  * @method     ChildPersonaQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildPersonaQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildPersonaQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method     ChildPersonaQuery leftJoinRewardCategory($relationAlias = null) Adds a LEFT JOIN clause to the query using the RewardCategory relation
+ * @method     ChildPersonaQuery rightJoinRewardCategory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the RewardCategory relation
+ * @method     ChildPersonaQuery innerJoinRewardCategory($relationAlias = null) Adds a INNER JOIN clause to the query using the RewardCategory relation
  *
  * @method     ChildPersonaQuery leftJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaFeatureConstraint relation
  * @method     ChildPersonaQuery rightJoinMapPersonaFeatureConstraint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaFeatureConstraint relation
@@ -48,21 +60,29 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonaQuery rightJoinPersonaRestriction($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PersonaRestriction relation
  * @method     ChildPersonaQuery innerJoinPersonaRestriction($relationAlias = null) Adds a INNER JOIN clause to the query using the PersonaRestriction relation
  *
- * @method     \MapPersonaFeatureConstraintQuery|\MapPersonaSceneQuery|\PersonaRestrictionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \RewardCategoryQuery|\MapPersonaFeatureConstraintQuery|\MapPersonaSceneQuery|\PersonaRestrictionQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPersona findOne(ConnectionInterface $con = null) Return the first ChildPersona matching the query
  * @method     ChildPersona findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPersona matching the query, or a new ChildPersona object populated from the query conditions when no match is found
  *
  * @method     ChildPersona findOneByPersonaId(int $persona_id) Return the first ChildPersona filtered by the persona_id column
+ * @method     ChildPersona findOneByIdentifier(string $identifier) Return the first ChildPersona filtered by the identifier column
  * @method     ChildPersona findOneByName(string $name) Return the first ChildPersona filtered by the name column
  * @method     ChildPersona findOneByDescription(string $description) Return the first ChildPersona filtered by the description column
+ * @method     ChildPersona findOneByDefaultSpend(int $default_spend) Return the first ChildPersona filtered by the default_spend column
+ * @method     ChildPersona findOneBySorting(string $sorting) Return the first ChildPersona filtered by the sorting column
+ * @method     ChildPersona findOneByRewardCategoryId(int $reward_category_id) Return the first ChildPersona filtered by the reward_category_id column
  * @method     ChildPersona findOneByUpdateTime(string $update_time) Return the first ChildPersona filtered by the update_time column
  * @method     ChildPersona findOneByUpdateUser(string $update_user) Return the first ChildPersona filtered by the update_user column
  *
  * @method     ChildPersona[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPersona objects based on current ModelCriteria
  * @method     ChildPersona[]|ObjectCollection findByPersonaId(int $persona_id) Return ChildPersona objects filtered by the persona_id column
+ * @method     ChildPersona[]|ObjectCollection findByIdentifier(string $identifier) Return ChildPersona objects filtered by the identifier column
  * @method     ChildPersona[]|ObjectCollection findByName(string $name) Return ChildPersona objects filtered by the name column
  * @method     ChildPersona[]|ObjectCollection findByDescription(string $description) Return ChildPersona objects filtered by the description column
+ * @method     ChildPersona[]|ObjectCollection findByDefaultSpend(int $default_spend) Return ChildPersona objects filtered by the default_spend column
+ * @method     ChildPersona[]|ObjectCollection findBySorting(string $sorting) Return ChildPersona objects filtered by the sorting column
+ * @method     ChildPersona[]|ObjectCollection findByRewardCategoryId(int $reward_category_id) Return ChildPersona objects filtered by the reward_category_id column
  * @method     ChildPersona[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildPersona objects filtered by the update_time column
  * @method     ChildPersona[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildPersona objects filtered by the update_user column
  * @method     ChildPersona[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -156,7 +176,7 @@ abstract class PersonaQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT persona_id, name, description, update_time, update_user FROM persona WHERE persona_id = :p0';
+        $sql = 'SELECT persona_id, identifier, name, description, default_spend, sorting, reward_category_id, update_time, update_user FROM persona WHERE persona_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -288,6 +308,35 @@ abstract class PersonaQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the identifier column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByIdentifier('fooValue');   // WHERE identifier = 'fooValue'
+     * $query->filterByIdentifier('%fooValue%'); // WHERE identifier LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $identifier The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByIdentifier($identifier = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($identifier)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $identifier)) {
+                $identifier = str_replace('*', '%', $identifier);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PersonaTableMap::COL_IDENTIFIER, $identifier, $comparison);
+    }
+
+    /**
      * Filter the query on the name column
      *
      * Example usage:
@@ -343,6 +392,119 @@ abstract class PersonaQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PersonaTableMap::COL_DESCRIPTION, $description, $comparison);
+    }
+
+    /**
+     * Filter the query on the default_spend column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDefaultSpend(1234); // WHERE default_spend = 1234
+     * $query->filterByDefaultSpend(array(12, 34)); // WHERE default_spend IN (12, 34)
+     * $query->filterByDefaultSpend(array('min' => 12)); // WHERE default_spend > 12
+     * </code>
+     *
+     * @param     mixed $defaultSpend The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByDefaultSpend($defaultSpend = null, $comparison = null)
+    {
+        if (is_array($defaultSpend)) {
+            $useMinMax = false;
+            if (isset($defaultSpend['min'])) {
+                $this->addUsingAlias(PersonaTableMap::COL_DEFAULT_SPEND, $defaultSpend['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($defaultSpend['max'])) {
+                $this->addUsingAlias(PersonaTableMap::COL_DEFAULT_SPEND, $defaultSpend['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PersonaTableMap::COL_DEFAULT_SPEND, $defaultSpend, $comparison);
+    }
+
+    /**
+     * Filter the query on the sorting column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySorting('fooValue');   // WHERE sorting = 'fooValue'
+     * $query->filterBySorting('%fooValue%'); // WHERE sorting LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $sorting The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterBySorting($sorting = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($sorting)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $sorting)) {
+                $sorting = str_replace('*', '%', $sorting);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PersonaTableMap::COL_SORTING, $sorting, $comparison);
+    }
+
+    /**
+     * Filter the query on the reward_category_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByRewardCategoryId(1234); // WHERE reward_category_id = 1234
+     * $query->filterByRewardCategoryId(array(12, 34)); // WHERE reward_category_id IN (12, 34)
+     * $query->filterByRewardCategoryId(array('min' => 12)); // WHERE reward_category_id > 12
+     * </code>
+     *
+     * @see       filterByRewardCategory()
+     *
+     * @param     mixed $rewardCategoryId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByRewardCategoryId($rewardCategoryId = null, $comparison = null)
+    {
+        if (is_array($rewardCategoryId)) {
+            $useMinMax = false;
+            if (isset($rewardCategoryId['min'])) {
+                $this->addUsingAlias(PersonaTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($rewardCategoryId['max'])) {
+                $this->addUsingAlias(PersonaTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PersonaTableMap::COL_REWARD_CATEGORY_ID, $rewardCategoryId, $comparison);
     }
 
     /**
@@ -415,6 +577,83 @@ abstract class PersonaQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PersonaTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \RewardCategory object
+     *
+     * @param \RewardCategory|ObjectCollection $rewardCategory The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByRewardCategory($rewardCategory, $comparison = null)
+    {
+        if ($rewardCategory instanceof \RewardCategory) {
+            return $this
+                ->addUsingAlias(PersonaTableMap::COL_REWARD_CATEGORY_ID, $rewardCategory->getRewardCategoryId(), $comparison);
+        } elseif ($rewardCategory instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(PersonaTableMap::COL_REWARD_CATEGORY_ID, $rewardCategory->toKeyValue('PrimaryKey', 'RewardCategoryId'), $comparison);
+        } else {
+            throw new PropelException('filterByRewardCategory() only accepts arguments of type \RewardCategory or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the RewardCategory relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function joinRewardCategory($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('RewardCategory');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'RewardCategory');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the RewardCategory relation RewardCategory object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \RewardCategoryQuery A secondary query class using the current class as primary query
+     */
+    public function useRewardCategoryQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinRewardCategory($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'RewardCategory', '\RewardCategoryQuery');
     }
 
     /**

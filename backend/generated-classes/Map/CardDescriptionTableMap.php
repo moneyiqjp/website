@@ -59,7 +59,7 @@ class CardDescriptionTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CardDescriptionTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the item_id field
@@ -85,6 +85,11 @@ class CardDescriptionTableMap extends TableMap
      * the column name for the item_name field
      */
     const COL_ITEM_NAME = 'card_description.item_name';
+
+    /**
+     * the column name for the item_type field
+     */
+    const COL_ITEM_TYPE = 'card_description.item_type';
 
     /**
      * the column name for the item_description field
@@ -113,11 +118,11 @@ class CardDescriptionTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('ItemId', 'CreditCardId', 'ItemName', 'ItemDescription', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('itemId', 'creditCardId', 'itemName', 'itemDescription', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CardDescriptionTableMap::COL_ITEM_ID, CardDescriptionTableMap::COL_CREDIT_CARD_ID, CardDescriptionTableMap::COL_ITEM_NAME, CardDescriptionTableMap::COL_ITEM_DESCRIPTION, CardDescriptionTableMap::COL_UPDATE_TIME, CardDescriptionTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('item_id', 'credit_card_id', 'item_name', 'item_description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('ItemId', 'CreditCardId', 'ItemName', 'ItemType', 'ItemDescription', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('itemId', 'creditCardId', 'itemName', 'itemType', 'itemDescription', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CardDescriptionTableMap::COL_ITEM_ID, CardDescriptionTableMap::COL_CREDIT_CARD_ID, CardDescriptionTableMap::COL_ITEM_NAME, CardDescriptionTableMap::COL_ITEM_TYPE, CardDescriptionTableMap::COL_ITEM_DESCRIPTION, CardDescriptionTableMap::COL_UPDATE_TIME, CardDescriptionTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('item_id', 'credit_card_id', 'item_name', 'item_type', 'item_description', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class CardDescriptionTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('ItemId' => 0, 'CreditCardId' => 1, 'ItemName' => 2, 'ItemDescription' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
-        self::TYPE_CAMELNAME     => array('itemId' => 0, 'creditCardId' => 1, 'itemName' => 2, 'itemDescription' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
-        self::TYPE_COLNAME       => array(CardDescriptionTableMap::COL_ITEM_ID => 0, CardDescriptionTableMap::COL_CREDIT_CARD_ID => 1, CardDescriptionTableMap::COL_ITEM_NAME => 2, CardDescriptionTableMap::COL_ITEM_DESCRIPTION => 3, CardDescriptionTableMap::COL_UPDATE_TIME => 4, CardDescriptionTableMap::COL_UPDATE_USER => 5, ),
-        self::TYPE_FIELDNAME     => array('item_id' => 0, 'credit_card_id' => 1, 'item_name' => 2, 'item_description' => 3, 'update_time' => 4, 'update_user' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('ItemId' => 0, 'CreditCardId' => 1, 'ItemName' => 2, 'ItemType' => 3, 'ItemDescription' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
+        self::TYPE_CAMELNAME     => array('itemId' => 0, 'creditCardId' => 1, 'itemName' => 2, 'itemType' => 3, 'itemDescription' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
+        self::TYPE_COLNAME       => array(CardDescriptionTableMap::COL_ITEM_ID => 0, CardDescriptionTableMap::COL_CREDIT_CARD_ID => 1, CardDescriptionTableMap::COL_ITEM_NAME => 2, CardDescriptionTableMap::COL_ITEM_TYPE => 3, CardDescriptionTableMap::COL_ITEM_DESCRIPTION => 4, CardDescriptionTableMap::COL_UPDATE_TIME => 5, CardDescriptionTableMap::COL_UPDATE_USER => 6, ),
+        self::TYPE_FIELDNAME     => array('item_id' => 0, 'credit_card_id' => 1, 'item_name' => 2, 'item_type' => 3, 'item_description' => 4, 'update_time' => 5, 'update_user' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -154,6 +159,7 @@ class CardDescriptionTableMap extends TableMap
         $this->addPrimaryKey('item_id', 'ItemId', 'INTEGER', true, null, null);
         $this->addForeignKey('credit_card_id', 'CreditCardId', 'INTEGER', 'credit_card', 'credit_card_id', true, null, null);
         $this->addColumn('item_name', 'ItemName', 'VARCHAR', true, 255, null);
+        $this->addColumn('item_type', 'ItemType', 'VARCHAR', false, 255, null);
         $this->addColumn('item_description', 'ItemDescription', 'LONGVARCHAR', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
@@ -311,6 +317,7 @@ class CardDescriptionTableMap extends TableMap
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_ITEM_ID);
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_CREDIT_CARD_ID);
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_ITEM_NAME);
+            $criteria->addSelectColumn(CardDescriptionTableMap::COL_ITEM_TYPE);
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_ITEM_DESCRIPTION);
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CardDescriptionTableMap::COL_UPDATE_USER);
@@ -318,6 +325,7 @@ class CardDescriptionTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.item_id');
             $criteria->addSelectColumn($alias . '.credit_card_id');
             $criteria->addSelectColumn($alias . '.item_name');
+            $criteria->addSelectColumn($alias . '.item_type');
             $criteria->addSelectColumn($alias . '.item_description');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');

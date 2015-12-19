@@ -59,7 +59,7 @@ class RewardCategoryTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class RewardCategoryTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the reward_category_id field
@@ -80,6 +80,11 @@ class RewardCategoryTableMap extends TableMap
      * the column name for the name field
      */
     const COL_NAME = 'reward_category.name';
+
+    /**
+     * the column name for the subcategory field
+     */
+    const COL_SUBCATEGORY = 'reward_category.subcategory';
 
     /**
      * the column name for the description field
@@ -108,11 +113,11 @@ class RewardCategoryTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('RewardCategoryId', 'Name', 'Description', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('rewardCategoryId', 'name', 'description', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, RewardCategoryTableMap::COL_NAME, RewardCategoryTableMap::COL_DESCRIPTION, RewardCategoryTableMap::COL_UPDATE_TIME, RewardCategoryTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('reward_category_id', 'name', 'description', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RewardCategoryId', 'Name', 'Subcategory', 'Description', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('rewardCategoryId', 'name', 'subcategory', 'description', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID, RewardCategoryTableMap::COL_NAME, RewardCategoryTableMap::COL_SUBCATEGORY, RewardCategoryTableMap::COL_DESCRIPTION, RewardCategoryTableMap::COL_UPDATE_TIME, RewardCategoryTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('reward_category_id', 'name', 'subcategory', 'description', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class RewardCategoryTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('RewardCategoryId' => 0, 'Name' => 1, 'Description' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('rewardCategoryId' => 0, 'name' => 1, 'description' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID => 0, RewardCategoryTableMap::COL_NAME => 1, RewardCategoryTableMap::COL_DESCRIPTION => 2, RewardCategoryTableMap::COL_UPDATE_TIME => 3, RewardCategoryTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('reward_category_id' => 0, 'name' => 1, 'description' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('RewardCategoryId' => 0, 'Name' => 1, 'Subcategory' => 2, 'Description' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('rewardCategoryId' => 0, 'name' => 1, 'subcategory' => 2, 'description' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID => 0, RewardCategoryTableMap::COL_NAME => 1, RewardCategoryTableMap::COL_SUBCATEGORY => 2, RewardCategoryTableMap::COL_DESCRIPTION => 3, RewardCategoryTableMap::COL_UPDATE_TIME => 4, RewardCategoryTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('reward_category_id' => 0, 'name' => 1, 'subcategory' => 2, 'description' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -148,6 +153,7 @@ class RewardCategoryTableMap extends TableMap
         // columns
         $this->addPrimaryKey('reward_category_id', 'RewardCategoryId', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
+        $this->addColumn('subcategory', 'Subcategory', 'VARCHAR', false, 50, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
@@ -159,6 +165,7 @@ class RewardCategoryTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('MapSceneRewcat', '\\MapSceneRewcat', RelationMap::ONE_TO_MANY, array('reward_category_id' => 'reward_category_id', ), null, null, 'MapSceneRewcats');
+        $this->addRelation('Persona', '\\Persona', RelationMap::ONE_TO_MANY, array('reward_category_id' => 'reward_category_id', ), null, null, 'Personas');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('reward_category_id' => 'reward_category_id', ), null, null, 'Rewards');
     } // buildRelations()
 
@@ -305,12 +312,14 @@ class RewardCategoryTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(RewardCategoryTableMap::COL_REWARD_CATEGORY_ID);
             $criteria->addSelectColumn(RewardCategoryTableMap::COL_NAME);
+            $criteria->addSelectColumn(RewardCategoryTableMap::COL_SUBCATEGORY);
             $criteria->addSelectColumn(RewardCategoryTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(RewardCategoryTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(RewardCategoryTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.reward_category_id');
             $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.subcategory');
             $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
