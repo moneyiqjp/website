@@ -18,7 +18,7 @@ BEGIN
 
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='credit_card' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='poinyExpiryDisplay') THEN
 	ALTER TABLE `credit_card`
-		ADD COLUMN `poinyExpiryDisplay` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `pointExpiryMonths`;
+		ADD COLUMN `pointExpiryDisplay` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `pointExpiryMonths`;
 
 		SELECT 'ADDED credit_card.poinyExpiryDisplay';
 	else
@@ -28,6 +28,5 @@ BEGIN
 END //
 DELIMITER ;
 CALL UpgradeMoneyIQ25(DATABASE());
-/*'moneyiq_uat');*/
 
 DROP PROCEDURE IF EXISTS UpgradeMoneyIQ25;

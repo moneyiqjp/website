@@ -218,7 +218,7 @@
     <column name="afilliate_link" phpName="AfilliateLink" type="LONGVARCHAR"/>
     <column name="affiliate_id" phpName="AffiliateId" type="INTEGER" required="true"/>
     <column name="pointExpiryMonths" phpName="Pointexpirymonths" type="INTEGER" defaultValue="12"/>
-    <column name="poinyExpiryDisplay" phpName="Poinyexpirydisplay" type="VARCHAR" size="250"/>
+    <column name="pointExpiryDisplay" phpName="Pointexpirydisplay" type="VARCHAR" size="250"/>
     <column name="issue_period" phpName="IssuePeriod" type="INTEGER"/>
     <column name="credit_limit_bottom" phpName="CreditLimitBottom" type="INTEGER"/>
     <column name="credit_limit_upper" phpName="CreditLimitUpper" type="INTEGER"/>

@@ -26,6 +26,7 @@ class JCreditCard {
     public $affiliate_id;
     public $affiliate;
     public $points_expiry_months;
+    public $points_expiry_display;
     public $reference;
     public $point_systems;
     public $commission;
@@ -64,6 +65,7 @@ class JCreditCard {
         $myself->affiliate_link = $ccs->getAfilliateLink();
         $myself->affiliate_id = $ccs->getAffiliateId();
         $myself->points_expiry_months = $ccs->getPointexpirymonths();
+        $myself->points_expiry_display = $ccs->getPointexpirydisplay();
         $myself->issue_period = $ccs->getIssuePeriod();
         $myself->credit_limit_bottom = $ccs->getCreditLimitBottom();
         $myself->credit_limit_upper = $ccs->getCreditLimitUpper();

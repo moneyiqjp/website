@@ -116,6 +116,10 @@ class CreditCard extends BaseCreditCard
             case "points_expiry_months":
                 $this->setPointexpirymonths($value);
                 break;
+
+            case "points_expiry_display":
+                $this->setPointexpirydisplay($value);
+                break;
             case "issue_period":
                 $this->setIssuePeriod($value);
                 break;

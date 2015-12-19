@@ -283,6 +283,9 @@
             }, {
                 label: "MaxInterest:",
                 name: "MaxInterest"
+            },  {
+                label: "Display:",
+                name: "Display"
             }, {
                 label: "Reference",
                 name:  "Reference",
@@ -774,6 +777,7 @@
                     {"data": "PaymentType.Name", editField: "PaymentType.Id"},
                     {"data": "MinInterest", width: 20},
                     {"data": "MaxInterest", width: 10},
+                    {"data": "Display", width: 20},
                     {"data": "Reference", width: 10, visible:false},
                     {"data": "UpdateTime", visible: false},
                     {"data": "UpdateUser", visible: false}
@@ -1064,6 +1068,7 @@
                     <th>PaymentType</th>
                     <th>MinInterest</th>
                     <th>MaxInterest</th>
+                    <th>Display</th>
                     <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>
@@ -1077,6 +1082,7 @@
                     <th>PaymentType</th>
                     <th>MinInterest</th>
                     <th>MaxInterest</th>
+                    <th>Display</th>
                     <th>Reference</th>
                     <th>Update</th>
                     <th>User</th>

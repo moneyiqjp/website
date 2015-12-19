@@ -13,6 +13,7 @@ use Db\Json\JInsurance;
 use Db\Json\JFeatureType;
 use Db\Json\JCreditCardRestriction;
 use Db\Utility\FieldUtils;
+use Db\Utility\FormatUtils;
 
 
 class CardRestriction { //TODO merge with PersonaMapping
@@ -61,6 +62,25 @@ class Interest{
         }
         $this->MinInterest = $ins->getMinInterest();
         $this->MaxInterest = $ins->getMaxInterest();
+
+    if(!FieldUtils::STRING_IS_DEFINED($ins->getDisplay())) {
+            if(!FieldUtils::ID_IS_DEFINED($ins->getMaxInterest()) && !FieldUtils::ID_IS_DEFINED($ins->getMinInterest())) {
+                    $this->Display="公式サイトに参照"; //TODO Move string to configuration
+            } else if(!is_null($ins->getMaxInterest()) && FieldUtils::ID_IS_DEFINED($ins->getMinInterest())) {
+                    if($ins->getMinInterest()==$ins->getMaxInterest() || 0>=$ins->getMaxInterest() ) {
+                        $this->Display=FormatUtils::Percentage($ins->getMinInterest());
+                    } else {
+                        $this->Display=  FormatUtils::Percentage($ins->getMinInterest()) . " ~ " . FormatUtils::Percentage($ins->getMaxInterest());
+                    }
+            } else if(!is_null($ins->getMinInterest())) {
+                $this->Display=FormatUtils::Percentage($ins->getMinInterest());
+            }  else if(FieldUtils::ID_IS_DEFINED($ins->getMaxInterest())) {
+                $this->Display=FormatUtils::Percentage($ins->getMaxInterest());
+            }
+        } else {//display defined
+            $this->Display=$ins->getDisplay();
+        }
+
         return $this;
     }
 
@@ -247,6 +267,7 @@ class CreditCard {
     public $cardImg;
     public $campaignText;
     public $pointsExpiryPeriod;
+    public $pointsExpiryPeriodDisplay;
     public $campaignPoints;
     public $campaignYenValue;
     public $annualFeeFirstYear;
@@ -407,7 +428,6 @@ class CreditCard {
         foreach($cc->getInsurances() as $insurance ) {
             $mine->AddInsuranceAsFeature($insurance);
         }
-
         $mine->insurances = Insurance::CREATE_FROM_CREDIT_CARD($cc);
 
         $now = new \DateTime('NOW');
@@ -422,10 +442,13 @@ class CreditCard {
         $mine->pointsToMoneyConversionRate = $cc->getPointsToMoneyConversionRate();
         $mine->interestShopping = $cc->getShoppingInterestRate();
         $mine->interest = Interest::CREATE_FROM_CREDIT_CARD($cc);
+
         $mine->shortDescription = $cc->getShortDescription();
+
         if(!is_null($cc->getPointexpirymonths())) {
             $mine->pointsExpiryPeriod=$cc->getPointexpirymonths()/12;
         }
+        $mine->pointsExpiryPeriodDisplay = $cc->getPointexpirydisplay();
 
 
         foreach($cc->getCardPointSystems() as $pcs) {

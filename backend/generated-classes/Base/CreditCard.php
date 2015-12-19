@@ -172,10 +172,10 @@ abstract class CreditCard implements ActiveRecordInterface
     protected $pointexpirymonths;
 
     /**
-     * The value for the poinyexpirydisplay field.
+     * The value for the pointexpirydisplay field.
      * @var        string
      */
-    protected $poinyexpirydisplay;
+    protected $pointexpirydisplay;
 
     /**
      * The value for the issue_period field.
@@ -793,13 +793,13 @@ abstract class CreditCard implements ActiveRecordInterface
     }
 
     /**
-     * Get the [poinyexpirydisplay] column value.
+     * Get the [pointexpirydisplay] column value.
      *
      * @return string
      */
-    public function getPoinyexpirydisplay()
+    public function getPointexpirydisplay()
     {
-        return $this->poinyexpirydisplay;
+        return $this->pointexpirydisplay;
     }
 
     /**
@@ -1221,24 +1221,24 @@ abstract class CreditCard implements ActiveRecordInterface
     } // setPointexpirymonths()
 
     /**
-     * Set the value of [poinyexpirydisplay] column.
+     * Set the value of [pointexpirydisplay] column.
      *
      * @param  string $v new value
      * @return $this|\CreditCard The current object (for fluent API support)
      */
-    public function setPoinyexpirydisplay($v)
+    public function setPointexpirydisplay($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->poinyexpirydisplay !== $v) {
-            $this->poinyexpirydisplay = $v;
-            $this->modifiedColumns[CreditCardTableMap::COL_POINYEXPIRYDISPLAY] = true;
+        if ($this->pointexpirydisplay !== $v) {
+            $this->pointexpirydisplay = $v;
+            $this->modifiedColumns[CreditCardTableMap::COL_POINTEXPIRYDISPLAY] = true;
         }
 
         return $this;
-    } // setPoinyexpirydisplay()
+    } // setPointexpirydisplay()
 
     /**
      * Set the value of [issue_period] column.
@@ -1543,8 +1543,8 @@ abstract class CreditCard implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : CreditCardTableMap::translateFieldName('Pointexpirymonths', TableMap::TYPE_PHPNAME, $indexType)];
             $this->pointexpirymonths = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : CreditCardTableMap::translateFieldName('Poinyexpirydisplay', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->poinyexpirydisplay = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : CreditCardTableMap::translateFieldName('Pointexpirydisplay', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->pointexpirydisplay = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 14 + $startcol : CreditCardTableMap::translateFieldName('IssuePeriod', TableMap::TYPE_PHPNAME, $indexType)];
             $this->issue_period = (null !== $col) ? (int) $col : null;
@@ -2039,8 +2039,8 @@ abstract class CreditCard implements ActiveRecordInterface
         if ($this->isColumnModified(CreditCardTableMap::COL_POINTEXPIRYMONTHS)) {
             $modifiedColumns[':p' . $index++]  = 'pointExpiryMonths';
         }
-        if ($this->isColumnModified(CreditCardTableMap::COL_POINYEXPIRYDISPLAY)) {
-            $modifiedColumns[':p' . $index++]  = 'poinyExpiryDisplay';
+        if ($this->isColumnModified(CreditCardTableMap::COL_POINTEXPIRYDISPLAY)) {
+            $modifiedColumns[':p' . $index++]  = 'pointExpiryDisplay';
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_ISSUE_PERIOD)) {
             $modifiedColumns[':p' . $index++]  = 'issue_period';
@@ -2122,8 +2122,8 @@ abstract class CreditCard implements ActiveRecordInterface
                     case 'pointExpiryMonths':
                         $stmt->bindValue($identifier, $this->pointexpirymonths, PDO::PARAM_INT);
                         break;
-                    case 'poinyExpiryDisplay':
-                        $stmt->bindValue($identifier, $this->poinyexpirydisplay, PDO::PARAM_STR);
+                    case 'pointExpiryDisplay':
+                        $stmt->bindValue($identifier, $this->pointexpirydisplay, PDO::PARAM_STR);
                         break;
                     case 'issue_period':
                         $stmt->bindValue($identifier, $this->issue_period, PDO::PARAM_INT);
@@ -2257,7 +2257,7 @@ abstract class CreditCard implements ActiveRecordInterface
                 return $this->getPointexpirymonths();
                 break;
             case 13:
-                return $this->getPoinyexpirydisplay();
+                return $this->getPointexpirydisplay();
                 break;
             case 14:
                 return $this->getIssuePeriod();
@@ -2332,7 +2332,7 @@ abstract class CreditCard implements ActiveRecordInterface
             $keys[10] => $this->getAfilliateLink(),
             $keys[11] => $this->getAffiliateId(),
             $keys[12] => $this->getPointexpirymonths(),
-            $keys[13] => $this->getPoinyexpirydisplay(),
+            $keys[13] => $this->getPointexpirydisplay(),
             $keys[14] => $this->getIssuePeriod(),
             $keys[15] => $this->getCreditLimitBottom(),
             $keys[16] => $this->getCreditLimitUpper(),
@@ -2604,7 +2604,7 @@ abstract class CreditCard implements ActiveRecordInterface
                 $this->setPointexpirymonths($value);
                 break;
             case 13:
-                $this->setPoinyexpirydisplay($value);
+                $this->setPointexpirydisplay($value);
                 break;
             case 14:
                 $this->setIssuePeriod($value);
@@ -2702,7 +2702,7 @@ abstract class CreditCard implements ActiveRecordInterface
             $this->setPointexpirymonths($arr[$keys[12]]);
         }
         if (array_key_exists($keys[13], $arr)) {
-            $this->setPoinyexpirydisplay($arr[$keys[13]]);
+            $this->setPointexpirydisplay($arr[$keys[13]]);
         }
         if (array_key_exists($keys[14], $arr)) {
             $this->setIssuePeriod($arr[$keys[14]]);
@@ -2814,8 +2814,8 @@ abstract class CreditCard implements ActiveRecordInterface
         if ($this->isColumnModified(CreditCardTableMap::COL_POINTEXPIRYMONTHS)) {
             $criteria->add(CreditCardTableMap::COL_POINTEXPIRYMONTHS, $this->pointexpirymonths);
         }
-        if ($this->isColumnModified(CreditCardTableMap::COL_POINYEXPIRYDISPLAY)) {
-            $criteria->add(CreditCardTableMap::COL_POINYEXPIRYDISPLAY, $this->poinyexpirydisplay);
+        if ($this->isColumnModified(CreditCardTableMap::COL_POINTEXPIRYDISPLAY)) {
+            $criteria->add(CreditCardTableMap::COL_POINTEXPIRYDISPLAY, $this->pointexpirydisplay);
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_ISSUE_PERIOD)) {
             $criteria->add(CreditCardTableMap::COL_ISSUE_PERIOD, $this->issue_period);
@@ -2945,7 +2945,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $copyObj->setAfilliateLink($this->getAfilliateLink());
         $copyObj->setAffiliateId($this->getAffiliateId());
         $copyObj->setPointexpirymonths($this->getPointexpirymonths());
-        $copyObj->setPoinyexpirydisplay($this->getPoinyexpirydisplay());
+        $copyObj->setPointexpirydisplay($this->getPointexpirydisplay());
         $copyObj->setIssuePeriod($this->getIssuePeriod());
         $copyObj->setCreditLimitBottom($this->getCreditLimitBottom());
         $copyObj->setCreditLimitUpper($this->getCreditLimitUpper());
@@ -5584,7 +5584,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->afilliate_link = null;
         $this->affiliate_id = null;
         $this->pointexpirymonths = null;
-        $this->poinyexpirydisplay = null;
+        $this->pointexpirydisplay = null;
         $this->issue_period = null;
         $this->credit_limit_bottom = null;
         $this->credit_limit_upper = null;

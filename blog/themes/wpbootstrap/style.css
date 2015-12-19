@@ -56,8 +56,9 @@ This simple theme was built using the example Bootstrap theme "Basic marketing s
         text-align: center;
     }
 
-    clear: both;
+/*    clear: both;
     margin-top: 50px;
+    */
     .header-container {
         width: 550px;
         /*

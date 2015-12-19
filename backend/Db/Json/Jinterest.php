@@ -17,6 +17,7 @@ class Jinterest implements JSONInterface{
     public $PaymentType;
     public $MinInterest;
     public $MaxInterest;
+    public $Display;
     public $Reference;
     public $UpdateTime;
     public $UpdateUser;
@@ -39,6 +40,7 @@ class Jinterest implements JSONInterface{
         );
         $mine->MinInterest = $item->getMinInterest();
         $mine->MaxInterest = $item->getMaxInterest();
+        $mine->Display = $item->getDisplay();
         $mine->Reference = $item->getReference();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
@@ -70,6 +72,7 @@ class Jinterest implements JSONInterface{
         if(ArrayUtils::KEY_EXISTS($data,'MinInterest')) $mine->MinInterest = $data['MinInterest'];
         if(ArrayUtils::KEY_EXISTS($data,'MaxInterest')) $mine->MaxInterest = $data['MaxInterest'];
         if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
+        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
         $mine->UpdateTime = new \DateTime($data['UpdateTime']);
         $mine->UpdateUser = $data['UpdateUser'];
 
@@ -105,6 +108,7 @@ class Jinterest implements JSONInterface{
             $item->setPaymentType((new \PaymentTypeQuery())->findPk($it['Id']));
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
+        if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDisplay($this->Display);
 
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);

@@ -1,0 +1,95 @@
+/*
+Theme Name: ThreeLira
+Description: A basic bootstrap theme
+Author: Ben Fries
+Author URI: http://moneyiq.jp/
+Version: 1.0
+Tags: responsive, light, bootstrap
+
+
+@import url('bootstrap/css/bootstrap.css');
+@import url('bootstrap/css/bootstrap-responsive.css');
+*/
+
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.eot');
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.eot?#iefix') format('embedded-opentype'),
+    url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.eot');
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.eot?#iefix') format('embedded-opentype'),
+    url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.woff') format('woff');
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Noto Sans Japanese', sans-serif;
+    color: rgb(75, 75, 75);
+}
+
+
+.jumbotron {
+    margin-bottom:0;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.excerpt {
+    overflow: hidden;
+}
+
+.miqheader{
+    background-image: url('img/hero.png');
+    margin: 0 0 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+}
+
+.miqfooter{
+    margin-top: 10rem;
+}
+
+.miqfooter .dark {
+    color: rgb(211, 208, 165);
+    background-color: rgb(50, 50, 50);
+    padding: 2rem 0 2rem 0;
+}
+
+.miqfooter .light {
+    color: rgb(255, 255, 255);
+    background-color: rgb(211, 208, 165);
+    padding: 2rem 0 2rem 0;
+}
+
+
+hr{
+    width: 50%;
+}
+.miqheader a{
+    text-decoration: none;
+    color: white;
+}
+/*
+.navbar-inverse .navbar-nav .active a {
+    background-color: rgb(233, 145, 61);
+    color: white;
+}
+*/
+
+
+
+.image-textoverlay {position: relative;}
+.image-textoverlay .col {position: absolute; z-index: 1; top: 0; left: 0;}

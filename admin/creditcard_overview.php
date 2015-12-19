@@ -143,6 +143,9 @@
                     },  {
                         label:  "Points expiry (months)",
                         name:   "points_expiry_months"
+                    },  {
+                        label:  "Points expiry Display",
+                        name:   "points_expiry_display"
                     }, {
                         label:  "Commission",
                         name:   "commission"
@@ -303,6 +306,7 @@
                         visible: true
                     },
                     { "data": "points_expiry_months" },
+                    { "data": "points_expiry_display" },
                     { "data": "commission", editField: "commission" },
                     { "data": "issue_period" },
                     { "data": "credit_limit_bottom" },
@@ -423,6 +427,7 @@
             <th>affiliate</th>
             <th>link</th>
             <th>point<br>expiry<br>(months)</th>
+            <th>PE Display</th>
             <th>commission</th>
             <th>issue<br>period<br>(months)</th>
             <th>credit<br>limit<br>bottom</th>
@@ -450,6 +455,7 @@
             <th>affiliate</th>
             <th>link</th>
             <th>expiry<br>(months)</th>
+            <th>PE Display</th>
             <th>commission</th>
             <th>issue<br>period<br>(months)</th>
             <th>credit<br>limit<br>bottom</th>
