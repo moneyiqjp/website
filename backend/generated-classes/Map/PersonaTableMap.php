@@ -185,6 +185,7 @@ class PersonaTableMap extends TableMap
         $this->addRelation('RewardCategory', '\\RewardCategory', RelationMap::MANY_TO_ONE, array('reward_category_id' => 'reward_category_id', ), null, null);
         $this->addRelation('MapPersonaFeatureConstraint', '\\MapPersonaFeatureConstraint', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaFeatureConstraints');
         $this->addRelation('MapPersonaScene', '\\MapPersonaScene', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaScenes');
+        $this->addRelation('MapPersonaStore', '\\MapPersonaStore', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'MapPersonaStores');
         $this->addRelation('PersonaRestriction', '\\PersonaRestriction', RelationMap::ONE_TO_MANY, array('persona_id' => 'persona_id', ), null, null, 'PersonaRestrictions');
     } // buildRelations()
 

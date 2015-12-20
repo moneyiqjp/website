@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Store;
-use \StoreQuery;
+use \MapPersonaStore;
+use \MapPersonaStoreQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'store' table.
+ * This class defines the structure of the 'map_persona_store' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class StoreTableMap extends TableMap
+class MapPersonaStoreTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class StoreTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.StoreTableMap';
+    const CLASS_NAME = '.Map.MapPersonaStoreTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class StoreTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'store';
+    const TABLE_NAME = 'map_persona_store';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Store';
+    const OM_CLASS = '\\MapPersonaStore';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Store';
+    const CLASS_DEFAULT = 'MapPersonaStore';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,47 +69,37 @@ class StoreTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 6;
+
+    /**
+     * the column name for the persona_id field
+     */
+    const COL_PERSONA_ID = 'map_persona_store.persona_id';
 
     /**
      * the column name for the store_id field
      */
-    const COL_STORE_ID = 'store.store_id';
+    const COL_STORE_ID = 'map_persona_store.store_id';
 
     /**
-     * the column name for the store_name field
+     * the column name for the percentage field
      */
-    const COL_STORE_NAME = 'store.store_name';
+    const COL_PERCENTAGE = 'map_persona_store.percentage';
 
     /**
-     * the column name for the store_category_id field
+     * the column name for the negative field
      */
-    const COL_STORE_CATEGORY_ID = 'store.store_category_id';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'store.description';
-
-    /**
-     * the column name for the is_major field
-     */
-    const COL_IS_MAJOR = 'store.is_major';
-
-    /**
-     * the column name for the allocation field
-     */
-    const COL_ALLOCATION = 'store.allocation';
+    const COL_NEGATIVE = 'map_persona_store.negative';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'store.update_time';
+    const COL_UPDATE_TIME = 'map_persona_store.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'store.update_user';
+    const COL_UPDATE_USER = 'map_persona_store.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -123,11 +113,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('StoreId', 'StoreName', 'StoreCategoryId', 'Description', 'IsMajor', 'Allocation', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('storeId', 'storeName', 'storeCategoryId', 'description', 'isMajor', 'allocation', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID, StoreTableMap::COL_STORE_NAME, StoreTableMap::COL_STORE_CATEGORY_ID, StoreTableMap::COL_DESCRIPTION, StoreTableMap::COL_IS_MAJOR, StoreTableMap::COL_ALLOCATION, StoreTableMap::COL_UPDATE_TIME, StoreTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('store_id', 'store_name', 'store_category_id', 'description', 'is_major', 'allocation', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('PersonaId', 'StoreId', 'Percentage', 'Negative', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('personaId', 'storeId', 'percentage', 'negative', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MapPersonaStoreTableMap::COL_PERSONA_ID, MapPersonaStoreTableMap::COL_STORE_ID, MapPersonaStoreTableMap::COL_PERCENTAGE, MapPersonaStoreTableMap::COL_NEGATIVE, MapPersonaStoreTableMap::COL_UPDATE_TIME, MapPersonaStoreTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'store_id', 'percentage', 'negative', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -137,11 +127,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('StoreId' => 0, 'StoreName' => 1, 'StoreCategoryId' => 2, 'Description' => 3, 'IsMajor' => 4, 'Allocation' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('storeId' => 0, 'storeName' => 1, 'storeCategoryId' => 2, 'description' => 3, 'isMajor' => 4, 'allocation' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID => 0, StoreTableMap::COL_STORE_NAME => 1, StoreTableMap::COL_STORE_CATEGORY_ID => 2, StoreTableMap::COL_DESCRIPTION => 3, StoreTableMap::COL_IS_MAJOR => 4, StoreTableMap::COL_ALLOCATION => 5, StoreTableMap::COL_UPDATE_TIME => 6, StoreTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('store_id' => 0, 'store_name' => 1, 'store_category_id' => 2, 'description' => 3, 'is_major' => 4, 'allocation' => 5, 'update_time' => 6, 'update_user' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'StoreId' => 1, 'Percentage' => 2, 'Negative' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('personaId' => 0, 'storeId' => 1, 'percentage' => 2, 'negative' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(MapPersonaStoreTableMap::COL_PERSONA_ID => 0, MapPersonaStoreTableMap::COL_STORE_ID => 1, MapPersonaStoreTableMap::COL_PERCENTAGE => 2, MapPersonaStoreTableMap::COL_NEGATIVE => 3, MapPersonaStoreTableMap::COL_UPDATE_TIME => 4, MapPersonaStoreTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'store_id' => 1, 'percentage' => 2, 'negative' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -154,19 +144,17 @@ class StoreTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('store');
-        $this->setPhpName('Store');
+        $this->setName('map_persona_store');
+        $this->setPhpName('MapPersonaStore');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Store');
+        $this->setClassName('\\MapPersonaStore');
         $this->setPackage('');
-        $this->setUseIdGenerator(true);
+        $this->setUseIdGenerator(false);
         // columns
-        $this->addPrimaryKey('store_id', 'StoreId', 'INTEGER', true, null, null);
-        $this->addColumn('store_name', 'StoreName', 'LONGVARCHAR', true, null, null);
-        $this->addForeignKey('store_category_id', 'StoreCategoryId', 'INTEGER', 'store_category', 'store_category_id', true, null, 1);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('is_major', 'IsMajor', 'TINYINT', true, null, 0);
-        $this->addColumn('allocation', 'Allocation', 'INTEGER', false, null, 10);
+        $this->addForeignPrimaryKey('persona_id', 'PersonaId', 'INTEGER' , 'persona', 'persona_id', true, null, null);
+        $this->addForeignPrimaryKey('store_id', 'StoreId', 'INTEGER' , 'store', 'store_id', true, null, null);
+        $this->addColumn('percentage', 'Percentage', 'DOUBLE', false, null, 0.05);
+        $this->addColumn('negative', 'Negative', 'TINYINT', false, null, 0);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -176,13 +164,62 @@ class StoreTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('StoreCategory', '\\StoreCategory', RelationMap::MANY_TO_ONE, array('store_category_id' => 'store_category_id', ), null, null);
-        $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
-        $this->addRelation('MapPersonaStore', '\\MapPersonaStore', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'MapPersonaStores');
-        $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
-        $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUses');
-        $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Rewards');
+        $this->addRelation('Persona', '\\Persona', RelationMap::MANY_TO_ONE, array('persona_id' => 'persona_id', ), null, null);
+        $this->addRelation('Store', '\\Store', RelationMap::MANY_TO_ONE, array('store_id' => 'store_id', ), null, null);
     } // buildRelations()
+
+    /**
+     * Adds an object to the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database. In some cases you may need to explicitly add objects
+     * to the cache in order to ensure that the same objects are always returned by find*()
+     * and findPk*() calls.
+     *
+     * @param \MapPersonaStore $obj A \MapPersonaStore object.
+     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
+     */
+    public static function addInstanceToPool($obj, $key = null)
+    {
+        if (Propel::isInstancePoolingEnabled()) {
+            if (null === $key) {
+                $key = serialize(array((string) $obj->getPersonaId(), (string) $obj->getStoreId()));
+            } // if key === null
+            self::$instances[$key] = $obj;
+        }
+    }
+
+    /**
+     * Removes an object from the instance pool.
+     *
+     * Propel keeps cached copies of objects in an instance pool when they are retrieved
+     * from the database.  In some cases -- especially when you override doDelete
+     * methods in your stub classes -- you may need to explicitly remove objects
+     * from the cache in order to prevent returning objects that no longer exist.
+     *
+     * @param mixed $value A \MapPersonaStore object or a primary key value.
+     */
+    public static function removeInstanceFromPool($value)
+    {
+        if (Propel::isInstancePoolingEnabled() && null !== $value) {
+            if (is_object($value) && $value instanceof \MapPersonaStore) {
+                $key = serialize(array((string) $value->getPersonaId(), (string) $value->getStoreId()));
+
+            } elseif (is_array($value) && count($value) === 2) {
+                // assume we've been passed a primary key";
+                $key = serialize(array((string) $value[0], (string) $value[1]));
+            } elseif ($value instanceof Criteria) {
+                self::$instances = [];
+
+                return;
+            } else {
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \MapPersonaStore object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                throw $e;
+            }
+
+            unset(self::$instances[$key]);
+        }
+    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -200,11 +237,11 @@ class StoreTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PersonaId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)];
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PersonaId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -221,11 +258,20 @@ class StoreTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        return (int) $row[
+            $pks = [];
+
+        $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
+                : self::translateFieldName('PersonaId', TableMap::TYPE_PHPNAME, $indexType)
+        ];
+        $pks[] = (int) $row[
+            $indexType == TableMap::TYPE_NUM
+                ? 1 + $offset
                 : self::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)
         ];
+
+        return $pks;
     }
 
     /**
@@ -241,7 +287,7 @@ class StoreTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? StoreTableMap::CLASS_DEFAULT : StoreTableMap::OM_CLASS;
+        return $withPrefix ? MapPersonaStoreTableMap::CLASS_DEFAULT : MapPersonaStoreTableMap::OM_CLASS;
     }
 
     /**
@@ -255,22 +301,22 @@ class StoreTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Store object, last column rank)
+     * @return array           (MapPersonaStore object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = StoreTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = StoreTableMap::getInstanceFromPool($key))) {
+        $key = MapPersonaStoreTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = MapPersonaStoreTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + StoreTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + MapPersonaStoreTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = StoreTableMap::OM_CLASS;
-            /** @var Store $obj */
+            $cls = MapPersonaStoreTableMap::OM_CLASS;
+            /** @var MapPersonaStore $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            StoreTableMap::addInstanceToPool($obj, $key);
+            MapPersonaStoreTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -293,18 +339,18 @@ class StoreTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = StoreTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = StoreTableMap::getInstanceFromPool($key))) {
+            $key = MapPersonaStoreTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = MapPersonaStoreTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Store $obj */
+                /** @var MapPersonaStore $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                StoreTableMap::addInstanceToPool($obj, $key);
+                MapPersonaStoreTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -325,21 +371,17 @@ class StoreTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_ID);
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_NAME);
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_CATEGORY_ID);
-            $criteria->addSelectColumn(StoreTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(StoreTableMap::COL_IS_MAJOR);
-            $criteria->addSelectColumn(StoreTableMap::COL_ALLOCATION);
-            $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_PERSONA_ID);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_STORE_ID);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_PERCENTAGE);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_NEGATIVE);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(MapPersonaStoreTableMap::COL_UPDATE_USER);
         } else {
+            $criteria->addSelectColumn($alias . '.persona_id');
             $criteria->addSelectColumn($alias . '.store_id');
-            $criteria->addSelectColumn($alias . '.store_name');
-            $criteria->addSelectColumn($alias . '.store_category_id');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.is_major');
-            $criteria->addSelectColumn($alias . '.allocation');
+            $criteria->addSelectColumn($alias . '.percentage');
+            $criteria->addSelectColumn($alias . '.negative');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }
@@ -354,7 +396,7 @@ class StoreTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(StoreTableMap::DATABASE_NAME)->getTable(StoreTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(MapPersonaStoreTableMap::DATABASE_NAME)->getTable(MapPersonaStoreTableMap::TABLE_NAME);
     }
 
     /**
@@ -362,16 +404,16 @@ class StoreTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(StoreTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(StoreTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new StoreTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MapPersonaStoreTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(MapPersonaStoreTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new MapPersonaStoreTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Store or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a MapPersonaStore or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Store object or primary key or array of primary keys
+     * @param mixed               $values Criteria or MapPersonaStore object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -382,27 +424,37 @@ class StoreTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(StoreTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapPersonaStoreTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Store) { // it's a model object
+        } elseif ($values instanceof \MapPersonaStore) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(StoreTableMap::DATABASE_NAME);
-            $criteria->add(StoreTableMap::COL_STORE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(MapPersonaStoreTableMap::DATABASE_NAME);
+            // primary key is composite; we therefore, expect
+            // the primary key passed to be an array of pkey values
+            if (count($values) == count($values, COUNT_RECURSIVE)) {
+                // array is not multi-dimensional
+                $values = array($values);
+            }
+            foreach ($values as $value) {
+                $criterion = $criteria->getNewCriterion(MapPersonaStoreTableMap::COL_PERSONA_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(MapPersonaStoreTableMap::COL_STORE_ID, $value[1]));
+                $criteria->addOr($criterion);
+            }
         }
 
-        $query = StoreQuery::create()->mergeWith($criteria);
+        $query = MapPersonaStoreQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            StoreTableMap::clearInstancePool();
+            MapPersonaStoreTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                StoreTableMap::removeInstanceFromPool($singleval);
+                MapPersonaStoreTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -410,20 +462,20 @@ class StoreTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the store table.
+     * Deletes all rows from the map_persona_store table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return StoreQuery::create()->doDeleteAll($con);
+        return MapPersonaStoreQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Store or Criteria object.
+     * Performs an INSERT on the database, given a MapPersonaStore or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Store object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or MapPersonaStore object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -432,22 +484,18 @@ class StoreTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(StoreTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MapPersonaStoreTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Store object
-        }
-
-        if ($criteria->containsKey(StoreTableMap::COL_STORE_ID) && $criteria->keyContainsValue(StoreTableMap::COL_STORE_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.StoreTableMap::COL_STORE_ID.')');
+            $criteria = $criteria->buildCriteria(); // build Criteria from MapPersonaStore object
         }
 
 
         // Set the correct dbName
-        $query = StoreQuery::create()->mergeWith($criteria);
+        $query = MapPersonaStoreQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -456,7 +504,7 @@ class StoreTableMap extends TableMap
         });
     }
 
-} // StoreTableMap
+} // MapPersonaStoreTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-StoreTableMap::buildTableMap();
+MapPersonaStoreTableMap::buildTableMap();

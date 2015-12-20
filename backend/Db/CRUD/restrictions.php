@@ -97,6 +97,7 @@ function CreateGeneralRestrictionForCrud($data)
     if(is_null($parsed)) throw new \Exception ("Failed to parse GeneralRestriction update request");
     if(!$parsed->saveToDb()) throw new \Exception("Error saving object to database");
 
+
     //TODO implement cache, add to cache
     return $parsed;
 }

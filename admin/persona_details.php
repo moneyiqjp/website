@@ -55,7 +55,7 @@
                 for (index = 0; index < tmpStore.length; ++index) {
                     stores.push({
                         value: tmpStore[index]["StoreId"],
-                        label: tmpStore[index]["Category"] + " - " + tmpStore[index]["StoreName"]
+                        label: tmpStore[index]["StoreCategory"]["Name"] + " - " + tmpStore[index]["StoreName"]
                     })
                 }
             }
@@ -263,8 +263,12 @@
                         }, {
                             label: "Persona:",
                             name: "Persona.PersonaId",
+                            type: "readonly",
+                            def: personaId
+                            /*
                             type: "select",
                             options: personas
+                            */
                         }, {
                             label: "Scene:",
                             name: "Scene.SceneId",
@@ -273,6 +277,60 @@
                         }, {
                             label: "Allocation:",
                             name: "Allocation"
+                        }, {
+                            label: "Update date:",
+                            name: "UpdateTime",
+                            type: "readonly"
+                        }, {
+                            label: "Update user:",
+                            name: "UpdateUser"
+                        }
+                    ]
+                });
+
+
+            personaToStoreEditor = new $.fn.dataTable.Editor(
+                {
+                    ajax: {
+                        create: '../backend/crud/persona/to/store/create', // default method is POST
+                        edit: {
+                            type: 'PUT',
+                            url:  '../backend/crud/persona/to/store/update'
+                        },
+                        remove: {
+                            type: 'DELETE',
+                            url: '../backend/crud/persona/to/store/delete'
+                        }
+                    },
+                    table: "#personaStoreMap",
+                    idSrc: "Id",
+                    fields: [
+                        {
+                            label: "Id:",
+                            name: "Id",
+                            type:  "readonly"
+                        }, {
+                            label: "Persona:",
+                            name: "Persona.PersonaId",
+                            type: "readonly",
+                            def: personaId
+                            /*
+                            type: "select",
+                            options: personas
+                            */
+                        }, {
+                            label: "Store:",
+                            name: "Store.StoreId",
+                            type: "select",
+                            options: stores
+                        }, {
+                            label: "Allocation:",
+                            name: "Allocation"
+                        }, {
+                            label: "Exclude:",
+                            name: "Negative",
+                            type: "select",
+                            options: [ 0, 1]
                         }, {
                             label: "Update date:",
                             name: "UpdateTime",
@@ -366,8 +424,11 @@
                         },{
                             label: "Persona:",
                             name: "Persona.PersonaId",
-                            type:  "select",
+                            type: "readonly",
+                            def: personaId
+                            /*type:  "select",
                             options: personas
+                            */
                         },{
                             label: "RestrictionType:",
                             name: "RestrictionType.RestrictionTypeId",
@@ -530,7 +591,7 @@
                 })
                 .on('click', 'tbody td:not(:first-child)', function (e) {
 
-                    if( $.inArray(e.target.className, new Array("editor-afield","editor-negative") ) == -1 )
+                    if( $.inArray(e.target.className, ["editor-afield","editor-negative"] ) == -1 )
                     {
                        // featureEditor.inline(this);
                     }
@@ -562,6 +623,37 @@
                         {sExtends: "editor_create", editor: personaToSceneEditor},
                         {sExtends: "editor_edit", editor: personaToSceneEditor},
                         {sExtends: "editor_remove", editor: personaToSceneEditor}
+                    ]
+                }
+            });
+
+
+
+
+            $('#personaStoreMap').dataTable({
+                dom: "rtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/persona/to/store/by/persona/id?Id=" + personaId,
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {"data": "Id", edit: false},
+                    {"data": "Persona.Name", editField:"Persona.PersonaId"},
+                    {"data": "Store.StoreName", editField:"Store.StoreId"},
+                    {"data": "Allocation"},
+                    {"data": "Negative"},
+                    {"data": "UpdateTime", edit: false, visible: false},
+                    {"data": "UpdateUser", visible: false}
+                ]
+                , tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        {sExtends: "editor_create", editor: personaToStoreEditor},
+                        {sExtends: "editor_edit", editor: personaToStoreEditor},
+                        {sExtends: "editor_remove", editor: personaToStoreEditor}
                     ]
                 }
             });
@@ -763,6 +855,36 @@
                 <a href="http://localhost/backend/crud/persona/to/scene/all" class="source">PersonaToScene JSON</a>
             </div>
         <br>
+
+            <div style="width: 98%; margin: 25px 25px 25px 25px;float: left">
+                <div class="table-headline"><a name="rewardtypes">Persona To Store Mapping</a></div>
+                <table id="personaStoreMap" class="display" cellspacing="0" width="98%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Persona</th>
+                        <th>Store</th>
+                        <th>Allocation</th>
+                        <th>Not</th>
+                        <th>Updated</th>
+                        <th>User</th>
+                    </thead>
+
+                    <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Persona</th>
+                        <th>Store</th>
+                        <th>Allocation</th>
+                        <th>Not</th>
+                        <th>Updated</th>
+                        <th>User</th>
+                    </tfoot>
+                </table>
+                <a href="http://localhost/backend/crud/persona/to/store/all" class="source">PersonaToScene JSON</a>
+            </div>
+            <br>
+
             <div style="width: 98%;float:left;">
                 <div class="table-headline"><a name="restrictions">General Restrictions</a></div>
                 <table id="restrictionTable" class="display" cellspacing="0" width="98%">

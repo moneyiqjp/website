@@ -6,6 +6,8 @@ use \MapPersonaFeatureConstraint as ChildMapPersonaFeatureConstraint;
 use \MapPersonaFeatureConstraintQuery as ChildMapPersonaFeatureConstraintQuery;
 use \MapPersonaScene as ChildMapPersonaScene;
 use \MapPersonaSceneQuery as ChildMapPersonaSceneQuery;
+use \MapPersonaStore as ChildMapPersonaStore;
+use \MapPersonaStoreQuery as ChildMapPersonaStoreQuery;
 use \Persona as ChildPersona;
 use \PersonaQuery as ChildPersonaQuery;
 use \PersonaRestriction as ChildPersonaRestriction;
@@ -144,6 +146,12 @@ abstract class Persona implements ActiveRecordInterface
     protected $collMapPersonaScenesPartial;
 
     /**
+     * @var        ObjectCollection|ChildMapPersonaStore[] Collection to store aggregation of ChildMapPersonaStore objects.
+     */
+    protected $collMapPersonaStores;
+    protected $collMapPersonaStoresPartial;
+
+    /**
      * @var        ObjectCollection|ChildPersonaRestriction[] Collection to store aggregation of ChildPersonaRestriction objects.
      */
     protected $collPersonaRestrictions;
@@ -168,6 +176,12 @@ abstract class Persona implements ActiveRecordInterface
      * @var ObjectCollection|ChildMapPersonaScene[]
      */
     protected $mapPersonaScenesScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMapPersonaStore[]
+     */
+    protected $mapPersonaStoresScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -835,6 +849,8 @@ abstract class Persona implements ActiveRecordInterface
 
             $this->collMapPersonaScenes = null;
 
+            $this->collMapPersonaStores = null;
+
             $this->collPersonaRestrictions = null;
 
         } // if (deep)
@@ -987,6 +1003,23 @@ abstract class Persona implements ActiveRecordInterface
 
             if ($this->collMapPersonaScenes !== null) {
                 foreach ($this->collMapPersonaScenes as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->mapPersonaStoresScheduledForDeletion !== null) {
+                if (!$this->mapPersonaStoresScheduledForDeletion->isEmpty()) {
+                    \MapPersonaStoreQuery::create()
+                        ->filterByPrimaryKeys($this->mapPersonaStoresScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mapPersonaStoresScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMapPersonaStores !== null) {
+                foreach ($this->collMapPersonaStores as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1280,6 +1313,21 @@ abstract class Persona implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collMapPersonaScenes->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMapPersonaStores) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mapPersonaStores';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'map_persona_stores';
+                        break;
+                    default:
+                        $key = 'MapPersonaStores';
+                }
+
+                $result[$key] = $this->collMapPersonaStores->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPersonaRestrictions) {
 
@@ -1590,6 +1638,12 @@ abstract class Persona implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getMapPersonaStores() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMapPersonaStore($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getPersonaRestrictions() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPersonaRestriction($relObj->copy($deepCopy));
@@ -1693,6 +1747,9 @@ abstract class Persona implements ActiveRecordInterface
         }
         if ('MapPersonaScene' == $relationName) {
             return $this->initMapPersonaScenes();
+        }
+        if ('MapPersonaStore' == $relationName) {
+            return $this->initMapPersonaStores();
         }
         if ('PersonaRestriction' == $relationName) {
             return $this->initPersonaRestrictions();
@@ -2192,6 +2249,252 @@ abstract class Persona implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collMapPersonaStores collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMapPersonaStores()
+     */
+    public function clearMapPersonaStores()
+    {
+        $this->collMapPersonaStores = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMapPersonaStores collection loaded partially.
+     */
+    public function resetPartialMapPersonaStores($v = true)
+    {
+        $this->collMapPersonaStoresPartial = $v;
+    }
+
+    /**
+     * Initializes the collMapPersonaStores collection.
+     *
+     * By default this just sets the collMapPersonaStores collection to an empty array (like clearcollMapPersonaStores());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMapPersonaStores($overrideExisting = true)
+    {
+        if (null !== $this->collMapPersonaStores && !$overrideExisting) {
+            return;
+        }
+        $this->collMapPersonaStores = new ObjectCollection();
+        $this->collMapPersonaStores->setModel('\MapPersonaStore');
+    }
+
+    /**
+     * Gets an array of ChildMapPersonaStore objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPersona is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMapPersonaStore[] List of ChildMapPersonaStore objects
+     * @throws PropelException
+     */
+    public function getMapPersonaStores(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaStoresPartial && !$this->isNew();
+        if (null === $this->collMapPersonaStores || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaStores) {
+                // return empty collection
+                $this->initMapPersonaStores();
+            } else {
+                $collMapPersonaStores = ChildMapPersonaStoreQuery::create(null, $criteria)
+                    ->filterByPersona($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMapPersonaStoresPartial && count($collMapPersonaStores)) {
+                        $this->initMapPersonaStores(false);
+
+                        foreach ($collMapPersonaStores as $obj) {
+                            if (false == $this->collMapPersonaStores->contains($obj)) {
+                                $this->collMapPersonaStores->append($obj);
+                            }
+                        }
+
+                        $this->collMapPersonaStoresPartial = true;
+                    }
+
+                    return $collMapPersonaStores;
+                }
+
+                if ($partial && $this->collMapPersonaStores) {
+                    foreach ($this->collMapPersonaStores as $obj) {
+                        if ($obj->isNew()) {
+                            $collMapPersonaStores[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMapPersonaStores = $collMapPersonaStores;
+                $this->collMapPersonaStoresPartial = false;
+            }
+        }
+
+        return $this->collMapPersonaStores;
+    }
+
+    /**
+     * Sets a collection of ChildMapPersonaStore objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mapPersonaStores A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function setMapPersonaStores(Collection $mapPersonaStores, ConnectionInterface $con = null)
+    {
+        /** @var ChildMapPersonaStore[] $mapPersonaStoresToDelete */
+        $mapPersonaStoresToDelete = $this->getMapPersonaStores(new Criteria(), $con)->diff($mapPersonaStores);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->mapPersonaStoresScheduledForDeletion = clone $mapPersonaStoresToDelete;
+
+        foreach ($mapPersonaStoresToDelete as $mapPersonaStoreRemoved) {
+            $mapPersonaStoreRemoved->setPersona(null);
+        }
+
+        $this->collMapPersonaStores = null;
+        foreach ($mapPersonaStores as $mapPersonaStore) {
+            $this->addMapPersonaStore($mapPersonaStore);
+        }
+
+        $this->collMapPersonaStores = $mapPersonaStores;
+        $this->collMapPersonaStoresPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MapPersonaStore objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MapPersonaStore objects.
+     * @throws PropelException
+     */
+    public function countMapPersonaStores(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMapPersonaStoresPartial && !$this->isNew();
+        if (null === $this->collMapPersonaStores || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMapPersonaStores) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMapPersonaStores());
+            }
+
+            $query = ChildMapPersonaStoreQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPersona($this)
+                ->count($con);
+        }
+
+        return count($this->collMapPersonaStores);
+    }
+
+    /**
+     * Method called to associate a ChildMapPersonaStore object to this object
+     * through the ChildMapPersonaStore foreign key attribute.
+     *
+     * @param  ChildMapPersonaStore $l ChildMapPersonaStore
+     * @return $this|\Persona The current object (for fluent API support)
+     */
+    public function addMapPersonaStore(ChildMapPersonaStore $l)
+    {
+        if ($this->collMapPersonaStores === null) {
+            $this->initMapPersonaStores();
+            $this->collMapPersonaStoresPartial = true;
+        }
+
+        if (!$this->collMapPersonaStores->contains($l)) {
+            $this->doAddMapPersonaStore($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMapPersonaStore $mapPersonaStore The ChildMapPersonaStore object to add.
+     */
+    protected function doAddMapPersonaStore(ChildMapPersonaStore $mapPersonaStore)
+    {
+        $this->collMapPersonaStores[]= $mapPersonaStore;
+        $mapPersonaStore->setPersona($this);
+    }
+
+    /**
+     * @param  ChildMapPersonaStore $mapPersonaStore The ChildMapPersonaStore object to remove.
+     * @return $this|ChildPersona The current object (for fluent API support)
+     */
+    public function removeMapPersonaStore(ChildMapPersonaStore $mapPersonaStore)
+    {
+        if ($this->getMapPersonaStores()->contains($mapPersonaStore)) {
+            $pos = $this->collMapPersonaStores->search($mapPersonaStore);
+            $this->collMapPersonaStores->remove($pos);
+            if (null === $this->mapPersonaStoresScheduledForDeletion) {
+                $this->mapPersonaStoresScheduledForDeletion = clone $this->collMapPersonaStores;
+                $this->mapPersonaStoresScheduledForDeletion->clear();
+            }
+            $this->mapPersonaStoresScheduledForDeletion[]= clone $mapPersonaStore;
+            $mapPersonaStore->setPersona(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Persona is new, it will return
+     * an empty collection; or if this Persona has previously
+     * been saved, it will retrieve related MapPersonaStores from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Persona.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMapPersonaStore[] List of ChildMapPersonaStore objects
+     */
+    public function getMapPersonaStoresJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMapPersonaStoreQuery::create(null, $criteria);
+        $query->joinWith('Store', $joinBehavior);
+
+        return $this->getMapPersonaStores($query, $con);
+    }
+
+    /**
      * Clears out the collPersonaRestrictions collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -2485,6 +2788,11 @@ abstract class Persona implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMapPersonaStores) {
+                foreach ($this->collMapPersonaStores as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collPersonaRestrictions) {
                 foreach ($this->collPersonaRestrictions as $o) {
                     $o->clearAllReferences($deep);
@@ -2494,6 +2802,7 @@ abstract class Persona implements ActiveRecordInterface
 
         $this->collMapPersonaFeatureConstraints = null;
         $this->collMapPersonaScenes = null;
+        $this->collMapPersonaStores = null;
         $this->collPersonaRestrictions = null;
         $this->aRewardCategory = null;
     }

@@ -25,6 +25,11 @@ class JGeneralRestriction  implements JSONInterface {
         return $this;
     }
 
+    public function toString(){
+        return "(" . $this->GeneralRestrictionId . ", " . $this->Persona->PersonaId . ", " .$this->RestrictionType->RestrictionTypeId . ", " .$this->Comparator . ", " .$this->Value . ", " .
+                $this->Priority . ", " . $this->UpdateTime . ", " . $this->UpdateUser . ")";
+    }
+
     public function GenerateKey() {
         if(!$this->isValid() && !is_null($this->Persona)) {
             return $this->Persona->PersonaId . "_";
@@ -100,7 +105,10 @@ class JGeneralRestriction  implements JSONInterface {
 
 
     public function saveToDb() {
-        return $this->toDB()->save() > 0;
+        $pr = $this->toDB();
+
+
+        return $pr->save() > 0;
     }
 
     public function isValid() {
@@ -112,8 +120,8 @@ class JGeneralRestriction  implements JSONInterface {
         if(!$this->isValid()) return new \PersonaRestriction();
         $this->GeneralRestrictionId = $this->GenerateKey();
 
-        foreach( (new \PersonaRestrictionQuery())->findByPrimaryKeys($this->Persona->PersonaId,
-            $this->RestrictionType->RestrictionTypeId) as $restriction)
+        foreach( (new \PersonaRestrictionQuery())->filterByPersonaId($this->Persona->PersonaId)
+                     ->filterByRestrictionTypeId($this->RestrictionType->RestrictionTypeId)->find() as $restriction)
         {
             return $restriction;
         }
@@ -122,7 +130,8 @@ class JGeneralRestriction  implements JSONInterface {
     }
 
     public function toDB() {
-        return $this->updateDB($this->tryLoadFromDB());
+        $pr = $this->tryLoadFromDB();
+        return $this->updateDB($pr);
     }
 
     public function updateDB(\PersonaRestriction &$item) {

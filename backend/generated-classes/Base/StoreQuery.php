@@ -50,6 +50,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinDiscounts($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Discounts relation
  * @method     ChildStoreQuery innerJoinDiscounts($relationAlias = null) Adds a INNER JOIN clause to the query using the Discounts relation
  *
+ * @method     ChildStoreQuery leftJoinMapPersonaStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the MapPersonaStore relation
+ * @method     ChildStoreQuery rightJoinMapPersonaStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaStore relation
+ * @method     ChildStoreQuery innerJoinMapPersonaStore($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaStore relation
+ *
  * @method     ChildStoreQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildStoreQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildStoreQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
@@ -62,7 +66,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildStoreQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \StoreCategoryQuery|\DiscountsQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \StoreCategoryQuery|\DiscountsQuery|\MapPersonaStoreQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
@@ -710,6 +714,79 @@ abstract class StoreQuery extends ModelCriteria
         return $this
             ->joinDiscounts($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Discounts', '\DiscountsQuery');
+    }
+
+    /**
+     * Filter the query by a related \MapPersonaStore object
+     *
+     * @param \MapPersonaStore|ObjectCollection $mapPersonaStore  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByMapPersonaStore($mapPersonaStore, $comparison = null)
+    {
+        if ($mapPersonaStore instanceof \MapPersonaStore) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $mapPersonaStore->getStoreId(), $comparison);
+        } elseif ($mapPersonaStore instanceof ObjectCollection) {
+            return $this
+                ->useMapPersonaStoreQuery()
+                ->filterByPrimaryKeys($mapPersonaStore->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMapPersonaStore() only accepts arguments of type \MapPersonaStore or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MapPersonaStore relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinMapPersonaStore($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MapPersonaStore');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MapPersonaStore');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MapPersonaStore relation MapPersonaStore object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MapPersonaStoreQuery A secondary query class using the current class as primary query
+     */
+    public function useMapPersonaStoreQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMapPersonaStore($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MapPersonaStore', '\MapPersonaStoreQuery');
     }
 
     /**

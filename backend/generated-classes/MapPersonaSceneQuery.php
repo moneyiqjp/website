@@ -22,13 +22,7 @@ class MapPersonaSceneQuery extends BaseMapPersonaSceneQuery
      * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
      */
     public function findByPersonaIdSceneId($personaId, $sceneId) {
-        $result = array();
-        foreach($this->findByPersonaId($personaId) as $map) {
-            if($map->getSceneId()==$sceneId)
-                array_push($result, $map);
-        }
-
-        return $result;
+        return $this->filterByPersonaId($personaId)->filterBySceneId($sceneId)->find();
     }
 
 } // MapPersonaSceneQuery

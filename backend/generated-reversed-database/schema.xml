@@ -554,6 +554,29 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="map_persona_store" idMethod="native" phpName="MapPersonaStore">
+    <column name="persona_id" phpName="PersonaId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="store_id" phpName="StoreId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="percentage" phpName="Percentage" type="DOUBLE" defaultValue="0.05"/>
+    <column name="negative" phpName="Negative" type="TINYINT" defaultValue="0"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="persona" name="fk_mperstore_persona_id">
+      <reference local="persona_id" foreign="persona_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="store" name="fk_mperstore_store_id">
+      <reference local="store_id" foreign="store_id"/>
+    </foreign-key>
+    <index name="ind_mperstore_persona_id">
+      <index-column name="persona_id"/>
+    </index>
+    <index name="ind_mperstore_store_id">
+      <index-column name="store_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="map_scene_rewcat" idMethod="native" phpName="MapSceneRewcat">
     <column name="scene_id" phpName="SceneId" type="INTEGER" primaryKey="true" required="true"/>
     <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" primaryKey="true" required="true"/>

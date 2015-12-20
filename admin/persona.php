@@ -97,6 +97,7 @@
         }
 
         var personas = [];
+        var personanames = [];
         tmp = $.ajax({
             url: '../backend/crud/persona/all',
             data: {
@@ -116,6 +117,10 @@
                     personas.push({
                         value: tmpStore[index]["PersonaId"],
                         label: tmpStore[index]["Name"]
+                    })
+                    personanames.push({
+                        value: tmpStore[index]["Identifier"],
+                        label: tmpStore[index]["Identifier"]
                     })
                 }
             }
@@ -496,6 +501,7 @@
                     {"data": "Id", edit: false},
                     {"data": "Scene.Name", editField:"Scene.SceneId"},
                     {"data": "RewardCategory.Name", editField:"RewardCategory.RewardCategoryId"},
+                    {"data": "RewardCategory.SubCategory", edit: false},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -628,6 +634,7 @@
                 <th>Id</th>
                 <th>Scene</th>
                 <th>Reward</th>
+                <th>Subcategory</th>
                 <th>Updated</th>
                 <th>User</th>
             </thead>
@@ -637,6 +644,7 @@
                 <th>Id</th>
                 <th>Scene</th>
                 <th>Reward</th>
+                <th>Subcategory</th>
                 <th>Updated</th>
                 <th>User</th>
             </tfoot>

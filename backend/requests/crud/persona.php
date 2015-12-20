@@ -294,3 +294,69 @@ $app->put('/crud/persona/to/scene/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
+
+
+
+/* PersonaToStoreMap*/
+$app->get('/crud/persona/to/store/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetPersonaToStoreMap()));
+});
+$app->get('/crud/persona/to/store/by/persona/id', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $result = array();
+    try {
+        $result['data'] = Db\CRUD\GetPersonaToStoreMapByPersonaId($app->request()->get('Id'));
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+    echo json_encode($result);
+});
+$app->delete('/crud/persona/to/store/delete', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("/crud/Store/delete: Deleting point system " . $id);
+        //TODO delete should handle also all dependent data
+        $jTableResult['row'] = Db\CRUD\DeletePersonaToStoreMap($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/persona/to/store/create', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\CreatePersonaToStoreMap($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/persona/to/store/update', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\UpdatePersonaToStoreMap($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});

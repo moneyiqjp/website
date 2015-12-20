@@ -13,6 +13,7 @@ use Db\Json\JScene;
 use Db\Json\JSceneCategoryMapping;
 use Db\Json\JSceneRewardCategoryMapping;
 use Db\Json\JPersonaSceneMapping;
+use Db\Json\JPersonaStoreMapping;
 
 /* Persona */
 function GetPersonaForDisplay()
@@ -199,7 +200,7 @@ function DeleteSceneToRewardCategoryMap($complexId)
 {
     $sceneId = JSceneRewardCategoryMapping::GetSceneIdFromComplexId($complexId);
     $categoryId = JSceneRewardCategoryMapping::GetRewardCategoryIdFromComplexId($complexId);
-    $res = array();
+
     foreach ((new \MapSceneRewcatQuery())->findBySceneIdRewardCategoryId($sceneId, $categoryId) as $item) {
         if(!is_null($item)) {
             $item->delete();
@@ -271,7 +272,7 @@ function DeletePersonaToSceneMap($complexId)
     return array();
 }
 function UpdatePersonaToSceneMap($data) {
-    $complexId = $data["Id"];
+    //$complexId = $data["Id"];
     $parsed = JPersonaSceneMapping::CREATE_FROM_ARRAY($data);
     if(is_null($parsed)) throw new \Exception ("Failed to parse Scene to Category Mapping update request");
     $personaId = $parsed->Persona->PersonaId;
@@ -299,5 +300,71 @@ function CreatePersonaToSceneMap($data)
     //TODO implement cache, add to cache
     return JPersonaSceneMapping::CREATE_FROM_DB($item);
 }
+
+
+
+
+/* GetPersonaToStoreMap */
+function GetPersonaToStoreMap()
+{
+    $result = array();
+    foreach ((new \MapPersonaStoreQuery())->orderByPersonaId()->find() as $af) {
+        array_push($result,  JPersonaStoreMapping::CREATE_FROM_DB($af));
+    }
+    return $result;
+}
+function GetPersonaToStoreMapByPersonaId($personaId)
+{
+
+    $result = array();
+    foreach ((new \MapPersonaStoreQuery())->orderByPersonaId()->findByPersonaId($personaId) as $af) {
+        array_push($result,  JPersonaStoreMapping::CREATE_FROM_DB($af));
+    }
+    return $result;
+}
+function DeletePersonaToStoreMap($complexId)
+{
+    $storeId = JPersonaStoreMapping::GetStoreIdFromComplexId($complexId);
+    $personaId = JPersonaStoreMapping::GetPersonaIdFromComplexId($complexId);
+    foreach (\MapPersonaStoreQuery::create()->filterByPersonaId($personaId)->filterByStoreId($storeId)->find() as $item) {
+        if(!is_null($item)) {
+            $item->delete();
+        }
+    }
+    return array();
+}
+function UpdatePersonaToStoreMap($data) {
+    //$complexId = $data["Id"];
+    $parsed = JPersonaStoreMapping::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse Store to Category Mapping update request");
+    $personaId = $parsed->Persona->PersonaId;
+    $storeId = $parsed->Store->StoreId;
+    $items = (new \MapPersonaStoreQuery())->findByPersonaIdStoreId($personaId, $storeId);
+    if(count($items)>1) throw new \Exception("Multiple items found for given store and category");
+    if(count($items)==0) throw new \Exception("item not found for Persona $personaId, Store $storeId");
+
+    if(!is_null($items[0])) {
+        $parsed->updateDB($items[0])->save();
+    }
+
+    //TODO implement cache, then refresh
+    $items = (new \MapPersonaStoreQuery())->findByPersonaIdStoreId($personaId, $storeId);
+    if(count($items)>1) throw new \Exception("Multiple items found for given store and category");
+
+
+    return JPersonaStoreMapping::CREATE_FROM_DB($items[0]);
+}
+
+function CreatePersonaToStoreMap($data)
+{
+    $item = JPersonaStoreMapping::CREATE_FROM_ARRAY_RELAXED($data)->toDB();
+    $item->save();
+
+    //TODO implement cache, add to cache
+    return JPersonaStoreMapping::CREATE_FROM_DB($item);
+}
+
+
+
 
 ?>
