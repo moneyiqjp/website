@@ -32,11 +32,11 @@ class JRestriction
     }
 
     public static function CREATE_PERSONA(JGeneralRestriction $rest){
-        return JRestriction::CREATE("G".$rest->GeneralRestrictionId,$rest->RestrictionType->Name, $rest->Comparator, $rest->Value, $rest->RestrictionType->Display);
+        return JRestriction::CREATE("G".$rest->GeneralRestrictionId,$rest->RestrictionType->Path, $rest->Comparator, $rest->Value, $rest->RestrictionType->Display);
     }
 
     public static function CREATE_CREDITCARD(JCreditCardRestriction $rest) {
-        return JRestriction::CREATE("C".$rest->CreditCardRestrictionId, $rest->RestrictionType->Name, $rest->Comparator, $rest->Value, $rest->RestrictionType->Display);
+        return JRestriction::CREATE("C".$rest->CreditCardRestrictionId, $rest->RestrictionType->Path, $rest->Comparator, $rest->Value, $rest->RestrictionType->Display);
     }
 
     private static function GETDISPLAY($attribute, $comparator, $value, $display) {

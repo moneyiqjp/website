@@ -494,7 +494,7 @@
                             label: "Sorting:",
                             name: "Sorting",
                             type: "select",
-                            options: ['reward', 'points', 'rate', 'campaign-points']
+                            options: ['reward', 'points', 'rate', 'campaign-points','reward-net']
                         }, {
                             label: "RewardCategoryId:",
                             name: "RewardCategory.RewardCategoryId",

@@ -16,6 +16,7 @@ class JRestrictionType implements JSONInterface {
     public $Name;
     public $Display;
     public $Description;
+    public $Path;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -30,6 +31,7 @@ class JRestrictionType implements JSONInterface {
         $mine->Name = $item->getName();
         $mine->Display = $item->getDisplay();
         $mine->Description = $item->getDescription();
+        $mine->Path = $item->getPath();
         $mine->UpdateTime = $item->getUpdateTime()->format(\DateTime::ISO8601);
         $mine->UpdateUser = $item->getUpdateUser();
         return $mine;
@@ -48,6 +50,7 @@ class JRestrictionType implements JSONInterface {
         }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
+        if(ArrayUtils::KEY_EXISTS($data,'Path')) $mine->Path = $data['Path'];
         if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
         $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
@@ -71,6 +74,7 @@ class JRestrictionType implements JSONInterface {
         if(FieldUtils::ID_IS_DEFINED($this->RestrictionTypeId)) $item->setRestrictionTypeId($this->RestrictionTypeId);
 
         if(FieldUtils::STRING_IS_DEFINED($this->Description)) $item->setDescription($this->Description);
+        if(FieldUtils::STRING_IS_DEFINED($this->Path)) $item->setPath($this->Path);
         if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDisplay($this->Display);
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         $item->setUpdateTime(new \DateTime());

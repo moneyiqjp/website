@@ -22,6 +22,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRestrictionTypeQuery orderByRestrictionTypeId($order = Criteria::ASC) Order by the restriction_type_id column
  * @method     ChildRestrictionTypeQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildRestrictionTypeQuery orderByPath($order = Criteria::ASC) Order by the path column
  * @method     ChildRestrictionTypeQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildRestrictionTypeQuery orderByDisplay($order = Criteria::ASC) Order by the display column
  * @method     ChildRestrictionTypeQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
@@ -29,6 +30,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRestrictionTypeQuery groupByRestrictionTypeId() Group by the restriction_type_id column
  * @method     ChildRestrictionTypeQuery groupByName() Group by the name column
+ * @method     ChildRestrictionTypeQuery groupByPath() Group by the path column
  * @method     ChildRestrictionTypeQuery groupByDescription() Group by the description column
  * @method     ChildRestrictionTypeQuery groupByDisplay() Group by the display column
  * @method     ChildRestrictionTypeQuery groupByUpdateTime() Group by the update_time column
@@ -53,6 +55,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildRestrictionType findOneByRestrictionTypeId(int $restriction_type_id) Return the first ChildRestrictionType filtered by the restriction_type_id column
  * @method     ChildRestrictionType findOneByName(string $name) Return the first ChildRestrictionType filtered by the name column
+ * @method     ChildRestrictionType findOneByPath(string $path) Return the first ChildRestrictionType filtered by the path column
  * @method     ChildRestrictionType findOneByDescription(string $description) Return the first ChildRestrictionType filtered by the description column
  * @method     ChildRestrictionType findOneByDisplay(string $display) Return the first ChildRestrictionType filtered by the display column
  * @method     ChildRestrictionType findOneByUpdateTime(string $update_time) Return the first ChildRestrictionType filtered by the update_time column
@@ -61,6 +64,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildRestrictionType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildRestrictionType objects based on current ModelCriteria
  * @method     ChildRestrictionType[]|ObjectCollection findByRestrictionTypeId(int $restriction_type_id) Return ChildRestrictionType objects filtered by the restriction_type_id column
  * @method     ChildRestrictionType[]|ObjectCollection findByName(string $name) Return ChildRestrictionType objects filtered by the name column
+ * @method     ChildRestrictionType[]|ObjectCollection findByPath(string $path) Return ChildRestrictionType objects filtered by the path column
  * @method     ChildRestrictionType[]|ObjectCollection findByDescription(string $description) Return ChildRestrictionType objects filtered by the description column
  * @method     ChildRestrictionType[]|ObjectCollection findByDisplay(string $display) Return ChildRestrictionType objects filtered by the display column
  * @method     ChildRestrictionType[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildRestrictionType objects filtered by the update_time column
@@ -156,7 +160,7 @@ abstract class RestrictionTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT restriction_type_id, name, description, display, update_time, update_user FROM restriction_type WHERE restriction_type_id = :p0';
+        $sql = 'SELECT restriction_type_id, name, path, description, display, update_time, update_user FROM restriction_type WHERE restriction_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -314,6 +318,35 @@ abstract class RestrictionTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(RestrictionTypeTableMap::COL_NAME, $name, $comparison);
+    }
+
+    /**
+     * Filter the query on the path column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPath('fooValue');   // WHERE path = 'fooValue'
+     * $query->filterByPath('%fooValue%'); // WHERE path LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $path The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildRestrictionTypeQuery The current query, for fluid interface
+     */
+    public function filterByPath($path = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($path)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $path)) {
+                $path = str_replace('*', '%', $path);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(RestrictionTypeTableMap::COL_PATH, $path, $comparison);
     }
 
     /**

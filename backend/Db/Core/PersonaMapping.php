@@ -105,7 +105,8 @@ class SceneWithPersona extends Scene{
         return $this;
     }
 
-    public static function CREATE(\Scene $scene)
+    public static function
+     CREATE(\Scene $scene)
     {
         $that = new SceneWithPersona();
         return $that->UpdateFromScene($scene);
@@ -142,9 +143,22 @@ class Scene {
         $that = new Scene();
         return $that->UpdateFromScene($scene);
     }
+/*
+    public static function CREATE_PERSONA_SCENE(\Persona $pers) {
+        $that = new Scene();
+        $that->Name = $pers->getName();
+        $that->Id = $pers->getPersonaId() * 1000;
+        return $that;
+    }
 
+    public function AddStore($store) {
+        $this->AddStoresToScene(Array($store));
+    }
 
-
+    public function RemoveStore($store) {
+        $this->RemoveStoresFromScene(Array($store));
+    }
+*/
     public function AddStoresToScene($stores) {
         //New stores are always added
         $newStores = array(); $storeIds = array();
@@ -184,6 +198,7 @@ class Scene {
 
         return $this;
     }
+
 }
 
 class Restriction {
@@ -213,7 +228,7 @@ class Restriction {
 class PersonaWithScene extends Persona {
     public $Scene = Array();
 
-
+/*
     private function AddSceneWithStores($sceneId, $stores, $storesRemove) {
 
         $dbscene = \SceneQuery::create()->findPk($sceneId);
@@ -270,11 +285,12 @@ class PersonaWithScene extends Persona {
         $sceneStoreMap = array();
         $sceneId=null;
 
+        $scene = SceneWithPersona::CREATE_PERSONA_SCENE($pers);
         foreach($pers->getMapPersonaStores() as $map) {
             $store = $map->getStore();
             $store->setIsMajor(1);
             $store->setAllocation($map->getPercentage());
-
+            if(!$map->getNegative()) $scene->AddStore($store);
             foreach($store->getStoreCategory()->getMapSceneStoreCategories() as $ssmap)  {
                 $sceneId = $ssmap->getSceneId() ;
 
@@ -290,16 +306,18 @@ class PersonaWithScene extends Persona {
             }
         }
 
+        array_push($this->Scene,$scene);
+
 
         $this->StoreToScene($sceneStoreMap);
     }
-
+*/
     public function UpdateFromPersona(\Persona $pers) {
         parent::UpdateFromPersona($pers);
         foreach ($pers->getMapPersonaScenes() as $pms) {
             array_push($this->Scene, Scene::CREATE($pms->getScene()));
         }
-        $this->GenerateScenesFromStores($pers);
+        //$this->GenerateScenesFromStores($pers);
 
     }
 

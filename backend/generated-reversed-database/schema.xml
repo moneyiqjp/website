@@ -776,6 +776,7 @@
   <table name="restriction_type" idMethod="native" phpName="RestrictionType">
     <column name="restriction_type_id" phpName="RestrictionTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="path" phpName="Path" type="VARCHAR" size="255"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="display" phpName="Display" type="LONGVARCHAR" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>

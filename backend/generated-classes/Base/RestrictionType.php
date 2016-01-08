@@ -80,6 +80,12 @@ abstract class RestrictionType implements ActiveRecordInterface
     protected $name;
 
     /**
+     * The value for the path field.
+     * @var        string
+     */
+    protected $path;
+
+    /**
      * The value for the description field.
      * @var        string
      */
@@ -373,6 +379,16 @@ abstract class RestrictionType implements ActiveRecordInterface
     }
 
     /**
+     * Get the [path] column value.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
      * Get the [description] column value.
      *
      * @return string
@@ -461,6 +477,26 @@ abstract class RestrictionType implements ActiveRecordInterface
 
         return $this;
     } // setName()
+
+    /**
+     * Set the value of [path] column.
+     *
+     * @param  string $v new value
+     * @return $this|\RestrictionType The current object (for fluent API support)
+     */
+    public function setPath($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->path !== $v) {
+            $this->path = $v;
+            $this->modifiedColumns[RestrictionTypeTableMap::COL_PATH] = true;
+        }
+
+        return $this;
+    } // setPath()
 
     /**
      * Set the value of [description] column.
@@ -584,19 +620,22 @@ abstract class RestrictionType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : RestrictionTypeTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RestrictionTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : RestrictionTypeTableMap::translateFieldName('Path', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->path = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RestrictionTypeTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
             $this->description = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : RestrictionTypeTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RestrictionTypeTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : RestrictionTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -606,7 +645,7 @@ abstract class RestrictionType implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = RestrictionTypeTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = RestrictionTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\RestrictionType'), 0, $e);
@@ -847,6 +886,9 @@ abstract class RestrictionType implements ActiveRecordInterface
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
+        if ($this->isColumnModified(RestrictionTypeTableMap::COL_PATH)) {
+            $modifiedColumns[':p' . $index++]  = 'path';
+        }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = 'description';
         }
@@ -875,6 +917,9 @@ abstract class RestrictionType implements ActiveRecordInterface
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case 'path':
+                        $stmt->bindValue($identifier, $this->path, PDO::PARAM_STR);
                         break;
                     case 'description':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -957,15 +1002,18 @@ abstract class RestrictionType implements ActiveRecordInterface
                 return $this->getName();
                 break;
             case 2:
-                return $this->getDescription();
+                return $this->getPath();
                 break;
             case 3:
-                return $this->getDisplay();
+                return $this->getDescription();
                 break;
             case 4:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 5:
+                return $this->getUpdateTime();
+                break;
+            case 6:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1000,10 +1048,11 @@ abstract class RestrictionType implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getRestrictionTypeId(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getDisplay(),
-            $keys[4] => $this->getUpdateTime(),
-            $keys[5] => $this->getUpdateUser(),
+            $keys[2] => $this->getPath(),
+            $keys[3] => $this->getDescription(),
+            $keys[4] => $this->getDisplay(),
+            $keys[5] => $this->getUpdateTime(),
+            $keys[6] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1082,15 +1131,18 @@ abstract class RestrictionType implements ActiveRecordInterface
                 $this->setName($value);
                 break;
             case 2:
-                $this->setDescription($value);
+                $this->setPath($value);
                 break;
             case 3:
-                $this->setDisplay($value);
+                $this->setDescription($value);
                 break;
             case 4:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 5:
+                $this->setUpdateTime($value);
+                break;
+            case 6:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1126,16 +1178,19 @@ abstract class RestrictionType implements ActiveRecordInterface
             $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDescription($arr[$keys[2]]);
+            $this->setPath($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDisplay($arr[$keys[3]]);
+            $this->setDescription($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateTime($arr[$keys[4]]);
+            $this->setDisplay($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setUpdateUser($arr[$keys[5]]);
+            $this->setUpdateTime($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setUpdateUser($arr[$keys[6]]);
         }
     }
 
@@ -1183,6 +1238,9 @@ abstract class RestrictionType implements ActiveRecordInterface
         }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_NAME)) {
             $criteria->add(RestrictionTypeTableMap::COL_NAME, $this->name);
+        }
+        if ($this->isColumnModified(RestrictionTypeTableMap::COL_PATH)) {
+            $criteria->add(RestrictionTypeTableMap::COL_PATH, $this->path);
         }
         if ($this->isColumnModified(RestrictionTypeTableMap::COL_DESCRIPTION)) {
             $criteria->add(RestrictionTypeTableMap::COL_DESCRIPTION, $this->description);
@@ -1283,6 +1341,7 @@ abstract class RestrictionType implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
+        $copyObj->setPath($this->getPath());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setDisplay($this->getDisplay());
         $copyObj->setUpdateTime($this->getUpdateTime());
@@ -1855,6 +1914,7 @@ abstract class RestrictionType implements ActiveRecordInterface
     {
         $this->restriction_type_id = null;
         $this->name = null;
+        $this->path = null;
         $this->description = null;
         $this->display = null;
         $this->update_time = null;

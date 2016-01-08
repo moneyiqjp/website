@@ -129,6 +129,9 @@
                         label: "Display:",
                         name: "Display"
                     }, {
+                        label: "Path:",
+                        name: "Path"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -258,7 +261,8 @@
                     {"data": "RestrictionTypeId", edit: false},
                     {"data": "Name", width: "15%"},
                     {"data": "Description", width:"25%"},
-                    {"data": "Display", width: "40%"},
+                    {"data": "Display", width: "30%"},
+                    {"data": "Path", width: "30%"},
                     {"data": "UpdateTime", edit: false, visible: false},
                     {"data": "UpdateUser", visible: false}
                 ]
@@ -373,6 +377,7 @@
             <th>Attribute</th>
             <th>Description</th>
             <th>Display</th>
+            <th>Path</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -384,6 +389,7 @@
             <th>Attribute</th>
             <th>Description</th>
             <th>Display</th>
+            <th>Path</th>
             <th>Updated</th>
             <th>User</th>
         </tr>

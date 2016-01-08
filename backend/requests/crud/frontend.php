@@ -9,10 +9,25 @@ include_once(__DIR__ . "/../../Db/CRUD/frontend.php");
 use Db\CRUD;
 
 
+
+$app->get('/allscenes', function () use ($app) {
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $jTableResult = array();
+    try {
+        $jTableResult['data'] = Db\CRUD\GetAllScenes();
+    } catch (\Exception $ex) {
+        $result['error'] = $ex->getMessage();
+        $app->getLog()->error($ex);
+    }
+
+
+    echo json_encode($jTableResult);
+
+});
+
+
 $app->get('/allpersonas', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $db = new \Db\Db();
     $jTableResult = array();
     try {
         $jTableResult['data'] = Db\CRUD\GetAllPersonas();
@@ -28,22 +43,7 @@ $app->get('/allpersonas', function () use ($app) {
 
 
 
-$app->get('/allscenes', function () use ($app) {
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
-    $db = new \Db\Db();
-    $jTableResult = array();
-    try {
-        $jTableResult['data'] = Db\CRUD\GetAllScenes();
-    } catch (\Exception $ex) {
-        $result['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
-
-
-    echo json_encode($jTableResult);
-
-});
 
 //Define a HTTP GET route:
 // handle GET requests for /articles
