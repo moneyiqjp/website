@@ -1,0 +1,339 @@
+/*
+Theme Name: Kronenburg
+Description: Fourth version of the MoneyIQ blog theme
+Author: Ben Fries
+Author URI: http://moneyiq.jp/
+Version: 4.0
+Tags: responsive, light, bootstrap
+
+
+@import url('bootstrap/css/bootstrap.css');
+@import url('bootstrap/css/bootstrap-responsive.css');
+*/
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
+
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.eot');
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.eot?#iefix') format('embedded-opentype'),
+    url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Regular-subset.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Noto Sans Japanese';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.eot');
+    src: url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.eot?#iefix') format('embedded-opentype'),
+    url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.woff') format('woff');
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Noto Sans Japanese', sans-serif;
+    color: rgb(75, 75, 75);
+}
+
+body.single div.content {
+    font-size: 1.1em;
+}
+
+body.single {
+    background-color: #fafafa;
+}
+
+.sidebar-widget hr {
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+    height: 1px;
+    color: rgb(30,30,30);
+    width: 100%;
+    text-align:center;
+    margin: 2px auto 5px auto;
+}
+
+.sidebar-widget {
+    padding-top: 15px;
+}
+
+.sidebar-widget-title {
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 1.25em;
+}
+
+body.single .container div.light.col-sm-3 {
+    padding: 0 0 0 25px;
+
+}
+
+div.primary-sidebar {
+    background-color: #ffffff;
+    margin: 0 0 0 0;
+    padding: 0 0.25em 5em 0.25em;
+    top: 0;
+    bottom: auto;
+    width: 100%;
+
+}
+div.container.light {
+    background-color: #ffffff;
+}
+
+body.single .container div.light.col-sm-9 {
+    padding-bottom: 250px;
+    background-color: #ffffff;
+}
+
+body.single  .miqfooter {
+    margin-top: 0;
+}
+
+body.single div.slider-size div.container {
+}
+
+body.single .caption {
+    height: 100%;
+    padding-top: 10%;
+    color: rgb(110,149,104);
+    font-weight: 900;
+    font-size: 1.25em;
+    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
+    width: 80%;
+}
+}
+
+.jumbotron {
+    margin-bottom:0;
+}
+
+h3 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.excerpt {
+    overflow: hidden;
+}
+
+.miqheader{
+    margin: 0 0 1rem 0;
+    background-size: cover;
+    background: url('img/hero.png') no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+}
+
+.miqfooter{
+    margin-top: 10rem;
+}
+
+.miqfooter .dark {
+    color: rgb(211, 208, 165);
+    background-color: rgb(50, 50, 50);
+    padding: 2rem 0 2rem 0;
+}
+
+.miqfooter .light {
+    color: rgb(255, 255, 255);
+    background-color: rgb(211, 208, 165);
+    padding: 2rem 0 2rem 0;
+}
+
+
+hr{
+    width: 50%;
+}
+.miqheader a{
+    text-decoration: none;
+    color: white;
+}
+
+.image-textoverlay {position: relative;}
+.image-textoverlay .col {position: absolute; z-index: 1; top: 0; left: 0;}
+
+
+.tint{
+    zoom: 1;
+    /* This works in IE 8 & 9 too */
+    /* ... but also 5, 6, 7 */
+    filter: alpha(opacity=50);
+
+    /* Older than Firefox 0.9 */
+    -moz-opacity:0.5;
+
+    /* Safari 1.x (pre WebKit!) */
+    -khtml-opacity: 0.5;
+
+    /* Modern!
+    /* Firefox 0.9+, Safari 2?, Chrome any?
+    /* Opera 9+, IE 9+ */
+    opacity: 0.5;
+
+    background-color: aquamarine;
+}
+
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+
+/*
+.carousel-control {
+    display: table;
+    width: 20px;
+    height: 500px;
+}
+
+.carousel-control .carousel-control-center {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: normal;
+    font-size: 120px;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    background-color: transparent;
+    border: 0;
+    z-index: 10;
+}
+*/
+.post-thumbnail a h3,
+.post-thumbnail a h3:hover{
+    color: rgb(110,149,105);
+    font-size: 1.5em;
+}
+
+.navbar a{
+    color: rgb(110,149,105);
+}
+
+.slider-size {
+    height: 500px; /* This is your slider height */
+}
+.carousel {
+    width:100%;
+    margin:0 auto 2rem auto; /* center your carousel if other than 100% */
+}
+
+.carousel-caption1{
+    padding-top: 75px;
+    padding-right:10%;
+}
+
+.carousel-caption1 h1 a {
+    color: rgb(110,149,104);
+    font-weight: 900;
+    font-size: 1.25em;
+    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
+    width: 80%;
+}
+
+.carousel-caption {
+    position: relative;
+    width: inherit;
+    padding-left: inherit;
+    left: auto;
+    text-align: left;
+    top: 0;
+    bottom: 0;
+    z-index: 18;
+    margin-left: inherit;
+}
+.lead {
+    margin: 0;
+    line-height: 1.25;
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: white;
+    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
+    z-index: 18;
+}
+
+.carousel-control {
+    width: 40px;
+    font-size: 100px;
+    padding-top: 170px;
+ }
+
+.carousel .item {
+    height: 500px;
+}
+
+.carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 500px;
+    max-width: none;
+}
+.carousel-indicators{
+    margin-bottom: 0;
+    top:auto;
+    bottom: 0;
+}
+
+.carousel-indicators > li.active {
+    background: rgba(110,149,104,0.85);
+    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
+    color: #ffffff;/* rgba(233,145,61,0.95);*/
+    font-weight: 800;
+    font-size: 1.5rem;
+    width: auto;
+    max-width: 18%;
+    min-width: 150px;
+    top:auto;
+    bottom: 0;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-width: 0;
+    text-indent: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 1em 1em 1em 1em;
+}
+
+.carousel-indicators > li {
+    color: #ffffff;/*rgb(205,200,165);*/
+    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
+    font-weight: 800;
+    font-size: 1.5rem;
+    width: auto;
+    max-width: 18%;
+    min-width: 150px;
+    top:auto;
+    bottom: 0;
+    height: auto;
+    border-radius: 0;
+    border-width: 0;
+    text-indent: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 1em 1em 0.5em 1em;
+}
+/*
+.carousel-indicators > li.active {
+    background: white;
+}
+*/
+/*
+.carousel-caption {
+    background-color: transparent;
+    position: static;
+    max-width: 550px;
+    padding: 0 20px;
+    margin-top: 200px;
+}
+
+.carousel-caption h1,
+.carousel-caption .btn {
+    margin-top: 10px;
+}
+*/
