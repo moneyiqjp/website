@@ -26,7 +26,13 @@ BEGIN
 		SELECT 'EXISTED map_persona_store';
 	end if;	
 
-
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='restriction_type' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='path') THEN
+		ALTER TABLE `restriction_type`
+			ADD COLUMN `path` VARCHAR(255) NULL AFTER `name`;
+			SELECT 'ADDED restriction_type.path';
+	else
+			SELECT 'EXISTED restriction_type.path';
+	end if;
 
 
 	
