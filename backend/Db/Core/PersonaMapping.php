@@ -12,23 +12,43 @@ namespace Db\Core;
 use Db\Json\JFeatureType;
 use Db\Json\JGeneralRestriction;
 
+class StoreWithNegativeFlag extends Store {
+    public $Negative =0;
+
+    public static function CREATE(\Store $store) {
+        $that = new StoreWithNegativeFlag();
+        return $that->UpdateFromDB($store);
+    }
+
+    public function SetNegative($negative) {
+        $this->Negative = $negative;
+    }
+
+}
+
+
 class Store {
     public $Id;
     public $Name;
     public $IsMajor;
     public $Allocation;
 
+    public function UpdateFromDB(\Store $store) {
+        $this->Id = $store->getStoreId();
+        $this->Name = $store->getStoreName();
+        $this->IsMajor = $store->getIsMajor();
+        if(!is_null($store->getAllocation())) {
+            $this->Allocation = $store->getAllocation() * 0.01;
+        } else {
+            $this->Allocation = 10 * 0.01;
+        }
+        return $this;
+    }
+
     public static function CREATE(\Store $store) {
         $that = new Store();
-        $that->Id = $store->getStoreId();
-        $that->Name = $store->getStoreName();
-        $that->IsMajor = $store->getIsMajor();
-        if(!is_null($store->getAllocation())) {
-            $that->Allocation = $store->getAllocation() * 0.01;
-        } else {
-            $that->Allocation = 10 * 0.01;
-        }
-        return $that;
+
+        return $that->UpdateFromDB($store);
     }
 }
 
@@ -71,7 +91,7 @@ class RewardCategory {
 
 class SceneWithPersona extends Scene{
     public $Persona;
-
+/*
     private function AddStoresFromPersona(\Persona $pers) {
         $addList = array(); $removeList = array();
         foreach($pers->getMapPersonaStores() as $map) {
@@ -92,14 +112,14 @@ class SceneWithPersona extends Scene{
         $this->AddStoresToScene($addList);
         $this->RemoveStoresFromScene($removeList);
     }
-
+*/
     public function UpdateFromScene(\Scene $scene) {
         parent::UpdateFromScene($scene);
         $this->Persona = array();
 
         foreach($scene->getMapPersonaScenes() as $map) {
             array_push($this->Persona, Persona::CREATE($map->getPersona()));
-            $this->AddStoresFromPersona($map->getPersona());
+            //$this->AddStoresFromPersona($map->getPersona());
         }
 
         return $this;
@@ -158,7 +178,6 @@ class Scene {
     public function RemoveStore($store) {
         $this->RemoveStoresFromScene(Array($store));
     }
-*/
     public function AddStoresToScene($stores) {
         //New stores are always added
         $newStores = array(); $storeIds = array();
@@ -198,6 +217,7 @@ class Scene {
 
         return $this;
     }
+*/
 
 }
 
@@ -338,6 +358,7 @@ class Persona {
     public $DefaultSpend;
     public $Sorting;
     public $RewardCategory;
+    public $Stores=array();
 
     public function Persona(){}
 
@@ -349,6 +370,14 @@ class Persona {
         $this->DefaultSpend = $pers->getDefaultSpend();
         $this->Sorting = $pers->getSorting();
         $this->RewardCategory = RewardCategory::CREATE($pers->getRewardCategory());
+
+        $st = null;
+        foreach( $pers->getMapPersonaStores() as $map) {
+            $st = StoreWithNegativeFlag::CREATE($map->getStore());
+            $st->SetNegative($map->getNegative());
+            array_push($this->Stores, $st);
+        }
+
     }
 
 

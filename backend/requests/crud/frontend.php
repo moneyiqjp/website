@@ -20,7 +20,6 @@ $app->get('/allscenes', function () use ($app) {
         $app->getLog()->error($ex);
     }
 
-
     echo json_encode($jTableResult);
 
 });
@@ -42,11 +41,6 @@ $app->get('/allpersonas', function () use ($app) {
 });
 
 
-
-
-
-//Define a HTTP GET route:
-// handle GET requests for /articles
 $app->get('/allcards', function () use ($app) {
     // query database for all cards
 
@@ -111,6 +105,3 @@ $app->post('/mailinglist/add', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
-
-
-?>

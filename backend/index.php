@@ -1639,5 +1639,3 @@ require_once 'requests/crud/payment_type.php';
 
 //Run the Slim application:
 $app->run();
-
-?>
