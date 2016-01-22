@@ -9,12 +9,7 @@ function wpbootstrap_scripts_with_jquery()
 }
 add_action( 'wp_enqueue_scripts', 'wpbootstrap_scripts_with_jquery' );
 
-function register_menus() {
-    register_nav_menus(
-        array(
-            'internal-links' => 'InternalLinks'
-        ));
-}
+
 
 
 /**
@@ -36,7 +31,6 @@ function arphabet_widgets_init() {
 add_action( 'widgets_init', 'arphabet_widgets_init' );
 
 
-add_action( 'init', 'register_menus' );
 
 add_theme_support( 'post-thumbnails' );
 add_image_size( 'post-preview', 370, 222 );

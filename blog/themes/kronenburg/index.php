@@ -8,7 +8,7 @@
         $count = -1;
         foreach ( $lastposts as $post ):  $count++;
     ?>
-        <li data-target="#moneyiq-index-carousel" data-slide-to="<?php echo $count;?> " <?php if($count==0) { echo " class='active'";} ?>>
+        <li data-target="#moneyiq-index-carousel" data-slide-to="<?php echo $count;?> " class="hidden-xs <?php if($count==0) { echo "active";} ?>">
             <?php the_title(); ?>
         </li>
     <?php endforeach; ?>
@@ -32,7 +32,7 @@
                 <div class="container">
                     <div class="carousel-caption1">
                         <h1><a href='<?php echo get_permalink(); ?>'><?php the_title(); ?></a></h1>
-                        <p class="lead"><?php echo get_the_excerpt(); ?></p>
+                        <p class="lead hidden-xs"><?php echo get_the_excerpt(); ?></p>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
         <div class="post-thumbnail">
             <?php if ( has_post_thumbnail() ) : ?>
                 <a href='<?php echo get_permalink() ?>'>
-                    <img class="img-responsive" src="<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );
+                    <img class="img-responsive" src="<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-preview' );
                     //get_the_post_thumbnail();
                     ?>" alt="<?php the_title_attribute() ?>">
                 </a>

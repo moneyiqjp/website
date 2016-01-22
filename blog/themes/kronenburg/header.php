@@ -11,23 +11,29 @@
     <?php if( is_single() ): ?>
         <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/main_reduced.css">
     <?php endif; ?>
+    <?php  wp_head();  ?>
+</head>
 </head>
 <body <?php body_class( $class ); ?> >
 
-<div class="container light">
+<div class="container light blog-page-header">
+    <!--
     <div class="row">
-
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <a class="" href="<?php bloginfo('url'); ?>">
-                <img alt="MoneyIQ Logo" src="<?php bloginfo('template_directory'); ?>/img/moneyiq_web.png"/>
+                <img alt="MoneyIQ Logo" src="<?php bloginfo('template_directory'); ?>/img/moneyiq_web.png" width="216px" height="75" />
             </a>
         </div>
-        <div class="col-sm-8">
-            <nav class="navbar" style="margin-top: 50px; margin-bottom: 0; margin-right: 0; padding-right:0">
+        <div class="col-sm-9">
+        -->
+            <nav class="navbar" style="margin-top: 0px; margin-bottom: 0; margin-right: 0; padding-right:0">
                 <div class="container-fluid"  style="padding-right: 0">
 
                     <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
+                        <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
+                            <img alt="MoneyIQ Logo" src="<?php bloginfo('template_directory'); ?>/img/moneyiq_web.png" width="144px" height="50px" />
+                        </a>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#blog-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
@@ -46,19 +52,31 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">最強クレジットカード2016年</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">最強 ANAマイレージカード</a></li>
-                                    <li><a href="#">最強 JALマイレージカード</a></li>
-                                    <li><a href="#">最強 ゴールドクレジットカード</a></li>
-                                    <li><a href="#">最強ポイント付きクレジットカード</a></li>
-                                    <li><a href="#">最強 キャッシュバッククレジットカード</a></li>
+                                    <?php
+                                    $args = array( 'posts_per_page' => 5, "cat" => 7 );
+                                    $lastposts = get_posts( $args );
+                                    $start = true;
+                                    foreach ( $lastposts as $post ) :  setup_postdata( $post );
+                                    ?>
+                                    <li><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></li>
+                                    <?php endforeach; wp_reset_postdata(); ?>
                                 </ul>
                             </li>
-                            <li><a href="#">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="dropdown1" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-slack"></i>
                                     レビュー
-                                </a></li>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php
+                                    $args = array( 'posts_per_page' => 5, "cat" => 13 );
+                                    $lastposts = get_posts( $args );
+                                    foreach ( $lastposts as $post ) :  setup_postdata( $post ); ?>
+                                        <li><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></li>
+                                    <?php endforeach; wp_reset_postdata(); ?>
+                                </ul>
+                            </li>
                             <li class="dropdown">
 
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" id="dropdown2" aria-haspopup="true" aria-expanded="false">
@@ -66,34 +84,28 @@
                                     目的別ランキング<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">ANA</a></li>
-                                    <li><a href="#">空マイラー</a></li>
-                                    <li><a href="#">陸マイラー</a></li>
-                                    <li><a href="#">年会費無料</a></li>
-                                    <li><a href="#">JAL</a></li>
-                                    <li><a href="#">フライトで貯まる</a></li>
-                                    <li><a href="#">ショッピングで貯まる</a></li>
-                                    <li><a href="#">年会費無料</a></li>
-                                    <li><a href="#">ゴールドカード</a></li>
-                                    <li><a href="#">マイレージ</a></li>
-                                    <li><a href="#">旅行</a></li>
-                                    <li><a href="#">年会費が１万円以下</a></li>
-                                    <li><a href="#">キャッシュバック</a></li>
-                                    <li><a href="#">銀行振り込み型</a></li>
-                                    <li><a href="#">請求に充当</a></li>
-                                    <li><a href="#">電子マネー充当</a></li>
+
+                                <?php
+                                    $locations = get_nav_menu_locations();
+                                    $menu_name = 'internal-links';
+                                    $menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
+                                    $menu_items = wp_get_nav_menu_items($menu->term_id);
+                                    foreach ( (array) $menu_items as $key => $menu_item ): ?>
+                                            <li><a href="<?php echo $menu_item->url; ?>"><?php echo $menu_item->title; ?></a></li>
+                                <?php endforeach; ?>
                                 </ul>
                             </li>
-                            <li><a href="#">
-                                    <i class="fa fa-database"></i>
-                                    データブログ
-                                </a></li>
+                            <li class="navbar-inverse "><a href="http://www.moneyiq.jp">
+                                    <i class="fa fa-credit-card"></i>
+                                    カード検索
+                                </a>
+                            </li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div><!-- /.container-fluid -->
             </nav>
-        </div><!-- /column -->
-    </div><!-- /row -->
+        <!--</div> /column -->
+    <!--</div> /row -->
     <!--
     <div class="jumbotron miqheader">
         <div class="row">

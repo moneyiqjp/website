@@ -7,6 +7,23 @@
  */
 
 
+function register_menus() {
+    register_nav_menus(
+        array(
+            'internal-links' => 'InternalLinks'
+        ));
+}
+add_action( 'init', 'register_menus' );
+
+function the_content_shortcodefilter($content) {
+    $block = join("|",array("result", "resultbox", "merit", "demerit", "item"));
+    $rep = preg_replace("/(<p>)?\[($block)(\s[^\]]+)?\](<\/p>|<br \/>)?/","[$2$3]",$content);
+    $rep = preg_replace("/(<p>)?\[\/($block)](<\/p>|<br \/>)?/","[/$2]",$rep);
+    return $rep;
+}
+add_filter("the_content", "the_content_shortcodefilter");
+
+
 /**
  * Register our sidebars and widgetized areas.
  *
@@ -26,6 +43,72 @@ function arphabet_widgets_init() {
 add_action( 'widgets_init', 'arphabet_widgets_init' );
 
 // Add Shortcode
+function result_shortcode( $atts, $content = null ) {
+    return '<div class="kb-result">' . do_shortcode($content) . '</div>';
+}
+add_shortcode( 'result', 'result_shortcode' );
+function resultbox_shortcode( $atts, $content = null ) {
+    // Attributes
+    $params = shortcode_atts(
+        array(
+            'title' => '',
+            'type' => '',
+            'width' => 98
+        ), $atts );
+
+    $header = $params['title'];
+    /*
+     $width =  strlen($params['width'])>0?'style="width:' . $params['width'] .'%;float:left;"':"";
+     */
+    $width =  $params['width']<=50?'halfsize':"fullsize";
+    $typeclass = "";
+    switch(strtolower($params['type'])) {
+        case "merit":
+            $typeclass="kb-merit";
+            break;
+        case "demerit":
+            $typeclass="kb-merit";
+            break;
+        default:
+            $typeclass="kb-general";
+    }
+
+    return '<div class="kb-merit-block ' . $typeclass . " " . $width . '" ' . $width .'>'
+    . '<div class="kb-merit-header">' . $header . '</div>'
+    . '<div class="kb-merit-content"><ul class="fa-ul">' . do_shortcode($content) . '</ul></div>'
+    .'</div>';
+}
+add_shortcode( 'resultbox', 'resultbox_shortcode' );
+
+function merit_shortcode( $atts, $content = null ) {
+    return '<li><i class="fa-li fa fa-check-square"></i>' . do_shortcode($content) . '</li>';
+}
+add_shortcode( 'merit', 'merit_shortcode' );
+function demerit_shortcode( $atts, $content = null ) {
+    return '<li><i class="fa-li fa fa-times-circle"></i>' . do_shortcode($content) . '</li>';
+}
+add_shortcode( 'demerit', 'demerit_shortcode' );
+function item_shortcode( $atts, $content = null ) {
+    return '<li><i class="fa-li fa fa-bullseye"></i>' . do_shortcode($content) . '</li>';
+}
+add_shortcode( 'item', 'item_shortcode' );
+
+function inlinetable_shortcode( $atts, $content = null ) {
+    // Attributes
+    $params = shortcode_atts(
+        array(
+            'title' => ''
+        ), $atts );
+
+    $header = $params['title'];
+    return '<div class="kb-inline-table-row">'
+            . '<div class="kb-inline-table-header">' . $header . '</div>'
+            . '<div class="kb-inline-table-content">' . $content . '</div>'
+            .'</div>';
+}
+add_shortcode( 'inlinetable', 'inlinetable_shortcode' );
+
+
 function generate_cardelement( $atts ) {
     // Attributes
     $params = shortcode_atts(
@@ -81,7 +164,7 @@ function register_menus() {
 add_action( 'init', 'register_menus' );
 */
 add_theme_support( 'post-thumbnails' );
-add_image_size( 'post-preview', 370, 222 );
+add_image_size( 'post-preview', 630, 420, true );
 add_image_size( 'post-feature-small', 800, 480 );
 add_image_size( 'post-feature', 1000, 600, true );
 add_image_size( 'post-feature-large', 1200, 720, true );

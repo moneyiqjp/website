@@ -12,6 +12,69 @@ Tags: responsive, light, bootstrap
 */
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
 
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+    .kb-merit-block.halfsize {
+        width:100%;
+        float:none;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+    .kb-merit-block.halfsize {
+        width:100%;
+        float:none;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .kb-merit-block.halfsize {
+        width:100%;
+        float:none;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .kb-merit-block.halfsize {
+        width:50%;
+        float:left;
+    }
+
+
+    .kb-merit-block.fullsize  {
+        display: block;
+        float: none;
+        clear: both;
+        width: 100%;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .kb-merit-block.halfsize {
+        width:50%;
+        float:left;
+    }
+
+
+    .kb-merit-block.fullsize {
+        display: block;
+        float: none;
+        clear: both;
+        width: 100%;
+    }
+
+}
+
+
+
 @font-face {
     font-family: 'Noto Sans Japanese';
     font-style: normal;
@@ -30,8 +93,9 @@ Tags: responsive, light, bootstrap
     url('../../../../fonts/NotoSansCJKjp-hinted/NotoSansCJKjp-Bold-subset.woff') format('woff');
 }
 
+
 body {
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'Noto Sans Japanese', sans-serif;
     color: rgb(75, 75, 75);
 }
@@ -55,6 +119,10 @@ body.single {
 
 .sidebar-widget {
     padding-top: 15px;
+    display: block;
+    float: none;
+    clear: both;
+    width: 100%;
 }
 
 .sidebar-widget-title {
@@ -62,6 +130,19 @@ body.single {
     text-align: center;
     margin-bottom: 0;
     font-size: 1.25em;
+}
+.sidebar-widget h2 {
+    font-size: 1.05em;
+    font-weight: 600;
+}
+.sidebar-widget div {
+    text-align:center;
+}
+
+.sidebar-widget img {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body.single .container div.light.col-sm-3 {
@@ -103,15 +184,21 @@ body.single .caption {
     text-shadow: 1px 2px 3px rgba(0,0,0,.4);
     width: 80%;
 }
-}
+
 
 .jumbotron {
     margin-bottom:0;
 }
 
-h3 {
+h1 {
     font-size: 2em;
     font-weight: bold;
+}
+
+h3 {
+    font-size: 1.5em;
+    font-weight: bolder;
+    margin-top: 1.5em;
 }
 
 .excerpt {
@@ -205,8 +292,31 @@ hr{
     font-size: 1.5em;
 }
 
+
 .navbar a{
     color: rgb(110,149,105);
+}
+
+.navbar-inverse a{
+    color: rgb(255,255,255);
+}
+.navbar-toggle {
+    border-color:  rgb(110,149,105);
+}
+.icon-bar {
+    background-color:  rgb(110,149,105);
+}
+
+.navbar-brand {
+    padding: 0 0 0 0 ;
+}
+
+.blog-page-header {
+    padding-top: 1em;
+}
+
+.blog-page-header .navbar-inverse {
+    background-color: rgb(110,149,105);
 }
 
 .slider-size {
@@ -337,3 +447,130 @@ hr{
     margin-top: 10px;
 }
 */
+
+
+/* ShortCode */
+
+/* InlineTable */
+.kb-inline-table-row {
+    width:100%;
+}
+.kb-inline-table-header {
+    width:25%;
+    height:100%;
+    margin-top: 1px;
+    float: left;
+    background-color:  rgb(160, 188, 118);
+    color:white;
+    padding: 2px 0.5em 2px 0.5em;
+    display: table-cell;
+}
+.kb-inline-table-content {
+    width:74%;
+    margin-top: 1px;
+    margin-left: 1px;
+    float: left;
+    background-color:  rgb(211, 208, 165);
+    padding: 2px 0.5em 2px 0.5em;
+    margin-bottom: 1px;
+    display: table-cell;
+}
+
+/* Merit &demerit
+.kb-merit-block {
+}
+*/
+
+.kb-merit-header {
+    border-bottom: solid;
+    border-width:1px;
+    /*
+    border-color: rgb(160, 188, 118);
+    color:rgb(160, 188, 118);
+    */
+    border-color:rgb(110, 149, 105);
+    color:rgb(110, 149, 105);
+    font-size: 1.2em;
+    font-weight: 600;
+
+}
+
+.kb-merit-content {
+
+}
+
+.kb-result{
+
+    background-color: rgb(248, 248, 240);
+    border-radius: 5px;
+    padding: 0.75em 0.5em 0.75em 0.5em;
+
+}
+
+.kb-result:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.kb-merit li {
+
+}
+.kb-merit li {
+
+}
+
+.kb-general li {
+
+}
+
+
+
+
+
+/* Most popular plugins */
+
+.wpp-list {
+    display: inline;
+    float: left;
+    background-color: white;
+}
+.wpp-list a {
+    border: 1px solid #EEE!important;
+    box-shadow: none!important;
+    margin: 2px 10px 2px 0;
+    padding: 3px!important;
+}
+.wpp-list img {
+    vertical-align: middle;
+}
+
+.wpp-list li {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    list-style-type: none;
+}
+
+.wpp-list a.wpp-post-title {
+    background: none!important;
+    clear: none;
+    margin-bottom: 0!important;
+    margin-top: 0!important;
+    font-weight: 400;
+    font-size: 12px!important;
+    line-height: 1.5em;
+    border: 0!important;
+}
+
+ ul.wpp-list {
+    list-style: none!important;
+    margin-left: 0!important;
+    padding-left: 0!important;
+}
+
+.wpp-list .wpp-views {
+    color: #bbb;
+    font-size: 11px;
+}
