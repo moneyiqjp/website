@@ -8,12 +8,15 @@
 <div class="container content">
 <?php if ( is_active_sidebar( 'single_post_right' ) ) : ?>
     <div class="row">
-        <div class="col-sm-9 light">
+        <div class="col-sm-9 light single_post_content">
 <?php endif; ?>
             <h1><?php the_title(); ?></h1>
-            <p class="lead"><?php echo get_the_subtitle(); ?></p>
 
-            <?php if (function_exists('synved_social_share_markup')) echo synved_social_share_markup(); ?>
+            <?php if(strlen(get_the_subtitle()>0)): ?>
+                <p class="subtitle"><?php echo get_the_subtitle(); ?></p>
+            <?php endif;?>
+
+                <?php if (function_exists('synved_social_share_markup')) echo synved_social_share_markup(); ?>
             <p class="blog-pane-data-container">
                 <?php the_content(); ?>
             </p>
@@ -27,6 +30,9 @@
                 </div>
             </div>
 
+    <?php if ( is_user_logged_in() ) : ?>
+        <?php edit_post_link('edit', '<div class="row light">', '</div>'); ?>
+    <?php endif; ?>
 <?php else: ?>
             post_right does not exist
 <?php endif; ?>
@@ -35,6 +41,15 @@
     </div>
 
 
-<script src="http://www.moneyiq.jp/js/main.js"></script>
-<script></script>
+ <script src="http://www.moneyiq.jp/js/main.js"></script>
+<script>
+    jQuery(document).ready(function(){
+        jQuery("div.kb-merit ul").addClass("fa-ul");
+        jQuery("div.kb-merit li").prepend("<i class='fa-li fa fa-check-square'></i>");
+        jQuery("div.kb-demerit ul").addClass("fa-ul");
+        jQuery("div.kb-demerit li").prepend("<i class='fa-li fa fa-times-circle'></i>");
+        jQuery("div.kb-general ul").addClass("fa-ul");
+        jQuery("div.kb-general li").prepend("<i class='fa-li fa fa-bullseye'></i>");
+    });
+</script>
 <?php get_footer(); ?>

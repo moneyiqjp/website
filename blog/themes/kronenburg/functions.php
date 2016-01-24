@@ -80,18 +80,62 @@ function resultbox_shortcode( $atts, $content = null ) {
 }
 add_shortcode( 'resultbox', 'resultbox_shortcode' );
 
+function generic_meritbox( $atts, $content = null ) {
+    // Attributes
+    $params = shortcode_atts(
+        array(
+            'title' => '',
+            'type' => '',
+            'width' => ''
+        ), $atts );
+
+/*
+    $typeclass = "";
+    switch(strtolower()) {
+        case "merit":
+            $typeclass="kb-merit";
+            break;
+        case "demerit":
+            $typeclass="";
+            break;
+        default:
+            $typeclass="kb-general";
+    }
+    */
+
+    return '<div class="kb-merit-block ' . $params['type'] . " " . $params['width'] . '">'
+    . '<div class="kb-merit-header">' . $params['title'] . '</div>'
+    . '<div class="kb-merit-content">' . do_shortcode($content) . '</div>'
+    .'</div>';
+}
 function merit_shortcode( $atts, $content = null ) {
-    return '<li><i class="fa-li fa fa-check-square"></i>' . do_shortcode($content) . '</li>';
+    $atts['title']="メリット";
+    $atts['width']="halfsize";
+    $atts['type']="kb-merit";
+    return generic_meritbox( $atts, $content );
 }
 add_shortcode( 'merit', 'merit_shortcode' );
+
 function demerit_shortcode( $atts, $content = null ) {
-    return '<li><i class="fa-li fa fa-times-circle"></i>' . do_shortcode($content) . '</li>';
+    $atts['title']="デメリット";
+    $atts['width']="halfsize";
+    $atts['type']="kb-demerit";
+    return generic_meritbox( $atts, $content );
 }
 add_shortcode( 'demerit', 'demerit_shortcode' );
+
 function item_shortcode( $atts, $content = null ) {
-    return '<li><i class="fa-li fa fa-bullseye"></i>' . do_shortcode($content) . '</li>';
+    $atts['width']="fullsize";
+    $atts['type']="kb-general";
+    return generic_meritbox( $atts, $content );
 }
 add_shortcode( 'item', 'item_shortcode' );
+
+function intro_shortcode( $atts, $content = null ) {
+
+    return '<p class="introduction">' . do_shortcode($content) . '</p>';
+}
+add_shortcode( 'intro', 'intro_shortcode' );
 
 function inlinetable_shortcode( $atts, $content = null ) {
     // Attributes
@@ -152,6 +196,12 @@ function generate_cardelement( $atts ) {
 
 }
 add_shortcode( 'cardelement', 'generate_cardelement' );
+
+
+function my_scripts_method() {
+    wp_enqueue_script('flexslider', get_template_directory_uri().'/js/main.js', array('jquery'), null, true);
+}
+add_action( 'wp_enqueue_scripts', 'my_scripts_method', 20 );
 
 /*
 function register_menus() {

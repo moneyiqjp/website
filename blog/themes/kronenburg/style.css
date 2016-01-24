@@ -18,6 +18,13 @@ Tags: responsive, light, bootstrap
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
+    body {
+        font-size: 14px;
+        font-family: 'Noto Sans Japanese', sans-serif;
+        color: rgb(75, 75, 75);
+        line-height: 150%;
+    }
+
     .kb-merit-block.halfsize {
         width:100%;
         float:none;
@@ -94,14 +101,30 @@ Tags: responsive, light, bootstrap
 }
 
 
-body {
-    font-size: 14px;
-    font-family: 'Noto Sans Japanese', sans-serif;
-    color: rgb(75, 75, 75);
+body.single .introduction{
+    font-size: 1.2em;
+    font-weight: 600;
+    font-style: italic;
 }
+
 
 body.single div.content {
     font-size: 1.1em;
+}
+
+
+.single_post_content{
+    line-height: 175%;
+}
+
+
+body.single p{
+    margin-bottom: 0;
+}
+
+
+body.single i{
+    padding-top: 0.2em;
 }
 
 body.single {
@@ -185,21 +208,49 @@ body.single .caption {
     width: 80%;
 }
 
+.home hr{
+    width:90%;
+    border: 0;
+    /*border-top: 2px solid #f8f8f0;*/
+    border-top: 1px solid #d3d0a5;;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+body.single hr{
+    width: 100%;
+    border-top: 1px solid #rgb(75,75,75);;
+    margin: 1em auto 1em auto;
+}
+
 
 .jumbotron {
     margin-bottom:0;
 }
 
 h1 {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 3rem;
+    font-weight: 700;
 }
 
 h3 {
     font-size: 1.5em;
     font-weight: bolder;
+}
+body.home h3 {
+    font-size: 1.5em;
+    font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+body.single h3 {
+    font-size: 1.5em;
+    font-weight: bolder;
     margin-top: 1.5em;
 }
+
+
 
 .excerpt {
     overflow: hidden;
@@ -230,9 +281,7 @@ h3 {
 }
 
 
-hr{
-    width: 50%;
-}
+
 .miqheader a{
     text-decoration: none;
     color: white;
@@ -286,6 +335,8 @@ hr{
     z-index: 10;
 }
 */
+
+
 .post-thumbnail a h3,
 .post-thumbnail a h3:hover{
     color: rgb(110,149,105);
@@ -359,6 +410,10 @@ hr{
     color: white;
     text-shadow: 1px 2px 3px rgba(0,0,0,.4);
     z-index: 18;
+}
+.subtitle {
+    font-size: 1.5em;
+    font-weight: bolder;
 }
 
 .carousel-control {

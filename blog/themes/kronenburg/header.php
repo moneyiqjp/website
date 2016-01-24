@@ -4,14 +4,15 @@
     <title>MoneyIQ Smart Life Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <?php //wp_enqueue_script("jquery"); ?>
+    <?php  wp_head();  ?>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link href="<?php bloginfo('stylesheet_url');?>" rel="stylesheet">
     <?php if( is_single() ): ?>
         <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/main_reduced.css">
     <?php endif; ?>
-    <?php  wp_head();  ?>
 </head>
 </head>
 <body <?php body_class( $class ); ?> >
@@ -106,27 +107,4 @@
             </nav>
         <!--</div> /column -->
     <!--</div> /row -->
-    <!--
-    <div class="jumbotron miqheader">
-        <div class="row">
-            <div class="col-sm-6">
-                <a href="<?php echo site_url(); ?>">
-                    <h1>Smart Life.</h1>
-                </a>
-            </div>
-            <div class="col-sm-6  hidden-xs hidden-sm text-right">
-                <a href="<?php echo site_url(); ?>">
-                    <h1 class="pull-right">Smart Money.</h1>
-                </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-2 miqhero">
-                <a href="<?php echo site_url(); ?>">
-                    <img src="<?php bloginfo('template_directory'); ?>/img/logo_white.png" class="img-responsive center-block">
-                </a>
-            </div>
-        </div>
-    </div>
-        -->
 </div>

@@ -11,6 +11,10 @@
     font-size:1.25rem;
     font-weight:bold;
 }
+.js-card-name{
+    font-weight: 600;
+    font-size: 1.2em;
+}
 
 .blog-heading {
     display:block;
@@ -75,6 +79,7 @@
     overflow:hidden;
     text-align:left;
     background-color: white;
+    line-height: 110%;
 }
 
 div.card-pane a, div.card-pane a:hover, div.card-pane a:visited {
