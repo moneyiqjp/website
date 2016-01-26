@@ -3,8 +3,13 @@
     <!-- Indicators -->
     <ol class="carousel-indicators">
     <?php
-        $args = array( 'posts_per_page' => 5 );
-        $lastposts = get_posts( $args );
+        $lastposts = get_transient('moneyiq_advertising');
+        if(!$lastposts) {
+            $lastposts = get_posts(array('posts_per_page' => 5, 'category' => 15));
+            set_transient('moneyiq_advertising', $lastposts, 60*60*12);
+        }
+        $args = array( 'posts_per_page' => 5, 'category' => 7 );
+        $lastposts = array_merge(get_posts( $args ), $lastposts );
         $count = -1;
         foreach ( $lastposts as $post ):  $count++;
     ?>
@@ -16,28 +21,25 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
 <?php
+    /*
     $args = array( 'posts_per_page' => 5 );
     $lastposts = get_posts( $args );
+    */
     $start = true;
     foreach ( $lastposts as $post ) :  setup_postdata( $post );
+            $link = in_category( 15, $_post )? "http://www.moneyiq.jp": get_permalink();
+
 ?>
         <div class="item <?php if($start) {echo "active"; $start=false;} ?>">
-
-<!--
-            <img class="tint"  src="<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>" alt="<?php the_title_attribute() ?>">
--->
             <div style="background: linear-gradient(rgba(110,149,104,0.3),rgba(110,149,104,0.3)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
-
-
                 <div class="container">
                     <div class="carousel-caption1">
-                        <h1><a href='<?php echo get_permalink(); ?>'><?php the_title(); ?></a></h1>
-                        <p class="lead hidden-xs"><?php echo get_the_excerpt(); ?></p>
+                        <h1><a href='<?php echo $link; ?>'><?php the_title(); ?></a></h1>
+                        <a href='<?php echo $link; ?>'><p class="lead hidden-xs"><?php echo get_the_excerpt(); ?></p></a>
                     </div>
                 </div>
             </div>
         </div>
-
     <?php endforeach; wp_reset_postdata(); ?>
     </div>
   <!-- Controls -->
@@ -48,7 +50,9 @@
 
 <div class="container light">
     <div class='row'>
-    <?php $counter=0; if ( have_posts() ) : while ( have_posts() ) : the_post();
+    <?php
+        query_posts( "cat=-15" );
+        $counter=0; if ( have_posts() ) : while ( have_posts() ) : the_post();
         $counter++;
         $tempo = $wp_query->post_count%3==0?3:$wp_query->post_count%3;
         $split=($wp_query->post_count+(3-$tempo))/3;

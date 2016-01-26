@@ -35,7 +35,7 @@
                         <a class="navbar-brand" href="<?php bloginfo('url'); ?>">
                             <img alt="MoneyIQ Logo" src="<?php bloginfo('template_directory'); ?>/img/moneyiq_web.png" width="144px" height="50px" />
                         </a>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#blog-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#blog-navbar-main" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>

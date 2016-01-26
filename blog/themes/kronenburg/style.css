@@ -29,6 +29,33 @@ Tags: responsive, light, bootstrap
         width:100%;
         float:none;
     }
+
+    .blockquote {
+        border-left: 10px solid rgb(0, 0, 0);
+        padding: 0.5em 10px;
+        margin: 1.5em auto 1.5em auto;
+        width:80%;
+    }
+    .blockquote-content {
+        color: rgb(0,0,0);
+        font-size: 1.5em;
+
+        font-family: "Arial Black", "Arial Rounded MT Bold", "Arial Unicode MS", sans-serif;
+        width:100%;
+    }
+
+    .blockquote-author {
+        padding-top: 0;
+        margin-top: 0;
+        vertical-align: top;
+        color: #ccc;
+        font-size: 1em;
+
+        font-family: "Arial Black", "Arial Rounded MT Bold", "Arial Unicode MS", sans-serif;
+        width:100%;
+    }
+
+
 }
 
 /* Extra Small Devices, Phones */
@@ -61,6 +88,7 @@ Tags: responsive, light, bootstrap
         clear: both;
         width: 100%;
     }
+
 }
 
 /* Large Devices, Wide Screens */
@@ -77,6 +105,8 @@ Tags: responsive, light, bootstrap
         clear: both;
         width: 100%;
     }
+
+
 
 }
 

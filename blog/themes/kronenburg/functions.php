@@ -152,6 +152,22 @@ function inlinetable_shortcode( $atts, $content = null ) {
 }
 add_shortcode( 'inlinetable', 'inlinetable_shortcode' );
 
+function quote_shortcode( $atts, $content = null ) {
+    // Attributes
+    $params = shortcode_atts(
+        array(
+            'author' => ''
+        ), $atts );
+
+    $author = "";
+    if(strlen($params['author'])>0) {
+        $author= '<div class="blockquote-author">' . $params['author'] . '</div>';
+    };
+    return '<div class="blockquote">'
+    . '<div class="blockquote-content">' . do_shortcode($content) . '</div>' . $author
+    .'</div>';
+}
+add_shortcode( 'quote', 'quote_shortcode' );
 
 function generate_cardelement( $atts ) {
     // Attributes
