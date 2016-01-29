@@ -56,6 +56,76 @@ Tags: responsive, light, bootstrap
     }
 
 
+    .slider-size {
+        height: 500px; /* This is your slider height */
+        position: relative;
+    }
+    .carousel {
+        width:100%;
+        margin:0 auto 2rem auto; /* center your carousel if other than 100% */
+    }
+
+    .carousel-caption1{
+        padding-top: 75px;
+        padding-right:10%;
+    }
+
+    .carousel-caption1 h1 a {
+        color: rgb(110,149,104);
+        font-weight: 900;
+        font-size: 1.25em;
+        text-shadow: 1px 2px 3px rgba(0,0,0,.4);
+        width: 80%;
+    }
+
+    .carousel-caption {
+        position: relative;
+        width: inherit;
+        padding-left: inherit;
+        left: auto;
+        text-align: left;
+        top: 0;
+        bottom: 0;
+        z-index: 18;
+        margin-left: inherit;
+    }
+
+    .bottom-right{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+    .credit-box {
+        background-color:  rgb(110,149,105);
+        color:white;
+        font-size: 0.8em;
+        padding: 0.5em 1em 0.5em 1em;
+    }
+
+    .credit-box a{
+        color: whitesmoke;
+        text-decoration: none;
+    }
+    .credit-box a:hover{
+        text-decoration: underline;
+    }
+
+    .blog-pane-data-container {
+        padding-top: 20px;
+    }
+
+    .kb-inline-table-header {
+        background-color:  rgb(160, 188, 118);
+        color:white;
+        margin-top: 1px;
+
+    }
+    .kb-inline-table-content {
+        background-color:  rgb(211, 208, 165);
+        margin-top: 1px;
+    }
+
 }
 
 /* Extra Small Devices, Phones */
@@ -71,6 +141,26 @@ Tags: responsive, light, bootstrap
     .kb-merit-block.halfsize {
         width:100%;
         float:none;
+    }
+    /* InlineTable */
+    .row.kb-inline-table-row {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display:         flex;
+        margin-bottom: 1px;
+    }
+
+    .kb-inline-table-header {
+        background-color:  rgb(160, 188, 118);
+        color:white;
+        margin-top: 0;
+    }
+
+    .kb-inline-table-content {
+        background-color:  rgb(211, 208, 165);
+        margin-left: 1px;
+        margin-top: 0;
     }
 }
 
@@ -88,6 +178,7 @@ Tags: responsive, light, bootstrap
         clear: both;
         width: 100%;
     }
+
 
 }
 
@@ -400,38 +491,6 @@ body.single h3 {
     background-color: rgb(110,149,105);
 }
 
-.slider-size {
-    height: 500px; /* This is your slider height */
-}
-.carousel {
-    width:100%;
-    margin:0 auto 2rem auto; /* center your carousel if other than 100% */
-}
-
-.carousel-caption1{
-    padding-top: 75px;
-    padding-right:10%;
-}
-
-.carousel-caption1 h1 a {
-    color: rgb(110,149,104);
-    font-weight: 900;
-    font-size: 1.25em;
-    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
-    width: 80%;
-}
-
-.carousel-caption {
-    position: relative;
-    width: inherit;
-    padding-left: inherit;
-    left: auto;
-    text-align: left;
-    top: 0;
-    bottom: 0;
-    z-index: 18;
-    margin-left: inherit;
-}
 .lead {
     margin: 0;
     line-height: 1.25;
@@ -536,30 +595,6 @@ body.single h3 {
 
 /* ShortCode */
 
-/* InlineTable */
-.kb-inline-table-row {
-    width:100%;
-}
-.kb-inline-table-header {
-    width:25%;
-    height:100%;
-    margin-top: 1px;
-    float: left;
-    background-color:  rgb(160, 188, 118);
-    color:white;
-    padding: 2px 0.5em 2px 0.5em;
-    display: table-cell;
-}
-.kb-inline-table-content {
-    width:74%;
-    margin-top: 1px;
-    margin-left: 1px;
-    float: left;
-    background-color:  rgb(211, 208, 165);
-    padding: 2px 0.5em 2px 0.5em;
-    margin-bottom: 1px;
-    display: table-cell;
-}
 
 /* Merit &demerit
 .kb-merit-block {

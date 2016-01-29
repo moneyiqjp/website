@@ -47,6 +47,7 @@ function result_shortcode( $atts, $content = null ) {
     return '<div class="kb-result">' . do_shortcode($content) . '</div>';
 }
 add_shortcode( 'result', 'result_shortcode' );
+/*
 function resultbox_shortcode( $atts, $content = null ) {
     // Attributes
     $params = shortcode_atts(
@@ -57,9 +58,9 @@ function resultbox_shortcode( $atts, $content = null ) {
         ), $atts );
 
     $header = $params['title'];
-    /*
-     $width =  strlen($params['width'])>0?'style="width:' . $params['width'] .'%;float:left;"':"";
-     */
+
+     //$width =  strlen($params['width'])>0?'style="width:' . $params['width'] .'%;float:left;"':"";
+
     $width =  $params['width']<=50?'halfsize':"fullsize";
     $typeclass = "";
     switch(strtolower($params['type'])) {
@@ -79,6 +80,7 @@ function resultbox_shortcode( $atts, $content = null ) {
     .'</div>';
 }
 add_shortcode( 'resultbox', 'resultbox_shortcode' );
+*/
 
 function generic_meritbox( $atts, $content = null ) {
     // Attributes
@@ -89,19 +91,6 @@ function generic_meritbox( $atts, $content = null ) {
             'width' => ''
         ), $atts );
 
-/*
-    $typeclass = "";
-    switch(strtolower()) {
-        case "merit":
-            $typeclass="kb-merit";
-            break;
-        case "demerit":
-            $typeclass="";
-            break;
-        default:
-            $typeclass="kb-general";
-    }
-    */
 
     return '<div class="kb-merit-block ' . $params['type'] . " " . $params['width'] . '">'
     . '<div class="kb-merit-header">' . $params['title'] . '</div>'
@@ -145,9 +134,9 @@ function inlinetable_shortcode( $atts, $content = null ) {
         ), $atts );
 
     $header = $params['title'];
-    return '<div class="kb-inline-table-row">'
-            . '<div class="kb-inline-table-header">' . $header . '</div>'
-            . '<div class="kb-inline-table-content">' . $content . '</div>'
+    return '<div class="row kb-inline-table-row">'
+            . '<div class="col-sm-4 kb-inline-table-header">' . $header . '</div>'
+            . '<div class="col-sm-8 kb-inline-table-content">' . $content . '</div>'
             .'</div>';
 }
 add_shortcode( 'inlinetable', 'inlinetable_shortcode' );
@@ -178,9 +167,6 @@ function generate_cardelement( $atts ) {
             ), $atts );
 
     $parameter = strlen($params['persona'])>0?$params['persona'] : $params['card'];
-
-
-
 
     return
         "<div class='card-pane $parameter'>"

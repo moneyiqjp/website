@@ -2,8 +2,16 @@
 
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 <div style="background: linear-gradient(rgba(110,149,104,0.3),rgba(110,149,104,0.3)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
-    <div class="container">
-    </div>
+    <!-- <div class="container slider-size"> -->
+        <?php
+            $credit = get_media_credit_html( get_post_thumbnail_id( $post ) );
+            if(strpos($credit, '| MoneyIQ') == false):
+        ?>
+        <div class="bottom-right credit-box">
+            <?php echo $credit  ?>
+        </div>
+        <?php endif; ?>
+    <!-- </div>-->
 </div>
 <div class="container content">
 <?php if ( is_active_sidebar( 'single_post_right' ) ) : ?>
