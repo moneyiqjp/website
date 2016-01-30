@@ -1,0 +1,525 @@
+/* BLOGS */
+
+
+.blog-section {
+    float:left;
+    margin: 1%;
+    height: 250px;
+    vertical-align: middle;
+    width: 96%;
+    cursor: pointer;
+    font-size:1.25rem;
+    font-weight:bold;
+}
+.js-card-name{
+    font-weight: 600;
+    font-size: 1.2em;
+}
+
+.blog-heading {
+    display:block;
+    padding:25% 15%;
+}
+
+.blog{
+    background: url("/img/blog.png") center no-repeat;
+    background-size: auto 100%;
+}
+
+.blog2{
+    background: url("/img/blog2.png") center no-repeat;
+    background-size: auto 100%;
+}
+
+.blog3{
+    background: url("/img/blog3.png") center no-repeat;
+    background-size: auto 100%;
+}
+
+.blog-btn {
+    clear:both;
+    margin: 30px auto 60px auto;
+    width:150px;
+    border:thin solid #d3d0a5;
+    border-radius:5px;
+    text-align:center;
+    font-size:16px;
+    padding:10px;
+    cursor: pointer;
+}
+
+.blog-btn:hover {
+    background-color: #e9913d;
+    border-color: #e9913d;
+    color:#fff;
+}
+
+/* RESULT PAGE */
+.results-container {
+    display:none;
+}
+
+.card-pane a, .card-pane-details a {
+    text-decoration:none;
+}
+
+.card-list-container, .card-list-header {
+//width:80%;
+    width:100%;
+    float:left;
+}
+
+/* CARD INFO */
+.card-pane {
+    margin: 20px 0 0 0;
+    border:thin solid #d3d0a5;
+    border-radius:5px;
+    color: #4b4b4b;
+    position:relative;
+    overflow:hidden;
+    text-align:left;
+    background-color: white;
+    line-height: 110%;
+}
+
+div.card-pane a, div.card-pane a:hover, div.card-pane a:visited {
+    color: white;
+}
+
+.card-pane-highlighted {
+    background-color:#f8f8f0;
+}
+
+.card-pane-details {
+    display:none;
+}
+
+.card-image-placeholder {
+    margin:40px auto 20px auto;
+    width:240px;
+    height:150px;
+    border-radius:4px;
+}
+
+div.persona-pane .card-image-placeholder {
+    margin-top:10px;
+    border:1px solid #fff;
+}
+
+.image-placeholder-details {
+    width:240px;
+    height:150px;
+    border-radius:4px;
+}
+
+
+.card-name {
+    clear:both;
+    width:100%;
+    font-weight:bold;
+    padding: 30px 20px 20px 20px;
+    font-size:0.9rem;
+}
+
+.card-name-details{
+    margin-left:0.5%;
+    float:left;
+    width:54.5%;
+}
+
+.card-article, .card-message{
+    color: #4b4b4b;
+    padding: 10px 0;
+    font-size:1.6rem;
+}
+
+
+.details-btn {
+    position:absolute;
+    top:0;
+    right:0;
+    overflow:hidden;
+    font-size:14px;
+    border-bottom-left-radius: 3px;
+    color:#fff;
+    background-color:#d3d0a5;
+    padding:5px 10px;
+    cursor:pointer;
+    visibility:hidden;
+}
+
+.rank {
+    color:#d3d0a5;
+    font-size:1.2rem;
+}
+
+.rank-number {
+    color:#fff;
+}
+
+.card-data-container, .card-point-rate, .card-points, .card-rewards, .card-stats-blog {
+    width:100%;
+}
+
+.card-image {
+    padding-top:15px;
+}
+
+.card-image-details {
+    float:left;
+    width:45%;
+}
+
+.card-image-rotate {
+    margin:0 auto 20px auto;
+
+}
+
+.card-stats-container {
+    float:right;
+    width:100%;
+    text-align:center;
+}
+
+.number-highlight {
+    font-size: 1.4rem;
+    padding: 5px 5px 20px 0;
+    font-weight:bold;
+    color: #a0bc76;
+    border-bottom: thin solid #d3d0a5;
+}
+
+.number-highlight-main {
+    font-size: 1.75rem;
+    padding: 5px 5px 10px 0;
+    font-weight:bold;
+    color: #a0bc76;
+}
+
+.number-highlight-details {
+    display:inline;
+    font-size:20px;
+    font-weight:bold;
+    color: #a0bc76;
+    clear:both;
+}
+
+.bottom-line {
+    position:absolute;
+    bottom:10px;
+    font-size:0.9rem;
+    visibility:hidden;
+}
+
+.arrow {
+    float:left;
+    width:5%;
+    margin-right:1%;
+    color: #d3d0a5;
+    display:none;
+}
+
+.arrow-blog {
+    float:left;
+    width:10%;
+    display:none;
+}
+
+
+.action-btn {
+    clear:both;
+    margin: 20px auto 20px auto;
+    width:60%;
+    border-radius:5px;
+    padding:10px;
+    text-align:center;
+    background-color:#e9913d;
+    color:#fff;
+    cursor: pointer;
+}
+
+.btn-no-margin {
+    margin: 0 0 20px auto;
+}
+
+.action-btn:hover, .search-btn:hover {
+    background-color:#FF9966;
+    background-color: rgba(233, 145, 61, .8);
+}
+
+.button-details {
+    float:right;
+    width:40%;
+}
+
+.button-blog {
+    margin:30px auto 15px auto;
+    width:60%;
+}
+
+.footer-details {
+    float:left;
+    width:60%;
+    font-size:18px;
+}
+
+.details-column {
+    float:left;
+    margin:0;
+    padding:7px 1% 7px 0;
+    width:24%;
+}
+
+.details-row {
+    clear:both;
+    width:100%;
+    text-align:left;
+    padding-bottom: 5px;
+}
+
+.details-header, .details-content {
+    width:100%;
+    clear:both;
+    padding:0;
+}
+
+.details-header{
+    border-bottom: thin solid #d3d0a5;
+}
+
+/* Custom select */
+
+.s-hidden {
+    visibility:hidden;
+    padding-right:30px;
+}
+
+.select {
+    cursor:pointer;
+    display:inline-block;
+    position:relative;
+    font-size:14px;
+    color:#4b4b4b;
+    border:none;
+    min-width:160px;
+}
+
+.card-details {
+    background-color: #ebe9dc;
+    color:#4b4b4b;
+    border-radius:5px;
+}
+
+.ui-dialog-titlebar {
+    margin-top:5px;
+}
+
+.card-details .ui-dialog-titlebar {
+    margin-bottom:0;
+    padding-bottom:0;
+}
+
+@media only screen and (min-width: 768px) {
+
+    /* CARD INFO */
+
+    .card-name {
+        font-size:1.25rem;
+        padding-bottom:40px;
+    }
+
+    .details-btn {
+        visibility:visible;
+    }
+
+
+    .card-image {
+        float:left;
+        width:31%;
+    }
+
+    .card-image-rotate {
+        -ms-transform: rotate(-8deg); /* IE 9 */
+        -webkit-transform: rotate(-8deg); /* Safari */
+        transform: rotate(-8deg);
+        margin:0;
+        position:absolute;
+        left:-10px;
+        bottom:2px;
+    }
+
+    .card-stats-container {
+        width:69%;
+        text-align:left;
+        font-size:0.8rem;
+    }
+
+    .card-point-rate {
+        float:left;
+        width:17%;
+        margin-left:5%;
+        margin-right:5%;
+    }
+
+    .card-points {
+        float:left;
+        width:30%;
+        margin-right:2%;
+    }
+
+    .bottom-line {
+        visibility:visible;
+    }
+
+    .arrow, .arrow-blog {
+        display:block;
+    }
+
+
+    .card-rewards {
+        float:left;
+        width:33%;
+        margin-right:2%;
+    }
+
+    .card-stats-blog {
+        float:left;
+        width:25%;
+    }
+
+    .action-btn {
+        margin: 20px auto 20px 0;
+        width:80%;
+    }
+
+    .button-blog {
+        clear:none;
+        margin:30px 10% 15px 0;
+        float:left;
+        width:30%;
+    }
+
+}
+
+@media only screen and (min-width: 1140px) {
+
+    .card-stats-container {
+        font-size:1rem;
+    }
+
+}
+
+
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   Print styles
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #4b4b4b !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}

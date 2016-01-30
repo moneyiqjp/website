@@ -31,7 +31,7 @@
 
 ?>
         <div class="item <?php if($start) {echo "active"; $start=false;} ?>">
-            <div style="background: linear-gradient(rgba(110,149,104,0.3),rgba(110,149,104,0.3)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
+            <div style="background: linear-gradient(rgba(110,149,104,0),rgba(110,149,104,0)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
                 <div class="container">
                     <a href="<?php echo $link; ?>" class="invisible-link slider-size">
                     <div class="carousel-caption1">

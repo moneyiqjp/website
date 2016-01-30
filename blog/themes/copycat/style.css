@@ -1,5 +1,5 @@
 /*
-Theme Name: Kronenburg
+Theme Name: CopyCat
 Description: Fourth version of the MoneyIQ blog theme
 Author: Ben Fries
 Author URI: http://moneyiq.jp/
@@ -303,7 +303,10 @@ div.primary-sidebar {
     width: 100%;
 
 }
-div.container.light {
+div.light{
+    background-color: #ffffff;
+}
+ div.container.light {
     background-color: #ffffff;
 }
 
@@ -489,6 +492,14 @@ body.single h3 {
 
 .blog-page-header .navbar-inverse {
     background-color: rgb(110,149,105);
+    border-radius: 5px;
+}
+
+.navbar.mainbar{
+    margin-bottom:2.5rem;
+    margin-top: 0;
+    margin-right: 0;
+    padding-right:0;
 }
 
 .lead {
