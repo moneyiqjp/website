@@ -42,15 +42,15 @@
         <?php edit_post_link('edit', '<div class="row light">', '</div>'); ?>
     <?php endif; ?>
 <?php else: ?>
-            post_right does not exist
+
 <?php endif; ?>
 
 
     </div>
 
 
- <script src="http://www.moneyiq.jp/js/main.js"></script>
-<script>
+    <!-- <script src="http://www.moneyiq.jp/js/main.js"></script> -->
+    <script>
     jQuery(document).ready(function(){
         jQuery("div.kb-merit ul").addClass("fa-ul");
         jQuery("div.kb-merit li").prepend("<i class='fa-li fa fa-check-square'></i>");
@@ -59,5 +59,5 @@
         jQuery("div.kb-general ul").addClass("fa-ul");
         jQuery("div.kb-general li").prepend("<i class='fa-li fa fa-bullseye'></i>");
     });
-</script>
+    </script>
 <?php get_footer(); ?>
