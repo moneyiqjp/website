@@ -31,7 +31,7 @@
 </head>
 <body <?php body_class( $class ); ?> >
 
-<div class="container light blog-page-header">
+<div class="container-fluid light blog-page-header">
     <!--
     <div class="row">
         <div class="col-sm-3">
@@ -41,7 +41,7 @@
         </div>
         <div class="col-sm-9">
         -->
-            <nav class="navbar" style="margin-top: 0px; margin-bottom: 0; margin-right: 0; padding-right:0">
+            <nav class="navbar mainbar">
                 <div class="container-fluid"  style="padding-right: 0">
 
                     <!-- Brand and toggle get grouped for better mobile display -->

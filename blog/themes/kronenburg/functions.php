@@ -183,7 +183,7 @@ function generate_cardelement( $atts ) {
         . "            <div>"
         . "                <a href='#' class=\"js-affiliate-link\" target=\"_blank\">"
         . "                     <div class=\"action-btn animated smooth-transition button-blog\" onclick=\"sendGglEvent('link', 'click', 'ref-blog')\">"
-        . "                           サイトにアクセス"
+        . "                           お申し込みはこちら"
         . "                        </div>"
         . "                </a>"
         . "                <a href='#' class=\"js-list-link\" target=\"_blank\">"
@@ -201,7 +201,7 @@ add_shortcode( 'cardelement', 'generate_cardelement' );
 
 
 function my_scripts_method() {
-    wp_enqueue_script('flexslider', get_template_directory_uri().'/js/main.js', array('jquery'), null, true);
+    wp_enqueue_script('flexslider', 'http://www.moneyiq.jp/js/main.js', array('jquery'), null, true);
 }
 add_action( 'wp_enqueue_scripts', 'my_scripts_method', 20 );
 

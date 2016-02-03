@@ -1,5 +1,5 @@
 <?php get_header();?>
-<div id="moneyiq-index-carousel" class="carousel slide" data-ride="carousel">
+<div id="moneyiq-index-carousel" class="carousel slide" data-ride="carousel"   data-interval="60000" data-pause="none">
     <!-- Indicators -->
     <ol class="carousel-indicators">
     <?php
@@ -13,8 +13,10 @@
         $count = -1;
         foreach ( $lastposts as $post ):  $count++;
     ?>
-        <li data-target="#moneyiq-index-carousel" data-slide-to="<?php echo $count;?> " class="hidden-xs <?php if($count==0) { echo "active";} ?>">
-            <?php the_title(); ?>
+        <li data-target="#moneyiq-index-carousel" data-slide-to="<?php echo $count;?> "
+                                        class="hidden-xs <?php if($count==0) { echo "active";} ?>">
+            <i class="fa fa-dot-circle-o"></i>
+            <?php //the_title(); ?>
         </li>
     <?php endforeach; ?>
     </ol>
@@ -28,16 +30,34 @@
     $start = true;
     foreach ( $lastposts as $post ) :  setup_postdata( $post );
             $link = in_category( 15, $_post )? "http://www.moneyiq.jp": get_permalink();
+            $title=get_the_title();
+            $subtitle=get_the_subtitle();
+            if(strlen($subtitle)<=0) {$subtitle=$title;}
 
 ?>
         <div class="item <?php if($start) {echo "active"; $start=false;} ?>">
-            <div style="background: linear-gradient(rgba(110,149,104,0.3),rgba(110,149,104,0.3)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
-                <div class="container">
-                    <a href="<?php echo $link; ?>" class="invisible-link slider-size">
-                    <div class="carousel-caption1">
-                        <h1><a href='<?php echo $link; ?>'><?php the_title(); ?></a></h1>
-                        <a href='<?php echo $link; ?>'><p class="lead hidden-xs"><?php echo get_the_excerpt(); ?></p></a>
+            <div style="background: linear-gradient(rgba(110,149,104,0),rgba(110,149,104,0)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'full' );?>) center center; background-size:cover;" class="slider-size">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-8  slider-size">
+
+                        </div>
+                        <div class="col-sm-4 bg_moneyiq_green  slider-size kb-carousel-text">
+                            <a href='<?php echo $link; ?>'>
+                                <h2 class="kb-title"><?php echo $subtitle;?></h2>
+                                <p class="lead hidden-xs"><?php echo get_the_excerpt(); ?></p>
+                            </a>
+                            <div class="kb-orange-bg kb-button kb-carousel-button">
+                                <a href="<?php echo $link; ?>" class="kb-link">
+                                    記事を読む
+                                </a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="kb-title-row kb-title">
+                    <a href='<?php echo $link; ?>'>
+                        <?php  echo $title?>
                     </a>
                 </div>
             </div>
@@ -59,7 +79,7 @@
         $tempo = $wp_query->post_count%3==0?3:$wp_query->post_count%3;
         $split=($wp_query->post_count+(3-$tempo))/3;
         $fulltitle = get_the_title();
-        if( function_exists('get_the_subtitle') ) $fulltitle .= get_the_subtitle();
+        //if( function_exists('get_the_subtitle') ) $fulltitle .= get_the_subtitle();
 
         ?>
 

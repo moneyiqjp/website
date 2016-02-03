@@ -13,8 +13,160 @@ Tags: responsive, light, bootstrap
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
 
 
+a.kb-link {
+
+}
+
+a.kb-link:hover{
+    font-size: 110%;
+}
+
+.kb-orange-bg {
+    background-color: #e9913d;
+}
+
+.kb-button{
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 5px;
+    max-width: 150px;
+    font-weight: 500;
+    font-size: 1.25em;
+    height: 46px;
+    text-align: center;
+}
+
+.kb-carousel-button {
+    margin: auto;
+    bottom: 27px;
+    left:0;
+    right: 0;
+    top: auto;
+    display: inline;
+    position: absolute;
+    z-index: 50;
+}
+
 
 /*==========  Mobile First Method  ==========*/
+
+.kb-title {
+    font-size: 1.75em;
+    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
+}
+
+.carousel .kb-title {
+    color: white;
+    margin-bottom: 1em;
+}
+
+.kb-title-row {
+    top: -75px;
+    height: 50px;
+    background-color: rgba(128,128,128,0.6);
+    color: white;
+    width: 100%;
+    z-index: 25;
+    position: relative;
+    font-weight: bolder;
+    margin: 0 0 0 0;
+    line-height: 50px;
+    padding-left: 0.5em;
+}
+
+.lead {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: white;
+    z-index: 18;
+    line-height: 175%;
+}
+
+
+
+.bg_moneyiq_green {
+    background-color: rgba(110, 149, 105,0.95); /* moneyiq green */
+}
+
+.carousel a {
+    color: white;
+    text-decoration: none;
+}
+
+.kb-carousel-text a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.slider-size {
+    height: 500px; /* This is your slider height */
+    position: relative;
+}
+
+.kb-inverse-slider {
+    margin-top: -500px;
+}
+
+.carousel-control {
+    width: 40px;
+    font-size: 100px;
+    padding-top: 170px;
+}
+
+.carousel .item {
+    height: 500px;
+}
+
+.carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 500px;
+    max-width: none;
+}
+.carousel-indicators{
+    margin-bottom: 0;
+    top:auto;
+    bottom: 0;
+}
+
+.carousel-indicators > li.active {
+    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
+    color: rgb(110, 149, 105);
+    font-weight: 800;
+    font-size: 1.5rem;
+    top:-50px;
+    bottom: 0;
+    height: auto;
+    border-width: 0;
+    text-indent: 0;
+    /* padding: 1em 1em 1em 1em; */
+    background-color: transparent;
+    width: 25px;
+}
+
+.carousel-indicators > li {
+    color: #ffffff;/*rgb(205,200,165);*/
+    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
+    font-weight: 800;
+    font-size: 1.5rem;
+
+    top:-50px;
+    bottom: 0;
+    height: auto;
+    border-radius: 0;
+    border-width: 0;
+    text-indent: 0;
+    width: 25px;
+}
+
+.kb-carousel-text{
+    padding: 2em 1em 2em 1em;
+    position: relative;
+}
+
+
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
@@ -56,10 +208,6 @@ Tags: responsive, light, bootstrap
     }
 
 
-    .slider-size {
-        height: 500px; /* This is your slider height */
-        position: relative;
-    }
     .carousel {
         width:100%;
         margin:0 auto 2rem auto; /* center your carousel if other than 100% */
@@ -303,7 +451,10 @@ div.primary-sidebar {
     width: 100%;
 
 }
-div.container.light {
+div.light{
+    background-color: #ffffff;
+}
+ div.container.light {
     background-color: #ffffff;
 }
 
@@ -340,7 +491,7 @@ body.single .caption {
 
 body.single hr{
     width: 100%;
-    border-top: 1px solid #rgb(75,75,75);;
+    border-top: 1px solid rgb(75,75,75);
     margin: 1em auto 1em auto;
 }
 
@@ -489,89 +640,23 @@ body.single h3 {
 
 .blog-page-header .navbar-inverse {
     background-color: rgb(110,149,105);
+    border-radius: 5px;
 }
 
-.lead {
-    margin: 0;
-    line-height: 1.25;
-    font-size: 1.5em;
-    font-weight: bolder;
-    color: white;
-    text-shadow: 1px 2px 3px rgba(0,0,0,.4);
-    z-index: 18;
+.navbar.mainbar{
+    margin-bottom:2.5rem;
+    margin-top: 0;
+    margin-right: 0;
+    padding-right:0;
 }
+
+
 .subtitle {
     font-size: 1.5em;
     font-weight: bolder;
 }
 
-.carousel-control {
-    width: 40px;
-    font-size: 100px;
-    padding-top: 170px;
- }
 
-.carousel .item {
-    height: 500px;
-}
-
-.carousel img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    height: 500px;
-    max-width: none;
-}
-.carousel-indicators{
-    margin-bottom: 0;
-    top:auto;
-    bottom: 0;
-}
-
-.carousel-indicators > li.active {
-    background: rgba(110,149,104,0.85);
-    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
-    color: #ffffff;/* rgba(233,145,61,0.95);*/
-    font-weight: 800;
-    font-size: 1.5rem;
-    width: auto;
-    max-width: 18%;
-    min-width: 150px;
-    top:auto;
-    bottom: 0;
-    height: auto;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-width: 0;
-    text-indent: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    overflow: hidden;
-    padding: 1em 1em 1em 1em;
-}
-
-.carousel-indicators > li {
-    color: #ffffff;/*rgb(205,200,165);*/
-    text-shadow: 1px 2px 3px rgba(0,0,0,.6);
-    font-weight: 800;
-    font-size: 1.5rem;
-    width: auto;
-    max-width: 18%;
-    min-width: 150px;
-    top:auto;
-    bottom: 0;
-    height: auto;
-    border-radius: 0;
-    border-width: 0;
-    text-indent: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    overflow: hidden;
-    padding: 1em 1em 0.5em 1em;
-}
 /*
 .carousel-indicators > li.active {
     background: white;

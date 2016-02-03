@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-<div style="background: linear-gradient(rgba(110,149,104,0.3),rgba(110,149,104,0.3)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'post-feature-small' );?>) center center; background-size:cover;" class="slider-size">
+<div style="background: linear-gradient(rgba(110,149,104,0),rgba(110,149,104,0)), url(<?php echo wp_get_attachment_image_url( get_post_thumbnail_id($post->ID), 'full' );?>) center center; background-size:cover;" class="slider-size">
     <!-- <div class="container slider-size"> -->
         <?php
             $credit = get_media_credit_html( get_post_thumbnail_id( $post ) );
@@ -42,15 +42,15 @@
         <?php edit_post_link('edit', '<div class="row light">', '</div>'); ?>
     <?php endif; ?>
 <?php else: ?>
-            post_right does not exist
+
 <?php endif; ?>
 
 
     </div>
 
 
- <script src="http://www.moneyiq.jp/js/main.js"></script>
-<script>
+    <!-- <script src="http://www.moneyiq.jp/js/main.js"></script> -->
+    <script>
     jQuery(document).ready(function(){
         jQuery("div.kb-merit ul").addClass("fa-ul");
         jQuery("div.kb-merit li").prepend("<i class='fa-li fa fa-check-square'></i>");
@@ -59,5 +59,5 @@
         jQuery("div.kb-general ul").addClass("fa-ul");
         jQuery("div.kb-general li").prepend("<i class='fa-li fa fa-bullseye'></i>");
     });
-</script>
+    </script>
 <?php get_footer(); ?>
