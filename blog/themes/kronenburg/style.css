@@ -70,7 +70,7 @@ a.kb-link:hover{
     font-weight: bolder;
     margin: 0 0 0 0;
     line-height: 50px;
-    padding-left: 0.5em;
+    padding-left: 40px;
 }
 
 .lead {
@@ -133,7 +133,7 @@ a.kb-link:hover{
 
 .carousel-indicators > li.active {
     text-shadow: 1px 2px 3px rgba(0,0,0,.6);
-    color: rgb(110, 149, 105);
+    color: #ffffff;/*rgb(205,200,165);*/
     font-weight: 800;
     font-size: 1.5rem;
     top:-50px;
@@ -147,10 +147,10 @@ a.kb-link:hover{
 }
 
 .carousel-indicators > li {
-    color: #ffffff;/*rgb(205,200,165);*/
     text-shadow: 1px 2px 3px rgba(0,0,0,.6);
     font-weight: 800;
     font-size: 1.5rem;
+    color: rgb(110, 149, 105);
 
     top:-50px;
     bottom: 0;
@@ -162,7 +162,8 @@ a.kb-link:hover{
 }
 
 .kb-carousel-text{
-    padding: 2em 1em 2em 1em;
+    padding: 2em 40px 2em 1em;
+    padding: 2em 40px 2em 2em;
     position: relative;
 }
 
