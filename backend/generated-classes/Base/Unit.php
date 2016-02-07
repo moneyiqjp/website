@@ -4,6 +4,8 @@ namespace Base;
 
 use \Reward as ChildReward;
 use \RewardQuery as ChildRewardQuery;
+use \Trip as ChildTrip;
+use \TripQuery as ChildTripQuery;
 use \Unit as ChildUnit;
 use \UnitQuery as ChildUnitQuery;
 use \DateTime;
@@ -102,6 +104,12 @@ abstract class Unit implements ActiveRecordInterface
     protected $collRewardsPartial;
 
     /**
+     * @var        ObjectCollection|ChildTrip[] Collection to store aggregation of ChildTrip objects.
+     */
+    protected $collTrips;
+    protected $collTripsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -114,6 +122,12 @@ abstract class Unit implements ActiveRecordInterface
      * @var ObjectCollection|ChildReward[]
      */
     protected $rewardsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildTrip[]
+     */
+    protected $tripsScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Base\Unit object.
@@ -616,6 +630,8 @@ abstract class Unit implements ActiveRecordInterface
 
             $this->collRewards = null;
 
+            $this->collTrips = null;
+
         } // if (deep)
     }
 
@@ -737,6 +753,23 @@ abstract class Unit implements ActiveRecordInterface
 
             if ($this->collRewards !== null) {
                 foreach ($this->collRewards as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->tripsScheduledForDeletion !== null) {
+                if (!$this->tripsScheduledForDeletion->isEmpty()) {
+                    \TripQuery::create()
+                        ->filterByPrimaryKeys($this->tripsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->tripsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTrips !== null) {
+                foreach ($this->collTrips as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -943,6 +976,21 @@ abstract class Unit implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collTrips) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'trips';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'trips';
+                        break;
+                    default:
+                        $key = 'Trips';
+                }
+
+                $result[$key] = $this->collTrips->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1192,6 +1240,12 @@ abstract class Unit implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getTrips() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTrip($relObj->copy($deepCopy));
+                }
+            }
+
         } // if ($deepCopy)
 
         if ($makeNew) {
@@ -1235,6 +1289,9 @@ abstract class Unit implements ActiveRecordInterface
     {
         if ('Reward' == $relationName) {
             return $this->initRewards();
+        }
+        if ('Trip' == $relationName) {
+            return $this->initTrips();
         }
     }
 
@@ -1557,6 +1614,274 @@ abstract class Unit implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collTrips collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTrips()
+     */
+    public function clearTrips()
+    {
+        $this->collTrips = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTrips collection loaded partially.
+     */
+    public function resetPartialTrips($v = true)
+    {
+        $this->collTripsPartial = $v;
+    }
+
+    /**
+     * Initializes the collTrips collection.
+     *
+     * By default this just sets the collTrips collection to an empty array (like clearcollTrips());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTrips($overrideExisting = true)
+    {
+        if (null !== $this->collTrips && !$overrideExisting) {
+            return;
+        }
+        $this->collTrips = new ObjectCollection();
+        $this->collTrips->setModel('\Trip');
+    }
+
+    /**
+     * Gets an array of ChildTrip objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUnit is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildTrip[] List of ChildTrip objects
+     * @throws PropelException
+     */
+    public function getTrips(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTripsPartial && !$this->isNew();
+        if (null === $this->collTrips || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTrips) {
+                // return empty collection
+                $this->initTrips();
+            } else {
+                $collTrips = ChildTripQuery::create(null, $criteria)
+                    ->filterByUnit($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTripsPartial && count($collTrips)) {
+                        $this->initTrips(false);
+
+                        foreach ($collTrips as $obj) {
+                            if (false == $this->collTrips->contains($obj)) {
+                                $this->collTrips->append($obj);
+                            }
+                        }
+
+                        $this->collTripsPartial = true;
+                    }
+
+                    return $collTrips;
+                }
+
+                if ($partial && $this->collTrips) {
+                    foreach ($this->collTrips as $obj) {
+                        if ($obj->isNew()) {
+                            $collTrips[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTrips = $collTrips;
+                $this->collTripsPartial = false;
+            }
+        }
+
+        return $this->collTrips;
+    }
+
+    /**
+     * Sets a collection of ChildTrip objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $trips A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUnit The current object (for fluent API support)
+     */
+    public function setTrips(Collection $trips, ConnectionInterface $con = null)
+    {
+        /** @var ChildTrip[] $tripsToDelete */
+        $tripsToDelete = $this->getTrips(new Criteria(), $con)->diff($trips);
+
+
+        $this->tripsScheduledForDeletion = $tripsToDelete;
+
+        foreach ($tripsToDelete as $tripRemoved) {
+            $tripRemoved->setUnit(null);
+        }
+
+        $this->collTrips = null;
+        foreach ($trips as $trip) {
+            $this->addTrip($trip);
+        }
+
+        $this->collTrips = $trips;
+        $this->collTripsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Trip objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Trip objects.
+     * @throws PropelException
+     */
+    public function countTrips(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTripsPartial && !$this->isNew();
+        if (null === $this->collTrips || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTrips) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTrips());
+            }
+
+            $query = ChildTripQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUnit($this)
+                ->count($con);
+        }
+
+        return count($this->collTrips);
+    }
+
+    /**
+     * Method called to associate a ChildTrip object to this object
+     * through the ChildTrip foreign key attribute.
+     *
+     * @param  ChildTrip $l ChildTrip
+     * @return $this|\Unit The current object (for fluent API support)
+     */
+    public function addTrip(ChildTrip $l)
+    {
+        if ($this->collTrips === null) {
+            $this->initTrips();
+            $this->collTripsPartial = true;
+        }
+
+        if (!$this->collTrips->contains($l)) {
+            $this->doAddTrip($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildTrip $trip The ChildTrip object to add.
+     */
+    protected function doAddTrip(ChildTrip $trip)
+    {
+        $this->collTrips[]= $trip;
+        $trip->setUnit($this);
+    }
+
+    /**
+     * @param  ChildTrip $trip The ChildTrip object to remove.
+     * @return $this|ChildUnit The current object (for fluent API support)
+     */
+    public function removeTrip(ChildTrip $trip)
+    {
+        if ($this->getTrips()->contains($trip)) {
+            $pos = $this->collTrips->search($trip);
+            $this->collTrips->remove($pos);
+            if (null === $this->tripsScheduledForDeletion) {
+                $this->tripsScheduledForDeletion = clone $this->collTrips;
+                $this->tripsScheduledForDeletion->clear();
+            }
+            $this->tripsScheduledForDeletion[]= clone $trip;
+            $trip->setUnit(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Unit is new, it will return
+     * an empty collection; or if this Unit has previously
+     * been saved, it will retrieve related Trips from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Unit.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTrip[] List of ChildTrip objects
+     */
+    public function getTripsJoinCityRelatedByFromCityId(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTripQuery::create(null, $criteria);
+        $query->joinWith('CityRelatedByFromCityId', $joinBehavior);
+
+        return $this->getTrips($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Unit is new, it will return
+     * an empty collection; or if this Unit has previously
+     * been saved, it will retrieve related Trips from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Unit.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildTrip[] List of ChildTrip objects
+     */
+    public function getTripsJoinCityRelatedByToCityId(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildTripQuery::create(null, $criteria);
+        $query->joinWith('CityRelatedByToCityId', $joinBehavior);
+
+        return $this->getTrips($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1591,9 +1916,15 @@ abstract class Unit implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collTrips) {
+                foreach ($this->collTrips as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collRewards = null;
+        $this->collTrips = null;
     }
 
     /**

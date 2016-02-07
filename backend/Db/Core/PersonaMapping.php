@@ -354,6 +354,8 @@ class Persona {
     public $Id;
     public $Identifier;
     public $Name;
+    public $DescriptionLong;
+    public $DescriptionShort;
     public $Restriction;
     public $DefaultSpend;
     public $Sorting;
@@ -367,6 +369,8 @@ class Persona {
         $this->Identifier = $pers->getIdentifier();
         $this->Name= $pers->getName();
         $this->Restriction = Restriction::CREATE($pers);
+        $this->DescriptionLong = $pers->getDescriptionLong();
+        $this->DescriptionShort = $pers->getDescriptionShort();
         $this->DefaultSpend = $pers->getDefaultSpend();
         $this->Sorting = $pers->getSorting();
         $this->RewardCategory = RewardCategory::CREATE($pers->getRewardCategory());

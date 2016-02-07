@@ -9,7 +9,6 @@
 namespace Db\Json;
 
 interface JSONInterface {
-
     public static function CREATE_FROM_ARRAY($data);
     public function saveToDb();
     public function toDB();

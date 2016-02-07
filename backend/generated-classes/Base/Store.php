@@ -6,6 +6,8 @@ use \Discounts as ChildDiscounts;
 use \DiscountsQuery as ChildDiscountsQuery;
 use \MapPersonaStore as ChildMapPersonaStore;
 use \MapPersonaStoreQuery as ChildMapPersonaStoreQuery;
+use \Milage as ChildMilage;
+use \MilageQuery as ChildMilageQuery;
 use \PointAcquisition as ChildPointAcquisition;
 use \PointAcquisitionQuery as ChildPointAcquisitionQuery;
 use \PointUse as ChildPointUse;
@@ -144,6 +146,12 @@ abstract class Store implements ActiveRecordInterface
     protected $collMapPersonaStoresPartial;
 
     /**
+     * @var        ObjectCollection|ChildMilage[] Collection to store aggregation of ChildMilage objects.
+     */
+    protected $collMilages;
+    protected $collMilagesPartial;
+
+    /**
      * @var        ObjectCollection|ChildPointAcquisition[] Collection to store aggregation of ChildPointAcquisition objects.
      */
     protected $collPointAcquisitions;
@@ -180,6 +188,12 @@ abstract class Store implements ActiveRecordInterface
      * @var ObjectCollection|ChildMapPersonaStore[]
      */
     protected $mapPersonaStoresScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMilage[]
+     */
+    protected $milagesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -836,6 +850,8 @@ abstract class Store implements ActiveRecordInterface
 
             $this->collMapPersonaStores = null;
 
+            $this->collMilages = null;
+
             $this->collPointAcquisitions = null;
 
             $this->collPointUses = null;
@@ -992,6 +1008,23 @@ abstract class Store implements ActiveRecordInterface
 
             if ($this->collMapPersonaStores !== null) {
                 foreach ($this->collMapPersonaStores as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->milagesScheduledForDeletion !== null) {
+                if (!$this->milagesScheduledForDeletion->isEmpty()) {
+                    \MilageQuery::create()
+                        ->filterByPrimaryKeys($this->milagesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->milagesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMilages !== null) {
+                foreach ($this->collMilages as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1310,6 +1343,21 @@ abstract class Store implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collMapPersonaStores->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMilages) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'milages';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'milages';
+                        break;
+                    default:
+                        $key = 'Milages';
+                }
+
+                $result[$key] = $this->collMilages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collPointAcquisitions) {
 
@@ -1640,6 +1688,12 @@ abstract class Store implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getMilages() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMilage($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getPointAcquisitions() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPointAcquisition($relObj->copy($deepCopy));
@@ -1755,6 +1809,9 @@ abstract class Store implements ActiveRecordInterface
         }
         if ('MapPersonaStore' == $relationName) {
             return $this->initMapPersonaStores();
+        }
+        if ('Milage' == $relationName) {
+            return $this->initMilages();
         }
         if ('PointAcquisition' == $relationName) {
             return $this->initPointAcquisitions();
@@ -2254,6 +2311,249 @@ abstract class Store implements ActiveRecordInterface
         $query->joinWith('Persona', $joinBehavior);
 
         return $this->getMapPersonaStores($query, $con);
+    }
+
+    /**
+     * Clears out the collMilages collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMilages()
+     */
+    public function clearMilages()
+    {
+        $this->collMilages = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMilages collection loaded partially.
+     */
+    public function resetPartialMilages($v = true)
+    {
+        $this->collMilagesPartial = $v;
+    }
+
+    /**
+     * Initializes the collMilages collection.
+     *
+     * By default this just sets the collMilages collection to an empty array (like clearcollMilages());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMilages($overrideExisting = true)
+    {
+        if (null !== $this->collMilages && !$overrideExisting) {
+            return;
+        }
+        $this->collMilages = new ObjectCollection();
+        $this->collMilages->setModel('\Milage');
+    }
+
+    /**
+     * Gets an array of ChildMilage objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildStore is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMilage[] List of ChildMilage objects
+     * @throws PropelException
+     */
+    public function getMilages(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMilagesPartial && !$this->isNew();
+        if (null === $this->collMilages || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMilages) {
+                // return empty collection
+                $this->initMilages();
+            } else {
+                $collMilages = ChildMilageQuery::create(null, $criteria)
+                    ->filterByStore($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMilagesPartial && count($collMilages)) {
+                        $this->initMilages(false);
+
+                        foreach ($collMilages as $obj) {
+                            if (false == $this->collMilages->contains($obj)) {
+                                $this->collMilages->append($obj);
+                            }
+                        }
+
+                        $this->collMilagesPartial = true;
+                    }
+
+                    return $collMilages;
+                }
+
+                if ($partial && $this->collMilages) {
+                    foreach ($this->collMilages as $obj) {
+                        if ($obj->isNew()) {
+                            $collMilages[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMilages = $collMilages;
+                $this->collMilagesPartial = false;
+            }
+        }
+
+        return $this->collMilages;
+    }
+
+    /**
+     * Sets a collection of ChildMilage objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $milages A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildStore The current object (for fluent API support)
+     */
+    public function setMilages(Collection $milages, ConnectionInterface $con = null)
+    {
+        /** @var ChildMilage[] $milagesToDelete */
+        $milagesToDelete = $this->getMilages(new Criteria(), $con)->diff($milages);
+
+
+        $this->milagesScheduledForDeletion = $milagesToDelete;
+
+        foreach ($milagesToDelete as $milageRemoved) {
+            $milageRemoved->setStore(null);
+        }
+
+        $this->collMilages = null;
+        foreach ($milages as $milage) {
+            $this->addMilage($milage);
+        }
+
+        $this->collMilages = $milages;
+        $this->collMilagesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Milage objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Milage objects.
+     * @throws PropelException
+     */
+    public function countMilages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMilagesPartial && !$this->isNew();
+        if (null === $this->collMilages || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMilages) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMilages());
+            }
+
+            $query = ChildMilageQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByStore($this)
+                ->count($con);
+        }
+
+        return count($this->collMilages);
+    }
+
+    /**
+     * Method called to associate a ChildMilage object to this object
+     * through the ChildMilage foreign key attribute.
+     *
+     * @param  ChildMilage $l ChildMilage
+     * @return $this|\Store The current object (for fluent API support)
+     */
+    public function addMilage(ChildMilage $l)
+    {
+        if ($this->collMilages === null) {
+            $this->initMilages();
+            $this->collMilagesPartial = true;
+        }
+
+        if (!$this->collMilages->contains($l)) {
+            $this->doAddMilage($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMilage $milage The ChildMilage object to add.
+     */
+    protected function doAddMilage(ChildMilage $milage)
+    {
+        $this->collMilages[]= $milage;
+        $milage->setStore($this);
+    }
+
+    /**
+     * @param  ChildMilage $milage The ChildMilage object to remove.
+     * @return $this|ChildStore The current object (for fluent API support)
+     */
+    public function removeMilage(ChildMilage $milage)
+    {
+        if ($this->getMilages()->contains($milage)) {
+            $pos = $this->collMilages->search($milage);
+            $this->collMilages->remove($pos);
+            if (null === $this->milagesScheduledForDeletion) {
+                $this->milagesScheduledForDeletion = clone $this->collMilages;
+                $this->milagesScheduledForDeletion->clear();
+            }
+            $this->milagesScheduledForDeletion[]= clone $milage;
+            $milage->setStore(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Store is new, it will return
+     * an empty collection; or if this Store has previously
+     * been saved, it will retrieve related Milages from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Store.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMilage[] List of ChildMilage objects
+     */
+    public function getMilagesJoinTrip(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMilageQuery::create(null, $criteria);
+        $query->joinWith('Trip', $joinBehavior);
+
+        return $this->getMilages($query, $con);
     }
 
     /**
@@ -3107,6 +3407,11 @@ abstract class Store implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMilages) {
+                foreach ($this->collMilages as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collPointAcquisitions) {
                 foreach ($this->collPointAcquisitions as $o) {
                     $o->clearAllReferences($deep);
@@ -3126,6 +3431,7 @@ abstract class Store implements ActiveRecordInterface
 
         $this->collDiscountss = null;
         $this->collMapPersonaStores = null;
+        $this->collMilages = null;
         $this->collPointAcquisitions = null;
         $this->collPointUses = null;
         $this->collRewards = null;

@@ -54,6 +54,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinMapPersonaStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MapPersonaStore relation
  * @method     ChildStoreQuery innerJoinMapPersonaStore($relationAlias = null) Adds a INNER JOIN clause to the query using the MapPersonaStore relation
  *
+ * @method     ChildStoreQuery leftJoinMilage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Milage relation
+ * @method     ChildStoreQuery rightJoinMilage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Milage relation
+ * @method     ChildStoreQuery innerJoinMilage($relationAlias = null) Adds a INNER JOIN clause to the query using the Milage relation
+ *
  * @method     ChildStoreQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildStoreQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildStoreQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
@@ -66,7 +70,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildStoreQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildStoreQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \StoreCategoryQuery|\DiscountsQuery|\MapPersonaStoreQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \StoreCategoryQuery|\DiscountsQuery|\MapPersonaStoreQuery|\MilageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildStore findOne(ConnectionInterface $con = null) Return the first ChildStore matching the query
  * @method     ChildStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildStore matching the query, or a new ChildStore object populated from the query conditions when no match is found
@@ -787,6 +791,79 @@ abstract class StoreQuery extends ModelCriteria
         return $this
             ->joinMapPersonaStore($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'MapPersonaStore', '\MapPersonaStoreQuery');
+    }
+
+    /**
+     * Filter the query by a related \Milage object
+     *
+     * @param \Milage|ObjectCollection $milage  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildStoreQuery The current query, for fluid interface
+     */
+    public function filterByMilage($milage, $comparison = null)
+    {
+        if ($milage instanceof \Milage) {
+            return $this
+                ->addUsingAlias(StoreTableMap::COL_STORE_ID, $milage->getStoreId(), $comparison);
+        } elseif ($milage instanceof ObjectCollection) {
+            return $this
+                ->useMilageQuery()
+                ->filterByPrimaryKeys($milage->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMilage() only accepts arguments of type \Milage or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Milage relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildStoreQuery The current query, for fluid interface
+     */
+    public function joinMilage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Milage');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Milage');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Milage relation Milage object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MilageQuery A secondary query class using the current class as primary query
+     */
+    public function useMilageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMilage($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Milage', '\MilageQuery');
     }
 
     /**

@@ -16,7 +16,8 @@ class JPersona implements JSONInterface
     public $PersonaId;
     public $Identity;
     public $Name;
-    public $Description;
+    public $DescriptionLong;
+    public $DescriptionShort;
     public $DefaultSpend;
     public $Sorting;
     public $RewardCategory;
@@ -30,7 +31,8 @@ class JPersona implements JSONInterface
         $mine->PersonaId = $item->getPersonaId();
         $mine->Identity = $item->getIdentifier();
         $mine->Name = $item->getName();
-        $mine->Description = $item->getDescription();
+        $mine->DescriptionLong = $item->getDescriptionLong();
+        $mine->DescriptionShort = $item->getDescriptionShort();
         $mine->DefaultSpend = $item->getDefaultSpend();
         $time = new \DateTime();
         if(!is_null($item->getUpdateTime())) {
@@ -63,7 +65,8 @@ class JPersona implements JSONInterface
 
         if (ArrayUtils::KEY_EXISTS($data, 'Identity')) $mine->Identity = $data['Identity'];
         if (ArrayUtils::KEY_EXISTS($data, 'Name')) $mine->Name = $data['Name'];
-        if (ArrayUtils::KEY_EXISTS($data, 'Description')) $mine->Description = $data['Description'];
+        if (ArrayUtils::KEY_EXISTS($data, 'DescriptionShort')) $mine->DescriptionShort = $data['DescriptionShort'];
+        if (ArrayUtils::KEY_EXISTS($data, 'DescriptionLong')) $mine->DescriptionLong = $data['DescriptionLong'];
         if (ArrayUtils::KEY_EXISTS($data, 'DefaultSpend')) $mine->DefaultSpend = $data['DefaultSpend'];
         if (ArrayUtils::KEY_EXISTS($data, 'Sorting')) $mine->Sorting = $data['Sorting'];
         if (ArrayUtils::KEY_EXISTS($data, 'UpdateTime'    )) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
@@ -91,7 +94,8 @@ class JPersona implements JSONInterface
         if(FieldUtils::STRING_IS_DEFINED($this->Identity)) $item->setIdentifier($this->Identity);
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         //if(FieldUtils::STRING_IS_DEFINED($this->Description))
-        $item->setDescription($this->Description);
+        $item->setDescriptionLong($this->DescriptionLong);
+        $item->setDescriptionShort($this->DescriptionShort);
         if(FieldUtils::NUMBER_IS_DEFINED($this->DefaultSpend)) $item->setDefaultSpend($this->DefaultSpend);
         if(!is_null($this->RewardCategory)) $item->setRewardCategoryId($this->RewardCategory->RewardCategoryId);
         if(FieldUtils::STRING_IS_DEFINED($this->Sorting)) $item->setSorting($this->Sorting);

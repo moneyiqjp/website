@@ -40,7 +40,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUnitQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildUnitQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildUnitQuery leftJoinTrip($relationAlias = null) Adds a LEFT JOIN clause to the query using the Trip relation
+ * @method     ChildUnitQuery rightJoinTrip($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Trip relation
+ * @method     ChildUnitQuery innerJoinTrip($relationAlias = null) Adds a INNER JOIN clause to the query using the Trip relation
+ *
+ * @method     \RewardQuery|\TripQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUnit findOne(ConnectionInterface $con = null) Return the first ChildUnit matching the query
  * @method     ChildUnit findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUnit matching the query, or a new ChildUnit object populated from the query conditions when no match is found
@@ -480,6 +484,79 @@ abstract class UnitQuery extends ModelCriteria
         return $this
             ->joinReward($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Reward', '\RewardQuery');
+    }
+
+    /**
+     * Filter the query by a related \Trip object
+     *
+     * @param \Trip|ObjectCollection $trip  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUnitQuery The current query, for fluid interface
+     */
+    public function filterByTrip($trip, $comparison = null)
+    {
+        if ($trip instanceof \Trip) {
+            return $this
+                ->addUsingAlias(UnitTableMap::COL_UNIT_ID, $trip->getUnitId(), $comparison);
+        } elseif ($trip instanceof ObjectCollection) {
+            return $this
+                ->useTripQuery()
+                ->filterByPrimaryKeys($trip->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByTrip() only accepts arguments of type \Trip or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Trip relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUnitQuery The current query, for fluid interface
+     */
+    public function joinTrip($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Trip');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Trip');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Trip relation Trip object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \TripQuery A secondary query class using the current class as primary query
+     */
+    public function useTripQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTrip($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Trip', '\TripQuery');
     }
 
     /**

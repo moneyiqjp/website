@@ -92,10 +92,16 @@ abstract class Persona implements ActiveRecordInterface
     protected $name;
 
     /**
-     * The value for the description field.
+     * The value for the description_short field.
      * @var        string
      */
-    protected $description;
+    protected $description_short;
+
+    /**
+     * The value for the description_long field.
+     * @var        string
+     */
+    protected $description_long;
 
     /**
      * The value for the default_spend field.
@@ -450,13 +456,23 @@ abstract class Persona implements ActiveRecordInterface
     }
 
     /**
-     * Get the [description] column value.
+     * Get the [description_short] column value.
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescriptionShort()
     {
-        return $this->description;
+        return $this->description_short;
+    }
+
+    /**
+     * Get the [description_long] column value.
+     *
+     * @return string
+     */
+    public function getDescriptionLong()
+    {
+        return $this->description_long;
     }
 
     /**
@@ -580,24 +596,44 @@ abstract class Persona implements ActiveRecordInterface
     } // setName()
 
     /**
-     * Set the value of [description] column.
+     * Set the value of [description_short] column.
      *
      * @param  string $v new value
      * @return $this|\Persona The current object (for fluent API support)
      */
-    public function setDescription($v)
+    public function setDescriptionShort($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[PersonaTableMap::COL_DESCRIPTION] = true;
+        if ($this->description_short !== $v) {
+            $this->description_short = $v;
+            $this->modifiedColumns[PersonaTableMap::COL_DESCRIPTION_SHORT] = true;
         }
 
         return $this;
-    } // setDescription()
+    } // setDescriptionShort()
+
+    /**
+     * Set the value of [description_long] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Persona The current object (for fluent API support)
+     */
+    public function setDescriptionLong($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->description_long !== $v) {
+            $this->description_long = $v;
+            $this->modifiedColumns[PersonaTableMap::COL_DESCRIPTION_LONG] = true;
+        }
+
+        return $this;
+    } // setDescriptionLong()
 
     /**
      * Set the value of [default_spend] column.
@@ -752,25 +788,28 @@ abstract class Persona implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PersonaTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PersonaTableMap::translateFieldName('Description', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->description = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : PersonaTableMap::translateFieldName('DescriptionShort', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->description_short = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PersonaTableMap::translateFieldName('DefaultSpend', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : PersonaTableMap::translateFieldName('DescriptionLong', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->description_long = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PersonaTableMap::translateFieldName('DefaultSpend', TableMap::TYPE_PHPNAME, $indexType)];
             $this->default_spend = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : PersonaTableMap::translateFieldName('Sorting', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PersonaTableMap::translateFieldName('Sorting', TableMap::TYPE_PHPNAME, $indexType)];
             $this->sorting = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : PersonaTableMap::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PersonaTableMap::translateFieldName('RewardCategoryId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reward_category_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : PersonaTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PersonaTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : PersonaTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : PersonaTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -780,7 +819,7 @@ abstract class Persona implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = PersonaTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 10; // 10 = PersonaTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Persona'), 0, $e);
@@ -1078,8 +1117,11 @@ abstract class Persona implements ActiveRecordInterface
         if ($this->isColumnModified(PersonaTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = 'description';
+        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION_SHORT)) {
+            $modifiedColumns[':p' . $index++]  = 'description_short';
+        }
+        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION_LONG)) {
+            $modifiedColumns[':p' . $index++]  = 'description_long';
         }
         if ($this->isColumnModified(PersonaTableMap::COL_DEFAULT_SPEND)) {
             $modifiedColumns[':p' . $index++]  = 'default_spend';
@@ -1116,8 +1158,11 @@ abstract class Persona implements ActiveRecordInterface
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'description':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                    case 'description_short':
+                        $stmt->bindValue($identifier, $this->description_short, PDO::PARAM_STR);
+                        break;
+                    case 'description_long':
+                        $stmt->bindValue($identifier, $this->description_long, PDO::PARAM_STR);
                         break;
                     case 'default_spend':
                         $stmt->bindValue($identifier, $this->default_spend, PDO::PARAM_INT);
@@ -1206,21 +1251,24 @@ abstract class Persona implements ActiveRecordInterface
                 return $this->getName();
                 break;
             case 3:
-                return $this->getDescription();
+                return $this->getDescriptionShort();
                 break;
             case 4:
-                return $this->getDefaultSpend();
+                return $this->getDescriptionLong();
                 break;
             case 5:
-                return $this->getSorting();
+                return $this->getDefaultSpend();
                 break;
             case 6:
-                return $this->getRewardCategoryId();
+                return $this->getSorting();
                 break;
             case 7:
-                return $this->getUpdateTime();
+                return $this->getRewardCategoryId();
                 break;
             case 8:
+                return $this->getUpdateTime();
+                break;
+            case 9:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1256,12 +1304,13 @@ abstract class Persona implements ActiveRecordInterface
             $keys[0] => $this->getPersonaId(),
             $keys[1] => $this->getIdentifier(),
             $keys[2] => $this->getName(),
-            $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getDefaultSpend(),
-            $keys[5] => $this->getSorting(),
-            $keys[6] => $this->getRewardCategoryId(),
-            $keys[7] => $this->getUpdateTime(),
-            $keys[8] => $this->getUpdateUser(),
+            $keys[3] => $this->getDescriptionShort(),
+            $keys[4] => $this->getDescriptionLong(),
+            $keys[5] => $this->getDefaultSpend(),
+            $keys[6] => $this->getSorting(),
+            $keys[7] => $this->getRewardCategoryId(),
+            $keys[8] => $this->getUpdateTime(),
+            $keys[9] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1388,21 +1437,24 @@ abstract class Persona implements ActiveRecordInterface
                 $this->setName($value);
                 break;
             case 3:
-                $this->setDescription($value);
+                $this->setDescriptionShort($value);
                 break;
             case 4:
-                $this->setDefaultSpend($value);
+                $this->setDescriptionLong($value);
                 break;
             case 5:
-                $this->setSorting($value);
+                $this->setDefaultSpend($value);
                 break;
             case 6:
-                $this->setRewardCategoryId($value);
+                $this->setSorting($value);
                 break;
             case 7:
-                $this->setUpdateTime($value);
+                $this->setRewardCategoryId($value);
                 break;
             case 8:
+                $this->setUpdateTime($value);
+                break;
+            case 9:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1441,22 +1493,25 @@ abstract class Persona implements ActiveRecordInterface
             $this->setName($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDescription($arr[$keys[3]]);
+            $this->setDescriptionShort($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDefaultSpend($arr[$keys[4]]);
+            $this->setDescriptionLong($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setSorting($arr[$keys[5]]);
+            $this->setDefaultSpend($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setRewardCategoryId($arr[$keys[6]]);
+            $this->setSorting($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateTime($arr[$keys[7]]);
+            $this->setRewardCategoryId($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setUpdateUser($arr[$keys[8]]);
+            $this->setUpdateTime($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setUpdateUser($arr[$keys[9]]);
         }
     }
 
@@ -1508,8 +1563,11 @@ abstract class Persona implements ActiveRecordInterface
         if ($this->isColumnModified(PersonaTableMap::COL_NAME)) {
             $criteria->add(PersonaTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION)) {
-            $criteria->add(PersonaTableMap::COL_DESCRIPTION, $this->description);
+        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION_SHORT)) {
+            $criteria->add(PersonaTableMap::COL_DESCRIPTION_SHORT, $this->description_short);
+        }
+        if ($this->isColumnModified(PersonaTableMap::COL_DESCRIPTION_LONG)) {
+            $criteria->add(PersonaTableMap::COL_DESCRIPTION_LONG, $this->description_long);
         }
         if ($this->isColumnModified(PersonaTableMap::COL_DEFAULT_SPEND)) {
             $criteria->add(PersonaTableMap::COL_DEFAULT_SPEND, $this->default_spend);
@@ -1614,7 +1672,8 @@ abstract class Persona implements ActiveRecordInterface
     {
         $copyObj->setIdentifier($this->getIdentifier());
         $copyObj->setName($this->getName());
-        $copyObj->setDescription($this->getDescription());
+        $copyObj->setDescriptionShort($this->getDescriptionShort());
+        $copyObj->setDescriptionLong($this->getDescriptionLong());
         $copyObj->setDefaultSpend($this->getDefaultSpend());
         $copyObj->setSorting($this->getSorting());
         $copyObj->setRewardCategoryId($this->getRewardCategoryId());
@@ -2753,7 +2812,8 @@ abstract class Persona implements ActiveRecordInterface
         $this->persona_id = null;
         $this->identifier = null;
         $this->name = null;
-        $this->description = null;
+        $this->description_short = null;
+        $this->description_long = null;
         $this->default_spend = null;
         $this->sorting = null;
         $this->reward_category_id = null;

@@ -59,7 +59,7 @@ class PersonaTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 10;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PersonaTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 10;
 
     /**
      * the column name for the persona_id field
@@ -87,9 +87,14 @@ class PersonaTableMap extends TableMap
     const COL_NAME = 'persona.name';
 
     /**
-     * the column name for the description field
+     * the column name for the description_short field
      */
-    const COL_DESCRIPTION = 'persona.description';
+    const COL_DESCRIPTION_SHORT = 'persona.description_short';
+
+    /**
+     * the column name for the description_long field
+     */
+    const COL_DESCRIPTION_LONG = 'persona.description_long';
 
     /**
      * the column name for the default_spend field
@@ -128,11 +133,11 @@ class PersonaTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PersonaId', 'Identifier', 'Name', 'Description', 'DefaultSpend', 'Sorting', 'RewardCategoryId', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('personaId', 'identifier', 'name', 'description', 'defaultSpend', 'sorting', 'rewardCategoryId', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID, PersonaTableMap::COL_IDENTIFIER, PersonaTableMap::COL_NAME, PersonaTableMap::COL_DESCRIPTION, PersonaTableMap::COL_DEFAULT_SPEND, PersonaTableMap::COL_SORTING, PersonaTableMap::COL_REWARD_CATEGORY_ID, PersonaTableMap::COL_UPDATE_TIME, PersonaTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('persona_id', 'identifier', 'name', 'description', 'default_spend', 'sorting', 'reward_category_id', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('PersonaId', 'Identifier', 'Name', 'DescriptionShort', 'DescriptionLong', 'DefaultSpend', 'Sorting', 'RewardCategoryId', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('personaId', 'identifier', 'name', 'descriptionShort', 'descriptionLong', 'defaultSpend', 'sorting', 'rewardCategoryId', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID, PersonaTableMap::COL_IDENTIFIER, PersonaTableMap::COL_NAME, PersonaTableMap::COL_DESCRIPTION_SHORT, PersonaTableMap::COL_DESCRIPTION_LONG, PersonaTableMap::COL_DEFAULT_SPEND, PersonaTableMap::COL_SORTING, PersonaTableMap::COL_REWARD_CATEGORY_ID, PersonaTableMap::COL_UPDATE_TIME, PersonaTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('persona_id', 'identifier', 'name', 'description_short', 'description_long', 'default_spend', 'sorting', 'reward_category_id', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -142,11 +147,11 @@ class PersonaTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'Identifier' => 1, 'Name' => 2, 'Description' => 3, 'DefaultSpend' => 4, 'Sorting' => 5, 'RewardCategoryId' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
-        self::TYPE_CAMELNAME     => array('personaId' => 0, 'identifier' => 1, 'name' => 2, 'description' => 3, 'defaultSpend' => 4, 'sorting' => 5, 'rewardCategoryId' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
-        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID => 0, PersonaTableMap::COL_IDENTIFIER => 1, PersonaTableMap::COL_NAME => 2, PersonaTableMap::COL_DESCRIPTION => 3, PersonaTableMap::COL_DEFAULT_SPEND => 4, PersonaTableMap::COL_SORTING => 5, PersonaTableMap::COL_REWARD_CATEGORY_ID => 6, PersonaTableMap::COL_UPDATE_TIME => 7, PersonaTableMap::COL_UPDATE_USER => 8, ),
-        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'identifier' => 1, 'name' => 2, 'description' => 3, 'default_spend' => 4, 'sorting' => 5, 'reward_category_id' => 6, 'update_time' => 7, 'update_user' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('PersonaId' => 0, 'Identifier' => 1, 'Name' => 2, 'DescriptionShort' => 3, 'DescriptionLong' => 4, 'DefaultSpend' => 5, 'Sorting' => 6, 'RewardCategoryId' => 7, 'UpdateTime' => 8, 'UpdateUser' => 9, ),
+        self::TYPE_CAMELNAME     => array('personaId' => 0, 'identifier' => 1, 'name' => 2, 'descriptionShort' => 3, 'descriptionLong' => 4, 'defaultSpend' => 5, 'sorting' => 6, 'rewardCategoryId' => 7, 'updateTime' => 8, 'updateUser' => 9, ),
+        self::TYPE_COLNAME       => array(PersonaTableMap::COL_PERSONA_ID => 0, PersonaTableMap::COL_IDENTIFIER => 1, PersonaTableMap::COL_NAME => 2, PersonaTableMap::COL_DESCRIPTION_SHORT => 3, PersonaTableMap::COL_DESCRIPTION_LONG => 4, PersonaTableMap::COL_DEFAULT_SPEND => 5, PersonaTableMap::COL_SORTING => 6, PersonaTableMap::COL_REWARD_CATEGORY_ID => 7, PersonaTableMap::COL_UPDATE_TIME => 8, PersonaTableMap::COL_UPDATE_USER => 9, ),
+        self::TYPE_FIELDNAME     => array('persona_id' => 0, 'identifier' => 1, 'name' => 2, 'description_short' => 3, 'description_long' => 4, 'default_spend' => 5, 'sorting' => 6, 'reward_category_id' => 7, 'update_time' => 8, 'update_user' => 9, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
     );
 
     /**
@@ -169,7 +174,8 @@ class PersonaTableMap extends TableMap
         $this->addPrimaryKey('persona_id', 'PersonaId', 'INTEGER', true, null, null);
         $this->addColumn('identifier', 'Identifier', 'VARCHAR', true, 250, null);
         $this->addColumn('name', 'Name', 'VARCHAR', true, 255, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('description_short', 'DescriptionShort', 'VARCHAR', false, 250, null);
+        $this->addColumn('description_long', 'DescriptionLong', 'LONGVARCHAR', false, null, null);
         $this->addColumn('default_spend', 'DefaultSpend', 'INTEGER', true, null, 100000);
         $this->addColumn('sorting', 'Sorting', 'VARCHAR', true, 250, null);
         $this->addForeignKey('reward_category_id', 'RewardCategoryId', 'INTEGER', 'reward_category', 'reward_category_id', true, null, null);
@@ -333,7 +339,8 @@ class PersonaTableMap extends TableMap
             $criteria->addSelectColumn(PersonaTableMap::COL_PERSONA_ID);
             $criteria->addSelectColumn(PersonaTableMap::COL_IDENTIFIER);
             $criteria->addSelectColumn(PersonaTableMap::COL_NAME);
-            $criteria->addSelectColumn(PersonaTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(PersonaTableMap::COL_DESCRIPTION_SHORT);
+            $criteria->addSelectColumn(PersonaTableMap::COL_DESCRIPTION_LONG);
             $criteria->addSelectColumn(PersonaTableMap::COL_DEFAULT_SPEND);
             $criteria->addSelectColumn(PersonaTableMap::COL_SORTING);
             $criteria->addSelectColumn(PersonaTableMap::COL_REWARD_CATEGORY_ID);
@@ -343,7 +350,8 @@ class PersonaTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.persona_id');
             $criteria->addSelectColumn($alias . '.identifier');
             $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.description_short');
+            $criteria->addSelectColumn($alias . '.description_long');
             $criteria->addSelectColumn($alias . '.default_spend');
             $criteria->addSelectColumn($alias . '.sorting');
             $criteria->addSelectColumn($alias . '.reward_category_id');

@@ -23,7 +23,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonaQuery orderByPersonaId($order = Criteria::ASC) Order by the persona_id column
  * @method     ChildPersonaQuery orderByIdentifier($order = Criteria::ASC) Order by the identifier column
  * @method     ChildPersonaQuery orderByName($order = Criteria::ASC) Order by the name column
- * @method     ChildPersonaQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method     ChildPersonaQuery orderByDescriptionShort($order = Criteria::ASC) Order by the description_short column
+ * @method     ChildPersonaQuery orderByDescriptionLong($order = Criteria::ASC) Order by the description_long column
  * @method     ChildPersonaQuery orderByDefaultSpend($order = Criteria::ASC) Order by the default_spend column
  * @method     ChildPersonaQuery orderBySorting($order = Criteria::ASC) Order by the sorting column
  * @method     ChildPersonaQuery orderByRewardCategoryId($order = Criteria::ASC) Order by the reward_category_id column
@@ -33,7 +34,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersonaQuery groupByPersonaId() Group by the persona_id column
  * @method     ChildPersonaQuery groupByIdentifier() Group by the identifier column
  * @method     ChildPersonaQuery groupByName() Group by the name column
- * @method     ChildPersonaQuery groupByDescription() Group by the description column
+ * @method     ChildPersonaQuery groupByDescriptionShort() Group by the description_short column
+ * @method     ChildPersonaQuery groupByDescriptionLong() Group by the description_long column
  * @method     ChildPersonaQuery groupByDefaultSpend() Group by the default_spend column
  * @method     ChildPersonaQuery groupBySorting() Group by the sorting column
  * @method     ChildPersonaQuery groupByRewardCategoryId() Group by the reward_category_id column
@@ -72,7 +74,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersona findOneByPersonaId(int $persona_id) Return the first ChildPersona filtered by the persona_id column
  * @method     ChildPersona findOneByIdentifier(string $identifier) Return the first ChildPersona filtered by the identifier column
  * @method     ChildPersona findOneByName(string $name) Return the first ChildPersona filtered by the name column
- * @method     ChildPersona findOneByDescription(string $description) Return the first ChildPersona filtered by the description column
+ * @method     ChildPersona findOneByDescriptionShort(string $description_short) Return the first ChildPersona filtered by the description_short column
+ * @method     ChildPersona findOneByDescriptionLong(string $description_long) Return the first ChildPersona filtered by the description_long column
  * @method     ChildPersona findOneByDefaultSpend(int $default_spend) Return the first ChildPersona filtered by the default_spend column
  * @method     ChildPersona findOneBySorting(string $sorting) Return the first ChildPersona filtered by the sorting column
  * @method     ChildPersona findOneByRewardCategoryId(int $reward_category_id) Return the first ChildPersona filtered by the reward_category_id column
@@ -83,7 +86,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPersona[]|ObjectCollection findByPersonaId(int $persona_id) Return ChildPersona objects filtered by the persona_id column
  * @method     ChildPersona[]|ObjectCollection findByIdentifier(string $identifier) Return ChildPersona objects filtered by the identifier column
  * @method     ChildPersona[]|ObjectCollection findByName(string $name) Return ChildPersona objects filtered by the name column
- * @method     ChildPersona[]|ObjectCollection findByDescription(string $description) Return ChildPersona objects filtered by the description column
+ * @method     ChildPersona[]|ObjectCollection findByDescriptionShort(string $description_short) Return ChildPersona objects filtered by the description_short column
+ * @method     ChildPersona[]|ObjectCollection findByDescriptionLong(string $description_long) Return ChildPersona objects filtered by the description_long column
  * @method     ChildPersona[]|ObjectCollection findByDefaultSpend(int $default_spend) Return ChildPersona objects filtered by the default_spend column
  * @method     ChildPersona[]|ObjectCollection findBySorting(string $sorting) Return ChildPersona objects filtered by the sorting column
  * @method     ChildPersona[]|ObjectCollection findByRewardCategoryId(int $reward_category_id) Return ChildPersona objects filtered by the reward_category_id column
@@ -180,7 +184,7 @@ abstract class PersonaQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT persona_id, identifier, name, description, default_spend, sorting, reward_category_id, update_time, update_user FROM persona WHERE persona_id = :p0';
+        $sql = 'SELECT persona_id, identifier, name, description_short, description_long, default_spend, sorting, reward_category_id, update_time, update_user FROM persona WHERE persona_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -370,32 +374,61 @@ abstract class PersonaQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the description column
+     * Filter the query on the description_short column
      *
      * Example usage:
      * <code>
-     * $query->filterByDescription('fooValue');   // WHERE description = 'fooValue'
-     * $query->filterByDescription('%fooValue%'); // WHERE description LIKE '%fooValue%'
+     * $query->filterByDescriptionShort('fooValue');   // WHERE description_short = 'fooValue'
+     * $query->filterByDescriptionShort('%fooValue%'); // WHERE description_short LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $description The value to use as filter.
+     * @param     string $descriptionShort The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildPersonaQuery The current query, for fluid interface
      */
-    public function filterByDescription($description = null, $comparison = null)
+    public function filterByDescriptionShort($descriptionShort = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($description)) {
+            if (is_array($descriptionShort)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $description)) {
-                $description = str_replace('*', '%', $description);
+            } elseif (preg_match('/[\%\*]/', $descriptionShort)) {
+                $descriptionShort = str_replace('*', '%', $descriptionShort);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(PersonaTableMap::COL_DESCRIPTION, $description, $comparison);
+        return $this->addUsingAlias(PersonaTableMap::COL_DESCRIPTION_SHORT, $descriptionShort, $comparison);
+    }
+
+    /**
+     * Filter the query on the description_long column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDescriptionLong('fooValue');   // WHERE description_long = 'fooValue'
+     * $query->filterByDescriptionLong('%fooValue%'); // WHERE description_long LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $descriptionLong The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPersonaQuery The current query, for fluid interface
+     */
+    public function filterByDescriptionLong($descriptionLong = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($descriptionLong)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $descriptionLong)) {
+                $descriptionLong = str_replace('*', '%', $descriptionLong);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(PersonaTableMap::COL_DESCRIPTION_LONG, $descriptionLong, $comparison);
     }
 
     /**

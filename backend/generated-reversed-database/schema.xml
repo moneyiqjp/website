@@ -205,6 +205,16 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="city" idMethod="native" phpName="City">
+    <column name="city_id" phpName="CityId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="region" phpName="Region" type="VARCHAR" size="255"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="255"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="credit_card" idMethod="native" phpName="CreditCard">
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -621,6 +631,31 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="milage" idMethod="native" phpName="Milage">
+    <column name="milage_id" phpName="MilageId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="trip_id" phpName="TripId" type="INTEGER" required="true"/>
+    <column name="required_miles" phpName="RequiredMiles" type="INTEGER" required="true"/>
+    <column name="value_in_yen" phpName="ValueInYen" type="INTEGER" required="true"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="255"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="store" name="fk_milage_store">
+      <reference local="store_id" foreign="store_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="trip" name="fk_milage_trip">
+      <reference local="trip_id" foreign="trip_id"/>
+    </foreign-key>
+    <index name="fk_milage_trip">
+      <index-column name="trip_id"/>
+    </index>
+    <index name="fk_milage_store">
+      <index-column name="store_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="payment_type" idMethod="native" phpName="PaymentType">
     <column name="payment_type_id" phpName="PaymentTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
@@ -647,7 +682,8 @@
     <column name="persona_id" phpName="PersonaId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="identifier" phpName="Identifier" type="VARCHAR" size="250" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
-    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="description_short" phpName="DescriptionShort" type="VARCHAR" size="250"/>
+    <column name="description_long" phpName="DescriptionLong" type="LONGVARCHAR"/>
     <column name="default_spend" phpName="DefaultSpend" type="INTEGER" required="true" defaultValue="100000"/>
     <column name="sorting" phpName="Sorting" type="VARCHAR" size="250" required="true"/>
     <column name="reward_category_id" phpName="RewardCategoryId" type="INTEGER" required="true"/>
@@ -951,6 +987,37 @@
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="trip" idMethod="native" phpName="Trip">
+    <column name="trip_id" phpName="TripId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="from_city_id" phpName="FromCityId" type="INTEGER" required="true"/>
+    <column name="to_city_id" phpName="ToCityId" type="INTEGER" required="true"/>
+    <column name="distance" phpName="Distance" type="INTEGER" required="true"/>
+    <column name="unit_id" phpName="UnitId" type="INTEGER" required="true"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="255"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="unit" name="fk_trip_unit">
+      <reference local="unit_id" foreign="unit_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="city" name="trip_from_city_city">
+      <reference local="from_city_id" foreign="city_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="city" name="trip_to_city_city">
+      <reference local="to_city_id" foreign="city_id"/>
+    </foreign-key>
+    <index name="trip_from_city_city">
+      <index-column name="from_city_id"/>
+    </index>
+    <index name="trip_to_city_city">
+      <index-column name="to_city_id"/>
+    </index>
+    <index name="fk_trip_unit">
+      <index-column name="unit_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

@@ -159,6 +159,7 @@ class UnitTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('unit_id' => 'unit_id', ), null, null, 'Rewards');
+        $this->addRelation('Trip', '\\Trip', RelationMap::ONE_TO_MANY, array('unit_id' => 'unit_id', ), null, null, 'Trips');
     } // buildRelations()
 
     /**

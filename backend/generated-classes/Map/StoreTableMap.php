@@ -179,6 +179,7 @@ class StoreTableMap extends TableMap
         $this->addRelation('StoreCategory', '\\StoreCategory', RelationMap::MANY_TO_ONE, array('store_category_id' => 'store_category_id', ), null, null);
         $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
         $this->addRelation('MapPersonaStore', '\\MapPersonaStore', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'MapPersonaStores');
+        $this->addRelation('Milage', '\\Milage', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Milages');
         $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
         $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUses');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Rewards');
