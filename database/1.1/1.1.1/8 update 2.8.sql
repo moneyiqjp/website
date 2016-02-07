@@ -16,6 +16,7 @@ BEGIN
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='city' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='city_id') THEN
 			CREATE TABLE `city` (
 				`city_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`name` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 				`region` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 				`display` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 				`update_time` DATETIME NOT NULL,

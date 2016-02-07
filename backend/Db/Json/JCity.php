@@ -7,20 +7,24 @@
  */
 
 namespace Db\Json;
+use Base\CityQuery;
+use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 
 class JCity implements JSONInterface
 {
     public $CityId;
+    public $Name;
     public $Region;
     public $Display;
-    public $RewardCategory;
     public $UpdateTime;
     public $UpdateUser;
 
     public static function CREATE_FROM_DB(\City $item) {
         $mine = new JCity();
         $mine->CityId = $item->getCityId();
+        $mine->Name = $item->getName();
         $mine->Region = $item->getRegion();
         $mine->Display = $item->getDisplay();
         $time = new \DateTime();
@@ -34,16 +38,46 @@ class JCity implements JSONInterface
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        // TODO: Implement CREATE_FROM_ARRAY() method.
+        $mine = new JCity();
+        if(ArrayUtils::KEY_EXISTS($data,'CityId')) $mine->CityId = $data['CityId'];
+        if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
+        if(ArrayUtils::KEY_EXISTS($data,'Region')) $mine->Region = $data['Region'];
+        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
+        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateUser = $data['UpdateUser'];
+        return $mine;
     }
 
     public function saveToDb()
     {
-        // TODO: Implement saveToDb() method.
+        return $this->toDB()->save() > 0;
+    }
+
+    private function tryLoadFromDB(){
+
+        if(FieldUtils::ID_IS_DEFINED($this->CityId)) {
+            $item = CityQuery::create()->findOneByCityId($this->CityId);
+            if(!is_null($item)) return $item;
+        }
+        return new \City();
     }
 
     public function toDB()
     {
-        // TODO: Implement toDB() method.
+        $item = $this->tryLoadFromDB();
+        return $this->updateDB($item);
+    }
+
+    public function updateDB(\City &$item)
+    {
+        if(FieldUtils::ID_IS_DEFINED($this->CityId)) $item->setCityId($this->CityId);
+
+        if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
+        if(FieldUtils::STRING_IS_DEFINED($this->Region)) $item->setRegion($this->Region);
+        if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDeleted($this->Display);
+
+        $item->setUpdateTime(new \DateTime());
+        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
+        return $item;
     }
 }
