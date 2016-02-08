@@ -207,6 +207,7 @@
   </table>
   <table name="city" idMethod="native" phpName="City">
     <column name="city_id" phpName="CityId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255"/>
     <column name="region" phpName="Region" type="VARCHAR" size="255"/>
     <column name="display" phpName="Display" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>

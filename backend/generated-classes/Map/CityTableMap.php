@@ -59,7 +59,7 @@ class CityTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class CityTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the city_id field
      */
     const COL_CITY_ID = 'city.city_id';
+
+    /**
+     * the column name for the name field
+     */
+    const COL_NAME = 'city.name';
 
     /**
      * the column name for the region field
@@ -108,11 +113,11 @@ class CityTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('CityId', 'Region', 'Display', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('cityId', 'region', 'display', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(CityTableMap::COL_CITY_ID, CityTableMap::COL_REGION, CityTableMap::COL_DISPLAY, CityTableMap::COL_UPDATE_TIME, CityTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('city_id', 'region', 'display', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('CityId', 'Name', 'Region', 'Display', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('cityId', 'name', 'region', 'display', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(CityTableMap::COL_CITY_ID, CityTableMap::COL_NAME, CityTableMap::COL_REGION, CityTableMap::COL_DISPLAY, CityTableMap::COL_UPDATE_TIME, CityTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('city_id', 'name', 'region', 'display', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class CityTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('CityId' => 0, 'Region' => 1, 'Display' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
-        self::TYPE_CAMELNAME     => array('cityId' => 0, 'region' => 1, 'display' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
-        self::TYPE_COLNAME       => array(CityTableMap::COL_CITY_ID => 0, CityTableMap::COL_REGION => 1, CityTableMap::COL_DISPLAY => 2, CityTableMap::COL_UPDATE_TIME => 3, CityTableMap::COL_UPDATE_USER => 4, ),
-        self::TYPE_FIELDNAME     => array('city_id' => 0, 'region' => 1, 'display' => 2, 'update_time' => 3, 'update_user' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('CityId' => 0, 'Name' => 1, 'Region' => 2, 'Display' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
+        self::TYPE_CAMELNAME     => array('cityId' => 0, 'name' => 1, 'region' => 2, 'display' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
+        self::TYPE_COLNAME       => array(CityTableMap::COL_CITY_ID => 0, CityTableMap::COL_NAME => 1, CityTableMap::COL_REGION => 2, CityTableMap::COL_DISPLAY => 3, CityTableMap::COL_UPDATE_TIME => 4, CityTableMap::COL_UPDATE_USER => 5, ),
+        self::TYPE_FIELDNAME     => array('city_id' => 0, 'name' => 1, 'region' => 2, 'display' => 3, 'update_time' => 4, 'update_user' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -147,6 +152,7 @@ class CityTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('city_id', 'CityId', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
         $this->addColumn('region', 'Region', 'VARCHAR', false, 255, null);
         $this->addColumn('display', 'Display', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
@@ -304,12 +310,14 @@ class CityTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(CityTableMap::COL_CITY_ID);
+            $criteria->addSelectColumn(CityTableMap::COL_NAME);
             $criteria->addSelectColumn(CityTableMap::COL_REGION);
             $criteria->addSelectColumn(CityTableMap::COL_DISPLAY);
             $criteria->addSelectColumn(CityTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(CityTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.city_id');
+            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.region');
             $criteria->addSelectColumn($alias . '.display');
             $criteria->addSelectColumn($alias . '.update_time');

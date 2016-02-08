@@ -1636,6 +1636,7 @@ $app->get('/crud/storecategory/by/id', function () use ($app) {
 require_once 'requests/crud/persona.php';
 require_once 'requests/crud/restrictions.php';
 require_once 'requests/crud/payment_type.php';
+require_once 'requests/crud/milage.php';
 
 //Run the Slim application:
 $app->run();

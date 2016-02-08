@@ -72,6 +72,12 @@ abstract class City implements ActiveRecordInterface
     protected $city_id;
 
     /**
+     * The value for the name field.
+     * @var        string
+     */
+    protected $name;
+
+    /**
      * The value for the region field.
      * @var        string
      */
@@ -355,6 +361,16 @@ abstract class City implements ActiveRecordInterface
     }
 
     /**
+     * Get the [name] column value.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Get the [region] column value.
      *
      * @return string
@@ -423,6 +439,26 @@ abstract class City implements ActiveRecordInterface
 
         return $this;
     } // setCityId()
+
+    /**
+     * Set the value of [name] column.
+     *
+     * @param  string $v new value
+     * @return $this|\City The current object (for fluent API support)
+     */
+    public function setName($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[CityTableMap::COL_NAME] = true;
+        }
+
+        return $this;
+    } // setName()
 
     /**
      * Set the value of [region] column.
@@ -543,19 +579,22 @@ abstract class City implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : CityTableMap::translateFieldName('CityId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->city_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : CityTableMap::translateFieldName('Region', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : CityTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CityTableMap::translateFieldName('Region', TableMap::TYPE_PHPNAME, $indexType)];
             $this->region = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CityTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CityTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : CityTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CityTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : CityTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : CityTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -565,7 +604,7 @@ abstract class City implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 5; // 5 = CityTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = CityTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\City'), 0, $e);
@@ -803,6 +842,9 @@ abstract class City implements ActiveRecordInterface
         if ($this->isColumnModified(CityTableMap::COL_CITY_ID)) {
             $modifiedColumns[':p' . $index++]  = 'city_id';
         }
+        if ($this->isColumnModified(CityTableMap::COL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = 'name';
+        }
         if ($this->isColumnModified(CityTableMap::COL_REGION)) {
             $modifiedColumns[':p' . $index++]  = 'region';
         }
@@ -828,6 +870,9 @@ abstract class City implements ActiveRecordInterface
                 switch ($columnName) {
                     case 'city_id':
                         $stmt->bindValue($identifier, $this->city_id, PDO::PARAM_INT);
+                        break;
+                    case 'name':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
                     case 'region':
                         $stmt->bindValue($identifier, $this->region, PDO::PARAM_STR);
@@ -907,15 +952,18 @@ abstract class City implements ActiveRecordInterface
                 return $this->getCityId();
                 break;
             case 1:
-                return $this->getRegion();
+                return $this->getName();
                 break;
             case 2:
-                return $this->getDisplay();
+                return $this->getRegion();
                 break;
             case 3:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 4:
+                return $this->getUpdateTime();
+                break;
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -949,10 +997,11 @@ abstract class City implements ActiveRecordInterface
         $keys = CityTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getCityId(),
-            $keys[1] => $this->getRegion(),
-            $keys[2] => $this->getDisplay(),
-            $keys[3] => $this->getUpdateTime(),
-            $keys[4] => $this->getUpdateUser(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getRegion(),
+            $keys[3] => $this->getDisplay(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1028,15 +1077,18 @@ abstract class City implements ActiveRecordInterface
                 $this->setCityId($value);
                 break;
             case 1:
-                $this->setRegion($value);
+                $this->setName($value);
                 break;
             case 2:
-                $this->setDisplay($value);
+                $this->setRegion($value);
                 break;
             case 3:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 4:
+                $this->setUpdateTime($value);
+                break;
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1069,16 +1121,19 @@ abstract class City implements ActiveRecordInterface
             $this->setCityId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setRegion($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setDisplay($arr[$keys[2]]);
+            $this->setRegion($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setUpdateTime($arr[$keys[3]]);
+            $this->setDisplay($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUpdateUser($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
+        }
+        if (array_key_exists($keys[5], $arr)) {
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1123,6 +1178,9 @@ abstract class City implements ActiveRecordInterface
 
         if ($this->isColumnModified(CityTableMap::COL_CITY_ID)) {
             $criteria->add(CityTableMap::COL_CITY_ID, $this->city_id);
+        }
+        if ($this->isColumnModified(CityTableMap::COL_NAME)) {
+            $criteria->add(CityTableMap::COL_NAME, $this->name);
         }
         if ($this->isColumnModified(CityTableMap::COL_REGION)) {
             $criteria->add(CityTableMap::COL_REGION, $this->region);
@@ -1222,6 +1280,7 @@ abstract class City implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setName($this->getName());
         $copyObj->setRegion($this->getRegion());
         $copyObj->setDisplay($this->getDisplay());
         $copyObj->setUpdateTime($this->getUpdateTime());
@@ -1787,6 +1846,7 @@ abstract class City implements ActiveRecordInterface
     public function clear()
     {
         $this->city_id = null;
+        $this->name = null;
         $this->region = null;
         $this->display = null;
         $this->update_time = null;

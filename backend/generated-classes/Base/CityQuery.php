@@ -21,12 +21,14 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildCityQuery orderByCityId($order = Criteria::ASC) Order by the city_id column
+ * @method     ChildCityQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method     ChildCityQuery orderByRegion($order = Criteria::ASC) Order by the region column
  * @method     ChildCityQuery orderByDisplay($order = Criteria::ASC) Order by the display column
  * @method     ChildCityQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCityQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildCityQuery groupByCityId() Group by the city_id column
+ * @method     ChildCityQuery groupByName() Group by the name column
  * @method     ChildCityQuery groupByRegion() Group by the region column
  * @method     ChildCityQuery groupByDisplay() Group by the display column
  * @method     ChildCityQuery groupByUpdateTime() Group by the update_time column
@@ -50,6 +52,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCity findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCity matching the query, or a new ChildCity object populated from the query conditions when no match is found
  *
  * @method     ChildCity findOneByCityId(int $city_id) Return the first ChildCity filtered by the city_id column
+ * @method     ChildCity findOneByName(string $name) Return the first ChildCity filtered by the name column
  * @method     ChildCity findOneByRegion(string $region) Return the first ChildCity filtered by the region column
  * @method     ChildCity findOneByDisplay(string $display) Return the first ChildCity filtered by the display column
  * @method     ChildCity findOneByUpdateTime(string $update_time) Return the first ChildCity filtered by the update_time column
@@ -57,6 +60,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildCity[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCity objects based on current ModelCriteria
  * @method     ChildCity[]|ObjectCollection findByCityId(int $city_id) Return ChildCity objects filtered by the city_id column
+ * @method     ChildCity[]|ObjectCollection findByName(string $name) Return ChildCity objects filtered by the name column
  * @method     ChildCity[]|ObjectCollection findByRegion(string $region) Return ChildCity objects filtered by the region column
  * @method     ChildCity[]|ObjectCollection findByDisplay(string $display) Return ChildCity objects filtered by the display column
  * @method     ChildCity[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCity objects filtered by the update_time column
@@ -152,7 +156,7 @@ abstract class CityQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT city_id, region, display, update_time, update_user FROM city WHERE city_id = :p0';
+        $sql = 'SELECT city_id, name, region, display, update_time, update_user FROM city WHERE city_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -281,6 +285,35 @@ abstract class CityQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CityTableMap::COL_CITY_ID, $cityId, $comparison);
+    }
+
+    /**
+     * Filter the query on the name column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByName('%fooValue%'); // WHERE name LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $name The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCityQuery The current query, for fluid interface
+     */
+    public function filterByName($name = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($name)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $name)) {
+                $name = str_replace('*', '%', $name);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CityTableMap::COL_NAME, $name, $comparison);
     }
 
     /**

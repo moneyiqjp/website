@@ -179,8 +179,11 @@
                         label: "Name:",
                         name: "Name"
                     }, {
-                        label: "Description:",
-                        name: "Description"
+                        label: "Description (short):",
+                        name: "DescriptionShort"
+                    }, {
+                        label: "Description (long):",
+                        name: "DescriptionLong"
                     }, {
                         label: "Default spend:",
                         name: "DefaultSpend"
@@ -383,7 +386,8 @@
                     {"data": "PersonaId", edit: false},
                     {"data": "Identity"},
                     {"data": "Name"},
-                    {"data": "Description"},
+                    {"data": "DescriptionShort"},
+                    {"data": "DescriptionLong", visible:false},
                     {"data": "DefaultSpend", visible: false},
                     {"data": "Sorting", visible: false},
                     {"data": "RewardCategory.Name", editField: "RewardCategory.RestrictionTypeId", visible: false},
@@ -527,7 +531,8 @@
                 <th>Id</th>
                 <th>Identifier</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Desc (Short) </th>
+                <th>Desc (Long) </th>
                 <th>DefaultSpend</th>
                 <th>Sorting</th>
                 <th>Reward</th>
@@ -542,7 +547,8 @@
                 <th>Id</th>
                 <th>Identifier</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Desc (Short)</th>
+                <th>Desc (Long) </th>
                 <th>DefaultSpend</th>
                 <th>Sorting</th>
                 <th>Reward</th>

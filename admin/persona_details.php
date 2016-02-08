@@ -485,9 +485,12 @@
                             label: "Name:",
                             name: "Name"
                         }, {
-                            label: "Description:",
-                            name: "Description"
-                        },  {
+                            label: "Description (Short):",
+                            name: "DescriptionShort"
+                        }, {
+                            label: "Description (Long):",
+                            name: "DescriptionLong"
+                        },    {
                             label: "Default spend:",
                             name: "DefaultSpend"
                         }, {
@@ -702,7 +705,8 @@
                     {"data": "PersonaId", edit: false, visible: false},
                     {"data": "Identity"},
                     {"data": "Name"},
-                    {"data": "Description"},
+                    {"data": "DescriptionShort", width: "80"},
+                    {"data": "DescriptionLong", width: "80", visible:false},
                     {"data": "DefaultSpend"},
                     {"data": "Sorting"},
                     {"data": "RewardCategory.Name", editField: "RewardCategory.RestrictionTypeId"},
@@ -802,7 +806,8 @@
                         <th>Id</th>
                         <th>Identifier</th>
                         <th>Name</th>
-                        <th>Description</th>
+                        <th>Description<br>(Short)</th>
+                        <th>Description<br>(Long)</th>
                         <th>Spend</th>
                         <th>Sorting</th>
                         <th>Reward</th>
@@ -816,7 +821,8 @@
                         <th>Id</th>
                         <th>Identifier</th>
                         <th>Name</th>
-                        <th>Description</th>
+                        <th>Description<br>(Short)</th>
+                        <th>Description<br>(Long)</th>
                         <th>Spend</th>
                         <th>Sorting</th>
                         <th>Reward</th>

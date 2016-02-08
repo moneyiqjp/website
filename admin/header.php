@@ -60,6 +60,11 @@
         </a>
     </div>
     <div class="adminlogo">
+        <a href="mileage.php" target="frame_main" class="menulink">
+            Mileage
+        </a>
+    </div>
+    <div class="adminlogo">
         <a href="testing_backend.php" target="frame_main" class="menulink">
             Backend Status
         </a>

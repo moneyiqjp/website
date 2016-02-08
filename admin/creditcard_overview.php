@@ -224,7 +224,7 @@
                     "dataType": "json"
                 },
                 "columns": [
-                    { "data": "credit_card_id",visible: false, edit: false },
+                    { "data": "credit_card_id",visible: true, edit: false },
                     { "data": "name" },
                     { "data": "issuer.name", editField: "issuer.id" },
                     { "data": "description", visible:false },

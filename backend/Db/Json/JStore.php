@@ -12,6 +12,69 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 class JStore implements JSONInterface {
+    /**
+     * @return mixed
+     */
+    public function getStoreId()
+    {
+        return $this->StoreId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStoreName()
+    {
+        return $this->StoreName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStoreCategory()
+    {
+        return $this->StoreCategory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->Description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsMajor()
+    {
+        return $this->IsMajor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllocation()
+    {
+        return $this->Allocation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateTime()
+    {
+        return $this->UpdateTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateUser()
+    {
+        return $this->UpdateUser;
+    }
     public $StoreId;
     public $StoreName;
     public $StoreCategory;
@@ -46,7 +109,8 @@ class JStore implements JSONInterface {
 
         return JStore::CREATE_FROM_ARRAY_RELAXED($data);
     }
-    public static function CREATE_FROM_ARRAY_RELAXED($data)
+
+   public static function CREATE_FROM_ARRAY_RELAXED($data)
     {
         $mine = new JStore();
         if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {

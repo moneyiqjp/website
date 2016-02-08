@@ -39,18 +39,26 @@ class JCity implements JSONInterface
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JCity();
-        if(ArrayUtils::KEY_EXISTS($data,'CityId')) $mine->CityId = $data['CityId'];
+        if(ArrayUtils::KEY_EXISTS($data,'CityId')) {
+            $mine->CityId = $data['CityId'];
+            $mine = JCity::CREATE_FROM_DB($mine->tryLoadFromDB());
+        }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(ArrayUtils::KEY_EXISTS($data,'Region')) $mine->Region = $data['Region'];
         if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
-        $mine->UpdateUser = $data['UpdateUser'];
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime'))$mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateUser'))$mine->UpdateUser = $data['UpdateUser'];
         return $mine;
     }
 
     public function saveToDb()
     {
         return $this->toDB()->save() > 0;
+    }
+
+    private function tryLoad($id) {
+        $item = CityQuery::create()->findOneByCityId($id);
+        return $item;
     }
 
     private function tryLoadFromDB(){
@@ -64,8 +72,7 @@ class JCity implements JSONInterface
 
     public function toDB()
     {
-        $item = $this->tryLoadFromDB();
-        return $this->updateDB($item);
+        return $this->updateDB($this->tryLoadFromDB());
     }
 
     public function updateDB(\City &$item)
@@ -74,7 +81,7 @@ class JCity implements JSONInterface
 
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         if(FieldUtils::STRING_IS_DEFINED($this->Region)) $item->setRegion($this->Region);
-        if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDeleted($this->Display);
+        if(FieldUtils::STRING_IS_DEFINED($this->Display)) $item->setDisplay($this->Display);
 
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
