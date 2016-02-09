@@ -13,7 +13,7 @@ use Db\Utility\FieldUtils;
 
 class JMilage implements JSONInterface
 {
-    private $MilageId;
+    private $MileageId;
     private $Store;
     private $Trip;
     private $RequiredMiles;
@@ -25,9 +25,9 @@ class JMilage implements JSONInterface
     /**
      * @return mixed
      */
-    public function getMilageId()
+    public function getMileageId()
     {
-        return $this->MilageId;
+        return $this->MileageId;
     }
     /**
      * @return mixed
@@ -82,7 +82,7 @@ class JMilage implements JSONInterface
 
     public static function CREATE_FROM_DB(\Milage $item) {
         $mine = new JMilage();
-        $mine->MilageId = $item->getMilageId();
+        $mine->MileageId = $item->getMilageId();
         $mine->Store = JStore::CREATE_FROM_DB($item->getStore());
         $mine->Trip = JTrip::CREATE_FROM_DB($item->getTrip());
         $mine->RequiredMiles = $item->getRequiredMiles();
@@ -102,7 +102,7 @@ class JMilage implements JSONInterface
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JMilage();
-        if(ArrayUtils::KEY_EXISTS($data,'MilageId')) $mine->MilageId = $data['MilageId'];
+        if(ArrayUtils::KEY_EXISTS($data,'MileageId')) $mine->MileageId = $data['MileageId'];
         if(ArrayUtils::KEY_EXISTS($data,'Store')) $mine->Store = JStore::CREATE_FROM_ARRAY($data['Store']);
         if(ArrayUtils::KEY_EXISTS($data,'Trip')) $mine->Trip = JTrip::CREATE_FROM_ARRAY($data['Trip']);
         if(ArrayUtils::KEY_EXISTS($data,'RequiredMiles')) $mine->RequiredMiles = $data['RequiredMiles'];
@@ -122,8 +122,8 @@ class JMilage implements JSONInterface
 
     private function tryLoadFromDB(){
 
-        if(FieldUtils::ID_IS_DEFINED($this->MilageId)) {
-            $item = \MilageQuery::create()->findByMilageId($this->MilageId);
+        if(FieldUtils::ID_IS_DEFINED($this->MileageId)) {
+            $item = \MilageQuery::create()->findByMilageId($this->MileageId);
             if(!is_null($item)) return $item;
         }
         return new \Milage();
@@ -136,7 +136,7 @@ class JMilage implements JSONInterface
 
     public function updateDB(\Milage &$item)
     {
-        if(FieldUtils::ID_IS_DEFINED($this->MilageId)) $item->setMilageId($this->MilageId);
+        if(FieldUtils::ID_IS_DEFINED($this->MileageId)) $item->setMilageId($this->MileageId);
 
         if(!is_null($this->Store) && FieldUtils::ID_IS_DEFINED( $this->Store->StoreId)) {
             $item->setStoreId($this->Store->StoreId);

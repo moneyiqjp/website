@@ -19,6 +19,7 @@
     <script type="text/javascript" language="javascript" class="init">
         var cities = [];
         var units = [];
+        var trips = [];
         var tmpStore;
         var index;
         var jason;
@@ -70,6 +71,32 @@
                 }
             }
         }
+
+
+        tmp = $.ajax({
+            url: '../backend/crud/trip/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    trips.push({
+                        value: tmpStore[index]["TripId"],
+                        label: tmpStore[index]["CityFrom"]["Name"] + "-" + tmpStore[index]["CityTo"]["Name"]
+                    })
+                }
+            }
+        }
+
 
 
         cityEditor = new $.fn.dataTable.Editor(
@@ -130,7 +157,7 @@
                 fields: [
                     {
                         label: "Id:",
-                        name: "Trip",
+                        name: "TripId",
                         type:  "readonly"
                     }, {
                         label: "From:",
@@ -163,6 +190,59 @@
                     }
                 ]
             });
+
+
+        mileageEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/mileage/create', // default method is POST
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/mileage/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/mileage/delete'
+                    }
+                },
+                table: "#mileage",
+                idSrc: "MileageId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "MileageId",
+                        type:  "readonly"
+                    }, {
+                        label: "Store:",
+                        name: "Store.StoreId",
+                        type: "select",
+                        options: stores
+                    }, {
+                        label: "Trip:",
+                        name: "Trip.TripId",
+                        type: "select",
+                        options: trips
+                    }, {
+                        label: "RequiredMiles:",
+                        name: "RequiredMiles"
+                    }, {
+                        label: "ValueInYen:",
+                        name: "ValueInYen"
+                    },  {
+                        label: "Display:",
+                        name: "Display"
+                    },{
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
+
 
         $(document).ready(function() {
             $('#cities').dataTable( {
@@ -220,20 +300,11 @@
                     ]
                 }
             } );
-        })
-/*
+        });
 
- <th>Id</th>
- <th>Store</th>
- <th>Trips</th>
- <th>RequiredMiles</th>
- <th>ValueInYen</th>
- <th>Display</th>
- <th>Updated</th>
- <th>User</th>
- */
-        /*
-        $('#milage').dataTable( {
+
+
+        $('#mileage').dataTable( {
             dom: "frtTip",
             "pageLength": 25,
             "ajax": {
@@ -244,25 +315,32 @@
             },
             "columns": [
                 { "data": "MilageId", visible: false },
-                { "data": "Trip", editField: "Trip.TripId" },
-                { "data": "CityTo.Name", editField: "CityFrom.CityId" },
-                { "data": "Distance" },
+                { "data": "Store.StoreName", editField: "Store.StoreId" },
+                { data: "Trip",
+                  editField: "Trip.TripId",
+                  "render": function ( data, type, full, meta ) {
+                        if ( type === 'display' ) {
+                            return data["CityFrom"]["Name"] + "-" + data["CityTo"]["Name"];
+                        }
+                        return data;
+                  }
+                },
+                { "data": "RequiredMiles" },
+                { "data": "ValueInYen" },
                 { "data": "Display" },
-                { data: "Unit.Name",   editField: "Unit.UnitId" },
                 { "data": "UpdateTime", visible: false},
                 { "data": "UpdateUser", visible: false }
             ]
             ,tableTools: {
                 sRowSelect: "os",
                 aButtons: [
-                    { sExtends: "editor_create", editor: tripEditor },
-                    { sExtends: "editor_edit",   editor: tripEditor },
-                    { sExtends: "editor_remove", editor: tripEditor }
+                    { sExtends: "editor_create", editor: mileageEditor },
+                    { sExtends: "editor_edit",   editor: mileageEditor },
+                    { sExtends: "editor_remove", editor: mileageEditor }
                 ]
             }
         } );
         })
-*/
     </script>
 </head>
 
@@ -334,14 +412,14 @@
 
 
 <div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="milage">Mileage</a></div>
+    <div class="table-headline"><a name="mileage">Mileage</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
     <a href="#affiliates" class="subheader">Affiliates</a>
     <a href="#insurance_type" class="subheader">Insurance Type</a>
     <a href="#feature_type" class="subheader">Feature Type</a>
     -->
-    <table id="milage" class="display" cellspacing="0" width="98%">
+    <table id="mileage" class="display" cellspacing="0" width="98%">
         <thead>
         <tr>
             <th>Id</th>
