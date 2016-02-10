@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Store;
-use \StoreQuery;
+use \Mileage;
+use \MileageQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'store' table.
+ * This class defines the structure of the 'mileage' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class StoreTableMap extends TableMap
+class MileageTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class StoreTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.StoreTableMap';
+    const CLASS_NAME = '.Map.MileageTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class StoreTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'store';
+    const TABLE_NAME = 'mileage';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Store';
+    const OM_CLASS = '\\Mileage';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Store';
+    const CLASS_DEFAULT = 'Mileage';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,47 +69,52 @@ class StoreTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 9;
+
+    /**
+     * the column name for the mileage_id field
+     */
+    const COL_MILEAGE_ID = 'mileage.mileage_id';
 
     /**
      * the column name for the store_id field
      */
-    const COL_STORE_ID = 'store.store_id';
+    const COL_STORE_ID = 'mileage.store_id';
 
     /**
-     * the column name for the store_name field
+     * the column name for the point_system_id field
      */
-    const COL_STORE_NAME = 'store.store_name';
+    const COL_POINT_SYSTEM_ID = 'mileage.point_system_id';
 
     /**
-     * the column name for the store_category_id field
+     * the column name for the trip_id field
      */
-    const COL_STORE_CATEGORY_ID = 'store.store_category_id';
+    const COL_TRIP_ID = 'mileage.trip_id';
 
     /**
-     * the column name for the description field
+     * the column name for the required_miles field
      */
-    const COL_DESCRIPTION = 'store.description';
+    const COL_REQUIRED_MILES = 'mileage.required_miles';
 
     /**
-     * the column name for the is_major field
+     * the column name for the value_in_yen field
      */
-    const COL_IS_MAJOR = 'store.is_major';
+    const COL_VALUE_IN_YEN = 'mileage.value_in_yen';
 
     /**
-     * the column name for the allocation field
+     * the column name for the display field
      */
-    const COL_ALLOCATION = 'store.allocation';
+    const COL_DISPLAY = 'mileage.display';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'store.update_time';
+    const COL_UPDATE_TIME = 'mileage.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'store.update_user';
+    const COL_UPDATE_USER = 'mileage.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -123,11 +128,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('StoreId', 'StoreName', 'StoreCategoryId', 'Description', 'IsMajor', 'Allocation', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('storeId', 'storeName', 'storeCategoryId', 'description', 'isMajor', 'allocation', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID, StoreTableMap::COL_STORE_NAME, StoreTableMap::COL_STORE_CATEGORY_ID, StoreTableMap::COL_DESCRIPTION, StoreTableMap::COL_IS_MAJOR, StoreTableMap::COL_ALLOCATION, StoreTableMap::COL_UPDATE_TIME, StoreTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('store_id', 'store_name', 'store_category_id', 'description', 'is_major', 'allocation', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('MileageId', 'StoreId', 'PointSystemId', 'TripId', 'RequiredMiles', 'ValueInYen', 'Display', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('mileageId', 'storeId', 'pointSystemId', 'tripId', 'requiredMiles', 'valueInYen', 'display', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID, MileageTableMap::COL_STORE_ID, MileageTableMap::COL_POINT_SYSTEM_ID, MileageTableMap::COL_TRIP_ID, MileageTableMap::COL_REQUIRED_MILES, MileageTableMap::COL_VALUE_IN_YEN, MileageTableMap::COL_DISPLAY, MileageTableMap::COL_UPDATE_TIME, MileageTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('mileage_id', 'store_id', 'point_system_id', 'trip_id', 'required_miles', 'value_in_yen', 'display', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -137,11 +142,11 @@ class StoreTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('StoreId' => 0, 'StoreName' => 1, 'StoreCategoryId' => 2, 'Description' => 3, 'IsMajor' => 4, 'Allocation' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('storeId' => 0, 'storeName' => 1, 'storeCategoryId' => 2, 'description' => 3, 'isMajor' => 4, 'allocation' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(StoreTableMap::COL_STORE_ID => 0, StoreTableMap::COL_STORE_NAME => 1, StoreTableMap::COL_STORE_CATEGORY_ID => 2, StoreTableMap::COL_DESCRIPTION => 3, StoreTableMap::COL_IS_MAJOR => 4, StoreTableMap::COL_ALLOCATION => 5, StoreTableMap::COL_UPDATE_TIME => 6, StoreTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('store_id' => 0, 'store_name' => 1, 'store_category_id' => 2, 'description' => 3, 'is_major' => 4, 'allocation' => 5, 'update_time' => 6, 'update_user' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('MileageId' => 0, 'StoreId' => 1, 'PointSystemId' => 2, 'TripId' => 3, 'RequiredMiles' => 4, 'ValueInYen' => 5, 'Display' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
+        self::TYPE_CAMELNAME     => array('mileageId' => 0, 'storeId' => 1, 'pointSystemId' => 2, 'tripId' => 3, 'requiredMiles' => 4, 'valueInYen' => 5, 'display' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
+        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID => 0, MileageTableMap::COL_STORE_ID => 1, MileageTableMap::COL_POINT_SYSTEM_ID => 2, MileageTableMap::COL_TRIP_ID => 3, MileageTableMap::COL_REQUIRED_MILES => 4, MileageTableMap::COL_VALUE_IN_YEN => 5, MileageTableMap::COL_DISPLAY => 6, MileageTableMap::COL_UPDATE_TIME => 7, MileageTableMap::COL_UPDATE_USER => 8, ),
+        self::TYPE_FIELDNAME     => array('mileage_id' => 0, 'store_id' => 1, 'point_system_id' => 2, 'trip_id' => 3, 'required_miles' => 4, 'value_in_yen' => 5, 'display' => 6, 'update_time' => 7, 'update_user' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -154,19 +159,20 @@ class StoreTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('store');
-        $this->setPhpName('Store');
+        $this->setName('mileage');
+        $this->setPhpName('Mileage');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Store');
+        $this->setClassName('\\Mileage');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('store_id', 'StoreId', 'INTEGER', true, null, null);
-        $this->addColumn('store_name', 'StoreName', 'LONGVARCHAR', true, null, null);
-        $this->addForeignKey('store_category_id', 'StoreCategoryId', 'INTEGER', 'store_category', 'store_category_id', true, null, 1);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('is_major', 'IsMajor', 'TINYINT', true, null, 0);
-        $this->addColumn('allocation', 'Allocation', 'INTEGER', false, null, 10);
+        $this->addPrimaryKey('mileage_id', 'MileageId', 'INTEGER', true, null, null);
+        $this->addForeignKey('store_id', 'StoreId', 'INTEGER', 'store', 'store_id', true, null, null);
+        $this->addForeignKey('point_system_id', 'PointSystemId', 'INTEGER', 'point_system', 'point_system_id', true, null, null);
+        $this->addForeignKey('trip_id', 'TripId', 'INTEGER', 'trip', 'trip_id', true, null, null);
+        $this->addColumn('required_miles', 'RequiredMiles', 'INTEGER', true, null, null);
+        $this->addColumn('value_in_yen', 'ValueInYen', 'INTEGER', true, null, null);
+        $this->addColumn('display', 'Display', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -176,13 +182,9 @@ class StoreTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('StoreCategory', '\\StoreCategory', RelationMap::MANY_TO_ONE, array('store_category_id' => 'store_category_id', ), null, null);
-        $this->addRelation('Discounts', '\\Discounts', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Discountss');
-        $this->addRelation('MapPersonaStore', '\\MapPersonaStore', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'MapPersonaStores');
-        $this->addRelation('Mileage', '\\Mileage', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Mileages');
-        $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointAcquisitions');
-        $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'PointUses');
-        $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('store_id' => 'store_id', ), null, null, 'Rewards');
+        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
+        $this->addRelation('Store', '\\Store', RelationMap::MANY_TO_ONE, array('store_id' => 'store_id', ), null, null);
+        $this->addRelation('Trip', '\\Trip', RelationMap::MANY_TO_ONE, array('trip_id' => 'trip_id', ), null, null);
     } // buildRelations()
 
     /**
@@ -201,11 +203,11 @@ class StoreTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MileageId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('MileageId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -225,7 +227,7 @@ class StoreTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('MileageId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -242,7 +244,7 @@ class StoreTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? StoreTableMap::CLASS_DEFAULT : StoreTableMap::OM_CLASS;
+        return $withPrefix ? MileageTableMap::CLASS_DEFAULT : MileageTableMap::OM_CLASS;
     }
 
     /**
@@ -256,22 +258,22 @@ class StoreTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Store object, last column rank)
+     * @return array           (Mileage object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = StoreTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = StoreTableMap::getInstanceFromPool($key))) {
+        $key = MileageTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = MileageTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + StoreTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + MileageTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = StoreTableMap::OM_CLASS;
-            /** @var Store $obj */
+            $cls = MileageTableMap::OM_CLASS;
+            /** @var Mileage $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            StoreTableMap::addInstanceToPool($obj, $key);
+            MileageTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -294,18 +296,18 @@ class StoreTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = StoreTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = StoreTableMap::getInstanceFromPool($key))) {
+            $key = MileageTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = MileageTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Store $obj */
+                /** @var Mileage $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                StoreTableMap::addInstanceToPool($obj, $key);
+                MileageTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -326,21 +328,23 @@ class StoreTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_ID);
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_NAME);
-            $criteria->addSelectColumn(StoreTableMap::COL_STORE_CATEGORY_ID);
-            $criteria->addSelectColumn(StoreTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(StoreTableMap::COL_IS_MAJOR);
-            $criteria->addSelectColumn(StoreTableMap::COL_ALLOCATION);
-            $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(StoreTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(MileageTableMap::COL_MILEAGE_ID);
+            $criteria->addSelectColumn(MileageTableMap::COL_STORE_ID);
+            $criteria->addSelectColumn(MileageTableMap::COL_POINT_SYSTEM_ID);
+            $criteria->addSelectColumn(MileageTableMap::COL_TRIP_ID);
+            $criteria->addSelectColumn(MileageTableMap::COL_REQUIRED_MILES);
+            $criteria->addSelectColumn(MileageTableMap::COL_VALUE_IN_YEN);
+            $criteria->addSelectColumn(MileageTableMap::COL_DISPLAY);
+            $criteria->addSelectColumn(MileageTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(MileageTableMap::COL_UPDATE_USER);
         } else {
+            $criteria->addSelectColumn($alias . '.mileage_id');
             $criteria->addSelectColumn($alias . '.store_id');
-            $criteria->addSelectColumn($alias . '.store_name');
-            $criteria->addSelectColumn($alias . '.store_category_id');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.is_major');
-            $criteria->addSelectColumn($alias . '.allocation');
+            $criteria->addSelectColumn($alias . '.point_system_id');
+            $criteria->addSelectColumn($alias . '.trip_id');
+            $criteria->addSelectColumn($alias . '.required_miles');
+            $criteria->addSelectColumn($alias . '.value_in_yen');
+            $criteria->addSelectColumn($alias . '.display');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }
@@ -355,7 +359,7 @@ class StoreTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(StoreTableMap::DATABASE_NAME)->getTable(StoreTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(MileageTableMap::DATABASE_NAME)->getTable(MileageTableMap::TABLE_NAME);
     }
 
     /**
@@ -363,16 +367,16 @@ class StoreTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(StoreTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(StoreTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new StoreTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(MileageTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(MileageTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new MileageTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Store or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Mileage or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Store object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Mileage object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -383,27 +387,27 @@ class StoreTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(StoreTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Store) { // it's a model object
+        } elseif ($values instanceof \Mileage) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(StoreTableMap::DATABASE_NAME);
-            $criteria->add(StoreTableMap::COL_STORE_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(MileageTableMap::DATABASE_NAME);
+            $criteria->add(MileageTableMap::COL_MILEAGE_ID, (array) $values, Criteria::IN);
         }
 
-        $query = StoreQuery::create()->mergeWith($criteria);
+        $query = MileageQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            StoreTableMap::clearInstancePool();
+            MileageTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                StoreTableMap::removeInstanceFromPool($singleval);
+                MileageTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -411,20 +415,20 @@ class StoreTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the store table.
+     * Deletes all rows from the mileage table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return StoreQuery::create()->doDeleteAll($con);
+        return MileageQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Store or Criteria object.
+     * Performs an INSERT on the database, given a Mileage or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Store object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Mileage object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -433,22 +437,22 @@ class StoreTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(StoreTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Store object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Mileage object
         }
 
-        if ($criteria->containsKey(StoreTableMap::COL_STORE_ID) && $criteria->keyContainsValue(StoreTableMap::COL_STORE_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.StoreTableMap::COL_STORE_ID.')');
+        if ($criteria->containsKey(MileageTableMap::COL_MILEAGE_ID) && $criteria->keyContainsValue(MileageTableMap::COL_MILEAGE_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.MileageTableMap::COL_MILEAGE_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = StoreQuery::create()->mergeWith($criteria);
+        $query = MileageQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -457,7 +461,7 @@ class StoreTableMap extends TableMap
         });
     }
 
-} // StoreTableMap
+} // MileageTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-StoreTableMap::buildTableMap();
+MileageTableMap::buildTableMap();

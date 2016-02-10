@@ -2,7 +2,9 @@
 
 namespace Base;
 
-use \MilageQuery as ChildMilageQuery;
+use \MileageQuery as ChildMileageQuery;
+use \PointSystem as ChildPointSystem;
+use \PointSystemQuery as ChildPointSystemQuery;
 use \Store as ChildStore;
 use \StoreQuery as ChildStoreQuery;
 use \Trip as ChildTrip;
@@ -10,7 +12,7 @@ use \TripQuery as ChildTripQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\MilageTableMap;
+use Map\MileageTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -25,18 +27,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'milage' table.
+ * Base class that represents a row from the 'mileage' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Milage implements ActiveRecordInterface
+abstract class Mileage implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\MilageTableMap';
+    const TABLE_MAP = '\\Map\\MileageTableMap';
 
 
     /**
@@ -66,16 +68,22 @@ abstract class Milage implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the milage_id field.
+     * The value for the mileage_id field.
      * @var        int
      */
-    protected $milage_id;
+    protected $mileage_id;
 
     /**
      * The value for the store_id field.
      * @var        int
      */
     protected $store_id;
+
+    /**
+     * The value for the point_system_id field.
+     * @var        int
+     */
+    protected $point_system_id;
 
     /**
      * The value for the trip_id field.
@@ -114,6 +122,11 @@ abstract class Milage implements ActiveRecordInterface
     protected $update_user;
 
     /**
+     * @var        ChildPointSystem
+     */
+    protected $aPointSystem;
+
+    /**
      * @var        ChildStore
      */
     protected $aStore;
@@ -132,7 +145,7 @@ abstract class Milage implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\Milage object.
+     * Initializes internal state of Base\Mileage object.
      */
     public function __construct()
     {
@@ -227,9 +240,9 @@ abstract class Milage implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Milage</code> instance.  If
-     * <code>obj</code> is an instance of <code>Milage</code>, delegates to
-     * <code>equals(Milage)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Mileage</code> instance.  If
+     * <code>obj</code> is an instance of <code>Mileage</code>, delegates to
+     * <code>equals(Mileage)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -295,7 +308,7 @@ abstract class Milage implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Milage The current object, for fluid interface
+     * @return $this|Mileage The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -349,13 +362,13 @@ abstract class Milage implements ActiveRecordInterface
     }
 
     /**
-     * Get the [milage_id] column value.
+     * Get the [mileage_id] column value.
      *
      * @return int
      */
-    public function getMilageId()
+    public function getMileageId()
     {
-        return $this->milage_id;
+        return $this->mileage_id;
     }
 
     /**
@@ -366,6 +379,16 @@ abstract class Milage implements ActiveRecordInterface
     public function getStoreId()
     {
         return $this->store_id;
+    }
+
+    /**
+     * Get the [point_system_id] column value.
+     *
+     * @return int
+     */
+    public function getPointSystemId()
+    {
+        return $this->point_system_id;
     }
 
     /**
@@ -439,30 +462,30 @@ abstract class Milage implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [milage_id] column.
+     * Set the value of [mileage_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
-    public function setMilageId($v)
+    public function setMileageId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->milage_id !== $v) {
-            $this->milage_id = $v;
-            $this->modifiedColumns[MilageTableMap::COL_MILAGE_ID] = true;
+        if ($this->mileage_id !== $v) {
+            $this->mileage_id = $v;
+            $this->modifiedColumns[MileageTableMap::COL_MILEAGE_ID] = true;
         }
 
         return $this;
-    } // setMilageId()
+    } // setMileageId()
 
     /**
      * Set the value of [store_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setStoreId($v)
     {
@@ -472,7 +495,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->store_id !== $v) {
             $this->store_id = $v;
-            $this->modifiedColumns[MilageTableMap::COL_STORE_ID] = true;
+            $this->modifiedColumns[MileageTableMap::COL_STORE_ID] = true;
         }
 
         if ($this->aStore !== null && $this->aStore->getStoreId() !== $v) {
@@ -483,10 +506,34 @@ abstract class Milage implements ActiveRecordInterface
     } // setStoreId()
 
     /**
+     * Set the value of [point_system_id] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Mileage The current object (for fluent API support)
+     */
+    public function setPointSystemId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->point_system_id !== $v) {
+            $this->point_system_id = $v;
+            $this->modifiedColumns[MileageTableMap::COL_POINT_SYSTEM_ID] = true;
+        }
+
+        if ($this->aPointSystem !== null && $this->aPointSystem->getPointSystemId() !== $v) {
+            $this->aPointSystem = null;
+        }
+
+        return $this;
+    } // setPointSystemId()
+
+    /**
      * Set the value of [trip_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setTripId($v)
     {
@@ -496,7 +543,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->trip_id !== $v) {
             $this->trip_id = $v;
-            $this->modifiedColumns[MilageTableMap::COL_TRIP_ID] = true;
+            $this->modifiedColumns[MileageTableMap::COL_TRIP_ID] = true;
         }
 
         if ($this->aTrip !== null && $this->aTrip->getTripId() !== $v) {
@@ -510,7 +557,7 @@ abstract class Milage implements ActiveRecordInterface
      * Set the value of [required_miles] column.
      *
      * @param  int $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setRequiredMiles($v)
     {
@@ -520,7 +567,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->required_miles !== $v) {
             $this->required_miles = $v;
-            $this->modifiedColumns[MilageTableMap::COL_REQUIRED_MILES] = true;
+            $this->modifiedColumns[MileageTableMap::COL_REQUIRED_MILES] = true;
         }
 
         return $this;
@@ -530,7 +577,7 @@ abstract class Milage implements ActiveRecordInterface
      * Set the value of [value_in_yen] column.
      *
      * @param  int $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setValueInYen($v)
     {
@@ -540,7 +587,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->value_in_yen !== $v) {
             $this->value_in_yen = $v;
-            $this->modifiedColumns[MilageTableMap::COL_VALUE_IN_YEN] = true;
+            $this->modifiedColumns[MileageTableMap::COL_VALUE_IN_YEN] = true;
         }
 
         return $this;
@@ -550,7 +597,7 @@ abstract class Milage implements ActiveRecordInterface
      * Set the value of [display] column.
      *
      * @param  string $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setDisplay($v)
     {
@@ -560,7 +607,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->display !== $v) {
             $this->display = $v;
-            $this->modifiedColumns[MilageTableMap::COL_DISPLAY] = true;
+            $this->modifiedColumns[MileageTableMap::COL_DISPLAY] = true;
         }
 
         return $this;
@@ -571,7 +618,7 @@ abstract class Milage implements ActiveRecordInterface
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setUpdateTime($v)
     {
@@ -579,7 +626,7 @@ abstract class Milage implements ActiveRecordInterface
         if ($this->update_time !== null || $dt !== null) {
             if ($dt !== $this->update_time) {
                 $this->update_time = $dt;
-                $this->modifiedColumns[MilageTableMap::COL_UPDATE_TIME] = true;
+                $this->modifiedColumns[MileageTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
@@ -590,7 +637,7 @@ abstract class Milage implements ActiveRecordInterface
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -600,7 +647,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[MilageTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[MileageTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -642,31 +689,34 @@ abstract class Milage implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MilageTableMap::translateFieldName('MilageId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->milage_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MileageTableMap::translateFieldName('MileageId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->mileage_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MilageTableMap::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MileageTableMap::translateFieldName('StoreId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->store_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MilageTableMap::translateFieldName('TripId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MileageTableMap::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->point_system_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MileageTableMap::translateFieldName('TripId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->trip_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MilageTableMap::translateFieldName('RequiredMiles', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MileageTableMap::translateFieldName('RequiredMiles', TableMap::TYPE_PHPNAME, $indexType)];
             $this->required_miles = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MilageTableMap::translateFieldName('ValueInYen', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MileageTableMap::translateFieldName('ValueInYen', TableMap::TYPE_PHPNAME, $indexType)];
             $this->value_in_yen = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MilageTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MileageTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MilageTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MileageTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MilageTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : MileageTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -676,10 +726,10 @@ abstract class Milage implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = MilageTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = MileageTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Milage'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Mileage'), 0, $e);
         }
     }
 
@@ -700,6 +750,9 @@ abstract class Milage implements ActiveRecordInterface
     {
         if ($this->aStore !== null && $this->store_id !== $this->aStore->getStoreId()) {
             $this->aStore = null;
+        }
+        if ($this->aPointSystem !== null && $this->point_system_id !== $this->aPointSystem->getPointSystemId()) {
+            $this->aPointSystem = null;
         }
         if ($this->aTrip !== null && $this->trip_id !== $this->aTrip->getTripId()) {
             $this->aTrip = null;
@@ -727,13 +780,13 @@ abstract class Milage implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(MilageTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(MileageTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildMilageQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildMileageQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -743,6 +796,7 @@ abstract class Milage implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aPointSystem = null;
             $this->aStore = null;
             $this->aTrip = null;
         } // if (deep)
@@ -754,8 +808,8 @@ abstract class Milage implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Milage::setDeleted()
-     * @see Milage::isDeleted()
+     * @see Mileage::setDeleted()
+     * @see Mileage::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -764,11 +818,11 @@ abstract class Milage implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MilageTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildMilageQuery::create()
+            $deleteQuery = ChildMileageQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -799,7 +853,7 @@ abstract class Milage implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(MilageTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -818,7 +872,7 @@ abstract class Milage implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                MilageTableMap::addInstanceToPool($this);
+                MileageTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -848,6 +902,13 @@ abstract class Milage implements ActiveRecordInterface
             // were passed to this object by their corresponding set
             // method.  This object relates to these object(s) by a
             // foreign key reference.
+
+            if ($this->aPointSystem !== null) {
+                if ($this->aPointSystem->isModified() || $this->aPointSystem->isNew()) {
+                    $affectedRows += $this->aPointSystem->save($con);
+                }
+                $this->setPointSystem($this->aPointSystem);
+            }
 
             if ($this->aStore !== null) {
                 if ($this->aStore->isModified() || $this->aStore->isNew()) {
@@ -894,39 +955,42 @@ abstract class Milage implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[MilageTableMap::COL_MILAGE_ID] = true;
-        if (null !== $this->milage_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MilageTableMap::COL_MILAGE_ID . ')');
+        $this->modifiedColumns[MileageTableMap::COL_MILEAGE_ID] = true;
+        if (null !== $this->mileage_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MileageTableMap::COL_MILEAGE_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(MilageTableMap::COL_MILAGE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'milage_id';
+        if ($this->isColumnModified(MileageTableMap::COL_MILEAGE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'mileage_id';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_STORE_ID)) {
+        if ($this->isColumnModified(MileageTableMap::COL_STORE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'store_id';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_TRIP_ID)) {
+        if ($this->isColumnModified(MileageTableMap::COL_POINT_SYSTEM_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'point_system_id';
+        }
+        if ($this->isColumnModified(MileageTableMap::COL_TRIP_ID)) {
             $modifiedColumns[':p' . $index++]  = 'trip_id';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_REQUIRED_MILES)) {
+        if ($this->isColumnModified(MileageTableMap::COL_REQUIRED_MILES)) {
             $modifiedColumns[':p' . $index++]  = 'required_miles';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_VALUE_IN_YEN)) {
+        if ($this->isColumnModified(MileageTableMap::COL_VALUE_IN_YEN)) {
             $modifiedColumns[':p' . $index++]  = 'value_in_yen';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_DISPLAY)) {
+        if ($this->isColumnModified(MileageTableMap::COL_DISPLAY)) {
             $modifiedColumns[':p' . $index++]  = 'display';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_UPDATE_TIME)) {
+        if ($this->isColumnModified(MileageTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(MilageTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(MileageTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO milage (%s) VALUES (%s)',
+            'INSERT INTO mileage (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -935,11 +999,14 @@ abstract class Milage implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'milage_id':
-                        $stmt->bindValue($identifier, $this->milage_id, PDO::PARAM_INT);
+                    case 'mileage_id':
+                        $stmt->bindValue($identifier, $this->mileage_id, PDO::PARAM_INT);
                         break;
                     case 'store_id':
                         $stmt->bindValue($identifier, $this->store_id, PDO::PARAM_INT);
+                        break;
+                    case 'point_system_id':
+                        $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
                         break;
                     case 'trip_id':
                         $stmt->bindValue($identifier, $this->trip_id, PDO::PARAM_INT);
@@ -972,7 +1039,7 @@ abstract class Milage implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setMilageId($pk);
+        $this->setMileageId($pk);
 
         $this->setNew(false);
     }
@@ -1005,7 +1072,7 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MilageTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MileageTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1022,27 +1089,30 @@ abstract class Milage implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getMilageId();
+                return $this->getMileageId();
                 break;
             case 1:
                 return $this->getStoreId();
                 break;
             case 2:
-                return $this->getTripId();
+                return $this->getPointSystemId();
                 break;
             case 3:
-                return $this->getRequiredMiles();
+                return $this->getTripId();
                 break;
             case 4:
-                return $this->getValueInYen();
+                return $this->getRequiredMiles();
                 break;
             case 5:
-                return $this->getDisplay();
+                return $this->getValueInYen();
                 break;
             case 6:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 7:
+                return $this->getUpdateTime();
+                break;
+            case 8:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1069,20 +1139,21 @@ abstract class Milage implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Milage'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Mileage'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Milage'][$this->hashCode()] = true;
-        $keys = MilageTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Mileage'][$this->hashCode()] = true;
+        $keys = MileageTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getMilageId(),
+            $keys[0] => $this->getMileageId(),
             $keys[1] => $this->getStoreId(),
-            $keys[2] => $this->getTripId(),
-            $keys[3] => $this->getRequiredMiles(),
-            $keys[4] => $this->getValueInYen(),
-            $keys[5] => $this->getDisplay(),
-            $keys[6] => $this->getUpdateTime(),
-            $keys[7] => $this->getUpdateUser(),
+            $keys[2] => $this->getPointSystemId(),
+            $keys[3] => $this->getTripId(),
+            $keys[4] => $this->getRequiredMiles(),
+            $keys[5] => $this->getValueInYen(),
+            $keys[6] => $this->getDisplay(),
+            $keys[7] => $this->getUpdateTime(),
+            $keys[8] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1090,6 +1161,21 @@ abstract class Milage implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aPointSystem) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'pointSystem';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'point_system';
+                        break;
+                    default:
+                        $key = 'PointSystem';
+                }
+
+                $result[$key] = $this->aPointSystem->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->aStore) {
 
                 switch ($keyType) {
@@ -1134,11 +1220,11 @@ abstract class Milage implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Milage
+     * @return $this|\Mileage
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = MilageTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MileageTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1149,33 +1235,36 @@ abstract class Milage implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Milage
+     * @return $this|\Mileage
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setMilageId($value);
+                $this->setMileageId($value);
                 break;
             case 1:
                 $this->setStoreId($value);
                 break;
             case 2:
-                $this->setTripId($value);
+                $this->setPointSystemId($value);
                 break;
             case 3:
-                $this->setRequiredMiles($value);
+                $this->setTripId($value);
                 break;
             case 4:
-                $this->setValueInYen($value);
+                $this->setRequiredMiles($value);
                 break;
             case 5:
-                $this->setDisplay($value);
+                $this->setValueInYen($value);
                 break;
             case 6:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 7:
+                $this->setUpdateTime($value);
+                break;
+            case 8:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1202,31 +1291,34 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = MilageTableMap::getFieldNames($keyType);
+        $keys = MileageTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setMilageId($arr[$keys[0]]);
+            $this->setMileageId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setStoreId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setTripId($arr[$keys[2]]);
+            $this->setPointSystemId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setRequiredMiles($arr[$keys[3]]);
+            $this->setTripId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setValueInYen($arr[$keys[4]]);
+            $this->setRequiredMiles($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setDisplay($arr[$keys[5]]);
+            $this->setValueInYen($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateTime($arr[$keys[6]]);
+            $this->setDisplay($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateUser($arr[$keys[7]]);
+            $this->setUpdateTime($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setUpdateUser($arr[$keys[8]]);
         }
     }
 
@@ -1247,7 +1339,7 @@ abstract class Milage implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Milage The current object, for fluid interface
+     * @return $this|\Mileage The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1267,31 +1359,34 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(MilageTableMap::DATABASE_NAME);
+        $criteria = new Criteria(MileageTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(MilageTableMap::COL_MILAGE_ID)) {
-            $criteria->add(MilageTableMap::COL_MILAGE_ID, $this->milage_id);
+        if ($this->isColumnModified(MileageTableMap::COL_MILEAGE_ID)) {
+            $criteria->add(MileageTableMap::COL_MILEAGE_ID, $this->mileage_id);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_STORE_ID)) {
-            $criteria->add(MilageTableMap::COL_STORE_ID, $this->store_id);
+        if ($this->isColumnModified(MileageTableMap::COL_STORE_ID)) {
+            $criteria->add(MileageTableMap::COL_STORE_ID, $this->store_id);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_TRIP_ID)) {
-            $criteria->add(MilageTableMap::COL_TRIP_ID, $this->trip_id);
+        if ($this->isColumnModified(MileageTableMap::COL_POINT_SYSTEM_ID)) {
+            $criteria->add(MileageTableMap::COL_POINT_SYSTEM_ID, $this->point_system_id);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_REQUIRED_MILES)) {
-            $criteria->add(MilageTableMap::COL_REQUIRED_MILES, $this->required_miles);
+        if ($this->isColumnModified(MileageTableMap::COL_TRIP_ID)) {
+            $criteria->add(MileageTableMap::COL_TRIP_ID, $this->trip_id);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_VALUE_IN_YEN)) {
-            $criteria->add(MilageTableMap::COL_VALUE_IN_YEN, $this->value_in_yen);
+        if ($this->isColumnModified(MileageTableMap::COL_REQUIRED_MILES)) {
+            $criteria->add(MileageTableMap::COL_REQUIRED_MILES, $this->required_miles);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_DISPLAY)) {
-            $criteria->add(MilageTableMap::COL_DISPLAY, $this->display);
+        if ($this->isColumnModified(MileageTableMap::COL_VALUE_IN_YEN)) {
+            $criteria->add(MileageTableMap::COL_VALUE_IN_YEN, $this->value_in_yen);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(MilageTableMap::COL_UPDATE_TIME, $this->update_time);
+        if ($this->isColumnModified(MileageTableMap::COL_DISPLAY)) {
+            $criteria->add(MileageTableMap::COL_DISPLAY, $this->display);
         }
-        if ($this->isColumnModified(MilageTableMap::COL_UPDATE_USER)) {
-            $criteria->add(MilageTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(MileageTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(MileageTableMap::COL_UPDATE_TIME, $this->update_time);
+        }
+        if ($this->isColumnModified(MileageTableMap::COL_UPDATE_USER)) {
+            $criteria->add(MileageTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1309,8 +1404,8 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildMilageQuery::create();
-        $criteria->add(MilageTableMap::COL_MILAGE_ID, $this->milage_id);
+        $criteria = ChildMileageQuery::create();
+        $criteria->add(MileageTableMap::COL_MILEAGE_ID, $this->mileage_id);
 
         return $criteria;
     }
@@ -1323,7 +1418,7 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getMilageId();
+        $validPk = null !== $this->getMileageId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1343,18 +1438,18 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getMilageId();
+        return $this->getMileageId();
     }
 
     /**
-     * Generic method to set the primary key (milage_id column).
+     * Generic method to set the primary key (mileage_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setMilageId($key);
+        $this->setMileageId($key);
     }
 
     /**
@@ -1363,7 +1458,7 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getMilageId();
+        return null === $this->getMileageId();
     }
 
     /**
@@ -1372,7 +1467,7 @@ abstract class Milage implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Milage (or compatible) type.
+     * @param      object $copyObj An object of \Mileage (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1380,6 +1475,7 @@ abstract class Milage implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setStoreId($this->getStoreId());
+        $copyObj->setPointSystemId($this->getPointSystemId());
         $copyObj->setTripId($this->getTripId());
         $copyObj->setRequiredMiles($this->getRequiredMiles());
         $copyObj->setValueInYen($this->getValueInYen());
@@ -1388,7 +1484,7 @@ abstract class Milage implements ActiveRecordInterface
         $copyObj->setUpdateUser($this->getUpdateUser());
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setMilageId(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setMileageId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1401,7 +1497,7 @@ abstract class Milage implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Milage Clone of current object.
+     * @return \Mileage Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1415,10 +1511,61 @@ abstract class Milage implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildPointSystem object.
+     *
+     * @param  ChildPointSystem $v
+     * @return $this|\Mileage The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setPointSystem(ChildPointSystem $v = null)
+    {
+        if ($v === null) {
+            $this->setPointSystemId(NULL);
+        } else {
+            $this->setPointSystemId($v->getPointSystemId());
+        }
+
+        $this->aPointSystem = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildPointSystem object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMileage($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildPointSystem object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildPointSystem The associated ChildPointSystem object.
+     * @throws PropelException
+     */
+    public function getPointSystem(ConnectionInterface $con = null)
+    {
+        if ($this->aPointSystem === null && ($this->point_system_id !== null)) {
+            $this->aPointSystem = ChildPointSystemQuery::create()->findPk($this->point_system_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aPointSystem->addMileages($this);
+             */
+        }
+
+        return $this->aPointSystem;
+    }
+
+    /**
      * Declares an association between this object and a ChildStore object.
      *
      * @param  ChildStore $v
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      * @throws PropelException
      */
     public function setStore(ChildStore $v = null)
@@ -1434,7 +1581,7 @@ abstract class Milage implements ActiveRecordInterface
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildStore object, it will not be re-added.
         if ($v !== null) {
-            $v->addMilage($this);
+            $v->addMileage($this);
         }
 
 
@@ -1458,7 +1605,7 @@ abstract class Milage implements ActiveRecordInterface
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aStore->addMilages($this);
+                $this->aStore->addMileages($this);
              */
         }
 
@@ -1469,7 +1616,7 @@ abstract class Milage implements ActiveRecordInterface
      * Declares an association between this object and a ChildTrip object.
      *
      * @param  ChildTrip $v
-     * @return $this|\Milage The current object (for fluent API support)
+     * @return $this|\Mileage The current object (for fluent API support)
      * @throws PropelException
      */
     public function setTrip(ChildTrip $v = null)
@@ -1485,7 +1632,7 @@ abstract class Milage implements ActiveRecordInterface
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildTrip object, it will not be re-added.
         if ($v !== null) {
-            $v->addMilage($this);
+            $v->addMileage($this);
         }
 
 
@@ -1509,7 +1656,7 @@ abstract class Milage implements ActiveRecordInterface
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aTrip->addMilages($this);
+                $this->aTrip->addMileages($this);
              */
         }
 
@@ -1523,14 +1670,18 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aPointSystem) {
+            $this->aPointSystem->removeMileage($this);
+        }
         if (null !== $this->aStore) {
-            $this->aStore->removeMilage($this);
+            $this->aStore->removeMileage($this);
         }
         if (null !== $this->aTrip) {
-            $this->aTrip->removeMilage($this);
+            $this->aTrip->removeMileage($this);
         }
-        $this->milage_id = null;
+        $this->mileage_id = null;
         $this->store_id = null;
+        $this->point_system_id = null;
         $this->trip_id = null;
         $this->required_miles = null;
         $this->value_in_yen = null;
@@ -1557,6 +1708,7 @@ abstract class Milage implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
+        $this->aPointSystem = null;
         $this->aStore = null;
         $this->aTrip = null;
     }
@@ -1568,7 +1720,7 @@ abstract class Milage implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(MilageTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(MileageTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

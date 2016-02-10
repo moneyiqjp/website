@@ -20,6 +20,8 @@
         var cities = [];
         var units = [];
         var trips = [];
+        var stores = [];
+        var pointsystems = [];
         var tmpStore;
         var index;
         var jason;
@@ -92,6 +94,54 @@
                     trips.push({
                         value: tmpStore[index]["TripId"],
                         label: tmpStore[index]["CityFrom"]["Name"] + "-" + tmpStore[index]["CityTo"]["Name"]
+                    })
+                }
+            }
+        }
+
+        tmp = $.ajax({
+            url: '../backend/crud/store/by/category?categoryid=1',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    stores.push({
+                        value: tmpStore[index]["StoreId"],
+                        label: tmpStore[index]["StoreName"]
+                    })
+                }
+            }
+        }
+
+        tmp = $.ajax({
+            url: '../backend/crud/pointsystem/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    pointsystems.push({
+                        value: tmpStore[index]["PointSystemId"],
+                        label: tmpStore[index]["PointSystemName"]
                     })
                 }
             }
@@ -195,7 +245,7 @@
         mileageEditor = new $.fn.dataTable.Editor(
             {
                 ajax: {
-                    create: '../backend/crud/mileage/create', // default method is POST
+                    create: '../backend/crud/mileage/create',
                     edit: {
                         type: 'PUT',
                         url:  '../backend/crud/mileage/update'
@@ -212,6 +262,11 @@
                         label: "Id:",
                         name: "MileageId",
                         type:  "readonly"
+                    }, {
+                        label: "PointSystem:",
+                        name: "PointSystem.PointSystemId",
+                        type: "select",
+                        options: pointsystems
                     }, {
                         label: "Store:",
                         name: "Store.StoreId",
@@ -300,7 +355,7 @@
                     ]
                 }
             } );
-        });
+
 
 
 
@@ -308,18 +363,19 @@
             dom: "frtTip",
             "pageLength": 25,
             "ajax": {
-                "url": "../backend/crud/trip/all",
+                "url": "../backend/crud/mileage/all",
                 "type": "GET",
                 "contentType": "application/json; charset=utf-8",
                 "dataType": "json"
             },
             "columns": [
-                { "data": "MilageId", visible: false },
+                { "data": "MileageId", visible: false },
+                { "data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
                 { "data": "Store.StoreName", editField: "Store.StoreId" },
                 { data: "Trip",
                   editField: "Trip.TripId",
                   "render": function ( data, type, full, meta ) {
-                        if ( type === 'display' ) {
+                        if ( type === 'display' && data!=null ) {
                             return data["CityFrom"]["Name"] + "-" + data["CityTo"]["Name"];
                         }
                         return data;
@@ -331,6 +387,7 @@
                 { "data": "UpdateTime", visible: false},
                 { "data": "UpdateUser", visible: false }
             ]
+
             ,tableTools: {
                 sRowSelect: "os",
                 aButtons: [
@@ -339,13 +396,15 @@
                     { sExtends: "editor_remove", editor: mileageEditor }
                 ]
             }
+
         } );
+
         })
     </script>
 </head>
 
 <body class="dt-other">
-<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="store">City</a></div>
     <table id="cities" class="display" cellspacing="0" width="98%">
         <thead>
@@ -373,7 +432,7 @@
     <a href="http://localhost/backend/crud/store/all" class="source">Source</a>
 </div>
 
-<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="trips">Trips</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -411,7 +470,7 @@
 </div>
 
 
-<div style="width: 45%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="mileage">Mileage</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -423,6 +482,7 @@
         <thead>
         <tr>
             <th>Id</th>
+            <th>PointSystem</th>
             <th>Store</th>
             <th>Trips</th>
             <th>RequiredMiles</th>
@@ -437,6 +497,7 @@
         <tr>
             <th>Id</th>
             <th>Store</th>
+            <th>PointSystem</th>
             <th>Trips</th>
             <th>RequiredMiles</th>
             <th>ValueInYen</th>

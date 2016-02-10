@@ -44,12 +44,20 @@ class JPointSystem implements JSONInterface{
     public static function CREATE_FROM_ARRAY($data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
+
+
         return JPointSystem::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
-        $mine = new JPointSystem();
-        if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
+    public static function CREATE_FROM_ARRAY_RELAXED($data)
+    {
+        $item = \PointSystemQuery::create()->findPk($data['PointSystemId']);
+        if (!is_null($item)) {
+            $mine = self::CREATE_FROM_DB($item);
+        } else {
+           $mine = new JPointSystem();
+        }
+        if(ArrayUtils::KEY_EXISTS($data,'PointSystemId')) $mine->PointSystemId = $data['PointSystemId'];
         if(ArrayUtils::KEY_EXISTS($data,'PointSystemName')) $mine->PointSystemName = $data['PointSystemName'];
         if(ArrayUtils::KEY_EXISTS($data,'PointsPerYen')) $mine->PointsPerYen = $data['PointsPerYen'];
         if(ArrayUtils::KEY_EXISTS($data,'YenPerPoint')) $mine->YenPerPoint = $data['YenPerPoint'];
@@ -57,11 +65,9 @@ class JPointSystem implements JSONInterface{
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime();
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
-
         return $mine;
 
     }
-
 
     public function isEmpty() {
         return !FieldUtils::STRING_IS_DEFINED($this->PointSystemName) ||   (is_null($this->PointsPerYen));

@@ -8,6 +8,8 @@
 
 namespace Db\Json;
 
+use Base\RewardTypeQuery;
+use Base\UnitQuery;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -113,7 +115,7 @@ class JReward  implements JSONInterface {
 
 
     public function isEmpty() {
-        return is_null($this->PointSystem) || is_null($this->Category) || is_null($this->YenPerPoint);
+        return is_null($this->PointSystem) || is_null($this->Category) || FieldUtils::ID_IS_DEFINED($this->YenPerPoint);
     }
 
     public function isValid() {
@@ -173,4 +175,43 @@ class JReward  implements JSONInterface {
         return $item;
     }
 
+
+    public static function CREATE_FROM_MILEAGE(JMileage $item)
+    {
+        $mine = new JReward();
+        $mine->RewardId = "M" . $item->MileageId;
+        $mine->PointSystem = $item->getPointSystem();
+
+
+        $tmp = RewardTypeQuery::create()->findOneByName("exchange");
+        if (is_null($tmp)) throw new \Exception("RewardType exchange not found");
+        $mine->Type = JRewardType::CREATE_FROM_DB($tmp);
+
+
+        $tmp = \RewardCategoryQuery::create()->findOneByName("マイレージ");
+        if (is_null($tmp)) throw new \Exception("RewardCategory exchange not found");
+        $mine->Category = JRewardCategory::CREATE_FROM_DB($tmp);
+
+
+
+        if(!is_null($item->Store)) $mine->Store = $item->getStore();
+        $mine->Title = $item->getDisplay();
+        $mine->Description = $item->getDisplay();
+        $mine->Icon = "";
+        $mine->YenPerPoint = $item->getValueInYen()/$item->getRequiredMiles();
+        $mine->PricePerUnit = $item->getRequiredMiles();
+        $mine->MinPoints = $item->getRequiredMiles();
+        $mine->MaxPoints = $item->getRequiredMiles();
+        $mine->RequiredPoints = $item->getRequiredMiles();
+        $mine->MaxPeriod = null;
+        $mine->Reference = null;
+        $mine->PointMultiplier = 1.0;
+        $item = \UnitQuery ::create()->findOneByName("Miles");
+        if(is_null($item)) throw new \Exception("Didn't find Unit for Miles");
+        $mine->Unit = JUnit::CREATE_FROM_DB($item);
+        $mine->UpdateTime = $item->getUpdateTime();
+        $mine->UpdateUser = $item->getUpdateUser();
+
+        return $mine;
+    }
 }

@@ -1,9 +1,9 @@
 <?php
 
-use Base\MilageQuery as BaseMilageQuery;
+use Base\MileageQuery as BaseMileageQuery;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'milage' table.
+ * Skeleton subclass for performing query and update operations on the 'mileage' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\MilageQuery as BaseMilageQuery;
  * long as it does not already exist in the output directory.
  *
  */
-class MilageQuery extends BaseMilageQuery
+class MileageQuery extends BaseMileageQuery
 {
 
-} // MilageQuery
+} // MileageQuery

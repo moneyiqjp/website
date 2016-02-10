@@ -12,6 +12,8 @@ include_once(__DIR__ . "/../Json/JInsurance.php");
 use Db\Json\JInsurance;
 use Db\Json\JFeatureType;
 use Db\Json\JCreditCardRestriction;
+use Db\Json\JMileage;
+use Db\Json\JReward;
 use Db\Utility\FieldUtils;
 use Db\Utility\FormatUtils;
 
@@ -373,13 +375,16 @@ class CreditCard {
 
     function AddReward(\Reward $rew)
     {
+
         $key = $rew->getRewardCategory()->getName();
         if (!array_key_exists($key,$this->rewards))
         {
             $this->rewards[$key] = array();
         }
-        array_push($this->rewards[$key],Reward::CREATE_FROM_DB($rew));
+        array_push($this->rewards[$key], Reward::CREATE_FROM_DB($rew));
     }
+
+
 
     function AddDefaultPitch($text){
         foreach((new \PersonaQuery())->orderByIdentifier()->find() as $persona) {
@@ -494,6 +499,11 @@ class CreditCard {
             foreach($ps->getRewards() as $rew) {
                 $mine->AddReward($rew);
             }
+            /*
+            foreach( \MileageQuery::create()->findByPointSystemId($pcs->getPointSystemId()) as $mile) {
+                $mine->AddReward(JReward::CREATE_FROM_MILEAGE(JMileage::CREATE_FROM_DB($mile))->toDB());
+            }
+            */
 
             foreach($ps->getPointAcquisitions() as $use) {
                 $mine->AddPointsData($use->getStore()->getStoreName(),

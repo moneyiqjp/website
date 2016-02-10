@@ -162,57 +162,6 @@ class Db
         return array();
     }
 
-    /*  */
-    function GetStoresForDisplay()
-    {
-        $result = array();
-        foreach ((new \StoreQuery())->orderByStoreCategoryId()->orderByStoreName()->find() as $af) {
-            if(!is_null($af))
-                array_push($result, Json\JStore::CREATE_FROM_DB($af));
-        }
-        return $result;
-    }
-    function GetStoresForCrud()
-    {
-        return $this->GetStoresForDisplay();
-    }
-    function UpdateStoreForCrud($data)
-    {
-        $parsed = Json\JStore::CREATE_FROM_ARRAY($data);
-        if(is_null($parsed)) throw new \Exception ("Failed to parse Store update request");
-
-        if(!FieldUtils::ID_IS_DEFINED($parsed->StoreId)) throw new \Exception("Failed to parse ID");
-
-        $item = (new  \StoreQuery())->findPk($parsed->StoreId);
-        if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
-
-        //$new = $parsed->updateDB($item);
-        if(!$parsed->saveToDb())   throw new \Exception("Failed to save store with id " . $parsed->StoreId);
-
-        //TODO implement cache, then refresh
-        $item = (new  \StoreQuery())->findPk($parsed->StoreId);
-        return Json\JStore::CREATE_FROM_DB($item);
-    }
-    function CreateStoreForCrud($data)
-    {
-        $parsed = Json\JStore::CREATE_FROM_ARRAY($data);
-        if(is_null($parsed)) throw new \Exception ("Failed to parse Store update request");
-
-        $item = $parsed->toDB();
-        if(is_null($item)) throw new \Exception ("Store with id ". $parsed->StoreId ." not found");
-        $item->save();
-        $item->reload();
-
-        //TODO implement cache, add to cache
-        return Json\JStore::CREATE_FROM_DB($item);
-    }
-    function DeleteStoreForCrud($id)
-    {
-        $item = (new  \StoreQuery())->findPk($id);
-        if(is_null($item)) throw new \Exception ("Store with id ". $id ." not found");
-        $item->delete();
-        return array();
-    }
 
     /* PointSystem */
     function GetCardPointSystemMappingForCrud()

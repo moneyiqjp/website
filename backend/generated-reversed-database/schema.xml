@@ -632,15 +632,19 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
-  <table name="milage" idMethod="native" phpName="Milage">
-    <column name="milage_id" phpName="MilageId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+  <table name="mileage" idMethod="native" phpName="Mileage">
+    <column name="mileage_id" phpName="MileageId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="store_id" phpName="StoreId" type="INTEGER" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
     <column name="trip_id" phpName="TripId" type="INTEGER" required="true"/>
     <column name="required_miles" phpName="RequiredMiles" type="INTEGER" required="true"/>
     <column name="value_in_yen" phpName="ValueInYen" type="INTEGER" required="true"/>
     <column name="display" phpName="Display" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="point_system" name="fk_milage_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
     <foreign-key foreignTable="store" name="fk_milage_store">
       <reference local="store_id" foreign="store_id"/>
     </foreign-key>
@@ -652,6 +656,9 @@
     </index>
     <index name="fk_milage_store">
       <index-column name="store_id"/>
+    </index>
+    <index name="fk_milage_point_system">
+      <index-column name="point_system_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>

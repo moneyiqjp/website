@@ -44,6 +44,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
  * @method     ChildPointSystemQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
+ * @method     ChildPointSystemQuery leftJoinMileage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Mileage relation
+ * @method     ChildPointSystemQuery rightJoinMileage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Mileage relation
+ * @method     ChildPointSystemQuery innerJoinMileage($relationAlias = null) Adds a INNER JOIN clause to the query using the Mileage relation
+ *
  * @method     ChildPointSystemQuery leftJoinPointAcquisition($relationAlias = null) Adds a LEFT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildPointSystemQuery rightJoinPointAcquisition($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PointAcquisition relation
  * @method     ChildPointSystemQuery innerJoinPointAcquisition($relationAlias = null) Adds a INNER JOIN clause to the query using the PointAcquisition relation
@@ -56,7 +60,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildPointSystemQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \CardPointSystemQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \CardPointSystemQuery|\MileageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPointSystem findOne(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query
  * @method     ChildPointSystem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query, or a new ChildPointSystem object populated from the query conditions when no match is found
@@ -582,6 +586,79 @@ abstract class PointSystemQuery extends ModelCriteria
         return $this
             ->joinCardPointSystem($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CardPointSystem', '\CardPointSystemQuery');
+    }
+
+    /**
+     * Filter the query by a related \Mileage object
+     *
+     * @param \Mileage|ObjectCollection $mileage  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByMileage($mileage, $comparison = null)
+    {
+        if ($mileage instanceof \Mileage) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $mileage->getPointSystemId(), $comparison);
+        } elseif ($mileage instanceof ObjectCollection) {
+            return $this
+                ->useMileageQuery()
+                ->filterByPrimaryKeys($mileage->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMileage() only accepts arguments of type \Mileage or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Mileage relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinMileage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Mileage');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Mileage');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Mileage relation Mileage object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MileageQuery A secondary query class using the current class as primary query
+     */
+    public function useMileageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMileage($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Mileage', '\MileageQuery');
     }
 
     /**
