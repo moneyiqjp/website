@@ -104,7 +104,8 @@ function CreateGeneralRestrictionForCrud($data)
 function DeleteGeneralRestrictionForCrud($id)
 {
     $item = JGeneralRestriction::LOAD_FROM_ID($id);
-    $item->delete();
+    $dbitem = $item->toDB();
+    $dbitem->delete();
     return array();
 }
 

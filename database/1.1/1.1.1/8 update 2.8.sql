@@ -56,18 +56,20 @@ BEGIN
 
 
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='milage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='milage_id') THEN
-			CREATE TABLE `milage` (
-				`milage_id` INT(11) NOT NULL AUTO_INCREMENT,
+			CREATE TABLE `mileage` (
+				`mileage_id` INT(11) NOT NULL AUTO_INCREMENT,
 				`store_id` INT(11) NOT NULL,
+				`point_system_id` INT(11) NOT NULL,
 				`trip_id` INT(11) NOT NULL,
 				`required_miles` INT(11) NOT NULL,
 				`value_in_yen` INT(11) NOT NULL,
 				`display` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 				`update_time` DATETIME NOT NULL,
 				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
-				PRIMARY KEY (`milage_id`),
+				PRIMARY KEY (`mileage_id`),
 				CONSTRAINT `fk_milage_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`),
-				CONSTRAINT `fk_milage_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`)
+				CONSTRAINT `fk_milage_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+				CONSTRAINT `fk_milage_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
 			)
 			COLLATE='utf8_general_ci',
 			ENGINE=InnoDB

@@ -25,8 +25,7 @@ class JFeatureType implements JSONInterface {
         return $this;
     }
 
-    public static function CREATE_FROM_DB(\CardFeatureType $item)
-    {
+    public static function CREATE_FROM_DB(\CardFeatureType $item) {
         $mine = new JFeatureType();
         $mine->FeatureTypeId = $item->getFeatureTypeId();
         $mine->Name = $item->getName();
@@ -39,8 +38,7 @@ class JFeatureType implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
-    {
+    public static function CREATE_FROM_ARRAY($data) {
         $mine = new JFeatureType();
         if(ArrayUtils::KEY_EXISTS($data,'FeatureTypeId'))  $mine->FeatureTypeId = $data['FeatureTypeId'];
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
@@ -59,9 +57,16 @@ class JFeatureType implements JSONInterface {
         return $this->toDB()->save() > 0;
     }
 
-    public function toDB()
-    {
-        $is = new \CardFeatureType();
+    public function tryLoadDB() {
+        if(FieldUtils::ID_IS_DEFINED($this->FeatureTypeId)) {
+            $item = \CardFeatureTypeQuery::create()->findPk($this->FeatureTypeId);
+            if(!is_null($item)) return $item;
+        }
+        return new \CardFeatureType();
+    }
+
+    public function toDB() {
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 

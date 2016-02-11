@@ -7,6 +7,8 @@
  */
 
 namespace Db\Json;
+use Base\CardDescriptionQuery;
+use Db\Utility\FieldUtils;
 
 
 class JDescription implements JSONInterface {
@@ -63,9 +65,17 @@ class JDescription implements JSONInterface {
         return $this->toDB()->save() > 0;
     }
 
+    public function tryLoadDB(){
+        if(FieldUtils::ID_IS_DEFINED($this->ItemId)) {
+            $item = CardDescriptionQuery::create()->findPk($this->ItemId);
+            if(!is_null($item)) return $item;
+        }
+        return new \CardDescription();
+    }
+
     public function toDB()
     {
-        $is = new \CardDescription();
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 

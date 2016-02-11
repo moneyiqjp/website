@@ -131,7 +131,8 @@ class JGeneralRestriction  implements JSONInterface {
 
     public function toDB() {
         $pr = $this->tryLoadFromDB();
-        return $this->updateDB($pr);
+        $item = $this->updateDB($pr);
+        return $item;
     }
 
     public function updateDB(\PersonaRestriction &$item) {

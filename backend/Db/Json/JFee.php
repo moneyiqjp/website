@@ -76,9 +76,16 @@ class JFee implements JSONInterface{
         return $this->toDB()->save() > 0;
     }
 
-    public function toDB()
-    {
-        $is = new \Fees();
+    public function tryLoadDB() {
+        if(FieldUtils::ID_IS_DEFINED($this->FeeId)) {
+            $item = \FeesQuery::create()->findPk($this->FeeId);
+            if(!is_null($item)) return $item;
+        }
+        return new \Fees();
+    }
+
+    public function toDB() {
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 
@@ -92,7 +99,8 @@ class JFee implements JSONInterface{
         if(FieldUtils::NUMBER_IS_DEFINED($this->YearlyOccurrence)) $item->setYearlyOccurrence($this->YearlyOccurrence);
         if(FieldUtils::NUMBER_IS_DEFINED($this->startYear)) $item->setStartYear($this->startYear);
         if(FieldUtils::NUMBER_IS_DEFINED($this->endYear)) $item->setEndYear($this->endYear);
-        if(FieldUtils::STRING_IS_DEFINED($this->Reference)) $item->setReference($this->Reference);
+        //if(FieldUtils::STRING_IS_DEFINED($this->Reference))
+        $item->setReference($this->Reference);
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;

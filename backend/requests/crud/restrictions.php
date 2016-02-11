@@ -107,7 +107,6 @@ $app->delete('/crud/restriction/general/delete', function () use ($app) {
     echo json_encode($jTableResult);
 });
 $app->post('/crud/restriction/general/create', function () use ($app) {
-
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 

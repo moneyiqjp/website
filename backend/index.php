@@ -46,20 +46,8 @@ $app->get('/display/affiliates', function () use ($app) {
     // return JSON-encoded response body with query results
     echo json_encode($cards);
 });
-$app->get('/display/stores', function () use ($app) {
-    $db = new \Db\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $jTableResult = array();
 
-    try {
-        $jTableResult['data'] = $db->GetStoresForDisplay();
-    } catch (\Exception $ex) {
-        $jTableResult['error'] = $ex->getMessage();
-        $app->getLog()->error($ex);
-    }
 
-    echo json_encode($jTableResult);
-});
 /*RewardTypes*/
 $app->get('/display/reward/type/all', function () use ($app) {
     $db = new \Db\Db();
@@ -1256,57 +1244,6 @@ $app->put('/crud/pointmapping/by/creditcard/update', function () use ($app) {
 
 
 
-/*Store*/
-$app->get('/crud/store/all', function () use ($app) {
-    $db = new \Db\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    echo json_encode(array('data'=> $db->GetStoresForCrud()));
-});
-$app->delete('/crud/store/delete', function () use ($app) {
-    $db = new \Db\Db();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $ids = $app->request()->delete('id');
-    $jTableResult = array();
-    //TODO handle errors
-    foreach($ids as $id) {
-        $app->getLog()->debug("Deleting credit card " . $id);
-        $jTableResult['row'] = $db->DeleteStoreForCrud($id);
-    }
-    echo json_encode($jTableResult);
-});
-$app->post('/crud/store/create', function () use ($app) {
-    $db = new \Db\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->CreateStoreForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-$app->put('/crud/store/update', function () use ($app) {
-    $db = new \Db\Db();
-    $request = $app->request();
-    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
-    $id = $app->request()->put('id');
-    if(!\Db\Utility\FieldUtils::ID_IS_DEFINED($id)) throw new Exception("No id found");
-
-    $jTableResult = array();
-    try {
-        $jTableResult['row'] = $db->UpdateStoreForCrud($request->put('data'));
-    } catch(\Exception $e) {
-        $jTableResult['error'] = $e->getMessage();
-        $app->getLog()->error($e);
-    }
-
-    echo json_encode($jTableResult);
-});
-
 /*Insurance*/
 $app->get('/crud/insurance/all', function () use ($app) {
     $db = new \Db\Db();
@@ -1636,7 +1573,8 @@ $app->get('/crud/storecategory/by/id', function () use ($app) {
 require_once 'requests/crud/persona.php';
 require_once 'requests/crud/restrictions.php';
 require_once 'requests/crud/payment_type.php';
-require_once 'requests/crud/milage.php';
+require_once 'requests/crud/mileage.php';
+require_once 'requests/crud/store.php';
 
 //Run the Slim application:
 $app->run();

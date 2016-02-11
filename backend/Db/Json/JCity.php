@@ -67,12 +67,14 @@ class JCity implements JSONInterface
             $item = CityQuery::create()->findOneByCityId($this->CityId);
             if(!is_null($item)) return $item;
         }
+
         return new \City();
     }
 
     public function toDB()
     {
-        return $this->updateDB($this->tryLoadFromDB());
+        $item = $this->tryLoadFromDB();
+        return $this->updateDB($item);
     }
 
     public function updateDB(\City &$item)

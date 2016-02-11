@@ -6,7 +6,7 @@
  * Time: 1:20 PM
  */
 
-include_once(__DIR__ . "/../../Db/CRUD/milage.php");
+include_once(__DIR__ . "/../../Db/CRUD/mileage.php");
 use Db\CRUD;
 
 
@@ -124,6 +124,12 @@ $app->get('/crud/mileage/all', function () use ($app) {
 
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetMileageForCrud()));
+});
+
+$app->get('/crud/mileage/reward/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetMileageRewards()));
 });
 
 $app->delete('/crud/mileage/delete', function () use ($app) {
