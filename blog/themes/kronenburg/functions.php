@@ -161,12 +161,13 @@ add_shortcode( 'quote', 'quote_shortcode' );
 function generate_cardelement( $atts ) {
     // Attributes
     $params = shortcode_atts(
-            array(
-                'persona' => '',
-                'card' => '',
-            ), $atts );
+        array(
+            'persona' => '',
+            'card-id' => '',
+        ), $atts );
 
-    $parameter = strlen($params['persona'])>0?$params['persona'] : $params['card'];
+    $parameter = $params['persona'];
+    $parameter .= strlen($params['card-id'])>0? "card-id-" . $params['card-id']:"";
 
     return
         "<div class='card-pane $parameter'>"

@@ -85,7 +85,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <?php
-                                    $args = array( 'posts_per_page' => 5, "cat" => 13 );
+                                    $args = array( 'posts_per_page' => 5, "cat" => 13, 'order'=> 'ASC', 'orderby' => 'title' );
                                     $lastposts = get_posts( $args );
                                     foreach ( $lastposts as $post ) :  setup_postdata( $post ); ?>
                                         <li><a href="<?php echo get_permalink(); ?>"><?php the_title(); ?></a></li>

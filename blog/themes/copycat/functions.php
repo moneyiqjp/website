@@ -163,10 +163,11 @@ function generate_cardelement( $atts ) {
     $params = shortcode_atts(
             array(
                 'persona' => '',
-                'card' => '',
+                'card-id' => '',
             ), $atts );
 
-    $parameter = strlen($params['persona'])>0?$params['persona'] : $params['card'];
+    $parameter = $params['persona'];
+    $parameter .= strlen($params['card-id'])>0? "card-" . $params['card-id']:"";
 
     return
         "<div class='card-pane $parameter'>"

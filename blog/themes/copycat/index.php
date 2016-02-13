@@ -1,5 +1,5 @@
 <?php get_header();?>
-<div id="moneyiq-index-carousel" class="carousel slide" data-ride="carousel"   data-interval="60000" data-pause="none">
+<div id="moneyiq-index-carousel" class="carousel slide" data-ride="carousel"  data-interval="6000" data-pause="none">
     <!-- Indicators -->
     <ol class="carousel-indicators">
     <?php
