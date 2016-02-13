@@ -26,6 +26,10 @@ class FieldUtils {
         return $ids;
     }
 
+    public static function IS_STRING($value){
+        return (!is_null($value)) && is_string($value);
+    }
+
     public static function STRING_IS_DEFINED($value){
         return (!is_null($value)) && is_string($value) && (strlen(trim($value))>0);
     }

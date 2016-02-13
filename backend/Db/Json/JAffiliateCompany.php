@@ -54,12 +54,19 @@ class JAffiliateCompany implements JSONInterface
         return $this->toDB()->save() > 0;
     }
 
-    public function toDB()
-    {
-        $af = new \AffiliateCompany();
-        return $this->updateDB($af);
+    public function tryLoadDB(){
+        if(FieldUtils::ID_IS_DEFINED($this->AffiliateId)) {
+            $item = \AffiliateCompanyQuery::create()->findPk($this->AffiliateId);
+            if(!is_null($item)) return $item;
+        }
+        return new \AffiliateCompany();
     }
 
+    public function toDB()
+    {
+        $is = $this->tryLoadDB();
+        return $this->updateDB($is);
+    }
 
     public function updateDB(\AffiliateCompany &$item)
     {

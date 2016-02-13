@@ -11,16 +11,17 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JMilage implements JSONInterface
+class JMileage implements JSONInterface
 {
-    private $MileageId;
-    private $Store;
-    private $Trip;
-    private $RequiredMiles;
-    private $ValueInYen;
-    private $Display;
-    private $UpdateTime;
-    private $UpdateUser;
+    public $MileageId;
+    public $PointSystem;
+    public $Store;
+    public $Trip;
+    public $RequiredMiles;
+    public $ValueInYen;
+    public $Display;
+    public $UpdateTime;
+    public $UpdateUser;
 
     /**
      * @return mixed
@@ -28,6 +29,13 @@ class JMilage implements JSONInterface
     public function getMileageId()
     {
         return $this->MileageId;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPointSystem()
+    {
+        return $this->PointSystem;
     }
     /**
      * @return mixed
@@ -57,13 +65,7 @@ class JMilage implements JSONInterface
     {
         return $this->ValueInYen;
     }
-    /**
-     * @return mixed
-     */
-    public function getDisplay()
-    {
-        return $this->Display;
-    }
+
     /**
      * @return mixed
      */
@@ -80,13 +82,14 @@ class JMilage implements JSONInterface
     }
 
 
-    public static function CREATE_FROM_DB(\Milage $item) {
-        $mine = new JMilage();
-        $mine->MileageId = $item->getMilageId();
+    public static function CREATE_FROM_DB(\Mileage $item) {
+        $mine = new JMileage();
+        $mine->MileageId = $item->getMileageId();
         $mine->Store = JStore::CREATE_FROM_DB($item->getStore());
+        $mine->PointSystem = JPointSystem::CREATE_FROM_DB($item->getPointSystem());
         $mine->Trip = JTrip::CREATE_FROM_DB($item->getTrip());
         $mine->RequiredMiles = $item->getRequiredMiles();
-        $mine->ValueInYen = $item->getValueInYen()
+        $mine->ValueInYen = $item->getValueInYen();
         $mine->Display = $item->getDisplay();
 
         $time = new \DateTime();
@@ -101,9 +104,10 @@ class JMilage implements JSONInterface
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        $mine = new JMilage();
+        $mine = new JMileage();
         if(ArrayUtils::KEY_EXISTS($data,'MileageId')) $mine->MileageId = $data['MileageId'];
         if(ArrayUtils::KEY_EXISTS($data,'Store')) $mine->Store = JStore::CREATE_FROM_ARRAY($data['Store']);
+        if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         if(ArrayUtils::KEY_EXISTS($data,'Trip')) $mine->Trip = JTrip::CREATE_FROM_ARRAY($data['Trip']);
         if(ArrayUtils::KEY_EXISTS($data,'RequiredMiles')) $mine->RequiredMiles = $data['RequiredMiles'];
         if(ArrayUtils::KEY_EXISTS($data,'ValueInYen')) $mine->ValueInYen = $data['ValueInYen'];
@@ -123,26 +127,30 @@ class JMilage implements JSONInterface
     private function tryLoadFromDB(){
 
         if(FieldUtils::ID_IS_DEFINED($this->MileageId)) {
-            $item = \MilageQuery::create()->findByMilageId($this->MileageId);
+            $item = \MileageQuery::create()->findByMileageId($this->MileageId);
             if(!is_null($item)) return $item;
         }
-        return new \Milage();
+        return new \Mileage();
     }
 
     public function toDB()
     {
-        return $this->updateDB($this->tryLoadFromDB());
+        $item = $this->tryLoadFromDB();
+        return $this->updateDB($item);
     }
 
-    public function updateDB(\Milage &$item)
+    public function updateDB(\Mileage &$item)
     {
-        if(FieldUtils::ID_IS_DEFINED($this->MileageId)) $item->setMilageId($this->MileageId);
+        if(FieldUtils::ID_IS_DEFINED($this->MileageId)) $item->setMileageId($this->MileageId);
 
         if(!is_null($this->Store) && FieldUtils::ID_IS_DEFINED( $this->Store->StoreId)) {
             $item->setStoreId($this->Store->StoreId);
         }
         if(!is_null($this->Trip) && FieldUtils::ID_IS_DEFINED( $this->Trip->TripId)) {
             $item->setTripId($this->Trip->TripId);
+        }
+        if(!is_null($this->PointSystem) && FieldUtils::ID_IS_DEFINED( $this->PointSystem->PointSystemId)) {
+            $item->setPointSystemId($this->PointSystem->PointSystemId);
         }
         if(FieldUtils::NUMBER_IS_DEFINED($this->RequiredMiles)) $item->setRequiredMiles($this->RequiredMiles);
         if(FieldUtils::NUMBER_IS_DEFINED($this->ValueInYen)) $item->setValueInYen($this->ValueInYen);
@@ -153,5 +161,31 @@ class JMilage implements JSONInterface
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 
         return $item;
+    }
+
+    public function getDisplay(){
+        $display = $this->Display;
+        if(is_null($display)) {
+            $display = $this->Trip->Display;
+        }
+
+
+        $display = str_replace($display, "%FROM%", $this->Trip->CityFrom->Name);
+        $display = str_replace($display, "%TO%", $this->Trip->CityTo->Name);
+        $display = str_replace($display, "%TRIP%", $this->Trip->getDisplay());
+        $display = str_replace($display, "%STORE%", $this->Store->StoreName);
+        $display = str_replace($display, "%MILES%", $this->RequiredMiles);
+        $display = str_replace($display, "%VALUE%", $this->ValueInYen);
+
+        return $display;
+    }
+
+    public function getForDisplay(){
+        $this->Display = $this->getDisplay();
+        return $this;
+    }
+
+    public function getRewardCategory() {
+
     }
 }

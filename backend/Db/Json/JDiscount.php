@@ -101,10 +101,17 @@ class JDiscount implements JSONInterface{
         return $this->toDB()->save() > 0;
     }
 
+    public function tryLoadDB(){
+        if(FieldUtils::ID_IS_DEFINED($this->DiscountId)) {
+            $item = \DiscountQuery::create()->findPk($this->DiscountId);
+            if(!is_null($item)) return $item;
+        }
+        return new \Discounts();
+    }
 
     public function toDB()
     {
-        $is = new \Discounts();
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 

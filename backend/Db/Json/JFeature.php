@@ -139,8 +139,16 @@ class JFeature implements JSONInterface{
         return $this->toDB()->save() > 0;
     }
 
+    public function tryLoadDB(){
+        if(FieldUtils::ID_IS_DEFINED($this->FeatureId)) {
+            $item = \CardFeaturesQuery::create()->findPk($this->FeatureId);
+            if(!is_null($item)) return $item;
+        }
+        return new \CardFeatures();
+    }
+
     public function toDB() {
-        $is = new \CardFeatures();
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 

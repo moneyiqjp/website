@@ -179,7 +179,7 @@ class TripTableMap extends TableMap
         $this->addRelation('Unit', '\\Unit', RelationMap::MANY_TO_ONE, array('unit_id' => 'unit_id', ), null, null);
         $this->addRelation('CityRelatedByFromCityId', '\\City', RelationMap::MANY_TO_ONE, array('from_city_id' => 'city_id', ), null, null);
         $this->addRelation('CityRelatedByToCityId', '\\City', RelationMap::MANY_TO_ONE, array('to_city_id' => 'city_id', ), null, null);
-        $this->addRelation('Milage', '\\Milage', RelationMap::ONE_TO_MANY, array('trip_id' => 'trip_id', ), null, null, 'Milages');
+        $this->addRelation('Mileage', '\\Mileage', RelationMap::ONE_TO_MANY, array('trip_id' => 'trip_id', ), null, null, 'Mileages');
     } // buildRelations()
 
     /**

@@ -4,8 +4,9 @@ namespace Db\CRUD;
 
 use Db\Json\JObject;
 use Db\Json\JCity;
+use Db\Json\JReward;
 use Db\Json\JTrip;
-use Db\Json\JMilage;
+use Db\Json\JMileage;
 
 
 
@@ -33,8 +34,7 @@ function UpdateCityForCrud($data)
     $item = (new  \CityQuery())->findPk($parsed->CityId);
     return JCity::CREATE_FROM_DB($item);
 }
-function CreateCityForCrud($data)
-{
+function CreateCityForCrud($data) {
     $item = JCity::CREATE_FROM_ARRAY($data)->toDB();
     $item->save();
 
@@ -99,48 +99,59 @@ function DeleteTripForCrud($id)
 
 
 
-
-
 /* Mileage */
 function GetMileageForCrud()
 {
     $result = array();
-    foreach ((new \MilageQuery())->orderByStoreId()->find() as $item) {
-        array_push($result, JMilage::CREATE_FROM_DB($item));
+    foreach ((new \MileageQuery())->orderByStoreId()->find() as $item) {
+        array_push($result, JMileage::CREATE_FROM_DB($item));
     }
     return $result;
 }
 function UpdateMileageForCrud($data)
 {
-    $parsed = JMilage::CREATE_FROM_ARRAY($data);
+    $parsed = JMileage::CREATE_FROM_ARRAY($data);
     if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
 
-    $item = (new  \MilageQuery())->findPk($parsed->GetMilageId());
-    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->MilageId ." not found");
+    $item = (new  \MileageQuery())->findPk($parsed->GetMileageId());
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->getMileageId() ." not found");
 
     $item = $parsed->updateDB($item);
     $item->save();
 
     //TODO implement cache, then refresh
-    $item = (new  \MilageQuery())->findPk($parsed->GetMilageId());
-    return JMilage::CREATE_FROM_DB($item);
+    $item = (new  \MileageQuery())->findPk($parsed->GetMileageId());
+    return JMileage::CREATE_FROM_DB($item);
 }
+
 function CreateMileageForCrud($data)
 {
-    $item = JMilage::CREATE_FROM_ARRAY($data)->toDB();
-    $item->save();
+    $item = JMileage::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save MIleage");
+    }
 
     //TODO implement cache, add to cache
-    return JMilage::CREATE_FROM_DB($item);
+    return JMileage::CREATE_FROM_DB($item);
 }
+
 function DeleteMileageForCrud($id)
 {
-    $item = (new  \MilageQuery())->findPk($id);
+    $item = (new  \MileageQuery())->findPk($id);
     if(is_null($item)) {
         throw new \Exception ("restriction type with id ". $id ." not found");
     }
     $item->delete();
     return array();
+}
+
+function GetMileageRewards()
+{
+    $result = array();
+    foreach ((new \MileageQuery())->orderByStoreId()->find() as $item) {
+        array_push($result, JReward::CREATE_FROM_MILEAGE(JMileage::CREATE_FROM_DB($item)));
+    }
+    return $result;
 }
 
 

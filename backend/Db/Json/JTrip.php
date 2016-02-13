@@ -22,6 +22,21 @@ class JTrip implements JSONInterface
     public $UpdateTime;
     public $UpdateUser;
 
+    public function getDisplay(){
+        $display=$this->Display;
+
+        if(is_null($display)) {
+            $display = "%FROM% - %TO%";
+        }
+
+        $display = str_replace($display, "%FROM%", $this->CityFrom->Name);
+        $display = str_replace($display, "%TO%", $this->CityTo->Name);
+        $display = str_replace($display, "%UNIT%", $this->Unit->Name);
+        $display = str_replace($display, "%DISTANCE%", $this->Distance);
+
+        return $display;
+    }
+
     public static function CREATE_FROM_DB(\Trip $item) {
         $mine = new JTrip();
         $mine->TripId = $item->getTripId();
@@ -71,12 +86,14 @@ class JTrip implements JSONInterface
 
     public function toDB()
     {
-        return $this->updateDB($this->tryLoadFromDB());
+        $item =$this->tryLoadFromDB();
+
+        return $this->updateDB($item);
     }
 
     public function updateDB(\Trip &$item)
     {
-        if(FieldUtils::ID_IS_DEFINED($this->TripId)) $item->setCityId($this->TripId);
+        if(FieldUtils::ID_IS_DEFINED($this->TripId)) $item->setTripId($this->TripId);
 
         if(!is_null($this->CityFrom) && FieldUtils::ID_IS_DEFINED($this->CityFrom->CityId)) {
             $item->setFromCityId($this->CityFrom->CityId);

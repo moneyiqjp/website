@@ -123,7 +123,8 @@ class JCreditCardRestriction  implements JSONInterface {
     }
 
     public function toDB() {
-        return $this->updateDB($this->tryLoadFromDB());
+        $item =$this->tryLoadFromDB();
+        return $this->updateDB($item);
     }
 
     public function updateDB(\CardRestriction &$item) {

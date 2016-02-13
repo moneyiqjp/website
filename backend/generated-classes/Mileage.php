@@ -1,9 +1,9 @@
 <?php
 
-use Base\Milage as BaseMilage;
+use Base\Mileage as BaseMileage;
 
 /**
- * Skeleton subclass for representing a row from the 'milage' table.
+ * Skeleton subclass for representing a row from the 'mileage' table.
  *
  *
  *
@@ -12,7 +12,7 @@ use Base\Milage as BaseMilage;
  * long as it does not already exist in the output directory.
  *
  */
-class Milage extends BaseMilage
+class Mileage extends BaseMileage
 {
 
 }

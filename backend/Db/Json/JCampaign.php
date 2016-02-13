@@ -7,6 +7,7 @@
  */
 
 namespace Db\Json;
+use Base\CampaignQuery;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
@@ -81,9 +82,17 @@ class JCampaign implements JSONInterface{
         return $this->toDB()->save() > 0;
     }
 
+    public function tryLoadDB(){
+        if(FieldUtils::ID_IS_DEFINED($this->CampaignId)) {
+            $item = CampaignQuery::create()->findPk($this->CampaignId);
+            if(!is_null($item)) return $item;
+        }
+        return new \Campaign();
+    }
+
     public function toDB()
     {
-        $is = new \Campaign();
+        $is = $this->tryLoadDB();
         return $this->updateDB($is);
     }
 
