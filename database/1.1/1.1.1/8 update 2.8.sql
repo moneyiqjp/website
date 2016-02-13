@@ -55,7 +55,7 @@ BEGIN
 	end if;
 
 
-	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='milage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='milage_id') THEN
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_id') THEN
 			CREATE TABLE `mileage` (
 				`mileage_id` INT(11) NOT NULL AUTO_INCREMENT,
 				`store_id` INT(11) NOT NULL,
@@ -67,18 +67,101 @@ BEGIN
 				`update_time` DATETIME NOT NULL,
 				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
 				PRIMARY KEY (`mileage_id`),
-				CONSTRAINT `fk_milage_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`),
-				CONSTRAINT `fk_milage_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
-				CONSTRAINT `fk_milage_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
+				CONSTRAINT `fk_mileage_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`),
+				CONSTRAINT `fk_mileage_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`store_id`),
+				CONSTRAINT `fk_mileage_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
 			)
 			COLLATE='utf8_general_ci',
 			ENGINE=InnoDB
 			;
-		SELECT 'ADDED table milage';
+		SELECT 'ADDED table mileage';
 	else
-		SELECT 'EXISTED table milage';
+		SELECT 'EXISTED table mileage';
 	end if;
 	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_id') THEN
+			CREATE TABLE `season` (				
+				`season_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`point_system_id` INT(11) NOT NULL,
+				`name` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				`type` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				`from` Date NULL,
+				`to` Date NULL,
+				`update_time` DATETIME NOT NULL,
+				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`season_id`),
+				CONSTRAINT `fk_mileage_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table season';
+	else
+		SELECT 'EXISTED table season';
+	end if;
+	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage_type' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN
+			CREATE TABLE `mileage_type` (
+				`mileage_type_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`round_trip` TINYINT NOT NULL DEFAULT '0',
+				`season_id` INT(11) NOT NULL,
+				`class` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',				
+				`ticket_type` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				`display` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				`trip_length` INT(11) NOT NULL,
+				`update_time` DATETIME NOT NULL,
+				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`mileage_type_id`),
+				CONSTRAINT `fk_mileage_type_season` FOREIGN KEY (`season_id`) REFERENCES `season` (`season_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table mileage_type';
+	else
+		SELECT 'EXISTED table mileage_type';
+	end if;
+	
+	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='flight_cost' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN
+			CREATE TABLE `flight_cost` (
+				`flight_cost_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`retrieval_date` date NOT NULL,
+				`point_system_id` INT(11) NOT NULL,
+				`mileage_type_id` INT(11) NOT NULL,
+				`trip_id` INT(11) NOT NULL,
+				`fare_type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8_general_ci',				
+				`depart_date` DATE NULL,
+				`depart_flight_no` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				`return_date` DATE NULL,				
+				`return_flight_no` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				`price` INT(15) NOT NULL,
+				`reference` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`flight_cost_id`),
+				CONSTRAINT `fk_mileage_type_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`),
+				CONSTRAINT `fk_mileage_type_milage_type` FOREIGN KEY (`milage_type_id`) REFERENCES `milage_type` (`milage_type_id`),
+				CONSTRAINT `fk_mileage_type_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table flight_cost';
+	else
+		SELECT 'EXISTED table flight_cost';
+	end if;
+
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN	
+			if exists(select 1 from mileage_type) THEN	
+				ALTER TABLE `mileage`
+					ADD COLUMN `milage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles` ,
+					ADD CONSTRAINT `fk_milage_milage_type` FOREIGN KEY (`milage_type_id`) REFERENCES `milage_type` (`milage_type_id`);
+				SELECT 'Updated table mileage';
+			end if;
+	else
+		SELECT 'table mileage already up to date';
+	end if;
+
+
 END //
 DELIMITER ;
 CALL UpgradeMoneyIQ2_8(DATABASE());

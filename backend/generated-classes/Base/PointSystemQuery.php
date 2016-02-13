@@ -44,6 +44,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinCardPointSystem($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CardPointSystem relation
  * @method     ChildPointSystemQuery innerJoinCardPointSystem($relationAlias = null) Adds a INNER JOIN clause to the query using the CardPointSystem relation
  *
+ * @method     ChildPointSystemQuery leftJoinFlightCost($relationAlias = null) Adds a LEFT JOIN clause to the query using the FlightCost relation
+ * @method     ChildPointSystemQuery rightJoinFlightCost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FlightCost relation
+ * @method     ChildPointSystemQuery innerJoinFlightCost($relationAlias = null) Adds a INNER JOIN clause to the query using the FlightCost relation
+ *
  * @method     ChildPointSystemQuery leftJoinMileage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Mileage relation
  * @method     ChildPointSystemQuery rightJoinMileage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Mileage relation
  * @method     ChildPointSystemQuery innerJoinMileage($relationAlias = null) Adds a INNER JOIN clause to the query using the Mileage relation
@@ -60,7 +64,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinReward($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Reward relation
  * @method     ChildPointSystemQuery innerJoinReward($relationAlias = null) Adds a INNER JOIN clause to the query using the Reward relation
  *
- * @method     \CardPointSystemQuery|\MileageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildPointSystemQuery leftJoinSeason($relationAlias = null) Adds a LEFT JOIN clause to the query using the Season relation
+ * @method     ChildPointSystemQuery rightJoinSeason($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Season relation
+ * @method     ChildPointSystemQuery innerJoinSeason($relationAlias = null) Adds a INNER JOIN clause to the query using the Season relation
+ *
+ * @method     \CardPointSystemQuery|\FlightCostQuery|\MileageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery|\SeasonQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPointSystem findOne(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query
  * @method     ChildPointSystem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query, or a new ChildPointSystem object populated from the query conditions when no match is found
@@ -589,6 +597,79 @@ abstract class PointSystemQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \FlightCost object
+     *
+     * @param \FlightCost|ObjectCollection $flightCost  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByFlightCost($flightCost, $comparison = null)
+    {
+        if ($flightCost instanceof \FlightCost) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $flightCost->getPointSystemId(), $comparison);
+        } elseif ($flightCost instanceof ObjectCollection) {
+            return $this
+                ->useFlightCostQuery()
+                ->filterByPrimaryKeys($flightCost->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFlightCost() only accepts arguments of type \FlightCost or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the FlightCost relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinFlightCost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('FlightCost');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'FlightCost');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the FlightCost relation FlightCost object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \FlightCostQuery A secondary query class using the current class as primary query
+     */
+    public function useFlightCostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFlightCost($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FlightCost', '\FlightCostQuery');
+    }
+
+    /**
      * Filter the query by a related \Mileage object
      *
      * @param \Mileage|ObjectCollection $mileage  the related object to use as filter
@@ -878,6 +959,79 @@ abstract class PointSystemQuery extends ModelCriteria
         return $this
             ->joinReward($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Reward', '\RewardQuery');
+    }
+
+    /**
+     * Filter the query by a related \Season object
+     *
+     * @param \Season|ObjectCollection $season  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterBySeason($season, $comparison = null)
+    {
+        if ($season instanceof \Season) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $season->getPointSystemId(), $comparison);
+        } elseif ($season instanceof ObjectCollection) {
+            return $this
+                ->useSeasonQuery()
+                ->filterByPrimaryKeys($season->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySeason() only accepts arguments of type \Season or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Season relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinSeason($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Season');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Season');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Season relation Season object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SeasonQuery A secondary query class using the current class as primary query
+     */
+    public function useSeasonQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSeason($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Season', '\SeasonQuery');
     }
 
     /**

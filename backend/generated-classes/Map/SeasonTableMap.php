@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \PointSystem;
-use \PointSystemQuery;
+use \Season;
+use \SeasonQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'point_system' table.
+ * This class defines the structure of the 'season' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class PointSystemTableMap extends TableMap
+class SeasonTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class PointSystemTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.PointSystemTableMap';
+    const CLASS_NAME = '.Map.SeasonTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class PointSystemTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'point_system';
+    const TABLE_NAME = 'season';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\PointSystem';
+    const OM_CLASS = '\\Season';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'PointSystem';
+    const CLASS_DEFAULT = 'Season';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 8;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,47 @@ class PointSystemTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 8;
+
+    /**
+     * the column name for the season_id field
+     */
+    const COL_SEASON_ID = 'season.season_id';
 
     /**
      * the column name for the point_system_id field
      */
-    const COL_POINT_SYSTEM_ID = 'point_system.point_system_id';
+    const COL_POINT_SYSTEM_ID = 'season.point_system_id';
 
     /**
-     * the column name for the point_system_name field
+     * the column name for the name field
      */
-    const COL_POINT_SYSTEM_NAME = 'point_system.point_system_name';
+    const COL_NAME = 'season.name';
 
     /**
-     * the column name for the default_points_per_yen field
+     * the column name for the type field
      */
-    const COL_DEFAULT_POINTS_PER_YEN = 'point_system.default_points_per_yen';
+    const COL_TYPE = 'season.type';
 
     /**
-     * the column name for the default_yen_per_point field
+     * the column name for the from field
      */
-    const COL_DEFAULT_YEN_PER_POINT = 'point_system.default_yen_per_point';
+    const COL_FROM = 'season.from';
+
+    /**
+     * the column name for the to field
+     */
+    const COL_TO = 'season.to';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'point_system.update_time';
+    const COL_UPDATE_TIME = 'season.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'point_system.update_user';
-
-    /**
-     * the column name for the reference field
-     */
-    const COL_REFERENCE = 'point_system.reference';
+    const COL_UPDATE_USER = 'season.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +123,11 @@ class PointSystemTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PointSystemId', 'PointSystemName', 'DefaultPointsPerYen', 'DefaultYenPerPoint', 'UpdateTime', 'UpdateUser', 'Reference', ),
-        self::TYPE_CAMELNAME     => array('pointSystemId', 'pointSystemName', 'defaultPointsPerYen', 'defaultYenPerPoint', 'updateTime', 'updateUser', 'reference', ),
-        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID, PointSystemTableMap::COL_POINT_SYSTEM_NAME, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT, PointSystemTableMap::COL_UPDATE_TIME, PointSystemTableMap::COL_UPDATE_USER, PointSystemTableMap::COL_REFERENCE, ),
-        self::TYPE_FIELDNAME     => array('point_system_id', 'point_system_name', 'default_points_per_yen', 'default_yen_per_point', 'update_time', 'update_user', 'reference', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('SeasonId', 'PointSystemId', 'Name', 'Type', 'From', 'To', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('seasonId', 'pointSystemId', 'name', 'type', 'from', 'to', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID, SeasonTableMap::COL_POINT_SYSTEM_ID, SeasonTableMap::COL_NAME, SeasonTableMap::COL_TYPE, SeasonTableMap::COL_FROM, SeasonTableMap::COL_TO, SeasonTableMap::COL_UPDATE_TIME, SeasonTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('season_id', 'point_system_id', 'name', 'type', 'from', 'to', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -132,11 +137,11 @@ class PointSystemTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PointSystemId' => 0, 'PointSystemName' => 1, 'DefaultPointsPerYen' => 2, 'DefaultYenPerPoint' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, 'Reference' => 6, ),
-        self::TYPE_CAMELNAME     => array('pointSystemId' => 0, 'pointSystemName' => 1, 'defaultPointsPerYen' => 2, 'defaultYenPerPoint' => 3, 'updateTime' => 4, 'updateUser' => 5, 'reference' => 6, ),
-        self::TYPE_COLNAME       => array(PointSystemTableMap::COL_POINT_SYSTEM_ID => 0, PointSystemTableMap::COL_POINT_SYSTEM_NAME => 1, PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN => 2, PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT => 3, PointSystemTableMap::COL_UPDATE_TIME => 4, PointSystemTableMap::COL_UPDATE_USER => 5, PointSystemTableMap::COL_REFERENCE => 6, ),
-        self::TYPE_FIELDNAME     => array('point_system_id' => 0, 'point_system_name' => 1, 'default_points_per_yen' => 2, 'default_yen_per_point' => 3, 'update_time' => 4, 'update_user' => 5, 'reference' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('SeasonId' => 0, 'PointSystemId' => 1, 'Name' => 2, 'Type' => 3, 'From' => 4, 'To' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
+        self::TYPE_CAMELNAME     => array('seasonId' => 0, 'pointSystemId' => 1, 'name' => 2, 'type' => 3, 'from' => 4, 'to' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
+        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID => 0, SeasonTableMap::COL_POINT_SYSTEM_ID => 1, SeasonTableMap::COL_NAME => 2, SeasonTableMap::COL_TYPE => 3, SeasonTableMap::COL_FROM => 4, SeasonTableMap::COL_TO => 5, SeasonTableMap::COL_UPDATE_TIME => 6, SeasonTableMap::COL_UPDATE_USER => 7, ),
+        self::TYPE_FIELDNAME     => array('season_id' => 0, 'point_system_id' => 1, 'name' => 2, 'type' => 3, 'from' => 4, 'to' => 5, 'update_time' => 6, 'update_user' => 7, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
     );
 
     /**
@@ -149,20 +154,21 @@ class PointSystemTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('point_system');
-        $this->setPhpName('PointSystem');
+        $this->setName('season');
+        $this->setPhpName('Season');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\PointSystem');
+        $this->setClassName('\\Season');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('point_system_id', 'PointSystemId', 'INTEGER', true, null, null);
-        $this->addColumn('point_system_name', 'PointSystemName', 'VARCHAR', true, 255, null);
-        $this->addColumn('default_points_per_yen', 'DefaultPointsPerYen', 'DECIMAL', true, 8, 0.01);
-        $this->addColumn('default_yen_per_point', 'DefaultYenPerPoint', 'DECIMAL', true, 8, 1);
+        $this->addPrimaryKey('season_id', 'SeasonId', 'INTEGER', true, null, null);
+        $this->addForeignKey('point_system_id', 'PointSystemId', 'INTEGER', 'point_system', 'point_system_id', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', true, 100, null);
+        $this->addColumn('type', 'Type', 'VARCHAR', true, 100, null);
+        $this->addColumn('from', 'From', 'DATE', false, null, null);
+        $this->addColumn('to', 'To', 'DATE', false, null, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -170,13 +176,8 @@ class PointSystemTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('CardPointSystem', '\\CardPointSystem', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'CardPointSystems');
-        $this->addRelation('FlightCost', '\\FlightCost', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'FlightCosts');
-        $this->addRelation('Mileage', '\\Mileage', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Mileages');
-        $this->addRelation('PointAcquisition', '\\PointAcquisition', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'PointAcquisitions');
-        $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'PointUses');
-        $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Rewards');
-        $this->addRelation('Season', '\\Season', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Seasons');
+        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
+        $this->addRelation('MileageType', '\\MileageType', RelationMap::ONE_TO_MANY, array('season_id' => 'season_id', ), null, null, 'MileageTypes');
     } // buildRelations()
 
     /**
@@ -195,11 +196,11 @@ class PointSystemTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -219,7 +220,7 @@ class PointSystemTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -236,7 +237,7 @@ class PointSystemTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? PointSystemTableMap::CLASS_DEFAULT : PointSystemTableMap::OM_CLASS;
+        return $withPrefix ? SeasonTableMap::CLASS_DEFAULT : SeasonTableMap::OM_CLASS;
     }
 
     /**
@@ -250,22 +251,22 @@ class PointSystemTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (PointSystem object, last column rank)
+     * @return array           (Season object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = PointSystemTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = PointSystemTableMap::getInstanceFromPool($key))) {
+        $key = SeasonTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SeasonTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + PointSystemTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SeasonTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = PointSystemTableMap::OM_CLASS;
-            /** @var PointSystem $obj */
+            $cls = SeasonTableMap::OM_CLASS;
+            /** @var Season $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            PointSystemTableMap::addInstanceToPool($obj, $key);
+            SeasonTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -288,18 +289,18 @@ class PointSystemTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = PointSystemTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = PointSystemTableMap::getInstanceFromPool($key))) {
+            $key = SeasonTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SeasonTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var PointSystem $obj */
+                /** @var Season $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                PointSystemTableMap::addInstanceToPool($obj, $key);
+                SeasonTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -320,21 +321,23 @@ class PointSystemTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PointSystemTableMap::COL_POINT_SYSTEM_ID);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_POINT_SYSTEM_NAME);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_DEFAULT_POINTS_PER_YEN);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_DEFAULT_YEN_PER_POINT);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_UPDATE_USER);
-            $criteria->addSelectColumn(PointSystemTableMap::COL_REFERENCE);
+            $criteria->addSelectColumn(SeasonTableMap::COL_SEASON_ID);
+            $criteria->addSelectColumn(SeasonTableMap::COL_POINT_SYSTEM_ID);
+            $criteria->addSelectColumn(SeasonTableMap::COL_NAME);
+            $criteria->addSelectColumn(SeasonTableMap::COL_TYPE);
+            $criteria->addSelectColumn(SeasonTableMap::COL_FROM);
+            $criteria->addSelectColumn(SeasonTableMap::COL_TO);
+            $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_USER);
         } else {
+            $criteria->addSelectColumn($alias . '.season_id');
             $criteria->addSelectColumn($alias . '.point_system_id');
-            $criteria->addSelectColumn($alias . '.point_system_name');
-            $criteria->addSelectColumn($alias . '.default_points_per_yen');
-            $criteria->addSelectColumn($alias . '.default_yen_per_point');
+            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.type');
+            $criteria->addSelectColumn($alias . '.from');
+            $criteria->addSelectColumn($alias . '.to');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
-            $criteria->addSelectColumn($alias . '.reference');
         }
     }
 
@@ -347,7 +350,7 @@ class PointSystemTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(PointSystemTableMap::DATABASE_NAME)->getTable(PointSystemTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SeasonTableMap::DATABASE_NAME)->getTable(SeasonTableMap::TABLE_NAME);
     }
 
     /**
@@ -355,16 +358,16 @@ class PointSystemTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(PointSystemTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(PointSystemTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new PointSystemTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SeasonTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SeasonTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SeasonTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a PointSystem or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Season or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or PointSystem object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Season object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -375,27 +378,27 @@ class PointSystemTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PointSystemTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \PointSystem) { // it's a model object
+        } elseif ($values instanceof \Season) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(PointSystemTableMap::DATABASE_NAME);
-            $criteria->add(PointSystemTableMap::COL_POINT_SYSTEM_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SeasonTableMap::DATABASE_NAME);
+            $criteria->add(SeasonTableMap::COL_SEASON_ID, (array) $values, Criteria::IN);
         }
 
-        $query = PointSystemQuery::create()->mergeWith($criteria);
+        $query = SeasonQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            PointSystemTableMap::clearInstancePool();
+            SeasonTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                PointSystemTableMap::removeInstanceFromPool($singleval);
+                SeasonTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -403,20 +406,20 @@ class PointSystemTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the point_system table.
+     * Deletes all rows from the season table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return PointSystemQuery::create()->doDeleteAll($con);
+        return SeasonQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a PointSystem or Criteria object.
+     * Performs an INSERT on the database, given a Season or Criteria object.
      *
-     * @param mixed               $criteria Criteria or PointSystem object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Season object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -425,22 +428,22 @@ class PointSystemTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(PointSystemTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from PointSystem object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Season object
         }
 
-        if ($criteria->containsKey(PointSystemTableMap::COL_POINT_SYSTEM_ID) && $criteria->keyContainsValue(PointSystemTableMap::COL_POINT_SYSTEM_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.PointSystemTableMap::COL_POINT_SYSTEM_ID.')');
+        if ($criteria->containsKey(SeasonTableMap::COL_SEASON_ID) && $criteria->keyContainsValue(SeasonTableMap::COL_SEASON_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SeasonTableMap::COL_SEASON_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = PointSystemQuery::create()->mergeWith($criteria);
+        $query = SeasonQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -449,7 +452,7 @@ class PointSystemTableMap extends TableMap
         });
     }
 
-} // PointSystemTableMap
+} // SeasonTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-PointSystemTableMap::buildTableMap();
+SeasonTableMap::buildTableMap();

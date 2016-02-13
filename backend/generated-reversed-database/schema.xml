@@ -362,6 +362,41 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="flight_cost" idMethod="native" phpName="FlightCost">
+    <column name="flight_cost_id" phpName="FlightCostId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="retrieval_date" phpName="RetrievalDate" type="DATE" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="mileage_type_id" phpName="MileageTypeId" type="INTEGER" required="true"/>
+    <column name="trip_id" phpName="TripId" type="INTEGER" required="true"/>
+    <column name="fare_type" phpName="FareType" type="VARCHAR" size="100"/>
+    <column name="depart_date" phpName="DepartDate" type="DATE"/>
+    <column name="depart_flight_no" phpName="DepartFlightNo" type="VARCHAR" size="50"/>
+    <column name="return_date" phpName="ReturnDate" type="DATE"/>
+    <column name="return_flight_no" phpName="ReturnFlightNo" type="VARCHAR" size="50"/>
+    <column name="price" phpName="Price" type="INTEGER" size="15" required="true"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="250"/>
+    <foreign-key foreignTable="mileage_type" name="fk_milage_type_milage_type">
+      <reference local="mileage_type_id" foreign="mileage_type_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="trip" name="fk_milage_type_trip">
+      <reference local="trip_id" foreign="trip_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="point_system" name="fk_mileage_type_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <index name="fk_mileage_type_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <index name="fk_milage_type_trip">
+      <index-column name="trip_id"/>
+    </index>
+    <index name="fk_milage_type_milage_type">
+      <index-column name="mileage_type_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="insurance" idMethod="native" phpName="Insurance">
     <column name="insurance_id" phpName="InsuranceId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="credit_card_id" phpName="CreditCardId" type="INTEGER" required="true"/>
@@ -664,6 +699,26 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="mileage_type" idMethod="native" phpName="MileageType">
+    <column name="mileage_type_id" phpName="MileageTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="round_trip" phpName="RoundTrip" type="TINYINT" required="true" defaultValue="0"/>
+    <column name="season_id" phpName="SeasonId" type="INTEGER" required="true"/>
+    <column name="class" phpName="Class" type="VARCHAR" size="255"/>
+    <column name="ticket_type" phpName="TicketType" type="VARCHAR" size="255"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="255"/>
+    <column name="trip_length" phpName="TripLength" type="INTEGER" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="season" name="fk_mileage_type_season">
+      <reference local="season_id" foreign="season_id"/>
+    </foreign-key>
+    <index name="fk_mileage_type_season">
+      <index-column name="season_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="payment_type" idMethod="native" phpName="PaymentType">
     <column name="payment_type_id" phpName="PaymentTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="type" phpName="Type" type="VARCHAR" size="255" required="true"/>
@@ -954,6 +1009,25 @@
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="season" idMethod="native" phpName="Season">
+    <column name="season_id" phpName="SeasonId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
+    <column name="type" phpName="Type" type="VARCHAR" size="100" required="true"/>
+    <column name="from" phpName="From" type="DATE"/>
+    <column name="to" phpName="To" type="DATE"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="point_system" name="FK_season_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <index name="FK_season_point_system">
+      <index-column name="point_system_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

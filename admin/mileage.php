@@ -469,6 +469,43 @@
     </table>
 </div>
 
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="season">Seasons</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="seasons" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>PointSystem</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>PointSystem</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
 
 <div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="mileage">Mileage</a></div>
@@ -506,7 +543,94 @@
             <th>User</th>
         </tr>
         </tfoot>
-    </table
+    </table>
+</div>
+
+
+<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="mileagetype">MileageType</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="mileagetype" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Season</th>
+            <th>Class</th>
+            <th>RoundTrip</th>
+            <th>TicketType</th>
+            <th>TripLength</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Season</th>
+            <th>Class</th>
+            <th>RoundTrip</th>
+            <th>TicketType</th>
+            <th>TripLength</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="flightcost">FlightCost</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="flightcost" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>RetrievalDate</th>
+            <th>PointSystem</th>
+            <th>MilageType</th>
+            <th>Trip</th>
+            <th>FareType</th>
+            <th>Departure<br>Date</th>
+            <th><br>Flight#</th>
+            <th>Return<br>Date</th>
+            <th><br>Flight#</th>
+            <th>Price</th>
+            <th>Reference</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>RetrievalDate</th>
+            <th>PointSystem</th>
+            <th>MilageType</th>
+            <th>Trip</th>
+            <th>FareType</th>
+            <th>Departure<br>Date</th>
+            <th><br>Flight#</th>
+            <th>Return<br>Date</th>
+            <th><br>Flight#</th>
+            <th>Price</th>
+            <th>Reference</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
 
 <br>
 <br>

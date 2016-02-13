@@ -7,6 +7,9 @@ use Db\Json\JCity;
 use Db\Json\JReward;
 use Db\Json\JTrip;
 use Db\Json\JMileage;
+use Db\Json\JMileageType;
+use Db\Json\JSeason;
+use Db\Json\JFlightCost;
 
 
 
@@ -156,4 +159,147 @@ function GetMileageRewards()
 
 
 
+/* MileageType */
+function GetMileageTypeForCrud()
+{
+    $result = array();
+    foreach ((new \MileageTypeQuery())->orderByClass()->find() as $item) {
+        array_push($result, JMileageType::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateMileageTypeForCrud($data)
+{
+    $parsed = JMileageType::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \MileageTypeQuery())->findPk($parsed->MileageTypeId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->MileageTypeId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \MileageTypeQuery())->findPk($parsed->MileageTypeId);
+    return JMileageType::CREATE_FROM_DB($item);
+}
+
+function CreateMileageTypeForCrud($data)
+{
+    $item = JMileageType::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save MileageType");
+    }
+
+    //TODO implement cache, add to cache
+    return JMileageType::CREATE_FROM_DB($item);
+}
+
+function DeleteMileageTypeForCrud($id)
+{
+    $item = (new  \MileageTypeQuery())->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
+
+
+
+
+/* Season */
+function GetSeasonForCrud()
+{
+    $result = array();
+    foreach ((new \SeasonQuery())->orderByName()->find() as $item) {
+        array_push($result, JSeason::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateSeasonForCrud($data)
+{
+    $parsed = JSeason::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \SeasonQuery())->findPk($parsed->SeasonId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->SeasonId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \SeasonQuery())->findPk($parsed->SeasonId);
+    return JSeason::CREATE_FROM_DB($item);
+}
+
+function CreateSeasonForCrud($data)
+{
+    $item = JSeason::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save Season");
+    }
+
+    //TODO implement cache, add to cache
+    return JSeason::CREATE_FROM_DB($item);
+}
+
+function DeleteSeasonForCrud($id)
+{
+    $item = (new  \SeasonQuery())->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
+
+
+
+
+/* FlightCost */
+function GetFlightCostForCrud()
+{
+    $result = array();
+    foreach ((new \FlightCostQuery())->orderByDepartDate()->find() as $item) {
+        array_push($result, JFlightCost::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateFlightCostForCrud($data)
+{
+    $parsed = JFlightCost::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \FlightCostQuery())->findPk($parsed->FlightCostId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->FlightCostId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \FlightCostQuery())->findPk($parsed->FlightCostId);
+    return JFlightCost::CREATE_FROM_DB($item);
+}
+
+function CreateFlightCostForCrud($data)
+{
+    $item = JFlightCost::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save FlightCost");
+    }
+
+    //TODO implement cache, add to cache
+    return JFlightCost::CREATE_FROM_DB($item);
+}
+
+function DeleteFlightCostForCrud($id)
+{
+    $item = (new  \FlightCostQuery())->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
 

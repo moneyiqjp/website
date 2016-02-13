@@ -54,11 +54,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildTripQuery rightJoinCityRelatedByToCityId($relationAlias = null) Adds a RIGHT JOIN clause to the query using the CityRelatedByToCityId relation
  * @method     ChildTripQuery innerJoinCityRelatedByToCityId($relationAlias = null) Adds a INNER JOIN clause to the query using the CityRelatedByToCityId relation
  *
+ * @method     ChildTripQuery leftJoinFlightCost($relationAlias = null) Adds a LEFT JOIN clause to the query using the FlightCost relation
+ * @method     ChildTripQuery rightJoinFlightCost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FlightCost relation
+ * @method     ChildTripQuery innerJoinFlightCost($relationAlias = null) Adds a INNER JOIN clause to the query using the FlightCost relation
+ *
  * @method     ChildTripQuery leftJoinMileage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Mileage relation
  * @method     ChildTripQuery rightJoinMileage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Mileage relation
  * @method     ChildTripQuery innerJoinMileage($relationAlias = null) Adds a INNER JOIN clause to the query using the Mileage relation
  *
- * @method     \UnitQuery|\CityQuery|\MileageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UnitQuery|\CityQuery|\FlightCostQuery|\MileageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildTrip findOne(ConnectionInterface $con = null) Return the first ChildTrip matching the query
  * @method     ChildTrip findOneOrCreate(ConnectionInterface $con = null) Return the first ChildTrip matching the query, or a new ChildTrip object populated from the query conditions when no match is found
@@ -803,6 +807,79 @@ abstract class TripQuery extends ModelCriteria
         return $this
             ->joinCityRelatedByToCityId($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'CityRelatedByToCityId', '\CityQuery');
+    }
+
+    /**
+     * Filter the query by a related \FlightCost object
+     *
+     * @param \FlightCost|ObjectCollection $flightCost  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildTripQuery The current query, for fluid interface
+     */
+    public function filterByFlightCost($flightCost, $comparison = null)
+    {
+        if ($flightCost instanceof \FlightCost) {
+            return $this
+                ->addUsingAlias(TripTableMap::COL_TRIP_ID, $flightCost->getTripId(), $comparison);
+        } elseif ($flightCost instanceof ObjectCollection) {
+            return $this
+                ->useFlightCostQuery()
+                ->filterByPrimaryKeys($flightCost->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByFlightCost() only accepts arguments of type \FlightCost or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the FlightCost relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildTripQuery The current query, for fluid interface
+     */
+    public function joinFlightCost($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('FlightCost');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'FlightCost');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the FlightCost relation FlightCost object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \FlightCostQuery A secondary query class using the current class as primary query
+     */
+    public function useFlightCostQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinFlightCost($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'FlightCost', '\FlightCostQuery');
     }
 
     /**

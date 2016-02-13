@@ -2,20 +2,16 @@
 
 namespace Base;
 
-use \City as ChildCity;
-use \CityQuery as ChildCityQuery;
 use \FlightCost as ChildFlightCost;
 use \FlightCostQuery as ChildFlightCostQuery;
-use \Mileage as ChildMileage;
-use \MileageQuery as ChildMileageQuery;
-use \Trip as ChildTrip;
-use \TripQuery as ChildTripQuery;
-use \Unit as ChildUnit;
-use \UnitQuery as ChildUnitQuery;
+use \MileageType as ChildMileageType;
+use \MileageTypeQuery as ChildMileageTypeQuery;
+use \Season as ChildSeason;
+use \SeasonQuery as ChildSeasonQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\TripTableMap;
+use Map\MileageTypeTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -31,18 +27,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'trip' table.
+ * Base class that represents a row from the 'mileage_type' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Trip implements ActiveRecordInterface
+abstract class MileageType implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\TripTableMap';
+    const TABLE_MAP = '\\Map\\MileageTypeTableMap';
 
 
     /**
@@ -72,40 +68,47 @@ abstract class Trip implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the trip_id field.
+     * The value for the mileage_type_id field.
      * @var        int
      */
-    protected $trip_id;
+    protected $mileage_type_id;
 
     /**
-     * The value for the from_city_id field.
+     * The value for the round_trip field.
+     * Note: this column has a database default value of: 0
      * @var        int
      */
-    protected $from_city_id;
+    protected $round_trip;
 
     /**
-     * The value for the to_city_id field.
+     * The value for the season_id field.
      * @var        int
      */
-    protected $to_city_id;
+    protected $season_id;
 
     /**
-     * The value for the distance field.
-     * @var        int
+     * The value for the class field.
+     * @var        string
      */
-    protected $distance;
+    protected $class;
 
     /**
-     * The value for the unit_id field.
-     * @var        int
+     * The value for the ticket_type field.
+     * @var        string
      */
-    protected $unit_id;
+    protected $ticket_type;
 
     /**
      * The value for the display field.
      * @var        string
      */
     protected $display;
+
+    /**
+     * The value for the trip_length field.
+     * @var        int
+     */
+    protected $trip_length;
 
     /**
      * The value for the update_time field.
@@ -120,31 +123,15 @@ abstract class Trip implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildUnit
+     * @var        ChildSeason
      */
-    protected $aUnit;
-
-    /**
-     * @var        ChildCity
-     */
-    protected $aCityRelatedByFromCityId;
-
-    /**
-     * @var        ChildCity
-     */
-    protected $aCityRelatedByToCityId;
+    protected $aSeason;
 
     /**
      * @var        ObjectCollection|ChildFlightCost[] Collection to store aggregation of ChildFlightCost objects.
      */
     protected $collFlightCosts;
     protected $collFlightCostsPartial;
-
-    /**
-     * @var        ObjectCollection|ChildMileage[] Collection to store aggregation of ChildMileage objects.
-     */
-    protected $collMileages;
-    protected $collMileagesPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -161,16 +148,23 @@ abstract class Trip implements ActiveRecordInterface
     protected $flightCostsScheduledForDeletion = null;
 
     /**
-     * An array of objects scheduled for deletion.
-     * @var ObjectCollection|ChildMileage[]
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
      */
-    protected $mileagesScheduledForDeletion = null;
+    public function applyDefaultValues()
+    {
+        $this->round_trip = 0;
+    }
 
     /**
-     * Initializes internal state of Base\Trip object.
+     * Initializes internal state of Base\MileageType object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -262,9 +256,9 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Trip</code> instance.  If
-     * <code>obj</code> is an instance of <code>Trip</code>, delegates to
-     * <code>equals(Trip)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>MileageType</code> instance.  If
+     * <code>obj</code> is an instance of <code>MileageType</code>, delegates to
+     * <code>equals(MileageType)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -330,7 +324,7 @@ abstract class Trip implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Trip The current object, for fluid interface
+     * @return $this|MileageType The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -384,53 +378,53 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
-     * Get the [trip_id] column value.
+     * Get the [mileage_type_id] column value.
      *
      * @return int
      */
-    public function getTripId()
+    public function getMileageTypeId()
     {
-        return $this->trip_id;
+        return $this->mileage_type_id;
     }
 
     /**
-     * Get the [from_city_id] column value.
+     * Get the [round_trip] column value.
      *
      * @return int
      */
-    public function getFromCityId()
+    public function getRoundTrip()
     {
-        return $this->from_city_id;
+        return $this->round_trip;
     }
 
     /**
-     * Get the [to_city_id] column value.
+     * Get the [season_id] column value.
      *
      * @return int
      */
-    public function getToCityId()
+    public function getSeasonId()
     {
-        return $this->to_city_id;
+        return $this->season_id;
     }
 
     /**
-     * Get the [distance] column value.
+     * Get the [class] column value.
      *
-     * @return int
+     * @return string
      */
-    public function getDistance()
+    public function getClass()
     {
-        return $this->distance;
+        return $this->class;
     }
 
     /**
-     * Get the [unit_id] column value.
+     * Get the [ticket_type] column value.
      *
-     * @return int
+     * @return string
      */
-    public function getUnitId()
+    public function getTicketType()
     {
-        return $this->unit_id;
+        return $this->ticket_type;
     }
 
     /**
@@ -441,6 +435,16 @@ abstract class Trip implements ActiveRecordInterface
     public function getDisplay()
     {
         return $this->display;
+    }
+
+    /**
+     * Get the [trip_length] column value.
+     *
+     * @return int
+     */
+    public function getTripLength()
+    {
+        return $this->trip_length;
     }
 
     /**
@@ -474,122 +478,114 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [trip_id] column.
+     * Set the value of [mileage_type_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setTripId($v)
+    public function setMileageTypeId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->trip_id !== $v) {
-            $this->trip_id = $v;
-            $this->modifiedColumns[TripTableMap::COL_TRIP_ID] = true;
+        if ($this->mileage_type_id !== $v) {
+            $this->mileage_type_id = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_MILEAGE_TYPE_ID] = true;
         }
 
         return $this;
-    } // setTripId()
+    } // setMileageTypeId()
 
     /**
-     * Set the value of [from_city_id] column.
+     * Set the value of [round_trip] column.
      *
      * @param  int $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setFromCityId($v)
+    public function setRoundTrip($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->from_city_id !== $v) {
-            $this->from_city_id = $v;
-            $this->modifiedColumns[TripTableMap::COL_FROM_CITY_ID] = true;
-        }
-
-        if ($this->aCityRelatedByFromCityId !== null && $this->aCityRelatedByFromCityId->getCityId() !== $v) {
-            $this->aCityRelatedByFromCityId = null;
+        if ($this->round_trip !== $v) {
+            $this->round_trip = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_ROUND_TRIP] = true;
         }
 
         return $this;
-    } // setFromCityId()
+    } // setRoundTrip()
 
     /**
-     * Set the value of [to_city_id] column.
+     * Set the value of [season_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setToCityId($v)
+    public function setSeasonId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->to_city_id !== $v) {
-            $this->to_city_id = $v;
-            $this->modifiedColumns[TripTableMap::COL_TO_CITY_ID] = true;
+        if ($this->season_id !== $v) {
+            $this->season_id = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_SEASON_ID] = true;
         }
 
-        if ($this->aCityRelatedByToCityId !== null && $this->aCityRelatedByToCityId->getCityId() !== $v) {
-            $this->aCityRelatedByToCityId = null;
+        if ($this->aSeason !== null && $this->aSeason->getSeasonId() !== $v) {
+            $this->aSeason = null;
         }
 
         return $this;
-    } // setToCityId()
+    } // setSeasonId()
 
     /**
-     * Set the value of [distance] column.
+     * Set the value of [class] column.
      *
-     * @param  int $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @param  string $v new value
+     * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setDistance($v)
+    public function setClass($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->distance !== $v) {
-            $this->distance = $v;
-            $this->modifiedColumns[TripTableMap::COL_DISTANCE] = true;
+        if ($this->class !== $v) {
+            $this->class = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_CLASS] = true;
         }
 
         return $this;
-    } // setDistance()
+    } // setClass()
 
     /**
-     * Set the value of [unit_id] column.
+     * Set the value of [ticket_type] column.
      *
-     * @param  int $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @param  string $v new value
+     * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setUnitId($v)
+    public function setTicketType($v)
     {
         if ($v !== null) {
-            $v = (int) $v;
+            $v = (string) $v;
         }
 
-        if ($this->unit_id !== $v) {
-            $this->unit_id = $v;
-            $this->modifiedColumns[TripTableMap::COL_UNIT_ID] = true;
-        }
-
-        if ($this->aUnit !== null && $this->aUnit->getUnitId() !== $v) {
-            $this->aUnit = null;
+        if ($this->ticket_type !== $v) {
+            $this->ticket_type = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_TICKET_TYPE] = true;
         }
 
         return $this;
-    } // setUnitId()
+    } // setTicketType()
 
     /**
      * Set the value of [display] column.
      *
      * @param  string $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
     public function setDisplay($v)
     {
@@ -599,18 +595,38 @@ abstract class Trip implements ActiveRecordInterface
 
         if ($this->display !== $v) {
             $this->display = $v;
-            $this->modifiedColumns[TripTableMap::COL_DISPLAY] = true;
+            $this->modifiedColumns[MileageTypeTableMap::COL_DISPLAY] = true;
         }
 
         return $this;
     } // setDisplay()
 
     /**
+     * Set the value of [trip_length] column.
+     *
+     * @param  int $v new value
+     * @return $this|\MileageType The current object (for fluent API support)
+     */
+    public function setTripLength($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->trip_length !== $v) {
+            $this->trip_length = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_TRIP_LENGTH] = true;
+        }
+
+        return $this;
+    } // setTripLength()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
     public function setUpdateTime($v)
     {
@@ -618,7 +634,7 @@ abstract class Trip implements ActiveRecordInterface
         if ($this->update_time !== null || $dt !== null) {
             if ($dt !== $this->update_time) {
                 $this->update_time = $dt;
-                $this->modifiedColumns[TripTableMap::COL_UPDATE_TIME] = true;
+                $this->modifiedColumns[MileageTypeTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
@@ -629,7 +645,7 @@ abstract class Trip implements ActiveRecordInterface
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -639,7 +655,7 @@ abstract class Trip implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[TripTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[MileageTypeTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -655,6 +671,10 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->round_trip !== 0) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -681,31 +701,34 @@ abstract class Trip implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : TripTableMap::translateFieldName('TripId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->trip_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : MileageTypeTableMap::translateFieldName('MileageTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->mileage_type_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : TripTableMap::translateFieldName('FromCityId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->from_city_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MileageTypeTableMap::translateFieldName('RoundTrip', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->round_trip = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : TripTableMap::translateFieldName('ToCityId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->to_city_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MileageTypeTableMap::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->season_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : TripTableMap::translateFieldName('Distance', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->distance = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MileageTypeTableMap::translateFieldName('Class', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->class = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : TripTableMap::translateFieldName('UnitId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->unit_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MileageTypeTableMap::translateFieldName('TicketType', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->ticket_type = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : TripTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MileageTypeTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : TripTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MileageTypeTableMap::translateFieldName('TripLength', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->trip_length = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MileageTypeTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : TripTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : MileageTypeTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -715,10 +738,10 @@ abstract class Trip implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = TripTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = MileageTypeTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Trip'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\MileageType'), 0, $e);
         }
     }
 
@@ -737,14 +760,8 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aCityRelatedByFromCityId !== null && $this->from_city_id !== $this->aCityRelatedByFromCityId->getCityId()) {
-            $this->aCityRelatedByFromCityId = null;
-        }
-        if ($this->aCityRelatedByToCityId !== null && $this->to_city_id !== $this->aCityRelatedByToCityId->getCityId()) {
-            $this->aCityRelatedByToCityId = null;
-        }
-        if ($this->aUnit !== null && $this->unit_id !== $this->aUnit->getUnitId()) {
-            $this->aUnit = null;
+        if ($this->aSeason !== null && $this->season_id !== $this->aSeason->getSeasonId()) {
+            $this->aSeason = null;
         }
     } // ensureConsistency
 
@@ -769,13 +786,13 @@ abstract class Trip implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(TripTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(MileageTypeTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildTripQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildMileageTypeQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -785,12 +802,8 @@ abstract class Trip implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aUnit = null;
-            $this->aCityRelatedByFromCityId = null;
-            $this->aCityRelatedByToCityId = null;
+            $this->aSeason = null;
             $this->collFlightCosts = null;
-
-            $this->collMileages = null;
 
         } // if (deep)
     }
@@ -801,8 +814,8 @@ abstract class Trip implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Trip::setDeleted()
-     * @see Trip::isDeleted()
+     * @see MileageType::setDeleted()
+     * @see MileageType::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -811,11 +824,11 @@ abstract class Trip implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TripTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTypeTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildTripQuery::create()
+            $deleteQuery = ChildMileageTypeQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -846,7 +859,7 @@ abstract class Trip implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(TripTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(MileageTypeTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -865,7 +878,7 @@ abstract class Trip implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                TripTableMap::addInstanceToPool($this);
+                MileageTypeTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -896,25 +909,11 @@ abstract class Trip implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aUnit !== null) {
-                if ($this->aUnit->isModified() || $this->aUnit->isNew()) {
-                    $affectedRows += $this->aUnit->save($con);
+            if ($this->aSeason !== null) {
+                if ($this->aSeason->isModified() || $this->aSeason->isNew()) {
+                    $affectedRows += $this->aSeason->save($con);
                 }
-                $this->setUnit($this->aUnit);
-            }
-
-            if ($this->aCityRelatedByFromCityId !== null) {
-                if ($this->aCityRelatedByFromCityId->isModified() || $this->aCityRelatedByFromCityId->isNew()) {
-                    $affectedRows += $this->aCityRelatedByFromCityId->save($con);
-                }
-                $this->setCityRelatedByFromCityId($this->aCityRelatedByFromCityId);
-            }
-
-            if ($this->aCityRelatedByToCityId !== null) {
-                if ($this->aCityRelatedByToCityId->isModified() || $this->aCityRelatedByToCityId->isNew()) {
-                    $affectedRows += $this->aCityRelatedByToCityId->save($con);
-                }
-                $this->setCityRelatedByToCityId($this->aCityRelatedByToCityId);
+                $this->setSeason($this->aSeason);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -945,23 +944,6 @@ abstract class Trip implements ActiveRecordInterface
                 }
             }
 
-            if ($this->mileagesScheduledForDeletion !== null) {
-                if (!$this->mileagesScheduledForDeletion->isEmpty()) {
-                    \MileageQuery::create()
-                        ->filterByPrimaryKeys($this->mileagesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
-                    $this->mileagesScheduledForDeletion = null;
-                }
-            }
-
-            if ($this->collMileages !== null) {
-                foreach ($this->collMileages as $referrerFK) {
-                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
-                        $affectedRows += $referrerFK->save($con);
-                    }
-                }
-            }
-
             $this->alreadyInSave = false;
 
         }
@@ -982,39 +964,42 @@ abstract class Trip implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[TripTableMap::COL_TRIP_ID] = true;
-        if (null !== $this->trip_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TripTableMap::COL_TRIP_ID . ')');
+        $this->modifiedColumns[MileageTypeTableMap::COL_MILEAGE_TYPE_ID] = true;
+        if (null !== $this->mileage_type_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . MileageTypeTableMap::COL_MILEAGE_TYPE_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(TripTableMap::COL_TRIP_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'trip_id';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_MILEAGE_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'mileage_type_id';
         }
-        if ($this->isColumnModified(TripTableMap::COL_FROM_CITY_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'from_city_id';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_ROUND_TRIP)) {
+            $modifiedColumns[':p' . $index++]  = 'round_trip';
         }
-        if ($this->isColumnModified(TripTableMap::COL_TO_CITY_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'to_city_id';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'season_id';
         }
-        if ($this->isColumnModified(TripTableMap::COL_DISTANCE)) {
-            $modifiedColumns[':p' . $index++]  = 'distance';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_CLASS)) {
+            $modifiedColumns[':p' . $index++]  = 'class';
         }
-        if ($this->isColumnModified(TripTableMap::COL_UNIT_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'unit_id';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_TICKET_TYPE)) {
+            $modifiedColumns[':p' . $index++]  = 'ticket_type';
         }
-        if ($this->isColumnModified(TripTableMap::COL_DISPLAY)) {
+        if ($this->isColumnModified(MileageTypeTableMap::COL_DISPLAY)) {
             $modifiedColumns[':p' . $index++]  = 'display';
         }
-        if ($this->isColumnModified(TripTableMap::COL_UPDATE_TIME)) {
+        if ($this->isColumnModified(MileageTypeTableMap::COL_TRIP_LENGTH)) {
+            $modifiedColumns[':p' . $index++]  = 'trip_length';
+        }
+        if ($this->isColumnModified(MileageTypeTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(TripTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(MileageTypeTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO trip (%s) VALUES (%s)',
+            'INSERT INTO mileage_type (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -1023,23 +1008,26 @@ abstract class Trip implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'trip_id':
-                        $stmt->bindValue($identifier, $this->trip_id, PDO::PARAM_INT);
+                    case 'mileage_type_id':
+                        $stmt->bindValue($identifier, $this->mileage_type_id, PDO::PARAM_INT);
                         break;
-                    case 'from_city_id':
-                        $stmt->bindValue($identifier, $this->from_city_id, PDO::PARAM_INT);
+                    case 'round_trip':
+                        $stmt->bindValue($identifier, $this->round_trip, PDO::PARAM_INT);
                         break;
-                    case 'to_city_id':
-                        $stmt->bindValue($identifier, $this->to_city_id, PDO::PARAM_INT);
+                    case 'season_id':
+                        $stmt->bindValue($identifier, $this->season_id, PDO::PARAM_INT);
                         break;
-                    case 'distance':
-                        $stmt->bindValue($identifier, $this->distance, PDO::PARAM_INT);
+                    case 'class':
+                        $stmt->bindValue($identifier, $this->class, PDO::PARAM_STR);
                         break;
-                    case 'unit_id':
-                        $stmt->bindValue($identifier, $this->unit_id, PDO::PARAM_INT);
+                    case 'ticket_type':
+                        $stmt->bindValue($identifier, $this->ticket_type, PDO::PARAM_STR);
                         break;
                     case 'display':
                         $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
+                        break;
+                    case 'trip_length':
+                        $stmt->bindValue($identifier, $this->trip_length, PDO::PARAM_INT);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1060,7 +1048,7 @@ abstract class Trip implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setTripId($pk);
+        $this->setMileageTypeId($pk);
 
         $this->setNew(false);
     }
@@ -1093,7 +1081,7 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TripTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MileageTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1110,27 +1098,30 @@ abstract class Trip implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getTripId();
+                return $this->getMileageTypeId();
                 break;
             case 1:
-                return $this->getFromCityId();
+                return $this->getRoundTrip();
                 break;
             case 2:
-                return $this->getToCityId();
+                return $this->getSeasonId();
                 break;
             case 3:
-                return $this->getDistance();
+                return $this->getClass();
                 break;
             case 4:
-                return $this->getUnitId();
+                return $this->getTicketType();
                 break;
             case 5:
                 return $this->getDisplay();
                 break;
             case 6:
-                return $this->getUpdateTime();
+                return $this->getTripLength();
                 break;
             case 7:
+                return $this->getUpdateTime();
+                break;
+            case 8:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1157,20 +1148,21 @@ abstract class Trip implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Trip'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['MileageType'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Trip'][$this->hashCode()] = true;
-        $keys = TripTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['MileageType'][$this->hashCode()] = true;
+        $keys = MileageTypeTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getTripId(),
-            $keys[1] => $this->getFromCityId(),
-            $keys[2] => $this->getToCityId(),
-            $keys[3] => $this->getDistance(),
-            $keys[4] => $this->getUnitId(),
+            $keys[0] => $this->getMileageTypeId(),
+            $keys[1] => $this->getRoundTrip(),
+            $keys[2] => $this->getSeasonId(),
+            $keys[3] => $this->getClass(),
+            $keys[4] => $this->getTicketType(),
             $keys[5] => $this->getDisplay(),
-            $keys[6] => $this->getUpdateTime(),
-            $keys[7] => $this->getUpdateUser(),
+            $keys[6] => $this->getTripLength(),
+            $keys[7] => $this->getUpdateTime(),
+            $keys[8] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1178,50 +1170,20 @@ abstract class Trip implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aUnit) {
+            if (null !== $this->aSeason) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'unit';
+                        $key = 'season';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'unit';
+                        $key = 'season';
                         break;
                     default:
-                        $key = 'Unit';
+                        $key = 'Season';
                 }
 
-                $result[$key] = $this->aUnit->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aCityRelatedByFromCityId) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'city';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'city';
-                        break;
-                    default:
-                        $key = 'City';
-                }
-
-                $result[$key] = $this->aCityRelatedByFromCityId->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-            if (null !== $this->aCityRelatedByToCityId) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'city';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'city';
-                        break;
-                    default:
-                        $key = 'City';
-                }
-
-                $result[$key] = $this->aCityRelatedByToCityId->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aSeason->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collFlightCosts) {
 
@@ -1238,21 +1200,6 @@ abstract class Trip implements ActiveRecordInterface
 
                 $result[$key] = $this->collFlightCosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
-            if (null !== $this->collMileages) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'mileages';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'mileages';
-                        break;
-                    default:
-                        $key = 'Mileages';
-                }
-
-                $result[$key] = $this->collMileages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
-            }
         }
 
         return $result;
@@ -1267,11 +1214,11 @@ abstract class Trip implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Trip
+     * @return $this|\MileageType
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = TripTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = MileageTypeTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1282,33 +1229,36 @@ abstract class Trip implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Trip
+     * @return $this|\MileageType
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setTripId($value);
+                $this->setMileageTypeId($value);
                 break;
             case 1:
-                $this->setFromCityId($value);
+                $this->setRoundTrip($value);
                 break;
             case 2:
-                $this->setToCityId($value);
+                $this->setSeasonId($value);
                 break;
             case 3:
-                $this->setDistance($value);
+                $this->setClass($value);
                 break;
             case 4:
-                $this->setUnitId($value);
+                $this->setTicketType($value);
                 break;
             case 5:
                 $this->setDisplay($value);
                 break;
             case 6:
-                $this->setUpdateTime($value);
+                $this->setTripLength($value);
                 break;
             case 7:
+                $this->setUpdateTime($value);
+                break;
+            case 8:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1335,31 +1285,34 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = TripTableMap::getFieldNames($keyType);
+        $keys = MileageTypeTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setTripId($arr[$keys[0]]);
+            $this->setMileageTypeId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setFromCityId($arr[$keys[1]]);
+            $this->setRoundTrip($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setToCityId($arr[$keys[2]]);
+            $this->setSeasonId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setDistance($arr[$keys[3]]);
+            $this->setClass($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setUnitId($arr[$keys[4]]);
+            $this->setTicketType($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setDisplay($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateTime($arr[$keys[6]]);
+            $this->setTripLength($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateUser($arr[$keys[7]]);
+            $this->setUpdateTime($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setUpdateUser($arr[$keys[8]]);
         }
     }
 
@@ -1380,7 +1333,7 @@ abstract class Trip implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Trip The current object, for fluid interface
+     * @return $this|\MileageType The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1400,31 +1353,34 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(TripTableMap::DATABASE_NAME);
+        $criteria = new Criteria(MileageTypeTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(TripTableMap::COL_TRIP_ID)) {
-            $criteria->add(TripTableMap::COL_TRIP_ID, $this->trip_id);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_MILEAGE_TYPE_ID)) {
+            $criteria->add(MileageTypeTableMap::COL_MILEAGE_TYPE_ID, $this->mileage_type_id);
         }
-        if ($this->isColumnModified(TripTableMap::COL_FROM_CITY_ID)) {
-            $criteria->add(TripTableMap::COL_FROM_CITY_ID, $this->from_city_id);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_ROUND_TRIP)) {
+            $criteria->add(MileageTypeTableMap::COL_ROUND_TRIP, $this->round_trip);
         }
-        if ($this->isColumnModified(TripTableMap::COL_TO_CITY_ID)) {
-            $criteria->add(TripTableMap::COL_TO_CITY_ID, $this->to_city_id);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_ID)) {
+            $criteria->add(MileageTypeTableMap::COL_SEASON_ID, $this->season_id);
         }
-        if ($this->isColumnModified(TripTableMap::COL_DISTANCE)) {
-            $criteria->add(TripTableMap::COL_DISTANCE, $this->distance);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_CLASS)) {
+            $criteria->add(MileageTypeTableMap::COL_CLASS, $this->class);
         }
-        if ($this->isColumnModified(TripTableMap::COL_UNIT_ID)) {
-            $criteria->add(TripTableMap::COL_UNIT_ID, $this->unit_id);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_TICKET_TYPE)) {
+            $criteria->add(MileageTypeTableMap::COL_TICKET_TYPE, $this->ticket_type);
         }
-        if ($this->isColumnModified(TripTableMap::COL_DISPLAY)) {
-            $criteria->add(TripTableMap::COL_DISPLAY, $this->display);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_DISPLAY)) {
+            $criteria->add(MileageTypeTableMap::COL_DISPLAY, $this->display);
         }
-        if ($this->isColumnModified(TripTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(TripTableMap::COL_UPDATE_TIME, $this->update_time);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_TRIP_LENGTH)) {
+            $criteria->add(MileageTypeTableMap::COL_TRIP_LENGTH, $this->trip_length);
         }
-        if ($this->isColumnModified(TripTableMap::COL_UPDATE_USER)) {
-            $criteria->add(TripTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(MileageTypeTableMap::COL_UPDATE_TIME, $this->update_time);
+        }
+        if ($this->isColumnModified(MileageTypeTableMap::COL_UPDATE_USER)) {
+            $criteria->add(MileageTypeTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1442,8 +1398,8 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildTripQuery::create();
-        $criteria->add(TripTableMap::COL_TRIP_ID, $this->trip_id);
+        $criteria = ChildMileageTypeQuery::create();
+        $criteria->add(MileageTypeTableMap::COL_MILEAGE_TYPE_ID, $this->mileage_type_id);
 
         return $criteria;
     }
@@ -1456,7 +1412,7 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getTripId();
+        $validPk = null !== $this->getMileageTypeId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1476,18 +1432,18 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getTripId();
+        return $this->getMileageTypeId();
     }
 
     /**
-     * Generic method to set the primary key (trip_id column).
+     * Generic method to set the primary key (mileage_type_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setTripId($key);
+        $this->setMileageTypeId($key);
     }
 
     /**
@@ -1496,7 +1452,7 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getTripId();
+        return null === $this->getMileageTypeId();
     }
 
     /**
@@ -1505,18 +1461,19 @@ abstract class Trip implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Trip (or compatible) type.
+     * @param      object $copyObj An object of \MileageType (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setFromCityId($this->getFromCityId());
-        $copyObj->setToCityId($this->getToCityId());
-        $copyObj->setDistance($this->getDistance());
-        $copyObj->setUnitId($this->getUnitId());
+        $copyObj->setRoundTrip($this->getRoundTrip());
+        $copyObj->setSeasonId($this->getSeasonId());
+        $copyObj->setClass($this->getClass());
+        $copyObj->setTicketType($this->getTicketType());
         $copyObj->setDisplay($this->getDisplay());
+        $copyObj->setTripLength($this->getTripLength());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1531,17 +1488,11 @@ abstract class Trip implements ActiveRecordInterface
                 }
             }
 
-            foreach ($this->getMileages() as $relObj) {
-                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addMileage($relObj->copy($deepCopy));
-                }
-            }
-
         } // if ($deepCopy)
 
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setTripId(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setMileageTypeId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1554,7 +1505,7 @@ abstract class Trip implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Trip Clone of current object.
+     * @return \MileageType Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1568,26 +1519,26 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildUnit object.
+     * Declares an association between this object and a ChildSeason object.
      *
-     * @param  ChildUnit $v
-     * @return $this|\Trip The current object (for fluent API support)
+     * @param  ChildSeason $v
+     * @return $this|\MileageType The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setUnit(ChildUnit $v = null)
+    public function setSeason(ChildSeason $v = null)
     {
         if ($v === null) {
-            $this->setUnitId(NULL);
+            $this->setSeasonId(NULL);
         } else {
-            $this->setUnitId($v->getUnitId());
+            $this->setSeasonId($v->getSeasonId());
         }
 
-        $this->aUnit = $v;
+        $this->aSeason = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUnit object, it will not be re-added.
+        // If this object has already been added to the ChildSeason object, it will not be re-added.
         if ($v !== null) {
-            $v->addTrip($this);
+            $v->addMileageType($this);
         }
 
 
@@ -1596,128 +1547,26 @@ abstract class Trip implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildUnit object
+     * Get the associated ChildSeason object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUnit The associated ChildUnit object.
+     * @return ChildSeason The associated ChildSeason object.
      * @throws PropelException
      */
-    public function getUnit(ConnectionInterface $con = null)
+    public function getSeason(ConnectionInterface $con = null)
     {
-        if ($this->aUnit === null && ($this->unit_id !== null)) {
-            $this->aUnit = ChildUnitQuery::create()->findPk($this->unit_id, $con);
+        if ($this->aSeason === null && ($this->season_id !== null)) {
+            $this->aSeason = ChildSeasonQuery::create()->findPk($this->season_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUnit->addTrips($this);
+                $this->aSeason->addMileageTypes($this);
              */
         }
 
-        return $this->aUnit;
-    }
-
-    /**
-     * Declares an association between this object and a ChildCity object.
-     *
-     * @param  ChildCity $v
-     * @return $this|\Trip The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setCityRelatedByFromCityId(ChildCity $v = null)
-    {
-        if ($v === null) {
-            $this->setFromCityId(NULL);
-        } else {
-            $this->setFromCityId($v->getCityId());
-        }
-
-        $this->aCityRelatedByFromCityId = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildCity object, it will not be re-added.
-        if ($v !== null) {
-            $v->addTripRelatedByFromCityId($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildCity object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildCity The associated ChildCity object.
-     * @throws PropelException
-     */
-    public function getCityRelatedByFromCityId(ConnectionInterface $con = null)
-    {
-        if ($this->aCityRelatedByFromCityId === null && ($this->from_city_id !== null)) {
-            $this->aCityRelatedByFromCityId = ChildCityQuery::create()->findPk($this->from_city_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aCityRelatedByFromCityId->addTripsRelatedByFromCityId($this);
-             */
-        }
-
-        return $this->aCityRelatedByFromCityId;
-    }
-
-    /**
-     * Declares an association between this object and a ChildCity object.
-     *
-     * @param  ChildCity $v
-     * @return $this|\Trip The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setCityRelatedByToCityId(ChildCity $v = null)
-    {
-        if ($v === null) {
-            $this->setToCityId(NULL);
-        } else {
-            $this->setToCityId($v->getCityId());
-        }
-
-        $this->aCityRelatedByToCityId = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildCity object, it will not be re-added.
-        if ($v !== null) {
-            $v->addTripRelatedByToCityId($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildCity object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildCity The associated ChildCity object.
-     * @throws PropelException
-     */
-    public function getCityRelatedByToCityId(ConnectionInterface $con = null)
-    {
-        if ($this->aCityRelatedByToCityId === null && ($this->to_city_id !== null)) {
-            $this->aCityRelatedByToCityId = ChildCityQuery::create()->findPk($this->to_city_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aCityRelatedByToCityId->addTripsRelatedByToCityId($this);
-             */
-        }
-
-        return $this->aCityRelatedByToCityId;
+        return $this->aSeason;
     }
 
 
@@ -1733,9 +1582,6 @@ abstract class Trip implements ActiveRecordInterface
     {
         if ('FlightCost' == $relationName) {
             return $this->initFlightCosts();
-        }
-        if ('Mileage' == $relationName) {
-            return $this->initMileages();
         }
     }
 
@@ -1788,7 +1634,7 @@ abstract class Trip implements ActiveRecordInterface
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildTrip is new, it will return
+     * If this ChildMileageType is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
@@ -1805,7 +1651,7 @@ abstract class Trip implements ActiveRecordInterface
                 $this->initFlightCosts();
             } else {
                 $collFlightCosts = ChildFlightCostQuery::create(null, $criteria)
-                    ->filterByTrip($this)
+                    ->filterByMileageType($this)
                     ->find($con);
 
                 if (null !== $criteria) {
@@ -1848,7 +1694,7 @@ abstract class Trip implements ActiveRecordInterface
      *
      * @param      Collection $flightCosts A Propel collection.
      * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildTrip The current object (for fluent API support)
+     * @return $this|ChildMileageType The current object (for fluent API support)
      */
     public function setFlightCosts(Collection $flightCosts, ConnectionInterface $con = null)
     {
@@ -1859,7 +1705,7 @@ abstract class Trip implements ActiveRecordInterface
         $this->flightCostsScheduledForDeletion = $flightCostsToDelete;
 
         foreach ($flightCostsToDelete as $flightCostRemoved) {
-            $flightCostRemoved->setTrip(null);
+            $flightCostRemoved->setMileageType(null);
         }
 
         $this->collFlightCosts = null;
@@ -1900,7 +1746,7 @@ abstract class Trip implements ActiveRecordInterface
             }
 
             return $query
-                ->filterByTrip($this)
+                ->filterByMileageType($this)
                 ->count($con);
         }
 
@@ -1912,7 +1758,7 @@ abstract class Trip implements ActiveRecordInterface
      * through the ChildFlightCost foreign key attribute.
      *
      * @param  ChildFlightCost $l ChildFlightCost
-     * @return $this|\Trip The current object (for fluent API support)
+     * @return $this|\MileageType The current object (for fluent API support)
      */
     public function addFlightCost(ChildFlightCost $l)
     {
@@ -1934,12 +1780,12 @@ abstract class Trip implements ActiveRecordInterface
     protected function doAddFlightCost(ChildFlightCost $flightCost)
     {
         $this->collFlightCosts[]= $flightCost;
-        $flightCost->setTrip($this);
+        $flightCost->setMileageType($this);
     }
 
     /**
      * @param  ChildFlightCost $flightCost The ChildFlightCost object to remove.
-     * @return $this|ChildTrip The current object (for fluent API support)
+     * @return $this|ChildMileageType The current object (for fluent API support)
      */
     public function removeFlightCost(ChildFlightCost $flightCost)
     {
@@ -1951,7 +1797,7 @@ abstract class Trip implements ActiveRecordInterface
                 $this->flightCostsScheduledForDeletion->clear();
             }
             $this->flightCostsScheduledForDeletion[]= clone $flightCost;
-            $flightCost->setTrip(null);
+            $flightCost->setMileageType(null);
         }
 
         return $this;
@@ -1961,23 +1807,23 @@ abstract class Trip implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Trip is new, it will return
-     * an empty collection; or if this Trip has previously
+     * Otherwise if this MileageType is new, it will return
+     * an empty collection; or if this MileageType has previously
      * been saved, it will retrieve related FlightCosts from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Trip.
+     * actually need in MileageType.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildFlightCost[] List of ChildFlightCost objects
      */
-    public function getFlightCostsJoinMileageType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getFlightCostsJoinTrip(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildFlightCostQuery::create(null, $criteria);
-        $query->joinWith('MileageType', $joinBehavior);
+        $query->joinWith('Trip', $joinBehavior);
 
         return $this->getFlightCosts($query, $con);
     }
@@ -1986,13 +1832,13 @@ abstract class Trip implements ActiveRecordInterface
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this Trip is new, it will return
-     * an empty collection; or if this Trip has previously
+     * Otherwise if this MileageType is new, it will return
+     * an empty collection; or if this MileageType has previously
      * been saved, it will retrieve related FlightCosts from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in Trip.
+     * actually need in MileageType.
      *
      * @param      Criteria $criteria optional Criteria object to narrow the query
      * @param      ConnectionInterface $con optional connection object
@@ -2008,299 +1854,27 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
-     * Clears out the collMileages collection
-     *
-     * This does not modify the database; however, it will remove any associated objects, causing
-     * them to be refetched by subsequent calls to accessor method.
-     *
-     * @return void
-     * @see        addMileages()
-     */
-    public function clearMileages()
-    {
-        $this->collMileages = null; // important to set this to NULL since that means it is uninitialized
-    }
-
-    /**
-     * Reset is the collMileages collection loaded partially.
-     */
-    public function resetPartialMileages($v = true)
-    {
-        $this->collMileagesPartial = $v;
-    }
-
-    /**
-     * Initializes the collMileages collection.
-     *
-     * By default this just sets the collMileages collection to an empty array (like clearcollMileages());
-     * however, you may wish to override this method in your stub class to provide setting appropriate
-     * to your application -- for example, setting the initial array to the values stored in database.
-     *
-     * @param      boolean $overrideExisting If set to true, the method call initializes
-     *                                        the collection even if it is not empty
-     *
-     * @return void
-     */
-    public function initMileages($overrideExisting = true)
-    {
-        if (null !== $this->collMileages && !$overrideExisting) {
-            return;
-        }
-        $this->collMileages = new ObjectCollection();
-        $this->collMileages->setModel('\Mileage');
-    }
-
-    /**
-     * Gets an array of ChildMileage objects which contain a foreign key that references this object.
-     *
-     * If the $criteria is not null, it is used to always fetch the results from the database.
-     * Otherwise the results are fetched from the database the first time, then cached.
-     * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this ChildTrip is new, it will return
-     * an empty collection or the current collection; the criteria is ignored on a new object.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
-     * @throws PropelException
-     */
-    public function getMileages(Criteria $criteria = null, ConnectionInterface $con = null)
-    {
-        $partial = $this->collMileagesPartial && !$this->isNew();
-        if (null === $this->collMileages || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collMileages) {
-                // return empty collection
-                $this->initMileages();
-            } else {
-                $collMileages = ChildMileageQuery::create(null, $criteria)
-                    ->filterByTrip($this)
-                    ->find($con);
-
-                if (null !== $criteria) {
-                    if (false !== $this->collMileagesPartial && count($collMileages)) {
-                        $this->initMileages(false);
-
-                        foreach ($collMileages as $obj) {
-                            if (false == $this->collMileages->contains($obj)) {
-                                $this->collMileages->append($obj);
-                            }
-                        }
-
-                        $this->collMileagesPartial = true;
-                    }
-
-                    return $collMileages;
-                }
-
-                if ($partial && $this->collMileages) {
-                    foreach ($this->collMileages as $obj) {
-                        if ($obj->isNew()) {
-                            $collMileages[] = $obj;
-                        }
-                    }
-                }
-
-                $this->collMileages = $collMileages;
-                $this->collMileagesPartial = false;
-            }
-        }
-
-        return $this->collMileages;
-    }
-
-    /**
-     * Sets a collection of ChildMileage objects related by a one-to-many relationship
-     * to the current object.
-     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
-     * and new objects from the given Propel collection.
-     *
-     * @param      Collection $mileages A Propel collection.
-     * @param      ConnectionInterface $con Optional connection object
-     * @return $this|ChildTrip The current object (for fluent API support)
-     */
-    public function setMileages(Collection $mileages, ConnectionInterface $con = null)
-    {
-        /** @var ChildMileage[] $mileagesToDelete */
-        $mileagesToDelete = $this->getMileages(new Criteria(), $con)->diff($mileages);
-
-
-        $this->mileagesScheduledForDeletion = $mileagesToDelete;
-
-        foreach ($mileagesToDelete as $mileageRemoved) {
-            $mileageRemoved->setTrip(null);
-        }
-
-        $this->collMileages = null;
-        foreach ($mileages as $mileage) {
-            $this->addMileage($mileage);
-        }
-
-        $this->collMileages = $mileages;
-        $this->collMileagesPartial = false;
-
-        return $this;
-    }
-
-    /**
-     * Returns the number of related Mileage objects.
-     *
-     * @param      Criteria $criteria
-     * @param      boolean $distinct
-     * @param      ConnectionInterface $con
-     * @return int             Count of related Mileage objects.
-     * @throws PropelException
-     */
-    public function countMileages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
-    {
-        $partial = $this->collMileagesPartial && !$this->isNew();
-        if (null === $this->collMileages || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collMileages) {
-                return 0;
-            }
-
-            if ($partial && !$criteria) {
-                return count($this->getMileages());
-            }
-
-            $query = ChildMileageQuery::create(null, $criteria);
-            if ($distinct) {
-                $query->distinct();
-            }
-
-            return $query
-                ->filterByTrip($this)
-                ->count($con);
-        }
-
-        return count($this->collMileages);
-    }
-
-    /**
-     * Method called to associate a ChildMileage object to this object
-     * through the ChildMileage foreign key attribute.
-     *
-     * @param  ChildMileage $l ChildMileage
-     * @return $this|\Trip The current object (for fluent API support)
-     */
-    public function addMileage(ChildMileage $l)
-    {
-        if ($this->collMileages === null) {
-            $this->initMileages();
-            $this->collMileagesPartial = true;
-        }
-
-        if (!$this->collMileages->contains($l)) {
-            $this->doAddMileage($l);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param ChildMileage $mileage The ChildMileage object to add.
-     */
-    protected function doAddMileage(ChildMileage $mileage)
-    {
-        $this->collMileages[]= $mileage;
-        $mileage->setTrip($this);
-    }
-
-    /**
-     * @param  ChildMileage $mileage The ChildMileage object to remove.
-     * @return $this|ChildTrip The current object (for fluent API support)
-     */
-    public function removeMileage(ChildMileage $mileage)
-    {
-        if ($this->getMileages()->contains($mileage)) {
-            $pos = $this->collMileages->search($mileage);
-            $this->collMileages->remove($pos);
-            if (null === $this->mileagesScheduledForDeletion) {
-                $this->mileagesScheduledForDeletion = clone $this->collMileages;
-                $this->mileagesScheduledForDeletion->clear();
-            }
-            $this->mileagesScheduledForDeletion[]= clone $mileage;
-            $mileage->setTrip(null);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Trip is new, it will return
-     * an empty collection; or if this Trip has previously
-     * been saved, it will retrieve related Mileages from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Trip.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
-     */
-    public function getMileagesJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildMileageQuery::create(null, $criteria);
-        $query->joinWith('PointSystem', $joinBehavior);
-
-        return $this->getMileages($query, $con);
-    }
-
-
-    /**
-     * If this collection has already been initialized with
-     * an identical criteria, it returns the collection.
-     * Otherwise if this Trip is new, it will return
-     * an empty collection; or if this Trip has previously
-     * been saved, it will retrieve related Mileages from storage.
-     *
-     * This method is protected by default in order to keep the public
-     * api reasonable.  You can provide public methods for those you
-     * actually need in Trip.
-     *
-     * @param      Criteria $criteria optional Criteria object to narrow the query
-     * @param      ConnectionInterface $con optional connection object
-     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
-     */
-    public function getMileagesJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
-    {
-        $query = ChildMileageQuery::create(null, $criteria);
-        $query->joinWith('Store', $joinBehavior);
-
-        return $this->getMileages($query, $con);
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aUnit) {
-            $this->aUnit->removeTrip($this);
+        if (null !== $this->aSeason) {
+            $this->aSeason->removeMileageType($this);
         }
-        if (null !== $this->aCityRelatedByFromCityId) {
-            $this->aCityRelatedByFromCityId->removeTripRelatedByFromCityId($this);
-        }
-        if (null !== $this->aCityRelatedByToCityId) {
-            $this->aCityRelatedByToCityId->removeTripRelatedByToCityId($this);
-        }
-        $this->trip_id = null;
-        $this->from_city_id = null;
-        $this->to_city_id = null;
-        $this->distance = null;
-        $this->unit_id = null;
+        $this->mileage_type_id = null;
+        $this->round_trip = null;
+        $this->season_id = null;
+        $this->class = null;
+        $this->ticket_type = null;
         $this->display = null;
+        $this->trip_length = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -2322,18 +1896,10 @@ abstract class Trip implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
-            if ($this->collMileages) {
-                foreach ($this->collMileages as $o) {
-                    $o->clearAllReferences($deep);
-                }
-            }
         } // if ($deep)
 
         $this->collFlightCosts = null;
-        $this->collMileages = null;
-        $this->aUnit = null;
-        $this->aCityRelatedByFromCityId = null;
-        $this->aCityRelatedByToCityId = null;
+        $this->aSeason = null;
     }
 
     /**
@@ -2343,7 +1909,7 @@ abstract class Trip implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(TripTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(MileageTypeTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

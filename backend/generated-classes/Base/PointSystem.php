@@ -4,6 +4,8 @@ namespace Base;
 
 use \CardPointSystem as ChildCardPointSystem;
 use \CardPointSystemQuery as ChildCardPointSystemQuery;
+use \FlightCost as ChildFlightCost;
+use \FlightCostQuery as ChildFlightCostQuery;
 use \Mileage as ChildMileage;
 use \MileageQuery as ChildMileageQuery;
 use \PointAcquisition as ChildPointAcquisition;
@@ -14,6 +16,8 @@ use \PointUse as ChildPointUse;
 use \PointUseQuery as ChildPointUseQuery;
 use \Reward as ChildReward;
 use \RewardQuery as ChildRewardQuery;
+use \Season as ChildSeason;
+use \SeasonQuery as ChildSeasonQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -124,6 +128,12 @@ abstract class PointSystem implements ActiveRecordInterface
     protected $collCardPointSystemsPartial;
 
     /**
+     * @var        ObjectCollection|ChildFlightCost[] Collection to store aggregation of ChildFlightCost objects.
+     */
+    protected $collFlightCosts;
+    protected $collFlightCostsPartial;
+
+    /**
      * @var        ObjectCollection|ChildMileage[] Collection to store aggregation of ChildMileage objects.
      */
     protected $collMileages;
@@ -148,6 +158,12 @@ abstract class PointSystem implements ActiveRecordInterface
     protected $collRewardsPartial;
 
     /**
+     * @var        ObjectCollection|ChildSeason[] Collection to store aggregation of ChildSeason objects.
+     */
+    protected $collSeasons;
+    protected $collSeasonsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -160,6 +176,12 @@ abstract class PointSystem implements ActiveRecordInterface
      * @var ObjectCollection|ChildCardPointSystem[]
      */
     protected $cardPointSystemsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildFlightCost[]
+     */
+    protected $flightCostsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -184,6 +206,12 @@ abstract class PointSystem implements ActiveRecordInterface
      * @var ObjectCollection|ChildReward[]
      */
     protected $rewardsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSeason[]
+     */
+    protected $seasonsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -774,6 +802,8 @@ abstract class PointSystem implements ActiveRecordInterface
 
             $this->collCardPointSystems = null;
 
+            $this->collFlightCosts = null;
+
             $this->collMileages = null;
 
             $this->collPointAcquisitions = null;
@@ -781,6 +811,8 @@ abstract class PointSystem implements ActiveRecordInterface
             $this->collPointUses = null;
 
             $this->collRewards = null;
+
+            $this->collSeasons = null;
 
         } // if (deep)
     }
@@ -909,6 +941,23 @@ abstract class PointSystem implements ActiveRecordInterface
                 }
             }
 
+            if ($this->flightCostsScheduledForDeletion !== null) {
+                if (!$this->flightCostsScheduledForDeletion->isEmpty()) {
+                    \FlightCostQuery::create()
+                        ->filterByPrimaryKeys($this->flightCostsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->flightCostsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collFlightCosts !== null) {
+                foreach ($this->collFlightCosts as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->mileagesScheduledForDeletion !== null) {
                 if (!$this->mileagesScheduledForDeletion->isEmpty()) {
                     \MileageQuery::create()
@@ -971,6 +1020,23 @@ abstract class PointSystem implements ActiveRecordInterface
 
             if ($this->collRewards !== null) {
                 foreach ($this->collRewards as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->seasonsScheduledForDeletion !== null) {
+                if (!$this->seasonsScheduledForDeletion->isEmpty()) {
+                    \SeasonQuery::create()
+                        ->filterByPrimaryKeys($this->seasonsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->seasonsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSeasons !== null) {
+                foreach ($this->collSeasons as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1198,6 +1264,21 @@ abstract class PointSystem implements ActiveRecordInterface
 
                 $result[$key] = $this->collCardPointSystems->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collFlightCosts) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'flightCosts';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'flight_costs';
+                        break;
+                    default:
+                        $key = 'FlightCosts';
+                }
+
+                $result[$key] = $this->collFlightCosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collMileages) {
 
                 switch ($keyType) {
@@ -1257,6 +1338,21 @@ abstract class PointSystem implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collRewards->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collSeasons) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'seasons';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'seasons';
+                        break;
+                    default:
+                        $key = 'Seasons';
+                }
+
+                $result[$key] = $this->collSeasons->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1526,6 +1622,12 @@ abstract class PointSystem implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getFlightCosts() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addFlightCost($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getMileages() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addMileage($relObj->copy($deepCopy));
@@ -1547,6 +1649,12 @@ abstract class PointSystem implements ActiveRecordInterface
             foreach ($this->getRewards() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addReward($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getSeasons() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSeason($relObj->copy($deepCopy));
                 }
             }
 
@@ -1594,6 +1702,9 @@ abstract class PointSystem implements ActiveRecordInterface
         if ('CardPointSystem' == $relationName) {
             return $this->initCardPointSystems();
         }
+        if ('FlightCost' == $relationName) {
+            return $this->initFlightCosts();
+        }
         if ('Mileage' == $relationName) {
             return $this->initMileages();
         }
@@ -1605,6 +1716,9 @@ abstract class PointSystem implements ActiveRecordInterface
         }
         if ('Reward' == $relationName) {
             return $this->initRewards();
+        }
+        if ('Season' == $relationName) {
+            return $this->initSeasons();
         }
     }
 
@@ -1849,6 +1963,274 @@ abstract class PointSystem implements ActiveRecordInterface
         $query->joinWith('CreditCard', $joinBehavior);
 
         return $this->getCardPointSystems($query, $con);
+    }
+
+    /**
+     * Clears out the collFlightCosts collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addFlightCosts()
+     */
+    public function clearFlightCosts()
+    {
+        $this->collFlightCosts = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collFlightCosts collection loaded partially.
+     */
+    public function resetPartialFlightCosts($v = true)
+    {
+        $this->collFlightCostsPartial = $v;
+    }
+
+    /**
+     * Initializes the collFlightCosts collection.
+     *
+     * By default this just sets the collFlightCosts collection to an empty array (like clearcollFlightCosts());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initFlightCosts($overrideExisting = true)
+    {
+        if (null !== $this->collFlightCosts && !$overrideExisting) {
+            return;
+        }
+        $this->collFlightCosts = new ObjectCollection();
+        $this->collFlightCosts->setModel('\FlightCost');
+    }
+
+    /**
+     * Gets an array of ChildFlightCost objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPointSystem is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildFlightCost[] List of ChildFlightCost objects
+     * @throws PropelException
+     */
+    public function getFlightCosts(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collFlightCostsPartial && !$this->isNew();
+        if (null === $this->collFlightCosts || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collFlightCosts) {
+                // return empty collection
+                $this->initFlightCosts();
+            } else {
+                $collFlightCosts = ChildFlightCostQuery::create(null, $criteria)
+                    ->filterByPointSystem($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collFlightCostsPartial && count($collFlightCosts)) {
+                        $this->initFlightCosts(false);
+
+                        foreach ($collFlightCosts as $obj) {
+                            if (false == $this->collFlightCosts->contains($obj)) {
+                                $this->collFlightCosts->append($obj);
+                            }
+                        }
+
+                        $this->collFlightCostsPartial = true;
+                    }
+
+                    return $collFlightCosts;
+                }
+
+                if ($partial && $this->collFlightCosts) {
+                    foreach ($this->collFlightCosts as $obj) {
+                        if ($obj->isNew()) {
+                            $collFlightCosts[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collFlightCosts = $collFlightCosts;
+                $this->collFlightCostsPartial = false;
+            }
+        }
+
+        return $this->collFlightCosts;
+    }
+
+    /**
+     * Sets a collection of ChildFlightCost objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $flightCosts A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function setFlightCosts(Collection $flightCosts, ConnectionInterface $con = null)
+    {
+        /** @var ChildFlightCost[] $flightCostsToDelete */
+        $flightCostsToDelete = $this->getFlightCosts(new Criteria(), $con)->diff($flightCosts);
+
+
+        $this->flightCostsScheduledForDeletion = $flightCostsToDelete;
+
+        foreach ($flightCostsToDelete as $flightCostRemoved) {
+            $flightCostRemoved->setPointSystem(null);
+        }
+
+        $this->collFlightCosts = null;
+        foreach ($flightCosts as $flightCost) {
+            $this->addFlightCost($flightCost);
+        }
+
+        $this->collFlightCosts = $flightCosts;
+        $this->collFlightCostsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related FlightCost objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related FlightCost objects.
+     * @throws PropelException
+     */
+    public function countFlightCosts(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collFlightCostsPartial && !$this->isNew();
+        if (null === $this->collFlightCosts || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collFlightCosts) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getFlightCosts());
+            }
+
+            $query = ChildFlightCostQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPointSystem($this)
+                ->count($con);
+        }
+
+        return count($this->collFlightCosts);
+    }
+
+    /**
+     * Method called to associate a ChildFlightCost object to this object
+     * through the ChildFlightCost foreign key attribute.
+     *
+     * @param  ChildFlightCost $l ChildFlightCost
+     * @return $this|\PointSystem The current object (for fluent API support)
+     */
+    public function addFlightCost(ChildFlightCost $l)
+    {
+        if ($this->collFlightCosts === null) {
+            $this->initFlightCosts();
+            $this->collFlightCostsPartial = true;
+        }
+
+        if (!$this->collFlightCosts->contains($l)) {
+            $this->doAddFlightCost($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildFlightCost $flightCost The ChildFlightCost object to add.
+     */
+    protected function doAddFlightCost(ChildFlightCost $flightCost)
+    {
+        $this->collFlightCosts[]= $flightCost;
+        $flightCost->setPointSystem($this);
+    }
+
+    /**
+     * @param  ChildFlightCost $flightCost The ChildFlightCost object to remove.
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function removeFlightCost(ChildFlightCost $flightCost)
+    {
+        if ($this->getFlightCosts()->contains($flightCost)) {
+            $pos = $this->collFlightCosts->search($flightCost);
+            $this->collFlightCosts->remove($pos);
+            if (null === $this->flightCostsScheduledForDeletion) {
+                $this->flightCostsScheduledForDeletion = clone $this->collFlightCosts;
+                $this->flightCostsScheduledForDeletion->clear();
+            }
+            $this->flightCostsScheduledForDeletion[]= clone $flightCost;
+            $flightCost->setPointSystem(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this PointSystem is new, it will return
+     * an empty collection; or if this PointSystem has previously
+     * been saved, it will retrieve related FlightCosts from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in PointSystem.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildFlightCost[] List of ChildFlightCost objects
+     */
+    public function getFlightCostsJoinMileageType(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildFlightCostQuery::create(null, $criteria);
+        $query->joinWith('MileageType', $joinBehavior);
+
+        return $this->getFlightCosts($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this PointSystem is new, it will return
+     * an empty collection; or if this PointSystem has previously
+     * been saved, it will retrieve related FlightCosts from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in PointSystem.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildFlightCost[] List of ChildFlightCost objects
+     */
+    public function getFlightCostsJoinTrip(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildFlightCostQuery::create(null, $criteria);
+        $query->joinWith('Trip', $joinBehavior);
+
+        return $this->getFlightCosts($query, $con);
     }
 
     /**
@@ -2924,6 +3306,224 @@ abstract class PointSystem implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collSeasons collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSeasons()
+     */
+    public function clearSeasons()
+    {
+        $this->collSeasons = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSeasons collection loaded partially.
+     */
+    public function resetPartialSeasons($v = true)
+    {
+        $this->collSeasonsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSeasons collection.
+     *
+     * By default this just sets the collSeasons collection to an empty array (like clearcollSeasons());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSeasons($overrideExisting = true)
+    {
+        if (null !== $this->collSeasons && !$overrideExisting) {
+            return;
+        }
+        $this->collSeasons = new ObjectCollection();
+        $this->collSeasons->setModel('\Season');
+    }
+
+    /**
+     * Gets an array of ChildSeason objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPointSystem is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSeason[] List of ChildSeason objects
+     * @throws PropelException
+     */
+    public function getSeasons(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeasonsPartial && !$this->isNew();
+        if (null === $this->collSeasons || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSeasons) {
+                // return empty collection
+                $this->initSeasons();
+            } else {
+                $collSeasons = ChildSeasonQuery::create(null, $criteria)
+                    ->filterByPointSystem($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSeasonsPartial && count($collSeasons)) {
+                        $this->initSeasons(false);
+
+                        foreach ($collSeasons as $obj) {
+                            if (false == $this->collSeasons->contains($obj)) {
+                                $this->collSeasons->append($obj);
+                            }
+                        }
+
+                        $this->collSeasonsPartial = true;
+                    }
+
+                    return $collSeasons;
+                }
+
+                if ($partial && $this->collSeasons) {
+                    foreach ($this->collSeasons as $obj) {
+                        if ($obj->isNew()) {
+                            $collSeasons[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSeasons = $collSeasons;
+                $this->collSeasonsPartial = false;
+            }
+        }
+
+        return $this->collSeasons;
+    }
+
+    /**
+     * Sets a collection of ChildSeason objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $seasons A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function setSeasons(Collection $seasons, ConnectionInterface $con = null)
+    {
+        /** @var ChildSeason[] $seasonsToDelete */
+        $seasonsToDelete = $this->getSeasons(new Criteria(), $con)->diff($seasons);
+
+
+        $this->seasonsScheduledForDeletion = $seasonsToDelete;
+
+        foreach ($seasonsToDelete as $seasonRemoved) {
+            $seasonRemoved->setPointSystem(null);
+        }
+
+        $this->collSeasons = null;
+        foreach ($seasons as $season) {
+            $this->addSeason($season);
+        }
+
+        $this->collSeasons = $seasons;
+        $this->collSeasonsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Season objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Season objects.
+     * @throws PropelException
+     */
+    public function countSeasons(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeasonsPartial && !$this->isNew();
+        if (null === $this->collSeasons || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSeasons) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSeasons());
+            }
+
+            $query = ChildSeasonQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPointSystem($this)
+                ->count($con);
+        }
+
+        return count($this->collSeasons);
+    }
+
+    /**
+     * Method called to associate a ChildSeason object to this object
+     * through the ChildSeason foreign key attribute.
+     *
+     * @param  ChildSeason $l ChildSeason
+     * @return $this|\PointSystem The current object (for fluent API support)
+     */
+    public function addSeason(ChildSeason $l)
+    {
+        if ($this->collSeasons === null) {
+            $this->initSeasons();
+            $this->collSeasonsPartial = true;
+        }
+
+        if (!$this->collSeasons->contains($l)) {
+            $this->doAddSeason($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSeason $season The ChildSeason object to add.
+     */
+    protected function doAddSeason(ChildSeason $season)
+    {
+        $this->collSeasons[]= $season;
+        $season->setPointSystem($this);
+    }
+
+    /**
+     * @param  ChildSeason $season The ChildSeason object to remove.
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function removeSeason(ChildSeason $season)
+    {
+        if ($this->getSeasons()->contains($season)) {
+            $pos = $this->collSeasons->search($season);
+            $this->collSeasons->remove($pos);
+            if (null === $this->seasonsScheduledForDeletion) {
+                $this->seasonsScheduledForDeletion = clone $this->collSeasons;
+                $this->seasonsScheduledForDeletion->clear();
+            }
+            $this->seasonsScheduledForDeletion[]= clone $season;
+            $season->setPointSystem(null);
+        }
+
+        return $this;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2961,6 +3561,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collFlightCosts) {
+                foreach ($this->collFlightCosts as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collMileages) {
                 foreach ($this->collMileages as $o) {
                     $o->clearAllReferences($deep);
@@ -2981,13 +3586,20 @@ abstract class PointSystem implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collSeasons) {
+                foreach ($this->collSeasons as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collCardPointSystems = null;
+        $this->collFlightCosts = null;
         $this->collMileages = null;
         $this->collPointAcquisitions = null;
         $this->collPointUses = null;
         $this->collRewards = null;
+        $this->collSeasons = null;
     }
 
     /**
