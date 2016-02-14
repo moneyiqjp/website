@@ -298,6 +298,54 @@
             });
 
 
+        seasonEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/season/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/season/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/season/delete'
+                    }
+                },
+                table: "#seasons",
+                idSrc: "SeasonId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "SeasonId",
+                        type:  "readonly"
+                    }, {
+                        label: "PointSystem:",
+                        name: "PointSystem.PointSystemId",
+                        type: "select",
+                        options: pointsystems
+                    }, {
+                        label: "Name:",
+                        name: "Name"
+                    }, {
+                        label: "Type:",
+                        name: "Type"
+                    }, {
+                        label: "From:",
+                        name: "From"
+                    }, {
+                        label: "To:",
+                        name: "To"
+                    }, {
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
 
         $(document).ready(function() {
             $('#cities').dataTable( {
@@ -337,14 +385,14 @@
                     "dataType": "json"
                 },
                 "columns": [
-                    { "data": "TripId", visible: false },
-                    { "data": "CityFrom.Name", editField: "CityFrom.CityId" },
-                    { "data": "CityTo.Name", editField: "CityFrom.CityId" },
-                    { "data": "Distance" },
-                    { "data": "Display" },
+                    { data: "TripId", visible: false },
+                    { data: "CityFrom.Name", editField: "CityFrom.CityId" },
+                    { data: "CityTo.Name", editField: "CityFrom.CityId" },
+                    { data: "Distance" },
+                    { data: "Display" },
                     { data: "Unit.Name",   editField: "Unit.UnitId" },
-                    { "data": "UpdateTime", visible: false},
-                    { "data": "UpdateUser", visible: false }
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
                 ]
                 ,tableTools: {
                     sRowSelect: "os",
@@ -356,49 +404,120 @@
                 }
             } );
 
-
-
-
-        $('#mileage').dataTable( {
-            dom: "frtTip",
-            "pageLength": 25,
-            "ajax": {
-                "url": "../backend/crud/mileage/all",
-                "type": "GET",
-                "contentType": "application/json; charset=utf-8",
-                "dataType": "json"
-            },
-            "columns": [
-                { "data": "MileageId", visible: false },
-                { "data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
-                { "data": "Store.StoreName", editField: "Store.StoreId" },
-                { data: "Trip",
-                  editField: "Trip.TripId",
-                  "render": function ( data, type, full, meta ) {
-                        if ( type === 'display' && data!=null ) {
-                            return data["CityFrom"]["Name"] + "-" + data["CityTo"]["Name"];
-                        }
-                        return data;
-                  }
+            $('#seasons').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/season/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
                 },
-                { "data": "RequiredMiles" },
-                { "data": "ValueInYen" },
-                { "data": "Display" },
-                { "data": "UpdateTime", visible: false},
-                { "data": "UpdateUser", visible: false }
-            ]
-
-            ,tableTools: {
-                sRowSelect: "os",
-                aButtons: [
-                    { sExtends: "editor_create", editor: mileageEditor },
-                    { sExtends: "editor_edit",   editor: mileageEditor },
-                    { sExtends: "editor_remove", editor: mileageEditor }
+                "columns": [
+                    { data: "SeasonId", visible: false },
+                    { data: "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
+                    { data: "Name" },
+                    { data: "Type" },
+                    { data: "From" },
+                    { data: "To" },
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
                 ]
-            }
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: seasonEditor },
+                        { sExtends: "editor_edit",   editor: seasonEditor },
+                        { sExtends: "editor_remove", editor: seasonEditor }
+                    ]
+                }
+            } );
 
-        } );
+            $('flightcost').dataTable( {
+                dom: "lfrtip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/flightcost/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "FlightCostId", visible: false },
+                    { "data": "RetrievalDate"},
+                    { "data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
+                    {
+                        "data": "MileageType",
+                        editField: "MileageType.MileageTypeId",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' && data!=null ) {
+                                roundtrip = "one way";
+                                if(data["MileageType"]["RoundTrip"]) {roundtrip="round trip"}
+                                return data["MileageType"]["Class"] + "-" + data["MileageType"]["Season"] + "-" + roundtrip;
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "Trip",
+                        editField: "Trip.TripId",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' && data!=null ) {
+                                return data["CityFrom"]["Name"] + "-" + data["CityTo"]["Name"];
+                            }
+                            return data;
+                        }
+                    },
+                    { "data": "FareType" },
+                    { "data": "DepartDate" },
+                    { "data": "DepartFlightNo" },
+                    { "data": "ReturnDate" },
+                    { "data": "ReturnFlightNo" },
+                    { "data": "Reference" },
+                    { "data": "Price" }
+                ]
 
+            } );
+
+
+            $('#mileage').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/mileage/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "MileageId", visible: false },
+                    { "data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
+                    { "data": "Store.StoreName", editField: "Store.StoreId" },
+                    { data: "Trip",
+                        editField: "Trip.TripId",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' && data!=null ) {
+                                return data["CityFrom"]["Name"] + "-" + data["CityTo"]["Name"];
+                            }
+                            return data;
+                        }
+                    },
+                    { "data": "RequiredMiles" },
+                    { "data": "ValueInYen" },
+                    { "data": "Display" },
+                    { "data": "UpdateTime", visible: false},
+                    { "data": "UpdateUser", visible: false }
+                ]
+
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: mileageEditor },
+                        { sExtends: "editor_edit",   editor: mileageEditor },
+                        { sExtends: "editor_remove", editor: mileageEditor }
+                    ]
+                }
+
+            } );
         })
     </script>
 </head>
