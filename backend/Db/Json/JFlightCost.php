@@ -84,14 +84,15 @@ class JFlightCost implements JSONInterface
 
         if(FieldUtils::ID_IS_DEFINED($this->FlightCostId)) {
             $item = \FlightCostQuery::create()->findByFlightCostId($this->FlightCostId);
-            if(!is_null($item)) return $item;
+            return $item;
         }
-        return new \FlightCost();
+        return null;
     }
 
     public function toDB()
     {
         $item = $this->tryLoadFromDB();
+        if(is_null($item)) $item = new \FlightCost();
         return $this->updateDB($item);
     }
 

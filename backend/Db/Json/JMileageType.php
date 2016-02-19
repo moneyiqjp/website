@@ -16,7 +16,7 @@ class JMileageType implements JSONInterface
     public $MileageTypeId;
     public $Season;
     public $Class;
-    public $RoundTrip;
+    public $RoundTrip=0;
     public $TicketType;
     public $TripLength;
     public $Display;
@@ -44,8 +44,7 @@ class JMileageType implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
-    {
+    public static function CREATE_FROM_ARRAY($data) {
         $mine = new JMileageType();
         if(ArrayUtils::KEY_EXISTS($data,'MileageTypeId')) {
             $mine->MileageTypeId = $data['MileageTypeId'];
@@ -53,40 +52,43 @@ class JMileageType implements JSONInterface
             if(!is_null($item)) $mine = JMileageType::CREATE_FROM_DB($item);
         }
         if(ArrayUtils::KEY_EXISTS($data,'Season')) $mine->Season = JSeason::CREATE_FROM_ARRAY($data['Season']);
+
         if(ArrayUtils::KEY_EXISTS($data,'RoundTrip')) $mine->RoundTrip = $data['RoundTrip'];
         if(ArrayUtils::KEY_EXISTS($data,'Class')) $mine->Class =$data['Class'];
         if(ArrayUtils::KEY_EXISTS($data,'TicketType')) $mine->TicketType = $data['TicketType'];
         if(ArrayUtils::KEY_EXISTS($data,'TripLength')) $mine->TripLength = $data['TripLength'];
         if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
 
-        $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        $mine->UpdateTime = (new \DateTime($data['UpdateTime']))->format(\DateTime::ISO8601);;
         if(ArrayUtils::KEY_EXISTS($data,'Distance')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
     }
 
-    public function saveToDb()
-    {
-        return $this->toDB()->save() > 0;
-    }
-
-    private function tryLoadFromDB(){
-
-        if(FieldUtils::ID_IS_DEFINED($this->MileageTypeId)) {
-            $item = \MileageTypeQuery::create()->findByMileageTypeId($this->MileageTypeId);
-            if(!is_null($item)) return $item;
+    public function saveToDb() {
+        $item = $this->toDB();
+        try {
+            return $item->save()>0;
+        } catch(\Exception $ex) {
+            throw new JSONException("Failed to save to database " . $item . $ex->getMessage(), 0, $ex );
         }
-        return new \MileageType();
     }
 
-    public function toDB()
-    {
+    private function tryLoadFromDB() {
+        if(FieldUtils::ID_IS_DEFINED($this->MileageTypeId)) {
+            $item = \MileageTypeQuery::create()->findOneByMileageTypeId($this->MileageTypeId);
+            return $item;
+        }
+        return null;
+    }
+
+    public function toDB() {
         $item = $this->tryLoadFromDB();
+        if(is_null($item)) $item = new \MileageType();
         return $this->updateDB($item);
     }
 
-    public function updateDB(\MileageType &$item)
-    {
+    public function updateDB(\MileageType &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->MileageTypeId)) $item->setMileageTypeId($this->MileageTypeId);
 
         if(!is_null($this->Season) && FieldUtils::ID_IS_DEFINED( $this->Season->SeasonId)) {

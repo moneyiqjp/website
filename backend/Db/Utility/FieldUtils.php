@@ -41,4 +41,16 @@ class FieldUtils {
     public static function ID_IS_DEFINED($value){
         return (!is_null($value)) && is_numeric($value) && $value>0;
     }
+
+    public static function DateTimeToISOString(\DateTime $date) {
+        if(is_null($date)) return "";
+        return $date->format(\DateTime::ISO8601);
+    }
+
+    public static function DateTimeToDateString(\DateTime $date) {
+        if(is_null($date)) return "";
+        return $date->format("Y-m-d");
+    }
+
+
 }

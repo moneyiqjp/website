@@ -8,6 +8,10 @@
 
 namespace Db\Json;
 
+function exception_error_handler($errno, $errstr, $errfile, $errline ) {
+    throw new \ErrorException($errstr, $errno, 0, $errfile, $errline);
+}
+
 interface JSONInterface {
     public static function CREATE_FROM_ARRAY($data);
     public function saveToDb();

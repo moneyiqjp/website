@@ -1015,13 +1015,13 @@
   </table>
   <table name="season" idMethod="native" phpName="Season">
     <column name="season_id" phpName="SeasonId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
-    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
-    <column name="type" phpName="Type" type="VARCHAR" size="100" required="true"/>
-    <column name="from" phpName="From" type="DATE"/>
-    <column name="to" phpName="To" type="DATE"/>
-    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
-    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true" defaultValue="1"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100"/>
+    <column name="season_type" phpName="SeasonType" type="VARCHAR" size="100"/>
+    <column name="from_date" phpName="FromDate" type="DATE"/>
+    <column name="to_date" phpName="ToDate" type="DATE"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <foreign-key foreignTable="point_system" name="FK_season_point_system">
       <reference local="point_system_id" foreign="point_system_id"/>
     </foreign-key>

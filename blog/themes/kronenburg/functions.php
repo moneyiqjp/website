@@ -167,7 +167,7 @@ function generate_cardelement( $atts ) {
         ), $atts );
 
     $parameter = $params['persona'];
-    $parameter .= strlen($params['card-id'])>0? "card-id-" . $params['card-id']:"";
+    $parameter .= strlen($params['card-id'])>0? " card-id-" . $params['card-id']:"";
 
     return
         "<div class='card-pane $parameter'>"

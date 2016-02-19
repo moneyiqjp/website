@@ -168,8 +168,7 @@ function GetMileageTypeForCrud()
     }
     return $result;
 }
-function UpdateMileageTypeForCrud($data)
-{
+function UpdateMileageTypeForCrud($data) {
     $parsed = JMileageType::CREATE_FROM_ARRAY($data);
     if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
 
@@ -184,15 +183,12 @@ function UpdateMileageTypeForCrud($data)
     return JMileageType::CREATE_FROM_DB($item);
 }
 
-function CreateMileageTypeForCrud($data)
-{
-    $item = JMileageType::CREATE_FROM_ARRAY($data)->toDB();
-    if(0>=$item->save()) {
-        throw new \Exception("Failed to save MileageType");
-    }
+function CreateMileageTypeForCrud($data) {
+    $parsed = JMileageType::CREATE_FROM_ARRAY($data);
+    $parsed->saveToDb();
 
     //TODO implement cache, add to cache
-    return JMileageType::CREATE_FROM_DB($item);
+    return $parsed;
 }
 
 function DeleteMileageTypeForCrud($id)
@@ -235,13 +231,14 @@ function UpdateSeasonForCrud($data)
 
 function CreateSeasonForCrud($data)
 {
-    $item = JSeason::CREATE_FROM_ARRAY($data)->toDB();
-    if(0>=$item->save()) {
+    $item = JSeason::CREATE_FROM_ARRAY($data);
+
+    if(0>=$item->saveToDb()) {
         throw new \Exception("Failed to save Season");
     }
 
     //TODO implement cache, add to cache
-    return JSeason::CREATE_FROM_DB($item);
+    return JSeason::CREATE_FROM_DB($item->toDB());
 }
 
 function DeleteSeasonForCrud($id)

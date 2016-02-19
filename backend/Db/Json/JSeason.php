@@ -22,14 +22,26 @@ class JSeason implements JSONInterface
     public $UpdateTime;
     public $UpdateUser;
 
+    public function __toString() {
+        return " JSeason("
+            . $this->SeasonId . "|"
+            . $this->Name . "|"
+            . $this->Type . "|"
+            . $this->From . "|"
+            . $this->To . "|"
+            . $this->UpdateTime  . "/"
+            . $this->PointSystem . "|"
+        . ") ";
+    }
+
     public static function CREATE_FROM_DB(\Season $item) {
         $mine = new JSeason();
         $mine->SeasonId     = $item->getSeasonId();
         $mine->PointSystem  = JPointSystem::CREATE_FROM_DB($item->getPointSystem());
         $mine->Name         = $item->getName();
-        $mine->Type         = $item->getType();
-        $mine->From         = $item->getFrom();
-        $mine->To           = $item->getTo();
+        $mine->Type         = $item->getSeasonType();
+        $mine->From         = FieldUtils::DateTimeToDateString($item->getFromDate());
+        $mine->To           = FieldUtils::DateTimeToDateString($item->getToDate());
         $time = new \DateTime();
         if(!is_null($item->getUpdateTime())) {
             $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
@@ -40,44 +52,77 @@ class JSeason implements JSONInterface
         return $mine;
     }
 
+
+    public static function VALIDATE(JSeason $mine) {
+        if(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId))
+            throw new JSONException("Did not receive 'PointSystem' field, which is required" . $mine);
+
+        if(is_null($mine->From) || strlen($mine->From)<=0)
+            throw new JSONException("Did not receive 'From' field, which is required" . $mine);
+        if(is_null($mine->To) || strlen($mine->To)<=0)
+            throw new JSONException("Did not receive 'To' field, which is required" . $mine);
+        return $mine;
+    }
+
+    public function isValid(JSeason $mine) {
+        return !(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId))
+                && !(is_null($mine->From) || strlen($mine->From)<=0)
+                && !(is_null($mine->To) || strlen($mine->To)<=0);
+    }
+
     public static function CREATE_FROM_ARRAY($data)
     {
         $mine = new JSeason();
         if(ArrayUtils::KEY_EXISTS($data,'SeasonId')) {
                 $mine->SeasonId = $data['SeasonId'];
                 $item = $mine->tryLoadFromDB();
-                if(!is_null($item)) $mine = JSeason::CREATE_FROM_DB($item);
+                if(!is_null($item)) {
+                    $mine = JSeason::CREATE_FROM_DB($item);
+                }
         }
         if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) {
                 $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         }
-        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JCity::CREATE_FROM_ARRAY($data['Type']);
-        if(ArrayUtils::KEY_EXISTS($data,'From')) $mine->From = new \DateTime($data['From']);
-        if(ArrayUtils::KEY_EXISTS($data,'To')) $mine->To = new \DateTime($data['To']);
-        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = new \DateTime($data['UpdateTime']);
+        if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
+        if(is_null($mine->PointSystem)) throw new JSONException("Invalid point system specified " . json_encode($data));
+        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = $data['Type'];
+        if(ArrayUtils::KEY_EXISTS($data,'From')) {
+            $mine->From = FieldUtils::DateTimeToDateString(new \DateTime($data['From']));
+        }
+        if(ArrayUtils::KEY_EXISTS($data,'To')) {
+            $mine->To = FieldUtils::DateTimeToDateString(new \DateTime($data['To']));
+        }
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) {
+            $mine->UpdateTime = FieldUtils::DateTimeToISOString(new \DateTime($data['UpdateTime']));
+        }
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
-        return $mine;
+        return JSeason::VALIDATE($mine);
     }
 
     public function saveToDb()
     {
-        return $this->toDB()->save() > 0;
+        $item = $this->toDB();
+        try {
+            return $item->save()>0;
+        } catch(\Exception $ex) {
+            throw new JSONException("Failed to save to database " . $this . $ex->getMessage(), 0, $ex );
+        }
     }
 
     private function tryLoadFromDB(){
 
         if(FieldUtils::ID_IS_DEFINED($this->SeasonId)) {
-            $item = \SeasonQuery::create()->findPk($this->SeasonId);
-            if(!is_null($item)) return $item;
+            $item = \SeasonQuery::create()->findOneBySeasonId($this->SeasonId);
+            return $item;
         }
-        return new \Season();
+        return null;
     }
 
     public function toDB()
     {
         $item =$this->tryLoadFromDB();
-
+        if(is_null($item)) $item = new \Season();
         return $this->updateDB($item);
     }
 
@@ -89,9 +134,9 @@ class JSeason implements JSONInterface
             $item->setPointSystemId($this->PointSystem->PointSystemId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
-        if(FieldUtils::STRING_IS_DEFINED($this->Type)) $item->setType($this->Type);
-        if(!is_null($this->From)) $item->setFrom($this->From);
-        if(!is_null($this->To)) $item->setFrom($this->To);
+        if(FieldUtils::STRING_IS_DEFINED($this->Type)) $item->setSeasonType($this->Type);
+        if(!is_null($this->From)) { $item->setFromDate(FieldUtils::DateTimeToString($this->From)); } else { throw new JSONException("No From defined" . $this); }
+        if(!is_null($this->To)) $item->setToDate($this->To);
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 

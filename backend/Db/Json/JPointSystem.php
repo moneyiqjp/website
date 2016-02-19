@@ -21,6 +21,18 @@ class JPointSystem implements JSONInterface{
     public $UpdateTime;
     public $UpdateUser;
 
+    public function __toString() {
+        return " JPointSystem("
+        . $this->PointSystemId . "|"
+        . $this->PointSystemName . "|"
+        . $this->PointsPerYen . "|"
+        . $this->YenPerPoint . "|"
+        . $this->Reference . "|"
+        . $this->UpdateTime  . "|"
+        . $this->UpdateUser . "|"
+        . ") ";
+    }
+
     public function JPointSystem(){
         return $this;
     }

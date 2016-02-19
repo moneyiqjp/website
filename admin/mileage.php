@@ -22,6 +22,7 @@
         var trips = [];
         var stores = [];
         var pointsystems = [];
+        var seasons = [];
         var tmpStore;
         var index;
         var jason;
@@ -147,6 +148,30 @@
             }
         }
 
+        tmp = $.ajax({
+            url: '../backend/crud/season/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    seasons.push({
+                        value: tmpStore[index]["SeasonId"],
+                        label: tmpStore[index]["Name"]
+                    })
+                }
+            }
+        }
+
 
 
         cityEditor = new $.fn.dataTable.Editor(
@@ -242,6 +267,56 @@
             });
 
 
+        mileageTypeEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/mileage/type/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/mileage/type/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/mileage/type/delete'
+                    }
+                },
+                table: "#mileagetype",
+                idSrc: "MileageTypeId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "MileageTypeId",
+                        type:  "readonly"
+                    }, {
+                        label: "Season:",
+                        name: "Season.SeasonId",
+                        type: "select",
+                        options: seasons
+                    }, {
+                        label: "Class:",
+                        name: "Class"
+                    }, {
+                        label: "RoundTrip:",
+                        name: "RoundTrip"
+                    }, {
+                        label: "Ticket Type:",
+                        name: "TicketType"
+                    }, {
+                        label: "TripLength:",
+                        name: "TripLength"
+                    }, {
+                        label: "Display:",
+                        name: "Display"
+                    },{
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
         mileageEditor = new $.fn.dataTable.Editor(
             {
                 ajax: {
@@ -331,10 +406,12 @@
                         name: "Type"
                     }, {
                         label: "From:",
-                        name: "From"
+                        name: "From",
+                        type: "date"
                     }, {
                         label: "To:",
-                        name: "To"
+                        name: "To",
+                        type: "date"
                     }, {
                         label: "Update date:",
                         name: "UpdateTime",
@@ -433,7 +510,7 @@
                 }
             } );
 
-            $('flightcost').dataTable( {
+            $('#flightcost').dataTable( {
                 dom: "lfrtip",
                 "pageLength": 25,
                 "ajax": {
@@ -475,6 +552,51 @@
                     { "data": "Reference" },
                     { "data": "Price" }
                 ]
+
+            } );
+
+
+            $('#mileagetype').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/mileage/type/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "MileageTypeId", visible: false },
+                    { "data": "Season.Name", editField: "Season.SeasonId" },
+                    { "data": "Class"},
+                    {
+                        "data": "RoundTrip",
+                        render: function (data, type, row) {
+                            if (type === 'display') {
+                                if(data)
+                                    return '<input type="checkbox" class="editor-afield" checked readonly>';
+                                return '<input type="checkbox" class="editor-afield" readonly>';
+                            }
+                            return data;
+                        },
+                        className: "dt-body-center",
+                        width: "5"
+                    },
+                    { "data": "TicketType" },
+                    { "data": "TripLength" },
+                    { "data": "Display" },
+                    { "data": "UpdateTime", visible: false},
+                    { "data": "UpdateUser", visible: false }
+                ]
+
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: mileageTypeEditor },
+                        { sExtends: "editor_edit",   editor: mileageTypeEditor },
+                        { sExtends: "editor_remove", editor: mileageTypeEditor }
+                    ]
+                }
 
             } );
 
@@ -626,7 +748,7 @@
 </div>
 
 
-<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="mileage">Mileage</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -638,11 +760,11 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>PointSystem</th>
+            <th>Point System</th>
             <th>Store</th>
             <th>Trips</th>
-            <th>RequiredMiles</th>
-            <th>ValueInYen</th>
+            <th>Required Miles</th>
+            <th>Value In Yen</th>
             <th>Display</th>
             <th>Updated</th>
             <th>User</th>
@@ -652,11 +774,11 @@
         <tfoot>
         <tr>
             <th>Id</th>
+            <th>Point System</th>
             <th>Store</th>
-            <th>PointSystem</th>
             <th>Trips</th>
-            <th>RequiredMiles</th>
-            <th>ValueInYen</th>
+            <th>Required Miles</th>
+            <th>Value In Yen</th>
             <th>Display</th>
             <th>Updated</th>
             <th>User</th>
@@ -666,7 +788,7 @@
 </div>
 
 
-<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="mileagetype">MileageType</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -680,9 +802,9 @@
             <th>Id</th>
             <th>Season</th>
             <th>Class</th>
-            <th>RoundTrip</th>
-            <th>TicketType</th>
-            <th>TripLength</th>
+            <th>Round Trip</th>
+            <th>Ticket Type</th>
+            <th>Trip Length</th>
             <th>Display</th>
             <th>Updated</th>
             <th>User</th>
@@ -694,9 +816,9 @@
             <th>Id</th>
             <th>Season</th>
             <th>Class</th>
-            <th>RoundTrip</th>
-            <th>TicketType</th>
-            <th>TripLength</th>
+            <th>Round Trip</th>
+            <th>Ticket Type</th>
+            <th>Trip Length</th>
             <th>Display</th>
             <th>Updated</th>
             <th>User</th>
@@ -706,7 +828,7 @@
 </div>
 
 
-<div style="min-width: 600px; width: 60%;margin: 25px 25px 25px 25px;float: left">
+<div style="min-width: 1000px; width: 90%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="flightcost">FlightCost</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -749,6 +871,9 @@
         </tr>
         </tfoot>
     </table>
+    <p>
+        Flight Cost is an automatically generated table that is only included for
+    </p>
 </div>
 
 <br>
