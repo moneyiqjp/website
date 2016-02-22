@@ -163,11 +163,48 @@ a.kb-link:hover{
 
 .kb-carousel-text{
     padding: 2em 40px 2em 1em;
-    padding: 2em 40px 2em 2em;
     position: relative;
 }
 
+/* Pagination control start*/
+.navigation li a,
+.navigation li a:hover,
+.navigation li.active a,
+.navigation li.disabled {
+    color: #fff;
+    text-decoration:none;
+}
 
+.navigation li {
+    display: inline;
+}
+
+.navigation li a,
+.navigation li a:hover,
+.navigation li.active a,
+.navigation li.disabled {
+    background-color: rgba(110, 149, 105,0.80); /* moneyiq green */
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 12px;
+    padding: 0.75rem;
+}
+
+.navigation li a:hover,
+.navigation li.active a {
+    background-color: rgba(110, 149, 105,1.0); /* moneyiq green */
+}
+.navigation-container {
+    display: table;
+    width: 100%;
+    margin: 2rem auto 2rem auto;
+}
+.navigation {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+/* Pagination control end*/
 
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px) {
@@ -537,8 +574,8 @@ body.single h3 {
     text-shadow: black 0.3em 0.3em 0.3em;
 }
 
-.miqfooter{
-    margin-top: 10rem;
+.miqfooter {
+    margin-top: 4rem;
 }
 
 .miqfooter .dark {

@@ -73,7 +73,19 @@
 <div class="container light">
     <div class='row'>
     <?php
-        query_posts( "cat=-15" );
+        $paged = ( get_query_var('page') ) ? get_query_var('page') : 1;
+        if($paged==1) {
+            $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+        }
+        $query_args = array(
+            'post_type' => 'post',
+            'cat' => '-15',
+            'posts_per_page' => 12,
+            'paged' => $paged
+        );
+        /*  query_posts( "cat=-15" ); */
+        $the_query = new WP_Query( $query_args );
+
         $counter=0; if ( have_posts() ) : while ( have_posts() ) : the_post();
         $counter++;
         $tempo = $wp_query->post_count%3==0?3:$wp_query->post_count%3;
@@ -109,9 +121,16 @@
         <hr>
         <?php endif; ?>
 
-    <?php endwhile; else: ?>
+    <?php endwhile;?>
+    <?php else: ?>
         <p><?php echo('Sorry, no posts matched your criteria.'); ?></p>
+        <?php echo "</div>"; ?>
     <?php endif; ?>
+</div>
+<div class="row">
+    <div class="navigation-container">
+        <?php wpbeginner_numeric_posts_nav();?>
+    </div>
 </div>
 
 
