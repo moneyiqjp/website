@@ -18,6 +18,11 @@ interface JSONInterface {
     public function toDB();
 }
 
+interface JSONDisplay {
+    public function getDisplay();
+    public function parseForDisplay($str);
+}
+
 spl_autoload_register(function($className)
 {
     if (0 !== strpos($className, __NAMESPACE__)) {//not my namespace

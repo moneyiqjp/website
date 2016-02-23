@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JTrip implements JSONInterface
+class JTrip implements JSONInterface, JSONDisplay
 {
     public $TripId;
     public $CityFrom;
@@ -22,20 +22,6 @@ class JTrip implements JSONInterface
     public $UpdateTime;
     public $UpdateUser;
 
-    public function getDisplay(){
-        $display=$this->Display;
-
-        if(is_null($display)) {
-            $display = "%FROM% - %TO%";
-        }
-
-        $display = str_replace($display, "%FROM%", $this->CityFrom->Name);
-        $display = str_replace($display, "%TO%", $this->CityTo->Name);
-        $display = str_replace($display, "%UNIT%", $this->Unit->Name);
-        $display = str_replace($display, "%DISTANCE%", $this->Distance);
-
-        return $display;
-    }
 
     public static function CREATE_FROM_DB(\Trip $item) {
         $mine = new JTrip();
@@ -110,5 +96,24 @@ class JTrip implements JSONInterface
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 
         return $item;
+    }
+
+    public function getDisplay(){
+        $display=$this->Display;
+
+        if(is_null($display)) {
+            $display = "%TRIPFROM% → %TRIPTO%";
+        }
+
+        return $this->parseForDisplay($display);
+    }
+
+    public function parseForDisplay($display) {
+        $display = FieldUtils::replaceIfAvailable($display, "%TRIPFROM%", $this->CityFrom->Display);
+        $display = FieldUtils::replaceIfAvailable($display, "%TRIPTO%", $this->CityTo->Display);
+        $display = FieldUtils::replaceIfAvailable($display, "%TRIPUNIT%", $this->Unit->Name);
+        $display = FieldUtils::replaceIfAvailable($display, "%TRIPDISTANCE%", $this->Distance);
+
+        return $display;
     }
 }

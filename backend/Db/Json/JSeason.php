@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JSeason implements JSONInterface
+class JSeason implements JSONInterface, JSONDisplay
 {
     public $SeasonId;
     public $PointSystem;
@@ -19,6 +19,7 @@ class JSeason implements JSONInterface
     public $Type;
     public $From;
     public $To;
+    public $Display;
     public $UpdateTime;
     public $UpdateUser;
 
@@ -42,6 +43,7 @@ class JSeason implements JSONInterface
         $mine->Type         = $item->getSeasonType();
         $mine->From         = FieldUtils::DateTimeToDateString($item->getFromDate());
         $mine->To           = FieldUtils::DateTimeToDateString($item->getToDate());
+        $mine->Display      = $item->getDisplay();
         $time = new \DateTime();
         if(!is_null($item->getUpdateTime())) {
             $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
@@ -92,6 +94,7 @@ class JSeason implements JSONInterface
         if(ArrayUtils::KEY_EXISTS($data,'To')) {
             $mine->To = FieldUtils::DateTimeToDateString(new \DateTime($data['To']));
         }
+        if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) {
             $mine->UpdateTime = FieldUtils::DateTimeToISOString(new \DateTime($data['UpdateTime']));
         }
@@ -131,15 +134,31 @@ class JSeason implements JSONInterface
         if(FieldUtils::ID_IS_DEFINED($this->SeasonId)) $item->setSeasonId($this->SeasonId);
 
         if(!is_null($this->PointSystem) && FieldUtils::ID_IS_DEFINED($this->PointSystem->PointSystemId)) {
-            $item->setPointSystemId($this->PointSystem->PointSystemId);
+            $item->setPointSystemId($this->PointSystem->Poi0SystemId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
+        if(FieldUtils::IS_STRING($this->Display)) $item->setDisplay($this->Display);
         if(FieldUtils::STRING_IS_DEFINED($this->Type)) $item->setSeasonType($this->Type);
-        if(!is_null($this->From)) { $item->setFromDate(FieldUtils::DateTimeToString($this->From)); } else { throw new JSONException("No From defined" . $this); }
-        if(!is_null($this->To)) $item->setToDate($this->To);
+        if(!is_null($this->From)) { $item->setFromDate(FieldUtils::DateTimeToDateString($this->From)); } else { throw new JSONException("No From defined" . $this); }
+        if(!is_null($this->To)) $item->setToDate(FieldUtils::DateTimeToDateString($this->To));
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 
         return $item;
+    }
+
+    public function getDisplay() {
+        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"%SEASONNAME%";
+
+        return $this->parseForDisplay($display);
+    }
+
+    public function parseForDisplay($display) {
+        $display = FieldUtils::replaceIfAvailable($display, "%SEASONNAME%", $this->Name);
+        $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPE%", $this->Type);
+        $display = FieldUtils::replaceIfAvailable($display, "%SEASONFROM%", $this->From);
+        $display = FieldUtils::replaceIfAvailable($display, "%SEASONTO%", $this->To);
+
+        return $display;
     }
 }

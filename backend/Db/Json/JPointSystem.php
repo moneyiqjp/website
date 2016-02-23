@@ -11,7 +11,8 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JPointSystem implements JSONInterface{
+class JPointSystem implements JSONInterface, JSONDisplay
+{
 
     public $PointSystemId;
     public $PointSystemName;
@@ -130,4 +131,16 @@ class JPointSystem implements JSONInterface{
 
     }
 
+    public function getDisplay() {
+        return $this->parseForDisplay("%POINTSYSTEMNAME%");
+    }
+
+    public function parseForDisplay($display)
+    {
+        $display = FieldUtils::replaceIfAvailable($display, "%POINTSYSTEMNAME%", $this->PointSystemName);
+        $display = FieldUtils::replaceIfAvailable($display, "%DEFAULTPOINTSPERYEN%%", $this->PointsPerYen);
+        $display = FieldUtils::replaceIfAvailable($display, "%DEFAULTYENPERPOINT%", $this->YenPerPoint);
+
+        return $display;
+    }
 }

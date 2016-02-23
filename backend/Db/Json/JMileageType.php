@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JMileageType implements JSONInterface
+class JMileageType implements JSONInterface, JSONDisplay
 {
     public $MileageTypeId;
     public $Season;
@@ -59,7 +59,7 @@ class JMileageType implements JSONInterface
         if(ArrayUtils::KEY_EXISTS($data,'TripLength')) $mine->TripLength = $data['TripLength'];
         if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
 
-        $mine->UpdateTime = (new \DateTime($data['UpdateTime']))->format(\DateTime::ISO8601);;
+        if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) $mine->UpdateTime = (new \DateTime($data['UpdateTime']))->format(\DateTime::ISO8601);;
         if(ArrayUtils::KEY_EXISTS($data,'Distance')) $mine->UpdateUser = $data['UpdateUser'];
 
         return $mine;
@@ -107,4 +107,22 @@ class JMileageType implements JSONInterface
         return $item;
     }
 
+    public function getDisplay() {
+        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"(%MILEAGECLASS%)";
+
+        return $this->parseForDisplay($display);
+    }
+
+    public function parseForDisplay($display) {
+        if(!is_null($this->Season)) {
+            $display = $this->Season->parseForDisplay($display);
+        }
+
+        $display = FieldUtils::replaceIfAvailable($display, "%MILEAGECLASS%", $this->Class);
+        $display = FieldUtils::replaceIfAvailable($display, "%MILEAGETICKETTYPE%", $this->TicketType);
+        if($this->RoundTrip) $display =  FieldUtils::replaceIfAvailable($display, "%CONNECT%", "⇄");
+        if(!$this->RoundTrip) $display = FieldUtils::replaceIfAvailable($display, "%CONNECT%", "→");
+
+        return $display;
+    }
 }

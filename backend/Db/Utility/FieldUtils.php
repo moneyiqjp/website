@@ -52,5 +52,7 @@ class FieldUtils {
         return $date->format("Y-m-d");
     }
 
-
+    public static function replaceIfAvailable($str, $from, $to) {
+        return  self::STRING_IS_DEFINED($to)?str_replace($from, $to, $str):$str;
+    }
 }

@@ -11,7 +11,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JStore implements JSONInterface {
+class JStore implements JSONInterface, JSONDisplay {
     /**
      * @return mixed
      */
@@ -164,4 +164,17 @@ class JStore implements JSONInterface {
         return $item;
     }
 
+    public function getDisplay()
+    {
+        return $this->parseForDisplay("%STORENAME%");
+    }
+
+    public function parseForDisplay($display) {
+        $display = FieldUtils::replaceIfAvailable($display, "%STORENAME%", $this->StoreName);
+        if(!is_null($this->StoreCategory)) {
+            $display = FieldUtils::replaceIfAvailable($display, "%STORECATEGORY%", $this->StoreCategory->Name);
+        }
+
+        return $display;
+    }
 }

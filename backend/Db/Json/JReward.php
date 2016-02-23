@@ -196,7 +196,7 @@ class JReward  implements JSONInterface {
 
         if(!is_null($item->Store)) $mine->Store = $item->getStore();
         $mine->Title = $item->getDisplay();
-        $mine->Description = $item->getDisplay();
+        $mine->Description = $item->getDisplayLong();
         $mine->Icon = "";
         $mine->YenPerPoint = $item->getValueInYen()/$item->getRequiredMiles();
         $mine->PricePerUnit = $item->getRequiredMiles();
