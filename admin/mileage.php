@@ -22,6 +22,7 @@
         var trips = [];
         var stores = [];
         var pointsystems = [];
+        var mileagetypes = [];
         var seasons = [];
         var tmpStore;
         var index;
@@ -172,6 +173,30 @@
             }
         }
 
+
+        tmp = $.ajax({
+            url: '../backend/crud/mileage/type/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    mileagetypes.push({
+                        value: tmpStore[index]["MileageTypeId"],
+                        label: tmpStore[index]["Season"]["Name"] + " " + tmpStore[index]["Season"]["Type"] + "/" + "/" + tmpStore[index]["Class"] + "/" + tmpStore[index]["TicketType"]
+                    })
+                }
+            }
+        }
 
 
         cityEditor = new $.fn.dataTable.Editor(
@@ -338,6 +363,11 @@
                         name: "MileageId",
                         type:  "readonly"
                     }, {
+                        label: "MileageType:",
+                        name: "MileageType.MileageTypeId",
+                        type: "select",
+                        options: mileagetypes
+                    }, {
                         label: "PointSystem:",
                         name: "PointSystem.PointSystemId",
                         type: "select",
@@ -358,10 +388,13 @@
                     }, {
                         label: "ValueInYen:",
                         name: "ValueInYen"
-                    },  {
+                    }, {
                         label: "Display:",
                         name: "Display"
-                    },{
+                    }, {
+                        label: "Display (long):",
+                        name: "DisplayLong"
+                    }, {
                         label: "Update date:",
                         name: "UpdateTime",
                         type: "readonly"
@@ -612,6 +645,15 @@
                 },
                 "columns": [
                     { "data": "MileageId", visible: false },
+                    { "data": "MileageType", editField: "MileageType.MileageTypeId",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' && data!=null ) {
+                                return data["Season"]["Name"] + " " + data["Season"]["Type"] + "/" 
+                                            + "/" + data["Class"] + "/" + data["TicketType"];
+                            }
+                            return data;
+                        }
+                    },
                     { "data": "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
                     { "data": "Store.StoreName", editField: "Store.StoreId" },
                     { data: "Trip",
@@ -626,6 +668,7 @@
                     { "data": "RequiredMiles" },
                     { "data": "ValueInYen" },
                     { "data": "Display" },
+                    { "data": "DisplayLong" },
                     { "data": "UpdateTime", visible: false},
                     { "data": "UpdateUser", visible: false }
                 ]
@@ -688,8 +731,8 @@
             <th>From</th>
             <th>To</th>
             <th>Distance</th>
-            <th>Unit</th>
             <th>Display</th>
+            <th>Unit</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -701,8 +744,8 @@
             <th>From</th>
             <th>To</th>
             <th>Distance</th>
-            <th>Unit</th>
             <th>Display</th>
+            <th>Unit</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -749,46 +792,6 @@
 
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="mileage">Mileage</a></div>
-    <!--
-    <a href="#issuers" class="subheader">Issuers</a>
-    <a href="#affiliates" class="subheader">Affiliates</a>
-    <a href="#insurance_type" class="subheader">Insurance Type</a>
-    <a href="#feature_type" class="subheader">Feature Type</a>
-    -->
-    <table id="mileage" class="display" cellspacing="0" width="98%">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Point System</th>
-            <th>Store</th>
-            <th>Trips</th>
-            <th>Required Miles</th>
-            <th>Value In Yen</th>
-            <th>Display</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-        </thead>
-
-        <tfoot>
-        <tr>
-            <th>Id</th>
-            <th>Point System</th>
-            <th>Store</th>
-            <th>Trips</th>
-            <th>Required Miles</th>
-            <th>Value In Yen</th>
-            <th>Display</th>
-            <th>Updated</th>
-            <th>User</th>
-        </tr>
-        </tfoot>
-    </table>
-</div>
-
-
-<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
     <div class="table-headline"><a name="mileagetype">MileageType</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
@@ -826,6 +829,50 @@
         </tfoot>
     </table>
 </div>
+
+<div style="min-width: 1000px; width: 90%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline"><a name="mileage">Mileage</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="mileage" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Mileage Type</th>
+            <th>Point System</th>
+            <th>Store</th>
+            <th>Trips</th>
+            <th>Required Miles</th>
+            <th>Value In Yen</th>
+            <th>Display</th>
+            <th>Long</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Mileage Type</th>
+            <th>Point System</th>
+            <th>Store</th>
+            <th>Trips</th>
+            <th>Required Miles</th>
+            <th>Value In Yen</th>
+            <th>Display</th>
+            <th>Long</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
 
 
 <div style="min-width: 1000px; width: 90%;margin: 25px 25px 25px 25px;float: left">
