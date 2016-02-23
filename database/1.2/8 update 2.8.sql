@@ -177,8 +177,57 @@ BEGIN
 	else
 		SELECT 'table season already up to date';
 	end if;
+	
+		if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season_type' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_type_id') THEN
+			CREATE TABLE `season_type` (
+				`season_type_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`name` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8_general_ci',								
+				`display` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+				`update_time` DATETIME NOT NULL,
+				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`season_type_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table season_type';
+	else
+		SELECT 'EXISTED table season_type';
+	end if;
 
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_type') THEN	
+			ALTER TABLE `season`
+					ADD COLUMN `reference` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci'  AFTER `display`;
+		SELECT 'Updated table season with reference';
+	else
+		SELECT 'table season already has reference';
+	end if;
 
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_type') THEN	
+		ALTER TABLE `season`
+			CHANGE COLUMN `season_type` `season_type_name` VARCHAR(100) NULL DEFAULT NULL AFTER `name`;
+		insert into season_type (name) select distinct season_type_name from season;
+		ALTER TABLE `season`
+			ADD COLUMN `season_type_id` INT(11) NULL DEFAULT NULL AFTER `season_type_name`;		
+		Update season s INNER JOIN season_type st ON st.name=s.season_type_name set  s.season_type_id = st.season_type_id;	
+		SELECT 'Updated table season with season type name';
+	else
+		SELECT 'table season already has season type name';
+	end if;
+
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_type_name') THEN	
+		ALTER TABLE `season`
+			ALTER `season_type_id` DROP DEFAULT;
+		ALTER TABLE `season`
+			CHANGE COLUMN `season_type_id` `season_type_id` INT(11) NOT NULL AFTER `season_type_name`;
+		ALTER TABLE `season`	DROP COLUMN `season_type_name`;		
+		ALTER TABLE `season`
+			ADD CONSTRAINT `fk_season_season_type` FOREIGN KEY (`season_type_id`) REFERENCES `season_type` (`season_type_id`);
+		SELECT 'Updated table season with season type id';
+	else
+		SELECT 'table season already has season type id';
+	end if;
+	
 END //
 DELIMITER ;
 CALL UpgradeMoneyIQ2_8(DATABASE());

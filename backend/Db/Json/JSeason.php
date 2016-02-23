@@ -40,7 +40,7 @@ class JSeason implements JSONInterface, JSONDisplay
         $mine->SeasonId     = $item->getSeasonId();
         $mine->PointSystem  = JPointSystem::CREATE_FROM_DB($item->getPointSystem());
         $mine->Name         = $item->getName();
-        $mine->Type         = $item->getSeasonType();
+        $mine->Type         = JSeasonType::CREATE_FROM_DB($item->getSeasonType());
         $mine->From         = FieldUtils::DateTimeToDateString($item->getFromDate());
         $mine->To           = FieldUtils::DateTimeToDateString($item->getToDate());
         $mine->Display      = $item->getDisplay();
@@ -87,7 +87,10 @@ class JSeason implements JSONInterface, JSONDisplay
         }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(is_null($mine->PointSystem)) throw new JSONException("Invalid point system specified " . json_encode($data));
-        if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = $data['Type'];
+        if(ArrayUtils::KEY_EXISTS($data,'Type')) {
+            $mine->Type = JSeasonType::CREATE_FROM_ARRAY($data['Type']);
+        }
+
         if(ArrayUtils::KEY_EXISTS($data,'From')) {
             $mine->From = FieldUtils::DateTimeToDateString(new \DateTime($data['From']));
         }
@@ -134,11 +137,14 @@ class JSeason implements JSONInterface, JSONDisplay
         if(FieldUtils::ID_IS_DEFINED($this->SeasonId)) $item->setSeasonId($this->SeasonId);
 
         if(!is_null($this->PointSystem) && FieldUtils::ID_IS_DEFINED($this->PointSystem->PointSystemId)) {
-            $item->setPointSystemId($this->PointSystem->Poi0SystemId);
+            $item->setPointSystemId($this->PointSystem->PointSystemId);
         }
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         if(FieldUtils::IS_STRING($this->Display)) $item->setDisplay($this->Display);
-        if(FieldUtils::STRING_IS_DEFINED($this->Type)) $item->setSeasonType($this->Type);
+
+        if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->SeasonTypeId)) {
+            $item->setPointSystemId($this->Type->SeasonTypeId);
+        }
         if(!is_null($this->From)) { $item->setFromDate(FieldUtils::DateTimeToDateString($this->From)); } else { throw new JSONException("No From defined" . $this); }
         if(!is_null($this->To)) $item->setToDate(FieldUtils::DateTimeToDateString($this->To));
         $item->setUpdateTime(new \DateTime());
@@ -148,14 +154,18 @@ class JSeason implements JSONInterface, JSONDisplay
     }
 
     public function getDisplay() {
-        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"%SEASONNAME%";
+        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"%SEASONTYPE%";
 
         return $this->parseForDisplay($display);
     }
 
     public function parseForDisplay($display) {
+        if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->SeasonTypeId)) {
+            $display = $this->Type->parseForDisplay($display);
+            $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPE%", $this->Type->getDisplay());
+        }
+
         $display = FieldUtils::replaceIfAvailable($display, "%SEASONNAME%", $this->Name);
-        $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPE%", $this->Type);
         $display = FieldUtils::replaceIfAvailable($display, "%SEASONFROM%", $this->From);
         $display = FieldUtils::replaceIfAvailable($display, "%SEASONTO%", $this->To);
 

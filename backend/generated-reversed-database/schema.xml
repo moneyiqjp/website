@@ -673,8 +673,10 @@
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
     <column name="trip_id" phpName="TripId" type="INTEGER" required="true"/>
     <column name="required_miles" phpName="RequiredMiles" type="INTEGER" required="true"/>
+    <column name="mileage_type_id" phpName="MileageTypeId" type="INTEGER" required="true" defaultValue="1"/>
     <column name="value_in_yen" phpName="ValueInYen" type="INTEGER" required="true"/>
     <column name="display" phpName="Display" type="VARCHAR" size="255"/>
+    <column name="display_long" phpName="DisplayLong" type="VARCHAR" size="255"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <foreign-key foreignTable="point_system" name="fk_milage_point_system">
@@ -686,6 +688,9 @@
     <foreign-key foreignTable="trip" name="fk_milage_trip">
       <reference local="trip_id" foreign="trip_id"/>
     </foreign-key>
+    <foreign-key foreignTable="mileage_type" name="fk_mileage_mileage_type">
+      <reference local="mileage_type_id" foreign="mileage_type_id"/>
+    </foreign-key>
     <index name="fk_milage_trip">
       <index-column name="trip_id"/>
     </index>
@@ -694,6 +699,9 @@
     </index>
     <index name="fk_milage_point_system">
       <index-column name="point_system_id"/>
+    </index>
+    <index name="fk_mileage_mileage_type">
+      <index-column name="mileage_type_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
@@ -1017,17 +1025,35 @@
     <column name="season_id" phpName="SeasonId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true" defaultValue="1"/>
     <column name="name" phpName="Name" type="VARCHAR" size="100"/>
-    <column name="season_type" phpName="SeasonType" type="VARCHAR" size="100"/>
+    <column name="season_type_id" phpName="SeasonTypeId" type="INTEGER" required="true"/>
     <column name="from_date" phpName="FromDate" type="DATE"/>
     <column name="to_date" phpName="ToDate" type="DATE"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="250"/>
+    <column name="reference" phpName="Reference" type="VARCHAR" size="250"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
     <foreign-key foreignTable="point_system" name="FK_season_point_system">
       <reference local="point_system_id" foreign="point_system_id"/>
     </foreign-key>
+    <foreign-key foreignTable="season_type" name="fk_season_season_type">
+      <reference local="season_type_id" foreign="season_type_id"/>
+    </foreign-key>
     <index name="FK_season_point_system">
       <index-column name="point_system_id"/>
     </index>
+    <index name="fk_season_season_type">
+      <index-column name="season_type_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="season_type" idMethod="native" phpName="SeasonType">
+    <column name="season_type_id" phpName="SeasonTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="150"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="150"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

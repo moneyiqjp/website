@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Season;
-use \SeasonQuery;
+use \SeasonType;
+use \SeasonTypeQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'season' table.
+ * This class defines the structure of the 'season_type' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class SeasonTableMap extends TableMap
+class SeasonTypeTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class SeasonTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.SeasonTableMap';
+    const CLASS_NAME = '.Map.SeasonTypeTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class SeasonTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'season';
+    const TABLE_NAME = 'season_type';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Season';
+    const OM_CLASS = '\\SeasonType';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Season';
+    const CLASS_DEFAULT = 'SeasonType';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,57 +69,32 @@ class SeasonTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 10;
-
-    /**
-     * the column name for the season_id field
-     */
-    const COL_SEASON_ID = 'season.season_id';
-
-    /**
-     * the column name for the point_system_id field
-     */
-    const COL_POINT_SYSTEM_ID = 'season.point_system_id';
-
-    /**
-     * the column name for the name field
-     */
-    const COL_NAME = 'season.name';
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the season_type_id field
      */
-    const COL_SEASON_TYPE_ID = 'season.season_type_id';
+    const COL_SEASON_TYPE_ID = 'season_type.season_type_id';
 
     /**
-     * the column name for the from_date field
+     * the column name for the name field
      */
-    const COL_FROM_DATE = 'season.from_date';
-
-    /**
-     * the column name for the to_date field
-     */
-    const COL_TO_DATE = 'season.to_date';
+    const COL_NAME = 'season_type.name';
 
     /**
      * the column name for the display field
      */
-    const COL_DISPLAY = 'season.display';
-
-    /**
-     * the column name for the reference field
-     */
-    const COL_REFERENCE = 'season.reference';
+    const COL_DISPLAY = 'season_type.display';
 
     /**
      * the column name for the update_time field
      */
-    const COL_UPDATE_TIME = 'season.update_time';
+    const COL_UPDATE_TIME = 'season_type.update_time';
 
     /**
      * the column name for the update_user field
      */
-    const COL_UPDATE_USER = 'season.update_user';
+    const COL_UPDATE_USER = 'season_type.update_user';
 
     /**
      * The default string format for model objects of the related table
@@ -133,11 +108,11 @@ class SeasonTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('SeasonId', 'PointSystemId', 'Name', 'SeasonTypeId', 'FromDate', 'ToDate', 'Display', 'Reference', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('seasonId', 'pointSystemId', 'name', 'seasonTypeId', 'fromDate', 'toDate', 'display', 'reference', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID, SeasonTableMap::COL_POINT_SYSTEM_ID, SeasonTableMap::COL_NAME, SeasonTableMap::COL_SEASON_TYPE_ID, SeasonTableMap::COL_FROM_DATE, SeasonTableMap::COL_TO_DATE, SeasonTableMap::COL_DISPLAY, SeasonTableMap::COL_REFERENCE, SeasonTableMap::COL_UPDATE_TIME, SeasonTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('season_id', 'point_system_id', 'name', 'season_type_id', 'from_date', 'to_date', 'display', 'reference', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('SeasonTypeId', 'Name', 'Display', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('seasonTypeId', 'name', 'display', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(SeasonTypeTableMap::COL_SEASON_TYPE_ID, SeasonTypeTableMap::COL_NAME, SeasonTypeTableMap::COL_DISPLAY, SeasonTypeTableMap::COL_UPDATE_TIME, SeasonTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('season_type_id', 'name', 'display', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -147,11 +122,11 @@ class SeasonTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('SeasonId' => 0, 'PointSystemId' => 1, 'Name' => 2, 'SeasonTypeId' => 3, 'FromDate' => 4, 'ToDate' => 5, 'Display' => 6, 'Reference' => 7, 'UpdateTime' => 8, 'UpdateUser' => 9, ),
-        self::TYPE_CAMELNAME     => array('seasonId' => 0, 'pointSystemId' => 1, 'name' => 2, 'seasonTypeId' => 3, 'fromDate' => 4, 'toDate' => 5, 'display' => 6, 'reference' => 7, 'updateTime' => 8, 'updateUser' => 9, ),
-        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID => 0, SeasonTableMap::COL_POINT_SYSTEM_ID => 1, SeasonTableMap::COL_NAME => 2, SeasonTableMap::COL_SEASON_TYPE_ID => 3, SeasonTableMap::COL_FROM_DATE => 4, SeasonTableMap::COL_TO_DATE => 5, SeasonTableMap::COL_DISPLAY => 6, SeasonTableMap::COL_REFERENCE => 7, SeasonTableMap::COL_UPDATE_TIME => 8, SeasonTableMap::COL_UPDATE_USER => 9, ),
-        self::TYPE_FIELDNAME     => array('season_id' => 0, 'point_system_id' => 1, 'name' => 2, 'season_type_id' => 3, 'from_date' => 4, 'to_date' => 5, 'display' => 6, 'reference' => 7, 'update_time' => 8, 'update_user' => 9, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('SeasonTypeId' => 0, 'Name' => 1, 'Display' => 2, 'UpdateTime' => 3, 'UpdateUser' => 4, ),
+        self::TYPE_CAMELNAME     => array('seasonTypeId' => 0, 'name' => 1, 'display' => 2, 'updateTime' => 3, 'updateUser' => 4, ),
+        self::TYPE_COLNAME       => array(SeasonTypeTableMap::COL_SEASON_TYPE_ID => 0, SeasonTypeTableMap::COL_NAME => 1, SeasonTypeTableMap::COL_DISPLAY => 2, SeasonTypeTableMap::COL_UPDATE_TIME => 3, SeasonTypeTableMap::COL_UPDATE_USER => 4, ),
+        self::TYPE_FIELDNAME     => array('season_type_id' => 0, 'name' => 1, 'display' => 2, 'update_time' => 3, 'update_user' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -164,23 +139,18 @@ class SeasonTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('season');
-        $this->setPhpName('Season');
+        $this->setName('season_type');
+        $this->setPhpName('SeasonType');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Season');
+        $this->setClassName('\\SeasonType');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('season_id', 'SeasonId', 'INTEGER', true, null, null);
-        $this->addForeignKey('point_system_id', 'PointSystemId', 'INTEGER', 'point_system', 'point_system_id', true, null, 1);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 100, null);
-        $this->addForeignKey('season_type_id', 'SeasonTypeId', 'INTEGER', 'season_type', 'season_type_id', true, null, null);
-        $this->addColumn('from_date', 'FromDate', 'DATE', false, null, null);
-        $this->addColumn('to_date', 'ToDate', 'DATE', false, null, null);
-        $this->addColumn('display', 'Display', 'VARCHAR', false, 250, null);
-        $this->addColumn('reference', 'Reference', 'VARCHAR', false, 250, null);
-        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
-        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
+        $this->addPrimaryKey('season_type_id', 'SeasonTypeId', 'INTEGER', true, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 150, null);
+        $this->addColumn('display', 'Display', 'VARCHAR', false, 150, null);
+        $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
+        $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
 
     /**
@@ -188,9 +158,7 @@ class SeasonTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
-        $this->addRelation('SeasonType', '\\SeasonType', RelationMap::MANY_TO_ONE, array('season_type_id' => 'season_type_id', ), null, null);
-        $this->addRelation('MileageType', '\\MileageType', RelationMap::ONE_TO_MANY, array('season_id' => 'season_id', ), null, null, 'MileageTypes');
+        $this->addRelation('Season', '\\Season', RelationMap::ONE_TO_MANY, array('season_type_id' => 'season_type_id', ), null, null, 'Seasons');
     } // buildRelations()
 
     /**
@@ -209,11 +177,11 @@ class SeasonTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('SeasonTypeId', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -233,7 +201,7 @@ class SeasonTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('SeasonTypeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -250,7 +218,7 @@ class SeasonTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? SeasonTableMap::CLASS_DEFAULT : SeasonTableMap::OM_CLASS;
+        return $withPrefix ? SeasonTypeTableMap::CLASS_DEFAULT : SeasonTypeTableMap::OM_CLASS;
     }
 
     /**
@@ -264,22 +232,22 @@ class SeasonTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Season object, last column rank)
+     * @return array           (SeasonType object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = SeasonTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = SeasonTableMap::getInstanceFromPool($key))) {
+        $key = SeasonTypeTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SeasonTypeTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + SeasonTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SeasonTypeTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = SeasonTableMap::OM_CLASS;
-            /** @var Season $obj */
+            $cls = SeasonTypeTableMap::OM_CLASS;
+            /** @var SeasonType $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            SeasonTableMap::addInstanceToPool($obj, $key);
+            SeasonTypeTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -302,18 +270,18 @@ class SeasonTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = SeasonTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = SeasonTableMap::getInstanceFromPool($key))) {
+            $key = SeasonTypeTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SeasonTypeTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Season $obj */
+                /** @var SeasonType $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                SeasonTableMap::addInstanceToPool($obj, $key);
+                SeasonTypeTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -334,25 +302,15 @@ class SeasonTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(SeasonTableMap::COL_SEASON_ID);
-            $criteria->addSelectColumn(SeasonTableMap::COL_POINT_SYSTEM_ID);
-            $criteria->addSelectColumn(SeasonTableMap::COL_NAME);
-            $criteria->addSelectColumn(SeasonTableMap::COL_SEASON_TYPE_ID);
-            $criteria->addSelectColumn(SeasonTableMap::COL_FROM_DATE);
-            $criteria->addSelectColumn(SeasonTableMap::COL_TO_DATE);
-            $criteria->addSelectColumn(SeasonTableMap::COL_DISPLAY);
-            $criteria->addSelectColumn(SeasonTableMap::COL_REFERENCE);
-            $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_TIME);
-            $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_USER);
+            $criteria->addSelectColumn(SeasonTypeTableMap::COL_SEASON_TYPE_ID);
+            $criteria->addSelectColumn(SeasonTypeTableMap::COL_NAME);
+            $criteria->addSelectColumn(SeasonTypeTableMap::COL_DISPLAY);
+            $criteria->addSelectColumn(SeasonTypeTableMap::COL_UPDATE_TIME);
+            $criteria->addSelectColumn(SeasonTypeTableMap::COL_UPDATE_USER);
         } else {
-            $criteria->addSelectColumn($alias . '.season_id');
-            $criteria->addSelectColumn($alias . '.point_system_id');
-            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.season_type_id');
-            $criteria->addSelectColumn($alias . '.from_date');
-            $criteria->addSelectColumn($alias . '.to_date');
+            $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.display');
-            $criteria->addSelectColumn($alias . '.reference');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }
@@ -367,7 +325,7 @@ class SeasonTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(SeasonTableMap::DATABASE_NAME)->getTable(SeasonTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SeasonTypeTableMap::DATABASE_NAME)->getTable(SeasonTypeTableMap::TABLE_NAME);
     }
 
     /**
@@ -375,16 +333,16 @@ class SeasonTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SeasonTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(SeasonTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new SeasonTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SeasonTypeTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SeasonTypeTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SeasonTypeTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Season or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a SeasonType or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Season object or primary key or array of primary keys
+     * @param mixed               $values Criteria or SeasonType object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -395,27 +353,27 @@ class SeasonTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTypeTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Season) { // it's a model object
+        } elseif ($values instanceof \SeasonType) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(SeasonTableMap::DATABASE_NAME);
-            $criteria->add(SeasonTableMap::COL_SEASON_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SeasonTypeTableMap::DATABASE_NAME);
+            $criteria->add(SeasonTypeTableMap::COL_SEASON_TYPE_ID, (array) $values, Criteria::IN);
         }
 
-        $query = SeasonQuery::create()->mergeWith($criteria);
+        $query = SeasonTypeQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            SeasonTableMap::clearInstancePool();
+            SeasonTypeTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                SeasonTableMap::removeInstanceFromPool($singleval);
+                SeasonTypeTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -423,20 +381,20 @@ class SeasonTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the season table.
+     * Deletes all rows from the season_type table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return SeasonQuery::create()->doDeleteAll($con);
+        return SeasonTypeQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Season or Criteria object.
+     * Performs an INSERT on the database, given a SeasonType or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Season object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or SeasonType object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -445,22 +403,22 @@ class SeasonTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTypeTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Season object
+            $criteria = $criteria->buildCriteria(); // build Criteria from SeasonType object
         }
 
-        if ($criteria->containsKey(SeasonTableMap::COL_SEASON_ID) && $criteria->keyContainsValue(SeasonTableMap::COL_SEASON_ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SeasonTableMap::COL_SEASON_ID.')');
+        if ($criteria->containsKey(SeasonTypeTableMap::COL_SEASON_TYPE_ID) && $criteria->keyContainsValue(SeasonTypeTableMap::COL_SEASON_TYPE_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SeasonTypeTableMap::COL_SEASON_TYPE_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = SeasonQuery::create()->mergeWith($criteria);
+        $query = SeasonTypeQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -469,7 +427,7 @@ class SeasonTableMap extends TableMap
         });
     }
 
-} // SeasonTableMap
+} // SeasonTypeTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-SeasonTableMap::buildTableMap();
+SeasonTypeTableMap::buildTableMap();
