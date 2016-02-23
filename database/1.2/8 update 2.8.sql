@@ -79,6 +79,15 @@ BEGIN
 		SELECT 'EXISTED table mileage';
 	end if;
 	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='display_long') THEN
+			ALTER TABLE `mileage`
+				CHANGE COLUMN `display` `display` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `value_in_yen`,
+				ADD COLUMN `display_long` VARCHAR(255) NULL COLLATE 'utf8_general_ci' AFTER `display`;
+		SELECT 'ADDED mileage.display_long';
+	else
+		SELECT 'EXISTED mileage.display_long';
+	end if;
+	
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_id') THEN
 			CREATE TABLE `season` (				
 				`season_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -151,14 +160,22 @@ BEGIN
 	end if;
 
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN	
-			if exists(select 1 from mileage_type) THEN	
+			if exists(select 1 from mileage_type where mileage_type_id=1) THEN	
 				ALTER TABLE `mileage`
-					ADD COLUMN `milage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles` ,
-					ADD CONSTRAINT `fk_milage_milage_type` FOREIGN KEY (`milage_type_id`) REFERENCES `milage_type` (`milage_type_id`);
-				SELECT 'Updated table mileage';
+					ADD COLUMN `mileage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles`,
+					ADD CONSTRAINT `fk_mileage_mileage_type` FOREIGN KEY (`mileage_type_id`) REFERENCES `mileage_type` (`mileage_type_id`);
+				SELECT 'Updated table mileage with mileage_type';
 			end if;
 	else
 		SELECT 'table mileage already up to date';
+	end if;
+
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='display') THEN	
+		ALTER TABLE `season`
+			ADD COLUMN `display` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `to_date`;
+		SELECT 'Updated table season with display';
+	else
+		SELECT 'table season already up to date';
 	end if;
 
 

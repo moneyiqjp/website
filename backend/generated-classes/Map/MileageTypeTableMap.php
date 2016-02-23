@@ -184,6 +184,7 @@ class MileageTypeTableMap extends TableMap
     {
         $this->addRelation('Season', '\\Season', RelationMap::MANY_TO_ONE, array('season_id' => 'season_id', ), null, null);
         $this->addRelation('FlightCost', '\\FlightCost', RelationMap::ONE_TO_MANY, array('mileage_type_id' => 'mileage_type_id', ), null, null, 'FlightCosts');
+        $this->addRelation('Mileage', '\\Mileage', RelationMap::ONE_TO_MANY, array('mileage_type_id' => 'mileage_type_id', ), null, null, 'Mileages');
     } // buildRelations()
 
     /**

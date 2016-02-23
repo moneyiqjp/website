@@ -59,7 +59,7 @@ class MileageTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 11;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class MileageTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 11;
 
     /**
      * the column name for the mileage_id field
@@ -97,6 +97,11 @@ class MileageTableMap extends TableMap
     const COL_REQUIRED_MILES = 'mileage.required_miles';
 
     /**
+     * the column name for the mileage_type_id field
+     */
+    const COL_MILEAGE_TYPE_ID = 'mileage.mileage_type_id';
+
+    /**
      * the column name for the value_in_yen field
      */
     const COL_VALUE_IN_YEN = 'mileage.value_in_yen';
@@ -105,6 +110,11 @@ class MileageTableMap extends TableMap
      * the column name for the display field
      */
     const COL_DISPLAY = 'mileage.display';
+
+    /**
+     * the column name for the display_long field
+     */
+    const COL_DISPLAY_LONG = 'mileage.display_long';
 
     /**
      * the column name for the update_time field
@@ -128,11 +138,11 @@ class MileageTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('MileageId', 'StoreId', 'PointSystemId', 'TripId', 'RequiredMiles', 'ValueInYen', 'Display', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('mileageId', 'storeId', 'pointSystemId', 'tripId', 'requiredMiles', 'valueInYen', 'display', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID, MileageTableMap::COL_STORE_ID, MileageTableMap::COL_POINT_SYSTEM_ID, MileageTableMap::COL_TRIP_ID, MileageTableMap::COL_REQUIRED_MILES, MileageTableMap::COL_VALUE_IN_YEN, MileageTableMap::COL_DISPLAY, MileageTableMap::COL_UPDATE_TIME, MileageTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('mileage_id', 'store_id', 'point_system_id', 'trip_id', 'required_miles', 'value_in_yen', 'display', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('MileageId', 'StoreId', 'PointSystemId', 'TripId', 'RequiredMiles', 'MileageTypeId', 'ValueInYen', 'Display', 'DisplayLong', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('mileageId', 'storeId', 'pointSystemId', 'tripId', 'requiredMiles', 'mileageTypeId', 'valueInYen', 'display', 'displayLong', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID, MileageTableMap::COL_STORE_ID, MileageTableMap::COL_POINT_SYSTEM_ID, MileageTableMap::COL_TRIP_ID, MileageTableMap::COL_REQUIRED_MILES, MileageTableMap::COL_MILEAGE_TYPE_ID, MileageTableMap::COL_VALUE_IN_YEN, MileageTableMap::COL_DISPLAY, MileageTableMap::COL_DISPLAY_LONG, MileageTableMap::COL_UPDATE_TIME, MileageTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('mileage_id', 'store_id', 'point_system_id', 'trip_id', 'required_miles', 'mileage_type_id', 'value_in_yen', 'display', 'display_long', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -142,11 +152,11 @@ class MileageTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('MileageId' => 0, 'StoreId' => 1, 'PointSystemId' => 2, 'TripId' => 3, 'RequiredMiles' => 4, 'ValueInYen' => 5, 'Display' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
-        self::TYPE_CAMELNAME     => array('mileageId' => 0, 'storeId' => 1, 'pointSystemId' => 2, 'tripId' => 3, 'requiredMiles' => 4, 'valueInYen' => 5, 'display' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
-        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID => 0, MileageTableMap::COL_STORE_ID => 1, MileageTableMap::COL_POINT_SYSTEM_ID => 2, MileageTableMap::COL_TRIP_ID => 3, MileageTableMap::COL_REQUIRED_MILES => 4, MileageTableMap::COL_VALUE_IN_YEN => 5, MileageTableMap::COL_DISPLAY => 6, MileageTableMap::COL_UPDATE_TIME => 7, MileageTableMap::COL_UPDATE_USER => 8, ),
-        self::TYPE_FIELDNAME     => array('mileage_id' => 0, 'store_id' => 1, 'point_system_id' => 2, 'trip_id' => 3, 'required_miles' => 4, 'value_in_yen' => 5, 'display' => 6, 'update_time' => 7, 'update_user' => 8, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        self::TYPE_PHPNAME       => array('MileageId' => 0, 'StoreId' => 1, 'PointSystemId' => 2, 'TripId' => 3, 'RequiredMiles' => 4, 'MileageTypeId' => 5, 'ValueInYen' => 6, 'Display' => 7, 'DisplayLong' => 8, 'UpdateTime' => 9, 'UpdateUser' => 10, ),
+        self::TYPE_CAMELNAME     => array('mileageId' => 0, 'storeId' => 1, 'pointSystemId' => 2, 'tripId' => 3, 'requiredMiles' => 4, 'mileageTypeId' => 5, 'valueInYen' => 6, 'display' => 7, 'displayLong' => 8, 'updateTime' => 9, 'updateUser' => 10, ),
+        self::TYPE_COLNAME       => array(MileageTableMap::COL_MILEAGE_ID => 0, MileageTableMap::COL_STORE_ID => 1, MileageTableMap::COL_POINT_SYSTEM_ID => 2, MileageTableMap::COL_TRIP_ID => 3, MileageTableMap::COL_REQUIRED_MILES => 4, MileageTableMap::COL_MILEAGE_TYPE_ID => 5, MileageTableMap::COL_VALUE_IN_YEN => 6, MileageTableMap::COL_DISPLAY => 7, MileageTableMap::COL_DISPLAY_LONG => 8, MileageTableMap::COL_UPDATE_TIME => 9, MileageTableMap::COL_UPDATE_USER => 10, ),
+        self::TYPE_FIELDNAME     => array('mileage_id' => 0, 'store_id' => 1, 'point_system_id' => 2, 'trip_id' => 3, 'required_miles' => 4, 'mileage_type_id' => 5, 'value_in_yen' => 6, 'display' => 7, 'display_long' => 8, 'update_time' => 9, 'update_user' => 10, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
     );
 
     /**
@@ -171,8 +181,10 @@ class MileageTableMap extends TableMap
         $this->addForeignKey('point_system_id', 'PointSystemId', 'INTEGER', 'point_system', 'point_system_id', true, null, null);
         $this->addForeignKey('trip_id', 'TripId', 'INTEGER', 'trip', 'trip_id', true, null, null);
         $this->addColumn('required_miles', 'RequiredMiles', 'INTEGER', true, null, null);
+        $this->addForeignKey('mileage_type_id', 'MileageTypeId', 'INTEGER', 'mileage_type', 'mileage_type_id', true, null, 1);
         $this->addColumn('value_in_yen', 'ValueInYen', 'INTEGER', true, null, null);
         $this->addColumn('display', 'Display', 'VARCHAR', false, 255, null);
+        $this->addColumn('display_long', 'DisplayLong', 'VARCHAR', false, 255, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', true, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', true, 100, null);
     } // initialize()
@@ -185,6 +197,7 @@ class MileageTableMap extends TableMap
         $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
         $this->addRelation('Store', '\\Store', RelationMap::MANY_TO_ONE, array('store_id' => 'store_id', ), null, null);
         $this->addRelation('Trip', '\\Trip', RelationMap::MANY_TO_ONE, array('trip_id' => 'trip_id', ), null, null);
+        $this->addRelation('MileageType', '\\MileageType', RelationMap::MANY_TO_ONE, array('mileage_type_id' => 'mileage_type_id', ), null, null);
     } // buildRelations()
 
     /**
@@ -333,8 +346,10 @@ class MileageTableMap extends TableMap
             $criteria->addSelectColumn(MileageTableMap::COL_POINT_SYSTEM_ID);
             $criteria->addSelectColumn(MileageTableMap::COL_TRIP_ID);
             $criteria->addSelectColumn(MileageTableMap::COL_REQUIRED_MILES);
+            $criteria->addSelectColumn(MileageTableMap::COL_MILEAGE_TYPE_ID);
             $criteria->addSelectColumn(MileageTableMap::COL_VALUE_IN_YEN);
             $criteria->addSelectColumn(MileageTableMap::COL_DISPLAY);
+            $criteria->addSelectColumn(MileageTableMap::COL_DISPLAY_LONG);
             $criteria->addSelectColumn(MileageTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(MileageTableMap::COL_UPDATE_USER);
         } else {
@@ -343,8 +358,10 @@ class MileageTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.point_system_id');
             $criteria->addSelectColumn($alias . '.trip_id');
             $criteria->addSelectColumn($alias . '.required_miles');
+            $criteria->addSelectColumn($alias . '.mileage_type_id');
             $criteria->addSelectColumn($alias . '.value_in_yen');
             $criteria->addSelectColumn($alias . '.display');
+            $criteria->addSelectColumn($alias . '.display_long');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

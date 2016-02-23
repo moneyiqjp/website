@@ -4,6 +4,8 @@ namespace Base;
 
 use \FlightCost as ChildFlightCost;
 use \FlightCostQuery as ChildFlightCostQuery;
+use \Mileage as ChildMileage;
+use \MileageQuery as ChildMileageQuery;
 use \MileageType as ChildMileageType;
 use \MileageTypeQuery as ChildMileageTypeQuery;
 use \Season as ChildSeason;
@@ -134,6 +136,12 @@ abstract class MileageType implements ActiveRecordInterface
     protected $collFlightCostsPartial;
 
     /**
+     * @var        ObjectCollection|ChildMileage[] Collection to store aggregation of ChildMileage objects.
+     */
+    protected $collMileages;
+    protected $collMileagesPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -146,6 +154,12 @@ abstract class MileageType implements ActiveRecordInterface
      * @var ObjectCollection|ChildFlightCost[]
      */
     protected $flightCostsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMileage[]
+     */
+    protected $mileagesScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -805,6 +819,8 @@ abstract class MileageType implements ActiveRecordInterface
             $this->aSeason = null;
             $this->collFlightCosts = null;
 
+            $this->collMileages = null;
+
         } // if (deep)
     }
 
@@ -938,6 +954,23 @@ abstract class MileageType implements ActiveRecordInterface
 
             if ($this->collFlightCosts !== null) {
                 foreach ($this->collFlightCosts as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->mileagesScheduledForDeletion !== null) {
+                if (!$this->mileagesScheduledForDeletion->isEmpty()) {
+                    \MileageQuery::create()
+                        ->filterByPrimaryKeys($this->mileagesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->mileagesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMileages !== null) {
+                foreach ($this->collMileages as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1199,6 +1232,21 @@ abstract class MileageType implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collFlightCosts->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collMileages) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mileages';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'mileages';
+                        break;
+                    default:
+                        $key = 'Mileages';
+                }
+
+                $result[$key] = $this->collMileages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1488,6 +1536,12 @@ abstract class MileageType implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getMileages() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMileage($relObj->copy($deepCopy));
+                }
+            }
+
         } // if ($deepCopy)
 
         if ($makeNew) {
@@ -1582,6 +1636,9 @@ abstract class MileageType implements ActiveRecordInterface
     {
         if ('FlightCost' == $relationName) {
             return $this->initFlightCosts();
+        }
+        if ('Mileage' == $relationName) {
+            return $this->initMileages();
         }
     }
 
@@ -1854,6 +1911,299 @@ abstract class MileageType implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collMileages collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMileages()
+     */
+    public function clearMileages()
+    {
+        $this->collMileages = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMileages collection loaded partially.
+     */
+    public function resetPartialMileages($v = true)
+    {
+        $this->collMileagesPartial = $v;
+    }
+
+    /**
+     * Initializes the collMileages collection.
+     *
+     * By default this just sets the collMileages collection to an empty array (like clearcollMileages());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMileages($overrideExisting = true)
+    {
+        if (null !== $this->collMileages && !$overrideExisting) {
+            return;
+        }
+        $this->collMileages = new ObjectCollection();
+        $this->collMileages->setModel('\Mileage');
+    }
+
+    /**
+     * Gets an array of ChildMileage objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildMileageType is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
+     * @throws PropelException
+     */
+    public function getMileages(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMileagesPartial && !$this->isNew();
+        if (null === $this->collMileages || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMileages) {
+                // return empty collection
+                $this->initMileages();
+            } else {
+                $collMileages = ChildMileageQuery::create(null, $criteria)
+                    ->filterByMileageType($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMileagesPartial && count($collMileages)) {
+                        $this->initMileages(false);
+
+                        foreach ($collMileages as $obj) {
+                            if (false == $this->collMileages->contains($obj)) {
+                                $this->collMileages->append($obj);
+                            }
+                        }
+
+                        $this->collMileagesPartial = true;
+                    }
+
+                    return $collMileages;
+                }
+
+                if ($partial && $this->collMileages) {
+                    foreach ($this->collMileages as $obj) {
+                        if ($obj->isNew()) {
+                            $collMileages[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMileages = $collMileages;
+                $this->collMileagesPartial = false;
+            }
+        }
+
+        return $this->collMileages;
+    }
+
+    /**
+     * Sets a collection of ChildMileage objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mileages A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildMileageType The current object (for fluent API support)
+     */
+    public function setMileages(Collection $mileages, ConnectionInterface $con = null)
+    {
+        /** @var ChildMileage[] $mileagesToDelete */
+        $mileagesToDelete = $this->getMileages(new Criteria(), $con)->diff($mileages);
+
+
+        $this->mileagesScheduledForDeletion = $mileagesToDelete;
+
+        foreach ($mileagesToDelete as $mileageRemoved) {
+            $mileageRemoved->setMileageType(null);
+        }
+
+        $this->collMileages = null;
+        foreach ($mileages as $mileage) {
+            $this->addMileage($mileage);
+        }
+
+        $this->collMileages = $mileages;
+        $this->collMileagesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Mileage objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Mileage objects.
+     * @throws PropelException
+     */
+    public function countMileages(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMileagesPartial && !$this->isNew();
+        if (null === $this->collMileages || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMileages) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMileages());
+            }
+
+            $query = ChildMileageQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByMileageType($this)
+                ->count($con);
+        }
+
+        return count($this->collMileages);
+    }
+
+    /**
+     * Method called to associate a ChildMileage object to this object
+     * through the ChildMileage foreign key attribute.
+     *
+     * @param  ChildMileage $l ChildMileage
+     * @return $this|\MileageType The current object (for fluent API support)
+     */
+    public function addMileage(ChildMileage $l)
+    {
+        if ($this->collMileages === null) {
+            $this->initMileages();
+            $this->collMileagesPartial = true;
+        }
+
+        if (!$this->collMileages->contains($l)) {
+            $this->doAddMileage($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMileage $mileage The ChildMileage object to add.
+     */
+    protected function doAddMileage(ChildMileage $mileage)
+    {
+        $this->collMileages[]= $mileage;
+        $mileage->setMileageType($this);
+    }
+
+    /**
+     * @param  ChildMileage $mileage The ChildMileage object to remove.
+     * @return $this|ChildMileageType The current object (for fluent API support)
+     */
+    public function removeMileage(ChildMileage $mileage)
+    {
+        if ($this->getMileages()->contains($mileage)) {
+            $pos = $this->collMileages->search($mileage);
+            $this->collMileages->remove($pos);
+            if (null === $this->mileagesScheduledForDeletion) {
+                $this->mileagesScheduledForDeletion = clone $this->collMileages;
+                $this->mileagesScheduledForDeletion->clear();
+            }
+            $this->mileagesScheduledForDeletion[]= clone $mileage;
+            $mileage->setMileageType(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this MileageType is new, it will return
+     * an empty collection; or if this MileageType has previously
+     * been saved, it will retrieve related Mileages from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in MileageType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
+     */
+    public function getMileagesJoinPointSystem(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMileageQuery::create(null, $criteria);
+        $query->joinWith('PointSystem', $joinBehavior);
+
+        return $this->getMileages($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this MileageType is new, it will return
+     * an empty collection; or if this MileageType has previously
+     * been saved, it will retrieve related Mileages from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in MileageType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
+     */
+    public function getMileagesJoinStore(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMileageQuery::create(null, $criteria);
+        $query->joinWith('Store', $joinBehavior);
+
+        return $this->getMileages($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this MileageType is new, it will return
+     * an empty collection; or if this MileageType has previously
+     * been saved, it will retrieve related Mileages from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in MileageType.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildMileage[] List of ChildMileage objects
+     */
+    public function getMileagesJoinTrip(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildMileageQuery::create(null, $criteria);
+        $query->joinWith('Trip', $joinBehavior);
+
+        return $this->getMileages($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1896,9 +2246,15 @@ abstract class MileageType implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collMileages) {
+                foreach ($this->collMileages as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collFlightCosts = null;
+        $this->collMileages = null;
         $this->aSeason = null;
     }
 

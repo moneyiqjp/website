@@ -3,6 +3,8 @@
 namespace Base;
 
 use \MileageQuery as ChildMileageQuery;
+use \MileageType as ChildMileageType;
+use \MileageTypeQuery as ChildMileageTypeQuery;
 use \PointSystem as ChildPointSystem;
 use \PointSystemQuery as ChildPointSystemQuery;
 use \Store as ChildStore;
@@ -98,6 +100,13 @@ abstract class Mileage implements ActiveRecordInterface
     protected $required_miles;
 
     /**
+     * The value for the mileage_type_id field.
+     * Note: this column has a database default value of: 1
+     * @var        int
+     */
+    protected $mileage_type_id;
+
+    /**
      * The value for the value_in_yen field.
      * @var        int
      */
@@ -108,6 +117,12 @@ abstract class Mileage implements ActiveRecordInterface
      * @var        string
      */
     protected $display;
+
+    /**
+     * The value for the display_long field.
+     * @var        string
+     */
+    protected $display_long;
 
     /**
      * The value for the update_time field.
@@ -137,6 +152,11 @@ abstract class Mileage implements ActiveRecordInterface
     protected $aTrip;
 
     /**
+     * @var        ChildMileageType
+     */
+    protected $aMileageType;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -145,10 +165,23 @@ abstract class Mileage implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
+     * Applies default values to this object.
+     * This method should be called from the object's constructor (or
+     * equivalent initialization method).
+     * @see __construct()
+     */
+    public function applyDefaultValues()
+    {
+        $this->mileage_type_id = 1;
+    }
+
+    /**
      * Initializes internal state of Base\Mileage object.
+     * @see applyDefaults()
      */
     public function __construct()
     {
+        $this->applyDefaultValues();
     }
 
     /**
@@ -412,6 +445,16 @@ abstract class Mileage implements ActiveRecordInterface
     }
 
     /**
+     * Get the [mileage_type_id] column value.
+     *
+     * @return int
+     */
+    public function getMileageTypeId()
+    {
+        return $this->mileage_type_id;
+    }
+
+    /**
      * Get the [value_in_yen] column value.
      *
      * @return int
@@ -429,6 +472,16 @@ abstract class Mileage implements ActiveRecordInterface
     public function getDisplay()
     {
         return $this->display;
+    }
+
+    /**
+     * Get the [display_long] column value.
+     *
+     * @return string
+     */
+    public function getDisplayLong()
+    {
+        return $this->display_long;
     }
 
     /**
@@ -574,6 +627,30 @@ abstract class Mileage implements ActiveRecordInterface
     } // setRequiredMiles()
 
     /**
+     * Set the value of [mileage_type_id] column.
+     *
+     * @param  int $v new value
+     * @return $this|\Mileage The current object (for fluent API support)
+     */
+    public function setMileageTypeId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->mileage_type_id !== $v) {
+            $this->mileage_type_id = $v;
+            $this->modifiedColumns[MileageTableMap::COL_MILEAGE_TYPE_ID] = true;
+        }
+
+        if ($this->aMileageType !== null && $this->aMileageType->getMileageTypeId() !== $v) {
+            $this->aMileageType = null;
+        }
+
+        return $this;
+    } // setMileageTypeId()
+
+    /**
      * Set the value of [value_in_yen] column.
      *
      * @param  int $v new value
@@ -612,6 +689,26 @@ abstract class Mileage implements ActiveRecordInterface
 
         return $this;
     } // setDisplay()
+
+    /**
+     * Set the value of [display_long] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Mileage The current object (for fluent API support)
+     */
+    public function setDisplayLong($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->display_long !== $v) {
+            $this->display_long = $v;
+            $this->modifiedColumns[MileageTableMap::COL_DISPLAY_LONG] = true;
+        }
+
+        return $this;
+    } // setDisplayLong()
 
     /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
@@ -663,6 +760,10 @@ abstract class Mileage implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
+            if ($this->mileage_type_id !== 1) {
+                return false;
+            }
+
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -704,19 +805,25 @@ abstract class Mileage implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : MileageTableMap::translateFieldName('RequiredMiles', TableMap::TYPE_PHPNAME, $indexType)];
             $this->required_miles = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MileageTableMap::translateFieldName('ValueInYen', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : MileageTableMap::translateFieldName('MileageTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->mileage_type_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MileageTableMap::translateFieldName('ValueInYen', TableMap::TYPE_PHPNAME, $indexType)];
             $this->value_in_yen = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : MileageTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MileageTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : MileageTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : MileageTableMap::translateFieldName('DisplayLong', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->display_long = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : MileageTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : MileageTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : MileageTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -726,7 +833,7 @@ abstract class Mileage implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 9; // 9 = MileageTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = MileageTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Mileage'), 0, $e);
@@ -756,6 +863,9 @@ abstract class Mileage implements ActiveRecordInterface
         }
         if ($this->aTrip !== null && $this->trip_id !== $this->aTrip->getTripId()) {
             $this->aTrip = null;
+        }
+        if ($this->aMileageType !== null && $this->mileage_type_id !== $this->aMileageType->getMileageTypeId()) {
+            $this->aMileageType = null;
         }
     } // ensureConsistency
 
@@ -799,6 +909,7 @@ abstract class Mileage implements ActiveRecordInterface
             $this->aPointSystem = null;
             $this->aStore = null;
             $this->aTrip = null;
+            $this->aMileageType = null;
         } // if (deep)
     }
 
@@ -924,6 +1035,13 @@ abstract class Mileage implements ActiveRecordInterface
                 $this->setTrip($this->aTrip);
             }
 
+            if ($this->aMileageType !== null) {
+                if ($this->aMileageType->isModified() || $this->aMileageType->isNew()) {
+                    $affectedRows += $this->aMileageType->save($con);
+                }
+                $this->setMileageType($this->aMileageType);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -976,11 +1094,17 @@ abstract class Mileage implements ActiveRecordInterface
         if ($this->isColumnModified(MileageTableMap::COL_REQUIRED_MILES)) {
             $modifiedColumns[':p' . $index++]  = 'required_miles';
         }
+        if ($this->isColumnModified(MileageTableMap::COL_MILEAGE_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'mileage_type_id';
+        }
         if ($this->isColumnModified(MileageTableMap::COL_VALUE_IN_YEN)) {
             $modifiedColumns[':p' . $index++]  = 'value_in_yen';
         }
         if ($this->isColumnModified(MileageTableMap::COL_DISPLAY)) {
             $modifiedColumns[':p' . $index++]  = 'display';
+        }
+        if ($this->isColumnModified(MileageTableMap::COL_DISPLAY_LONG)) {
+            $modifiedColumns[':p' . $index++]  = 'display_long';
         }
         if ($this->isColumnModified(MileageTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
@@ -1014,11 +1138,17 @@ abstract class Mileage implements ActiveRecordInterface
                     case 'required_miles':
                         $stmt->bindValue($identifier, $this->required_miles, PDO::PARAM_INT);
                         break;
+                    case 'mileage_type_id':
+                        $stmt->bindValue($identifier, $this->mileage_type_id, PDO::PARAM_INT);
+                        break;
                     case 'value_in_yen':
                         $stmt->bindValue($identifier, $this->value_in_yen, PDO::PARAM_INT);
                         break;
                     case 'display':
                         $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
+                        break;
+                    case 'display_long':
+                        $stmt->bindValue($identifier, $this->display_long, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1104,15 +1234,21 @@ abstract class Mileage implements ActiveRecordInterface
                 return $this->getRequiredMiles();
                 break;
             case 5:
-                return $this->getValueInYen();
+                return $this->getMileageTypeId();
                 break;
             case 6:
-                return $this->getDisplay();
+                return $this->getValueInYen();
                 break;
             case 7:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 8:
+                return $this->getDisplayLong();
+                break;
+            case 9:
+                return $this->getUpdateTime();
+                break;
+            case 10:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1150,10 +1286,12 @@ abstract class Mileage implements ActiveRecordInterface
             $keys[2] => $this->getPointSystemId(),
             $keys[3] => $this->getTripId(),
             $keys[4] => $this->getRequiredMiles(),
-            $keys[5] => $this->getValueInYen(),
-            $keys[6] => $this->getDisplay(),
-            $keys[7] => $this->getUpdateTime(),
-            $keys[8] => $this->getUpdateUser(),
+            $keys[5] => $this->getMileageTypeId(),
+            $keys[6] => $this->getValueInYen(),
+            $keys[7] => $this->getDisplay(),
+            $keys[8] => $this->getDisplayLong(),
+            $keys[9] => $this->getUpdateTime(),
+            $keys[10] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1206,6 +1344,21 @@ abstract class Mileage implements ActiveRecordInterface
 
                 $result[$key] = $this->aTrip->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
+            if (null !== $this->aMileageType) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mileageType';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'mileage_type';
+                        break;
+                    default:
+                        $key = 'MileageType';
+                }
+
+                $result[$key] = $this->aMileageType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
         }
 
         return $result;
@@ -1256,15 +1409,21 @@ abstract class Mileage implements ActiveRecordInterface
                 $this->setRequiredMiles($value);
                 break;
             case 5:
-                $this->setValueInYen($value);
+                $this->setMileageTypeId($value);
                 break;
             case 6:
-                $this->setDisplay($value);
+                $this->setValueInYen($value);
                 break;
             case 7:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 8:
+                $this->setDisplayLong($value);
+                break;
+            case 9:
+                $this->setUpdateTime($value);
+                break;
+            case 10:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1309,16 +1468,22 @@ abstract class Mileage implements ActiveRecordInterface
             $this->setRequiredMiles($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setValueInYen($arr[$keys[5]]);
+            $this->setMileageTypeId($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setDisplay($arr[$keys[6]]);
+            $this->setValueInYen($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateTime($arr[$keys[7]]);
+            $this->setDisplay($arr[$keys[7]]);
         }
         if (array_key_exists($keys[8], $arr)) {
-            $this->setUpdateUser($arr[$keys[8]]);
+            $this->setDisplayLong($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setUpdateTime($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setUpdateUser($arr[$keys[10]]);
         }
     }
 
@@ -1376,11 +1541,17 @@ abstract class Mileage implements ActiveRecordInterface
         if ($this->isColumnModified(MileageTableMap::COL_REQUIRED_MILES)) {
             $criteria->add(MileageTableMap::COL_REQUIRED_MILES, $this->required_miles);
         }
+        if ($this->isColumnModified(MileageTableMap::COL_MILEAGE_TYPE_ID)) {
+            $criteria->add(MileageTableMap::COL_MILEAGE_TYPE_ID, $this->mileage_type_id);
+        }
         if ($this->isColumnModified(MileageTableMap::COL_VALUE_IN_YEN)) {
             $criteria->add(MileageTableMap::COL_VALUE_IN_YEN, $this->value_in_yen);
         }
         if ($this->isColumnModified(MileageTableMap::COL_DISPLAY)) {
             $criteria->add(MileageTableMap::COL_DISPLAY, $this->display);
+        }
+        if ($this->isColumnModified(MileageTableMap::COL_DISPLAY_LONG)) {
+            $criteria->add(MileageTableMap::COL_DISPLAY_LONG, $this->display_long);
         }
         if ($this->isColumnModified(MileageTableMap::COL_UPDATE_TIME)) {
             $criteria->add(MileageTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1478,8 +1649,10 @@ abstract class Mileage implements ActiveRecordInterface
         $copyObj->setPointSystemId($this->getPointSystemId());
         $copyObj->setTripId($this->getTripId());
         $copyObj->setRequiredMiles($this->getRequiredMiles());
+        $copyObj->setMileageTypeId($this->getMileageTypeId());
         $copyObj->setValueInYen($this->getValueInYen());
         $copyObj->setDisplay($this->getDisplay());
+        $copyObj->setDisplayLong($this->getDisplayLong());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
         if ($makeNew) {
@@ -1664,6 +1837,57 @@ abstract class Mileage implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a ChildMileageType object.
+     *
+     * @param  ChildMileageType $v
+     * @return $this|\Mileage The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setMileageType(ChildMileageType $v = null)
+    {
+        if ($v === null) {
+            $this->setMileageTypeId(1);
+        } else {
+            $this->setMileageTypeId($v->getMileageTypeId());
+        }
+
+        $this->aMileageType = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildMileageType object, it will not be re-added.
+        if ($v !== null) {
+            $v->addMileage($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildMileageType object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildMileageType The associated ChildMileageType object.
+     * @throws PropelException
+     */
+    public function getMileageType(ConnectionInterface $con = null)
+    {
+        if ($this->aMileageType === null && ($this->mileage_type_id !== null)) {
+            $this->aMileageType = ChildMileageTypeQuery::create()->findPk($this->mileage_type_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aMileageType->addMileages($this);
+             */
+        }
+
+        return $this->aMileageType;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1679,17 +1903,23 @@ abstract class Mileage implements ActiveRecordInterface
         if (null !== $this->aTrip) {
             $this->aTrip->removeMileage($this);
         }
+        if (null !== $this->aMileageType) {
+            $this->aMileageType->removeMileage($this);
+        }
         $this->mileage_id = null;
         $this->store_id = null;
         $this->point_system_id = null;
         $this->trip_id = null;
         $this->required_miles = null;
+        $this->mileage_type_id = null;
         $this->value_in_yen = null;
         $this->display = null;
+        $this->display_long = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
+        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1711,6 +1941,7 @@ abstract class Mileage implements ActiveRecordInterface
         $this->aPointSystem = null;
         $this->aStore = null;
         $this->aTrip = null;
+        $this->aMileageType = null;
     }
 
     /**

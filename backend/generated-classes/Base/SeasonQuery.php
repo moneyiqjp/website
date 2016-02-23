@@ -26,6 +26,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonQuery orderBySeasonType($order = Criteria::ASC) Order by the season_type column
  * @method     ChildSeasonQuery orderByFromDate($order = Criteria::ASC) Order by the from_date column
  * @method     ChildSeasonQuery orderByToDate($order = Criteria::ASC) Order by the to_date column
+ * @method     ChildSeasonQuery orderByDisplay($order = Criteria::ASC) Order by the display column
  * @method     ChildSeasonQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildSeasonQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -35,6 +36,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonQuery groupBySeasonType() Group by the season_type column
  * @method     ChildSeasonQuery groupByFromDate() Group by the from_date column
  * @method     ChildSeasonQuery groupByToDate() Group by the to_date column
+ * @method     ChildSeasonQuery groupByDisplay() Group by the display column
  * @method     ChildSeasonQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildSeasonQuery groupByUpdateUser() Group by the update_user column
  *
@@ -61,6 +63,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeason findOneBySeasonType(string $season_type) Return the first ChildSeason filtered by the season_type column
  * @method     ChildSeason findOneByFromDate(string $from_date) Return the first ChildSeason filtered by the from_date column
  * @method     ChildSeason findOneByToDate(string $to_date) Return the first ChildSeason filtered by the to_date column
+ * @method     ChildSeason findOneByDisplay(string $display) Return the first ChildSeason filtered by the display column
  * @method     ChildSeason findOneByUpdateTime(string $update_time) Return the first ChildSeason filtered by the update_time column
  * @method     ChildSeason findOneByUpdateUser(string $update_user) Return the first ChildSeason filtered by the update_user column
  *
@@ -71,6 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeason[]|ObjectCollection findBySeasonType(string $season_type) Return ChildSeason objects filtered by the season_type column
  * @method     ChildSeason[]|ObjectCollection findByFromDate(string $from_date) Return ChildSeason objects filtered by the from_date column
  * @method     ChildSeason[]|ObjectCollection findByToDate(string $to_date) Return ChildSeason objects filtered by the to_date column
+ * @method     ChildSeason[]|ObjectCollection findByDisplay(string $display) Return ChildSeason objects filtered by the display column
  * @method     ChildSeason[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildSeason objects filtered by the update_time column
  * @method     ChildSeason[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildSeason objects filtered by the update_user column
  * @method     ChildSeason[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -164,7 +168,7 @@ abstract class SeasonQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT season_id, point_system_id, name, season_type, from_date, to_date, update_time, update_user FROM season WHERE season_id = :p0';
+        $sql = 'SELECT season_id, point_system_id, name, season_type, from_date, to_date, display, update_time, update_user FROM season WHERE season_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -480,6 +484,35 @@ abstract class SeasonQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SeasonTableMap::COL_TO_DATE, $toDate, $comparison);
+    }
+
+    /**
+     * Filter the query on the display column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDisplay('fooValue');   // WHERE display = 'fooValue'
+     * $query->filterByDisplay('%fooValue%'); // WHERE display LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $display The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSeasonQuery The current query, for fluid interface
+     */
+    public function filterByDisplay($display = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($display)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $display)) {
+                $display = str_replace('*', '%', $display);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(SeasonTableMap::COL_DISPLAY, $display, $comparison);
     }
 
     /**

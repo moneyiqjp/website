@@ -59,7 +59,7 @@ class SeasonTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class SeasonTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the season_id field
@@ -102,6 +102,11 @@ class SeasonTableMap extends TableMap
     const COL_TO_DATE = 'season.to_date';
 
     /**
+     * the column name for the display field
+     */
+    const COL_DISPLAY = 'season.display';
+
+    /**
      * the column name for the update_time field
      */
     const COL_UPDATE_TIME = 'season.update_time';
@@ -123,11 +128,11 @@ class SeasonTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('SeasonId', 'PointSystemId', 'Name', 'SeasonType', 'FromDate', 'ToDate', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('seasonId', 'pointSystemId', 'name', 'seasonType', 'fromDate', 'toDate', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID, SeasonTableMap::COL_POINT_SYSTEM_ID, SeasonTableMap::COL_NAME, SeasonTableMap::COL_SEASON_TYPE, SeasonTableMap::COL_FROM_DATE, SeasonTableMap::COL_TO_DATE, SeasonTableMap::COL_UPDATE_TIME, SeasonTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('season_id', 'point_system_id', 'name', 'season_type', 'from_date', 'to_date', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('SeasonId', 'PointSystemId', 'Name', 'SeasonType', 'FromDate', 'ToDate', 'Display', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('seasonId', 'pointSystemId', 'name', 'seasonType', 'fromDate', 'toDate', 'display', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID, SeasonTableMap::COL_POINT_SYSTEM_ID, SeasonTableMap::COL_NAME, SeasonTableMap::COL_SEASON_TYPE, SeasonTableMap::COL_FROM_DATE, SeasonTableMap::COL_TO_DATE, SeasonTableMap::COL_DISPLAY, SeasonTableMap::COL_UPDATE_TIME, SeasonTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('season_id', 'point_system_id', 'name', 'season_type', 'from_date', 'to_date', 'display', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -137,11 +142,11 @@ class SeasonTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('SeasonId' => 0, 'PointSystemId' => 1, 'Name' => 2, 'SeasonType' => 3, 'FromDate' => 4, 'ToDate' => 5, 'UpdateTime' => 6, 'UpdateUser' => 7, ),
-        self::TYPE_CAMELNAME     => array('seasonId' => 0, 'pointSystemId' => 1, 'name' => 2, 'seasonType' => 3, 'fromDate' => 4, 'toDate' => 5, 'updateTime' => 6, 'updateUser' => 7, ),
-        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID => 0, SeasonTableMap::COL_POINT_SYSTEM_ID => 1, SeasonTableMap::COL_NAME => 2, SeasonTableMap::COL_SEASON_TYPE => 3, SeasonTableMap::COL_FROM_DATE => 4, SeasonTableMap::COL_TO_DATE => 5, SeasonTableMap::COL_UPDATE_TIME => 6, SeasonTableMap::COL_UPDATE_USER => 7, ),
-        self::TYPE_FIELDNAME     => array('season_id' => 0, 'point_system_id' => 1, 'name' => 2, 'season_type' => 3, 'from_date' => 4, 'to_date' => 5, 'update_time' => 6, 'update_user' => 7, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, )
+        self::TYPE_PHPNAME       => array('SeasonId' => 0, 'PointSystemId' => 1, 'Name' => 2, 'SeasonType' => 3, 'FromDate' => 4, 'ToDate' => 5, 'Display' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
+        self::TYPE_CAMELNAME     => array('seasonId' => 0, 'pointSystemId' => 1, 'name' => 2, 'seasonType' => 3, 'fromDate' => 4, 'toDate' => 5, 'display' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
+        self::TYPE_COLNAME       => array(SeasonTableMap::COL_SEASON_ID => 0, SeasonTableMap::COL_POINT_SYSTEM_ID => 1, SeasonTableMap::COL_NAME => 2, SeasonTableMap::COL_SEASON_TYPE => 3, SeasonTableMap::COL_FROM_DATE => 4, SeasonTableMap::COL_TO_DATE => 5, SeasonTableMap::COL_DISPLAY => 6, SeasonTableMap::COL_UPDATE_TIME => 7, SeasonTableMap::COL_UPDATE_USER => 8, ),
+        self::TYPE_FIELDNAME     => array('season_id' => 0, 'point_system_id' => 1, 'name' => 2, 'season_type' => 3, 'from_date' => 4, 'to_date' => 5, 'display' => 6, 'update_time' => 7, 'update_user' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -167,6 +172,7 @@ class SeasonTableMap extends TableMap
         $this->addColumn('season_type', 'SeasonType', 'VARCHAR', false, 100, null);
         $this->addColumn('from_date', 'FromDate', 'DATE', false, null, null);
         $this->addColumn('to_date', 'ToDate', 'DATE', false, null, null);
+        $this->addColumn('display', 'Display', 'VARCHAR', false, 250, null);
         $this->addColumn('update_time', 'UpdateTime', 'TIMESTAMP', false, null, null);
         $this->addColumn('update_user', 'UpdateUser', 'VARCHAR', false, 100, null);
     } // initialize()
@@ -327,6 +333,7 @@ class SeasonTableMap extends TableMap
             $criteria->addSelectColumn(SeasonTableMap::COL_SEASON_TYPE);
             $criteria->addSelectColumn(SeasonTableMap::COL_FROM_DATE);
             $criteria->addSelectColumn(SeasonTableMap::COL_TO_DATE);
+            $criteria->addSelectColumn(SeasonTableMap::COL_DISPLAY);
             $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_TIME);
             $criteria->addSelectColumn(SeasonTableMap::COL_UPDATE_USER);
         } else {
@@ -336,6 +343,7 @@ class SeasonTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.season_type');
             $criteria->addSelectColumn($alias . '.from_date');
             $criteria->addSelectColumn($alias . '.to_date');
+            $criteria->addSelectColumn($alias . '.display');
             $criteria->addSelectColumn($alias . '.update_time');
             $criteria->addSelectColumn($alias . '.update_user');
         }

@@ -25,8 +25,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageQuery orderByPointSystemId($order = Criteria::ASC) Order by the point_system_id column
  * @method     ChildMileageQuery orderByTripId($order = Criteria::ASC) Order by the trip_id column
  * @method     ChildMileageQuery orderByRequiredMiles($order = Criteria::ASC) Order by the required_miles column
+ * @method     ChildMileageQuery orderByMileageTypeId($order = Criteria::ASC) Order by the mileage_type_id column
  * @method     ChildMileageQuery orderByValueInYen($order = Criteria::ASC) Order by the value_in_yen column
  * @method     ChildMileageQuery orderByDisplay($order = Criteria::ASC) Order by the display column
+ * @method     ChildMileageQuery orderByDisplayLong($order = Criteria::ASC) Order by the display_long column
  * @method     ChildMileageQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildMileageQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
@@ -35,8 +37,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageQuery groupByPointSystemId() Group by the point_system_id column
  * @method     ChildMileageQuery groupByTripId() Group by the trip_id column
  * @method     ChildMileageQuery groupByRequiredMiles() Group by the required_miles column
+ * @method     ChildMileageQuery groupByMileageTypeId() Group by the mileage_type_id column
  * @method     ChildMileageQuery groupByValueInYen() Group by the value_in_yen column
  * @method     ChildMileageQuery groupByDisplay() Group by the display column
+ * @method     ChildMileageQuery groupByDisplayLong() Group by the display_long column
  * @method     ChildMileageQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildMileageQuery groupByUpdateUser() Group by the update_user column
  *
@@ -56,7 +60,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageQuery rightJoinTrip($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Trip relation
  * @method     ChildMileageQuery innerJoinTrip($relationAlias = null) Adds a INNER JOIN clause to the query using the Trip relation
  *
- * @method     \PointSystemQuery|\StoreQuery|\TripQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildMileageQuery leftJoinMileageType($relationAlias = null) Adds a LEFT JOIN clause to the query using the MileageType relation
+ * @method     ChildMileageQuery rightJoinMileageType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MileageType relation
+ * @method     ChildMileageQuery innerJoinMileageType($relationAlias = null) Adds a INNER JOIN clause to the query using the MileageType relation
+ *
+ * @method     \PointSystemQuery|\StoreQuery|\TripQuery|\MileageTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildMileage findOne(ConnectionInterface $con = null) Return the first ChildMileage matching the query
  * @method     ChildMileage findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMileage matching the query, or a new ChildMileage object populated from the query conditions when no match is found
@@ -66,8 +74,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileage findOneByPointSystemId(int $point_system_id) Return the first ChildMileage filtered by the point_system_id column
  * @method     ChildMileage findOneByTripId(int $trip_id) Return the first ChildMileage filtered by the trip_id column
  * @method     ChildMileage findOneByRequiredMiles(int $required_miles) Return the first ChildMileage filtered by the required_miles column
+ * @method     ChildMileage findOneByMileageTypeId(int $mileage_type_id) Return the first ChildMileage filtered by the mileage_type_id column
  * @method     ChildMileage findOneByValueInYen(int $value_in_yen) Return the first ChildMileage filtered by the value_in_yen column
  * @method     ChildMileage findOneByDisplay(string $display) Return the first ChildMileage filtered by the display column
+ * @method     ChildMileage findOneByDisplayLong(string $display_long) Return the first ChildMileage filtered by the display_long column
  * @method     ChildMileage findOneByUpdateTime(string $update_time) Return the first ChildMileage filtered by the update_time column
  * @method     ChildMileage findOneByUpdateUser(string $update_user) Return the first ChildMileage filtered by the update_user column
  *
@@ -77,8 +87,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileage[]|ObjectCollection findByPointSystemId(int $point_system_id) Return ChildMileage objects filtered by the point_system_id column
  * @method     ChildMileage[]|ObjectCollection findByTripId(int $trip_id) Return ChildMileage objects filtered by the trip_id column
  * @method     ChildMileage[]|ObjectCollection findByRequiredMiles(int $required_miles) Return ChildMileage objects filtered by the required_miles column
+ * @method     ChildMileage[]|ObjectCollection findByMileageTypeId(int $mileage_type_id) Return ChildMileage objects filtered by the mileage_type_id column
  * @method     ChildMileage[]|ObjectCollection findByValueInYen(int $value_in_yen) Return ChildMileage objects filtered by the value_in_yen column
  * @method     ChildMileage[]|ObjectCollection findByDisplay(string $display) Return ChildMileage objects filtered by the display column
+ * @method     ChildMileage[]|ObjectCollection findByDisplayLong(string $display_long) Return ChildMileage objects filtered by the display_long column
  * @method     ChildMileage[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildMileage objects filtered by the update_time column
  * @method     ChildMileage[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildMileage objects filtered by the update_user column
  * @method     ChildMileage[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
@@ -172,7 +184,7 @@ abstract class MileageQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT mileage_id, store_id, point_system_id, trip_id, required_miles, value_in_yen, display, update_time, update_user FROM mileage WHERE mileage_id = :p0';
+        $sql = 'SELECT mileage_id, store_id, point_system_id, trip_id, required_miles, mileage_type_id, value_in_yen, display, display_long, update_time, update_user FROM mileage WHERE mileage_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -474,6 +486,49 @@ abstract class MileageQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the mileage_type_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMileageTypeId(1234); // WHERE mileage_type_id = 1234
+     * $query->filterByMileageTypeId(array(12, 34)); // WHERE mileage_type_id IN (12, 34)
+     * $query->filterByMileageTypeId(array('min' => 12)); // WHERE mileage_type_id > 12
+     * </code>
+     *
+     * @see       filterByMileageType()
+     *
+     * @param     mixed $mileageTypeId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMileageQuery The current query, for fluid interface
+     */
+    public function filterByMileageTypeId($mileageTypeId = null, $comparison = null)
+    {
+        if (is_array($mileageTypeId)) {
+            $useMinMax = false;
+            if (isset($mileageTypeId['min'])) {
+                $this->addUsingAlias(MileageTableMap::COL_MILEAGE_TYPE_ID, $mileageTypeId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($mileageTypeId['max'])) {
+                $this->addUsingAlias(MileageTableMap::COL_MILEAGE_TYPE_ID, $mileageTypeId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(MileageTableMap::COL_MILEAGE_TYPE_ID, $mileageTypeId, $comparison);
+    }
+
+    /**
      * Filter the query on the value_in_yen column
      *
      * Example usage:
@@ -541,6 +596,35 @@ abstract class MileageQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(MileageTableMap::COL_DISPLAY, $display, $comparison);
+    }
+
+    /**
+     * Filter the query on the display_long column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDisplayLong('fooValue');   // WHERE display_long = 'fooValue'
+     * $query->filterByDisplayLong('%fooValue%'); // WHERE display_long LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $displayLong The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildMileageQuery The current query, for fluid interface
+     */
+    public function filterByDisplayLong($displayLong = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($displayLong)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $displayLong)) {
+                $displayLong = str_replace('*', '%', $displayLong);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(MileageTableMap::COL_DISPLAY_LONG, $displayLong, $comparison);
     }
 
     /**
@@ -844,6 +928,83 @@ abstract class MileageQuery extends ModelCriteria
         return $this
             ->joinTrip($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Trip', '\TripQuery');
+    }
+
+    /**
+     * Filter the query by a related \MileageType object
+     *
+     * @param \MileageType|ObjectCollection $mileageType The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildMileageQuery The current query, for fluid interface
+     */
+    public function filterByMileageType($mileageType, $comparison = null)
+    {
+        if ($mileageType instanceof \MileageType) {
+            return $this
+                ->addUsingAlias(MileageTableMap::COL_MILEAGE_TYPE_ID, $mileageType->getMileageTypeId(), $comparison);
+        } elseif ($mileageType instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(MileageTableMap::COL_MILEAGE_TYPE_ID, $mileageType->toKeyValue('PrimaryKey', 'MileageTypeId'), $comparison);
+        } else {
+            throw new PropelException('filterByMileageType() only accepts arguments of type \MileageType or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MileageType relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildMileageQuery The current query, for fluid interface
+     */
+    public function joinMileageType($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MileageType');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MileageType');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MileageType relation MileageType object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MileageTypeQuery A secondary query class using the current class as primary query
+     */
+    public function useMileageTypeQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMileageType($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MileageType', '\MileageTypeQuery');
     }
 
     /**

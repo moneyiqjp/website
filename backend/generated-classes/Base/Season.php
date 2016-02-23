@@ -105,6 +105,12 @@ abstract class Season implements ActiveRecordInterface
     protected $to_date;
 
     /**
+     * The value for the display field.
+     * @var        string
+     */
+    protected $display;
+
+    /**
      * The value for the update_time field.
      * @var        \DateTime
      */
@@ -452,6 +458,16 @@ abstract class Season implements ActiveRecordInterface
     }
 
     /**
+     * Get the [display] column value.
+     *
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
      * Get the [optionally formatted] temporal [update_time] column value.
      *
      *
@@ -606,6 +622,26 @@ abstract class Season implements ActiveRecordInterface
     } // setToDate()
 
     /**
+     * Set the value of [display] column.
+     *
+     * @param  string $v new value
+     * @return $this|\Season The current object (for fluent API support)
+     */
+    public function setDisplay($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->display !== $v) {
+            $this->display = $v;
+            $this->modifiedColumns[SeasonTableMap::COL_DISPLAY] = true;
+        }
+
+        return $this;
+    } // setDisplay()
+
+    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
@@ -709,13 +745,16 @@ abstract class Season implements ActiveRecordInterface
             }
             $this->to_date = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SeasonTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SeasonTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->display = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SeasonTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SeasonTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : SeasonTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -725,7 +764,7 @@ abstract class Season implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = SeasonTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = SeasonTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Season'), 0, $e);
@@ -975,6 +1014,9 @@ abstract class Season implements ActiveRecordInterface
         if ($this->isColumnModified(SeasonTableMap::COL_TO_DATE)) {
             $modifiedColumns[':p' . $index++]  = 'to_date';
         }
+        if ($this->isColumnModified(SeasonTableMap::COL_DISPLAY)) {
+            $modifiedColumns[':p' . $index++]  = 'display';
+        }
         if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
@@ -1009,6 +1051,9 @@ abstract class Season implements ActiveRecordInterface
                         break;
                     case 'to_date':
                         $stmt->bindValue($identifier, $this->to_date ? $this->to_date->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
+                        break;
+                    case 'display':
+                        $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -1097,9 +1142,12 @@ abstract class Season implements ActiveRecordInterface
                 return $this->getToDate();
                 break;
             case 6:
-                return $this->getUpdateTime();
+                return $this->getDisplay();
                 break;
             case 7:
+                return $this->getUpdateTime();
+                break;
+            case 8:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1138,8 +1186,9 @@ abstract class Season implements ActiveRecordInterface
             $keys[3] => $this->getSeasonType(),
             $keys[4] => $this->getFromDate(),
             $keys[5] => $this->getToDate(),
-            $keys[6] => $this->getUpdateTime(),
-            $keys[7] => $this->getUpdateUser(),
+            $keys[6] => $this->getDisplay(),
+            $keys[7] => $this->getUpdateTime(),
+            $keys[8] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1230,9 +1279,12 @@ abstract class Season implements ActiveRecordInterface
                 $this->setToDate($value);
                 break;
             case 6:
-                $this->setUpdateTime($value);
+                $this->setDisplay($value);
                 break;
             case 7:
+                $this->setUpdateTime($value);
+                break;
+            case 8:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1280,10 +1332,13 @@ abstract class Season implements ActiveRecordInterface
             $this->setToDate($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateTime($arr[$keys[6]]);
+            $this->setDisplay($arr[$keys[6]]);
         }
         if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateUser($arr[$keys[7]]);
+            $this->setUpdateTime($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setUpdateUser($arr[$keys[8]]);
         }
     }
 
@@ -1343,6 +1398,9 @@ abstract class Season implements ActiveRecordInterface
         }
         if ($this->isColumnModified(SeasonTableMap::COL_TO_DATE)) {
             $criteria->add(SeasonTableMap::COL_TO_DATE, $this->to_date);
+        }
+        if ($this->isColumnModified(SeasonTableMap::COL_DISPLAY)) {
+            $criteria->add(SeasonTableMap::COL_DISPLAY, $this->display);
         }
         if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_TIME)) {
             $criteria->add(SeasonTableMap::COL_UPDATE_TIME, $this->update_time);
@@ -1441,6 +1499,7 @@ abstract class Season implements ActiveRecordInterface
         $copyObj->setSeasonType($this->getSeasonType());
         $copyObj->setFromDate($this->getFromDate());
         $copyObj->setToDate($this->getToDate());
+        $copyObj->setDisplay($this->getDisplay());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
 
@@ -1786,6 +1845,7 @@ abstract class Season implements ActiveRecordInterface
         $this->season_type = null;
         $this->from_date = null;
         $this->to_date = null;
+        $this->display = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;

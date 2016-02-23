@@ -52,7 +52,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageTypeQuery rightJoinFlightCost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FlightCost relation
  * @method     ChildMileageTypeQuery innerJoinFlightCost($relationAlias = null) Adds a INNER JOIN clause to the query using the FlightCost relation
  *
- * @method     \SeasonQuery|\FlightCostQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildMileageTypeQuery leftJoinMileage($relationAlias = null) Adds a LEFT JOIN clause to the query using the Mileage relation
+ * @method     ChildMileageTypeQuery rightJoinMileage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Mileage relation
+ * @method     ChildMileageTypeQuery innerJoinMileage($relationAlias = null) Adds a INNER JOIN clause to the query using the Mileage relation
+ *
+ * @method     \SeasonQuery|\FlightCostQuery|\MileageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildMileageType findOne(ConnectionInterface $con = null) Return the first ChildMileageType matching the query
  * @method     ChildMileageType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMileageType matching the query, or a new ChildMileageType object populated from the query conditions when no match is found
@@ -731,6 +735,79 @@ abstract class MileageTypeQuery extends ModelCriteria
         return $this
             ->joinFlightCost($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'FlightCost', '\FlightCostQuery');
+    }
+
+    /**
+     * Filter the query by a related \Mileage object
+     *
+     * @param \Mileage|ObjectCollection $mileage  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildMileageTypeQuery The current query, for fluid interface
+     */
+    public function filterByMileage($mileage, $comparison = null)
+    {
+        if ($mileage instanceof \Mileage) {
+            return $this
+                ->addUsingAlias(MileageTypeTableMap::COL_MILEAGE_TYPE_ID, $mileage->getMileageTypeId(), $comparison);
+        } elseif ($mileage instanceof ObjectCollection) {
+            return $this
+                ->useMileageQuery()
+                ->filterByPrimaryKeys($mileage->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMileage() only accepts arguments of type \Mileage or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Mileage relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildMileageTypeQuery The current query, for fluid interface
+     */
+    public function joinMileage($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Mileage');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Mileage');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Mileage relation Mileage object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MileageQuery A secondary query class using the current class as primary query
+     */
+    public function useMileageQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinMileage($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Mileage', '\MileageQuery');
     }
 
     /**
