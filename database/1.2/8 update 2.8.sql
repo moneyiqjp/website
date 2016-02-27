@@ -147,9 +147,9 @@ BEGIN
 				`price` INT(15) NOT NULL,
 				`reference` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
 				PRIMARY KEY (`flight_cost_id`),
-				CONSTRAINT `fk_mileage_type_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`),
-				CONSTRAINT `fk_mileage_type_milage_type` FOREIGN KEY (`milage_type_id`) REFERENCES `milage_type` (`milage_type_id`),
-				CONSTRAINT `fk_mileage_type_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`)
+				CONSTRAINT `fk_flight_cost_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`),
+				CONSTRAINT `fk_flight_cost_milage_type` FOREIGN KEY (`mileage_type_id`) REFERENCES `mileage_type` (`mileage_type_id`),
+				CONSTRAINT `fk_flight_cost_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`)
 			)
 			COLLATE='utf8_general_ci',
 			ENGINE=InnoDB
@@ -162,7 +162,8 @@ BEGIN
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN	
 			if exists(select 1 from mileage_type where mileage_type_id=1) THEN	
 				ALTER TABLE `mileage`
-					ADD COLUMN `mileage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles`,
+					ADD COLUMN `mileage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles`;
+				ALTER TABLE `mileage`	
 					ADD CONSTRAINT `fk_mileage_mileage_type` FOREIGN KEY (`mileage_type_id`) REFERENCES `mileage_type` (`mileage_type_id`);
 				SELECT 'Updated table mileage with mileage_type';
 			end if;
@@ -227,7 +228,22 @@ BEGIN
 	else
 		SELECT 'table season already has season type id';
 	end if;
-	
+
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage_type' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_id') THEN	
+		ALTER TABLE `mileage_type`
+			ADD COLUMN `season_type_id` INT(11) NULL DEFAULT NULL AFTER `season_id`;
+		update mileage_type mt inner join season s on mt.season_id=s.season_id set mt.season_type_id=s.season_type_id;
+		ALTER TABLE `mileage_type` DROP COLUMN season_id;
+		
+		ALTER TABLE `mileage_type`	ALTER `season_id` DROP DEFAULT;
+		ALTER TABLE `mileage_type`	CHANGE COLUMN `season_type_id` `season_type_id` INT(11) NOT NULL AFTER `round_trip`;
+		ALTER TABLE `mileage_type`
+			ADD CONSTRAINT `fk_mileage_type_season` FOREIGN KEY (`season_type_id`) REFERENCES `season_type` (`season_type_id`);
+		SELECT 'Updated table season with season type id';
+	else
+		SELECT 'table season already has season type id';
+	end if;
+		
 END //
 DELIMITER ;
 CALL UpgradeMoneyIQ2_8(DATABASE());
