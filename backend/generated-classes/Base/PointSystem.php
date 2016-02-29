@@ -18,6 +18,8 @@ use \Reward as ChildReward;
 use \RewardQuery as ChildRewardQuery;
 use \Season as ChildSeason;
 use \SeasonQuery as ChildSeasonQuery;
+use \Zone as ChildZone;
+use \ZoneQuery as ChildZoneQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -164,6 +166,12 @@ abstract class PointSystem implements ActiveRecordInterface
     protected $collSeasonsPartial;
 
     /**
+     * @var        ObjectCollection|ChildZone[] Collection to store aggregation of ChildZone objects.
+     */
+    protected $collZones;
+    protected $collZonesPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -212,6 +220,12 @@ abstract class PointSystem implements ActiveRecordInterface
      * @var ObjectCollection|ChildSeason[]
      */
     protected $seasonsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildZone[]
+     */
+    protected $zonesScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -814,6 +828,8 @@ abstract class PointSystem implements ActiveRecordInterface
 
             $this->collSeasons = null;
 
+            $this->collZones = null;
+
         } // if (deep)
     }
 
@@ -1037,6 +1053,23 @@ abstract class PointSystem implements ActiveRecordInterface
 
             if ($this->collSeasons !== null) {
                 foreach ($this->collSeasons as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->zonesScheduledForDeletion !== null) {
+                if (!$this->zonesScheduledForDeletion->isEmpty()) {
+                    \ZoneQuery::create()
+                        ->filterByPrimaryKeys($this->zonesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->zonesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collZones !== null) {
+                foreach ($this->collZones as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1354,6 +1387,21 @@ abstract class PointSystem implements ActiveRecordInterface
 
                 $result[$key] = $this->collSeasons->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collZones) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'zones';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'zones';
+                        break;
+                    default:
+                        $key = 'Zones';
+                }
+
+                $result[$key] = $this->collZones->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
         }
 
         return $result;
@@ -1658,6 +1706,12 @@ abstract class PointSystem implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getZones() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addZone($relObj->copy($deepCopy));
+                }
+            }
+
         } // if ($deepCopy)
 
         if ($makeNew) {
@@ -1719,6 +1773,9 @@ abstract class PointSystem implements ActiveRecordInterface
         }
         if ('Season' == $relationName) {
             return $this->initSeasons();
+        }
+        if ('Zone' == $relationName) {
+            return $this->initZones();
         }
     }
 
@@ -3574,6 +3631,224 @@ abstract class PointSystem implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collZones collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addZones()
+     */
+    public function clearZones()
+    {
+        $this->collZones = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collZones collection loaded partially.
+     */
+    public function resetPartialZones($v = true)
+    {
+        $this->collZonesPartial = $v;
+    }
+
+    /**
+     * Initializes the collZones collection.
+     *
+     * By default this just sets the collZones collection to an empty array (like clearcollZones());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initZones($overrideExisting = true)
+    {
+        if (null !== $this->collZones && !$overrideExisting) {
+            return;
+        }
+        $this->collZones = new ObjectCollection();
+        $this->collZones->setModel('\Zone');
+    }
+
+    /**
+     * Gets an array of ChildZone objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPointSystem is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildZone[] List of ChildZone objects
+     * @throws PropelException
+     */
+    public function getZones(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZonesPartial && !$this->isNew();
+        if (null === $this->collZones || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collZones) {
+                // return empty collection
+                $this->initZones();
+            } else {
+                $collZones = ChildZoneQuery::create(null, $criteria)
+                    ->filterByPointSystem($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collZonesPartial && count($collZones)) {
+                        $this->initZones(false);
+
+                        foreach ($collZones as $obj) {
+                            if (false == $this->collZones->contains($obj)) {
+                                $this->collZones->append($obj);
+                            }
+                        }
+
+                        $this->collZonesPartial = true;
+                    }
+
+                    return $collZones;
+                }
+
+                if ($partial && $this->collZones) {
+                    foreach ($this->collZones as $obj) {
+                        if ($obj->isNew()) {
+                            $collZones[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collZones = $collZones;
+                $this->collZonesPartial = false;
+            }
+        }
+
+        return $this->collZones;
+    }
+
+    /**
+     * Sets a collection of ChildZone objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $zones A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function setZones(Collection $zones, ConnectionInterface $con = null)
+    {
+        /** @var ChildZone[] $zonesToDelete */
+        $zonesToDelete = $this->getZones(new Criteria(), $con)->diff($zones);
+
+
+        $this->zonesScheduledForDeletion = $zonesToDelete;
+
+        foreach ($zonesToDelete as $zoneRemoved) {
+            $zoneRemoved->setPointSystem(null);
+        }
+
+        $this->collZones = null;
+        foreach ($zones as $zone) {
+            $this->addZone($zone);
+        }
+
+        $this->collZones = $zones;
+        $this->collZonesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Zone objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Zone objects.
+     * @throws PropelException
+     */
+    public function countZones(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZonesPartial && !$this->isNew();
+        if (null === $this->collZones || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collZones) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getZones());
+            }
+
+            $query = ChildZoneQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPointSystem($this)
+                ->count($con);
+        }
+
+        return count($this->collZones);
+    }
+
+    /**
+     * Method called to associate a ChildZone object to this object
+     * through the ChildZone foreign key attribute.
+     *
+     * @param  ChildZone $l ChildZone
+     * @return $this|\PointSystem The current object (for fluent API support)
+     */
+    public function addZone(ChildZone $l)
+    {
+        if ($this->collZones === null) {
+            $this->initZones();
+            $this->collZonesPartial = true;
+        }
+
+        if (!$this->collZones->contains($l)) {
+            $this->doAddZone($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildZone $zone The ChildZone object to add.
+     */
+    protected function doAddZone(ChildZone $zone)
+    {
+        $this->collZones[]= $zone;
+        $zone->setPointSystem($this);
+    }
+
+    /**
+     * @param  ChildZone $zone The ChildZone object to remove.
+     * @return $this|ChildPointSystem The current object (for fluent API support)
+     */
+    public function removeZone(ChildZone $zone)
+    {
+        if ($this->getZones()->contains($zone)) {
+            $pos = $this->collZones->search($zone);
+            $this->collZones->remove($pos);
+            if (null === $this->zonesScheduledForDeletion) {
+                $this->zonesScheduledForDeletion = clone $this->collZones;
+                $this->zonesScheduledForDeletion->clear();
+            }
+            $this->zonesScheduledForDeletion[]= clone $zone;
+            $zone->setPointSystem(null);
+        }
+
+        return $this;
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -3641,6 +3916,11 @@ abstract class PointSystem implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collZones) {
+                foreach ($this->collZones as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collCardPointSystems = null;
@@ -3650,6 +3930,7 @@ abstract class PointSystem implements ActiveRecordInterface
         $this->collPointUses = null;
         $this->collRewards = null;
         $this->collSeasons = null;
+        $this->collZones = null;
     }
 
     /**

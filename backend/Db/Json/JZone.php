@@ -11,39 +11,34 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JSeason implements JSONInterface, JSONDisplay
+class JZone implements JSONInterface, JSONDisplay
 {
-    public $SeasonId;
+    public $ZoneId;
     public $PointSystem;
     public $Name;
-    public $Type;
     public $Display;
-    public $Reference;
     public $UpdateTime;
     public $UpdateUser;
 
     public function __toString() {
-        return " JSeason("
-            . $this->SeasonId . "|"
+        return " JZone("
+            . $this->ZoneId . "|"
             . $this->Name . "|"
-            . $this->Type . "|"
-            . $this->UpdateTime  . "/"
+            . $this->UpdateTime  . "|"
             . $this->PointSystem . "|"
         . ") ";
     }
 
-    public static function CREATE_FROM_DB(\Season $item) {
-        $mine = new JSeason();
-        $mine->SeasonId     = $item->getSeasonId();
+    public static function CREATE_FROM_DB(\Zone $item) {
+        $mine = new JZone();
+        $mine->ZoneId     = $item->getZoneId();
         $mine->PointSystem  = JPointSystem::CREATE_FROM_DB($item->getPointSystem());
         $mine->Name         = $item->getName();
-        $mine->Type         = JSeasonType::CREATE_FROM_DB($item->getSeasonType());
         $mine->Display      = $item->getDisplay();
         $time = new \DateTime();
         if(!is_null($item->getUpdateTime())) {
             $time = $item->getUpdateTime()->format(\DateTime::ISO8601);
         }
-        $mine->Reference = $item->getReference();
         $mine->UpdateTime = $time;
         $mine->UpdateUser = $item->getUpdateUser();
 
@@ -51,25 +46,25 @@ class JSeason implements JSONInterface, JSONDisplay
     }
 
 
-    public static function VALIDATE(JSeason $mine) {
+    public static function VALIDATE(JZone $mine) {
         if(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId))
             throw new JSONException("Did not receive 'PointSystem' field, which is required" . $mine);
 
         return $mine;
     }
 
-    public function isValid(JSeason $mine) {
+    public function isValid(JZone $mine) {
         return !(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId));
     }
 
     public static function CREATE_FROM_ARRAY($data)
     {
-        $mine = new JSeason();
-        if(ArrayUtils::KEY_EXISTS($data,'SeasonId')) {
-                $mine->SeasonId = $data['SeasonId'];
+        $mine = new JZone();
+        if(ArrayUtils::KEY_EXISTS($data,'ZoneId')) {
+                $mine->ZoneId = $data['ZoneId'];
                 $item = $mine->tryLoadFromDB();
                 if(!is_null($item)) {
-                    $mine = JSeason::CREATE_FROM_DB($item);
+                    $mine = JZone::CREATE_FROM_DB($item);
                 }
         }
         if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) {
@@ -77,18 +72,14 @@ class JSeason implements JSONInterface, JSONDisplay
         }
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
         if(is_null($mine->PointSystem)) throw new JSONException("Invalid point system specified " . json_encode($data));
-        if(ArrayUtils::KEY_EXISTS($data,'Type')) {
-            $mine->Type = JSeasonType::CREATE_FROM_ARRAY($data['Type']);
-        }
 
         if(ArrayUtils::KEY_EXISTS($data,'Display')) $mine->Display = $data['Display'];
-        if(ArrayUtils::KEY_EXISTS($data,'Reference')) $mine->Reference = $data['Reference'];
         if(ArrayUtils::KEY_EXISTS($data,'UpdateTime')) {
             $mine->UpdateTime = FieldUtils::DateTimeToISOString(new \DateTime($data['UpdateTime']));
         }
         if(ArrayUtils::KEY_EXISTS($data,'UpdateUser')) $mine->UpdateUser = $data['UpdateUser'];
 
-        return JSeason::VALIDATE($mine);
+        return JZone::VALIDATE($mine);
     }
 
     public function saveToDb()
@@ -103,8 +94,8 @@ class JSeason implements JSONInterface, JSONDisplay
 
     private function tryLoadFromDB(){
 
-        if(FieldUtils::ID_IS_DEFINED($this->SeasonId)) {
-            $item = \SeasonQuery::create()->findOneBySeasonId($this->SeasonId);
+        if(FieldUtils::ID_IS_DEFINED($this->ZoneId)) {
+            $item = \ZoneQuery::create()->findOneByZoneId($this->ZoneId);
             return $item;
         }
         return null;
@@ -113,13 +104,13 @@ class JSeason implements JSONInterface, JSONDisplay
     public function toDB()
     {
         $item =$this->tryLoadFromDB();
-        if(is_null($item)) $item = new \Season();
+        if(is_null($item)) $item = new \Zone();
         return $this->updateDB($item);
     }
 
-    public function updateDB(\Season &$item)
+    public function updateDB(\Zone &$item)
     {
-        if(FieldUtils::ID_IS_DEFINED($this->SeasonId)) $item->setSeasonId($this->SeasonId);
+        if(FieldUtils::ID_IS_DEFINED($this->ZoneId)) $item->setZoneId($this->ZoneId);
 
         if(!is_null($this->PointSystem) && FieldUtils::ID_IS_DEFINED($this->PointSystem->PointSystemId)) {
             $item->setPointSystemId($this->PointSystem->PointSystemId);
@@ -127,11 +118,6 @@ class JSeason implements JSONInterface, JSONDisplay
         if(FieldUtils::STRING_IS_DEFINED($this->Name)) $item->setName($this->Name);
         if(FieldUtils::IS_STRING($this->Display)) $item->setDisplay($this->Display);
 
-        if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->SeasonTypeId)) {
-            $item->setSeasonTypeId($this->Type->SeasonTypeId);
-        }
-
-        if(FieldUtils::IS_STRING($this->Reference)) $item->setReference($this->Reference);
 
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
@@ -140,18 +126,18 @@ class JSeason implements JSONInterface, JSONDisplay
     }
 
     public function getDisplay() {
-        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"%SEASONTYPE%";
+        $display = FieldUtils::STRING_IS_DEFINED($this->Display)?$this->Display:"%ZONENAME%";
 
         return $this->parseForDisplay($display);
     }
 
     public function parseForDisplay($display) {
-        if(!is_null($this->Type) && FieldUtils::ID_IS_DEFINED($this->Type->SeasonTypeId)) {
-            $display = $this->Type->parseForDisplay($display);
-            $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPE%", $this->Type->getDisplay());
+        if(!is_null($this->PointSystem) && FieldUtils::ID_IS_DEFINED($this->PointSystem->PointSystemId)) {
+            $display = $this->PointSystem->parseForDisplay($display);
+            $display = FieldUtils::replaceIfAvailable($display, "%POINTSYSTEM%", $this->PointSystem->getDisplay());
         }
 
-        $display = FieldUtils::replaceIfAvailable($display, "%SEASONNAME%", $this->Name);
+        $display = FieldUtils::replaceIfAvailable($display, "%ZONENAME%", $this->Name);
 
         return $display;
     }

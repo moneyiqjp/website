@@ -710,18 +710,18 @@
   <table name="mileage_type" idMethod="native" phpName="MileageType">
     <column name="mileage_type_id" phpName="MileageTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="round_trip" phpName="RoundTrip" type="TINYINT" required="true" defaultValue="0"/>
-    <column name="season_id" phpName="SeasonId" type="INTEGER" required="true"/>
+    <column name="season_type_id" phpName="SeasonTypeId" type="INTEGER"/>
     <column name="class" phpName="Class" type="VARCHAR" size="255"/>
     <column name="ticket_type" phpName="TicketType" type="VARCHAR" size="255"/>
     <column name="display" phpName="Display" type="VARCHAR" size="255"/>
     <column name="trip_length" phpName="TripLength" type="INTEGER" required="true"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
-    <foreign-key foreignTable="season" name="fk_mileage_type_season">
-      <reference local="season_id" foreign="season_id"/>
+    <foreign-key foreignTable="season_type" name="fk_mileage_type_season_type">
+      <reference local="season_type_id" foreign="season_type_id"/>
     </foreign-key>
-    <index name="fk_mileage_type_season">
-      <index-column name="season_id"/>
+    <index name="fk_mileage_type_season_type">
+      <index-column name="season_type_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
@@ -880,6 +880,16 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="region" idMethod="native" phpName="Region">
+    <column name="region_id" phpName="RegionId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="100"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="restriction_type" idMethod="native" phpName="RestrictionType">
     <column name="restriction_type_id" phpName="RestrictionTypeId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
@@ -1026,8 +1036,6 @@
     <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true" defaultValue="1"/>
     <column name="name" phpName="Name" type="VARCHAR" size="100"/>
     <column name="season_type_id" phpName="SeasonTypeId" type="INTEGER" required="true"/>
-    <column name="from_date" phpName="FromDate" type="DATE"/>
-    <column name="to_date" phpName="ToDate" type="DATE"/>
     <column name="display" phpName="Display" type="VARCHAR" size="250"/>
     <column name="reference" phpName="Reference" type="VARCHAR" size="250"/>
     <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
@@ -1043,6 +1051,23 @@
     </index>
     <index name="fk_season_season_type">
       <index-column name="season_type_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="season_date" idMethod="native" phpName="SeasonDate">
+    <column name="season_date_id" phpName="SeasonDateId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="zone_id" phpName="ZoneId" type="INTEGER" required="true"/>
+    <column name="from_date" phpName="FromDate" type="DATE"/>
+    <column name="to_date" phpName="ToDate" type="DATE"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP" required="true"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <foreign-key foreignTable="zone" name="FK_season_date_zone_id">
+      <reference local="zone_id" foreign="zone_id"/>
+    </foreign-key>
+    <index name="FK_season_date_zone_id">
+      <index-column name="zone_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
@@ -1147,6 +1172,41 @@
     <column name="time_beg" phpName="TimeBeg" type="TIMESTAMP" primaryKey="true" required="true"/>
     <column name="time_end" phpName="TimeEnd" type="TIMESTAMP"/>
     <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="zone" idMethod="native" phpName="Zone">
+    <column name="zone_id" phpName="ZoneId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="point_system_id" phpName="PointSystemId" type="INTEGER" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
+    <column name="display" phpName="Display" type="VARCHAR" size="100"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <foreign-key foreignTable="point_system" name="fk_zone_point_system">
+      <reference local="point_system_id" foreign="point_system_id"/>
+    </foreign-key>
+    <index name="fk_zone_point_system">
+      <index-column name="point_system_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="zone_city_map" idMethod="native" phpName="ZoneCityMap">
+    <column name="zone_id" phpName="ZoneId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="city_id" phpName="CityId" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="update_time" phpName="UpdateTime" type="TIMESTAMP"/>
+    <column name="update_user" phpName="UpdateUser" type="VARCHAR" size="100"/>
+    <foreign-key foreignTable="city" name="fk_zone_city_map_city">
+      <reference local="city_id" foreign="city_id"/>
+    </foreign-key>
+    <foreign-key foreignTable="zone" name="fk_zone_city_map_zone">
+      <reference local="zone_id" foreign="zone_id"/>
+    </foreign-key>
+    <index name="fk_zone_city_map_city">
+      <index-column name="city_id"/>
+    </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>

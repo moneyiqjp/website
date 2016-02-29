@@ -36,11 +36,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildSeasonTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
+ * @method     ChildSeasonTypeQuery leftJoinMileageType($relationAlias = null) Adds a LEFT JOIN clause to the query using the MileageType relation
+ * @method     ChildSeasonTypeQuery rightJoinMileageType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the MileageType relation
+ * @method     ChildSeasonTypeQuery innerJoinMileageType($relationAlias = null) Adds a INNER JOIN clause to the query using the MileageType relation
+ *
  * @method     ChildSeasonTypeQuery leftJoinSeason($relationAlias = null) Adds a LEFT JOIN clause to the query using the Season relation
  * @method     ChildSeasonTypeQuery rightJoinSeason($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Season relation
  * @method     ChildSeasonTypeQuery innerJoinSeason($relationAlias = null) Adds a INNER JOIN clause to the query using the Season relation
  *
- * @method     \SeasonQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \MileageTypeQuery|\SeasonQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildSeasonType findOne(ConnectionInterface $con = null) Return the first ChildSeasonType matching the query
  * @method     ChildSeasonType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSeasonType matching the query, or a new ChildSeasonType object populated from the query conditions when no match is found
@@ -407,6 +411,79 @@ abstract class SeasonTypeQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SeasonTypeTableMap::COL_UPDATE_USER, $updateUser, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \MileageType object
+     *
+     * @param \MileageType|ObjectCollection $mileageType  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildSeasonTypeQuery The current query, for fluid interface
+     */
+    public function filterByMileageType($mileageType, $comparison = null)
+    {
+        if ($mileageType instanceof \MileageType) {
+            return $this
+                ->addUsingAlias(SeasonTypeTableMap::COL_SEASON_TYPE_ID, $mileageType->getSeasonTypeId(), $comparison);
+        } elseif ($mileageType instanceof ObjectCollection) {
+            return $this
+                ->useMileageTypeQuery()
+                ->filterByPrimaryKeys($mileageType->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByMileageType() only accepts arguments of type \MileageType or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the MileageType relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSeasonTypeQuery The current query, for fluid interface
+     */
+    public function joinMileageType($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('MileageType');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'MileageType');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the MileageType relation MileageType object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \MileageTypeQuery A secondary query class using the current class as primary query
+     */
+    public function useMileageTypeQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinMileageType($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'MileageType', '\MileageTypeQuery');
     }
 
     /**

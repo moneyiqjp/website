@@ -4,18 +4,22 @@ namespace Base;
 
 use \PointSystem as ChildPointSystem;
 use \PointSystemQuery as ChildPointSystemQuery;
-use \SeasonQuery as ChildSeasonQuery;
-use \SeasonType as ChildSeasonType;
-use \SeasonTypeQuery as ChildSeasonTypeQuery;
+use \SeasonDate as ChildSeasonDate;
+use \SeasonDateQuery as ChildSeasonDateQuery;
+use \Zone as ChildZone;
+use \ZoneCityMap as ChildZoneCityMap;
+use \ZoneCityMapQuery as ChildZoneCityMapQuery;
+use \ZoneQuery as ChildZoneQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Map\SeasonTableMap;
+use Map\ZoneTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -25,18 +29,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'season' table.
+ * Base class that represents a row from the 'zone' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class Season implements ActiveRecordInterface
+abstract class Zone implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\SeasonTableMap';
+    const TABLE_MAP = '\\Map\\ZoneTableMap';
 
 
     /**
@@ -66,14 +70,13 @@ abstract class Season implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the season_id field.
+     * The value for the zone_id field.
      * @var        int
      */
-    protected $season_id;
+    protected $zone_id;
 
     /**
      * The value for the point_system_id field.
-     * Note: this column has a database default value of: 1
      * @var        int
      */
     protected $point_system_id;
@@ -85,22 +88,10 @@ abstract class Season implements ActiveRecordInterface
     protected $name;
 
     /**
-     * The value for the season_type_id field.
-     * @var        int
-     */
-    protected $season_type_id;
-
-    /**
      * The value for the display field.
      * @var        string
      */
     protected $display;
-
-    /**
-     * The value for the reference field.
-     * @var        string
-     */
-    protected $reference;
 
     /**
      * The value for the update_time field.
@@ -120,9 +111,16 @@ abstract class Season implements ActiveRecordInterface
     protected $aPointSystem;
 
     /**
-     * @var        ChildSeasonType
+     * @var        ObjectCollection|ChildSeasonDate[] Collection to store aggregation of ChildSeasonDate objects.
      */
-    protected $aSeasonType;
+    protected $collSeasonDates;
+    protected $collSeasonDatesPartial;
+
+    /**
+     * @var        ObjectCollection|ChildZoneCityMap[] Collection to store aggregation of ChildZoneCityMap objects.
+     */
+    protected $collZoneCityMaps;
+    protected $collZoneCityMapsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -133,23 +131,22 @@ abstract class Season implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Applies default values to this object.
-     * This method should be called from the object's constructor (or
-     * equivalent initialization method).
-     * @see __construct()
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSeasonDate[]
      */
-    public function applyDefaultValues()
-    {
-        $this->point_system_id = 1;
-    }
+    protected $seasonDatesScheduledForDeletion = null;
 
     /**
-     * Initializes internal state of Base\Season object.
-     * @see applyDefaults()
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildZoneCityMap[]
+     */
+    protected $zoneCityMapsScheduledForDeletion = null;
+
+    /**
+     * Initializes internal state of Base\Zone object.
      */
     public function __construct()
     {
-        $this->applyDefaultValues();
     }
 
     /**
@@ -241,9 +238,9 @@ abstract class Season implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Season</code> instance.  If
-     * <code>obj</code> is an instance of <code>Season</code>, delegates to
-     * <code>equals(Season)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Zone</code> instance.  If
+     * <code>obj</code> is an instance of <code>Zone</code>, delegates to
+     * <code>equals(Zone)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -309,7 +306,7 @@ abstract class Season implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Season The current object, for fluid interface
+     * @return $this|Zone The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -363,13 +360,13 @@ abstract class Season implements ActiveRecordInterface
     }
 
     /**
-     * Get the [season_id] column value.
+     * Get the [zone_id] column value.
      *
      * @return int
      */
-    public function getSeasonId()
+    public function getZoneId()
     {
-        return $this->season_id;
+        return $this->zone_id;
     }
 
     /**
@@ -393,16 +390,6 @@ abstract class Season implements ActiveRecordInterface
     }
 
     /**
-     * Get the [season_type_id] column value.
-     *
-     * @return int
-     */
-    public function getSeasonTypeId()
-    {
-        return $this->season_type_id;
-    }
-
-    /**
      * Get the [display] column value.
      *
      * @return string
@@ -410,16 +397,6 @@ abstract class Season implements ActiveRecordInterface
     public function getDisplay()
     {
         return $this->display;
-    }
-
-    /**
-     * Get the [reference] column value.
-     *
-     * @return string
-     */
-    public function getReference()
-    {
-        return $this->reference;
     }
 
     /**
@@ -453,30 +430,30 @@ abstract class Season implements ActiveRecordInterface
     }
 
     /**
-     * Set the value of [season_id] column.
+     * Set the value of [zone_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
-    public function setSeasonId($v)
+    public function setZoneId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->season_id !== $v) {
-            $this->season_id = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_SEASON_ID] = true;
+        if ($this->zone_id !== $v) {
+            $this->zone_id = $v;
+            $this->modifiedColumns[ZoneTableMap::COL_ZONE_ID] = true;
         }
 
         return $this;
-    } // setSeasonId()
+    } // setZoneId()
 
     /**
      * Set the value of [point_system_id] column.
      *
      * @param  int $v new value
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
     public function setPointSystemId($v)
     {
@@ -486,7 +463,7 @@ abstract class Season implements ActiveRecordInterface
 
         if ($this->point_system_id !== $v) {
             $this->point_system_id = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_POINT_SYSTEM_ID] = true;
+            $this->modifiedColumns[ZoneTableMap::COL_POINT_SYSTEM_ID] = true;
         }
 
         if ($this->aPointSystem !== null && $this->aPointSystem->getPointSystemId() !== $v) {
@@ -500,7 +477,7 @@ abstract class Season implements ActiveRecordInterface
      * Set the value of [name] column.
      *
      * @param  string $v new value
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -510,41 +487,17 @@ abstract class Season implements ActiveRecordInterface
 
         if ($this->name !== $v) {
             $this->name = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_NAME] = true;
+            $this->modifiedColumns[ZoneTableMap::COL_NAME] = true;
         }
 
         return $this;
     } // setName()
 
     /**
-     * Set the value of [season_type_id] column.
-     *
-     * @param  int $v new value
-     * @return $this|\Season The current object (for fluent API support)
-     */
-    public function setSeasonTypeId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->season_type_id !== $v) {
-            $this->season_type_id = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_SEASON_TYPE_ID] = true;
-        }
-
-        if ($this->aSeasonType !== null && $this->aSeasonType->getSeasonTypeId() !== $v) {
-            $this->aSeasonType = null;
-        }
-
-        return $this;
-    } // setSeasonTypeId()
-
-    /**
      * Set the value of [display] column.
      *
      * @param  string $v new value
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
     public function setDisplay($v)
     {
@@ -554,38 +507,18 @@ abstract class Season implements ActiveRecordInterface
 
         if ($this->display !== $v) {
             $this->display = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_DISPLAY] = true;
+            $this->modifiedColumns[ZoneTableMap::COL_DISPLAY] = true;
         }
 
         return $this;
     } // setDisplay()
 
     /**
-     * Set the value of [reference] column.
-     *
-     * @param  string $v new value
-     * @return $this|\Season The current object (for fluent API support)
-     */
-    public function setReference($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->reference !== $v) {
-            $this->reference = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_REFERENCE] = true;
-        }
-
-        return $this;
-    } // setReference()
-
-    /**
      * Sets the value of [update_time] column to a normalized version of the date/time value specified.
      *
      * @param  mixed $v string, integer (timestamp), or \DateTime value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
     public function setUpdateTime($v)
     {
@@ -593,7 +526,7 @@ abstract class Season implements ActiveRecordInterface
         if ($this->update_time !== null || $dt !== null) {
             if ($dt !== $this->update_time) {
                 $this->update_time = $dt;
-                $this->modifiedColumns[SeasonTableMap::COL_UPDATE_TIME] = true;
+                $this->modifiedColumns[ZoneTableMap::COL_UPDATE_TIME] = true;
             }
         } // if either are not null
 
@@ -604,7 +537,7 @@ abstract class Season implements ActiveRecordInterface
      * Set the value of [update_user] column.
      *
      * @param  string $v new value
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      */
     public function setUpdateUser($v)
     {
@@ -614,7 +547,7 @@ abstract class Season implements ActiveRecordInterface
 
         if ($this->update_user !== $v) {
             $this->update_user = $v;
-            $this->modifiedColumns[SeasonTableMap::COL_UPDATE_USER] = true;
+            $this->modifiedColumns[ZoneTableMap::COL_UPDATE_USER] = true;
         }
 
         return $this;
@@ -630,10 +563,6 @@ abstract class Season implements ActiveRecordInterface
      */
     public function hasOnlyDefaultValues()
     {
-            if ($this->point_system_id !== 1) {
-                return false;
-            }
-
         // otherwise, everything was equal, so return TRUE
         return true;
     } // hasOnlyDefaultValues()
@@ -660,31 +589,25 @@ abstract class Season implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SeasonTableMap::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->season_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : ZoneTableMap::translateFieldName('ZoneId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->zone_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SeasonTableMap::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : ZoneTableMap::translateFieldName('PointSystemId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->point_system_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SeasonTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : ZoneTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : SeasonTableMap::translateFieldName('SeasonTypeId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->season_type_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : SeasonTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : ZoneTableMap::translateFieldName('Display', TableMap::TYPE_PHPNAME, $indexType)];
             $this->display = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : SeasonTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->reference = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : SeasonTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : ZoneTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : SeasonTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ZoneTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -694,10 +617,10 @@ abstract class Season implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 8; // 8 = SeasonTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = ZoneTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Season'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Zone'), 0, $e);
         }
     }
 
@@ -718,9 +641,6 @@ abstract class Season implements ActiveRecordInterface
     {
         if ($this->aPointSystem !== null && $this->point_system_id !== $this->aPointSystem->getPointSystemId()) {
             $this->aPointSystem = null;
-        }
-        if ($this->aSeasonType !== null && $this->season_type_id !== $this->aSeasonType->getSeasonTypeId()) {
-            $this->aSeasonType = null;
         }
     } // ensureConsistency
 
@@ -745,13 +665,13 @@ abstract class Season implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(SeasonTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(ZoneTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildSeasonQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildZoneQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -762,7 +682,10 @@ abstract class Season implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aPointSystem = null;
-            $this->aSeasonType = null;
+            $this->collSeasonDates = null;
+
+            $this->collZoneCityMaps = null;
+
         } // if (deep)
     }
 
@@ -772,8 +695,8 @@ abstract class Season implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Season::setDeleted()
-     * @see Season::isDeleted()
+     * @see Zone::setDeleted()
+     * @see Zone::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -782,11 +705,11 @@ abstract class Season implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ZoneTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildSeasonQuery::create()
+            $deleteQuery = ChildZoneQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -817,7 +740,7 @@ abstract class Season implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(SeasonTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ZoneTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -836,7 +759,7 @@ abstract class Season implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                SeasonTableMap::addInstanceToPool($this);
+                ZoneTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -874,13 +797,6 @@ abstract class Season implements ActiveRecordInterface
                 $this->setPointSystem($this->aPointSystem);
             }
 
-            if ($this->aSeasonType !== null) {
-                if ($this->aSeasonType->isModified() || $this->aSeasonType->isNew()) {
-                    $affectedRows += $this->aSeasonType->save($con);
-                }
-                $this->setSeasonType($this->aSeasonType);
-            }
-
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -890,6 +806,40 @@ abstract class Season implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->seasonDatesScheduledForDeletion !== null) {
+                if (!$this->seasonDatesScheduledForDeletion->isEmpty()) {
+                    \SeasonDateQuery::create()
+                        ->filterByPrimaryKeys($this->seasonDatesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->seasonDatesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSeasonDates !== null) {
+                foreach ($this->collSeasonDates as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->zoneCityMapsScheduledForDeletion !== null) {
+                if (!$this->zoneCityMapsScheduledForDeletion->isEmpty()) {
+                    \ZoneCityMapQuery::create()
+                        ->filterByPrimaryKeys($this->zoneCityMapsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->zoneCityMapsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collZoneCityMaps !== null) {
+                foreach ($this->collZoneCityMaps as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -912,39 +862,33 @@ abstract class Season implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[SeasonTableMap::COL_SEASON_ID] = true;
-        if (null !== $this->season_id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . SeasonTableMap::COL_SEASON_ID . ')');
+        $this->modifiedColumns[ZoneTableMap::COL_ZONE_ID] = true;
+        if (null !== $this->zone_id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . ZoneTableMap::COL_ZONE_ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(SeasonTableMap::COL_SEASON_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'season_id';
+        if ($this->isColumnModified(ZoneTableMap::COL_ZONE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'zone_id';
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_POINT_SYSTEM_ID)) {
+        if ($this->isColumnModified(ZoneTableMap::COL_POINT_SYSTEM_ID)) {
             $modifiedColumns[':p' . $index++]  = 'point_system_id';
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_NAME)) {
+        if ($this->isColumnModified(ZoneTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_SEASON_TYPE_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'season_type_id';
-        }
-        if ($this->isColumnModified(SeasonTableMap::COL_DISPLAY)) {
+        if ($this->isColumnModified(ZoneTableMap::COL_DISPLAY)) {
             $modifiedColumns[':p' . $index++]  = 'display';
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_REFERENCE)) {
-            $modifiedColumns[':p' . $index++]  = 'reference';
-        }
-        if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_TIME)) {
+        if ($this->isColumnModified(ZoneTableMap::COL_UPDATE_TIME)) {
             $modifiedColumns[':p' . $index++]  = 'update_time';
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_USER)) {
+        if ($this->isColumnModified(ZoneTableMap::COL_UPDATE_USER)) {
             $modifiedColumns[':p' . $index++]  = 'update_user';
         }
 
         $sql = sprintf(
-            'INSERT INTO season (%s) VALUES (%s)',
+            'INSERT INTO zone (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -953,8 +897,8 @@ abstract class Season implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'season_id':
-                        $stmt->bindValue($identifier, $this->season_id, PDO::PARAM_INT);
+                    case 'zone_id':
+                        $stmt->bindValue($identifier, $this->zone_id, PDO::PARAM_INT);
                         break;
                     case 'point_system_id':
                         $stmt->bindValue($identifier, $this->point_system_id, PDO::PARAM_INT);
@@ -962,14 +906,8 @@ abstract class Season implements ActiveRecordInterface
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'season_type_id':
-                        $stmt->bindValue($identifier, $this->season_type_id, PDO::PARAM_INT);
-                        break;
                     case 'display':
                         $stmt->bindValue($identifier, $this->display, PDO::PARAM_STR);
-                        break;
-                    case 'reference':
-                        $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
                         break;
                     case 'update_time':
                         $stmt->bindValue($identifier, $this->update_time ? $this->update_time->format("Y-m-d H:i:s") : null, PDO::PARAM_STR);
@@ -990,7 +928,7 @@ abstract class Season implements ActiveRecordInterface
         } catch (Exception $e) {
             throw new PropelException('Unable to get autoincrement id.', 0, $e);
         }
-        $this->setSeasonId($pk);
+        $this->setZoneId($pk);
 
         $this->setNew(false);
     }
@@ -1023,7 +961,7 @@ abstract class Season implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = SeasonTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ZoneTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1040,7 +978,7 @@ abstract class Season implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getSeasonId();
+                return $this->getZoneId();
                 break;
             case 1:
                 return $this->getPointSystemId();
@@ -1049,18 +987,12 @@ abstract class Season implements ActiveRecordInterface
                 return $this->getName();
                 break;
             case 3:
-                return $this->getSeasonTypeId();
-                break;
-            case 4:
                 return $this->getDisplay();
                 break;
-            case 5:
-                return $this->getReference();
-                break;
-            case 6:
+            case 4:
                 return $this->getUpdateTime();
                 break;
-            case 7:
+            case 5:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -1087,20 +1019,18 @@ abstract class Season implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Season'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Zone'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Season'][$this->hashCode()] = true;
-        $keys = SeasonTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Zone'][$this->hashCode()] = true;
+        $keys = ZoneTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getSeasonId(),
+            $keys[0] => $this->getZoneId(),
             $keys[1] => $this->getPointSystemId(),
             $keys[2] => $this->getName(),
-            $keys[3] => $this->getSeasonTypeId(),
-            $keys[4] => $this->getDisplay(),
-            $keys[5] => $this->getReference(),
-            $keys[6] => $this->getUpdateTime(),
-            $keys[7] => $this->getUpdateUser(),
+            $keys[3] => $this->getDisplay(),
+            $keys[4] => $this->getUpdateTime(),
+            $keys[5] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1123,20 +1053,35 @@ abstract class Season implements ActiveRecordInterface
 
                 $result[$key] = $this->aPointSystem->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
-            if (null !== $this->aSeasonType) {
+            if (null !== $this->collSeasonDates) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'seasonType';
+                        $key = 'seasonDates';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'season_type';
+                        $key = 'season_dates';
                         break;
                     default:
-                        $key = 'SeasonType';
+                        $key = 'SeasonDates';
                 }
 
-                $result[$key] = $this->aSeasonType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->collSeasonDates->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collZoneCityMaps) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'zoneCityMaps';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'zone_city_maps';
+                        break;
+                    default:
+                        $key = 'ZoneCityMaps';
+                }
+
+                $result[$key] = $this->collZoneCityMaps->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1152,11 +1097,11 @@ abstract class Season implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Season
+     * @return $this|\Zone
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = SeasonTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = ZoneTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1167,13 +1112,13 @@ abstract class Season implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Season
+     * @return $this|\Zone
      */
     public function setByPosition($pos, $value)
     {
         switch ($pos) {
             case 0:
-                $this->setSeasonId($value);
+                $this->setZoneId($value);
                 break;
             case 1:
                 $this->setPointSystemId($value);
@@ -1182,18 +1127,12 @@ abstract class Season implements ActiveRecordInterface
                 $this->setName($value);
                 break;
             case 3:
-                $this->setSeasonTypeId($value);
-                break;
-            case 4:
                 $this->setDisplay($value);
                 break;
-            case 5:
-                $this->setReference($value);
-                break;
-            case 6:
+            case 4:
                 $this->setUpdateTime($value);
                 break;
-            case 7:
+            case 5:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -1220,10 +1159,10 @@ abstract class Season implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = SeasonTableMap::getFieldNames($keyType);
+        $keys = ZoneTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setSeasonId($arr[$keys[0]]);
+            $this->setZoneId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
             $this->setPointSystemId($arr[$keys[1]]);
@@ -1232,19 +1171,13 @@ abstract class Season implements ActiveRecordInterface
             $this->setName($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setSeasonTypeId($arr[$keys[3]]);
+            $this->setDisplay($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setDisplay($arr[$keys[4]]);
+            $this->setUpdateTime($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setReference($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setUpdateTime($arr[$keys[6]]);
-        }
-        if (array_key_exists($keys[7], $arr)) {
-            $this->setUpdateUser($arr[$keys[7]]);
+            $this->setUpdateUser($arr[$keys[5]]);
         }
     }
 
@@ -1265,7 +1198,7 @@ abstract class Season implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Season The current object, for fluid interface
+     * @return $this|\Zone The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1285,31 +1218,25 @@ abstract class Season implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(SeasonTableMap::DATABASE_NAME);
+        $criteria = new Criteria(ZoneTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(SeasonTableMap::COL_SEASON_ID)) {
-            $criteria->add(SeasonTableMap::COL_SEASON_ID, $this->season_id);
+        if ($this->isColumnModified(ZoneTableMap::COL_ZONE_ID)) {
+            $criteria->add(ZoneTableMap::COL_ZONE_ID, $this->zone_id);
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_POINT_SYSTEM_ID)) {
-            $criteria->add(SeasonTableMap::COL_POINT_SYSTEM_ID, $this->point_system_id);
+        if ($this->isColumnModified(ZoneTableMap::COL_POINT_SYSTEM_ID)) {
+            $criteria->add(ZoneTableMap::COL_POINT_SYSTEM_ID, $this->point_system_id);
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_NAME)) {
-            $criteria->add(SeasonTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(ZoneTableMap::COL_NAME)) {
+            $criteria->add(ZoneTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_SEASON_TYPE_ID)) {
-            $criteria->add(SeasonTableMap::COL_SEASON_TYPE_ID, $this->season_type_id);
+        if ($this->isColumnModified(ZoneTableMap::COL_DISPLAY)) {
+            $criteria->add(ZoneTableMap::COL_DISPLAY, $this->display);
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_DISPLAY)) {
-            $criteria->add(SeasonTableMap::COL_DISPLAY, $this->display);
+        if ($this->isColumnModified(ZoneTableMap::COL_UPDATE_TIME)) {
+            $criteria->add(ZoneTableMap::COL_UPDATE_TIME, $this->update_time);
         }
-        if ($this->isColumnModified(SeasonTableMap::COL_REFERENCE)) {
-            $criteria->add(SeasonTableMap::COL_REFERENCE, $this->reference);
-        }
-        if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_TIME)) {
-            $criteria->add(SeasonTableMap::COL_UPDATE_TIME, $this->update_time);
-        }
-        if ($this->isColumnModified(SeasonTableMap::COL_UPDATE_USER)) {
-            $criteria->add(SeasonTableMap::COL_UPDATE_USER, $this->update_user);
+        if ($this->isColumnModified(ZoneTableMap::COL_UPDATE_USER)) {
+            $criteria->add(ZoneTableMap::COL_UPDATE_USER, $this->update_user);
         }
 
         return $criteria;
@@ -1327,8 +1254,8 @@ abstract class Season implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildSeasonQuery::create();
-        $criteria->add(SeasonTableMap::COL_SEASON_ID, $this->season_id);
+        $criteria = ChildZoneQuery::create();
+        $criteria->add(ZoneTableMap::COL_ZONE_ID, $this->zone_id);
 
         return $criteria;
     }
@@ -1341,7 +1268,7 @@ abstract class Season implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getSeasonId();
+        $validPk = null !== $this->getZoneId();
 
         $validPrimaryKeyFKs = 0;
         $primaryKeyFKs = [];
@@ -1361,18 +1288,18 @@ abstract class Season implements ActiveRecordInterface
      */
     public function getPrimaryKey()
     {
-        return $this->getSeasonId();
+        return $this->getZoneId();
     }
 
     /**
-     * Generic method to set the primary key (season_id column).
+     * Generic method to set the primary key (zone_id column).
      *
      * @param       int $key Primary key.
      * @return void
      */
     public function setPrimaryKey($key)
     {
-        $this->setSeasonId($key);
+        $this->setZoneId($key);
     }
 
     /**
@@ -1381,7 +1308,7 @@ abstract class Season implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return null === $this->getSeasonId();
+        return null === $this->getZoneId();
     }
 
     /**
@@ -1390,7 +1317,7 @@ abstract class Season implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Season (or compatible) type.
+     * @param      object $copyObj An object of \Zone (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1399,14 +1326,32 @@ abstract class Season implements ActiveRecordInterface
     {
         $copyObj->setPointSystemId($this->getPointSystemId());
         $copyObj->setName($this->getName());
-        $copyObj->setSeasonTypeId($this->getSeasonTypeId());
         $copyObj->setDisplay($this->getDisplay());
-        $copyObj->setReference($this->getReference());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getSeasonDates() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSeasonDate($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getZoneCityMaps() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addZoneCityMap($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
-            $copyObj->setSeasonId(NULL); // this is a auto-increment column, so set to default value
+            $copyObj->setZoneId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1419,7 +1364,7 @@ abstract class Season implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Season Clone of current object.
+     * @return \Zone Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1436,13 +1381,13 @@ abstract class Season implements ActiveRecordInterface
      * Declares an association between this object and a ChildPointSystem object.
      *
      * @param  ChildPointSystem $v
-     * @return $this|\Season The current object (for fluent API support)
+     * @return $this|\Zone The current object (for fluent API support)
      * @throws PropelException
      */
     public function setPointSystem(ChildPointSystem $v = null)
     {
         if ($v === null) {
-            $this->setPointSystemId(1);
+            $this->setPointSystemId(NULL);
         } else {
             $this->setPointSystemId($v->getPointSystemId());
         }
@@ -1452,7 +1397,7 @@ abstract class Season implements ActiveRecordInterface
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildPointSystem object, it will not be re-added.
         if ($v !== null) {
-            $v->addSeason($this);
+            $v->addZone($this);
         }
 
 
@@ -1476,62 +1421,494 @@ abstract class Season implements ActiveRecordInterface
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aPointSystem->addSeasons($this);
+                $this->aPointSystem->addZones($this);
              */
         }
 
         return $this->aPointSystem;
     }
 
+
     /**
-     * Declares an association between this object and a ChildSeasonType object.
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
      *
-     * @param  ChildSeasonType $v
-     * @return $this|\Season The current object (for fluent API support)
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('SeasonDate' == $relationName) {
+            return $this->initSeasonDates();
+        }
+        if ('ZoneCityMap' == $relationName) {
+            return $this->initZoneCityMaps();
+        }
+    }
+
+    /**
+     * Clears out the collSeasonDates collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSeasonDates()
+     */
+    public function clearSeasonDates()
+    {
+        $this->collSeasonDates = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSeasonDates collection loaded partially.
+     */
+    public function resetPartialSeasonDates($v = true)
+    {
+        $this->collSeasonDatesPartial = $v;
+    }
+
+    /**
+     * Initializes the collSeasonDates collection.
+     *
+     * By default this just sets the collSeasonDates collection to an empty array (like clearcollSeasonDates());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSeasonDates($overrideExisting = true)
+    {
+        if (null !== $this->collSeasonDates && !$overrideExisting) {
+            return;
+        }
+        $this->collSeasonDates = new ObjectCollection();
+        $this->collSeasonDates->setModel('\SeasonDate');
+    }
+
+    /**
+     * Gets an array of ChildSeasonDate objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildZone is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSeasonDate[] List of ChildSeasonDate objects
      * @throws PropelException
      */
-    public function setSeasonType(ChildSeasonType $v = null)
+    public function getSeasonDates(Criteria $criteria = null, ConnectionInterface $con = null)
     {
-        if ($v === null) {
-            $this->setSeasonTypeId(NULL);
-        } else {
-            $this->setSeasonTypeId($v->getSeasonTypeId());
+        $partial = $this->collSeasonDatesPartial && !$this->isNew();
+        if (null === $this->collSeasonDates || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSeasonDates) {
+                // return empty collection
+                $this->initSeasonDates();
+            } else {
+                $collSeasonDates = ChildSeasonDateQuery::create(null, $criteria)
+                    ->filterByZone($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSeasonDatesPartial && count($collSeasonDates)) {
+                        $this->initSeasonDates(false);
+
+                        foreach ($collSeasonDates as $obj) {
+                            if (false == $this->collSeasonDates->contains($obj)) {
+                                $this->collSeasonDates->append($obj);
+                            }
+                        }
+
+                        $this->collSeasonDatesPartial = true;
+                    }
+
+                    return $collSeasonDates;
+                }
+
+                if ($partial && $this->collSeasonDates) {
+                    foreach ($this->collSeasonDates as $obj) {
+                        if ($obj->isNew()) {
+                            $collSeasonDates[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSeasonDates = $collSeasonDates;
+                $this->collSeasonDatesPartial = false;
+            }
         }
 
-        $this->aSeasonType = $v;
+        return $this->collSeasonDates;
+    }
 
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildSeasonType object, it will not be re-added.
-        if ($v !== null) {
-            $v->addSeason($this);
+    /**
+     * Sets a collection of ChildSeasonDate objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $seasonDates A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildZone The current object (for fluent API support)
+     */
+    public function setSeasonDates(Collection $seasonDates, ConnectionInterface $con = null)
+    {
+        /** @var ChildSeasonDate[] $seasonDatesToDelete */
+        $seasonDatesToDelete = $this->getSeasonDates(new Criteria(), $con)->diff($seasonDates);
+
+
+        $this->seasonDatesScheduledForDeletion = $seasonDatesToDelete;
+
+        foreach ($seasonDatesToDelete as $seasonDateRemoved) {
+            $seasonDateRemoved->setZone(null);
         }
 
+        $this->collSeasonDates = null;
+        foreach ($seasonDates as $seasonDate) {
+            $this->addSeasonDate($seasonDate);
+        }
+
+        $this->collSeasonDates = $seasonDates;
+        $this->collSeasonDatesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related SeasonDate objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related SeasonDate objects.
+     * @throws PropelException
+     */
+    public function countSeasonDates(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeasonDatesPartial && !$this->isNew();
+        if (null === $this->collSeasonDates || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSeasonDates) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSeasonDates());
+            }
+
+            $query = ChildSeasonDateQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByZone($this)
+                ->count($con);
+        }
+
+        return count($this->collSeasonDates);
+    }
+
+    /**
+     * Method called to associate a ChildSeasonDate object to this object
+     * through the ChildSeasonDate foreign key attribute.
+     *
+     * @param  ChildSeasonDate $l ChildSeasonDate
+     * @return $this|\Zone The current object (for fluent API support)
+     */
+    public function addSeasonDate(ChildSeasonDate $l)
+    {
+        if ($this->collSeasonDates === null) {
+            $this->initSeasonDates();
+            $this->collSeasonDatesPartial = true;
+        }
+
+        if (!$this->collSeasonDates->contains($l)) {
+            $this->doAddSeasonDate($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSeasonDate $seasonDate The ChildSeasonDate object to add.
+     */
+    protected function doAddSeasonDate(ChildSeasonDate $seasonDate)
+    {
+        $this->collSeasonDates[]= $seasonDate;
+        $seasonDate->setZone($this);
+    }
+
+    /**
+     * @param  ChildSeasonDate $seasonDate The ChildSeasonDate object to remove.
+     * @return $this|ChildZone The current object (for fluent API support)
+     */
+    public function removeSeasonDate(ChildSeasonDate $seasonDate)
+    {
+        if ($this->getSeasonDates()->contains($seasonDate)) {
+            $pos = $this->collSeasonDates->search($seasonDate);
+            $this->collSeasonDates->remove($pos);
+            if (null === $this->seasonDatesScheduledForDeletion) {
+                $this->seasonDatesScheduledForDeletion = clone $this->collSeasonDates;
+                $this->seasonDatesScheduledForDeletion->clear();
+            }
+            $this->seasonDatesScheduledForDeletion[]= clone $seasonDate;
+            $seasonDate->setZone(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Clears out the collZoneCityMaps collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addZoneCityMaps()
+     */
+    public function clearZoneCityMaps()
+    {
+        $this->collZoneCityMaps = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collZoneCityMaps collection loaded partially.
+     */
+    public function resetPartialZoneCityMaps($v = true)
+    {
+        $this->collZoneCityMapsPartial = $v;
+    }
+
+    /**
+     * Initializes the collZoneCityMaps collection.
+     *
+     * By default this just sets the collZoneCityMaps collection to an empty array (like clearcollZoneCityMaps());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initZoneCityMaps($overrideExisting = true)
+    {
+        if (null !== $this->collZoneCityMaps && !$overrideExisting) {
+            return;
+        }
+        $this->collZoneCityMaps = new ObjectCollection();
+        $this->collZoneCityMaps->setModel('\ZoneCityMap');
+    }
+
+    /**
+     * Gets an array of ChildZoneCityMap objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildZone is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildZoneCityMap[] List of ChildZoneCityMap objects
+     * @throws PropelException
+     */
+    public function getZoneCityMaps(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZoneCityMapsPartial && !$this->isNew();
+        if (null === $this->collZoneCityMaps || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collZoneCityMaps) {
+                // return empty collection
+                $this->initZoneCityMaps();
+            } else {
+                $collZoneCityMaps = ChildZoneCityMapQuery::create(null, $criteria)
+                    ->filterByZone($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collZoneCityMapsPartial && count($collZoneCityMaps)) {
+                        $this->initZoneCityMaps(false);
+
+                        foreach ($collZoneCityMaps as $obj) {
+                            if (false == $this->collZoneCityMaps->contains($obj)) {
+                                $this->collZoneCityMaps->append($obj);
+                            }
+                        }
+
+                        $this->collZoneCityMapsPartial = true;
+                    }
+
+                    return $collZoneCityMaps;
+                }
+
+                if ($partial && $this->collZoneCityMaps) {
+                    foreach ($this->collZoneCityMaps as $obj) {
+                        if ($obj->isNew()) {
+                            $collZoneCityMaps[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collZoneCityMaps = $collZoneCityMaps;
+                $this->collZoneCityMapsPartial = false;
+            }
+        }
+
+        return $this->collZoneCityMaps;
+    }
+
+    /**
+     * Sets a collection of ChildZoneCityMap objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $zoneCityMaps A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildZone The current object (for fluent API support)
+     */
+    public function setZoneCityMaps(Collection $zoneCityMaps, ConnectionInterface $con = null)
+    {
+        /** @var ChildZoneCityMap[] $zoneCityMapsToDelete */
+        $zoneCityMapsToDelete = $this->getZoneCityMaps(new Criteria(), $con)->diff($zoneCityMaps);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->zoneCityMapsScheduledForDeletion = clone $zoneCityMapsToDelete;
+
+        foreach ($zoneCityMapsToDelete as $zoneCityMapRemoved) {
+            $zoneCityMapRemoved->setZone(null);
+        }
+
+        $this->collZoneCityMaps = null;
+        foreach ($zoneCityMaps as $zoneCityMap) {
+            $this->addZoneCityMap($zoneCityMap);
+        }
+
+        $this->collZoneCityMaps = $zoneCityMaps;
+        $this->collZoneCityMapsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related ZoneCityMap objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related ZoneCityMap objects.
+     * @throws PropelException
+     */
+    public function countZoneCityMaps(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZoneCityMapsPartial && !$this->isNew();
+        if (null === $this->collZoneCityMaps || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collZoneCityMaps) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getZoneCityMaps());
+            }
+
+            $query = ChildZoneCityMapQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByZone($this)
+                ->count($con);
+        }
+
+        return count($this->collZoneCityMaps);
+    }
+
+    /**
+     * Method called to associate a ChildZoneCityMap object to this object
+     * through the ChildZoneCityMap foreign key attribute.
+     *
+     * @param  ChildZoneCityMap $l ChildZoneCityMap
+     * @return $this|\Zone The current object (for fluent API support)
+     */
+    public function addZoneCityMap(ChildZoneCityMap $l)
+    {
+        if ($this->collZoneCityMaps === null) {
+            $this->initZoneCityMaps();
+            $this->collZoneCityMapsPartial = true;
+        }
+
+        if (!$this->collZoneCityMaps->contains($l)) {
+            $this->doAddZoneCityMap($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildZoneCityMap $zoneCityMap The ChildZoneCityMap object to add.
+     */
+    protected function doAddZoneCityMap(ChildZoneCityMap $zoneCityMap)
+    {
+        $this->collZoneCityMaps[]= $zoneCityMap;
+        $zoneCityMap->setZone($this);
+    }
+
+    /**
+     * @param  ChildZoneCityMap $zoneCityMap The ChildZoneCityMap object to remove.
+     * @return $this|ChildZone The current object (for fluent API support)
+     */
+    public function removeZoneCityMap(ChildZoneCityMap $zoneCityMap)
+    {
+        if ($this->getZoneCityMaps()->contains($zoneCityMap)) {
+            $pos = $this->collZoneCityMaps->search($zoneCityMap);
+            $this->collZoneCityMaps->remove($pos);
+            if (null === $this->zoneCityMapsScheduledForDeletion) {
+                $this->zoneCityMapsScheduledForDeletion = clone $this->collZoneCityMaps;
+                $this->zoneCityMapsScheduledForDeletion->clear();
+            }
+            $this->zoneCityMapsScheduledForDeletion[]= clone $zoneCityMap;
+            $zoneCityMap->setZone(null);
+        }
 
         return $this;
     }
 
 
     /**
-     * Get the associated ChildSeasonType object
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Zone is new, it will return
+     * an empty collection; or if this Zone has previously
+     * been saved, it will retrieve related ZoneCityMaps from storage.
      *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildSeasonType The associated ChildSeasonType object.
-     * @throws PropelException
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Zone.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildZoneCityMap[] List of ChildZoneCityMap objects
      */
-    public function getSeasonType(ConnectionInterface $con = null)
+    public function getZoneCityMapsJoinCity(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
-        if ($this->aSeasonType === null && ($this->season_type_id !== null)) {
-            $this->aSeasonType = ChildSeasonTypeQuery::create()->findPk($this->season_type_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aSeasonType->addSeasons($this);
-             */
-        }
+        $query = ChildZoneCityMapQuery::create(null, $criteria);
+        $query->joinWith('City', $joinBehavior);
 
-        return $this->aSeasonType;
+        return $this->getZoneCityMaps($query, $con);
     }
 
     /**
@@ -1542,22 +1919,16 @@ abstract class Season implements ActiveRecordInterface
     public function clear()
     {
         if (null !== $this->aPointSystem) {
-            $this->aPointSystem->removeSeason($this);
+            $this->aPointSystem->removeZone($this);
         }
-        if (null !== $this->aSeasonType) {
-            $this->aSeasonType->removeSeason($this);
-        }
-        $this->season_id = null;
+        $this->zone_id = null;
         $this->point_system_id = null;
         $this->name = null;
-        $this->season_type_id = null;
         $this->display = null;
-        $this->reference = null;
         $this->update_time = null;
         $this->update_user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
-        $this->applyDefaultValues();
         $this->resetModified();
         $this->setNew(true);
         $this->setDeleted(false);
@@ -1574,10 +1945,21 @@ abstract class Season implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collSeasonDates) {
+                foreach ($this->collSeasonDates as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
+            if ($this->collZoneCityMaps) {
+                foreach ($this->collZoneCityMaps as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collSeasonDates = null;
+        $this->collZoneCityMaps = null;
         $this->aPointSystem = null;
-        $this->aSeasonType = null;
     }
 
     /**
@@ -1587,7 +1969,7 @@ abstract class Season implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(SeasonTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(ZoneTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

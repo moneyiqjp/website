@@ -82,9 +82,9 @@ class MileageTypeTableMap extends TableMap
     const COL_ROUND_TRIP = 'mileage_type.round_trip';
 
     /**
-     * the column name for the season_id field
+     * the column name for the season_type_id field
      */
-    const COL_SEASON_ID = 'mileage_type.season_id';
+    const COL_SEASON_TYPE_ID = 'mileage_type.season_type_id';
 
     /**
      * the column name for the class field
@@ -128,10 +128,10 @@ class MileageTypeTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('MileageTypeId', 'RoundTrip', 'SeasonId', 'Class', 'TicketType', 'Display', 'TripLength', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('mileageTypeId', 'roundTrip', 'seasonId', 'class', 'ticketType', 'display', 'tripLength', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(MileageTypeTableMap::COL_MILEAGE_TYPE_ID, MileageTypeTableMap::COL_ROUND_TRIP, MileageTypeTableMap::COL_SEASON_ID, MileageTypeTableMap::COL_CLASS, MileageTypeTableMap::COL_TICKET_TYPE, MileageTypeTableMap::COL_DISPLAY, MileageTypeTableMap::COL_TRIP_LENGTH, MileageTypeTableMap::COL_UPDATE_TIME, MileageTypeTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('mileage_type_id', 'round_trip', 'season_id', 'class', 'ticket_type', 'display', 'trip_length', 'update_time', 'update_user', ),
+        self::TYPE_PHPNAME       => array('MileageTypeId', 'RoundTrip', 'SeasonTypeId', 'Class', 'TicketType', 'Display', 'TripLength', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('mileageTypeId', 'roundTrip', 'seasonTypeId', 'class', 'ticketType', 'display', 'tripLength', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(MileageTypeTableMap::COL_MILEAGE_TYPE_ID, MileageTypeTableMap::COL_ROUND_TRIP, MileageTypeTableMap::COL_SEASON_TYPE_ID, MileageTypeTableMap::COL_CLASS, MileageTypeTableMap::COL_TICKET_TYPE, MileageTypeTableMap::COL_DISPLAY, MileageTypeTableMap::COL_TRIP_LENGTH, MileageTypeTableMap::COL_UPDATE_TIME, MileageTypeTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('mileage_type_id', 'round_trip', 'season_type_id', 'class', 'ticket_type', 'display', 'trip_length', 'update_time', 'update_user', ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
@@ -142,10 +142,10 @@ class MileageTypeTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('MileageTypeId' => 0, 'RoundTrip' => 1, 'SeasonId' => 2, 'Class' => 3, 'TicketType' => 4, 'Display' => 5, 'TripLength' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
-        self::TYPE_CAMELNAME     => array('mileageTypeId' => 0, 'roundTrip' => 1, 'seasonId' => 2, 'class' => 3, 'ticketType' => 4, 'display' => 5, 'tripLength' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
-        self::TYPE_COLNAME       => array(MileageTypeTableMap::COL_MILEAGE_TYPE_ID => 0, MileageTypeTableMap::COL_ROUND_TRIP => 1, MileageTypeTableMap::COL_SEASON_ID => 2, MileageTypeTableMap::COL_CLASS => 3, MileageTypeTableMap::COL_TICKET_TYPE => 4, MileageTypeTableMap::COL_DISPLAY => 5, MileageTypeTableMap::COL_TRIP_LENGTH => 6, MileageTypeTableMap::COL_UPDATE_TIME => 7, MileageTypeTableMap::COL_UPDATE_USER => 8, ),
-        self::TYPE_FIELDNAME     => array('mileage_type_id' => 0, 'round_trip' => 1, 'season_id' => 2, 'class' => 3, 'ticket_type' => 4, 'display' => 5, 'trip_length' => 6, 'update_time' => 7, 'update_user' => 8, ),
+        self::TYPE_PHPNAME       => array('MileageTypeId' => 0, 'RoundTrip' => 1, 'SeasonTypeId' => 2, 'Class' => 3, 'TicketType' => 4, 'Display' => 5, 'TripLength' => 6, 'UpdateTime' => 7, 'UpdateUser' => 8, ),
+        self::TYPE_CAMELNAME     => array('mileageTypeId' => 0, 'roundTrip' => 1, 'seasonTypeId' => 2, 'class' => 3, 'ticketType' => 4, 'display' => 5, 'tripLength' => 6, 'updateTime' => 7, 'updateUser' => 8, ),
+        self::TYPE_COLNAME       => array(MileageTypeTableMap::COL_MILEAGE_TYPE_ID => 0, MileageTypeTableMap::COL_ROUND_TRIP => 1, MileageTypeTableMap::COL_SEASON_TYPE_ID => 2, MileageTypeTableMap::COL_CLASS => 3, MileageTypeTableMap::COL_TICKET_TYPE => 4, MileageTypeTableMap::COL_DISPLAY => 5, MileageTypeTableMap::COL_TRIP_LENGTH => 6, MileageTypeTableMap::COL_UPDATE_TIME => 7, MileageTypeTableMap::COL_UPDATE_USER => 8, ),
+        self::TYPE_FIELDNAME     => array('mileage_type_id' => 0, 'round_trip' => 1, 'season_type_id' => 2, 'class' => 3, 'ticket_type' => 4, 'display' => 5, 'trip_length' => 6, 'update_time' => 7, 'update_user' => 8, ),
         self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
@@ -168,7 +168,7 @@ class MileageTypeTableMap extends TableMap
         // columns
         $this->addPrimaryKey('mileage_type_id', 'MileageTypeId', 'INTEGER', true, null, null);
         $this->addColumn('round_trip', 'RoundTrip', 'TINYINT', true, null, 0);
-        $this->addForeignKey('season_id', 'SeasonId', 'INTEGER', 'season', 'season_id', true, null, null);
+        $this->addForeignKey('season_type_id', 'SeasonTypeId', 'INTEGER', 'season_type', 'season_type_id', false, null, null);
         $this->addColumn('class', 'Class', 'VARCHAR', false, 255, null);
         $this->addColumn('ticket_type', 'TicketType', 'VARCHAR', false, 255, null);
         $this->addColumn('display', 'Display', 'VARCHAR', false, 255, null);
@@ -182,7 +182,7 @@ class MileageTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Season', '\\Season', RelationMap::MANY_TO_ONE, array('season_id' => 'season_id', ), null, null);
+        $this->addRelation('SeasonType', '\\SeasonType', RelationMap::MANY_TO_ONE, array('season_type_id' => 'season_type_id', ), null, null);
         $this->addRelation('FlightCost', '\\FlightCost', RelationMap::ONE_TO_MANY, array('mileage_type_id' => 'mileage_type_id', ), null, null, 'FlightCosts');
         $this->addRelation('Mileage', '\\Mileage', RelationMap::ONE_TO_MANY, array('mileage_type_id' => 'mileage_type_id', ), null, null, 'Mileages');
     } // buildRelations()
@@ -330,7 +330,7 @@ class MileageTypeTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(MileageTypeTableMap::COL_MILEAGE_TYPE_ID);
             $criteria->addSelectColumn(MileageTypeTableMap::COL_ROUND_TRIP);
-            $criteria->addSelectColumn(MileageTypeTableMap::COL_SEASON_ID);
+            $criteria->addSelectColumn(MileageTypeTableMap::COL_SEASON_TYPE_ID);
             $criteria->addSelectColumn(MileageTypeTableMap::COL_CLASS);
             $criteria->addSelectColumn(MileageTypeTableMap::COL_TICKET_TYPE);
             $criteria->addSelectColumn(MileageTypeTableMap::COL_DISPLAY);
@@ -340,7 +340,7 @@ class MileageTypeTableMap extends TableMap
         } else {
             $criteria->addSelectColumn($alias . '.mileage_type_id');
             $criteria->addSelectColumn($alias . '.round_trip');
-            $criteria->addSelectColumn($alias . '.season_id');
+            $criteria->addSelectColumn($alias . '.season_type_id');
             $criteria->addSelectColumn($alias . '.class');
             $criteria->addSelectColumn($alias . '.ticket_type');
             $criteria->addSelectColumn($alias . '.display');

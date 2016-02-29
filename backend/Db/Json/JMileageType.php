@@ -14,7 +14,7 @@ use Db\Utility\FieldUtils;
 class JMileageType implements JSONInterface, JSONDisplay
 {
     public $MileageTypeId;
-    public $Season;
+    public $SeasonType;
     public $Class;
     public $RoundTrip=0;
     public $TicketType;
@@ -28,7 +28,7 @@ class JMileageType implements JSONInterface, JSONDisplay
         $mine = new JMileageType();
         $mine->MileageTypeId = $item->getMileageTypeId();
         $mine->RoundTrip = $item->getRoundTrip();
-        $mine->Season = JSeason::CREATE_FROM_DB($item->getSeason());
+        $mine->SeasonType = JSeasonType::CREATE_FROM_DB($item->getSeasonType());
         $mine->Class = $item->getClass();
         $mine->TicketType = $item->getTicketType();
         $mine->TripLength = $item->getTripLength();
@@ -51,7 +51,7 @@ class JMileageType implements JSONInterface, JSONDisplay
             $item = $mine->tryLoadFromDB();
             if(!is_null($item)) $mine = JMileageType::CREATE_FROM_DB($item);
         }
-        if(ArrayUtils::KEY_EXISTS($data,'Season')) $mine->Season = JSeason::CREATE_FROM_ARRAY($data['Season']);
+        if(ArrayUtils::KEY_EXISTS($data,'SeasonType')) $mine->SeasonType = JSeasonType::CREATE_FROM_ARRAY($data['SeasonType']);
 
         if(ArrayUtils::KEY_EXISTS($data,'RoundTrip')) $mine->RoundTrip = $data['RoundTrip'];
         if(ArrayUtils::KEY_EXISTS($data,'Class')) $mine->Class =$data['Class'];
@@ -91,8 +91,8 @@ class JMileageType implements JSONInterface, JSONDisplay
     public function updateDB(\MileageType &$item) {
         if(FieldUtils::ID_IS_DEFINED($this->MileageTypeId)) $item->setMileageTypeId($this->MileageTypeId);
 
-        if(!is_null($this->Season) && FieldUtils::ID_IS_DEFINED( $this->Season->SeasonId)) {
-            $item->setSeasonId($this->Season->SeasonId);
+        if(!is_null($this->SeasonType) && FieldUtils::ID_IS_DEFINED( $this->SeasonType->SeasonTypeId)) {
+            $item->setSeasonTypeId($this->SeasonType->SeasonTypeId);
         }
         $item->SetRoundTrip($this->RoundTrip);
         if(FieldUtils::STRING_IS_DEFINED($this->Class)) $item->setClass($this->Class);
@@ -114,8 +114,8 @@ class JMileageType implements JSONInterface, JSONDisplay
     }
 
     public function parseForDisplay($display) {
-        if(!is_null($this->Season)) {
-            $display = $this->Season->parseForDisplay($display);
+        if(!is_null($this->SeasonType)) {
+            $display = $this->SeasonType->parseForDisplay($display);
         }
 
         $display = FieldUtils::replaceIfAvailable($display, "%MILEAGECLASS%", $this->Class);

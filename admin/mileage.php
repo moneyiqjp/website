@@ -16,6 +16,7 @@
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" src="//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js"></script>
     <script type="text/javascript" language="javascript" src="scripts/dataTables.editor.js"></script>
+    <script type="text/javascript" language="javascript" src="scripts/datatables_ext.js"></script>
     <script type="text/javascript" language="javascript" class="init">
         var cities = [];
         var units = [];
@@ -23,6 +24,8 @@
         var stores = [];
         var pointsystems = [];
         var mileagetypes = [];
+        var seasontypes = [];
+        var zones = [];
         var seasons = [];
         var tmpStore;
         var index;
@@ -173,6 +176,30 @@
             }
         }
 
+        tmp = $.ajax({
+            url: '../backend/crud/seasontype/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    seasontypes.push({
+                        value: tmpStore[index]["SeasonTypeId"],
+                        label: tmpStore[index]["Name"]
+                    })
+                }
+            }
+        }
+
 
         tmp = $.ajax({
             url: '../backend/crud/mileage/type/all',
@@ -192,7 +219,32 @@
                 for (index = 0; index < tmpStore.length; ++index) {
                     mileagetypes.push({
                         value: tmpStore[index]["MileageTypeId"],
-                        label: tmpStore[index]["Season"]["Name"] + " " + tmpStore[index]["Season"]["Type"] + "/" + "/" + tmpStore[index]["Class"] + "/" + tmpStore[index]["TicketType"]
+                        label: tmpStore[index]["SeasonType"]["Name"] + "/" + "/" + tmpStore[index]["Class"] + "/" + tmpStore[index]["TicketType"]
+                    })
+                }
+            }
+        }
+
+
+        tmp = $.ajax({
+            url: '../backend/crud/zone/all',
+            data: {
+                format: 'json',
+                "contentType": "application/json; charset=utf-8",
+                "dataType": "json"
+            },
+            type: 'GET',
+            async: false
+        }).responseText;
+
+        if(tmp) {
+            jason = JSON.parse(tmp);
+            if(jason["data"]!=undefined) {
+                tmpStore = jason["data"];
+                for (index = 0; index < tmpStore.length; ++index) {
+                    zones.push({
+                        value: tmpStore[index]["ZoneId"],
+                        label: tmpStore[index]["Name"]
                     })
                 }
             }
@@ -313,10 +365,10 @@
                         name: "MileageTypeId",
                         type:  "readonly"
                     }, {
-                        label: "Season:",
-                        name: "Season.SeasonId",
+                        label: "SeasonType:",
+                        name: "SeasonType.SeasonTypeId",
                         type: "select",
-                        options: seasons
+                        options: seasontypes
                     }, {
                         label: "Class:",
                         name: "Class"
@@ -406,6 +458,89 @@
             });
 
 
+        seasonDateEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/seasondate/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/seasondate/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/seasondate/delete'
+                    }
+                },
+                table: "#seasondate",
+                idSrc: "SeasonDateId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "SeasonDateId",
+                        type:  "readonly"
+                    }, {
+                        label: "Zone:",
+                        name: "Zone.ZoneId",
+                        type: "select",
+                        options: zones
+                    }, {
+                        label: "From:",
+                        name: "From",
+                        type: "date"
+                    }, {
+                        label: "To:",
+                        name: "To",
+                        type: "date"
+                    }, {
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
+
+        seasonTypeEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/seasontype/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/seasontype/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/seasontype/delete'
+                    }
+                },
+                table: "#seasontype",
+                idSrc: "SeasonTypeId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "SeasonTypeId",
+                        type:  "readonly"
+                    }, {
+                        label: "Name:",
+                        name: "Name"
+                    }, {
+                        label: "Display:",
+                        name: "Display"
+                    }, {
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
+
         seasonEditor = new $.fn.dataTable.Editor(
             {
                 ajax: {
@@ -436,15 +571,16 @@
                         name: "Name"
                     }, {
                         label: "Type:",
-                        name: "Type"
+                        name: "Type.SeasonTypeId",
+                        type: "select",
+                        options: seasontypes
                     }, {
-                        label: "From:",
-                        name: "From",
-                        type: "date"
+                        label: "Display:",
+                        name: "Display"
                     }, {
-                        label: "To:",
-                        name: "To",
-                        type: "date"
+                        label: "Reference:",
+                        name: "Reference",
+                        type: "EditAndLink"
                     }, {
                         label: "Update date:",
                         name: "UpdateTime",
@@ -456,6 +592,93 @@
                 ]
             });
 
+
+        zoneEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/zone/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/zone/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/zone/delete'
+                    }
+                },
+                table: "#zone",
+                idSrc: "ZoneId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "ZoneId",
+                        type:  "readonly"
+                    }, {
+                        label: "PointSystem:",
+                        name: "PointSystem.PointSystemId",
+                        type: "select",
+                        options: pointsystems
+                    }, {
+                        label: "Name:",
+                        name: "Name"
+                    }, {
+                        label: "Display:",
+                        name: "Display"
+                    }, /*{
+                        label: "Reference:",
+                        name: "Reference",
+                        type: "EditAndLink"
+                    }, */{
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
+
+        zoneCityMapEditor = new $.fn.dataTable.Editor(
+            {
+                ajax: {
+                    create: '../backend/crud/zonecitymap/create',
+                    edit: {
+                        type: 'PUT',
+                        url:  '../backend/crud/zonecitymap/update'
+                    },
+                    remove: {
+                        type: 'DELETE',
+                        url: '../backend/crud/zonecitymap/delete'
+                    }
+                },
+                table: "#zonecitymap",
+                idSrc: "ZoneCityMapId",
+                fields: [
+                    {
+                        label: "Id:",
+                        name: "ZoneCityMapId",
+                        type:  "readonly"
+                    }, {
+                        label: "Zone:",
+                        name: "Zone.ZoneId",
+                        type: "select",
+                        options: zones
+                    }, {
+                        label: "City:",
+                        name: "City.CityId",
+                        type: "select",
+                        options: cities
+                    }, {
+                        label: "Update date:",
+                        name: "UpdateTime",
+                        type: "readonly"
+                    }, {
+                        label: "Update user:",
+                        name: "UpdateUser"
+                    }
+                ]
+            });
 
         $(document).ready(function() {
             $('#cities').dataTable( {
@@ -514,6 +737,118 @@
                 }
             } );
 
+
+            $('#seasontype').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/seasontype/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { data: "SeasonTypeId", visible: false },
+                    { data: "Name" },
+                    { data: "Display" },
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
+                ]
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: seasonTypeEditor },
+                        { sExtends: "editor_edit",   editor: seasonTypeEditor },
+                        { sExtends: "editor_remove", editor: seasonTypeEditor }
+                    ]
+                }
+            } );
+
+
+
+
+            $('#seasondate').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/seasondate/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { data: "SeasonDateId", visible: false },
+                    { data: "Zone.Name", editField:"Zone.ZoneId" },
+                    { data: "From" },
+                    { data: "To" },
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
+                ]
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: seasonDateEditor },
+                        { sExtends: "editor_edit",   editor: seasonDateEditor },
+                        { sExtends: "editor_remove", editor: seasonDateEditor }
+                    ]
+                }
+            } );
+
+
+            $('#zone').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/zone/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { data: "ZoneId", visible: false },
+                    { data: "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
+                    { data: "Name" },
+                    { data: "Display" },
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
+                ]
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: zoneEditor },
+                        { sExtends: "editor_edit",   editor: zoneEditor },
+                        { sExtends: "editor_remove", editor: zoneEditor }
+                    ]
+                }
+            } );
+
+
+            $('#zonecitymap').dataTable( {
+                dom: "frtTip",
+                "pageLength": 25,
+                "ajax": {
+                    "url": "../backend/crud/zonecitymap/all",
+                    "type": "GET",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { data: "ZoneCityMapId", visible: false },
+                    { data: "Zone.Name", editField: "Zone.ZoneId" },
+                    { data: "City.Name", editField: "City.CityId" },
+                    { data: "UpdateTime", visible: false},
+                    { data: "UpdateUser", visible: false }
+                ]
+                ,tableTools: {
+                    sRowSelect: "os",
+                    aButtons: [
+                        { sExtends: "editor_create", editor: zoneCityMapEditor },
+                        { sExtends: "editor_remove", editor: zoneCityMapEditor }
+                    ]
+                }
+            } );
+
+
             $('#seasons').dataTable( {
                 dom: "frtTip",
                 "pageLength": 25,
@@ -527,9 +862,9 @@
                     { data: "SeasonId", visible: false },
                     { data: "PointSystem.PointSystemName", editField: "PointSystem.PointSystemId" },
                     { data: "Name" },
-                    { data: "Type" },
-                    { data: "From" },
-                    { data: "To" },
+                    { data: "Type.Name", editField: "Type.SeasonTypeId" },
+                    { data: "Display" },
+                    { data: "Reference" },
                     { data: "UpdateTime", visible: false},
                     { data: "UpdateUser", visible: false }
                 ]
@@ -600,7 +935,7 @@
                 },
                 "columns": [
                     { "data": "MileageTypeId", visible: false },
-                    { "data": "Season.Name", editField: "Season.SeasonId" },
+                    { "data": "SeasonType.Name", editField: "SeasonType.SeasonTypeId" },
                     { "data": "Class"},
                     {
                         "data": "RoundTrip",
@@ -648,7 +983,7 @@
                     { "data": "MileageType", editField: "MileageType.MileageTypeId",
                         "render": function ( data, type, full, meta ) {
                             if ( type === 'display' && data!=null ) {
-                                return data["Season"]["Name"] + " " + data["Season"]["Type"] + "/" 
+                                return data["SeasonType"]["Name"] + "/"
                                             + "/" + data["Class"] + "/" + data["TicketType"];
                             }
                             return data;
@@ -689,7 +1024,7 @@
 
 <body class="dt-other">
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="store">City</a></div>
+    <div class="table-headline-staticconfig"><a name="city">City</a></div>
     <table id="cities" class="display" cellspacing="0" width="98%">
         <thead>
         <tr>
@@ -713,11 +1048,65 @@
         </tr>
         </tfoot>
     </table>
-    <a href="http://localhost/backend/crud/store/all" class="source">Source</a>
+    <a href="../backend/crud/city/all" class="source">Source</a>
 </div>
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="trips">Trips</a></div>
+    <div class="table-headline-staticconfig"><a name="zone">Zone</a></div>
+    <table id="zone" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>PointSystem</th>
+            <th>Name</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>PointSystem</th>
+            <th>Name</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+    <a href="../backend/crud/zone/all" class="source">Source</a>
+</div>
+
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline-staticconfig"><a name="zonecitymap">ZoneCityMap</a></div>
+    <table id="zonecitymap" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Zone</th>
+            <th>City</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Zone</th>
+            <th>City</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+    <a href="../backend/crud/zonecitymap/all" class="source">Source</a>
+</div>
+
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline-staticconfig"><a name="trips">Trips</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
     <a href="#affiliates" class="subheader">Affiliates</a>
@@ -754,7 +1143,71 @@
 </div>
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="season">Seasons</a></div>
+    <div class="table-headline-staticconfig"><a name="season">SeasonType</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="seasontype" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Display</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline-auto"><a name="season">SeasonDates</a></div>
+    <!--
+    <a href="#issuers" class="subheader">Issuers</a>
+    <a href="#affiliates" class="subheader">Affiliates</a>
+    <a href="#insurance_type" class="subheader">Insurance Type</a>
+    <a href="#feature_type" class="subheader">Feature Type</a>
+    -->
+    <table id="seasondate" class="display" cellspacing="0" width="98%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Zone</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </thead>
+
+        <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Zone</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Updated</th>
+            <th>User</th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
+    <div class="table-headline-staticconfig"><a name="season">Seasons</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
     <a href="#affiliates" class="subheader">Affiliates</a>
@@ -768,8 +1221,8 @@
             <th>PointSystem</th>
             <th>Name</th>
             <th>Type</th>
-            <th>From</th>
-            <th>To</th>
+            <th>Display</th>
+            <th>Reference</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -781,8 +1234,8 @@
             <th>PointSystem</th>
             <th>Name</th>
             <th>Type</th>
-            <th>From</th>
-            <th>To</th>
+            <th>Display</th>
+            <th>Reference</th>
             <th>Updated</th>
             <th>User</th>
         </tr>
@@ -792,7 +1245,7 @@
 
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="mileagetype">MileageType</a></div>
+    <div class="table-headline-staticconfig"><a name="mileagetype">MileageType</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
     <a href="#affiliates" class="subheader">Affiliates</a>
@@ -876,7 +1329,7 @@
 
 
 <div style="min-width: 1000px; width: 90%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline"><a name="flightcost">FlightCost</a></div>
+    <div class="table-headline-auto"><a name="flightcost">FlightCost</a></div>
     <!--
     <a href="#issuers" class="subheader">Issuers</a>
     <a href="#affiliates" class="subheader">Affiliates</a>

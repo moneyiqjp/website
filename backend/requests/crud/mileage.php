@@ -333,3 +333,220 @@ $app->put('/crud/flightcost/update', function () use ($app) {
 
     echo json_encode($jTableResult);
 });
+
+
+
+
+
+/*Zone*/
+$app->get('/crud/zone/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetZoneForCrud()));
+});
+$app->delete('/crud/zone/delete', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = Db\CRUD\DeleteZoneForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/zone/create', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\CreateZoneForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/zone/update', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\UpdateZoneForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
+
+
+
+/*SeasonDate*/
+$app->get('/crud/seasondate/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetSeasonDateForCrud()));
+});
+$app->delete('/crud/seasondate/delete', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting season date " . $id);
+        $jTableResult['row'] = Db\CRUD\DeleteSeasonDateForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/seasondate/create', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\CreateSeasonDateForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/seasondate/update', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\UpdateSeasonDateForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
+
+
+
+/*SeasonType*/
+$app->get('/crud/seasontype/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetSeasonTypeForCrud()));
+});
+$app->delete('/crud/seasontype/delete', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = Db\CRUD\DeleteSeasonTypeForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/seasontype/create', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\CreateSeasonTypeForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/seasontype/update', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\UpdateSeasonTypeForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+
+
+
+
+
+/*Zone*/
+$app->get('/crud/zonecitymap/all', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    echo json_encode(array('data'=> Db\CRUD\GetZoneCityMapForCrud()));
+});
+$app->delete('/crud/zonecitymap/delete', function () use ($app) {
+
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+    $ids = $app->request()->delete('id');
+    $jTableResult = array();
+    //TODO handle errors
+    foreach($ids as $id) {
+        $app->getLog()->debug("Deleting restriction type card " . $id);
+        $jTableResult['row'] = Db\CRUD\DeleteZoneCityMapForCrud($id);
+    }
+    echo json_encode($jTableResult);
+});
+$app->post('/crud/zonecitymap/create', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\CreateZoneCityMapForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});
+$app->put('/crud/zonecitymap/update', function () use ($app) {
+
+    $request = $app->request();
+    $app->response()->header('Content-Type', 'application/json;charset=utf-8');
+
+
+    $jTableResult = array();
+    try {
+        $jTableResult['row'] = Db\CRUD\UpdateZoneCityMapForCrud($request->put('data'));
+    } catch(\Exception $e) {
+        $jTableResult['error'] = $e->getMessage();
+        $app->getLog()->error($e);
+    }
+
+    echo json_encode($jTableResult);
+});

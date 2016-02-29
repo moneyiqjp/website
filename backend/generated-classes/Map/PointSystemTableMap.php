@@ -177,6 +177,7 @@ class PointSystemTableMap extends TableMap
         $this->addRelation('PointUse', '\\PointUse', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'PointUses');
         $this->addRelation('Reward', '\\Reward', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Rewards');
         $this->addRelation('Season', '\\Season', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Seasons');
+        $this->addRelation('Zone', '\\Zone', RelationMap::ONE_TO_MANY, array('point_system_id' => 'point_system_id', ), null, null, 'Zones');
     } // buildRelations()
 
     /**

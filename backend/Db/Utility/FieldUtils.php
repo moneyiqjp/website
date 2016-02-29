@@ -10,18 +10,22 @@ namespace Db\Utility;
 
 
 class FieldUtils {
-    public function GenerateKey($id1, $id2) {
-        if(!is_null($id2)) {
-            return $id1 . "_";
+    public static function GENERATE_KEY($type, $id1, $id2) {
+        if(!self::ID_IS_DEFINED($id2)) {
+            return $type . "_" . $id1 . "_";
         }
-        return $id1 . "_" . $id2;
+
+        return $type . "_" . $id1 . "_" . $id2;
     }
 
     public static function SPLIT_ID($id) {
         $ids = explode("_",$id);
-        if(!is_array($ids) || count($ids) <> 2) throw new \Exception("invalid id returned, require #_# got " . $id);
-        if(strlen($ids[0])<=0) throw new \Exception("No persona id specified (" . $id . ")");
-        if(strlen($ids[1])<=0) throw new \Exception("No RestrictionType id specified (" . $id . ")");
+        if(!is_array($ids) || count($ids) <> 3) throw new \Exception("invalid id returned, require #_# got " . $id);
+        $ids = array_reverse($ids);
+        array_pop($ids);
+        $ids = array_reverse($ids);
+        if(!self::ID_IS_DEFINED($ids[0])) throw new \Exception("First ID missing (" . $id . ")");
+        if(!self::ID_IS_DEFINED($ids[1])) throw new \Exception("Second id missing (" . $id . ")");
 
         return $ids;
     }

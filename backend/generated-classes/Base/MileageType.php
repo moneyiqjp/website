@@ -8,8 +8,8 @@ use \Mileage as ChildMileage;
 use \MileageQuery as ChildMileageQuery;
 use \MileageType as ChildMileageType;
 use \MileageTypeQuery as ChildMileageTypeQuery;
-use \Season as ChildSeason;
-use \SeasonQuery as ChildSeasonQuery;
+use \SeasonType as ChildSeasonType;
+use \SeasonTypeQuery as ChildSeasonTypeQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -83,10 +83,10 @@ abstract class MileageType implements ActiveRecordInterface
     protected $round_trip;
 
     /**
-     * The value for the season_id field.
+     * The value for the season_type_id field.
      * @var        int
      */
-    protected $season_id;
+    protected $season_type_id;
 
     /**
      * The value for the class field.
@@ -125,9 +125,9 @@ abstract class MileageType implements ActiveRecordInterface
     protected $update_user;
 
     /**
-     * @var        ChildSeason
+     * @var        ChildSeasonType
      */
-    protected $aSeason;
+    protected $aSeasonType;
 
     /**
      * @var        ObjectCollection|ChildFlightCost[] Collection to store aggregation of ChildFlightCost objects.
@@ -412,13 +412,13 @@ abstract class MileageType implements ActiveRecordInterface
     }
 
     /**
-     * Get the [season_id] column value.
+     * Get the [season_type_id] column value.
      *
      * @return int
      */
-    public function getSeasonId()
+    public function getSeasonTypeId()
     {
-        return $this->season_id;
+        return $this->season_type_id;
     }
 
     /**
@@ -532,28 +532,28 @@ abstract class MileageType implements ActiveRecordInterface
     } // setRoundTrip()
 
     /**
-     * Set the value of [season_id] column.
+     * Set the value of [season_type_id] column.
      *
      * @param  int $v new value
      * @return $this|\MileageType The current object (for fluent API support)
      */
-    public function setSeasonId($v)
+    public function setSeasonTypeId($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->season_id !== $v) {
-            $this->season_id = $v;
-            $this->modifiedColumns[MileageTypeTableMap::COL_SEASON_ID] = true;
+        if ($this->season_type_id !== $v) {
+            $this->season_type_id = $v;
+            $this->modifiedColumns[MileageTypeTableMap::COL_SEASON_TYPE_ID] = true;
         }
 
-        if ($this->aSeason !== null && $this->aSeason->getSeasonId() !== $v) {
-            $this->aSeason = null;
+        if ($this->aSeasonType !== null && $this->aSeasonType->getSeasonTypeId() !== $v) {
+            $this->aSeasonType = null;
         }
 
         return $this;
-    } // setSeasonId()
+    } // setSeasonTypeId()
 
     /**
      * Set the value of [class] column.
@@ -721,8 +721,8 @@ abstract class MileageType implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : MileageTypeTableMap::translateFieldName('RoundTrip', TableMap::TYPE_PHPNAME, $indexType)];
             $this->round_trip = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MileageTypeTableMap::translateFieldName('SeasonId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->season_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : MileageTypeTableMap::translateFieldName('SeasonTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->season_type_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : MileageTypeTableMap::translateFieldName('Class', TableMap::TYPE_PHPNAME, $indexType)];
             $this->class = (null !== $col) ? (string) $col : null;
@@ -774,8 +774,8 @@ abstract class MileageType implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aSeason !== null && $this->season_id !== $this->aSeason->getSeasonId()) {
-            $this->aSeason = null;
+        if ($this->aSeasonType !== null && $this->season_type_id !== $this->aSeasonType->getSeasonTypeId()) {
+            $this->aSeasonType = null;
         }
     } // ensureConsistency
 
@@ -816,7 +816,7 @@ abstract class MileageType implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aSeason = null;
+            $this->aSeasonType = null;
             $this->collFlightCosts = null;
 
             $this->collMileages = null;
@@ -925,11 +925,11 @@ abstract class MileageType implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aSeason !== null) {
-                if ($this->aSeason->isModified() || $this->aSeason->isNew()) {
-                    $affectedRows += $this->aSeason->save($con);
+            if ($this->aSeasonType !== null) {
+                if ($this->aSeasonType->isModified() || $this->aSeasonType->isNew()) {
+                    $affectedRows += $this->aSeasonType->save($con);
                 }
-                $this->setSeason($this->aSeason);
+                $this->setSeasonType($this->aSeasonType);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1009,8 +1009,8 @@ abstract class MileageType implements ActiveRecordInterface
         if ($this->isColumnModified(MileageTypeTableMap::COL_ROUND_TRIP)) {
             $modifiedColumns[':p' . $index++]  = 'round_trip';
         }
-        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'season_id';
+        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_TYPE_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'season_type_id';
         }
         if ($this->isColumnModified(MileageTypeTableMap::COL_CLASS)) {
             $modifiedColumns[':p' . $index++]  = 'class';
@@ -1047,8 +1047,8 @@ abstract class MileageType implements ActiveRecordInterface
                     case 'round_trip':
                         $stmt->bindValue($identifier, $this->round_trip, PDO::PARAM_INT);
                         break;
-                    case 'season_id':
-                        $stmt->bindValue($identifier, $this->season_id, PDO::PARAM_INT);
+                    case 'season_type_id':
+                        $stmt->bindValue($identifier, $this->season_type_id, PDO::PARAM_INT);
                         break;
                     case 'class':
                         $stmt->bindValue($identifier, $this->class, PDO::PARAM_STR);
@@ -1137,7 +1137,7 @@ abstract class MileageType implements ActiveRecordInterface
                 return $this->getRoundTrip();
                 break;
             case 2:
-                return $this->getSeasonId();
+                return $this->getSeasonTypeId();
                 break;
             case 3:
                 return $this->getClass();
@@ -1189,7 +1189,7 @@ abstract class MileageType implements ActiveRecordInterface
         $result = array(
             $keys[0] => $this->getMileageTypeId(),
             $keys[1] => $this->getRoundTrip(),
-            $keys[2] => $this->getSeasonId(),
+            $keys[2] => $this->getSeasonTypeId(),
             $keys[3] => $this->getClass(),
             $keys[4] => $this->getTicketType(),
             $keys[5] => $this->getDisplay(),
@@ -1203,20 +1203,20 @@ abstract class MileageType implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aSeason) {
+            if (null !== $this->aSeasonType) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
-                        $key = 'season';
+                        $key = 'seasonType';
                         break;
                     case TableMap::TYPE_FIELDNAME:
-                        $key = 'season';
+                        $key = 'season_type';
                         break;
                     default:
-                        $key = 'Season';
+                        $key = 'SeasonType';
                 }
 
-                $result[$key] = $this->aSeason->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aSeasonType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collFlightCosts) {
 
@@ -1289,7 +1289,7 @@ abstract class MileageType implements ActiveRecordInterface
                 $this->setRoundTrip($value);
                 break;
             case 2:
-                $this->setSeasonId($value);
+                $this->setSeasonTypeId($value);
                 break;
             case 3:
                 $this->setClass($value);
@@ -1342,7 +1342,7 @@ abstract class MileageType implements ActiveRecordInterface
             $this->setRoundTrip($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setSeasonId($arr[$keys[2]]);
+            $this->setSeasonTypeId($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
             $this->setClass($arr[$keys[3]]);
@@ -1409,8 +1409,8 @@ abstract class MileageType implements ActiveRecordInterface
         if ($this->isColumnModified(MileageTypeTableMap::COL_ROUND_TRIP)) {
             $criteria->add(MileageTypeTableMap::COL_ROUND_TRIP, $this->round_trip);
         }
-        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_ID)) {
-            $criteria->add(MileageTypeTableMap::COL_SEASON_ID, $this->season_id);
+        if ($this->isColumnModified(MileageTypeTableMap::COL_SEASON_TYPE_ID)) {
+            $criteria->add(MileageTypeTableMap::COL_SEASON_TYPE_ID, $this->season_type_id);
         }
         if ($this->isColumnModified(MileageTypeTableMap::COL_CLASS)) {
             $criteria->add(MileageTypeTableMap::COL_CLASS, $this->class);
@@ -1517,7 +1517,7 @@ abstract class MileageType implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setRoundTrip($this->getRoundTrip());
-        $copyObj->setSeasonId($this->getSeasonId());
+        $copyObj->setSeasonTypeId($this->getSeasonTypeId());
         $copyObj->setClass($this->getClass());
         $copyObj->setTicketType($this->getTicketType());
         $copyObj->setDisplay($this->getDisplay());
@@ -1573,24 +1573,24 @@ abstract class MileageType implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildSeason object.
+     * Declares an association between this object and a ChildSeasonType object.
      *
-     * @param  ChildSeason $v
+     * @param  ChildSeasonType $v
      * @return $this|\MileageType The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setSeason(ChildSeason $v = null)
+    public function setSeasonType(ChildSeasonType $v = null)
     {
         if ($v === null) {
-            $this->setSeasonId(NULL);
+            $this->setSeasonTypeId(NULL);
         } else {
-            $this->setSeasonId($v->getSeasonId());
+            $this->setSeasonTypeId($v->getSeasonTypeId());
         }
 
-        $this->aSeason = $v;
+        $this->aSeasonType = $v;
 
         // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildSeason object, it will not be re-added.
+        // If this object has already been added to the ChildSeasonType object, it will not be re-added.
         if ($v !== null) {
             $v->addMileageType($this);
         }
@@ -1601,26 +1601,26 @@ abstract class MileageType implements ActiveRecordInterface
 
 
     /**
-     * Get the associated ChildSeason object
+     * Get the associated ChildSeasonType object
      *
      * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildSeason The associated ChildSeason object.
+     * @return ChildSeasonType The associated ChildSeasonType object.
      * @throws PropelException
      */
-    public function getSeason(ConnectionInterface $con = null)
+    public function getSeasonType(ConnectionInterface $con = null)
     {
-        if ($this->aSeason === null && ($this->season_id !== null)) {
-            $this->aSeason = ChildSeasonQuery::create()->findPk($this->season_id, $con);
+        if ($this->aSeasonType === null && ($this->season_type_id !== null)) {
+            $this->aSeasonType = ChildSeasonTypeQuery::create()->findPk($this->season_type_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aSeason->addMileageTypes($this);
+                $this->aSeasonType->addMileageTypes($this);
              */
         }
 
-        return $this->aSeason;
+        return $this->aSeasonType;
     }
 
 
@@ -2210,12 +2210,12 @@ abstract class MileageType implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aSeason) {
-            $this->aSeason->removeMileageType($this);
+        if (null !== $this->aSeasonType) {
+            $this->aSeasonType->removeMileageType($this);
         }
         $this->mileage_type_id = null;
         $this->round_trip = null;
-        $this->season_id = null;
+        $this->season_type_id = null;
         $this->class = null;
         $this->ticket_type = null;
         $this->display = null;
@@ -2255,7 +2255,7 @@ abstract class MileageType implements ActiveRecordInterface
 
         $this->collFlightCosts = null;
         $this->collMileages = null;
-        $this->aSeason = null;
+        $this->aSeasonType = null;
     }
 
     /**

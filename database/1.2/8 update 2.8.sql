@@ -99,7 +99,7 @@ BEGIN
 				`update_time` DATETIME NOT NULL,
 				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
 				PRIMARY KEY (`season_id`),
-				CONSTRAINT `fk_mileage_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
+				CONSTRAINT `fk_season_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
 			)
 			COLLATE='utf8_general_ci',
 			ENGINE=InnoDB
@@ -160,13 +160,11 @@ BEGIN
 	end if;
 
 	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='mileage' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='mileage_type_id') THEN	
-			if exists(select 1 from mileage_type where mileage_type_id=1) THEN	
 				ALTER TABLE `mileage`
-					ADD COLUMN `mileage_type_id` INT(11) NOT NULL default 1 AFTER `required_miles`;
+					ADD COLUMN `mileage_type_id` INT(11) NOT NULL  AFTER `required_miles`;
 				ALTER TABLE `mileage`	
 					ADD CONSTRAINT `fk_mileage_mileage_type` FOREIGN KEY (`mileage_type_id`) REFERENCES `mileage_type` (`mileage_type_id`);
 				SELECT 'Updated table mileage with mileage_type';
-			end if;
 	else
 		SELECT 'table mileage already up to date';
 	end if;
@@ -196,7 +194,7 @@ BEGIN
 		SELECT 'EXISTED table season_type';
 	end if;
 
-	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_type') THEN	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='reference') THEN	
 			ALTER TABLE `season`
 					ADD COLUMN `reference` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci'  AFTER `display`;
 		SELECT 'Updated table season with reference';
@@ -233,17 +231,105 @@ BEGIN
 		ALTER TABLE `mileage_type`
 			ADD COLUMN `season_type_id` INT(11) NULL DEFAULT NULL AFTER `season_id`;
 		update mileage_type mt inner join season s on mt.season_id=s.season_id set mt.season_type_id=s.season_type_id;
+		ALTER TABLE `mileage_type`
+			DROP FOREIGN KEY `fk_mileage_type_season`;
+		ALTER TABLE `mileage_type`
+			DROP COLUMN `season_id`;
 		ALTER TABLE `mileage_type` DROP COLUMN season_id;
-		
 		ALTER TABLE `mileage_type`	ALTER `season_id` DROP DEFAULT;
 		ALTER TABLE `mileage_type`	CHANGE COLUMN `season_type_id` `season_type_id` INT(11) NOT NULL AFTER `round_trip`;
 		ALTER TABLE `mileage_type`
-			ADD CONSTRAINT `fk_mileage_type_season` FOREIGN KEY (`season_type_id`) REFERENCES `season_type` (`season_type_id`);
+			ADD CONSTRAINT `fk_mileage_type_season_type` FOREIGN KEY (`season_type_id`) REFERENCES `season_type` (`season_type_id`);
 		SELECT 'Updated table season with season type id';
 	else
 		SELECT 'table season already has season type id';
 	end if;
+	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='zone' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='zone_id') THEN
+			CREATE TABLE `zone` (				
+				`zone_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`point_system_id` INT(11) NOT NULL,
+				`name` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				`display` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+				`update_time` DATETIME NULL,
+				`update_user` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`zone_id`),
+				CONSTRAINT `fk_zone_point_system` FOREIGN KEY (`point_system_id`) REFERENCES `point_system` (`point_system_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table zone';
+	else
+		SELECT 'EXISTED table zone';
+	end if;
 		
+		
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season_date' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='season_date_id') THEN
+			CREATE TABLE `season_date` (
+				`season_date_id` INT(11) NOT NULL AUTO_INCREMENT,	
+				`zone_id` INT(11) NOT NULL,
+				`from_date` Date NULL,
+				`to_date` Date NULL,
+				`update_time` DATETIME NOT NULL,
+				`update_user` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`season_date_id`),
+				CONSTRAINT `fk_season_date_zone` FOREIGN KEY (`zone_id`) REFERENCES `zone` (`zone_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table season_date';
+	else
+		SELECT 'EXISTED table season_date';
+	end if;
+	
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='season' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='from_date') THEN
+			ALTER TABLE `season`
+				DROP COLUMN `from_date`,
+				DROP COLUMN `to_date`;
+		SELECT 'removed from\to date from season';
+	else
+		SELECT 'from\to date from season already gone';
+	end if;
+	
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='region' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='region_id') THEN
+			CREATE TABLE `region` (				
+				`region_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`name` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+				`display` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+				`update_time` DATETIME NULL,
+				`update_user` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`region_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table region';
+	else
+		SELECT 'EXISTED table region';
+	end if;
+
+	
+		if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='zone_city_map' and TABLE_SCHEMA=varDatabase) THEN
+			CREATE TABLE `zone_city_map` (			
+				`zone_id` INT(11) NOT NULL,
+				`city_id` INT(11) NOT NULL,
+				`update_time` DATETIME NULL,
+				`update_user` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+				PRIMARY KEY (`zone_id`, `city_id`),
+				CONSTRAINT `fk_zone_city_map_zone` FOREIGN KEY (`zone_id`) REFERENCES `zone` (`zone_id`),
+				CONSTRAINT `fk_zone_city_map_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`)
+			)
+			COLLATE='utf8_general_ci',
+			ENGINE=InnoDB
+			;
+		SELECT 'ADDED table zone_city_map';
+	else
+		SELECT 'EXISTED table zone_city_map';
+	end if;
+
+
 END //
 DELIMITER ;
 CALL UpgradeMoneyIQ2_8(DATABASE());

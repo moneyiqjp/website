@@ -5,13 +5,16 @@ namespace Db\CRUD;
 use Db\Json\JObject;
 use Db\Json\JCity;
 use Db\Json\JReward;
+use Db\Json\JSONException;
 use Db\Json\JTrip;
 use Db\Json\JMileage;
 use Db\Json\JMileageType;
 use Db\Json\JSeason;
 use Db\Json\JFlightCost;
-
-
+use Db\Json\JZone;
+use Db\Json\JSeasonDate;
+use Db\Json\JSeasonType;
+use Db\Json\JZoneCityMap;
 
 /* City */
 function GetCityForCrud()
@@ -300,3 +303,183 @@ function DeleteFlightCostForCrud($id)
     return array();
 }
 
+
+
+
+/* Zone */
+function GetZoneForCrud()
+{
+    $result = array();
+    foreach ((new \ZoneQuery())->orderByName()->find() as $item) {
+        array_push($result, JZone::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateZoneForCrud($data)
+{
+    $parsed = JZone::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \ZoneQuery())->findPk($parsed->ZoneId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->ZoneId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \ZoneQuery())->findPk($parsed->ZoneId);
+    return JZone::CREATE_FROM_DB($item);
+}
+
+function CreateZoneForCrud($data)
+{
+    $item = JZone::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save Zone");
+    }
+
+    //TODO implement cache, add to cache
+    return JZone::CREATE_FROM_DB($item);
+}
+
+function DeleteZoneForCrud($id)
+{
+    $item = (new  \ZoneQuery())->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
+
+
+
+
+/* SeasonDate */
+function GetSeasonDateForCrud()
+{
+    $result = array();
+    foreach ((new \SeasonDateQuery())->orderByFromDate()->orderByToDate()->find() as $item) {
+        array_push($result, JSeasonDate::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateSeasonDateForCrud($data)
+{
+    $parsed = JSeasonDate::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \SeasonDateQuery())->findPk($parsed->SeasonDateId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->SeasonDateId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \SeasonDateQuery())->findPk($parsed->SeasonDateId);
+    return JSeasonDate::CREATE_FROM_DB($item);
+}
+
+function CreateSeasonDateForCrud($data)
+{
+    $item = JSeasonDate::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save SeasonDate");
+    }
+
+    //TODO implement cache, add to cache
+    return JSeasonDate::CREATE_FROM_DB($item);
+}
+
+function DeleteSeasonDateForCrud($id)
+{
+    $item = \SeasonDateQuery::create()->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
+
+
+
+
+/* SeasonType */
+function GetSeasonTypeForCrud() {
+    $result = array();
+    foreach ((new \SeasonTypeQuery())->orderByName()->find() as $item) {
+        array_push($result, JSeasonType::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateSeasonTypeForCrud($data) {
+    $parsed = JSeasonType::CREATE_FROM_ARRAY($data);
+    if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
+
+    $item = (new  \SeasonTypeQuery())->findPk($parsed->SeasonTypeId);
+    if(is_null($item)) throw new \Exception ("Restriction type with id ". $parsed->SeasonTypeId ." not found");
+
+    $item = $parsed->updateDB($item);
+    $item->save();
+
+    //TODO implement cache, then refresh
+    $item = (new  \SeasonTypeQuery())->findPk($parsed->SeasonTypeId);
+    return JSeasonType::CREATE_FROM_DB($item);
+}
+
+function CreateSeasonTypeForCrud($data) {
+    $item = JSeasonType::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save SeasonType");
+    }
+
+    //TODO implement cache, add to cache
+    return JSeasonType::CREATE_FROM_DB($item);
+}
+
+function DeleteSeasonTypeForCrud($id) {
+    $item = (new  \SeasonTypeQuery())->findPk($id);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}
+
+
+
+/* ZoneCityMap */
+function GetZoneCityMapForCrud()
+{
+    $result = array();
+    foreach ((new \ZoneCityMapQuery())->orderByUpdateTime()->find() as $item) {
+        array_push($result, JZoneCityMap::CREATE_FROM_DB($item));
+    }
+    return $result;
+}
+function UpdateZoneCityMapForCrud($data)
+{
+    throw new JSONException("Update not supported for ZoneCityMap");
+}
+
+function CreateZoneCityMapForCrud($data)
+{
+    $item = JZoneCityMap::CREATE_FROM_ARRAY($data)->toDB();
+    if(0>=$item->save()) {
+        throw new \Exception("Failed to save ZoneCityMap");
+    }
+
+    //TODO implement cache, add to cache
+    return JZoneCityMap::CREATE_FROM_DB($item);
+}
+
+function DeleteZoneCityMapForCrud($id)
+{
+    $ids = JZoneCityMap::GETZONECITYIDS($id);
+    $item = \ZoneCityMapQuery::create()->filterByCityId($ids[1])->findOneByZoneId($ids[0]);
+    if(is_null($item)) {
+        throw new \Exception ("restriction type with id ". $id ." not found");
+    }
+    $item->delete();
+    return array();
+}

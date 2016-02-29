@@ -22,7 +22,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildMileageTypeQuery orderByMileageTypeId($order = Criteria::ASC) Order by the mileage_type_id column
  * @method     ChildMileageTypeQuery orderByRoundTrip($order = Criteria::ASC) Order by the round_trip column
- * @method     ChildMileageTypeQuery orderBySeasonId($order = Criteria::ASC) Order by the season_id column
+ * @method     ChildMileageTypeQuery orderBySeasonTypeId($order = Criteria::ASC) Order by the season_type_id column
  * @method     ChildMileageTypeQuery orderByClass($order = Criteria::ASC) Order by the class column
  * @method     ChildMileageTypeQuery orderByTicketType($order = Criteria::ASC) Order by the ticket_type column
  * @method     ChildMileageTypeQuery orderByDisplay($order = Criteria::ASC) Order by the display column
@@ -32,7 +32,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildMileageTypeQuery groupByMileageTypeId() Group by the mileage_type_id column
  * @method     ChildMileageTypeQuery groupByRoundTrip() Group by the round_trip column
- * @method     ChildMileageTypeQuery groupBySeasonId() Group by the season_id column
+ * @method     ChildMileageTypeQuery groupBySeasonTypeId() Group by the season_type_id column
  * @method     ChildMileageTypeQuery groupByClass() Group by the class column
  * @method     ChildMileageTypeQuery groupByTicketType() Group by the ticket_type column
  * @method     ChildMileageTypeQuery groupByDisplay() Group by the display column
@@ -44,9 +44,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageTypeQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildMileageTypeQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildMileageTypeQuery leftJoinSeason($relationAlias = null) Adds a LEFT JOIN clause to the query using the Season relation
- * @method     ChildMileageTypeQuery rightJoinSeason($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Season relation
- * @method     ChildMileageTypeQuery innerJoinSeason($relationAlias = null) Adds a INNER JOIN clause to the query using the Season relation
+ * @method     ChildMileageTypeQuery leftJoinSeasonType($relationAlias = null) Adds a LEFT JOIN clause to the query using the SeasonType relation
+ * @method     ChildMileageTypeQuery rightJoinSeasonType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SeasonType relation
+ * @method     ChildMileageTypeQuery innerJoinSeasonType($relationAlias = null) Adds a INNER JOIN clause to the query using the SeasonType relation
  *
  * @method     ChildMileageTypeQuery leftJoinFlightCost($relationAlias = null) Adds a LEFT JOIN clause to the query using the FlightCost relation
  * @method     ChildMileageTypeQuery rightJoinFlightCost($relationAlias = null) Adds a RIGHT JOIN clause to the query using the FlightCost relation
@@ -56,14 +56,14 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageTypeQuery rightJoinMileage($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Mileage relation
  * @method     ChildMileageTypeQuery innerJoinMileage($relationAlias = null) Adds a INNER JOIN clause to the query using the Mileage relation
  *
- * @method     \SeasonQuery|\FlightCostQuery|\MileageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \SeasonTypeQuery|\FlightCostQuery|\MileageQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildMileageType findOne(ConnectionInterface $con = null) Return the first ChildMileageType matching the query
  * @method     ChildMileageType findOneOrCreate(ConnectionInterface $con = null) Return the first ChildMileageType matching the query, or a new ChildMileageType object populated from the query conditions when no match is found
  *
  * @method     ChildMileageType findOneByMileageTypeId(int $mileage_type_id) Return the first ChildMileageType filtered by the mileage_type_id column
  * @method     ChildMileageType findOneByRoundTrip(int $round_trip) Return the first ChildMileageType filtered by the round_trip column
- * @method     ChildMileageType findOneBySeasonId(int $season_id) Return the first ChildMileageType filtered by the season_id column
+ * @method     ChildMileageType findOneBySeasonTypeId(int $season_type_id) Return the first ChildMileageType filtered by the season_type_id column
  * @method     ChildMileageType findOneByClass(string $class) Return the first ChildMileageType filtered by the class column
  * @method     ChildMileageType findOneByTicketType(string $ticket_type) Return the first ChildMileageType filtered by the ticket_type column
  * @method     ChildMileageType findOneByDisplay(string $display) Return the first ChildMileageType filtered by the display column
@@ -74,7 +74,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildMileageType[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildMileageType objects based on current ModelCriteria
  * @method     ChildMileageType[]|ObjectCollection findByMileageTypeId(int $mileage_type_id) Return ChildMileageType objects filtered by the mileage_type_id column
  * @method     ChildMileageType[]|ObjectCollection findByRoundTrip(int $round_trip) Return ChildMileageType objects filtered by the round_trip column
- * @method     ChildMileageType[]|ObjectCollection findBySeasonId(int $season_id) Return ChildMileageType objects filtered by the season_id column
+ * @method     ChildMileageType[]|ObjectCollection findBySeasonTypeId(int $season_type_id) Return ChildMileageType objects filtered by the season_type_id column
  * @method     ChildMileageType[]|ObjectCollection findByClass(string $class) Return ChildMileageType objects filtered by the class column
  * @method     ChildMileageType[]|ObjectCollection findByTicketType(string $ticket_type) Return ChildMileageType objects filtered by the ticket_type column
  * @method     ChildMileageType[]|ObjectCollection findByDisplay(string $display) Return ChildMileageType objects filtered by the display column
@@ -172,7 +172,7 @@ abstract class MileageTypeQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT mileage_type_id, round_trip, season_id, class, ticket_type, display, trip_length, update_time, update_user FROM mileage_type WHERE mileage_type_id = :p0';
+        $sql = 'SELECT mileage_type_id, round_trip, season_type_id, class, ticket_type, display, trip_length, update_time, update_user FROM mileage_type WHERE mileage_type_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -345,18 +345,18 @@ abstract class MileageTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the season_id column
+     * Filter the query on the season_type_id column
      *
      * Example usage:
      * <code>
-     * $query->filterBySeasonId(1234); // WHERE season_id = 1234
-     * $query->filterBySeasonId(array(12, 34)); // WHERE season_id IN (12, 34)
-     * $query->filterBySeasonId(array('min' => 12)); // WHERE season_id > 12
+     * $query->filterBySeasonTypeId(1234); // WHERE season_type_id = 1234
+     * $query->filterBySeasonTypeId(array(12, 34)); // WHERE season_type_id IN (12, 34)
+     * $query->filterBySeasonTypeId(array('min' => 12)); // WHERE season_type_id > 12
      * </code>
      *
-     * @see       filterBySeason()
+     * @see       filterBySeasonType()
      *
-     * @param     mixed $seasonId The value to use as filter.
+     * @param     mixed $seasonTypeId The value to use as filter.
      *              Use scalar values for equality.
      *              Use array values for in_array() equivalent.
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
@@ -364,16 +364,16 @@ abstract class MileageTypeQuery extends ModelCriteria
      *
      * @return $this|ChildMileageTypeQuery The current query, for fluid interface
      */
-    public function filterBySeasonId($seasonId = null, $comparison = null)
+    public function filterBySeasonTypeId($seasonTypeId = null, $comparison = null)
     {
-        if (is_array($seasonId)) {
+        if (is_array($seasonTypeId)) {
             $useMinMax = false;
-            if (isset($seasonId['min'])) {
-                $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_ID, $seasonId['min'], Criteria::GREATER_EQUAL);
+            if (isset($seasonTypeId['min'])) {
+                $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_TYPE_ID, $seasonTypeId['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
-            if (isset($seasonId['max'])) {
-                $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_ID, $seasonId['max'], Criteria::LESS_EQUAL);
+            if (isset($seasonTypeId['max'])) {
+                $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_TYPE_ID, $seasonTypeId['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -384,7 +384,7 @@ abstract class MileageTypeQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_ID, $seasonId, $comparison);
+        return $this->addUsingAlias(MileageTypeTableMap::COL_SEASON_TYPE_ID, $seasonTypeId, $comparison);
     }
 
     /**
@@ -588,44 +588,44 @@ abstract class MileageTypeQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Season object
+     * Filter the query by a related \SeasonType object
      *
-     * @param \Season|ObjectCollection $season The related object(s) to use as filter
+     * @param \SeasonType|ObjectCollection $seasonType The related object(s) to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return ChildMileageTypeQuery The current query, for fluid interface
      */
-    public function filterBySeason($season, $comparison = null)
+    public function filterBySeasonType($seasonType, $comparison = null)
     {
-        if ($season instanceof \Season) {
+        if ($seasonType instanceof \SeasonType) {
             return $this
-                ->addUsingAlias(MileageTypeTableMap::COL_SEASON_ID, $season->getSeasonId(), $comparison);
-        } elseif ($season instanceof ObjectCollection) {
+                ->addUsingAlias(MileageTypeTableMap::COL_SEASON_TYPE_ID, $seasonType->getSeasonTypeId(), $comparison);
+        } elseif ($seasonType instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(MileageTypeTableMap::COL_SEASON_ID, $season->toKeyValue('PrimaryKey', 'SeasonId'), $comparison);
+                ->addUsingAlias(MileageTypeTableMap::COL_SEASON_TYPE_ID, $seasonType->toKeyValue('PrimaryKey', 'SeasonTypeId'), $comparison);
         } else {
-            throw new PropelException('filterBySeason() only accepts arguments of type \Season or Collection');
+            throw new PropelException('filterBySeasonType() only accepts arguments of type \SeasonType or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Season relation
+     * Adds a JOIN clause to the query using the SeasonType relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildMileageTypeQuery The current query, for fluid interface
      */
-    public function joinSeason($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinSeasonType($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Season');
+        $relationMap = $tableMap->getRelation('SeasonType');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -640,14 +640,14 @@ abstract class MileageTypeQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Season');
+            $this->addJoinObject($join, 'SeasonType');
         }
 
         return $this;
     }
 
     /**
-     * Use the Season relation Season object
+     * Use the SeasonType relation SeasonType object
      *
      * @see useQuery()
      *
@@ -655,13 +655,13 @@ abstract class MileageTypeQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \SeasonQuery A secondary query class using the current class as primary query
+     * @return \SeasonTypeQuery A secondary query class using the current class as primary query
      */
-    public function useSeasonQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useSeasonTypeQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
-            ->joinSeason($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Season', '\SeasonQuery');
+            ->joinSeasonType($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SeasonType', '\SeasonTypeQuery');
     }
 
     /**

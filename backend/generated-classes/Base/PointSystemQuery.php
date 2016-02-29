@@ -68,7 +68,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPointSystemQuery rightJoinSeason($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Season relation
  * @method     ChildPointSystemQuery innerJoinSeason($relationAlias = null) Adds a INNER JOIN clause to the query using the Season relation
  *
- * @method     \CardPointSystemQuery|\FlightCostQuery|\MileageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery|\SeasonQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildPointSystemQuery leftJoinZone($relationAlias = null) Adds a LEFT JOIN clause to the query using the Zone relation
+ * @method     ChildPointSystemQuery rightJoinZone($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Zone relation
+ * @method     ChildPointSystemQuery innerJoinZone($relationAlias = null) Adds a INNER JOIN clause to the query using the Zone relation
+ *
+ * @method     \CardPointSystemQuery|\FlightCostQuery|\MileageQuery|\PointAcquisitionQuery|\PointUseQuery|\RewardQuery|\SeasonQuery|\ZoneQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildPointSystem findOne(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query
  * @method     ChildPointSystem findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPointSystem matching the query, or a new ChildPointSystem object populated from the query conditions when no match is found
@@ -1032,6 +1036,79 @@ abstract class PointSystemQuery extends ModelCriteria
         return $this
             ->joinSeason($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Season', '\SeasonQuery');
+    }
+
+    /**
+     * Filter the query by a related \Zone object
+     *
+     * @param \Zone|ObjectCollection $zone  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function filterByZone($zone, $comparison = null)
+    {
+        if ($zone instanceof \Zone) {
+            return $this
+                ->addUsingAlias(PointSystemTableMap::COL_POINT_SYSTEM_ID, $zone->getPointSystemId(), $comparison);
+        } elseif ($zone instanceof ObjectCollection) {
+            return $this
+                ->useZoneQuery()
+                ->filterByPrimaryKeys($zone->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByZone() only accepts arguments of type \Zone or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Zone relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPointSystemQuery The current query, for fluid interface
+     */
+    public function joinZone($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Zone');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Zone');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Zone relation Zone object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \ZoneQuery A secondary query class using the current class as primary query
+     */
+    public function useZoneQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinZone($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Zone', '\ZoneQuery');
     }
 
     /**

@@ -158,6 +158,7 @@ class SeasonTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('MileageType', '\\MileageType', RelationMap::ONE_TO_MANY, array('season_type_id' => 'season_type_id', ), null, null, 'MileageTypes');
         $this->addRelation('Season', '\\Season', RelationMap::ONE_TO_MANY, array('season_type_id' => 'season_type_id', ), null, null, 'Seasons');
     } // buildRelations()
 

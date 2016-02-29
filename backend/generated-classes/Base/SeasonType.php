@@ -2,6 +2,8 @@
 
 namespace Base;
 
+use \MileageType as ChildMileageType;
+use \MileageTypeQuery as ChildMileageTypeQuery;
 use \Season as ChildSeason;
 use \SeasonQuery as ChildSeasonQuery;
 use \SeasonType as ChildSeasonType;
@@ -96,6 +98,12 @@ abstract class SeasonType implements ActiveRecordInterface
     protected $update_user;
 
     /**
+     * @var        ObjectCollection|ChildMileageType[] Collection to store aggregation of ChildMileageType objects.
+     */
+    protected $collMileageTypes;
+    protected $collMileageTypesPartial;
+
+    /**
      * @var        ObjectCollection|ChildSeason[] Collection to store aggregation of ChildSeason objects.
      */
     protected $collSeasons;
@@ -108,6 +116,12 @@ abstract class SeasonType implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildMileageType[]
+     */
+    protected $mileageTypesScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -614,6 +628,8 @@ abstract class SeasonType implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->collMileageTypes = null;
+
             $this->collSeasons = null;
 
         } // if (deep)
@@ -724,6 +740,24 @@ abstract class SeasonType implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->mileageTypesScheduledForDeletion !== null) {
+                if (!$this->mileageTypesScheduledForDeletion->isEmpty()) {
+                    foreach ($this->mileageTypesScheduledForDeletion as $mileageType) {
+                        // need to save related object because we set the relation to null
+                        $mileageType->save($con);
+                    }
+                    $this->mileageTypesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collMileageTypes !== null) {
+                foreach ($this->collMileageTypes as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             if ($this->seasonsScheduledForDeletion !== null) {
@@ -929,6 +963,21 @@ abstract class SeasonType implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->collMileageTypes) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'mileageTypes';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'mileage_types';
+                        break;
+                    default:
+                        $key = 'MileageTypes';
+                }
+
+                $result[$key] = $this->collMileageTypes->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collSeasons) {
 
                 switch ($keyType) {
@@ -1186,6 +1235,12 @@ abstract class SeasonType implements ActiveRecordInterface
             // the getter/setter methods for fkey referrer objects.
             $copyObj->setNew(false);
 
+            foreach ($this->getMileageTypes() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addMileageType($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getSeasons() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addSeason($relObj->copy($deepCopy));
@@ -1233,9 +1288,230 @@ abstract class SeasonType implements ActiveRecordInterface
      */
     public function initRelation($relationName)
     {
+        if ('MileageType' == $relationName) {
+            return $this->initMileageTypes();
+        }
         if ('Season' == $relationName) {
             return $this->initSeasons();
         }
+    }
+
+    /**
+     * Clears out the collMileageTypes collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addMileageTypes()
+     */
+    public function clearMileageTypes()
+    {
+        $this->collMileageTypes = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collMileageTypes collection loaded partially.
+     */
+    public function resetPartialMileageTypes($v = true)
+    {
+        $this->collMileageTypesPartial = $v;
+    }
+
+    /**
+     * Initializes the collMileageTypes collection.
+     *
+     * By default this just sets the collMileageTypes collection to an empty array (like clearcollMileageTypes());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initMileageTypes($overrideExisting = true)
+    {
+        if (null !== $this->collMileageTypes && !$overrideExisting) {
+            return;
+        }
+        $this->collMileageTypes = new ObjectCollection();
+        $this->collMileageTypes->setModel('\MileageType');
+    }
+
+    /**
+     * Gets an array of ChildMileageType objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildSeasonType is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildMileageType[] List of ChildMileageType objects
+     * @throws PropelException
+     */
+    public function getMileageTypes(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMileageTypesPartial && !$this->isNew();
+        if (null === $this->collMileageTypes || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collMileageTypes) {
+                // return empty collection
+                $this->initMileageTypes();
+            } else {
+                $collMileageTypes = ChildMileageTypeQuery::create(null, $criteria)
+                    ->filterBySeasonType($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collMileageTypesPartial && count($collMileageTypes)) {
+                        $this->initMileageTypes(false);
+
+                        foreach ($collMileageTypes as $obj) {
+                            if (false == $this->collMileageTypes->contains($obj)) {
+                                $this->collMileageTypes->append($obj);
+                            }
+                        }
+
+                        $this->collMileageTypesPartial = true;
+                    }
+
+                    return $collMileageTypes;
+                }
+
+                if ($partial && $this->collMileageTypes) {
+                    foreach ($this->collMileageTypes as $obj) {
+                        if ($obj->isNew()) {
+                            $collMileageTypes[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collMileageTypes = $collMileageTypes;
+                $this->collMileageTypesPartial = false;
+            }
+        }
+
+        return $this->collMileageTypes;
+    }
+
+    /**
+     * Sets a collection of ChildMileageType objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $mileageTypes A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildSeasonType The current object (for fluent API support)
+     */
+    public function setMileageTypes(Collection $mileageTypes, ConnectionInterface $con = null)
+    {
+        /** @var ChildMileageType[] $mileageTypesToDelete */
+        $mileageTypesToDelete = $this->getMileageTypes(new Criteria(), $con)->diff($mileageTypes);
+
+
+        $this->mileageTypesScheduledForDeletion = $mileageTypesToDelete;
+
+        foreach ($mileageTypesToDelete as $mileageTypeRemoved) {
+            $mileageTypeRemoved->setSeasonType(null);
+        }
+
+        $this->collMileageTypes = null;
+        foreach ($mileageTypes as $mileageType) {
+            $this->addMileageType($mileageType);
+        }
+
+        $this->collMileageTypes = $mileageTypes;
+        $this->collMileageTypesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related MileageType objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related MileageType objects.
+     * @throws PropelException
+     */
+    public function countMileageTypes(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collMileageTypesPartial && !$this->isNew();
+        if (null === $this->collMileageTypes || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collMileageTypes) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getMileageTypes());
+            }
+
+            $query = ChildMileageTypeQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterBySeasonType($this)
+                ->count($con);
+        }
+
+        return count($this->collMileageTypes);
+    }
+
+    /**
+     * Method called to associate a ChildMileageType object to this object
+     * through the ChildMileageType foreign key attribute.
+     *
+     * @param  ChildMileageType $l ChildMileageType
+     * @return $this|\SeasonType The current object (for fluent API support)
+     */
+    public function addMileageType(ChildMileageType $l)
+    {
+        if ($this->collMileageTypes === null) {
+            $this->initMileageTypes();
+            $this->collMileageTypesPartial = true;
+        }
+
+        if (!$this->collMileageTypes->contains($l)) {
+            $this->doAddMileageType($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildMileageType $mileageType The ChildMileageType object to add.
+     */
+    protected function doAddMileageType(ChildMileageType $mileageType)
+    {
+        $this->collMileageTypes[]= $mileageType;
+        $mileageType->setSeasonType($this);
+    }
+
+    /**
+     * @param  ChildMileageType $mileageType The ChildMileageType object to remove.
+     * @return $this|ChildSeasonType The current object (for fluent API support)
+     */
+    public function removeMileageType(ChildMileageType $mileageType)
+    {
+        if ($this->getMileageTypes()->contains($mileageType)) {
+            $pos = $this->collMileageTypes->search($mileageType);
+            $this->collMileageTypes->remove($pos);
+            if (null === $this->mileageTypesScheduledForDeletion) {
+                $this->mileageTypesScheduledForDeletion = clone $this->collMileageTypes;
+                $this->mileageTypesScheduledForDeletion->clear();
+            }
+            $this->mileageTypesScheduledForDeletion[]= $mileageType;
+            $mileageType->setSeasonType(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -1511,6 +1787,11 @@ abstract class SeasonType implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collMileageTypes) {
+                foreach ($this->collMileageTypes as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collSeasons) {
                 foreach ($this->collSeasons as $o) {
                     $o->clearAllReferences($deep);
@@ -1518,6 +1799,7 @@ abstract class SeasonType implements ActiveRecordInterface
             }
         } // if ($deep)
 
+        $this->collMileageTypes = null;
         $this->collSeasons = null;
     }
 

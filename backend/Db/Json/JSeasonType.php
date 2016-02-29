@@ -46,15 +46,9 @@ class JSeasonType implements JSONInterface, JSONDisplay
 
 
     public static function VALIDATE(JSeasonType $mine) {
-        /*
-        if(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId))
-            throw new JSONException("Did not receive 'PointSystem' field, which is required" . $mine);
+        if(!FieldUtils::STRING_IS_DEFINED($mine->Name))
+            throw new JSONException("Did not receive 'Name' field, which is required" . $mine);
 
-        if(is_null($mine->From) || strlen($mine->From)<=0)
-            throw new JSONException("Did not receive 'From' field, which is required" . $mine);
-        if(is_null($mine->To) || strlen($mine->To)<=0)
-            throw new JSONException("Did not receive 'To' field, which is required" . $mine);
-        */
         return $mine;
     }
     /*
