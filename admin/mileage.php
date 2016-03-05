@@ -479,6 +479,11 @@
                         name: "SeasonDateId",
                         type:  "readonly"
                     }, {
+                        label: "Season:",
+                        name: "Season.SeasonId",
+                        type: "select",
+                        options: seasons
+                    }, {
                         label: "Zone:",
                         name: "Zone.ZoneId",
                         type: "select",
@@ -778,6 +783,7 @@
                 },
                 "columns": [
                     { data: "SeasonDateId", visible: false },
+                    { data: "Season.Name", editField:"Season.SeasonId" },
                     { data: "Zone.Name", editField:"Zone.ZoneId" },
                     { data: "From" },
                     { data: "To" },

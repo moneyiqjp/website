@@ -21,6 +21,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  * @method     ChildSeasonDateQuery orderBySeasonDateId($order = Criteria::ASC) Order by the season_date_id column
+ * @method     ChildSeasonDateQuery orderBySeasonId($order = Criteria::ASC) Order by the season_id column
  * @method     ChildSeasonDateQuery orderByZoneId($order = Criteria::ASC) Order by the zone_id column
  * @method     ChildSeasonDateQuery orderByFromDate($order = Criteria::ASC) Order by the from_date column
  * @method     ChildSeasonDateQuery orderByToDate($order = Criteria::ASC) Order by the to_date column
@@ -28,6 +29,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonDateQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
  *
  * @method     ChildSeasonDateQuery groupBySeasonDateId() Group by the season_date_id column
+ * @method     ChildSeasonDateQuery groupBySeasonId() Group by the season_id column
  * @method     ChildSeasonDateQuery groupByZoneId() Group by the zone_id column
  * @method     ChildSeasonDateQuery groupByFromDate() Group by the from_date column
  * @method     ChildSeasonDateQuery groupByToDate() Group by the to_date column
@@ -42,12 +44,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonDateQuery rightJoinZone($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Zone relation
  * @method     ChildSeasonDateQuery innerJoinZone($relationAlias = null) Adds a INNER JOIN clause to the query using the Zone relation
  *
- * @method     \ZoneQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildSeasonDateQuery leftJoinSeason($relationAlias = null) Adds a LEFT JOIN clause to the query using the Season relation
+ * @method     ChildSeasonDateQuery rightJoinSeason($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Season relation
+ * @method     ChildSeasonDateQuery innerJoinSeason($relationAlias = null) Adds a INNER JOIN clause to the query using the Season relation
+ *
+ * @method     \ZoneQuery|\SeasonQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildSeasonDate findOne(ConnectionInterface $con = null) Return the first ChildSeasonDate matching the query
  * @method     ChildSeasonDate findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSeasonDate matching the query, or a new ChildSeasonDate object populated from the query conditions when no match is found
  *
  * @method     ChildSeasonDate findOneBySeasonDateId(int $season_date_id) Return the first ChildSeasonDate filtered by the season_date_id column
+ * @method     ChildSeasonDate findOneBySeasonId(int $season_id) Return the first ChildSeasonDate filtered by the season_id column
  * @method     ChildSeasonDate findOneByZoneId(int $zone_id) Return the first ChildSeasonDate filtered by the zone_id column
  * @method     ChildSeasonDate findOneByFromDate(string $from_date) Return the first ChildSeasonDate filtered by the from_date column
  * @method     ChildSeasonDate findOneByToDate(string $to_date) Return the first ChildSeasonDate filtered by the to_date column
@@ -56,6 +63,7 @@ use Propel\Runtime\Exception\PropelException;
  *
  * @method     ChildSeasonDate[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSeasonDate objects based on current ModelCriteria
  * @method     ChildSeasonDate[]|ObjectCollection findBySeasonDateId(int $season_date_id) Return ChildSeasonDate objects filtered by the season_date_id column
+ * @method     ChildSeasonDate[]|ObjectCollection findBySeasonId(int $season_id) Return ChildSeasonDate objects filtered by the season_id column
  * @method     ChildSeasonDate[]|ObjectCollection findByZoneId(int $zone_id) Return ChildSeasonDate objects filtered by the zone_id column
  * @method     ChildSeasonDate[]|ObjectCollection findByFromDate(string $from_date) Return ChildSeasonDate objects filtered by the from_date column
  * @method     ChildSeasonDate[]|ObjectCollection findByToDate(string $to_date) Return ChildSeasonDate objects filtered by the to_date column
@@ -152,7 +160,7 @@ abstract class SeasonDateQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT season_date_id, zone_id, from_date, to_date, update_time, update_user FROM season_date WHERE season_date_id = :p0';
+        $sql = 'SELECT season_date_id, season_id, zone_id, from_date, to_date, update_time, update_user FROM season_date WHERE season_date_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -281,6 +289,49 @@ abstract class SeasonDateQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(SeasonDateTableMap::COL_SEASON_DATE_ID, $seasonDateId, $comparison);
+    }
+
+    /**
+     * Filter the query on the season_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterBySeasonId(1234); // WHERE season_id = 1234
+     * $query->filterBySeasonId(array(12, 34)); // WHERE season_id IN (12, 34)
+     * $query->filterBySeasonId(array('min' => 12)); // WHERE season_id > 12
+     * </code>
+     *
+     * @see       filterBySeason()
+     *
+     * @param     mixed $seasonId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildSeasonDateQuery The current query, for fluid interface
+     */
+    public function filterBySeasonId($seasonId = null, $comparison = null)
+    {
+        if (is_array($seasonId)) {
+            $useMinMax = false;
+            if (isset($seasonId['min'])) {
+                $this->addUsingAlias(SeasonDateTableMap::COL_SEASON_ID, $seasonId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($seasonId['max'])) {
+                $this->addUsingAlias(SeasonDateTableMap::COL_SEASON_ID, $seasonId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(SeasonDateTableMap::COL_SEASON_ID, $seasonId, $comparison);
     }
 
     /**
@@ -559,6 +610,83 @@ abstract class SeasonDateQuery extends ModelCriteria
         return $this
             ->joinZone($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Zone', '\ZoneQuery');
+    }
+
+    /**
+     * Filter the query by a related \Season object
+     *
+     * @param \Season|ObjectCollection $season The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildSeasonDateQuery The current query, for fluid interface
+     */
+    public function filterBySeason($season, $comparison = null)
+    {
+        if ($season instanceof \Season) {
+            return $this
+                ->addUsingAlias(SeasonDateTableMap::COL_SEASON_ID, $season->getSeasonId(), $comparison);
+        } elseif ($season instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(SeasonDateTableMap::COL_SEASON_ID, $season->toKeyValue('PrimaryKey', 'SeasonId'), $comparison);
+        } else {
+            throw new PropelException('filterBySeason() only accepts arguments of type \Season or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Season relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSeasonDateQuery The current query, for fluid interface
+     */
+    public function joinSeason($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Season');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Season');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Season relation Season object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SeasonQuery A secondary query class using the current class as primary query
+     */
+    public function useSeasonQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSeason($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Season', '\SeasonQuery');
     }
 
     /**

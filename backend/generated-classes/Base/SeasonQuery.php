@@ -50,7 +50,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildSeasonQuery rightJoinSeasonType($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SeasonType relation
  * @method     ChildSeasonQuery innerJoinSeasonType($relationAlias = null) Adds a INNER JOIN clause to the query using the SeasonType relation
  *
- * @method     \PointSystemQuery|\SeasonTypeQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildSeasonQuery leftJoinSeasonDate($relationAlias = null) Adds a LEFT JOIN clause to the query using the SeasonDate relation
+ * @method     ChildSeasonQuery rightJoinSeasonDate($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SeasonDate relation
+ * @method     ChildSeasonQuery innerJoinSeasonDate($relationAlias = null) Adds a INNER JOIN clause to the query using the SeasonDate relation
+ *
+ * @method     \PointSystemQuery|\SeasonTypeQuery|\SeasonDateQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildSeason findOne(ConnectionInterface $con = null) Return the first ChildSeason matching the query
  * @method     ChildSeason findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSeason matching the query, or a new ChildSeason object populated from the query conditions when no match is found
@@ -692,6 +696,79 @@ abstract class SeasonQuery extends ModelCriteria
         return $this
             ->joinSeasonType($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'SeasonType', '\SeasonTypeQuery');
+    }
+
+    /**
+     * Filter the query by a related \SeasonDate object
+     *
+     * @param \SeasonDate|ObjectCollection $seasonDate  the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildSeasonQuery The current query, for fluid interface
+     */
+    public function filterBySeasonDate($seasonDate, $comparison = null)
+    {
+        if ($seasonDate instanceof \SeasonDate) {
+            return $this
+                ->addUsingAlias(SeasonTableMap::COL_SEASON_ID, $seasonDate->getSeasonId(), $comparison);
+        } elseif ($seasonDate instanceof ObjectCollection) {
+            return $this
+                ->useSeasonDateQuery()
+                ->filterByPrimaryKeys($seasonDate->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySeasonDate() only accepts arguments of type \SeasonDate or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the SeasonDate relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildSeasonQuery The current query, for fluid interface
+     */
+    public function joinSeasonDate($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('SeasonDate');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'SeasonDate');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the SeasonDate relation SeasonDate object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SeasonDateQuery A secondary query class using the current class as primary query
+     */
+    public function useSeasonDateQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSeasonDate($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'SeasonDate', '\SeasonDateQuery');
     }
 
     /**

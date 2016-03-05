@@ -59,7 +59,7 @@ class SeasonDateTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,17 @@ class SeasonDateTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the season_date_id field
      */
     const COL_SEASON_DATE_ID = 'season_date.season_date_id';
+
+    /**
+     * the column name for the season_id field
+     */
+    const COL_SEASON_ID = 'season_date.season_id';
 
     /**
      * the column name for the zone_id field
@@ -113,11 +118,11 @@ class SeasonDateTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('SeasonDateId', 'ZoneId', 'FromDate', 'ToDate', 'UpdateTime', 'UpdateUser', ),
-        self::TYPE_CAMELNAME     => array('seasonDateId', 'zoneId', 'fromDate', 'toDate', 'updateTime', 'updateUser', ),
-        self::TYPE_COLNAME       => array(SeasonDateTableMap::COL_SEASON_DATE_ID, SeasonDateTableMap::COL_ZONE_ID, SeasonDateTableMap::COL_FROM_DATE, SeasonDateTableMap::COL_TO_DATE, SeasonDateTableMap::COL_UPDATE_TIME, SeasonDateTableMap::COL_UPDATE_USER, ),
-        self::TYPE_FIELDNAME     => array('season_date_id', 'zone_id', 'from_date', 'to_date', 'update_time', 'update_user', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('SeasonDateId', 'SeasonId', 'ZoneId', 'FromDate', 'ToDate', 'UpdateTime', 'UpdateUser', ),
+        self::TYPE_CAMELNAME     => array('seasonDateId', 'seasonId', 'zoneId', 'fromDate', 'toDate', 'updateTime', 'updateUser', ),
+        self::TYPE_COLNAME       => array(SeasonDateTableMap::COL_SEASON_DATE_ID, SeasonDateTableMap::COL_SEASON_ID, SeasonDateTableMap::COL_ZONE_ID, SeasonDateTableMap::COL_FROM_DATE, SeasonDateTableMap::COL_TO_DATE, SeasonDateTableMap::COL_UPDATE_TIME, SeasonDateTableMap::COL_UPDATE_USER, ),
+        self::TYPE_FIELDNAME     => array('season_date_id', 'season_id', 'zone_id', 'from_date', 'to_date', 'update_time', 'update_user', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class SeasonDateTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('SeasonDateId' => 0, 'ZoneId' => 1, 'FromDate' => 2, 'ToDate' => 3, 'UpdateTime' => 4, 'UpdateUser' => 5, ),
-        self::TYPE_CAMELNAME     => array('seasonDateId' => 0, 'zoneId' => 1, 'fromDate' => 2, 'toDate' => 3, 'updateTime' => 4, 'updateUser' => 5, ),
-        self::TYPE_COLNAME       => array(SeasonDateTableMap::COL_SEASON_DATE_ID => 0, SeasonDateTableMap::COL_ZONE_ID => 1, SeasonDateTableMap::COL_FROM_DATE => 2, SeasonDateTableMap::COL_TO_DATE => 3, SeasonDateTableMap::COL_UPDATE_TIME => 4, SeasonDateTableMap::COL_UPDATE_USER => 5, ),
-        self::TYPE_FIELDNAME     => array('season_date_id' => 0, 'zone_id' => 1, 'from_date' => 2, 'to_date' => 3, 'update_time' => 4, 'update_user' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('SeasonDateId' => 0, 'SeasonId' => 1, 'ZoneId' => 2, 'FromDate' => 3, 'ToDate' => 4, 'UpdateTime' => 5, 'UpdateUser' => 6, ),
+        self::TYPE_CAMELNAME     => array('seasonDateId' => 0, 'seasonId' => 1, 'zoneId' => 2, 'fromDate' => 3, 'toDate' => 4, 'updateTime' => 5, 'updateUser' => 6, ),
+        self::TYPE_COLNAME       => array(SeasonDateTableMap::COL_SEASON_DATE_ID => 0, SeasonDateTableMap::COL_SEASON_ID => 1, SeasonDateTableMap::COL_ZONE_ID => 2, SeasonDateTableMap::COL_FROM_DATE => 3, SeasonDateTableMap::COL_TO_DATE => 4, SeasonDateTableMap::COL_UPDATE_TIME => 5, SeasonDateTableMap::COL_UPDATE_USER => 6, ),
+        self::TYPE_FIELDNAME     => array('season_date_id' => 0, 'season_id' => 1, 'zone_id' => 2, 'from_date' => 3, 'to_date' => 4, 'update_time' => 5, 'update_user' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -152,6 +157,7 @@ class SeasonDateTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('season_date_id', 'SeasonDateId', 'INTEGER', true, null, null);
+        $this->addForeignKey('season_id', 'SeasonId', 'INTEGER', 'season', 'season_id', true, null, null);
         $this->addForeignKey('zone_id', 'ZoneId', 'INTEGER', 'zone', 'zone_id', true, null, null);
         $this->addColumn('from_date', 'FromDate', 'DATE', false, null, null);
         $this->addColumn('to_date', 'ToDate', 'DATE', false, null, null);
@@ -165,6 +171,7 @@ class SeasonDateTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Zone', '\\Zone', RelationMap::MANY_TO_ONE, array('zone_id' => 'zone_id', ), null, null);
+        $this->addRelation('Season', '\\Season', RelationMap::MANY_TO_ONE, array('season_id' => 'season_id', ), null, null);
     } // buildRelations()
 
     /**
@@ -309,6 +316,7 @@ class SeasonDateTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(SeasonDateTableMap::COL_SEASON_DATE_ID);
+            $criteria->addSelectColumn(SeasonDateTableMap::COL_SEASON_ID);
             $criteria->addSelectColumn(SeasonDateTableMap::COL_ZONE_ID);
             $criteria->addSelectColumn(SeasonDateTableMap::COL_FROM_DATE);
             $criteria->addSelectColumn(SeasonDateTableMap::COL_TO_DATE);
@@ -316,6 +324,7 @@ class SeasonDateTableMap extends TableMap
             $criteria->addSelectColumn(SeasonDateTableMap::COL_UPDATE_USER);
         } else {
             $criteria->addSelectColumn($alias . '.season_date_id');
+            $criteria->addSelectColumn($alias . '.season_id');
             $criteria->addSelectColumn($alias . '.zone_id');
             $criteria->addSelectColumn($alias . '.from_date');
             $criteria->addSelectColumn($alias . '.to_date');

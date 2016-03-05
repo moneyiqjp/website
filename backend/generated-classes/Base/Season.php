@@ -4,6 +4,9 @@ namespace Base;
 
 use \PointSystem as ChildPointSystem;
 use \PointSystemQuery as ChildPointSystemQuery;
+use \Season as ChildSeason;
+use \SeasonDate as ChildSeasonDate;
+use \SeasonDateQuery as ChildSeasonDateQuery;
 use \SeasonQuery as ChildSeasonQuery;
 use \SeasonType as ChildSeasonType;
 use \SeasonTypeQuery as ChildSeasonTypeQuery;
@@ -16,6 +19,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -125,12 +129,24 @@ abstract class Season implements ActiveRecordInterface
     protected $aSeasonType;
 
     /**
+     * @var        ObjectCollection|ChildSeasonDate[] Collection to store aggregation of ChildSeasonDate objects.
+     */
+    protected $collSeasonDates;
+    protected $collSeasonDatesPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSeasonDate[]
+     */
+    protected $seasonDatesScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -763,6 +779,8 @@ abstract class Season implements ActiveRecordInterface
 
             $this->aPointSystem = null;
             $this->aSeasonType = null;
+            $this->collSeasonDates = null;
+
         } // if (deep)
     }
 
@@ -890,6 +908,23 @@ abstract class Season implements ActiveRecordInterface
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->seasonDatesScheduledForDeletion !== null) {
+                if (!$this->seasonDatesScheduledForDeletion->isEmpty()) {
+                    \SeasonDateQuery::create()
+                        ->filterByPrimaryKeys($this->seasonDatesScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->seasonDatesScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSeasonDates !== null) {
+                foreach ($this->collSeasonDates as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -1137,6 +1172,21 @@ abstract class Season implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aSeasonType->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collSeasonDates) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'seasonDates';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'season_dates';
+                        break;
+                    default:
+                        $key = 'SeasonDates';
+                }
+
+                $result[$key] = $this->collSeasonDates->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1404,6 +1454,20 @@ abstract class Season implements ActiveRecordInterface
         $copyObj->setReference($this->getReference());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getSeasonDates() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSeasonDate($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setSeasonId(NULL); // this is a auto-increment column, so set to default value
@@ -1534,6 +1598,265 @@ abstract class Season implements ActiveRecordInterface
         return $this->aSeasonType;
     }
 
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param      string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('SeasonDate' == $relationName) {
+            return $this->initSeasonDates();
+        }
+    }
+
+    /**
+     * Clears out the collSeasonDates collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSeasonDates()
+     */
+    public function clearSeasonDates()
+    {
+        $this->collSeasonDates = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSeasonDates collection loaded partially.
+     */
+    public function resetPartialSeasonDates($v = true)
+    {
+        $this->collSeasonDatesPartial = $v;
+    }
+
+    /**
+     * Initializes the collSeasonDates collection.
+     *
+     * By default this just sets the collSeasonDates collection to an empty array (like clearcollSeasonDates());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSeasonDates($overrideExisting = true)
+    {
+        if (null !== $this->collSeasonDates && !$overrideExisting) {
+            return;
+        }
+        $this->collSeasonDates = new ObjectCollection();
+        $this->collSeasonDates->setModel('\SeasonDate');
+    }
+
+    /**
+     * Gets an array of ChildSeasonDate objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildSeason is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSeasonDate[] List of ChildSeasonDate objects
+     * @throws PropelException
+     */
+    public function getSeasonDates(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeasonDatesPartial && !$this->isNew();
+        if (null === $this->collSeasonDates || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSeasonDates) {
+                // return empty collection
+                $this->initSeasonDates();
+            } else {
+                $collSeasonDates = ChildSeasonDateQuery::create(null, $criteria)
+                    ->filterBySeason($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSeasonDatesPartial && count($collSeasonDates)) {
+                        $this->initSeasonDates(false);
+
+                        foreach ($collSeasonDates as $obj) {
+                            if (false == $this->collSeasonDates->contains($obj)) {
+                                $this->collSeasonDates->append($obj);
+                            }
+                        }
+
+                        $this->collSeasonDatesPartial = true;
+                    }
+
+                    return $collSeasonDates;
+                }
+
+                if ($partial && $this->collSeasonDates) {
+                    foreach ($this->collSeasonDates as $obj) {
+                        if ($obj->isNew()) {
+                            $collSeasonDates[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSeasonDates = $collSeasonDates;
+                $this->collSeasonDatesPartial = false;
+            }
+        }
+
+        return $this->collSeasonDates;
+    }
+
+    /**
+     * Sets a collection of ChildSeasonDate objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $seasonDates A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildSeason The current object (for fluent API support)
+     */
+    public function setSeasonDates(Collection $seasonDates, ConnectionInterface $con = null)
+    {
+        /** @var ChildSeasonDate[] $seasonDatesToDelete */
+        $seasonDatesToDelete = $this->getSeasonDates(new Criteria(), $con)->diff($seasonDates);
+
+
+        $this->seasonDatesScheduledForDeletion = $seasonDatesToDelete;
+
+        foreach ($seasonDatesToDelete as $seasonDateRemoved) {
+            $seasonDateRemoved->setSeason(null);
+        }
+
+        $this->collSeasonDates = null;
+        foreach ($seasonDates as $seasonDate) {
+            $this->addSeasonDate($seasonDate);
+        }
+
+        $this->collSeasonDates = $seasonDates;
+        $this->collSeasonDatesPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related SeasonDate objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related SeasonDate objects.
+     * @throws PropelException
+     */
+    public function countSeasonDates(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeasonDatesPartial && !$this->isNew();
+        if (null === $this->collSeasonDates || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSeasonDates) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSeasonDates());
+            }
+
+            $query = ChildSeasonDateQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterBySeason($this)
+                ->count($con);
+        }
+
+        return count($this->collSeasonDates);
+    }
+
+    /**
+     * Method called to associate a ChildSeasonDate object to this object
+     * through the ChildSeasonDate foreign key attribute.
+     *
+     * @param  ChildSeasonDate $l ChildSeasonDate
+     * @return $this|\Season The current object (for fluent API support)
+     */
+    public function addSeasonDate(ChildSeasonDate $l)
+    {
+        if ($this->collSeasonDates === null) {
+            $this->initSeasonDates();
+            $this->collSeasonDatesPartial = true;
+        }
+
+        if (!$this->collSeasonDates->contains($l)) {
+            $this->doAddSeasonDate($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSeasonDate $seasonDate The ChildSeasonDate object to add.
+     */
+    protected function doAddSeasonDate(ChildSeasonDate $seasonDate)
+    {
+        $this->collSeasonDates[]= $seasonDate;
+        $seasonDate->setSeason($this);
+    }
+
+    /**
+     * @param  ChildSeasonDate $seasonDate The ChildSeasonDate object to remove.
+     * @return $this|ChildSeason The current object (for fluent API support)
+     */
+    public function removeSeasonDate(ChildSeasonDate $seasonDate)
+    {
+        if ($this->getSeasonDates()->contains($seasonDate)) {
+            $pos = $this->collSeasonDates->search($seasonDate);
+            $this->collSeasonDates->remove($pos);
+            if (null === $this->seasonDatesScheduledForDeletion) {
+                $this->seasonDatesScheduledForDeletion = clone $this->collSeasonDates;
+                $this->seasonDatesScheduledForDeletion->clear();
+            }
+            $this->seasonDatesScheduledForDeletion[]= clone $seasonDate;
+            $seasonDate->setSeason(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Season is new, it will return
+     * an empty collection; or if this Season has previously
+     * been saved, it will retrieve related SeasonDates from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Season.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildSeasonDate[] List of ChildSeasonDate objects
+     */
+    public function getSeasonDatesJoinZone(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildSeasonDateQuery::create(null, $criteria);
+        $query->joinWith('Zone', $joinBehavior);
+
+        return $this->getSeasonDates($query, $con);
+    }
+
     /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
@@ -1574,8 +1897,14 @@ abstract class Season implements ActiveRecordInterface
     public function clearAllReferences($deep = false)
     {
         if ($deep) {
+            if ($this->collSeasonDates) {
+                foreach ($this->collSeasonDates as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collSeasonDates = null;
         $this->aPointSystem = null;
         $this->aSeasonType = null;
     }

@@ -1058,6 +1058,7 @@
   </table>
   <table name="season_date" idMethod="native" phpName="SeasonDate">
     <column name="season_date_id" phpName="SeasonDateId" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="season_id" phpName="SeasonId" type="INTEGER" required="true"/>
     <column name="zone_id" phpName="ZoneId" type="INTEGER" required="true"/>
     <column name="from_date" phpName="FromDate" type="DATE"/>
     <column name="to_date" phpName="ToDate" type="DATE"/>
@@ -1066,8 +1067,14 @@
     <foreign-key foreignTable="zone" name="FK_season_date_zone_id">
       <reference local="zone_id" foreign="zone_id"/>
     </foreign-key>
+    <foreign-key foreignTable="season" name="fk_season_date_season">
+      <reference local="season_id" foreign="season_id"/>
+    </foreign-key>
     <index name="FK_season_date_zone_id">
       <index-column name="zone_id"/>
+    </index>
+    <index name="fk_season_date_season">
+      <index-column name="season_id"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
