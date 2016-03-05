@@ -65,6 +65,11 @@
         </a>
     </div>
     <div class="adminlogo">
+        <a href="imageUploader.php" target="frame_main" class="menulink">
+            Images
+        </a>
+    </div>
+    <div class="adminlogo">
         <a href="testing_backend.php" target="frame_main" class="menulink">
             Backend Status
         </a>
