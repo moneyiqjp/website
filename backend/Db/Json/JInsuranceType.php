@@ -12,7 +12,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JInsuranceType implements  JSONInterface{
+class JInsuranceType extends JObjectRoot implements  JSONInterface, JObjectifiable{
     public $InsuranceTypeId;
     public $TypeName;
     public $TypeDisplay;
@@ -43,7 +43,7 @@ class JInsuranceType implements  JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JInsuranceType();
         if(!ArrayUtils::KEY_EXISTS($data, 'InsuranceTypeId')) throw new \Exception("Required InsuranceTypeId not specified");
@@ -87,6 +87,16 @@ class JInsuranceType implements  JSONInterface{
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
 
         return $item;
+    }
+
+
+    public function getLabel() {
+        return $this->TypeName;
+    }
+
+    public function getValue()
+    {
+        return $this->InsuranceTypeId;
     }
 
 }

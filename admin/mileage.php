@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>MoneyIQ Stores</title>
+    <title>MoneyIQ Mileage</title>
     <link rel="stylesheet" type="text/css" href="media/css/jquery.dataTables.css">
     <script type="text/javascript" language="javascript" src="media/js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="media/js/jquery.dataTables.js"></script>
@@ -644,25 +644,25 @@
                 ]
             });
 
-        zoneCityMapEditor = new $.fn.dataTable.Editor(
+        zoneTripMapEditor = new $.fn.dataTable.Editor(
             {
                 ajax: {
-                    create: '../backend/crud/zonecitymap/create',
+                    create: '../backend/crud/zonetripmap/create',
                     edit: {
                         type: 'PUT',
-                        url:  '../backend/crud/zonecitymap/update'
+                        url:  '../backend/crud/zonetripmap/update'
                     },
                     remove: {
                         type: 'DELETE',
-                        url: '../backend/crud/zonecitymap/delete'
+                        url: '../backend/crud/zonetripmap/delete'
                     }
                 },
-                table: "#zonecitymap",
-                idSrc: "ZoneCityMapId",
+                table: "#zonetripmap",
+                idSrc: "ZoneTripMapId",
                 fields: [
                     {
                         label: "Id:",
-                        name: "ZoneCityMapId",
+                        name: "ZoneTripMapId",
                         type:  "readonly"
                     }, {
                         label: "Zone:",
@@ -670,10 +670,10 @@
                         type: "select",
                         options: zones
                     }, {
-                        label: "City:",
-                        name: "City.CityId",
+                        label: "Trip:",
+                        name: "Trip.TripId",
                         type: "select",
-                        options: cities
+                        options: trips
                     }, {
                         label: "Update date:",
                         name: "UpdateTime",
@@ -829,27 +829,37 @@
             } );
 
 
-            $('#zonecitymap').dataTable( {
+            $('#zonetripmap').dataTable( {
                 dom: "frtTip",
                 "pageLength": 25,
                 "ajax": {
-                    "url": "../backend/crud/zonecitymap/all",
+                    "url": "../backend/crud/zonetripmap/all",
                     "type": "GET",
                     "contentType": "application/json; charset=utf-8",
                     "dataType": "json"
                 },
                 "columns": [
-                    { data: "ZoneCityMapId", visible: false },
+                    { data: "ZoneTripMapId", visible: false },
                     { data: "Zone.Name", editField: "Zone.ZoneId" },
-                    { data: "City.Name", editField: "City.CityId" },
+                    { data: "Trip",
+                        editField: "Trip.TripId",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' && data!=null ) {
+                                roundtrip = "one way";
+                                if(data["MileageType"]["RoundTrip"]) {roundtrip="round trip"}
+                                return data["MileageType"]["Class"] + "-" + data["MileageType"]["Season"] + "-" + roundtrip;
+                            }
+                            return data;
+                        }
+                    },
                     { data: "UpdateTime", visible: false},
                     { data: "UpdateUser", visible: false }
                 ]
                 ,tableTools: {
                     sRowSelect: "os",
                     aButtons: [
-                        { sExtends: "editor_create", editor: zoneCityMapEditor },
-                        { sExtends: "editor_remove", editor: zoneCityMapEditor }
+                        { sExtends: "editor_create", editor: zoneTripMapEditor },
+                        { sExtends: "editor_remove", editor: zoneTripMapEditor }
                     ]
                 }
             } );
@@ -1086,8 +1096,8 @@
 </div>
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">
-    <div class="table-headline-staticconfig"><a name="zonecitymap">ZoneCityMap</a></div>
-    <table id="zonecitymap" class="display" cellspacing="0" width="98%">
+    <div class="table-headline-staticconfig"><a name="zonetripmap">Zonetripmap</a></div>
+    <table id="zonetripmap" class="display" cellspacing="0" width="98%">
         <thead>
         <tr>
             <th>Id</th>
@@ -1108,7 +1118,7 @@
         </tr>
         </tfoot>
     </table>
-    <a href="../backend/crud/zonecitymap/all" class="source">Source</a>
+    <a href="../backend/crud/zonetripmap/all" class="source">Source</a>
 </div>
 
 <div style="min-width: 500px; width: 45%;margin: 25px 25px 25px 25px;float: left">

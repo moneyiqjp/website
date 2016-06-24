@@ -21,9 +21,33 @@ BEGIN
 	else
 		SELECT 'table season_date already up to date';
 	end if;
+
+	if not exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='credit_card' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='review_url') THEN
+			ALTER TABLE `credit_card`
+				ADD COLUMN `review_url` VARCHAR(255) NULL AFTER `isActive`;
+		SELECT 'ADDED credit_card.review_url';
+	else
+		SELECT 'EXISTED credit_card.review_url';
+	end if;
+
+	if exists(select 1 from information_schema.`COLUMNS` a where a.TABLE_NAME='zone_city_map' and TABLE_SCHEMA=varDatabase and COLUMN_NAME='city_id') THEN
+		ALTER TABLE `zone_city_map`
+			DROP FOREIGN KEY `fk_zone_city_map_city`,
+			DROP FOREIGN KEY `fk_zone_city_map_zone`;
+		ALTER TABLE `zone_city_map`
+			ALTER `city_id` DROP DEFAULT;
+		RENAME TABLE zone_city_map to zone_trip_map;		
+		ALTER TABLE `zone_trip_map`
+			CHANGE COLUMN `city_id` `trip_id` INT(11) NOT NULL AFTER `zone_id`,
+			ADD CONSTRAINT `fk_zone_trip_map_trip` FOREIGN KEY (`trip_id`) REFERENCES `trip` (`trip_id`),
+			ADD CONSTRAINT `fk_zone_trip_map_zone` FOREIGN KEY (`zone_id`) REFERENCES `zone` (`zone_id`);
+		SELECT 'ADDED zone_trip_map';
+	else
+		SELECT 'EXISTED zone_trip_map';
+	end if;
 	
-	
-	
+
+
 
 
 

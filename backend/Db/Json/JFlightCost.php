@@ -11,8 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JFlightCost implements JSONInterface
-{
+class JFlightCost extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $FlightCostId;
     public $RetrievalDate;
     public $PointSystem;
@@ -45,7 +44,7 @@ class JFlightCost implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JFlightCost();
         if(ArrayUtils::KEY_EXISTS($data,'FlightCostId')) {
@@ -123,4 +122,13 @@ class JFlightCost implements JSONInterface
         return $item;
     }
 
+
+    public function getLabel() {
+        return $this->DepartFlightNo . "|" . $this->ReturnFlightNo;
+    }
+
+    public function getValue()
+    {
+        return $this->FlightCostId;
+    }
 }

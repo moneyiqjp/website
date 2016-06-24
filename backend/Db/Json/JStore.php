@@ -11,7 +11,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JStore implements JSONInterface, JSONDisplay {
+class JStore extends JObjectRoot implements JSONInterface, JSONDisplay {
     /**
      * @return mixed
      */
@@ -103,14 +103,14 @@ class JStore implements JSONInterface, JSONDisplay {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'StoreId')) throw new \Exception("Required key StoreId not found");
 
         return JStore::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-   public static function CREATE_FROM_ARRAY_RELAXED($data)
+   public static function CREATE_FROM_ARRAY_RELAXED(array $data)
     {
         $mine = new JStore();
         if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {
@@ -177,4 +177,14 @@ class JStore implements JSONInterface, JSONDisplay {
 
         return $display;
     }
+
+    public function getValue() {
+        return $this->StoreId;
+    }
+
+    public function getLabel() {
+        return $this->StoreName . "-" . $this->StoreName;
+    }
+
+
 }

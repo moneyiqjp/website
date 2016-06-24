@@ -12,6 +12,8 @@ use \Trip as ChildTrip;
 use \TripQuery as ChildTripQuery;
 use \Unit as ChildUnit;
 use \UnitQuery as ChildUnitQuery;
+use \ZoneTripMap as ChildZoneTripMap;
+use \ZoneTripMapQuery as ChildZoneTripMapQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -147,6 +149,12 @@ abstract class Trip implements ActiveRecordInterface
     protected $collMileagesPartial;
 
     /**
+     * @var        ObjectCollection|ChildZoneTripMap[] Collection to store aggregation of ChildZoneTripMap objects.
+     */
+    protected $collZoneTripMaps;
+    protected $collZoneTripMapsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -165,6 +173,12 @@ abstract class Trip implements ActiveRecordInterface
      * @var ObjectCollection|ChildMileage[]
      */
     protected $mileagesScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildZoneTripMap[]
+     */
+    protected $zoneTripMapsScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Base\Trip object.
@@ -792,6 +806,8 @@ abstract class Trip implements ActiveRecordInterface
 
             $this->collMileages = null;
 
+            $this->collZoneTripMaps = null;
+
         } // if (deep)
     }
 
@@ -956,6 +972,23 @@ abstract class Trip implements ActiveRecordInterface
 
             if ($this->collMileages !== null) {
                 foreach ($this->collMileages as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->zoneTripMapsScheduledForDeletion !== null) {
+                if (!$this->zoneTripMapsScheduledForDeletion->isEmpty()) {
+                    \ZoneTripMapQuery::create()
+                        ->filterByPrimaryKeys($this->zoneTripMapsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->zoneTripMapsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collZoneTripMaps !== null) {
+                foreach ($this->collZoneTripMaps as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1253,6 +1286,21 @@ abstract class Trip implements ActiveRecordInterface
 
                 $result[$key] = $this->collMileages->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collZoneTripMaps) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'zoneTripMaps';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'zone_trip_maps';
+                        break;
+                    default:
+                        $key = 'ZoneTripMaps';
+                }
+
+                $result[$key] = $this->collZoneTripMaps->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
         }
 
         return $result;
@@ -1537,6 +1585,12 @@ abstract class Trip implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getZoneTripMaps() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addZoneTripMap($relObj->copy($deepCopy));
+                }
+            }
+
         } // if ($deepCopy)
 
         if ($makeNew) {
@@ -1736,6 +1790,9 @@ abstract class Trip implements ActiveRecordInterface
         }
         if ('Mileage' == $relationName) {
             return $this->initMileages();
+        }
+        if ('ZoneTripMap' == $relationName) {
+            return $this->initZoneTripMaps();
         }
     }
 
@@ -2301,6 +2358,252 @@ abstract class Trip implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collZoneTripMaps collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addZoneTripMaps()
+     */
+    public function clearZoneTripMaps()
+    {
+        $this->collZoneTripMaps = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collZoneTripMaps collection loaded partially.
+     */
+    public function resetPartialZoneTripMaps($v = true)
+    {
+        $this->collZoneTripMapsPartial = $v;
+    }
+
+    /**
+     * Initializes the collZoneTripMaps collection.
+     *
+     * By default this just sets the collZoneTripMaps collection to an empty array (like clearcollZoneTripMaps());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initZoneTripMaps($overrideExisting = true)
+    {
+        if (null !== $this->collZoneTripMaps && !$overrideExisting) {
+            return;
+        }
+        $this->collZoneTripMaps = new ObjectCollection();
+        $this->collZoneTripMaps->setModel('\ZoneTripMap');
+    }
+
+    /**
+     * Gets an array of ChildZoneTripMap objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildTrip is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildZoneTripMap[] List of ChildZoneTripMap objects
+     * @throws PropelException
+     */
+    public function getZoneTripMaps(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZoneTripMapsPartial && !$this->isNew();
+        if (null === $this->collZoneTripMaps || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collZoneTripMaps) {
+                // return empty collection
+                $this->initZoneTripMaps();
+            } else {
+                $collZoneTripMaps = ChildZoneTripMapQuery::create(null, $criteria)
+                    ->filterByTrip($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collZoneTripMapsPartial && count($collZoneTripMaps)) {
+                        $this->initZoneTripMaps(false);
+
+                        foreach ($collZoneTripMaps as $obj) {
+                            if (false == $this->collZoneTripMaps->contains($obj)) {
+                                $this->collZoneTripMaps->append($obj);
+                            }
+                        }
+
+                        $this->collZoneTripMapsPartial = true;
+                    }
+
+                    return $collZoneTripMaps;
+                }
+
+                if ($partial && $this->collZoneTripMaps) {
+                    foreach ($this->collZoneTripMaps as $obj) {
+                        if ($obj->isNew()) {
+                            $collZoneTripMaps[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collZoneTripMaps = $collZoneTripMaps;
+                $this->collZoneTripMapsPartial = false;
+            }
+        }
+
+        return $this->collZoneTripMaps;
+    }
+
+    /**
+     * Sets a collection of ChildZoneTripMap objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $zoneTripMaps A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildTrip The current object (for fluent API support)
+     */
+    public function setZoneTripMaps(Collection $zoneTripMaps, ConnectionInterface $con = null)
+    {
+        /** @var ChildZoneTripMap[] $zoneTripMapsToDelete */
+        $zoneTripMapsToDelete = $this->getZoneTripMaps(new Criteria(), $con)->diff($zoneTripMaps);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->zoneTripMapsScheduledForDeletion = clone $zoneTripMapsToDelete;
+
+        foreach ($zoneTripMapsToDelete as $zoneTripMapRemoved) {
+            $zoneTripMapRemoved->setTrip(null);
+        }
+
+        $this->collZoneTripMaps = null;
+        foreach ($zoneTripMaps as $zoneTripMap) {
+            $this->addZoneTripMap($zoneTripMap);
+        }
+
+        $this->collZoneTripMaps = $zoneTripMaps;
+        $this->collZoneTripMapsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related ZoneTripMap objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related ZoneTripMap objects.
+     * @throws PropelException
+     */
+    public function countZoneTripMaps(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collZoneTripMapsPartial && !$this->isNew();
+        if (null === $this->collZoneTripMaps || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collZoneTripMaps) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getZoneTripMaps());
+            }
+
+            $query = ChildZoneTripMapQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByTrip($this)
+                ->count($con);
+        }
+
+        return count($this->collZoneTripMaps);
+    }
+
+    /**
+     * Method called to associate a ChildZoneTripMap object to this object
+     * through the ChildZoneTripMap foreign key attribute.
+     *
+     * @param  ChildZoneTripMap $l ChildZoneTripMap
+     * @return $this|\Trip The current object (for fluent API support)
+     */
+    public function addZoneTripMap(ChildZoneTripMap $l)
+    {
+        if ($this->collZoneTripMaps === null) {
+            $this->initZoneTripMaps();
+            $this->collZoneTripMapsPartial = true;
+        }
+
+        if (!$this->collZoneTripMaps->contains($l)) {
+            $this->doAddZoneTripMap($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildZoneTripMap $zoneTripMap The ChildZoneTripMap object to add.
+     */
+    protected function doAddZoneTripMap(ChildZoneTripMap $zoneTripMap)
+    {
+        $this->collZoneTripMaps[]= $zoneTripMap;
+        $zoneTripMap->setTrip($this);
+    }
+
+    /**
+     * @param  ChildZoneTripMap $zoneTripMap The ChildZoneTripMap object to remove.
+     * @return $this|ChildTrip The current object (for fluent API support)
+     */
+    public function removeZoneTripMap(ChildZoneTripMap $zoneTripMap)
+    {
+        if ($this->getZoneTripMaps()->contains($zoneTripMap)) {
+            $pos = $this->collZoneTripMaps->search($zoneTripMap);
+            $this->collZoneTripMaps->remove($pos);
+            if (null === $this->zoneTripMapsScheduledForDeletion) {
+                $this->zoneTripMapsScheduledForDeletion = clone $this->collZoneTripMaps;
+                $this->zoneTripMapsScheduledForDeletion->clear();
+            }
+            $this->zoneTripMapsScheduledForDeletion[]= clone $zoneTripMap;
+            $zoneTripMap->setTrip(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Trip is new, it will return
+     * an empty collection; or if this Trip has previously
+     * been saved, it will retrieve related ZoneTripMaps from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Trip.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildZoneTripMap[] List of ChildZoneTripMap objects
+     */
+    public function getZoneTripMapsJoinZone(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildZoneTripMapQuery::create(null, $criteria);
+        $query->joinWith('Zone', $joinBehavior);
+
+        return $this->getZoneTripMaps($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2352,10 +2655,16 @@ abstract class Trip implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collZoneTripMaps) {
+                foreach ($this->collZoneTripMaps as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collFlightCosts = null;
         $this->collMileages = null;
+        $this->collZoneTripMaps = null;
         $this->aUnit = null;
         $this->aCityRelatedByFromCityId = null;
         $this->aCityRelatedByToCityId = null;

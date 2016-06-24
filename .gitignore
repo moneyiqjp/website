@@ -8,3 +8,11 @@ frontend/nbproject/private/
 frontend/css/jquery-ui-1.11.2.custom/images/Thumbs.db
 frontend/*
 
+admin/.idea/copyright/profiles_settings.xml
+.htaccess
+blog/themes/.idea/.name
+blog/themes/copycat/.idea/vcs.xml
+blog/themes/copycat/.idea/.name
+blog/themes/.idea/modules.xml
+backend/.idea/backend.iml
+admin/.idea/deployment.xml

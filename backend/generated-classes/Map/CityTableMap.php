@@ -166,7 +166,6 @@ class CityTableMap extends TableMap
     {
         $this->addRelation('TripRelatedByFromCityId', '\\Trip', RelationMap::ONE_TO_MANY, array('city_id' => 'from_city_id', ), null, null, 'TripsRelatedByFromCityId');
         $this->addRelation('TripRelatedByToCityId', '\\Trip', RelationMap::ONE_TO_MANY, array('city_id' => 'to_city_id', ), null, null, 'TripsRelatedByToCityId');
-        $this->addRelation('ZoneCityMap', '\\ZoneCityMap', RelationMap::ONE_TO_MANY, array('city_id' => 'city_id', ), null, null, 'ZoneCityMaps');
     } // buildRelations()
 
     /**

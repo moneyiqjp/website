@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JCreditCardRestriction  implements JSONInterface {
+class JCreditCardRestriction extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $CreditCardRestrictionId;
     public $CreditCard;
     public $RestrictionType;
@@ -72,7 +72,7 @@ class JCreditCardRestriction  implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JCreditCardRestriction();
 
@@ -155,6 +155,16 @@ class JCreditCardRestriction  implements JSONInterface {
     }
 
 
+    public function getLabel() {
+        $restriction = is_null($this->RestrictionType)? "":$this->RestrictionType->Name;
+        $card = is_null($this->CreditCard)? "":$this->CreditCard->name;
+        return "$card/$restriction";
+    }
+
+    public function getValue()
+    {
+        return $this->CreditCardRestrictionId;
+    }
 
 
 }

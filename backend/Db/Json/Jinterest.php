@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class Jinterest implements JSONInterface{
+class JInterest extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $InterestId;
     public $CreditCard;
     public $PaymentType;
@@ -22,13 +22,13 @@ class Jinterest implements JSONInterface{
     public $UpdateTime;
     public $UpdateUser;
 
-    public function Jinterest(){
+    public function JInterest(){
         return $this;
     }
 
     public static function CREATE_FROM_DB(\Interest $item)
     {
-        $mine = new Jinterest();
+        $mine = new JInterest();
         $mine->InterestId = $item->getInterestId();
         $mine->CreditCard =  array(
             'Id' => $item->getCreditCardId(),
@@ -48,10 +48,10 @@ class Jinterest implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
 
-        $mine = new Jinterest();
+        $mine = new JInterest();
         $mine->InterestId = $data['InterestId'];
 
         $tmp = $data['CreditCard'];
@@ -113,5 +113,16 @@ class Jinterest implements JSONInterface{
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+
+    public function getLabel() {
+        $paymentType = (!is_null($this->PaymentType) && ArrayUtils::KEY_EXISTS($this->PaymentType, "Name"))?$this->PaymentType["Name"]:"";
+        return FieldUtils::getLabel($this->CreditCard) . "/" . $paymentType;
+    }
+
+    public function getValue()
+    {
+        return $this->InterestId;
     }
 }

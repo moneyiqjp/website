@@ -9,6 +9,8 @@
 namespace Db\Utility;
 
 
+use Db\Json\JObjectifiable;
+
 class FieldUtils {
     public static function GENERATE_KEY($type, $id1, $id2) {
         if(!self::ID_IS_DEFINED($id2)) {
@@ -58,5 +60,10 @@ class FieldUtils {
 
     public static function replaceIfAvailable($str, $from, $to) {
         return  self::STRING_IS_DEFINED($to)?str_replace($from, $to, $str):$str;
+    }
+
+    public static function getLabel(JObjectifiable $object) {
+        if (is_null($object)) return "";
+        return $object->getLabel();
     }
 }

@@ -12,7 +12,7 @@ use Db\Utility\FieldUtils;
 
 
 
-class JRewardType  implements JSONInterface
+class JRewardType  implements JSONInterface, JObjectifiable
 {
     public $RewardTypeId;
     public $Name;
@@ -41,7 +41,7 @@ class JRewardType  implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JRewardType();
         if(ArrayUtils::KEY_EXISTS($data,'RewardTypeId')) {
@@ -103,5 +103,15 @@ class JRewardType  implements JSONInterface
         }
 
         throw new \Exception("No RewardType found for JObject");
+    }
+
+    public function getLabel()
+    {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->RewardTypeId;
     }
 }

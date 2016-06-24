@@ -11,7 +11,7 @@ namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
 
-class JCreditCard {
+class JCreditCard extends JObjectRoot implements JObjectifiable, JSONInterface {
     public $credit_card_id;
     public $name;
     public $issuer;
@@ -27,7 +27,6 @@ class JCreditCard {
     public $affiliate;
     public $points_expiry_months;
     public $points_expiry_display;
-    public $reference;
     public $point_systems;
     public $commission;
     public $issue_period;
@@ -36,6 +35,8 @@ class JCreditCard {
     public $debit_date;
     public $cutoff_date;
     public $is_active;
+    public $review_url;
+    public $reference;
     public $update_time;
     public $update_user;
 
@@ -91,13 +92,13 @@ class JCreditCard {
         $myself->reference = $ccs->getReference();
         $myself->is_active = $ccs->getIsactive();
         $myself->commission = $ccs->getCommission();
-
+        $myself->review_url = $ccs->getReviewUrl();
         $myself->update_time = $ccs->getUpdateTime()->format("Y-m-d");
         $myself->update_user = $ccs->getUpdateUser();
         return $myself;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if(!ArrayUtils::KEY_EXISTS($data,'credit_card_id')) throw new \Exception("JCreditCard requires CreditCardId");
 
@@ -107,5 +108,24 @@ class JCreditCard {
         }
 
         throw new \Exception("No credit card found for CreditCardId" . $data['credit_card_id']);
+    }
+
+    public function getLabel() {
+        return $this->name;
+    }
+
+    public function getValue()
+    {
+        return $this->credit_card_id;
+    }
+
+    public function saveToDb()
+    {
+        // TODO: Implement saveToDb() method.
+    }
+
+    public function toDB()
+    {
+        // TODO: Implement toDB() method.
     }
 }

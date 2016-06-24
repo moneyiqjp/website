@@ -41,6 +41,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery orderByDebitDate($order = Criteria::ASC) Order by the debit_date column
  * @method     ChildCreditCardQuery orderByCutoffDate($order = Criteria::ASC) Order by the cutoff_date column
  * @method     ChildCreditCardQuery orderByIsactive($order = Criteria::ASC) Order by the isActive column
+ * @method     ChildCreditCardQuery orderByReviewUrl($order = Criteria::ASC) Order by the review_url column
  * @method     ChildCreditCardQuery orderByReference($order = Criteria::ASC) Order by the reference column
  * @method     ChildCreditCardQuery orderByUpdateTime($order = Criteria::ASC) Order by the update_time column
  * @method     ChildCreditCardQuery orderByUpdateUser($order = Criteria::ASC) Order by the update_user column
@@ -66,6 +67,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCardQuery groupByDebitDate() Group by the debit_date column
  * @method     ChildCreditCardQuery groupByCutoffDate() Group by the cutoff_date column
  * @method     ChildCreditCardQuery groupByIsactive() Group by the isActive column
+ * @method     ChildCreditCardQuery groupByReviewUrl() Group by the review_url column
  * @method     ChildCreditCardQuery groupByReference() Group by the reference column
  * @method     ChildCreditCardQuery groupByUpdateTime() Group by the update_time column
  * @method     ChildCreditCardQuery groupByUpdateUser() Group by the update_user column
@@ -148,6 +150,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard findOneByDebitDate(string $debit_date) Return the first ChildCreditCard filtered by the debit_date column
  * @method     ChildCreditCard findOneByCutoffDate(string $cutoff_date) Return the first ChildCreditCard filtered by the cutoff_date column
  * @method     ChildCreditCard findOneByIsactive(int $isActive) Return the first ChildCreditCard filtered by the isActive column
+ * @method     ChildCreditCard findOneByReviewUrl(string $review_url) Return the first ChildCreditCard filtered by the review_url column
  * @method     ChildCreditCard findOneByReference(string $reference) Return the first ChildCreditCard filtered by the reference column
  * @method     ChildCreditCard findOneByUpdateTime(string $update_time) Return the first ChildCreditCard filtered by the update_time column
  * @method     ChildCreditCard findOneByUpdateUser(string $update_user) Return the first ChildCreditCard filtered by the update_user column
@@ -174,6 +177,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildCreditCard[]|ObjectCollection findByDebitDate(string $debit_date) Return ChildCreditCard objects filtered by the debit_date column
  * @method     ChildCreditCard[]|ObjectCollection findByCutoffDate(string $cutoff_date) Return ChildCreditCard objects filtered by the cutoff_date column
  * @method     ChildCreditCard[]|ObjectCollection findByIsactive(int $isActive) Return ChildCreditCard objects filtered by the isActive column
+ * @method     ChildCreditCard[]|ObjectCollection findByReviewUrl(string $review_url) Return ChildCreditCard objects filtered by the review_url column
  * @method     ChildCreditCard[]|ObjectCollection findByReference(string $reference) Return ChildCreditCard objects filtered by the reference column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateTime(string $update_time) Return ChildCreditCard objects filtered by the update_time column
  * @method     ChildCreditCard[]|ObjectCollection findByUpdateUser(string $update_user) Return ChildCreditCard objects filtered by the update_user column
@@ -268,7 +272,7 @@ abstract class CreditCardQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, pointExpiryDisplay, issue_period, credit_limit_bottom, credit_limit_upper, commission, debit_date, cutoff_date, isActive, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
+        $sql = 'SELECT credit_card_id, name, issuer_id, description, image_link, visa, master, jcb, amex, diners, afilliate_link, affiliate_id, pointExpiryMonths, pointExpiryDisplay, issue_period, credit_limit_bottom, credit_limit_upper, commission, debit_date, cutoff_date, isActive, review_url, reference, update_time, update_user FROM credit_card WHERE credit_card_id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -1067,6 +1071,35 @@ abstract class CreditCardQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(CreditCardTableMap::COL_ISACTIVE, $isactive, $comparison);
+    }
+
+    /**
+     * Filter the query on the review_url column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByReviewUrl('fooValue');   // WHERE review_url = 'fooValue'
+     * $query->filterByReviewUrl('%fooValue%'); // WHERE review_url LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $reviewUrl The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildCreditCardQuery The current query, for fluid interface
+     */
+    public function filterByReviewUrl($reviewUrl = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($reviewUrl)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $reviewUrl)) {
+                $reviewUrl = str_replace('*', '%', $reviewUrl);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(CreditCardTableMap::COL_REVIEW_URL, $reviewUrl, $comparison);
     }
 
     /**

@@ -9,8 +9,7 @@
 namespace Db\Json;
 
 
-class JIssuer implements JSONInterface
-{
+class JIssuer extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $IssuerId;
     public $IssuerName;
     public $UpdateTime;
@@ -26,7 +25,7 @@ class JIssuer implements JSONInterface
         $mine->UpdateUser = $iss->getUpdateUser();
         return $mine;
     }
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JIssuer();
         $mine->IssuerId = $data['IssuerId'];
@@ -56,5 +55,14 @@ class JIssuer implements JSONInterface
         $is->setUpdateTime(new \DateTime());
         $is->setUpdateUser($this->UpdateUser);
         return $is;
+    }
+
+    public function getLabel() {
+        return $this->IssuerName;
+    }
+
+    public function getValue()
+    {
+        return $this->IssuerId;
     }
 }

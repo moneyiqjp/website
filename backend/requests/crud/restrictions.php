@@ -6,17 +6,22 @@
  * Time: 1:20 PM
  */
 
+include_once(__DIR__ . "/request_utils.php");
 include_once(__DIR__ . "/../../Db/CRUD/restrictions.php");
 use Db\CRUD;
 
+
+
+
+
 /*RestrictionType*/
 $app->get('/crud/restriction/type/all', function () use ($app) {
-
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetRestrictionTypeForCrud()));
 });
 $app->delete('/crud/restriction/type/delete', function () use ($app) {
-
+    delete_per_id($app, "RestrictionType", "Db\\CRUD\\DeleteRestrictionTypeForCrud");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -26,9 +31,11 @@ $app->delete('/crud/restriction/type/delete', function () use ($app) {
         $jTableResult['row'] = Db\CRUD\DeleteRestrictionTypeForCrud($id);
     }
     echo json_encode($jTableResult);
+*/
 });
 $app->post('/crud/restriction/type/create', function () use ($app) {
-
+    create_per_id($app, "RestrictionType", "Db\\CRUD\\CreateRestrictionTypeForCrud");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -41,9 +48,11 @@ $app->post('/crud/restriction/type/create', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+*/
 });
 $app->put('/crud/restriction/type/update', function () use ($app) {
-
+    update_per_id($app, "RestrictionType", "Db\\CRUD\\UpdateRestrictionTypeForCrud");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -57,17 +66,20 @@ $app->put('/crud/restriction/type/update', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+*/
 });
+
+
 
 
 /*GeneralRestriction*/
 $app->get('/crud/restriction/general/all', function () use ($app) {
-
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetAllGeneralRestrictions()));
 });
 $app->get('/crud/restriction/general/by/persona/id', function () use ($app) {
-
+    get_by_request_id($app, "GeneralRestriction", "Db\\CRUD\\GetGeneralRestrictionByPersonaId");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -79,9 +91,11 @@ $app->get('/crud/restriction/general/by/persona/id', function () use ($app) {
     }
 
     echo json_encode($result);
+*/
 });
 $app->get('/crud/restriction/general/by/id', function () use ($app) {
-
+    get_by_request_id($app, "GeneralRestriction", "Db\\CRUD\\GetGeneralRestrictionById");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -93,9 +107,11 @@ $app->get('/crud/restriction/general/by/id', function () use ($app) {
     }
 
     echo json_encode($result);
+*/
 });
 $app->delete('/crud/restriction/general/delete', function () use ($app) {
-
+    delete_per_id($app, "GeneralRestriction", "Db\\CRUD\\DeleteGeneralRestrictionForCrud");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -105,8 +121,11 @@ $app->delete('/crud/restriction/general/delete', function () use ($app) {
         $jTableResult['row'] = Db\CRUD\DeleteGeneralRestrictionForCrud($id);
     }
     echo json_encode($jTableResult);
+*/
 });
 $app->post('/crud/restriction/general/create', function () use ($app) {
+    create_per_id($app, "GeneralRestriction", "Db\\CRUD\\CreateGeneralRestrictionForCrud");
+    /*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -119,9 +138,11 @@ $app->post('/crud/restriction/general/create', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+    */
 });
 $app->put('/crud/restriction/general/update', function () use ($app) {
-
+    update_per_id($app, "GeneralRestriction", "Db\\CRUD\\UpdateGeneralRestrictionForCrud");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -135,16 +156,20 @@ $app->put('/crud/restriction/general/update', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+*/
 });
+
+
+
 
 /*FeatureRestriction*/
 $app->get('/crud/restriction/feature/all', function () use ($app) {
-
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetAllFeatureRestrictions()));
 });
 $app->get('/crud/restriction/feature/by/persona/id', function () use ($app) {
-
+    get_by_request_id($app, "FeatureRestriction", "Db\\CRUD\\GetFeatureRestrictionForPersona");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -156,9 +181,11 @@ $app->get('/crud/restriction/feature/by/persona/id', function () use ($app) {
     }
 
     echo json_encode($result);
+*/
 });
 $app->delete('/crud/restriction/feature/delete', function () use ($app) {
-
+    delete_per_id($app, "FeatureRestriction", "Db\\CRUD\\DeleteFeatureRestrictionForPersona");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -168,9 +195,11 @@ $app->delete('/crud/restriction/feature/delete', function () use ($app) {
         $jTableResult['row'] = Db\CRUD\DeleteFeatureRestrictionForPersona($id);
     }
     echo json_encode($jTableResult);
+*/
 });
 $app->post('/crud/restriction/feature/create', function () use ($app) {
-
+    create_per_id($app, "FeatureRestriction", "Db\\CRUD\\CreateFeatureRestrictionForPersona");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -183,9 +212,11 @@ $app->post('/crud/restriction/feature/create', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+*/
 });
 $app->put('/crud/restriction/feature/update', function () use ($app) {
-
+    update_per_id($app, "FeatureRestriction", "Db\\CRUD\\UpdateFeatureRestrictionForPersona");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -199,19 +230,21 @@ $app->put('/crud/restriction/feature/update', function () use ($app) {
     }
 
     echo json_encode($jTableResult);
+*/
 });
+
 
 
 
 /*Credit Card Restriction*/
 $app->get('/crud/restriction/credit/card/general/all', function () use ($app) {
-
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetAllCreditCardRestrictions()));
 });
 
 $app->get('/crud/restriction/credit/card/general/by/credit/card/id', function () use ($app) {
-
+    get_by_request_id($app, "CreditCardRestriction", "Db\\CRUD\\GetCreditCardRestrictionByCreditCardId");
+    /*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -223,10 +256,12 @@ $app->get('/crud/restriction/credit/card/general/by/credit/card/id', function ()
     }
 
     echo json_encode($result);
+    */
 });
 
 $app->get('/crud/restriction/credit/card/general/by/id', function () use ($app) {
-
+    get_by_request_id($app, "CreditCardRestriction", "Db\\CRUD\\GetCreditCardRestrictionById");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -238,10 +273,12 @@ $app->get('/crud/restriction/credit/card/general/by/id', function () use ($app) 
     }
 
     echo json_encode($result);
+*/
 });
 
 $app->delete('/crud/restriction/credit/card/general/delete', function () use ($app) {
-
+    delete_per_id($app, "CreditCardRestriction", "Db\\CRUD\\DeleteCreditCardRestrictionForCrud");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -251,10 +288,12 @@ $app->delete('/crud/restriction/credit/card/general/delete', function () use ($a
         $jTableResult['row'] = Db\CRUD\DeleteCreditCardRestrictionForCrud($id);
     }
     echo json_encode($jTableResult);
+    */
 });
 
 $app->post('/crud/restriction/credit/card/general/create', function () use ($app) {
-
+    create_per_id($app, "CreditCardRestriction", "Db\\CRUD\\CreateCreditCardRestrictionForCrud");
+    /*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -267,10 +306,12 @@ $app->post('/crud/restriction/credit/card/general/create', function () use ($app
     }
 
     echo json_encode($jTableResult);
+    */
 });
 
 $app->put('/crud/restriction/credit/card/general/update', function () use ($app) {
-
+    update_per_id($app, "CreditCardRestriction", "Db\\CRUD\\UpdateCreditCardRestrictionForCrud");
+    /*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -284,18 +325,20 @@ $app->put('/crud/restriction/credit/card/general/update', function () use ($app)
     }
 
     echo json_encode($jTableResult);
+    */
 });
+
 
 
 
 /*FeatureRestriction*/
 $app->get('/crud/restriction/credit/card/feature/all', function () use ($app) {
-
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     echo json_encode(array('data'=> Db\CRUD\GetAllCardFeatureRestrictions()));
 });
 $app->get('/crud/restriction/credit/card/feature/by/credit/card/id', function () use ($app) {
-
+    get_by_request_id($app, "CreditCardFeatureRestriction", "Db\\CRUD\\GetCardFeatureRestrictionForCreditCard");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
     $result = array();
@@ -307,9 +350,11 @@ $app->get('/crud/restriction/credit/card/feature/by/credit/card/id', function ()
     }
 
     echo json_encode($result);
+*/
 });
 $app->delete('/crud/restriction/credit/card/feature/delete', function () use ($app) {
-
+    delete_per_id($app, "CreditCardFeatureRestriction", "Db\\CRUD\\DeleteCardFeatureRestrictionForCreditCard");
+/*
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
     $ids = $app->request()->delete('id');
     $jTableResult = array();
@@ -319,9 +364,11 @@ $app->delete('/crud/restriction/credit/card/feature/delete', function () use ($a
         $jTableResult['row'] = Db\CRUD\DeleteCardFeatureRestrictionForCreditCard($id);
     }
     echo json_encode($jTableResult);
+*/
 });
 $app->post('/crud/restriction/credit/card/feature/create', function () use ($app) {
-
+    create_per_id($app, "CreditCardFeatureRestriction", "Db\\CRUD\\CreateCardFeatureRestrictionForCreditCard");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -334,9 +381,11 @@ $app->post('/crud/restriction/credit/card/feature/create', function () use ($app
     }
 
     echo json_encode($jTableResult);
+*/
 });
 $app->put('/crud/restriction/credit/card/feature/update', function () use ($app) {
-
+    update_per_id($app, "CreditCardFeatureRestriction", "Db\\CRUD\\UpdateCardFeatureRestrictionForCreditCard");
+/*
     $request = $app->request();
     $app->response()->header('Content-Type', 'application/json;charset=utf-8');
 
@@ -350,6 +399,5 @@ $app->put('/crud/restriction/credit/card/feature/update', function () use ($app)
     }
 
     echo json_encode($jTableResult);
+*/
 });
-
-?>

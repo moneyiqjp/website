@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JFeature implements JSONInterface{
+class JFeature extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $FeatureId;
     public $FeatureType;
     public $CreditCard;
@@ -98,7 +98,7 @@ class JFeature implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data) {
+    public static function CREATE_FROM_ARRAY(array $data) {
         $mine = new JFeature();
         if(ArrayUtils::KEY_EXISTS($data,'FeatureId') && ($data['FeatureId']>0) ) {
             $mine->FeatureId = $data['FeatureId'];
@@ -175,4 +175,12 @@ class JFeature implements JSONInterface{
         return $item;
     }
 
+    public function getLabel() {
+        return is_null($this->FeatureType)?"":$this->FeatureType->getLabel();
+    }
+
+    public function getValue()
+    {
+        return $this->FeatureId;
+    }
 }

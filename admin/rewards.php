@@ -718,7 +718,7 @@
                 <thead>
                 <tr>
                     <td colspan="17" class="table-headline">
-                        Rewards
+                        Mileage Rewards
                     </td>
                 </tr>
                 <tr>

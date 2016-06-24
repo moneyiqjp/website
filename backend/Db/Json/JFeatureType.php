@@ -11,7 +11,7 @@ use Db\Utility\FieldUtils;
 use Db\Utility\ArrayUtils;
 
 
-class JFeatureType implements JSONInterface {
+class JFeatureType extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $FeatureTypeId;
     public $Name;
     public $Description;
@@ -38,7 +38,7 @@ class JFeatureType implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data) {
+    public static function CREATE_FROM_ARRAY(array $data) {
         $mine = new JFeatureType();
         if(ArrayUtils::KEY_EXISTS($data,'FeatureTypeId'))  $mine->FeatureTypeId = $data['FeatureTypeId'];
         if(ArrayUtils::KEY_EXISTS($data,'Name')) $mine->Name = $data['Name'];
@@ -82,5 +82,14 @@ class JFeatureType implements JSONInterface {
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->FeatureTypeId;
     }
 }

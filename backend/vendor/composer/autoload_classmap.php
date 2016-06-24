@@ -152,6 +152,8 @@ return array(
     'Base\\ZoneCityMap' => $baseDir . '/generated-classes/Base/ZoneCityMap.php',
     'Base\\ZoneCityMapQuery' => $baseDir . '/generated-classes/Base/ZoneCityMapQuery.php',
     'Base\\ZoneQuery' => $baseDir . '/generated-classes/Base/ZoneQuery.php',
+    'Base\\ZoneTripMap' => $baseDir . '/generated-classes/Base/ZoneTripMap.php',
+    'Base\\ZoneTripMapQuery' => $baseDir . '/generated-classes/Base/ZoneTripMapQuery.php',
     'Campaign' => $baseDir . '/generated-classes/Campaign.php',
     'CampaignHistory' => $baseDir . '/generated-classes/CampaignHistory.php',
     'CampaignHistoryQuery' => $baseDir . '/generated-classes/CampaignHistoryQuery.php',
@@ -294,6 +296,7 @@ return array(
     'Map\\UnitTableMap' => $baseDir . '/generated-classes/Map/UnitTableMap.php',
     'Map\\ZoneCityMapTableMap' => $baseDir . '/generated-classes/Map/ZoneCityMapTableMap.php',
     'Map\\ZoneTableMap' => $baseDir . '/generated-classes/Map/ZoneTableMap.php',
+    'Map\\ZoneTripMapTableMap' => $baseDir . '/generated-classes/Map/ZoneTripMapTableMap.php',
     'Mileage' => $baseDir . '/generated-classes/Mileage.php',
     'MileageQuery' => $baseDir . '/generated-classes/MileageQuery.php',
     'MileageType' => $baseDir . '/generated-classes/MileageType.php',
@@ -360,4 +363,6 @@ return array(
     'ZoneCityMap' => $baseDir . '/generated-classes/ZoneCityMap.php',
     'ZoneCityMapQuery' => $baseDir . '/generated-classes/ZoneCityMapQuery.php',
     'ZoneQuery' => $baseDir . '/generated-classes/ZoneQuery.php',
+    'ZoneTripMap' => $baseDir . '/generated-classes/ZoneTripMap.php',
+    'ZoneTripMapQuery' => $baseDir . '/generated-classes/ZoneTripMapQuery.php',
 );

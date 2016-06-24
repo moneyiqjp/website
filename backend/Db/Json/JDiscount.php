@@ -12,7 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JDiscount implements JSONInterface{
+class JDiscount extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $DiscountId;
     public $Percentage;
     public $StartDate;
@@ -62,7 +62,7 @@ class JDiscount implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JDiscount();
         if(!ArrayUtils::KEY_EXISTS($data,'DiscountId')) throw new \Exception("Missing mandatory field DiscountId");
@@ -143,5 +143,15 @@ class JDiscount implements JSONInterface{
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->CreditCard) . "/" . FieldUtils::getLabel($this->Store) ;
+    }
+
+    public function getValue()
+    {
+        return $this->DiscountId;
     }
 }

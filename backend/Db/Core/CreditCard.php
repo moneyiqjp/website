@@ -55,8 +55,7 @@ class Interest{
 
     }
 
-    function UpdateFromDB(\Interest $ins)
-    {
+    function UpdateFromDB(\Interest $ins) {
         $type = $ins->getPaymentType();
 
         if(!is_null($type)) {
@@ -295,6 +294,7 @@ class CreditCard {
     public $rewards = array();
     public $restriction;
     public $pitch = array();
+    public $review_url;
 
     function CreditCard()
     {
@@ -518,6 +518,7 @@ class CreditCard {
         $mine->credit_limit_upper = $cc->getCreditLimitUpper();
         $mine->debit_date = $cc->getDebitDate();
         $mine->cutoff_date = $cc->getCutoffDate();
+        $mine->review_url = $cc->getReviewUrl();
 
         return $mine;
     }

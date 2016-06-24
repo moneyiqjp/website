@@ -288,5 +288,10 @@ function wpbeginner_numeric_posts_nav() {
 
 }
 
+add_filter('wpseo_locale', 'override_og_locale');
+function override_og_locale($locale)
+{
+    return "ja_JP";
+}
 
 ?>

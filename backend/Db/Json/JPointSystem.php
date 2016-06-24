@@ -11,9 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JPointSystem implements JSONInterface, JSONDisplay
-{
-
+class JPointSystem extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $PointSystemId;
     public $PointSystemName;
     public $PointsPerYen;
@@ -54,7 +52,7 @@ class JPointSystem implements JSONInterface, JSONDisplay
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'PointSystemId')) throw new \Exception("JPointSystem: Mandatory field PointUsageId missing");
 
@@ -62,7 +60,7 @@ class JPointSystem implements JSONInterface, JSONDisplay
         return JPointSystem::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data)
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data)
     {
         $item = \PointSystemQuery::create()->findPk($data['PointSystemId']);
         if (!is_null($item)) {
@@ -142,5 +140,14 @@ class JPointSystem implements JSONInterface, JSONDisplay
         $display = FieldUtils::replaceIfAvailable($display, "%DEFAULTYENPERPOINT%", $this->YenPerPoint);
 
         return $display;
+    }
+
+    public function getLabel() {
+        return $this->PointSystemName;
+    }
+
+    public function getValue()
+    {
+        return $this->PointSystemId;
     }
 }

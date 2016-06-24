@@ -10,7 +10,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JGeneralRestriction  implements JSONInterface {
+class JGeneralRestriction  extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $GeneralRestrictionId;
     public $Persona;
     public $RestrictionType;
@@ -76,7 +76,7 @@ class JGeneralRestriction  implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JGeneralRestriction();
 
@@ -161,6 +161,13 @@ class JGeneralRestriction  implements JSONInterface {
     }
 
 
+    public function getLabel() {
+        return FieldUtils::getLabel($this->Persona) . "/" . FieldUtils::getLabel($this->RestrictionType) ;
+    }
+
+    public function getValue() {
+        return $this->GeneralRestrictionId;
+    }
 
 
 }

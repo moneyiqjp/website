@@ -11,8 +11,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JPersonaStoreMapping implements JSONInterface
-{
+class JPersonaStoreMapping extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $Id;
     public $Persona;
     public $Store;
@@ -49,7 +48,7 @@ class JPersonaStoreMapping implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (ArrayUtils::KEY_EXISTS($data, 'StoreId') && ArrayUtils::KEY_EXISTS($data, 'PersonaId'))
         {
@@ -93,7 +92,7 @@ class JPersonaStoreMapping implements JSONInterface
         throw new \Exception("JPersonaToStoreMapping: no matching mapping found for $personaId, $storeId");
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data) {
         $mine = new JPersonaStoreMapping();
         if (ArrayUtils::KEY_EXISTS($data, 'StoreId') && ArrayUtils::KEY_EXISTS($data, 'PersonaId'))
         {
@@ -142,5 +141,14 @@ class JPersonaStoreMapping implements JSONInterface
     public function saveToDb()
     {
         return $this->toDB()->save();
+    }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->Persona) . "/" . FieldUtils::getLabel($this->Store) ;
+    }
+
+    public function getValue()
+    {
+        return $this->Id;
     }
 }

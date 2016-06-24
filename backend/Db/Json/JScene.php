@@ -12,8 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JScene implements JSONInterface
-{
+class JScene extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $SceneId;
     public $Name;
     public $Description;
@@ -37,7 +36,7 @@ class JScene implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JScene();
         if(ArrayUtils::KEY_EXISTS($data,'SceneId')) {
@@ -77,5 +76,13 @@ class JScene implements JSONInterface
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue() {
+        return $this->SceneId;
     }
 }

@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JFee implements JSONInterface{
+class JFee extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $FeeId;
     public $FeeType;
     public $FeeAmount;
@@ -47,7 +47,7 @@ class JFee implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JFee();
         if(ArrayUtils::KEY_EXISTS($data,'FeeId')) $mine->FeeId = $data['FeeId'];
@@ -104,6 +104,16 @@ class JFee implements JSONInterface{
         $item->setUpdateTime(new \DateTime());
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+
+    public function getLabel() {
+        return  FieldUtils::getLabel($this->CreditCard) . "/" . $this->FeeType;
+    }
+
+    public function getValue()
+    {
+        return $this->FeeId;
     }
 
 }

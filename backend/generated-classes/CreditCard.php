@@ -135,6 +135,9 @@ class CreditCard extends BaseCreditCard
             case "cutoff_date":
                 $this->setCutoffDate($value);
                 break;
+            case "review_url":
+                $this->setReviewUrl($value);
+                break;
             case "update_user":
                 $this->setUpdateUser($value);
                 break;

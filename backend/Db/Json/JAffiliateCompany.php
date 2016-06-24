@@ -11,7 +11,7 @@ use Db\Utility\FieldUtils;
 use Db\Utility\ArrayUtils;
 
 
-class JAffiliateCompany implements JSONInterface
+class JAffiliateCompany extends JObjectRoot implements JSONInterface, JObjectifiable
 {
     public $AffiliateId;
     public $Name;
@@ -36,7 +36,7 @@ class JAffiliateCompany implements JSONInterface
         $mine->UpdateUser = $af->getUpdateUser();
         return $mine;
     }
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JAffiliateCompany();
         if (ArrayUtils::KEY_EXISTS($data, 'AffiliateId')) $mine->AffiliateId = $data['AffiliateId'];
@@ -79,4 +79,16 @@ class JAffiliateCompany implements JSONInterface
        if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser))  $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
+
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->AffiliateId;
+    }
+
+    
 }

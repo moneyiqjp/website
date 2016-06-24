@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - moneyiq@localhost" uuid="e31d8b33-9c3e-402a-8343-086a9add51d7">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>moneyiq.*</schema-pattern>
+      <default-schemas>moneyiq.*</default-schemas>
+    </data-source>
+  </component>
+</project>

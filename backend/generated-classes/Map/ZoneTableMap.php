@@ -166,7 +166,7 @@ class ZoneTableMap extends TableMap
     {
         $this->addRelation('PointSystem', '\\PointSystem', RelationMap::MANY_TO_ONE, array('point_system_id' => 'point_system_id', ), null, null);
         $this->addRelation('SeasonDate', '\\SeasonDate', RelationMap::ONE_TO_MANY, array('zone_id' => 'zone_id', ), null, null, 'SeasonDates');
-        $this->addRelation('ZoneCityMap', '\\ZoneCityMap', RelationMap::ONE_TO_MANY, array('zone_id' => 'zone_id', ), null, null, 'ZoneCityMaps');
+        $this->addRelation('ZoneTripMap', '\\ZoneTripMap', RelationMap::ONE_TO_MANY, array('zone_id' => 'zone_id', ), null, null, 'ZoneTripMaps');
     } // buildRelations()
 
     /**

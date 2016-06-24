@@ -11,7 +11,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JPersona implements JSONInterface
+class JPersona extends JObjectRoot implements JSONInterface
 {
     public $PersonaId;
     public $Identity;
@@ -47,7 +47,7 @@ class JPersona implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JPersona();
         if(ArrayUtils::KEY_EXISTS($data,'PersonaId')) {
@@ -103,4 +103,14 @@ class JPersona implements JSONInterface
         $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue() {
+        return $this->PersonaId;
+    }
+
+
 }

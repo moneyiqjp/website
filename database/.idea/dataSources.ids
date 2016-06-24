@@ -1,0 +1,2899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - moneyiq@localhost" uuid="e31d8b33-9c3e-402a-8343-086a9add51d7">
+    <database-info product="MySQL" version="5.6.26" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="moneyiq"/>
+      <table id="2" parent="1" name="affiliate_company"/>
+      <table id="3" parent="1" name="affiliate_company_history"/>
+      <table id="4" parent="1" name="campaign"/>
+      <table id="5" parent="1" name="campaign_history"/>
+      <table id="6" parent="1" name="card_description"/>
+      <table id="7" parent="1" name="card_description_history"/>
+      <table id="8" parent="1" name="card_feature_type"/>
+      <table id="9" parent="1" name="card_feature_type_history"/>
+      <table id="10" parent="1" name="card_features"/>
+      <table id="11" parent="1" name="card_features_history"/>
+      <table id="12" parent="1" name="card_point_system"/>
+      <table id="13" parent="1" name="card_restriction"/>
+      <table id="14" parent="1" name="city"/>
+      <table id="15" parent="1" name="credit_card"/>
+      <table id="16" parent="1" name="credit_card_history"/>
+      <table id="17" parent="1" name="discounts"/>
+      <table id="18" parent="1" name="discounts_history"/>
+      <table id="19" parent="1" name="fees"/>
+      <table id="20" parent="1" name="fees_history"/>
+      <table id="21" parent="1" name="flight_cost"/>
+      <table id="22" parent="1" name="insurance"/>
+      <table id="23" parent="1" name="insurance_history"/>
+      <table id="24" parent="1" name="insurance_type"/>
+      <table id="25" parent="1" name="insurance_type_history"/>
+      <table id="26" parent="1" name="interest"/>
+      <table id="27" parent="1" name="interest_history"/>
+      <table id="28" parent="1" name="issuer"/>
+      <table id="29" parent="1" name="issuer_history"/>
+      <table id="30" parent="1" name="mailinglist"/>
+      <table id="31" parent="1" name="map_card_feature_constraint"/>
+      <table id="32" parent="1" name="map_persona_feature_constraint"/>
+      <table id="33" parent="1" name="map_persona_scene"/>
+      <table id="34" parent="1" name="map_persona_store"/>
+      <table id="35" parent="1" name="map_scene_rewcat"/>
+      <table id="36" parent="1" name="map_scene_store_category"/>
+      <table id="37" parent="1" name="mileage"/>
+      <table id="38" parent="1" name="mileage_type"/>
+      <table id="39" parent="1" name="payment_type"/>
+      <table id="40" parent="1" name="payment_type_history"/>
+      <table id="41" parent="1" name="persona"/>
+      <table id="42" parent="1" name="persona_restriction"/>
+      <table id="43" parent="1" name="point_acquisition"/>
+      <table id="44" parent="1" name="point_acquisition_history"/>
+      <table id="45" parent="1" name="point_system"/>
+      <table id="46" parent="1" name="point_system_history"/>
+      <table id="47" parent="1" name="point_use"/>
+      <table id="48" parent="1" name="region"/>
+      <table id="49" parent="1" name="restriction_type"/>
+      <table id="50" parent="1" name="reward"/>
+      <table id="51" parent="1" name="reward_category"/>
+      <table id="52" parent="1" name="reward_category_history"/>
+      <table id="53" parent="1" name="reward_history"/>
+      <table id="54" parent="1" name="reward_type"/>
+      <table id="55" parent="1" name="reward_type_history"/>
+      <table id="56" parent="1" name="scene"/>
+      <table id="57" parent="1" name="season"/>
+      <table id="58" parent="1" name="season_date"/>
+      <table id="59" parent="1" name="season_type"/>
+      <table id="60" parent="1" name="store"/>
+      <table id="61" parent="1" name="store_category"/>
+      <table id="62" parent="1" name="store_history"/>
+      <table id="63" parent="1" name="trip"/>
+      <table id="64" parent="1" name="unit"/>
+      <table id="65" parent="1" name="unit_history"/>
+      <table id="66" parent="1" name="zone"/>
+      <table id="67" parent="1" name="zone_city_map"/>
+      <column id="68" parent="2" name="affiliate_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="69" parent="2" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="70" parent="2" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="71" parent="2" name="website">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="72" parent="2" name="signed_up_date">
+        <mandatory>1</mandatory>
+        <data-type>date</data-type>
+      </column>
+      <column id="73" parent="2" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="74" parent="2" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="75" parent="2" name="PRIMARY">
+        <columns>affiliate_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="76" parent="3" name="affiliate_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="77" parent="3" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="78" parent="3" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="79" parent="3" name="website">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="80" parent="3" name="signed_up_date">
+        <mandatory>1</mandatory>
+        <data-type>date</data-type>
+      </column>
+      <column id="81" parent="3" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="82" parent="3" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="83" parent="3" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="84" parent="3" name="PRIMARY">
+        <columns>affiliate_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="85" parent="4" name="campaign_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="86" parent="4" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="87" parent="4" name="campaign_name">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="88" parent="4" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="89" parent="4" name="max_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="90" parent="4" name="value_in_yen">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="91" parent="4" name="start_date">
+        <data-type>date</data-type>
+        <default-expression>&apos;1000-01-01&apos;</default-expression>
+      </column>
+      <column id="92" parent="4" name="end_date">
+        <data-type>date</data-type>
+        <default-expression>&apos;9999-12-31&apos;</default-expression>
+      </column>
+      <column id="93" parent="4" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="94" parent="4" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="95" parent="4" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="96" parent="4" name="campaign_credit_card">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="97" parent="4" name="PRIMARY">
+        <columns>campaign_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="98" parent="4" name="campaign_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="99" parent="5" name="campaign_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="100" parent="5" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="101" parent="5" name="campaign_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="102" parent="5" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="103" parent="5" name="max_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="104" parent="5" name="value_in_yen">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="105" parent="5" name="start_date">
+        <data-type>date</data-type>
+        <default-expression>&apos;1000-01-01&apos;</default-expression>
+      </column>
+      <column id="106" parent="5" name="end_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="107" parent="5" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="108" parent="5" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="109" parent="5" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="110" parent="5" name="PRIMARY">
+        <columns>campaign_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="111" parent="6" name="item_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="112" parent="6" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="113" parent="6" name="item_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="114" parent="6" name="item_type">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="115" parent="6" name="item_description">
+        <data-type>text</data-type>
+      </column>
+      <column id="116" parent="6" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="117" parent="6" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="118" parent="6" name="creditcard_description">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="119" parent="6" name="PRIMARY">
+        <columns>item_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="120" parent="6" name="creditcard_description">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="121" parent="7" name="item_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="122" parent="7" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="123" parent="7" name="item_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="124" parent="7" name="item_description">
+        <data-type>text</data-type>
+      </column>
+      <column id="125" parent="7" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="126" parent="7" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="127" parent="7" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="128" parent="7" name="PRIMARY">
+        <columns>item_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="129" parent="8" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="130" parent="8" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="131" parent="8" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="132" parent="8" name="category">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="133" parent="8" name="background_color">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="134" parent="8" name="foreground_color">
+        <data-type>varchar(250)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="135" parent="8" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="136" parent="8" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="137" parent="8" name="PRIMARY">
+        <columns>feature_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="138" parent="9" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="139" parent="9" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="140" parent="9" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="141" parent="9" name="category">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="142" parent="9" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="143" parent="9" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="144" parent="9" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="145" parent="9" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="146" parent="9" name="PRIMARY">
+        <columns>feature_type_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="147" parent="10" name="feature_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="148" parent="10" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="149" parent="10" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="150" parent="10" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="151" parent="10" name="issuing_fee">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="152" parent="10" name="ongoing_fee">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="153" parent="10" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="154" parent="10" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="155" parent="10" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="156" parent="10" name="card_features_credit_card">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="157" parent="10" name="fk_card_feature_type">
+        <columns>feature_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="158" parent="10" name="PRIMARY">
+        <columns>feature_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="159" parent="10" name="card_features_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="160" parent="10" name="fk_card_feature_type">
+        <columns>feature_type_id</columns>
+        <ref-key>~.card_feature_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="161" parent="11" name="feature_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="162" parent="11" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="163" parent="11" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="164" parent="11" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="165" parent="11" name="feature_cost">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="166" parent="11" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="167" parent="11" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="168" parent="11" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="169" parent="11" name="PRIMARY">
+        <columns>feature_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="170" parent="12" name="card_point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="171" parent="12" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="172" parent="12" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="173" parent="12" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="174" parent="12" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="175" parent="12" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="176" parent="12" name="fk_credit_card_id">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="177" parent="12" name="fk_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="178" parent="12" name="PRIMARY">
+        <columns>card_point_system_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="179" parent="12" name="fk_credit_card_id">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="180" parent="12" name="fk_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="181" parent="13" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="182" parent="13" name="restriction_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="183" parent="13" name="Comparator">
+        <data-type>varchar(80)</data-type>
+        <default-expression>&apos;=&apos;</default-expression>
+      </column>
+      <column id="184" parent="13" name="value">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="185" parent="13" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="186" parent="13" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="187" parent="13" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="188" parent="13" name="PK_cr_credit_card_id_ind">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="189" parent="13" name="PK_cr_feature_type_id_ind">
+        <columns>restriction_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="190" parent="13" name="PRIMARY">
+        <columns>credit_card_id
+restriction_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="191" parent="13" name="FK_cr_credit_card_id">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="192" parent="13" name="FK_cr_restriction_type_id">
+        <columns>restriction_type_id</columns>
+        <ref-key>~.restriction_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="193" parent="14" name="city_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="194" parent="14" name="name">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="195" parent="14" name="region">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="196" parent="14" name="display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="197" parent="14" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="198" parent="14" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="199" parent="14" name="PRIMARY">
+        <columns>city_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="200" parent="15" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="201" parent="15" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="202" parent="15" name="issuer_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="203" parent="15" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="204" parent="15" name="image_link">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="205" parent="15" name="visa">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="206" parent="15" name="master">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="207" parent="15" name="jcb">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="208" parent="15" name="amex">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="209" parent="15" name="diners">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="210" parent="15" name="afilliate_link">
+        <data-type>text</data-type>
+      </column>
+      <column id="211" parent="15" name="affiliate_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="212" parent="15" name="pointExpiryMonths">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;12&apos;</default-expression>
+      </column>
+      <column id="213" parent="15" name="pointExpiryDisplay">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="214" parent="15" name="issue_period">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="215" parent="15" name="credit_limit_bottom">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="216" parent="15" name="credit_limit_upper">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="217" parent="15" name="commission">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="218" parent="15" name="debit_date">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="219" parent="15" name="cutoff_date">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="220" parent="15" name="isActive">
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <column id="221" parent="15" name="review_url">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="222" parent="15" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="223" parent="15" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="224" parent="15" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="225" parent="15" name="affiliate_company_credit_card">
+        <columns>affiliate_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="226" parent="15" name="idx_1">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="227" parent="15" name="issuer_credit_card">
+        <columns>issuer_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="228" parent="15" name="PRIMARY">
+        <columns>credit_card_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="229" parent="15" name="affiliate_company_credit_card">
+        <columns>affiliate_id</columns>
+        <ref-key>~.affiliate_company.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="230" parent="15" name="issuer_credit_card">
+        <columns>issuer_id</columns>
+        <ref-key>~.issuer.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="231" parent="16" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="232" parent="16" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="233" parent="16" name="issuer_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="234" parent="16" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="235" parent="16" name="image_link">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="236" parent="16" name="visa">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="237" parent="16" name="master">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="238" parent="16" name="jcb">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="239" parent="16" name="amex">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="240" parent="16" name="diners">
+        <data-type>tinyint(1)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="241" parent="16" name="afilliate_link">
+        <data-type>text</data-type>
+      </column>
+      <column id="242" parent="16" name="affiliate_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="243" parent="16" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="244" parent="16" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="245" parent="16" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="246" parent="16" name="PRIMARY">
+        <columns>credit_card_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="247" parent="17" name="discount_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="248" parent="17" name="percentage">
+        <mandatory>1</mandatory>
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="249" parent="17" name="start_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="250" parent="17" name="end_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="251" parent="17" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="252" parent="17" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="253" parent="17" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="254" parent="17" name="multiple">
+        <mandatory>1</mandatory>
+        <data-type>double(30,30)</data-type>
+      </column>
+      <column id="255" parent="17" name="conditions">
+        <data-type>text</data-type>
+      </column>
+      <column id="256" parent="17" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="257" parent="17" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="258" parent="17" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="259" parent="17" name="fk_discounts_credit_card">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="260" parent="17" name="fk_discounts_store">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="261" parent="17" name="PRIMARY">
+        <columns>discount_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="262" parent="17" name="fk_discounts_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="263" parent="17" name="fk_discounts_store">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="264" parent="18" name="discount_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="265" parent="18" name="percentage">
+        <mandatory>1</mandatory>
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="266" parent="18" name="start_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="267" parent="18" name="end_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="268" parent="18" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="269" parent="18" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="270" parent="18" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="271" parent="18" name="multiple">
+        <mandatory>1</mandatory>
+        <data-type>double(30,30)</data-type>
+      </column>
+      <column id="272" parent="18" name="conditions">
+        <data-type>text</data-type>
+      </column>
+      <column id="273" parent="18" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="274" parent="18" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="275" parent="18" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="276" parent="18" name="PRIMARY">
+        <columns>discount_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="277" parent="19" name="fee_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="278" parent="19" name="fee_type">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="279" parent="19" name="fee_amount">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="280" parent="19" name="yearly_occurrence">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="281" parent="19" name="start_year">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="282" parent="19" name="end_year">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="283" parent="19" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="284" parent="19" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="285" parent="19" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="286" parent="19" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="287" parent="19" name="fees_credit_card">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="288" parent="19" name="PRIMARY">
+        <columns>fee_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="289" parent="19" name="fees_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="290" parent="20" name="fee_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="291" parent="20" name="fee_type">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="292" parent="20" name="fee_amount">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="293" parent="20" name="yearly_occurrence">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="294" parent="20" name="start_year">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="295" parent="20" name="end_year">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="296" parent="20" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="297" parent="20" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="298" parent="20" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="299" parent="20" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="300" parent="20" name="PRIMARY">
+        <columns>fee_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="301" parent="21" name="flight_cost_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="302" parent="21" name="retrieval_date">
+        <mandatory>1</mandatory>
+        <data-type>date</data-type>
+      </column>
+      <column id="303" parent="21" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="304" parent="21" name="mileage_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="305" parent="21" name="trip_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="306" parent="21" name="fare_type">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="307" parent="21" name="depart_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="308" parent="21" name="depart_flight_no">
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="309" parent="21" name="return_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="310" parent="21" name="return_flight_no">
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="311" parent="21" name="price">
+        <mandatory>1</mandatory>
+        <data-type>int(15)</data-type>
+      </column>
+      <column id="312" parent="21" name="reference">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <index id="313" parent="21" name="fk_milage_type_milage_type">
+        <columns>mileage_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="314" parent="21" name="fk_milage_type_trip">
+        <columns>trip_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="315" parent="21" name="fk_mileage_type_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="316" parent="21" name="PRIMARY">
+        <columns>flight_cost_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="317" parent="21" name="fk_milage_type_milage_type">
+        <columns>mileage_type_id</columns>
+        <ref-key>~.mileage_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="318" parent="21" name="fk_milage_type_trip">
+        <columns>trip_id</columns>
+        <ref-key>~.trip.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="319" parent="21" name="fk_mileage_type_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="320" parent="22" name="insurance_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="321" parent="22" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="322" parent="22" name="insurance_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="323" parent="22" name="guaranteed_period">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="324" parent="22" name="max_insured_amount">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="325" parent="22" name="value">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="326" parent="22" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="327" parent="22" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="328" parent="22" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="329" parent="22" name="insurance_credit_card">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="330" parent="22" name="insurance_insurance_type">
+        <columns>insurance_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="331" parent="22" name="PRIMARY">
+        <columns>insurance_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="332" parent="22" name="insurance_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="333" parent="22" name="insurance_insurance_type">
+        <columns>insurance_type_id</columns>
+        <ref-key>~.insurance_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="334" parent="23" name="insurance_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="335" parent="23" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="336" parent="23" name="insurance_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="337" parent="23" name="max_insured_amount">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="338" parent="23" name="value">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="339" parent="23" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="340" parent="23" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="341" parent="23" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="342" parent="23" name="PRIMARY">
+        <columns>insurance_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="343" parent="24" name="insurance_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="344" parent="24" name="type_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="345" parent="24" name="type_display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="346" parent="24" name="subtype_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="347" parent="24" name="subtype_display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="348" parent="24" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="349" parent="24" name="region">
+        <data-type>varchar(255)</data-type>
+        <default-expression>&apos;Global&apos;</default-expression>
+      </column>
+      <column id="350" parent="24" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="351" parent="24" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="352" parent="24" name="PRIMARY">
+        <columns>insurance_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="353" parent="25" name="insurance_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="354" parent="25" name="type_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="355" parent="25" name="subtype_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="356" parent="25" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="357" parent="25" name="region">
+        <data-type>varchar(255)</data-type>
+        <default-expression>&apos;Global&apos;</default-expression>
+      </column>
+      <column id="358" parent="25" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="359" parent="25" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="360" parent="25" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="361" parent="25" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <key id="362" parent="25" name="PRIMARY">
+        <columns>insurance_type_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="363" parent="26" name="interest_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="364" parent="26" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="365" parent="26" name="payment_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="366" parent="26" name="min_interest">
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="367" parent="26" name="max_interest">
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="368" parent="26" name="Display">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="369" parent="26" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="370" parent="26" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="371" parent="26" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="372" parent="26" name="credit_card_id">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="373" parent="26" name="Interest_payment_type">
+        <columns>payment_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="374" parent="26" name="PRIMARY">
+        <columns>interest_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="375" parent="26" name="Interest_credit_card">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="376" parent="26" name="Interest_payment_type">
+        <columns>payment_type_id</columns>
+        <ref-key>~.payment_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="377" parent="27" name="interest_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="378" parent="27" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="379" parent="27" name="payment_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="380" parent="27" name="min_interest">
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="381" parent="27" name="max_interest">
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="382" parent="27" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="383" parent="27" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="384" parent="27" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="385" parent="27" name="interest_id">
+        <columns>interest_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="386" parent="27" name="PRIMARY">
+        <columns>credit_card_id
+payment_type_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="387" parent="28" name="issuer_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="388" parent="28" name="issuer_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="389" parent="28" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="390" parent="28" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="391" parent="28" name="PRIMARY">
+        <columns>issuer_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="392" parent="29" name="issuer_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="393" parent="29" name="issuer_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="394" parent="29" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="395" parent="29" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="396" parent="29" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="397" parent="29" name="PRIMARY">
+        <columns>issuer_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="398" parent="30" name="email">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="399" parent="30" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="400" parent="31" name="credit_card_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="401" parent="31" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="402" parent="31" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="403" parent="31" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="404" parent="31" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="405" parent="31" name="pk_mccfc_creditcard_id_ind">
+        <columns>credit_card_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="406" parent="31" name="pk_mccfc_feature_type_id_ind">
+        <columns>feature_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="407" parent="31" name="PRIMARY">
+        <columns>credit_card_id
+feature_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="408" parent="31" name="fk_mccfc_creditcard_id">
+        <columns>credit_card_id</columns>
+        <ref-key>~.credit_card.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="409" parent="31" name="fk_mccfc_feature_type_id">
+        <columns>feature_type_id</columns>
+        <ref-key>~.card_feature_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="410" parent="32" name="persona_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="411" parent="32" name="feature_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="412" parent="32" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="413" parent="32" name="negative">
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="414" parent="32" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="415" parent="32" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="416" parent="32" name="fk_mpfc_feature_type_id_ind">
+        <columns>feature_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="417" parent="32" name="fk_mpfc_persona_id_ind">
+        <columns>persona_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="418" parent="32" name="PRIMARY">
+        <columns>persona_id
+feature_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="419" parent="32" name="FK_mpfc_feature_type_id">
+        <columns>feature_type_id</columns>
+        <ref-key>~.card_feature_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="420" parent="32" name="FK_mpfc_persona_id">
+        <columns>persona_id</columns>
+        <ref-key>~.persona.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="421" parent="33" name="persona_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="422" parent="33" name="scene_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="423" parent="33" name="percentage">
+        <data-type>double</data-type>
+        <default-expression>&apos;0.3&apos;</default-expression>
+      </column>
+      <column id="424" parent="33" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="425" parent="33" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="426" parent="33" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="427" parent="33" name="fk_persona_id">
+        <columns>persona_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="428" parent="33" name="fk_scene_id">
+        <columns>scene_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="429" parent="33" name="PRIMARY">
+        <columns>persona_id
+scene_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="430" parent="33" name="fk_persona_id_ind">
+        <columns>persona_id</columns>
+        <ref-key>~.persona.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="431" parent="33" name="fk_scene_id_ind">
+        <columns>scene_id</columns>
+        <ref-key>~.scene.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="432" parent="34" name="persona_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="433" parent="34" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="434" parent="34" name="percentage">
+        <data-type>double</data-type>
+        <default-expression>&apos;0.05&apos;</default-expression>
+      </column>
+      <column id="435" parent="34" name="negative">
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="436" parent="34" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="437" parent="34" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="438" parent="34" name="ind_mperstore_persona_id">
+        <columns>persona_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="439" parent="34" name="ind_mperstore_store_id">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="440" parent="34" name="PRIMARY">
+        <columns>persona_id
+store_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="441" parent="34" name="fk_mperstore_persona_id">
+        <columns>persona_id</columns>
+        <ref-key>~.persona.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="442" parent="34" name="fk_mperstore_store_id">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="443" parent="35" name="scene_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="444" parent="35" name="reward_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="445" parent="35" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="446" parent="35" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="447" parent="35" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="448" parent="35" name="fk_msrc_scene_id_index">
+        <columns>scene_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="449" parent="35" name="fk_msrc_store_category_id_ind">
+        <columns>reward_category_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="450" parent="35" name="PRIMARY">
+        <columns>scene_id
+reward_category_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="451" parent="35" name="FK_msrc_map_scene_rewardcategory_rewardcategory">
+        <columns>reward_category_id</columns>
+        <ref-key>~.reward_category.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="452" parent="35" name="FK_msrc_map_scene_rewardcategory_scene">
+        <columns>scene_id</columns>
+        <ref-key>~.scene.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="453" parent="36" name="scene_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="454" parent="36" name="store_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="455" parent="36" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="456" parent="36" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="457" parent="36" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="458" parent="36" name="fk_scene_id_ind">
+        <columns>scene_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="459" parent="36" name="fk_store_category_id_ind">
+        <columns>store_category_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="460" parent="36" name="PRIMARY">
+        <columns>scene_id
+store_category_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="461" parent="36" name="FK_map_scene_store_scene">
+        <columns>scene_id</columns>
+        <ref-key>~.scene.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="462" parent="36" name="FK_map_scene_store_store">
+        <columns>store_category_id</columns>
+        <ref-key>~.store_category.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="463" parent="37" name="mileage_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="464" parent="37" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="465" parent="37" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="466" parent="37" name="trip_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="467" parent="37" name="required_miles">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="468" parent="37" name="mileage_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <column id="469" parent="37" name="value_in_yen">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="470" parent="37" name="display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="471" parent="37" name="display_long">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="472" parent="37" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="473" parent="37" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="474" parent="37" name="fk_milage_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="475" parent="37" name="fk_milage_store">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="476" parent="37" name="fk_milage_trip">
+        <columns>trip_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="477" parent="37" name="fk_mileage_mileage_type">
+        <columns>mileage_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="478" parent="37" name="PRIMARY">
+        <columns>mileage_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="479" parent="37" name="fk_milage_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="480" parent="37" name="fk_milage_store">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="481" parent="37" name="fk_milage_trip">
+        <columns>trip_id</columns>
+        <ref-key>~.trip.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="482" parent="37" name="fk_mileage_mileage_type">
+        <columns>mileage_type_id</columns>
+        <ref-key>~.mileage_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="483" parent="38" name="mileage_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="484" parent="38" name="round_trip">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="485" parent="38" name="season_type_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="486" parent="38" name="class">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="487" parent="38" name="ticket_type">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="488" parent="38" name="display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="489" parent="38" name="trip_length">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="490" parent="38" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="491" parent="38" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="492" parent="38" name="fk_mileage_type_season_type">
+        <columns>season_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="493" parent="38" name="PRIMARY">
+        <columns>mileage_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="494" parent="38" name="fk_mileage_type_season_type">
+        <columns>season_type_id</columns>
+        <ref-key>~.season_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="495" parent="39" name="payment_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="496" parent="39" name="type">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="497" parent="39" name="display">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="498" parent="39" name="description">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="499" parent="39" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="500" parent="39" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="501" parent="39" name="PRIMARY">
+        <columns>payment_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="502" parent="40" name="payment_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="503" parent="40" name="payment_type">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="504" parent="40" name="payment_description">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="505" parent="40" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="506" parent="40" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="507" parent="40" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="508" parent="40" name="PRIMARY">
+        <columns>payment_type_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="509" parent="41" name="persona_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="510" parent="41" name="identifier">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="511" parent="41" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="512" parent="41" name="description_short">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="513" parent="41" name="description_long">
+        <data-type>text</data-type>
+      </column>
+      <column id="514" parent="41" name="default_spend">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100000&apos;</default-expression>
+      </column>
+      <column id="515" parent="41" name="sorting">
+        <mandatory>1</mandatory>
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="516" parent="41" name="reward_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="517" parent="41" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="518" parent="41" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="519" parent="41" name="FK_persona_reward_category">
+        <columns>reward_category_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="520" parent="41" name="PRIMARY">
+        <columns>persona_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="521" parent="41" name="FK_persona_reward_category">
+        <columns>reward_category_id</columns>
+        <ref-key>~.reward_category.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="522" parent="42" name="persona_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="523" parent="42" name="restriction_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="524" parent="42" name="Comparator">
+        <data-type>varchar(80)</data-type>
+        <default-expression>&apos;=&apos;</default-expression>
+      </column>
+      <column id="525" parent="42" name="value">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="526" parent="42" name="priority_id">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;100&apos;</default-expression>
+      </column>
+      <column id="527" parent="42" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="528" parent="42" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="529" parent="42" name="fk_pr_feature_type_id_ind">
+        <columns>restriction_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="530" parent="42" name="fk_pr_persona_id_ind">
+        <columns>persona_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="531" parent="42" name="PRIMARY">
+        <columns>persona_id
+restriction_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="532" parent="42" name="FK_pr_persona_id">
+        <columns>persona_id</columns>
+        <ref-key>~.persona.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="533" parent="42" name="FK_pr_restriction_type_id">
+        <columns>restriction_type_id</columns>
+        <ref-key>~.restriction_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="534" parent="43" name="point_acquisition_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="535" parent="43" name="point_acquisition_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="536" parent="43" name="points_per_yen">
+        <mandatory>1</mandatory>
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="537" parent="43" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="538" parent="43" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="539" parent="43" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="540" parent="43" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="541" parent="43" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="542" parent="43" name="FK_point_acquisition_store">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="543" parent="43" name="ps_point_acquisition">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="544" parent="43" name="PRIMARY">
+        <columns>point_acquisition_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="545" parent="43" name="FK_point_acquisition_store">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="546" parent="43" name="ps_point_acquisition">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="547" parent="44" name="point_acquisition_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="548" parent="44" name="point_acquisition_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="549" parent="44" name="points_per_yen">
+        <mandatory>1</mandatory>
+        <data-type>double(15,15)</data-type>
+      </column>
+      <column id="550" parent="44" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="551" parent="44" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="552" parent="44" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="553" parent="44" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="554" parent="44" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="555" parent="44" name="PRIMARY">
+        <columns>point_acquisition_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="556" parent="45" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="557" parent="45" name="point_system_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="558" parent="45" name="default_points_per_yen">
+        <mandatory>1</mandatory>
+        <data-type>decimal(8,6)</data-type>
+        <default-expression>&apos;0.010000&apos;</default-expression>
+      </column>
+      <column id="559" parent="45" name="default_yen_per_point">
+        <mandatory>1</mandatory>
+        <data-type>decimal(8,6)</data-type>
+        <default-expression>&apos;1.000000&apos;</default-expression>
+      </column>
+      <column id="560" parent="45" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="561" parent="45" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="562" parent="45" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <key id="563" parent="45" name="PRIMARY">
+        <columns>point_system_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="564" parent="46" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="565" parent="46" name="point_system_name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="566" parent="46" name="default_points_per_yen">
+        <mandatory>1</mandatory>
+        <data-type>decimal(10)</data-type>
+      </column>
+      <column id="567" parent="46" name="default_yen_per_point">
+        <mandatory>1</mandatory>
+        <data-type>decimal(10)</data-type>
+      </column>
+      <column id="568" parent="46" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="569" parent="46" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="570" parent="46" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="571" parent="46" name="PRIMARY">
+        <columns>point_system_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="572" parent="47" name="point_use_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="573" parent="47" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="574" parent="47" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="575" parent="47" name="yen_per_point">
+        <mandatory>1</mandatory>
+        <data-type>decimal(8,6)</data-type>
+      </column>
+      <column id="576" parent="47" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="577" parent="47" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="578" parent="47" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="579" parent="47" name="point_use_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="580" parent="47" name="point_use_store">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="581" parent="47" name="PRIMARY">
+        <columns>point_use_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="582" parent="47" name="point_use_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="583" parent="47" name="point_use_store">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="584" parent="48" name="region_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="585" parent="48" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="586" parent="48" name="display">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="587" parent="48" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="588" parent="48" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="589" parent="48" name="PRIMARY">
+        <columns>region_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="590" parent="49" name="restriction_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="591" parent="49" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="592" parent="49" name="path">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="593" parent="49" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="594" parent="49" name="display">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="595" parent="49" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="596" parent="49" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="597" parent="49" name="PRIMARY">
+        <columns>restriction_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="598" parent="50" name="reward_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="599" parent="50" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="600" parent="50" name="store_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="601" parent="50" name="reward_category_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="602" parent="50" name="reward_type_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="603" parent="50" name="title">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="604" parent="50" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="605" parent="50" name="icon">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="606" parent="50" name="yen_per_point">
+        <mandatory>1</mandatory>
+        <data-type>decimal(10,6)</data-type>
+      </column>
+      <column id="607" parent="50" name="price_per_unit">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="608" parent="50" name="min_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="609" parent="50" name="max_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="610" parent="50" name="required_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="611" parent="50" name="max_period">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="612" parent="50" name="point_multiplier">
+        <mandatory>1</mandatory>
+        <data-type>decimal(10,8)</data-type>
+        <default-expression>&apos;1.00000000&apos;</default-expression>
+      </column>
+      <column id="613" parent="50" name="unit_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <column id="614" parent="50" name="reference">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="615" parent="50" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="616" parent="50" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="617" parent="50" name="FK_reward_category_id">
+        <columns>reward_category_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="618" parent="50" name="FK_reward_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="619" parent="50" name="FK_reward_type">
+        <columns>reward_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="620" parent="50" name="FK_store_id">
+        <columns>store_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="621" parent="50" name="FK_unit">
+        <columns>unit_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="622" parent="50" name="PRIMARY">
+        <columns>reward_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="623" parent="50" name="FK_reward_category_id">
+        <columns>reward_category_id</columns>
+        <ref-key>~.reward_category.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="624" parent="50" name="FK_reward_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="625" parent="50" name="FK_reward_type">
+        <columns>reward_type_id</columns>
+        <ref-key>~.reward_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="626" parent="50" name="FK_store_id">
+        <columns>store_id</columns>
+        <ref-key>~.store.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="627" parent="50" name="FK_unit">
+        <columns>unit_id</columns>
+        <ref-key>~.unit.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="628" parent="51" name="reward_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="629" parent="51" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="630" parent="51" name="subcategory">
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="631" parent="51" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="632" parent="51" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="633" parent="51" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="634" parent="51" name="PRIMARY">
+        <columns>reward_category_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="635" parent="52" name="reward_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="636" parent="52" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="637" parent="52" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="638" parent="52" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="639" parent="52" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="640" parent="52" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="641" parent="52" name="PRIMARY">
+        <columns>reward_category_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="642" parent="53" name="reward_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="643" parent="53" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="644" parent="53" name="reward_category_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="645" parent="53" name="reward_type_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="646" parent="53" name="title">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="647" parent="53" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="648" parent="53" name="icon">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="649" parent="53" name="yen_per_point">
+        <mandatory>1</mandatory>
+        <data-type>decimal(10,6)</data-type>
+      </column>
+      <column id="650" parent="53" name="price_per_unit">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="651" parent="53" name="min_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="652" parent="53" name="max_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="653" parent="53" name="required_points">
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="654" parent="53" name="max_period">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="655" parent="53" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="656" parent="53" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="657" parent="53" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="658" parent="53" name="PRIMARY">
+        <columns>reward_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="659" parent="54" name="reward_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="660" parent="54" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="661" parent="54" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="662" parent="54" name="is_finite">
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="663" parent="54" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="664" parent="54" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="665" parent="54" name="PRIMARY">
+        <columns>reward_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="666" parent="55" name="reward_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="667" parent="55" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="668" parent="55" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="669" parent="55" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="670" parent="55" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="671" parent="55" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="672" parent="55" name="PRIMARY">
+        <columns>reward_type_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="673" parent="56" name="scene_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="674" parent="56" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="675" parent="56" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="676" parent="56" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="677" parent="56" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="678" parent="56" name="PRIMARY">
+        <columns>scene_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="679" parent="57" name="season_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="680" parent="57" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <column id="681" parent="57" name="name">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="682" parent="57" name="season_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="683" parent="57" name="display">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="684" parent="57" name="reference">
+        <data-type>varchar(250)</data-type>
+      </column>
+      <column id="685" parent="57" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="686" parent="57" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="687" parent="57" name="FK_season_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="688" parent="57" name="fk_season_season_type">
+        <columns>season_type_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="689" parent="57" name="PRIMARY">
+        <columns>season_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="690" parent="57" name="FK_season_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="691" parent="57" name="fk_season_season_type">
+        <columns>season_type_id</columns>
+        <ref-key>~.season_type.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="692" parent="58" name="season_date_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="693" parent="58" name="season_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="694" parent="58" name="zone_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="695" parent="58" name="from_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="696" parent="58" name="to_date">
+        <data-type>date</data-type>
+      </column>
+      <column id="697" parent="58" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="698" parent="58" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="699" parent="58" name="fk_season_date_season">
+        <columns>season_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="700" parent="58" name="FK_season_date_zone_id">
+        <columns>zone_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="701" parent="58" name="PRIMARY">
+        <columns>season_date_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="702" parent="58" name="fk_season_date_season">
+        <columns>season_id</columns>
+        <ref-key>~.season.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="703" parent="58" name="FK_season_date_zone_id">
+        <columns>zone_id</columns>
+        <ref-key>~.zone.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="704" parent="59" name="season_type_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="705" parent="59" name="name">
+        <data-type>varchar(150)</data-type>
+      </column>
+      <column id="706" parent="59" name="display">
+        <data-type>varchar(150)</data-type>
+      </column>
+      <column id="707" parent="59" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="708" parent="59" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="709" parent="59" name="PRIMARY">
+        <columns>season_type_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="710" parent="60" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="711" parent="60" name="store_name">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="712" parent="60" name="store_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <column id="713" parent="60" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="714" parent="60" name="is_major">
+        <mandatory>1</mandatory>
+        <data-type>tinyint(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="715" parent="60" name="allocation">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;10&apos;</default-expression>
+      </column>
+      <column id="716" parent="60" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="717" parent="60" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="718" parent="60" name="FK_store_category">
+        <columns>store_category_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="719" parent="60" name="PRIMARY">
+        <columns>store_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="720" parent="60" name="FK_store_category">
+        <columns>store_category_id</columns>
+        <ref-key>~.store_category.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="721" parent="61" name="store_category_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="722" parent="61" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="723" parent="61" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="724" parent="61" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="725" parent="61" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="726" parent="61" name="PRIMARY">
+        <columns>store_category_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="727" parent="62" name="store_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="728" parent="62" name="store_name">
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="729" parent="62" name="category">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="730" parent="62" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="731" parent="62" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="732" parent="62" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="733" parent="62" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="734" parent="62" name="PRIMARY">
+        <columns>store_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="735" parent="63" name="trip_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="736" parent="63" name="from_city_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="737" parent="63" name="to_city_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="738" parent="63" name="distance">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="739" parent="63" name="unit_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="740" parent="63" name="display">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="741" parent="63" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="742" parent="63" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="743" parent="63" name="fk_trip_unit">
+        <columns>unit_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="744" parent="63" name="trip_from_city_city">
+        <columns>from_city_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="745" parent="63" name="trip_to_city_city">
+        <columns>to_city_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="746" parent="63" name="PRIMARY">
+        <columns>trip_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="747" parent="63" name="fk_trip_unit">
+        <columns>unit_id</columns>
+        <ref-key>~.unit.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="748" parent="63" name="trip_from_city_city">
+        <columns>from_city_id</columns>
+        <ref-key>~.city.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="749" parent="63" name="trip_to_city_city">
+        <columns>to_city_id</columns>
+        <ref-key>~.city.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="750" parent="64" name="unit_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="751" parent="64" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="752" parent="64" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="753" parent="64" name="update_time">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="754" parent="64" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="755" parent="64" name="PRIMARY">
+        <columns>unit_id</columns>
+        <primary>1</primary>
+      </key>
+      <column id="756" parent="65" name="unit_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="757" parent="65" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(255)</data-type>
+      </column>
+      <column id="758" parent="65" name="description">
+        <data-type>text</data-type>
+      </column>
+      <column id="759" parent="65" name="time_beg">
+        <mandatory>1</mandatory>
+        <data-type>datetime</data-type>
+      </column>
+      <column id="760" parent="65" name="time_end">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="761" parent="65" name="update_user">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <key id="762" parent="65" name="PRIMARY">
+        <columns>unit_id
+time_beg</columns>
+        <primary>1</primary>
+      </key>
+      <column id="763" parent="66" name="zone_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="764" parent="66" name="point_system_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="765" parent="66" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="766" parent="66" name="display">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <column id="767" parent="66" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="768" parent="66" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="769" parent="66" name="fk_zone_point_system">
+        <columns>point_system_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="770" parent="66" name="PRIMARY">
+        <columns>zone_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="771" parent="66" name="fk_zone_point_system">
+        <columns>point_system_id</columns>
+        <ref-key>~.point_system.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="772" parent="67" name="zone_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="773" parent="67" name="city_id">
+        <mandatory>1</mandatory>
+        <data-type>int(11)</data-type>
+      </column>
+      <column id="774" parent="67" name="update_time">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="775" parent="67" name="update_user">
+        <data-type>varchar(100)</data-type>
+      </column>
+      <index id="776" parent="67" name="fk_zone_city_map_city">
+        <columns>city_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="777" parent="67" name="PRIMARY">
+        <columns>zone_id
+city_id</columns>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="778" parent="67" name="fk_zone_city_map_city">
+        <columns>city_id</columns>
+        <ref-key>~.city.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <foreign-key id="779" parent="67" name="fk_zone_city_map_zone">
+        <columns>zone_id</columns>
+        <ref-key>~.zone.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+    </database-model>
+  </data-source>
+</component>

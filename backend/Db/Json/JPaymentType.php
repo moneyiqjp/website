@@ -11,7 +11,7 @@ namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
 
-class JPaymentType implements JSONInterface{
+class JPaymentType extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $PaymentTypeId;
     public $PaymentType;
     public $Display;
@@ -36,7 +36,7 @@ class JPaymentType implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JPaymentType();
         $mine->PaymentTypeId = $data['PaymentTypeId'];
@@ -74,4 +74,12 @@ class JPaymentType implements JSONInterface{
         return $item;
     }
 
+    public function getLabel() {
+        return $this->PaymentType;
+    }
+
+    public function getValue()
+    {
+        return $this->PaymentTypeId;
+    }
 }

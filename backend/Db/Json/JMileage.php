@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JMileage implements JSONInterface, JSONDisplay
+class JMileage extends JObjectRoot implements JSONInterface, JSONDisplay,JObjectifiable
 {
     public $MileageId;
     public $MileageType;
@@ -106,11 +106,11 @@ class JMileage implements JSONInterface, JSONDisplay
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data) {
+    public static function CREATE_FROM_ARRAY(array $data) {
         $mine = new JMileage();
-        if(ArrayUtils::KEY_EXISTS($data,'MileageId')) {
+        if(ArrayUtils::KEY_EXISTS($data,'MileageId') && FieldUtils::STRING_IS_DEFINED($data['MileageId'])) {
             $mine->MileageId = $data['MileageId'];
-            $item = $mine->tryLoadFromDB();
+            $item = $mine->tryLoadId($data['MileageId']);
             if(!is_null($mine)) $mine = self::CREATE_FROM_DB($item);;
         }
 
@@ -133,6 +133,15 @@ class JMileage implements JSONInterface, JSONDisplay
     {
         return $this->toDB()->save() > 0;
     }
+
+    private function tryLoadId($id) {
+        if(FieldUtils::ID_IS_DEFINED($id)) {
+            $item = \MileageQuery::create()->findPk($id);
+            return $item;
+        }
+        return null;
+    }
+
 
     private function tryLoadFromDB() {
         if(FieldUtils::ID_IS_DEFINED($this->MileageId)) {
@@ -244,4 +253,14 @@ class JMileage implements JSONInterface, JSONDisplay
 
         return $display;
     }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->PointSystem) . "/" . FieldUtils::getLabel($this->MileageType) ;
+    }
+
+    public function getValue()
+    {
+        return $this->MileageId;
+    }
+
 }

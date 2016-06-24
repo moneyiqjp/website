@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JInsurance  implements JSONInterface {
+class JInsurance extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $InsuranceId;
     public $CreditCard;
     public $InsuranceType;
@@ -54,7 +54,7 @@ class JInsurance  implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JInsurance();
         if(!ArrayUtils::KEY_EXISTS($data,'InsuranceId') && !FieldUtils::ID_IS_DEFINED($data['InsuranceId'])) {
@@ -159,5 +159,15 @@ class JInsurance  implements JSONInterface {
         }
     }
 
+    public function getLabel() {
+        $cc = is_null($this->CreditCard)?"":$this->CreditCard->getLabel();
+        $it = is_null($this->InsuranceType)?"":$this->InsuranceType->getLabel();
+        return "$cc/$it" ;
+    }
+
+    public function getValue()
+    {
+        return $this->InsuranceId;
+    }
 
 }

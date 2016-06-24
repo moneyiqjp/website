@@ -12,8 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JPointAcquisition implements JSONInterface
-{
+class JPointAcquisition extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $PointAcquisitionId;
     public $PointSystemId;
     public $PointAcquisitionName;
@@ -43,14 +42,14 @@ class JPointAcquisition implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'PointAcquisitionId')) throw new \Exception("JPointAcquisitionId: Mandatory field PointAcquisitionId missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'Store'))throw new \Exception("JPointAcquisitionId: Mandatory field Store missing");
         return JPointAcquisition::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data) {
         $mine = new JPointAcquisition();
 
         if(ArrayUtils::KEY_EXISTS($data, 'PointAcquisitionId')) $mine->PointAcquisitionId = $data['PointAcquisitionId'];
@@ -122,6 +121,14 @@ class JPointAcquisition implements JSONInterface
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+    public function getLabel() {
+        return $this->PointAcquisitionName;
+    }
+
+    public function getValue() {
+        return $this->PointAcquisitionId;
     }
 
 

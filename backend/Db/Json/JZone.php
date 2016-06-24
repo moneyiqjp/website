@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JZone implements JSONInterface, JSONDisplay
+class JZone implements JSONInterface, JSONDisplay, JObjectifiable
 {
     public $ZoneId;
     public $PointSystem;
@@ -57,7 +57,7 @@ class JZone implements JSONInterface, JSONDisplay
         return !(is_null($mine->PointSystem) || !FieldUtils::ID_IS_DEFINED($mine->PointSystem->PointSystemId));
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JZone();
         if(ArrayUtils::KEY_EXISTS($data,'ZoneId')) {
@@ -140,5 +140,19 @@ class JZone implements JSONInterface, JSONDisplay
         $display = FieldUtils::replaceIfAvailable($display, "%ZONENAME%", $this->Name);
 
         return $display;
+    }
+
+    public function toJObject() {
+        JObject::CREATE( $this->getDisplay(), $this->ZoneId);
+    }
+
+    public function getLabel()
+    {
+        return $this->getDisplay();
+    }
+
+    public function getValue()
+    {
+        return $this->ZoneId;
     }
 }

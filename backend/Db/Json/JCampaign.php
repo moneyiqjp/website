@@ -12,7 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JCampaign implements JSONInterface{
+class JCampaign extends JObjectRoot implements JSONInterface, JObjectifiable{
     public $CampaignId;
     public $CreditCard;
     public $Name;
@@ -53,7 +53,7 @@ class JCampaign implements JSONInterface{
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JCampaign();
         if(ArrayUtils::KEY_EXISTS($data,'CampaignId')) $mine->CampaignId = $data['CampaignId'];
@@ -122,5 +122,16 @@ class JCampaign implements JSONInterface{
         $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
+
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->CampaignId;
+    }
+
 
 }

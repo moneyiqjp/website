@@ -221,6 +221,12 @@ abstract class CreditCard implements ActiveRecordInterface
     protected $isactive;
 
     /**
+     * The value for the review_url field.
+     * @var        string
+     */
+    protected $review_url;
+
+    /**
      * The value for the reference field.
      * @var        string
      */
@@ -873,6 +879,16 @@ abstract class CreditCard implements ActiveRecordInterface
     }
 
     /**
+     * Get the [review_url] column value.
+     *
+     * @return string
+     */
+    public function getReviewUrl()
+    {
+        return $this->review_url;
+    }
+
+    /**
      * Get the [reference] column value.
      *
      * @return string
@@ -1381,6 +1397,26 @@ abstract class CreditCard implements ActiveRecordInterface
     } // setIsactive()
 
     /**
+     * Set the value of [review_url] column.
+     *
+     * @param  string $v new value
+     * @return $this|\CreditCard The current object (for fluent API support)
+     */
+    public function setReviewUrl($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->review_url !== $v) {
+            $this->review_url = $v;
+            $this->modifiedColumns[CreditCardTableMap::COL_REVIEW_URL] = true;
+        }
+
+        return $this;
+    } // setReviewUrl()
+
+    /**
      * Set the value of [reference] column.
      *
      * @param  string $v new value
@@ -1567,16 +1603,19 @@ abstract class CreditCard implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 20 + $startcol : CreditCardTableMap::translateFieldName('Isactive', TableMap::TYPE_PHPNAME, $indexType)];
             $this->isactive = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : CreditCardTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 21 + $startcol : CreditCardTableMap::translateFieldName('ReviewUrl', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->review_url = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : CreditCardTableMap::translateFieldName('Reference', TableMap::TYPE_PHPNAME, $indexType)];
             $this->reference = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 22 + $startcol : CreditCardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 23 + $startcol : CreditCardTableMap::translateFieldName('UpdateTime', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
             $this->update_time = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 23 + $startcol : CreditCardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 24 + $startcol : CreditCardTableMap::translateFieldName('UpdateUser', TableMap::TYPE_PHPNAME, $indexType)];
             $this->update_user = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
@@ -1586,7 +1625,7 @@ abstract class CreditCard implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 24; // 24 = CreditCardTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 25; // 25 = CreditCardTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\CreditCard'), 0, $e);
@@ -2063,6 +2102,9 @@ abstract class CreditCard implements ActiveRecordInterface
         if ($this->isColumnModified(CreditCardTableMap::COL_ISACTIVE)) {
             $modifiedColumns[':p' . $index++]  = 'isActive';
         }
+        if ($this->isColumnModified(CreditCardTableMap::COL_REVIEW_URL)) {
+            $modifiedColumns[':p' . $index++]  = 'review_url';
+        }
         if ($this->isColumnModified(CreditCardTableMap::COL_REFERENCE)) {
             $modifiedColumns[':p' . $index++]  = 'reference';
         }
@@ -2145,6 +2187,9 @@ abstract class CreditCard implements ActiveRecordInterface
                         break;
                     case 'isActive':
                         $stmt->bindValue($identifier, $this->isactive, PDO::PARAM_INT);
+                        break;
+                    case 'review_url':
+                        $stmt->bindValue($identifier, $this->review_url, PDO::PARAM_STR);
                         break;
                     case 'reference':
                         $stmt->bindValue($identifier, $this->reference, PDO::PARAM_STR);
@@ -2281,12 +2326,15 @@ abstract class CreditCard implements ActiveRecordInterface
                 return $this->getIsactive();
                 break;
             case 21:
-                return $this->getReference();
+                return $this->getReviewUrl();
                 break;
             case 22:
-                return $this->getUpdateTime();
+                return $this->getReference();
                 break;
             case 23:
+                return $this->getUpdateTime();
+                break;
+            case 24:
                 return $this->getUpdateUser();
                 break;
             default:
@@ -2340,9 +2388,10 @@ abstract class CreditCard implements ActiveRecordInterface
             $keys[18] => $this->getDebitDate(),
             $keys[19] => $this->getCutoffDate(),
             $keys[20] => $this->getIsactive(),
-            $keys[21] => $this->getReference(),
-            $keys[22] => $this->getUpdateTime(),
-            $keys[23] => $this->getUpdateUser(),
+            $keys[21] => $this->getReviewUrl(),
+            $keys[22] => $this->getReference(),
+            $keys[23] => $this->getUpdateTime(),
+            $keys[24] => $this->getUpdateUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -2628,12 +2677,15 @@ abstract class CreditCard implements ActiveRecordInterface
                 $this->setIsactive($value);
                 break;
             case 21:
-                $this->setReference($value);
+                $this->setReviewUrl($value);
                 break;
             case 22:
-                $this->setUpdateTime($value);
+                $this->setReference($value);
                 break;
             case 23:
+                $this->setUpdateTime($value);
+                break;
+            case 24:
                 $this->setUpdateUser($value);
                 break;
         } // switch()
@@ -2726,13 +2778,16 @@ abstract class CreditCard implements ActiveRecordInterface
             $this->setIsactive($arr[$keys[20]]);
         }
         if (array_key_exists($keys[21], $arr)) {
-            $this->setReference($arr[$keys[21]]);
+            $this->setReviewUrl($arr[$keys[21]]);
         }
         if (array_key_exists($keys[22], $arr)) {
-            $this->setUpdateTime($arr[$keys[22]]);
+            $this->setReference($arr[$keys[22]]);
         }
         if (array_key_exists($keys[23], $arr)) {
-            $this->setUpdateUser($arr[$keys[23]]);
+            $this->setUpdateTime($arr[$keys[23]]);
+        }
+        if (array_key_exists($keys[24], $arr)) {
+            $this->setUpdateUser($arr[$keys[24]]);
         }
     }
 
@@ -2837,6 +2892,9 @@ abstract class CreditCard implements ActiveRecordInterface
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_ISACTIVE)) {
             $criteria->add(CreditCardTableMap::COL_ISACTIVE, $this->isactive);
+        }
+        if ($this->isColumnModified(CreditCardTableMap::COL_REVIEW_URL)) {
+            $criteria->add(CreditCardTableMap::COL_REVIEW_URL, $this->review_url);
         }
         if ($this->isColumnModified(CreditCardTableMap::COL_REFERENCE)) {
             $criteria->add(CreditCardTableMap::COL_REFERENCE, $this->reference);
@@ -2953,6 +3011,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $copyObj->setDebitDate($this->getDebitDate());
         $copyObj->setCutoffDate($this->getCutoffDate());
         $copyObj->setIsactive($this->getIsactive());
+        $copyObj->setReviewUrl($this->getReviewUrl());
         $copyObj->setReference($this->getReference());
         $copyObj->setUpdateTime($this->getUpdateTime());
         $copyObj->setUpdateUser($this->getUpdateUser());
@@ -5592,6 +5651,7 @@ abstract class CreditCard implements ActiveRecordInterface
         $this->debit_date = null;
         $this->cutoff_date = null;
         $this->isactive = null;
+        $this->review_url = null;
         $this->reference = null;
         $this->update_time = null;
         $this->update_user = null;

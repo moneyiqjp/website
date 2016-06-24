@@ -15,6 +15,7 @@ use Db\Json\JZone;
 use Db\Json\JSeasonDate;
 use Db\Json\JSeasonType;
 use Db\Json\JZoneCityMap;
+use Db\Json\JZoneTripMap;
 
 /* City */
 function GetCityForCrud()
@@ -25,8 +26,7 @@ function GetCityForCrud()
     }
     return $result;
 }
-function UpdateCityForCrud($data)
-{
+function UpdateCityForCrud($data) {
     $parsed = JCity::CREATE_FROM_ARRAY($data);
     if(is_null($parsed)) throw new \Exception ("Failed to parse restriction type update request");
 
@@ -38,6 +38,7 @@ function UpdateCityForCrud($data)
 
     //TODO implement cache, then refresh
     $item = (new  \CityQuery())->findPk($parsed->CityId);
+
     return JCity::CREATE_FROM_DB($item);
 }
 function CreateCityForCrud($data) {
@@ -449,36 +450,36 @@ function DeleteSeasonTypeForCrud($id) {
 
 
 /* ZoneCityMap */
-function GetZoneCityMapForCrud()
+function GetZoneTripMapForCrud()
 {
     $result = array();
-    foreach ((new \ZoneCityMapQuery())->orderByUpdateTime()->find() as $item) {
-        array_push($result, JZoneCityMap::CREATE_FROM_DB($item));
+    foreach ((new \ZoneTripMapQuery())->orderByUpdateTime()->find() as $item) {
+        array_push($result, JZoneTripMap::CREATE_FROM_DB($item));
     }
     return $result;
 }
-function UpdateZoneCityMapForCrud($data)
+function UpdateZoneTripMapForCrud($data)
 {
-    throw new JSONException("Update not supported for ZoneCityMap");
+    throw new JSONException("Update not supported for ZoneTripMap");
 }
 
-function CreateZoneCityMapForCrud($data)
+function CreateZoneTripMapForCrud($data)
 {
-    $item = JZoneCityMap::CREATE_FROM_ARRAY($data)->toDB();
+    $item = JZoneTripMap::CREATE_FROM_ARRAY($data)->toDB();
     if(0>=$item->save()) {
-        throw new \Exception("Failed to save ZoneCityMap");
+        throw new \Exception("Failed to save ZoneTripMap");
     }
 
     //TODO implement cache, add to cache
-    return JZoneCityMap::CREATE_FROM_DB($item);
+    return JZoneTripMap::CREATE_FROM_DB($item);
 }
 
-function DeleteZoneCityMapForCrud($id)
+function DeleteZoneTripMapForCrud($id)
 {
-    $ids = JZoneCityMap::GETZONECITYIDS($id);
+    $ids = JZoneTripMap::GETZONETripIDS($id);
     $item = \ZoneCityMapQuery::create()->filterByCityId($ids[1])->findOneByZoneId($ids[0]);
     if(is_null($item)) {
-        throw new \Exception ("restriction type with id ". $id ." not found");
+        throw new \Exception ("ZoneTripMap with id ". $id ." not found");
     }
     $item->delete();
     return array();

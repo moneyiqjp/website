@@ -12,7 +12,7 @@ use Db\Utility\FieldUtils;
 
 
 
-class JRewardCategory  implements JSONInterface {
+class JRewardCategory extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $RewardCategoryId;
     public $Name;
     public $SubCategory;
@@ -37,7 +37,7 @@ class JRewardCategory  implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)  {
+    public static function CREATE_FROM_ARRAY(array $data)  {
         $mine = new JRewardCategory();
         if(ArrayUtils::KEY_EXISTS($data,'RewardCategoryId')) {
             $mine->RewardCategoryId = $data['RewardCategoryId'];
@@ -97,6 +97,14 @@ class JRewardCategory  implements JSONInterface {
         }
 
         throw new \Exception("No RewardCategory found for JObject");
+    }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue() {
+        return $this->RewardCategoryId;
     }
 
 

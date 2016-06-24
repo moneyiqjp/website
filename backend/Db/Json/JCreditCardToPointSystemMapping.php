@@ -3,6 +3,7 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
 /**
  * Created by PhpStorm.
@@ -11,7 +12,7 @@ use Db\Utility\ArrayUtils;
  * Time: 22:15
  */
 
-class JCreditCardToPointSystemMapping {
+class JCreditCardToPointSystemMapping extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $Id;
     public $CreditCard;
     public $PointSystem;
@@ -30,7 +31,7 @@ class JCreditCardToPointSystemMapping {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (ArrayUtils::KEY_EXISTS($data, 'PointSystemId') && ArrayUtils::KEY_EXISTS($data, 'CreditCardId'))
         {
@@ -70,8 +71,7 @@ class JCreditCardToPointSystemMapping {
         return $mine;
     }
 
-    public function isValid()
-    {
+    public function isValid() {
         return !is_null($this->PointSystem) && !is_null($this->CreditCard) &&
                     !is_null($this->PointSystem->PointSystemId) &&
                     !is_null($this->CreditCard->credit_card_id);
@@ -91,5 +91,20 @@ class JCreditCardToPointSystemMapping {
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->PointSystem) . "/" . FieldUtils::getLabel($this->CreditCard) ;
+    }
+
+    public function getValue()
+    {
+        return $this->Id;
+    }
+
+
+    public function saveToDb()
+    {
+        throw new \Exception("Not yet  implemented saveToDb");
     }
 }

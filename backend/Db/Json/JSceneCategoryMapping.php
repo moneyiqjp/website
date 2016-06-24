@@ -9,10 +9,9 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Db\Utility\FieldUtils;
 
-class JSceneCategoryMapping implements JSONInterface
-{
+class JSceneCategoryMapping  extends JObjectRoot implements JSONInterface, JObjectifiable {
 
     public $Id;
     public $Scene;
@@ -47,7 +46,7 @@ class JSceneCategoryMapping implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (ArrayUtils::KEY_EXISTS($data, 'StoreCategoryId') && ArrayUtils::KEY_EXISTS($data, 'SceneId'))
         {
@@ -81,7 +80,7 @@ class JSceneCategoryMapping implements JSONInterface
         throw new \Exception("JSceneToCategoryMapping: no matching mapping found for $sceneId, $categoryId");
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data) {
         $mine = new JSceneCategoryMapping();
         if (ArrayUtils::KEY_EXISTS($data, 'CategoryId') && ArrayUtils::KEY_EXISTS($data, 'SceneId'))
         {
@@ -122,5 +121,13 @@ class JSceneCategoryMapping implements JSONInterface
     public function saveToDb()
     {
         return $this->toDB()->save();
+    }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->Scene) . "/" . FieldUtils::getLabel($this->StoreCategory) ;
+    }
+
+    public function getValue() {
+        return $this->Id;
     }
 }

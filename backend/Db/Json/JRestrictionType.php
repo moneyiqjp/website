@@ -11,7 +11,7 @@ use Db\Utility\FieldUtils;
 use Db\Utility\ArrayUtils;
 
 
-class JRestrictionType implements JSONInterface {
+class JRestrictionType extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $RestrictionTypeId;
     public $Name;
     public $Display;
@@ -37,7 +37,7 @@ class JRestrictionType implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JRestrictionType();
         if(ArrayUtils::KEY_EXISTS($data,'RestrictionTypeId'))  {
@@ -81,4 +81,14 @@ class JRestrictionType implements JSONInterface {
         if(FieldUtils::STRING_IS_DEFINED($this->UpdateUser)) $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->RestrictionTypeId;
+    }
+
 }

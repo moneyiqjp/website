@@ -140,10 +140,10 @@
                         label:  "reference",
                         name:   "reference",
                         type:"EditAndLink"
-                    },  {
+                    }, {
                         label:  "Points expiry (months)",
                         name:   "points_expiry_months"
-                    },  {
+                    }, {
                         label:  "Points expiry Display",
                         name:   "points_expiry_display"
                     }, {
@@ -179,40 +179,14 @@
                     }, {
                         label: "Update user:",
                         name: "update_user"
+                    },   {
+                        label: "Review URL",
+                        name:  "review_url",
+                        type:  "EditAndLink"
                     }
                 ]
              });
-/*
-            editor.one( 'preOpen', function ( e, type ) {
-                var tmp = $.ajax({
-                    url: 'http://localhost/backend/display/issuers',
-                    data: {
-                        format: 'json',
-                        "contentType": "application/json; charset=utf-8",
-                        "dataType": "json"
-                    },
-                    type: 'GET',
-                    async: false
-                }).responseText;
-                values["issuers"] = JSON.parse(tmp);
-                editor.field("issuer_id").update(values["issuers"]);
 
-                tmp = $.ajax({
-                    url: '../backend/display/affiliates',
-                    data: {
-                        format: 'json',
-                        "contentType": "application/json; charset=utf-8",
-                        "dataType": "json"
-                    },
-                    type: 'GET',
-                    async: false
-                }).responseText;
-                values["affiliates"] = JSON.parse(tmp);
-                editor.field("affiliate_id").update(values["affiliates"]);
-                //editor.field("affiliate_id")
-
-            });
-*/
 
             $('#creditcards').dataTable( {
                 dom: "Tfrtip",
@@ -296,7 +270,7 @@
                         "data": "affiliate_link",
                         "render": function ( data, type, full, meta ) {
                             if ( type === 'display' ) {
-                                if(data.length>0)
+                                if(data != null && data.length>0)
                                     return "<a href='" + decodeURIComponent(data) + "' target='_blank'>link</a>";
                                 else
                                     return "<img src='../admin/images/error.png'>"
@@ -318,7 +292,7 @@
                         editField: "is_active",
                         render: function ( data, type, row ) {
                             if ( type === 'display' ) {
-                                if(data>0) return "<img src='../admin/images/power_on.png'>";
+                                if(data != null && data>0) return "<img src='../admin/images/power_on.png'>";
                                 return "<img src='../admin/images/power_off.png'>"
                             }
                             return data;
@@ -330,8 +304,22 @@
                         editField: "reference",
                         "render": function ( data, type, full, meta ) {
                             if ( type === 'display' ) {
-                                if(data.length>0)
+                                if(data != null && data.length>0)
                                     return "<a href='" + data + "' target='_blank'>reference</a>";
+                                else
+                                    return "<img src='../admin/images/error.png'>"
+                            }
+                            return data;
+                        },
+                        visible: true
+                    },
+                    {
+                        "data": "review_url",
+                        editField: "review_url",
+                        "render": function ( data, type, full, meta ) {
+                            if ( type === 'display' ) {
+                                if(data != null && data.length>0)
+                                    return "<a href='" + data + "' target='_blank'>review</a>";
                                 else
                                     return "<img src='../admin/images/error.png'>"
                             }
@@ -436,6 +424,7 @@
             <th>cutoff date</th>
             <th>active</th>
             <th>reference</th>
+            <th>review</th>
             <th>update</th>
         </tr>
     </thead>
@@ -464,6 +453,7 @@
             <th>cutoff date</th>
             <th>active</th>
             <th>reference</th>
+            <th>review</th>
             <th>update</th>
         </tr>
     </tfoot>

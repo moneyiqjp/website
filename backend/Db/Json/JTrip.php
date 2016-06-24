@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JTrip implements JSONInterface, JSONDisplay
+class JTrip extends JObjectRoot implements JSONInterface, JSONDisplay, JObjectifiable
 {
     public $TripId;
     public $CityFrom;
@@ -41,7 +41,7 @@ class JTrip implements JSONInterface, JSONDisplay
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JTrip();
         if(ArrayUtils::KEY_EXISTS($data,'TripId')) $mine->TripId = $data['TripId'];
@@ -115,5 +115,14 @@ class JTrip implements JSONInterface, JSONDisplay
         $display = FieldUtils::replaceIfAvailable($display, "%TRIPDISTANCE%", $this->Distance);
 
         return $display;
+    }
+
+    public function getLabel(){
+        return $this->getDisplay();
+    }
+
+    public function getValue()
+    {
+        return $this->TripId;
     }
 }

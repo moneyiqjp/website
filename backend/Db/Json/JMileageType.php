@@ -11,7 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JMileageType implements JSONInterface, JSONDisplay
+class JMileageType extends JObjectRoot implements JSONInterface, JSONDisplay, JObjectifiable
 {
     public $MileageTypeId;
     public $SeasonType;
@@ -44,7 +44,7 @@ class JMileageType implements JSONInterface, JSONDisplay
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data) {
+    public static function CREATE_FROM_ARRAY(array $data) {
         $mine = new JMileageType();
         if(ArrayUtils::KEY_EXISTS($data,'MileageTypeId')) {
             $mine->MileageTypeId = $data['MileageTypeId'];
@@ -94,7 +94,7 @@ class JMileageType implements JSONInterface, JSONDisplay
         if(!is_null($this->SeasonType) && FieldUtils::ID_IS_DEFINED( $this->SeasonType->SeasonTypeId)) {
             $item->setSeasonTypeId($this->SeasonType->SeasonTypeId);
         }
-        $item->SetRoundTrip($this->RoundTrip);
+        $item->setRoundTrip($this->RoundTrip);
         if(FieldUtils::STRING_IS_DEFINED($this->Class)) $item->setClass($this->Class);
         if(FieldUtils::STRING_IS_DEFINED($this->TicketType)) $item->setTicketType($this->TicketType);
         if(FieldUtils::STRING_IS_DEFINED($this->TripLength)) $item->setTripLength($this->TripLength);
@@ -125,4 +125,13 @@ class JMileageType implements JSONInterface, JSONDisplay
 
         return $display;
     }
+
+    public function getLabel() {
+        return $this->getDisplay() ;
+    }
+
+    public function getValue() {
+        return $this->MileageTypeId;
+    }
+
 }

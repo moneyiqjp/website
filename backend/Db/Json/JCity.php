@@ -36,7 +36,7 @@ class JCity implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JCity();
         if(ArrayUtils::KEY_EXISTS($data,'CityId')) {

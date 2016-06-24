@@ -13,7 +13,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 }
 
 interface JSONInterface {
-    public static function CREATE_FROM_ARRAY($data);
+    public static function CREATE_FROM_ARRAY(array $data);
     public function saveToDb();
     public function toDB();
 }
@@ -23,8 +23,7 @@ interface JSONDisplay {
     public function parseForDisplay($str);
 }
 
-spl_autoload_register(function($className)
-{
+spl_autoload_register(function($className) {
     if (0 !== strpos($className, __NAMESPACE__)) {//not my namespace
         return false;
     }

@@ -12,7 +12,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JStoreCategory implements JSONInterface
+class JStoreCategory extends JObjectRoot implements JSONInterface, JObjectifiable
 {
 
     public $StoreCategoryId;
@@ -39,7 +39,7 @@ class JStoreCategory implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JStoreCategory();
         if(ArrayUtils::KEY_EXISTS($data,'StoreCategoryId')) {
@@ -80,4 +80,16 @@ class JStoreCategory implements JSONInterface
         $item->setUpdateUser($this->UpdateUser);
         return $item;
     }
+
+    public function getLabel()
+    {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->StoreCategoryId;
+    }
+
+
 }

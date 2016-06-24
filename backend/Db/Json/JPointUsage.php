@@ -10,7 +10,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JPointUsage implements JSONInterface {
+class JPointUsage extends JObjectRoot implements JSONInterface, JObjectifiable, JSONDisplay {
     public $PointUsageId;
     public $Store;
     public $YenPerPoint;
@@ -43,7 +43,7 @@ class JPointUsage implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     { //create an object that is mapped against the db
         if (!ArrayUtils::KEY_EXISTS($data, 'PointUsageId')) throw new \Exception("JPointUsage Mandatory field PointUsageId missing");
         return JPointUsage::CREATE_FROM_ARRAY_RELAXED($data);
@@ -137,4 +137,22 @@ class JPointUsage implements JSONInterface {
         return $item;
     }
 
+    public function getLabel() {
+        return FieldUtils::getLabel($this->PointSystem) . "/" . FieldUtils::getLabel($this->Store) ;
+    }
+
+    public function getValue()
+    {
+        return $this->PointUsageId;
+    }
+
+    public function getDisplay()
+    {
+        return $this->getLabel();
+    }
+
+    public function parseForDisplay($str)
+    {
+        return $str;
+    }
 }

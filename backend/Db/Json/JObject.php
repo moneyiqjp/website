@@ -10,7 +10,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 
 
-class JObject {
+class JObject implements JObjectifiable {
     public $label;
     public $value;
 
@@ -28,12 +28,27 @@ class JObject {
         return $me;
     }
 
-    public static function CREATE_FROM_ARRAY($data) {
+    public static function CREATE_FROM_ARRAY(array $data) {
 
         $me = new JObject();
         if(ArrayUtils::KEY_EXISTS($data,'label')) $me->label = $data['label'];
         if(ArrayUtils::KEY_EXISTS($data,'value')) $me->label = $data['value'];
 
         return $me;
+    }
+
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function toJObject()
+    {
+        return $this;
     }
 }

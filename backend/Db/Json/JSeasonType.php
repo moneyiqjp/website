@@ -11,8 +11,7 @@ use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
 
-class JSeasonType implements JSONInterface, JSONDisplay
-{
+class JSeasonType extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $SeasonTypeId;
     public $Name;
     public $Display;
@@ -59,8 +58,7 @@ class JSeasonType implements JSONInterface, JSONDisplay
         }
     */
 
-    public static function CREATE_FROM_ARRAY($data)
-    {
+    public static function CREATE_FROM_ARRAY(array $data) {
         $mine = new JSeasonType();
         if(ArrayUtils::KEY_EXISTS($data,'SeasonTypeId')) {
                 $mine->SeasonTypeId = $data['SeasonTypeId'];
@@ -127,5 +125,13 @@ class JSeasonType implements JSONInterface, JSONDisplay
         $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPENAME%", $this->Name);
         $display = FieldUtils::replaceIfAvailable($display, "%SEASONTYPEDISPLAY", $this->Display);
         return $display;
+    }
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue() {
+        return $this->SeasonTypeId;
     }
 }

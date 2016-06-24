@@ -11,7 +11,7 @@ use Base\CardDescriptionQuery;
 use Db\Utility\FieldUtils;
 
 
-class JDescription implements JSONInterface {
+class JDescription extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $ItemId;
     public $CreditCard;
     public $Name;
@@ -41,7 +41,7 @@ class JDescription implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         $mine = new JDescription();
         $mine->ItemId = $data['ItemId'];
@@ -92,5 +92,15 @@ class JDescription implements JSONInterface {
         $item->setUpdateTime(new \DateTime());
         $item->setUpdateUser($this->UpdateUser);
         return $item;
+    }
+
+
+    public function getLabel() {
+        return $this->Name;
+    }
+
+    public function getValue()
+    {
+        return $this->ItemId;
     }
 }

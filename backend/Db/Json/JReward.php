@@ -15,8 +15,7 @@ use Db\Utility\FieldUtils;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 
-class JReward  implements JSONInterface {
-
+class JReward extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $RewardId;
     public $PointSystem;
     public $Type;
@@ -69,7 +68,7 @@ class JReward  implements JSONInterface {
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (!ArrayUtils::KEY_EXISTS($data, 'RewardId')) throw new \Exception("JReward: Mandatory field RewardId missing");
         if (!ArrayUtils::KEY_EXISTS($data, 'Category')) throw new \Exception("JReward: Mandatory field Category missing");
@@ -79,20 +78,20 @@ class JReward  implements JSONInterface {
         return JReward::CREATE_FROM_ARRAY_RELAXED($data);
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data) {
         $mine = new JReward();
 
         if(ArrayUtils::KEY_EXISTS($data,'RewardId')) $mine->RewardId = $data['RewardId'];
         if(ArrayUtils::KEY_EXISTS($data,'PointSystemId')) {
-            $mine->PointSystem = (new \PointSystemQuery())->findPK($data['PointSystem']);
+            $mine->PointSystem = (new \PointSystemQuery())->findPk($data['PointSystem']);
         }
         if(ArrayUtils::KEY_EXISTS($data,'PointSystem')) $mine->PointSystem = JPointSystem::CREATE_FROM_ARRAY($data['PointSystem']);
         if(ArrayUtils::KEY_EXISTS($data,'Type')) $mine->Type = JRewardType::CREATE_FROM_ARRAY($data['Type']);
         if(ArrayUtils::KEY_EXISTS($data,'Category')) $mine->Category = JRewardCategory::CREATE_FROM_ARRAY($data['Category']);
         if(ArrayUtils::KEY_EXISTS($data,'StoreId')) {
-            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPK($data['StoreId']));
+            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPk($data['StoreId']));
         } else if( ArrayUtils::KEY_EXISTS($data,'Store') && ArrayUtils::KEY_EXISTS($data['Store'],'StoreId') ) {
-            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPK( $data['Store']['StoreId']));
+            $mine->Store = JStore::CREATE_FROM_DB((new \StoreQuery())->findPk( $data['Store']['StoreId']));
         }
         if(ArrayUtils::KEY_EXISTS($data,'Title')) $mine->Title = $data['Title'];
         if(ArrayUtils::KEY_EXISTS($data,'Description')) $mine->Description = $data['Description'];
@@ -213,5 +212,14 @@ class JReward  implements JSONInterface {
         $mine->UpdateUser = $item->getUpdateUser();
 
         return $mine;
+    }
+
+    public function getLabel() {
+        return $this->Title;
+    }
+
+    public function getValue()
+    {
+        return $this->RewardId;
     }
 }

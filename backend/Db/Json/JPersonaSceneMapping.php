@@ -11,8 +11,7 @@ namespace Db\Json;
 use Db\Utility\ArrayUtils;
 use Db\Utility\FieldUtils;
 
-class JPersonaSceneMapping implements JSONInterface
-{
+class JPersonaSceneMapping extends JObjectRoot implements JSONInterface, JObjectifiable {
     public $Id;
     public $Persona;
     public $Scene;
@@ -47,7 +46,7 @@ class JPersonaSceneMapping implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (ArrayUtils::KEY_EXISTS($data, 'SceneId') && ArrayUtils::KEY_EXISTS($data, 'PersonaId'))
         {
@@ -91,7 +90,7 @@ class JPersonaSceneMapping implements JSONInterface
         throw new \Exception("JPersonaToSceneMapping: no matching mapping found for $personaId, $sceneId");
     }
 
-    public static function CREATE_FROM_ARRAY_RELAXED($data) {
+    public static function CREATE_FROM_ARRAY_RELAXED(array $data) {
         $mine = new JPersonaSceneMapping();
         if (ArrayUtils::KEY_EXISTS($data, 'SceneId') && ArrayUtils::KEY_EXISTS($data, 'PersonaId'))
         {
@@ -138,5 +137,14 @@ class JPersonaSceneMapping implements JSONInterface
     public function saveToDb()
     {
         return $this->toDB()->save();
+    }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->Persona) . "/" . FieldUtils::getLabel($this->Scene) ;
+    }
+
+    public function getValue()
+    {
+        return $this->Id;
     }
 }

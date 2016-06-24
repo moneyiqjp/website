@@ -9,9 +9,9 @@
 namespace Db\Json;
 
 use Db\Utility\ArrayUtils;
+use Db\Utility\FieldUtils;
 
-class JSceneRewardCategoryMapping implements JSONInterface
-{
+class JSceneRewardCategoryMapping extends JObjectRoot implements JSONInterface, JObjectifiable {
 
     public $Id;
     public $Scene;
@@ -46,7 +46,7 @@ class JSceneRewardCategoryMapping implements JSONInterface
         return $mine;
     }
 
-    public static function CREATE_FROM_ARRAY($data)
+    public static function CREATE_FROM_ARRAY(array $data)
     {
         if (ArrayUtils::KEY_EXISTS($data, 'RewardCategoryId') && ArrayUtils::KEY_EXISTS($data, 'SceneId'))
         {
@@ -134,5 +134,13 @@ class JSceneRewardCategoryMapping implements JSONInterface
     public function saveToDb()
     {
         return $this->toDB()->save();
+    }
+
+    public function getLabel() {
+        return FieldUtils::getLabel($this->Scene) . "/" . FieldUtils::getLabel($this->RewardCategory) ;
+    }
+
+    public function getValue() {
+        return $this->Id;
     }
 }

@@ -46,11 +46,11 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildZoneQuery rightJoinSeasonDate($relationAlias = null) Adds a RIGHT JOIN clause to the query using the SeasonDate relation
  * @method     ChildZoneQuery innerJoinSeasonDate($relationAlias = null) Adds a INNER JOIN clause to the query using the SeasonDate relation
  *
- * @method     ChildZoneQuery leftJoinZoneCityMap($relationAlias = null) Adds a LEFT JOIN clause to the query using the ZoneCityMap relation
- * @method     ChildZoneQuery rightJoinZoneCityMap($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ZoneCityMap relation
- * @method     ChildZoneQuery innerJoinZoneCityMap($relationAlias = null) Adds a INNER JOIN clause to the query using the ZoneCityMap relation
+ * @method     ChildZoneQuery leftJoinZoneTripMap($relationAlias = null) Adds a LEFT JOIN clause to the query using the ZoneTripMap relation
+ * @method     ChildZoneQuery rightJoinZoneTripMap($relationAlias = null) Adds a RIGHT JOIN clause to the query using the ZoneTripMap relation
+ * @method     ChildZoneQuery innerJoinZoneTripMap($relationAlias = null) Adds a INNER JOIN clause to the query using the ZoneTripMap relation
  *
- * @method     \PointSystemQuery|\SeasonDateQuery|\ZoneCityMapQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \PointSystemQuery|\SeasonDateQuery|\ZoneTripMapQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildZone findOne(ConnectionInterface $con = null) Return the first ChildZone matching the query
  * @method     ChildZone findOneOrCreate(ConnectionInterface $con = null) Return the first ChildZone matching the query, or a new ChildZone object populated from the query conditions when no match is found
@@ -615,40 +615,40 @@ abstract class ZoneQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \ZoneCityMap object
+     * Filter the query by a related \ZoneTripMap object
      *
-     * @param \ZoneCityMap|ObjectCollection $zoneCityMap  the related object to use as filter
+     * @param \ZoneTripMap|ObjectCollection $zoneTripMap  the related object to use as filter
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return ChildZoneQuery The current query, for fluid interface
      */
-    public function filterByZoneCityMap($zoneCityMap, $comparison = null)
+    public function filterByZoneTripMap($zoneTripMap, $comparison = null)
     {
-        if ($zoneCityMap instanceof \ZoneCityMap) {
+        if ($zoneTripMap instanceof \ZoneTripMap) {
             return $this
-                ->addUsingAlias(ZoneTableMap::COL_ZONE_ID, $zoneCityMap->getZoneId(), $comparison);
-        } elseif ($zoneCityMap instanceof ObjectCollection) {
+                ->addUsingAlias(ZoneTableMap::COL_ZONE_ID, $zoneTripMap->getZoneId(), $comparison);
+        } elseif ($zoneTripMap instanceof ObjectCollection) {
             return $this
-                ->useZoneCityMapQuery()
-                ->filterByPrimaryKeys($zoneCityMap->getPrimaryKeys())
+                ->useZoneTripMapQuery()
+                ->filterByPrimaryKeys($zoneTripMap->getPrimaryKeys())
                 ->endUse();
         } else {
-            throw new PropelException('filterByZoneCityMap() only accepts arguments of type \ZoneCityMap or Collection');
+            throw new PropelException('filterByZoneTripMap() only accepts arguments of type \ZoneTripMap or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the ZoneCityMap relation
+     * Adds a JOIN clause to the query using the ZoneTripMap relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildZoneQuery The current query, for fluid interface
      */
-    public function joinZoneCityMap($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinZoneTripMap($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('ZoneCityMap');
+        $relationMap = $tableMap->getRelation('ZoneTripMap');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -663,14 +663,14 @@ abstract class ZoneQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'ZoneCityMap');
+            $this->addJoinObject($join, 'ZoneTripMap');
         }
 
         return $this;
     }
 
     /**
-     * Use the ZoneCityMap relation ZoneCityMap object
+     * Use the ZoneTripMap relation ZoneTripMap object
      *
      * @see useQuery()
      *
@@ -678,13 +678,13 @@ abstract class ZoneQuery extends ModelCriteria
      *                                   to be used as main alias in the secondary query
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return \ZoneCityMapQuery A secondary query class using the current class as primary query
+     * @return \ZoneTripMapQuery A secondary query class using the current class as primary query
      */
-    public function useZoneCityMapQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useZoneTripMapQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
         return $this
-            ->joinZoneCityMap($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'ZoneCityMap', '\ZoneCityMapQuery');
+            ->joinZoneTripMap($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'ZoneTripMap', '\ZoneTripMapQuery');
     }
 
     /**
